@@ -28,6 +28,8 @@ const slides = [
   },
   {
     id: 'slide-4',
+    // TODO: substituir por uma imagem landscape (1600x1000) quando existir; por agora reutiliza a imagem mobile em desktop.
+    image: '/images/slide-4-mobile.jpg',
     imageMobile: '/images/slide-4-mobile.jpg',
     noOverlay: true,
   },
