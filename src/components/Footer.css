@@ -1,0 +1,8 @@
+.site-footer {
+  background: var(--hs-black);
+  color: var(--hs-white);
+  text-align: center;
+  padding: 20px;
+  font-size: 13px;
+  opacity: 0.85;
+}

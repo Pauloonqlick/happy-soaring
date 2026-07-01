@@ -1,0 +1,22 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.brand-header {
+  padding: 16px 20px;
+  text-align: center;
+  background: var(--hs-black);
+}
+
+.brand-name {
+  color: var(--hs-white);
+  font-weight: 800;
+  letter-spacing: 2px;
+  font-size: 18px;
+}
+
+main {
+  flex: 1;
+}
