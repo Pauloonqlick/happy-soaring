@@ -7,8 +7,8 @@ import './Slideshow.css'
 const slides = [
   {
     id: 'slide-1',
-    image: '/images/slide-1.svg',
-    imageMobile: '/images/slide-1-mobile.svg',
+    image: '/images/slide-1.jpg',
+    imageMobile: '/images/slide-1-mobile.jpg',
     title: 'Happy Soaring',
     subtitle: 'Voa mais alto. Voa mais feliz.',
   },
