@@ -29,7 +29,6 @@
   justify-content: center;
   text-align: center;
   padding: 24px;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.45) 100%);
 }
 
 .slide-overlay h1 {
@@ -38,7 +37,7 @@
   font-weight: 800;
   letter-spacing: -0.5px;
   margin: 0 0 12px;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.65), 0 4px 24px rgba(0, 0, 0, 0.5);
 }
 
 .slide-overlay p {
@@ -46,7 +45,7 @@
   font-size: clamp(14px, 3.2vw, 20px);
   margin: 0;
   max-width: 40ch;
-  opacity: 0.95;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7), 0 2px 16px rgba(0, 0, 0, 0.5);
 }
 
 .slide-dots {
