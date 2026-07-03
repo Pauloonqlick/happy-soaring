@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Happy Soaring — Conceito</title>
+<style>
+  :root{
+    --orange:#ff6a13;
+    --black:#141414;
+    --white:#ffffff;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+    color:var(--white);
+    overflow-x:hidden;
+  }
+
+  /* ---- Céu de fundo: gradiente que "sobe" (dia -> pôr do sol) ---- */
+  .sky{
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    background:linear-gradient(180deg,
+      #0a3d7a 0%,#1f6fc0 14%,#3f9adf 28%,#8fd0ea 44%,
+      #e9f4f9 56%,#f8dcac 70%,#ff9a4a 85%,#ff6a13 100%);
+    background-size:100% 320%;
+    background-position:0% 0%;
+  }
+  /* canvas do vento */
+  #wind{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+  }
+
+  section{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding:8vh 7vw;
+    overflow:hidden;
+  }
+
+  /* ---- Elementos que flutuam ---- */
+  .floaty{
+    position:absolute;
+    will-change:transform;
+  }
+  .floaty img{
+    filter:drop-shadow(0 24px 40px rgba(0,0,0,.35));
+    animation:float 7s ease-in-out infinite;
+  }
+  .floaty.slow img{animation-duration:9s}
+  .floaty.delay img{animation-delay:-3s}
+  @keyframes float{
+    0%,100%{transform:translateY(0) rotate(var(--rot,0deg))}
+    50%{transform:translateY(-26px) rotate(var(--rot,0deg))}
+  }
+
+  /* pilotos "no chão" — pousados, com sombra em baixo */
+  .grounded{
+    position:absolute;
+    bottom:6vh;
+    filter:drop-shadow(0 18px 22px rgba(0,0,0,.4));
+  }
+
+  /* ---- Texto ---- */
+  .wordmark{
+    font-size:clamp(48px,12vw,150px);
+    font-weight:900;
+    letter-spacing:-3px;
+    line-height:.9;
+    text-shadow:0 4px 24px rgba(0,0,0,.35);
+  }
+  .wordmark span{color:var(--orange)}
+  .kicker{
+    display:inline-block;
+    font-size:13px;letter-spacing:3px;text-transform:uppercase;font-weight:700;
+    background:rgba(0,0,0,.28);
+    padding:8px 16px;border-radius:100px;margin-bottom:20px;
+    backdrop-filter:blur(4px);
+  }
+  h2{
+    font-size:clamp(30px,5vw,60px);
+    font-weight:800;letter-spacing:-1px;line-height:1.05;
+    text-shadow:0 3px 16px rgba(0,0,0,.3);
+  }
+  .lead{
+    font-size:clamp(16px,2vw,21px);
+    max-width:34ch;margin-top:18px;line-height:1.5;
+    text-shadow:0 2px 10px rgba(0,0,0,.35);
+  }
+  .content{max-width:560px;position:relative;z-index:3}
+  .content.right{margin-left:auto;text-align:right}
+  .content.right .lead{margin-left:auto}
+
+  .btn{
+    display:inline-block;margin-top:28px;
+    background:var(--orange);color:#fff;font-weight:800;
+    padding:16px 34px;border-radius:100px;text-decoration:none;
+    font-size:16px;letter-spacing:.3px;
+    box-shadow:0 12px 30px rgba(255,106,19,.45);
+    transition:transform .2s;
+  }
+  .btn:hover{transform:translateY(-3px)}
+
+  /* card que aparece ao passar o rato num piloto */
+  .pilot{position:absolute}
+  .pilot img{display:block}
+  .pilot .card{
+    position:absolute;left:50%;top:8%;transform:translateX(-50%) translateY(-6px);
+    background:rgba(20,20,20,.82);backdrop-filter:blur(6px);
+    padding:10px 16px;border-radius:14px;white-space:nowrap;
+    opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;
+    border:1px solid rgba(255,255,255,.15);
+  }
+  .pilot .card b{color:var(--orange)}
+  .pilot .card small{opacity:.8;display:block;font-size:12px}
+  .pilot:hover .card{opacity:1;transform:translateX(-50%) translateY(0)}
+  .pilot:hover img{filter:drop-shadow(0 24px 40px rgba(0,0,0,.5))}
+
+  /* piloto (recorte) na apresentação */
+  .hero-pilot{
+    position:absolute;inset:0;z-index:1;
+    display:flex;align-items:flex-end;justify-content:flex-end;
+    pointer-events:none;will-change:transform;
+  }
+  .hero-pilot img{
+    height:100%;width:auto;display:block;
+    filter:drop-shadow(0 22px 44px rgba(0,0,0,.35));
+    animation:float 7s ease-in-out infinite;
+  }
+  #hero .content{z-index:2}
+  #hero::after{
+    content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+    background:linear-gradient(90deg,rgba(9,40,82,.55) 0%,rgba(9,40,82,.15) 38%,transparent 60%);
+  }
+
+  @media(max-width:760px){
+    /* mobile: piloto grande + texto sobreposto em baixo sobre degradê */
+    .hero-pilot{align-items:flex-end;justify-content:center}
+    .hero-pilot img{height:94%}
+    #hero{align-items:flex-end}
+    #hero .content{margin-bottom:4vh}
+    #hero::after{background:linear-gradient(180deg,transparent 18%,rgba(9,40,82,.38) 46%,rgba(9,40,82,.8) 72%,transparent 100%)}
+  }
+
+  .scrollhint{
+    position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
+    font-size:13px;letter-spacing:2px;text-transform:uppercase;opacity:.85;
+    animation:bob 2s ease-in-out infinite;
+  }
+  @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+  footer{
+    min-height:40vh;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:8px;
+    background:linear-gradient(180deg,transparent,rgba(0,0,0,.55));
+    text-align:center;padding:60px 20px;
+  }
+  footer .big{font-size:clamp(28px,6vw,64px);font-weight:900;letter-spacing:-1px}
+  footer small{opacity:.7}
+
+  @media(max-width:760px){
+    section{padding:12vh 6vw}
+    .content.right{text-align:left}
+    .content.right .lead{margin-left:0}
+    .floaty,.grounded{opacity:.9}
+  }
+</style>
+</head>
+<body>
+
+<div class="sky"></div>
+<canvas id="wind"></canvas>
+
+<!-- 1. HERO -->
+<section id="hero">
+  <div class="hero-pilot floaty" data-speed="0.08">
+    <img src="images/hero-pilot.png" alt="Piloto Happy Soaring com a Mullet 2">
+  </div>
+  <div class="content">
+    <span class="kicker">Parapente · Portugal</span>
+    <h1 class="wordmark">HAPPY<br><span>SOARING</span></h1>
+    <p class="lead">Cada piloto tem uma cor. Nós ajudamos-te a encontrá-la — e a voá-la.</p>
+  </div>
+  <div class="scrollhint">↓ sobe connosco</div>
+</section>
+
+<!-- 2. Glider top-down -->
+<section id="sobre">
+  <div class="content right">
+    <span class="kicker">A nossa vela</span>
+    <h2>Feita para brincar<br>com o vento</h2>
+    <p class="lead">Da soft-acro ao freestyle. Vê a Mullet 2 de um ângulo que poucos vêem — de cima.</p>
+  </div>
+  <div class="pilot floaty slow delay" style="top:24%;left:6%;width:min(30vw,360px);--rot:-8deg" data-speed="0.2">
+    <img src="images/glider-top.png" alt="Vela vista de cima" style="width:100%">
+    <div class="card">Flow <b>Mullet 2</b><small>vista de topo</small></div>
+  </div>
+</section>
+
+<!-- 3. Comunidade — pilotos no chão -->
+<section id="comunidade">
+  <div class="content">
+    <span class="kicker">A tribo</span>
+    <h2>Não vendemos velas.<br>Fazemos pilotos.</h2>
+    <p class="lead">Gente que descola junta, que arruma a asa ao fim do dia e volta amanhã. Essa é a Happy Soaring.</p>
+  </div>
+  <div class="pilot grounded" style="right:6%;width:min(26vw,340px)">
+    <img src="images/pilot-stand.png" alt="Piloto" style="width:100%">
+    <div class="card" style="top:2%">O <b>Chief</b><small>fundador &amp; instrutor</small></div>
+  </div>
+  <div class="pilot grounded" style="right:26%;width:min(22vw,280px);z-index:-1;filter:drop-shadow(0 18px 22px rgba(0,0,0,.4)) brightness(.92)">
+    <img src="images/pilot-walk.png" alt="Piloto a arrumar a asa" style="width:100%">
+  </div>
+</section>
+
+<!-- 4. Dealer Flow -->
+<section id="dealer">
+  <div class="content right">
+    <span class="kicker">Dealer oficial</span>
+    <h2>Flow Paragliders</h2>
+    <p class="lead">Representantes oficiais em Portugal. Aconselhamento a sério, primeira inspeção incluída, cor à tua escolha.</p>
+    <a class="btn" href="#">Fala connosco →</a>
+  </div>
+  <div class="pilot grounded" style="left:5%;width:min(24vw,320px)">
+    <img src="images/pilot-lines.png" alt="Piloto Flow" style="width:100%">
+    <div class="card" style="top:1%">Equipa <b>Flow</b><small>capacete laranja =)</small></div>
+  </div>
+</section>
+
+<footer>
+  <div class="big">HAPPY <span style="color:var(--orange)">×</span> FLOW</div>
+  <small>Conceito de demonstração · não é o site final</small>
+</footer>
+
+<script>
+  /* ---- parallax + céu que sobe ---- */
+  const floaties=[...document.querySelectorAll('[data-speed]')];
+  const sky=document.querySelector('.sky');
+  function onScroll(){
+    const y=window.scrollY;
+    const max=document.body.scrollHeight-window.innerHeight;
+    const frac=max>0? y/max : 0;
+    sky.style.backgroundPositionY=(frac*100)+'%';
+    floaties.forEach(el=>{
+      const sp=parseFloat(el.dataset.speed);
+      el.style.transform=`translateY(${y*sp*-1}px)`;
+    });
+    gust=Math.min(gust+0.22,2.5); // uma rajada quando fazes scroll
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+
+  /* ---- vento (canvas) ---- */
+  const canvas=document.getElementById('wind');
+  const ctx=canvas.getContext('2d');
+  let W,H,DPR;
+  function resize(){
+    DPR=Math.min(window.devicePixelRatio||1,2);
+    W=canvas.width=innerWidth*DPR; H=canvas.height=innerHeight*DPR;
+    canvas.style.width=innerWidth+'px'; canvas.style.height=innerHeight+'px';
+  }
+  resize(); window.addEventListener('resize',resize);
+
+  function newP(spread){
+    return {
+      x: spread ? Math.random()*W : -Math.random()*220*DPR,
+      y: Math.random()*H,
+      len:(70+Math.random()*180)*DPR,
+      v:(0.5+Math.random()*1.7)*DPR,
+      a:0.04+Math.random()*0.13,
+      amp:(3+Math.random()*13)*DPR,
+      ph:Math.random()*Math.PI*2
+    };
+  }
+  const N=90, P=[];
+  for(let i=0;i<N;i++) P.push(newP(true));
+
+  let gust=0, t=0;
+  function tick(){
+    t+=0.016;
+    const base=1 + Math.sin(t*0.6)*0.35 + gust;   // respiração + rajadas
+    gust*=0.95;
+    ctx.clearRect(0,0,W,H);
+    ctx.lineCap='round';
+    ctx.lineWidth=1.2*DPR;
+    for(const p of P){
+      p.x += p.v*base;
+      const yy=p.y + Math.sin(t*1.2 + p.ph)*p.amp;
+      ctx.strokeStyle='rgba(255,255,255,'+p.a+')';
+      ctx.beginPath();
+      ctx.moveTo(p.x - p.len, yy);
+      ctx.quadraticCurveTo(p.x - p.len*0.5, yy - p.amp*0.5, p.x, yy);
+      ctx.stroke();
+      if(p.x - p.len > W){ const np=newP(false); Object.assign(p,np); }
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+  onScroll();
+</script>
+
+</body>
+</html>
