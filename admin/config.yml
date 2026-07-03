@@ -1,0 +1,169 @@
+backend:
+  name: github
+  repo: Pauloonqlick/happy-soaring
+  branch: master
+  # Depois de instalar o worker de login (sveltia-cms-auth), descomenta e
+  # coloca aqui o endereço do worker:
+  # base_url: https://SEU-WORKER.workers.dev
+
+# Permite testar localmente com: npx @sveltia/cms-proxy-server
+local_backend: true
+
+# Onde ficam as imagens carregadas pelo painel
+media_folder: images
+public_folder: images
+
+# Idioma do painel
+locale: pt
+
+collections:
+  - name: site
+    label: Conteúdo do site
+    files:
+      - name: content
+        label: Página principal
+        file: content.json
+        format: json
+        description: Todo o conteúdo e layout da página.
+        fields:
+          - label: Marca
+            name: brand
+            widget: object
+            fields:
+              - { label: Cor laranja, name: orange, widget: color }
+              - { label: Cor preta, name: black, widget: color }
+              - { label: Tipo de letra, name: font, widget: string }
+
+          - label: Vento
+            name: wind
+            widget: object
+            fields:
+              - { label: Ativar vento, name: enabled, widget: boolean, default: true }
+              - { label: Densidade, name: density, widget: number, value_type: int, min: 0, max: 200, default: 90 }
+
+          - label: Cores do céu (do topo ao fundo)
+            name: sky
+            widget: list
+            field: { label: Cor, name: cor, widget: color }
+
+          - label: Secções
+            name: sections
+            widget: list
+            label_singular: Secção
+            summary: "{{fields.id}}"
+            fields:
+              - { label: Identificador, name: id, widget: string, hint: "Usado nas âncoras do menu (ex: hero, dealer)" }
+              - { label: Fundo especial da apresentação, name: heroScrim, widget: boolean, default: false, required: false }
+              - { label: Texto de scroll (opcional), name: scrollHint, widget: string, required: false }
+              - label: Elementos
+                name: elements
+                widget: list
+                label_singular: Elemento
+                typeKey: role
+                types:
+                  - label: Texto
+                    name: text
+                    widget: object
+                    summary: "Texto — {{fields.title}}"
+                    fields:
+                      - { label: Alinhamento, name: align, widget: select, options: [left, right], default: left }
+                      - { label: Etiqueta pequena, name: kicker, widget: string, required: false }
+                      - { label: Título, name: title, widget: string, required: false }
+                      - { label: Segunda linha do título, name: title2, widget: string, required: false }
+                      - { label: Segunda linha a laranja, name: accent2, widget: boolean, default: false, required: false }
+                      - { label: Tamanho do título, name: titleTag, widget: select, options: [h1, h2], default: h2 }
+                      - { label: Subtítulo, name: subtitle, widget: text, required: false }
+                      - label: Botão (opcional)
+                        name: button
+                        widget: object
+                        required: false
+                        fields:
+                          - { label: Texto do botão, name: label, widget: string, required: false }
+                          - { label: Link, name: href, widget: string, required: false }
+                      - { label: Mostrar no desktop, name: showDesktop, widget: boolean, default: true }
+                      - { label: Mostrar no mobile, name: showMobile, widget: boolean, default: true }
+
+                  - label: Piloto da apresentação
+                    name: heroImage
+                    widget: object
+                    summary: "Apresentação — {{fields.src}}"
+                    fields:
+                      - { label: Imagem, name: src, widget: image }
+                      - { label: Texto alternativo, name: alt, widget: string, required: false }
+                      - { label: Altura no desktop (%), name: heightPct, widget: number, value_type: int, min: 20, max: 100, default: 100 }
+                      - { label: Altura no mobile (%), name: heightPctMobile, widget: number, value_type: int, min: 20, max: 100, default: 94 }
+                      - { label: Rotação (graus), name: rotation, widget: number, value_type: int, min: -45, max: 45, default: 0, required: false }
+                      - { label: Opacidade (%), name: opacity, widget: number, value_type: int, min: 0, max: 100, default: 100 }
+                      - { label: Sombra, name: shadow, widget: boolean, default: true }
+                      - { label: Flutuar, name: float, widget: boolean, default: true }
+                      - { label: Velocidade do flutuar (s), name: floatSpeed, widget: number, value_type: int, min: 1, max: 20, default: 7 }
+                      - { label: Parallax (0-30), name: parallax, widget: number, value_type: int, min: 0, max: 30, default: 8 }
+                      - { label: Mostrar no desktop, name: showDesktop, widget: boolean, default: true }
+                      - { label: Mostrar no mobile, name: showMobile, widget: boolean, default: true }
+
+                  - label: Piloto a flutuar
+                    name: floatImage
+                    widget: object
+                    summary: "A flutuar — {{fields.src}}"
+                    fields:
+                      - { label: Imagem, name: src, widget: image }
+                      - { label: Texto alternativo, name: alt, widget: string, required: false }
+                      - { label: Posição horizontal (%), name: x, widget: number, value_type: int, min: 0, max: 100, default: 6 }
+                      - { label: Posição vertical (%), name: y, widget: number, value_type: int, min: 0, max: 100, default: 24 }
+                      - { label: Ancorar à direita, name: anchorX, widget: select, options: [left, right], default: left }
+                      - { label: Largura (% do ecrã), name: widthVW, widget: number, value_type: int, min: 5, max: 90, default: 30 }
+                      - { label: Largura máxima (px), name: widthMax, widget: number, value_type: int, min: 100, max: 900, default: 360 }
+                      - { label: Rotação (graus), name: rotation, widget: number, value_type: int, min: -45, max: 45, default: 0, required: false }
+                      - { label: Opacidade (%), name: opacity, widget: number, value_type: int, min: 0, max: 100, default: 100 }
+                      - { label: Sombra, name: shadow, widget: boolean, default: true }
+                      - { label: Flutuar, name: float, widget: boolean, default: true }
+                      - { label: Velocidade do flutuar (s), name: floatSpeed, widget: number, value_type: int, min: 1, max: 20, default: 9 }
+                      - { label: Parallax (0-30), name: parallax, widget: number, value_type: int, min: 0, max: 30, default: 20 }
+                      - { label: Mostrar no desktop, name: showDesktop, widget: boolean, default: true }
+                      - { label: Mostrar no mobile, name: showMobile, widget: boolean, default: true }
+                      - label: Cartão ao passar o rato (opcional)
+                        name: card
+                        widget: object
+                        required: false
+                        fields:
+                          - { label: Ativar, name: enabled, widget: boolean, default: false }
+                          - { label: Texto antes, name: pre, widget: string, required: false }
+                          - { label: Texto a negrito, name: strong, widget: string, required: false }
+                          - { label: Subtexto, name: sub, widget: string, required: false }
+
+                  - label: Piloto no chão
+                    name: groundImage
+                    widget: object
+                    summary: "No chão — {{fields.src}}"
+                    fields:
+                      - { label: Imagem, name: src, widget: image }
+                      - { label: Texto alternativo, name: alt, widget: string, required: false }
+                      - { label: Distância à margem (%), name: x, widget: number, value_type: int, min: 0, max: 100, default: 6 }
+                      - { label: Ancorar à direita, name: anchorX, widget: select, options: [left, right], default: right }
+                      - { label: Largura (% do ecrã), name: widthVW, widget: number, value_type: int, min: 5, max: 90, default: 26 }
+                      - { label: Largura máxima (px), name: widthMax, widget: number, value_type: int, min: 100, max: 900, default: 340 }
+                      - { label: Opacidade (%), name: opacity, widget: number, value_type: int, min: 0, max: 100, default: 100 }
+                      - { label: Sombra, name: shadow, widget: boolean, default: true }
+                      - { label: Escurecer (segundo plano), name: dim, widget: boolean, default: false, required: false }
+                      - { label: Profundidade (z-index), name: zIndex, widget: number, value_type: int, default: 0, required: false }
+                      - { label: Parallax (0-30), name: parallax, widget: number, value_type: int, min: 0, max: 30, default: 0 }
+                      - { label: Mostrar no desktop, name: showDesktop, widget: boolean, default: true }
+                      - { label: Mostrar no mobile, name: showMobile, widget: boolean, default: true }
+                      - label: Cartão ao passar o rato (opcional)
+                        name: card
+                        widget: object
+                        required: false
+                        fields:
+                          - { label: Ativar, name: enabled, widget: boolean, default: false }
+                          - { label: Texto antes, name: pre, widget: string, required: false }
+                          - { label: Texto a negrito, name: strong, widget: string, required: false }
+                          - { label: Subtexto, name: sub, widget: string, required: false }
+
+          - label: Rodapé
+            name: footer
+            widget: object
+            fields:
+              - { label: Primeira palavra, name: line1, widget: string }
+              - { label: Símbolo do meio, name: accent, widget: string, default: "×" }
+              - { label: Segunda palavra, name: line2, widget: string }
+              - { label: Nota, name: note, widget: string, required: false }

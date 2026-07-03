@@ -25,8 +25,8 @@ function buildText(item) {
   }
   c.appendChild(title);
   if (item.subtitle) { const p = el('p', 'lead'); p.textContent = item.subtitle; c.appendChild(p); }
-  if (item.button) {
-    const a = el('a', 'btn'); a.href = item.button.href || '#'; a.textContent = item.button.label || '';
+  if (item.button && item.button.label) {
+    const a = el('a', 'btn'); a.href = item.button.href || '#'; a.textContent = item.button.label;
     c.appendChild(a);
   }
   return c;
