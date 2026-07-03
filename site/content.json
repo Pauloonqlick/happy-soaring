@@ -1,0 +1,163 @@
+{
+  "brand": {
+    "orange": "#ff6a13",
+    "black": "#141414",
+    "font": "'Segoe UI', system-ui, -apple-system, sans-serif"
+  },
+  "wind": { "enabled": true, "density": 90 },
+  "sky": ["#0a3d7a", "#1f6fc0", "#3f9adf", "#8fd0ea", "#e9f4f9", "#f8dcac", "#ff9a4a", "#ff6a13"],
+  "sections": [
+    {
+      "id": "hero",
+      "heroScrim": true,
+      "scrollHint": "↓ sobe connosco",
+      "elements": [
+        {
+          "role": "heroImage",
+          "src": "images/hero-pilot.png",
+          "alt": "Piloto Happy Soaring com a Mullet 2",
+          "heightPct": 100,
+          "heightPctMobile": 94,
+          "rotation": 0,
+          "opacity": 100,
+          "shadow": true,
+          "float": true,
+          "floatSpeed": 7,
+          "parallax": 8,
+          "showDesktop": true,
+          "showMobile": true
+        },
+        {
+          "role": "text",
+          "align": "left",
+          "kicker": "Parapente · Portugal",
+          "title": "HAPPY",
+          "title2": "SOARING",
+          "accent2": true,
+          "titleTag": "h1",
+          "subtitle": "Cada piloto tem uma cor. Nós ajudamos-te a encontrá-la — e a voá-la.",
+          "showDesktop": true,
+          "showMobile": true
+        }
+      ]
+    },
+    {
+      "id": "sobre",
+      "elements": [
+        {
+          "role": "text",
+          "align": "right",
+          "kicker": "A nossa vela",
+          "title": "Feita para brincar",
+          "title2": "com o vento",
+          "titleTag": "h2",
+          "subtitle": "Da soft-acro ao freestyle. Vê a Mullet 2 de um ângulo que poucos vêem — de cima.",
+          "showDesktop": true,
+          "showMobile": true
+        },
+        {
+          "role": "floatImage",
+          "src": "images/glider-top.png",
+          "alt": "Vela vista de cima",
+          "x": 6,
+          "y": 24,
+          "anchorX": "left",
+          "widthVW": 30,
+          "widthMax": 360,
+          "rotation": -8,
+          "float": true,
+          "floatSpeed": 9,
+          "parallax": 20,
+          "opacity": 100,
+          "shadow": true,
+          "showDesktop": true,
+          "showMobile": true,
+          "card": { "enabled": true, "pre": "Flow ", "strong": "Mullet 2", "sub": "vista de topo" }
+        }
+      ]
+    },
+    {
+      "id": "comunidade",
+      "elements": [
+        {
+          "role": "text",
+          "align": "left",
+          "kicker": "A tribo",
+          "title": "Não vendemos velas.",
+          "title2": "Fazemos pilotos.",
+          "titleTag": "h2",
+          "subtitle": "Gente que descola junta, que arruma a asa ao fim do dia e volta amanhã. Essa é a Happy Soaring.",
+          "showDesktop": true,
+          "showMobile": true
+        },
+        {
+          "role": "groundImage",
+          "src": "images/pilot-stand.png",
+          "alt": "Piloto",
+          "x": 6,
+          "anchorX": "right",
+          "widthVW": 26,
+          "widthMax": 340,
+          "opacity": 100,
+          "shadow": true,
+          "parallax": 0,
+          "showDesktop": true,
+          "showMobile": true,
+          "card": { "enabled": true, "pre": "O ", "strong": "Chief", "sub": "fundador & instrutor" }
+        },
+        {
+          "role": "groundImage",
+          "src": "images/pilot-walk.png",
+          "alt": "Piloto a arrumar a asa",
+          "x": 26,
+          "anchorX": "right",
+          "widthVW": 22,
+          "widthMax": 280,
+          "opacity": 100,
+          "zIndex": -1,
+          "dim": true,
+          "parallax": 0,
+          "showDesktop": true,
+          "showMobile": true
+        }
+      ]
+    },
+    {
+      "id": "dealer",
+      "elements": [
+        {
+          "role": "text",
+          "align": "right",
+          "kicker": "Dealer oficial",
+          "title": "Flow Paragliders",
+          "titleTag": "h2",
+          "subtitle": "Representantes oficiais em Portugal. Aconselhamento a sério, primeira inspeção incluída, cor à tua escolha.",
+          "button": { "label": "Fala connosco →", "href": "#" },
+          "showDesktop": true,
+          "showMobile": true
+        },
+        {
+          "role": "groundImage",
+          "src": "images/pilot-lines.png",
+          "alt": "Piloto Flow",
+          "x": 5,
+          "anchorX": "left",
+          "widthVW": 24,
+          "widthMax": 320,
+          "opacity": 100,
+          "shadow": true,
+          "parallax": 0,
+          "showDesktop": true,
+          "showMobile": true,
+          "card": { "enabled": true, "pre": "Equipa ", "strong": "Flow", "sub": "capacete laranja =)" }
+        }
+      ]
+    }
+  ],
+  "footer": {
+    "line1": "HAPPY",
+    "accent": "×",
+    "line2": "FLOW",
+    "note": "Conceito de demonstração · não é o site final"
+  }
+}
