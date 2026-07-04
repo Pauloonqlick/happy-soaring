@@ -16,6 +16,14 @@ public_folder: images
 # Idioma do painel
 locale: pt
 
+# Tradução (i18n): os 5 idiomas guardados no mesmo ficheiro.
+# Só os campos marcados com "i18n: true" ficam por idioma; o resto
+# (posições, tamanhos, imagens, cores...) é partilhado.
+i18n:
+  structure: single_file
+  locales: [pt, en, es, fr, de]
+  default_locale: pt
+
 collections:
   - name: site
     label: Conteúdo do site
@@ -24,6 +32,7 @@ collections:
         label: Página principal
         file: content.json
         format: json
+        i18n: true
         description: Todo o conteúdo e layout da página.
         fields:
           - label: Marca
@@ -52,7 +61,7 @@ collections:
             label_singular: Item
             summary: "{{fields.label}}"
             fields:
-              - { label: Texto, name: label, widget: string }
+              - { label: Texto, name: label, widget: string, i18n: true }
               - { label: Destino, name: target, widget: string, hint: "Id da secção (ex: hero, dealer) ou link completo (https://...)" }
 
           - label: Secções
@@ -63,7 +72,7 @@ collections:
             fields:
               - { label: Identificador, name: id, widget: string, hint: "Usado nas âncoras do menu (ex: hero, dealer)" }
               - { label: Fundo especial da apresentação, name: heroScrim, widget: boolean, default: false, required: false }
-              - { label: Texto de scroll (opcional), name: scrollHint, widget: string, required: false }
+              - { label: Texto de scroll (opcional), name: scrollHint, widget: string, required: false, i18n: true }
               - label: Elementos
                 name: elements
                 widget: list
@@ -76,18 +85,18 @@ collections:
                     summary: "Texto — {{fields.title}}"
                     fields:
                       - { label: Alinhamento, name: align, widget: select, options: [left, right], default: left }
-                      - { label: Etiqueta pequena, name: kicker, widget: string, required: false }
-                      - { label: Título, name: title, widget: string, required: false }
-                      - { label: Segunda linha do título, name: title2, widget: string, required: false }
+                      - { label: Etiqueta pequena, name: kicker, widget: string, required: false, i18n: true }
+                      - { label: Título, name: title, widget: string, required: false, i18n: true }
+                      - { label: Segunda linha do título, name: title2, widget: string, required: false, i18n: true }
                       - { label: Segunda linha a laranja, name: accent2, widget: boolean, default: false, required: false }
                       - { label: Tamanho do título, name: titleTag, widget: select, options: [h1, h2], default: h2 }
-                      - { label: Subtítulo, name: subtitle, widget: text, required: false }
+                      - { label: Subtítulo, name: subtitle, widget: text, required: false, i18n: true }
                       - label: Botão (opcional)
                         name: button
                         widget: object
                         required: false
                         fields:
-                          - { label: Texto do botão, name: label, widget: string, required: false }
+                          - { label: Texto do botão, name: label, widget: string, required: false, i18n: true }
                           - { label: Link, name: href, widget: string, required: false }
                       - { label: Mostrar no desktop, name: showDesktop, widget: boolean, default: true }
                       - { label: Mostrar no mobile, name: showMobile, widget: boolean, default: true }
@@ -136,9 +145,9 @@ collections:
                         required: false
                         fields:
                           - { label: Ativar, name: enabled, widget: boolean, default: false }
-                          - { label: Texto antes, name: pre, widget: string, required: false }
-                          - { label: Texto a negrito, name: strong, widget: string, required: false }
-                          - { label: Subtexto, name: sub, widget: string, required: false }
+                          - { label: Texto antes, name: pre, widget: string, required: false, i18n: true }
+                          - { label: Texto a negrito, name: strong, widget: string, required: false, i18n: true }
+                          - { label: Subtexto, name: sub, widget: string, required: false, i18n: true }
 
                   - label: Piloto no chão
                     name: groundImage
@@ -164,15 +173,15 @@ collections:
                         required: false
                         fields:
                           - { label: Ativar, name: enabled, widget: boolean, default: false }
-                          - { label: Texto antes, name: pre, widget: string, required: false }
-                          - { label: Texto a negrito, name: strong, widget: string, required: false }
-                          - { label: Subtexto, name: sub, widget: string, required: false }
+                          - { label: Texto antes, name: pre, widget: string, required: false, i18n: true }
+                          - { label: Texto a negrito, name: strong, widget: string, required: false, i18n: true }
+                          - { label: Subtexto, name: sub, widget: string, required: false, i18n: true }
 
           - label: Rodapé
             name: footer
             widget: object
             fields:
-              - { label: Primeira palavra, name: line1, widget: string }
+              - { label: Primeira palavra, name: line1, widget: string, i18n: true }
               - { label: Símbolo do meio, name: accent, widget: string, default: "×" }
-              - { label: Segunda palavra, name: line2, widget: string }
-              - { label: Nota, name: note, widget: string, required: false }
+              - { label: Segunda palavra, name: line2, widget: string, i18n: true }
+              - { label: Nota, name: note, widget: string, required: false, i18n: true }

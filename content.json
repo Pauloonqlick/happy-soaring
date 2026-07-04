@@ -4,6 +4,7 @@
     "black": "#141414",
     "font": "'Segoe UI', system-ui, -apple-system, sans-serif"
   },
+  "locales": ["pt", "en", "es", "fr", "de"],
   "wind": {
     "enabled": true,
     "density": 90

@@ -5,6 +5,17 @@
 const el = (tag, cls) => { const n = document.createElement(tag); if (cls) n.className = cls; return n; };
 const px = v => (typeof v === 'number' ? v + 'px' : v);
 
+/* ---- idioma (i18n) ----
+   Um campo de texto pode ser uma string simples (uma língua) ou um objeto
+   { pt: "...", en: "...", ... }. t() escolhe o idioma atual, com fallback. */
+const DEFAULT_LOCALE = 'pt';
+let LOCALE = (typeof localStorage !== 'undefined' && localStorage.getItem('lang')) || DEFAULT_LOCALE;
+function t(v) {
+  if (v == null) return '';
+  if (typeof v === 'string') return v;
+  return v[LOCALE] || v[DEFAULT_LOCALE] || Object.values(v).find(Boolean) || '';
+}
+
 function visibilityClass(item) {
   let c = '';
   if (item.showMobile === false) c += ' hide-mobile';
@@ -14,19 +25,21 @@ function visibilityClass(item) {
 
 function buildText(item) {
   const c = el('div', 'content' + (item.align === 'right' ? ' right' : '') + visibilityClass(item));
-  if (item.kicker) { const k = el('span', 'kicker'); k.textContent = item.kicker; c.appendChild(k); }
+  const kicker = t(item.kicker), title1 = t(item.title), title2 = t(item.title2), subtitle = t(item.subtitle);
+  if (kicker) { const k = el('span', 'kicker'); k.textContent = kicker; c.appendChild(k); }
   const tag = item.titleTag === 'h1' ? 'h1' : 'h2';
   const title = el(tag, tag === 'h1' ? 'wordmark' : 'title');
-  if (item.title) title.appendChild(document.createTextNode(item.title));
-  if (item.title2) {
+  if (title1) title.appendChild(document.createTextNode(title1));
+  if (title2) {
     title.appendChild(el('br'));
-    if (item.accent2) { const s = el('span'); s.textContent = item.title2; title.appendChild(s); }
-    else title.appendChild(document.createTextNode(item.title2));
+    if (item.accent2) { const s = el('span'); s.textContent = title2; title.appendChild(s); }
+    else title.appendChild(document.createTextNode(title2));
   }
   c.appendChild(title);
-  if (item.subtitle) { const p = el('p', 'lead'); p.textContent = item.subtitle; c.appendChild(p); }
-  if (item.button && item.button.label) {
-    const a = el('a', 'btn'); a.href = item.button.href || '#'; a.textContent = item.button.label;
+  if (subtitle) { const p = el('p', 'lead'); p.textContent = subtitle; c.appendChild(p); }
+  const btnLabel = item.button && t(item.button.label);
+  if (btnLabel) {
+    const a = el('a', 'btn'); a.href = item.button.href || '#'; a.textContent = btnLabel;
     c.appendChild(a);
   }
   return c;
@@ -44,9 +57,10 @@ function applyCommon(wrap, img, item) {
 
 function buildCard(card) {
   const d = el('div', 'card');
-  if (card.pre) d.appendChild(document.createTextNode(card.pre));
-  if (card.strong) { const b = el('b'); b.textContent = card.strong; d.appendChild(b); }
-  if (card.sub) { const s = el('small'); s.textContent = card.sub; d.appendChild(s); }
+  const pre = t(card.pre), strong = t(card.strong), sub = t(card.sub);
+  if (pre) d.appendChild(document.createTextNode(pre));
+  if (strong) { const b = el('b'); b.textContent = strong; d.appendChild(b); }
+  if (sub) { const s = el('small'); s.textContent = sub; d.appendChild(s); }
   return d;
 }
 
@@ -56,7 +70,7 @@ function buildFloatImage(item) {
   if (item.anchorX === 'right') wrap.style.right = (item.x ?? 0) + '%';
   else wrap.style.left = (item.x ?? 0) + '%';
   wrap.style.width = 'min(' + (item.widthVW || 30) + 'vw,' + px(item.widthMax || 360) + ')';
-  const img = el('img'); img.src = item.src; img.alt = item.alt || ''; img.style.width = '100%';
+  const img = el('img'); img.src = item.src; img.alt = t(item.alt); img.style.width = '100%';
   applyCommon(wrap, img, item);
   wrap.appendChild(img);
   if (item.card && item.card.enabled) wrap.appendChild(buildCard(item.card));
@@ -68,7 +82,7 @@ function buildGroundImage(item) {
   if (item.anchorX === 'right') wrap.style.right = (item.x ?? 0) + '%';
   else wrap.style.left = (item.x ?? 0) + '%';
   wrap.style.width = 'min(' + (item.widthVW || 24) + 'vw,' + px(item.widthMax || 320) + ')';
-  const img = el('img'); img.src = item.src; img.alt = item.alt || ''; img.style.width = '100%';
+  const img = el('img'); img.src = item.src; img.alt = t(item.alt); img.style.width = '100%';
   applyCommon(wrap, img, item);
   wrap.appendChild(img);
   if (item.card && item.card.enabled) wrap.appendChild(buildCard(item.card));
@@ -81,7 +95,7 @@ function buildHeroImage(item) {
   if (typeof item.heightPctMobile === 'number') wrap.style.setProperty('--hm', item.heightPctMobile + '%');
   if (item.floatSpeed) wrap.style.setProperty('--float-speed', item.floatSpeed + 's');
   if (typeof item.parallax === 'number' && item.parallax > 0) wrap.dataset.speed = (item.parallax / 100).toFixed(2);
-  const img = el('img'); img.src = item.src; img.alt = item.alt || '';
+  const img = el('img'); img.src = item.src; img.alt = t(item.alt);
   if (typeof item.opacity === 'number' && item.opacity !== 100) img.style.opacity = item.opacity / 100;
   wrap.appendChild(img);
   return wrap;
@@ -124,7 +138,8 @@ function render(data) {
       const node = buildElement(item);
       if (node) s.appendChild(node);
     });
-    if (sec.scrollHint) { const h = el('div', 'scrollhint'); h.textContent = sec.scrollHint; s.appendChild(h); }
+    const hint = t(sec.scrollHint);
+    if (hint) { const h = el('div', 'scrollhint'); h.textContent = hint; s.appendChild(h); }
     root.appendChild(s);
   });
 
@@ -132,17 +147,46 @@ function render(data) {
   if (data.footer) {
     const f = el('footer');
     const big = el('div', 'big');
-    big.appendChild(document.createTextNode((data.footer.line1 || '') + ' '));
-    if (data.footer.accent) { const sp = el('span'); sp.textContent = data.footer.accent; big.appendChild(sp); }
-    big.appendChild(document.createTextNode(' ' + (data.footer.line2 || '')));
+    big.appendChild(document.createTextNode(t(data.footer.line1) + ' '));
+    if (data.footer.accent) { const sp = el('span'); sp.textContent = t(data.footer.accent); big.appendChild(sp); }
+    big.appendChild(document.createTextNode(' ' + t(data.footer.line2)));
     f.appendChild(big);
-    if (data.footer.note) { const sm = el('small'); sm.textContent = data.footer.note; f.appendChild(sm); }
+    const note = t(data.footer.note);
+    if (note) { const sm = el('small'); sm.textContent = note; f.appendChild(sm); }
     root.appendChild(f);
   }
 
   if (data.menu && data.menu.length) buildMenu(data.menu);
 
+  const locales = (data.locales && data.locales.length) ? data.locales : [DEFAULT_LOCALE];
+  if (locales.length > 1) buildLangSwitcher(locales);
+
   initMotion(data);
+}
+
+/* ---- seletor de idioma (bandeiras) ---- */
+const FLAGS = {
+  pt: '<svg viewBox="0 0 30 20"><rect width="12" height="20" fill="#006600"/><rect x="12" width="18" height="20" fill="#FF0000"/><circle cx="12" cy="10" r="4.2" fill="#FFCC00" stroke="#fff" stroke-width=".6"/></svg>',
+  en: '<svg viewBox="0 0 19 10"><rect width="19" height="10" fill="#fff"/><g fill="#B22234"><rect width="19" height="1" y="0"/><rect width="19" height="1" y="2"/><rect width="19" height="1" y="4"/><rect width="19" height="1" y="6"/><rect width="19" height="1" y="8"/></g><rect width="8" height="5" fill="#3C3B6E"/></svg>',
+  es: '<svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#AA151B"/><rect width="30" height="10" y="5" fill="#F1BF00"/></svg>',
+  fr: '<svg viewBox="0 0 9 6"><rect width="3" height="6" fill="#0055A4"/><rect width="3" height="6" x="3" fill="#fff"/><rect width="3" height="6" x="6" fill="#EF4135"/></svg>',
+  de: '<svg viewBox="0 0 5 3"><rect width="5" height="1" fill="#000"/><rect width="5" height="1" y="1" fill="#D00"/><rect width="5" height="1" y="2" fill="#FFCE00"/></svg>',
+};
+function buildLangSwitcher(locales) {
+  const bar = el('div', 'lang-switcher');
+  locales.forEach(code => {
+    const b = el('button', 'lang' + (code === LOCALE ? ' active' : ''));
+    b.type = 'button';
+    b.setAttribute('aria-label', code);
+    b.innerHTML = FLAGS[code] || code;
+    b.addEventListener('click', () => {
+      if (code === LOCALE) return;
+      localStorage.setItem('lang', code);
+      location.reload();
+    });
+    bar.appendChild(b);
+  });
+  document.body.appendChild(bar);
 }
 
 /* ---- menu burger + âncoras ---- */
@@ -159,7 +203,7 @@ function buildMenu(items) {
     const a = el('a');
     const target = String(mi.target || '');
     a.href = /^https?:\/\//.test(target) ? target : '#' + target;
-    a.textContent = mi.label || '';
+    a.textContent = t(mi.label);
     li.appendChild(a);
     ul.appendChild(li);
   });

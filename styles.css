@@ -129,6 +129,22 @@ h2.title{
   background:linear-gradient(90deg,rgba(9,40,82,.55) 0%,rgba(9,40,82,.15) 38%,transparent 60%);
 }
 
+/* ---- Seletor de idioma (bandeiras) ---- */
+.lang-switcher{
+  position:fixed;top:24px;left:20px;z-index:50;
+  display:flex;gap:7px;align-items:center;
+  background:rgba(9,40,82,.35);backdrop-filter:blur(6px);
+  padding:7px 9px;border-radius:12px;
+}
+.lang-switcher .lang{
+  width:26px;height:18px;padding:0;border:none;cursor:pointer;border-radius:3px;
+  overflow:hidden;opacity:.5;transition:opacity .2s,transform .2s;
+  box-shadow:0 0 0 1px rgba(255,255,255,.25);
+}
+.lang-switcher .lang svg{display:block;width:100%;height:100%}
+.lang-switcher .lang:hover{opacity:.9;transform:translateY(-1px)}
+.lang-switcher .lang.active{opacity:1;box-shadow:0 0 0 2px #fff}
+
 /* ---- Menu burger + âncoras ---- */
 .burger{
   position:fixed;top:20px;right:20px;z-index:50;
