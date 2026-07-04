@@ -140,7 +140,43 @@ function render(data) {
     root.appendChild(f);
   }
 
+  if (data.menu && data.menu.length) buildMenu(data.menu);
+
   initMotion(data);
+}
+
+/* ---- menu burger + âncoras ---- */
+function buildMenu(items) {
+  const burger = el('button', 'burger');
+  burger.setAttribute('aria-label', 'Abrir menu');
+  burger.innerHTML = '<span></span><span></span><span></span>';
+
+  const overlay = el('nav', 'menu-overlay');
+  overlay.setAttribute('aria-hidden', 'true');
+  const ul = el('ul');
+  items.forEach(mi => {
+    const li = el('li');
+    const a = el('a');
+    const target = String(mi.target || '');
+    a.href = /^https?:\/\//.test(target) ? target : '#' + target;
+    a.textContent = mi.label || '';
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+  overlay.appendChild(ul);
+
+  function setOpen(open) {
+    burger.classList.toggle('open', open);
+    overlay.classList.toggle('open', open);
+    overlay.setAttribute('aria-hidden', open ? 'false' : 'true');
+    burger.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+  }
+  burger.addEventListener('click', () => setOpen(!overlay.classList.contains('open')));
+  overlay.addEventListener('click', e => { if (e.target.tagName === 'A' || e.target === overlay) setOpen(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+
+  document.body.appendChild(burger);
+  document.body.appendChild(overlay);
 }
 
 /* ---- parallax + céu que sobe + vento ---- */

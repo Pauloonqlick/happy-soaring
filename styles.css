@@ -129,6 +129,35 @@ h2.title{
   background:linear-gradient(90deg,rgba(9,40,82,.55) 0%,rgba(9,40,82,.15) 38%,transparent 60%);
 }
 
+/* ---- Menu burger + âncoras ---- */
+.burger{
+  position:fixed;top:20px;right:20px;z-index:50;
+  width:48px;height:48px;border:none;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  background:rgba(9,40,82,.35);backdrop-filter:blur(6px);border-radius:12px;
+  transition:background .2s;
+}
+.burger:hover{background:rgba(9,40,82,.55)}
+.burger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:transform .25s,opacity .2s}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+.menu-overlay{
+  position:fixed;inset:0;z-index:45;
+  background:rgba(9,40,82,.94);backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.menu-overlay.open{opacity:1;pointer-events:auto}
+.menu-overlay ul{list-style:none;text-align:center}
+.menu-overlay li{margin:14px 0}
+.menu-overlay a{
+  color:#fff;text-decoration:none;font-weight:800;letter-spacing:-.5px;
+  font-size:clamp(30px,7vw,54px);transition:color .2s;
+}
+.menu-overlay a:hover{color:var(--orange)}
+
 .scrollhint{
   position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
   font-size:13px;letter-spacing:2px;text-transform:uppercase;opacity:.85;

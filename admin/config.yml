@@ -46,6 +46,15 @@ collections:
             widget: list
             field: { label: Cor, name: cor, widget: color }
 
+          - label: Menu
+            name: menu
+            widget: list
+            label_singular: Item
+            summary: "{{fields.label}}"
+            fields:
+              - { label: Texto, name: label, widget: string }
+              - { label: Destino, name: target, widget: string, hint: "Id da secção (ex: hero, dealer) ou link completo (https://...)" }
+
           - label: Secções
             name: sections
             widget: list
