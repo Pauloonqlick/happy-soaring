@@ -4,8 +4,26 @@
     "black": "#141414",
     "font": "'Segoe UI', system-ui, -apple-system, sans-serif"
   },
-  "wind": { "enabled": true, "density": 90 },
-  "sky": ["#0a3d7a", "#1f6fc0", "#3f9adf", "#8fd0ea", "#e9f4f9", "#f8dcac", "#ff9a4a", "#ff6a13"],
+  "wind": {
+    "enabled": true,
+    "density": 90
+  },
+  "sky": [
+    "#0a3d7a",
+    "#1f6fc0",
+    "#3f9adf",
+    "#8fd0ea",
+    "#e9f4f9",
+    "#f8dcac",
+    "#ff9a4a",
+    "#ff6a13"
+  ],
+  "menu": [
+    { "label": "Início", "target": "hero" },
+    { "label": "A vela", "target": "sobre" },
+    { "label": "A tribo", "target": "comunidade" },
+    { "label": "Dealer Flow", "target": "dealer" }
+  ],
   "sections": [
     {
       "id": "hero",
@@ -14,6 +32,8 @@
       "elements": [
         {
           "role": "heroImage",
+          "showDesktop": true,
+          "showMobile": true,
           "src": "images/hero-pilot.png",
           "alt": "Piloto Happy Soaring com a Mullet 2",
           "heightPct": 100,
@@ -23,9 +43,7 @@
           "shadow": true,
           "float": true,
           "floatSpeed": 7,
-          "parallax": 8,
-          "showDesktop": true,
-          "showMobile": true
+          "parallax": 8
         },
         {
           "role": "text",
@@ -43,6 +61,7 @@
     },
     {
       "id": "sobre",
+      "scrollHint": "",
       "elements": [
         {
           "role": "text",
@@ -52,32 +71,42 @@
           "title2": "com o vento",
           "titleTag": "h2",
           "subtitle": "Da soft-acro ao freestyle. Vê a Mullet 2 de um ângulo que poucos vêem — de cima.",
+          "button": {
+            "label": "Flow Paragliders",
+            "href": ""
+          },
           "showDesktop": true,
           "showMobile": true
         },
         {
           "role": "floatImage",
+          "showDesktop": true,
+          "showMobile": true,
           "src": "images/glider-top.png",
           "alt": "Vela vista de cima",
+          "rotation": -8,
+          "opacity": 100,
+          "shadow": true,
+          "float": true,
+          "floatSpeed": 9,
+          "parallax": 20,
           "x": 6,
           "y": 24,
           "anchorX": "left",
           "widthVW": 30,
           "widthMax": 360,
-          "rotation": -8,
-          "float": true,
-          "floatSpeed": 9,
-          "parallax": 20,
-          "opacity": 100,
-          "shadow": true,
-          "showDesktop": true,
-          "showMobile": true,
-          "card": { "enabled": true, "pre": "Flow ", "strong": "Mullet 2", "sub": "vista de topo" }
+          "card": {
+            "enabled": true,
+            "pre": "Flow",
+            "strong": "Mullet 2",
+            "sub": "vista de topo"
+          }
         }
       ]
     },
     {
       "id": "comunidade",
+      "scrollHint": "",
       "elements": [
         {
           "role": "text",
@@ -92,33 +121,39 @@
         },
         {
           "role": "groundImage",
+          "showDesktop": true,
+          "showMobile": true,
           "src": "images/pilot-stand.png",
           "alt": "Piloto",
+          "opacity": 100,
+          "shadow": true,
+          "parallax": 0,
           "x": 6,
           "anchorX": "right",
           "widthVW": 26,
           "widthMax": 340,
-          "opacity": 100,
-          "shadow": true,
-          "parallax": 0,
-          "showDesktop": true,
-          "showMobile": true,
-          "card": { "enabled": true, "pre": "O ", "strong": "Chief", "sub": "fundador & instrutor" }
+          "card": {
+            "enabled": true,
+            "pre": "O",
+            "strong": "Chief",
+            "sub": "fundador & instrutor"
+          },
+          "zIndex": null
         },
         {
           "role": "groundImage",
+          "showDesktop": true,
+          "showMobile": true,
           "src": "images/pilot-walk.png",
           "alt": "Piloto a arrumar a asa",
+          "opacity": 100,
+          "parallax": 0,
           "x": 26,
           "anchorX": "right",
           "widthVW": 22,
           "widthMax": 280,
-          "opacity": 100,
-          "zIndex": -1,
           "dim": true,
-          "parallax": 0,
-          "showDesktop": true,
-          "showMobile": true
+          "zIndex": -1
         }
       ]
     },
@@ -132,24 +167,32 @@
           "title": "Flow Paragliders",
           "titleTag": "h2",
           "subtitle": "Representantes oficiais em Portugal. Aconselhamento a sério, primeira inspeção incluída, cor à tua escolha.",
-          "button": { "label": "Fala connosco →", "href": "#" },
+          "button": {
+            "label": "Fala connosco →",
+            "href": "#"
+          },
           "showDesktop": true,
           "showMobile": true
         },
         {
           "role": "groundImage",
+          "showDesktop": true,
+          "showMobile": true,
           "src": "images/pilot-lines.png",
           "alt": "Piloto Flow",
+          "opacity": 100,
+          "shadow": true,
+          "parallax": 0,
           "x": 5,
           "anchorX": "left",
           "widthVW": 24,
           "widthMax": 320,
-          "opacity": 100,
-          "shadow": true,
-          "parallax": 0,
-          "showDesktop": true,
-          "showMobile": true,
-          "card": { "enabled": true, "pre": "Equipa ", "strong": "Flow", "sub": "capacete laranja =)" }
+          "card": {
+            "enabled": true,
+            "pre": "Equipa",
+            "strong": "Flow",
+            "sub": "capacete laranja =)"
+          }
         }
       ]
     }
