@@ -27,6 +27,7 @@ i18n:
 collections:
   - name: site
     label: Conteúdo do site
+    i18n: true
     files:
       - name: content
         label: Página principal
