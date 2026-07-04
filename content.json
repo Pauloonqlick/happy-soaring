@@ -4,13 +4,6 @@
     "black": "#141414",
     "font": "'Segoe UI', system-ui, -apple-system, sans-serif"
   },
-  "locales": [
-    "pt",
-    "en",
-    "es",
-    "fr",
-    "de"
-  ],
   "wind": {
     "enabled": true,
     "density": 90
@@ -28,7 +21,11 @@
   "menu": [
     {
       "label": {
-        "pt": "Início"
+        "pt": "Início",
+        "en": "Start",
+        "es": "",
+        "fr": "",
+        "de": ""
       },
       "target": "hero"
     },
@@ -56,7 +53,11 @@
       "id": "hero",
       "heroScrim": true,
       "scrollHint": {
-        "pt": "↓ sobe connosco"
+        "pt": "sobe connosco",
+        "en": "Soar with us",
+        "es": "Vuela con nosotros",
+        "fr": "Prends de la hauteur avec nous",
+        "de": "Steig mit uns auf"
       },
       "elements": [
         {
@@ -293,5 +294,12 @@
     "note": {
       "pt": "Conceito de demonstração · não é o site final"
     }
-  }
+  },
+  "locales": [
+    "pt",
+    "en",
+    "es",
+    "fr",
+    "de"
+  ]
 }
