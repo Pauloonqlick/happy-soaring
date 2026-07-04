@@ -16,24 +16,14 @@ public_folder: images
 # Idioma do painel
 locale: pt
 
-# Tradução (i18n): os 5 idiomas guardados no mesmo ficheiro.
-# Só os campos marcados com "i18n: true" ficam por idioma; o resto
-# (posições, tamanhos, imagens, cores...) é partilhado.
-i18n:
-  structure: single_file
-  locales: [pt, en, es, fr, de]
-  default_locale: pt
-
 collections:
   - name: site
     label: Conteúdo do site
-    i18n: true
     files:
       - name: content
         label: Página principal
         file: content.json
         format: json
-        i18n: true
         description: Todo o conteúdo e layout da página.
         fields:
           - label: Marca
