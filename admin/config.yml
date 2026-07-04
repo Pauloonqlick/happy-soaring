@@ -130,6 +130,17 @@ collections:
                       - { label: Parallax (0-30), name: parallax, widget: number, value_type: int, min: 0, max: 30, default: 20 }
                       - { label: Mostrar no desktop, name: showDesktop, widget: boolean, default: true }
                       - { label: Mostrar no mobile, name: showMobile, widget: boolean, default: true }
+                      - label: Mobile (opcional — deixa vazio para herdar do desktop)
+                        name: mobile
+                        widget: object
+                        collapsed: true
+                        required: false
+                        fields:
+                          - { label: Posição horizontal (%), name: x, widget: number, value_type: int, min: 0, max: 100, required: false }
+                          - { label: Posição vertical (%), name: y, widget: number, value_type: int, min: 0, max: 100, required: false }
+                          - { label: Ancorar à direita, name: anchorX, widget: select, options: [left, right], required: false }
+                          - { label: Largura (% do ecrã), name: widthVW, widget: number, value_type: int, min: 5, max: 90, required: false }
+                          - { label: Largura máxima (px), name: widthMax, widget: number, value_type: int, min: 100, max: 900, required: false }
                       - label: Cartão ao passar o rato (opcional)
                         name: card
                         widget: object
@@ -158,6 +169,16 @@ collections:
                       - { label: Parallax (0-30), name: parallax, widget: number, value_type: int, min: 0, max: 30, default: 0 }
                       - { label: Mostrar no desktop, name: showDesktop, widget: boolean, default: true }
                       - { label: Mostrar no mobile, name: showMobile, widget: boolean, default: true }
+                      - label: Mobile (opcional — deixa vazio para herdar do desktop)
+                        name: mobile
+                        widget: object
+                        collapsed: true
+                        required: false
+                        fields:
+                          - { label: Distância à margem (%), name: x, widget: number, value_type: int, min: 0, max: 100, required: false }
+                          - { label: Ancorar à direita, name: anchorX, widget: select, options: [left, right], required: false }
+                          - { label: Largura (% do ecrã), name: widthVW, widget: number, value_type: int, min: 5, max: 90, required: false }
+                          - { label: Largura máxima (px), name: widthMax, widget: number, value_type: int, min: 100, max: 900, required: false }
                       - label: Cartão ao passar o rato (opcional)
                         name: card
                         widget: object

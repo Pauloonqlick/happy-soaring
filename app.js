@@ -64,8 +64,34 @@ function buildCard(card) {
   return d;
 }
 
+/* ---- overrides responsivos (mobile) por elemento ----
+   item.mobile pode ter { x, y, anchorX, widthVW, widthMax } que só se
+   aplicam a ≤760px. Gera-se uma regra CSS com !important para vencer os
+   estilos inline do desktop. Deixar vazio = herda o desktop. */
+let posSeq = 0;
+let responsiveRules = [];
+function mobileRule(cls, item, isGround) {
+  const m = item.mobile;
+  if (!m) return '';
+  const d = [];
+  if (m.x != null || m.anchorX != null) {
+    const anchor = m.anchorX || item.anchorX || (isGround ? 'right' : 'left');
+    const x = m.x != null ? m.x : (item.x ?? 0);
+    if (anchor === 'right') d.push('right:' + x + '% !important', 'left:auto !important');
+    else d.push('left:' + x + '% !important', 'right:auto !important');
+  }
+  if (!isGround && m.y != null) d.push('top:' + m.y + '% !important');
+  if (m.widthVW != null || m.widthMax != null) {
+    const vw = m.widthVW != null ? m.widthVW : (item.widthVW || (isGround ? 24 : 30));
+    const mx = m.widthMax != null ? m.widthMax : (item.widthMax || (isGround ? 320 : 360));
+    d.push('width:min(' + vw + 'vw,' + mx + 'px) !important');
+  }
+  return d.length ? '@media(max-width:760px){.' + cls + '{' + d.join(';') + '}}' : '';
+}
+
 function buildFloatImage(item) {
-  const wrap = el('div', 'pilot floaty' + visibilityClass(item));
+  const cls = 'm' + (++posSeq);
+  const wrap = el('div', 'pilot floaty ' + cls + visibilityClass(item));
   wrap.style.top = (item.y ?? 0) + '%';
   if (item.anchorX === 'right') wrap.style.right = (item.x ?? 0) + '%';
   else wrap.style.left = (item.x ?? 0) + '%';
@@ -74,11 +100,13 @@ function buildFloatImage(item) {
   applyCommon(wrap, img, item);
   wrap.appendChild(img);
   if (item.card && item.card.enabled) wrap.appendChild(buildCard(item.card));
+  const r = mobileRule(cls, item, false); if (r) responsiveRules.push(r);
   return wrap;
 }
 
 function buildGroundImage(item) {
-  const wrap = el('div', 'pilot grounded' + visibilityClass(item));
+  const cls = 'm' + (++posSeq);
+  const wrap = el('div', 'pilot grounded ' + cls + visibilityClass(item));
   if (item.anchorX === 'right') wrap.style.right = (item.x ?? 0) + '%';
   else wrap.style.left = (item.x ?? 0) + '%';
   wrap.style.width = 'min(' + (item.widthVW || 24) + 'vw,' + px(item.widthMax || 320) + ')';
@@ -86,6 +114,7 @@ function buildGroundImage(item) {
   applyCommon(wrap, img, item);
   wrap.appendChild(img);
   if (item.card && item.card.enabled) wrap.appendChild(buildCard(item.card));
+  const r = mobileRule(cls, item, true); if (r) responsiveRules.push(r);
   return wrap;
 }
 
@@ -113,6 +142,8 @@ function buildElement(item) {
 
 function render(data) {
   const root = document.getElementById('app');
+  posSeq = 0;
+  responsiveRules = [];
 
   /* marca */
   if (data.brand) {
@@ -160,6 +191,12 @@ function render(data) {
 
   const locales = (data.locales && data.locales.length) ? data.locales : [DEFAULT_LOCALE];
   if (locales.length > 1) buildLangSwitcher(locales);
+
+  if (responsiveRules.length) {
+    const st = el('style'); st.id = 'mobile-overrides';
+    st.textContent = responsiveRules.join('\n');
+    document.head.appendChild(st);
+  }
 
   initMotion(data);
 }
