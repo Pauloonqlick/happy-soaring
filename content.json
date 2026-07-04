@@ -4,7 +4,13 @@
     "black": "#141414",
     "font": "'Segoe UI', system-ui, -apple-system, sans-serif"
   },
-  "locales": ["pt", "en", "es", "fr", "de"],
+  "locales": [
+    "pt",
+    "en",
+    "es",
+    "fr",
+    "de"
+  ],
   "wind": {
     "enabled": true,
     "density": 90
@@ -20,16 +26,38 @@
     "#ff6a13"
   ],
   "menu": [
-    { "label": "Início", "target": "hero" },
-    { "label": "A vela", "target": "sobre" },
-    { "label": "A tribo", "target": "comunidade" },
-    { "label": "Dealer Flow", "target": "dealer" }
+    {
+      "label": {
+        "pt": "Início"
+      },
+      "target": "hero"
+    },
+    {
+      "label": {
+        "pt": "A vela"
+      },
+      "target": "sobre"
+    },
+    {
+      "label": {
+        "pt": "A tribo"
+      },
+      "target": "comunidade"
+    },
+    {
+      "label": {
+        "pt": "Dealer Flow"
+      },
+      "target": "dealer"
+    }
   ],
   "sections": [
     {
       "id": "hero",
       "heroScrim": true,
-      "scrollHint": "↓ sobe connosco",
+      "scrollHint": {
+        "pt": "↓ sobe connosco"
+      },
       "elements": [
         {
           "role": "heroImage",
@@ -49,12 +77,20 @@
         {
           "role": "text",
           "align": "left",
-          "kicker": "Parapente · Portugal",
-          "title": "HAPPY",
-          "title2": "SOARING",
+          "kicker": {
+            "pt": "Parapente · Portugal"
+          },
+          "title": {
+            "pt": "HAPPY"
+          },
+          "title2": {
+            "pt": "SOARING"
+          },
           "accent2": true,
           "titleTag": "h1",
-          "subtitle": "Cada piloto tem uma cor. Nós ajudamos-te a encontrá-la — e a voá-la.",
+          "subtitle": {
+            "pt": "Cada piloto tem uma cor. Nós ajudamos-te a encontrá-la — e a voá-la."
+          },
           "showDesktop": true,
           "showMobile": true
         }
@@ -62,18 +98,30 @@
     },
     {
       "id": "sobre",
-      "scrollHint": "",
+      "scrollHint": {
+        "pt": ""
+      },
       "elements": [
         {
           "role": "text",
           "align": "right",
-          "kicker": "A nossa vela",
-          "title": "Feita para brincar",
-          "title2": "com o vento",
+          "kicker": {
+            "pt": "A nossa vela"
+          },
+          "title": {
+            "pt": "Feita para brincar"
+          },
+          "title2": {
+            "pt": "com o vento"
+          },
           "titleTag": "h2",
-          "subtitle": "Da soft-acro ao freestyle. Vê a Mullet 2 de um ângulo que poucos vêem — de cima.",
+          "subtitle": {
+            "pt": "Da soft-acro ao freestyle. Vê a Mullet 2 de um ângulo que poucos vêem — de cima."
+          },
           "button": {
-            "label": "Flow Paragliders",
+            "label": {
+              "pt": "Flow Paragliders"
+            },
             "href": ""
           },
           "showDesktop": true,
@@ -98,25 +146,41 @@
           "widthMax": 360,
           "card": {
             "enabled": true,
-            "pre": "Flow",
-            "strong": "Mullet 2",
-            "sub": "vista de topo"
+            "pre": {
+              "pt": "Flow"
+            },
+            "strong": {
+              "pt": "Mullet 2"
+            },
+            "sub": {
+              "pt": "vista de topo"
+            }
           }
         }
       ]
     },
     {
       "id": "comunidade",
-      "scrollHint": "",
+      "scrollHint": {
+        "pt": ""
+      },
       "elements": [
         {
           "role": "text",
           "align": "left",
-          "kicker": "A tribo",
-          "title": "Não vendemos velas.",
-          "title2": "Fazemos pilotos.",
+          "kicker": {
+            "pt": "A tribo"
+          },
+          "title": {
+            "pt": "Não vendemos velas."
+          },
+          "title2": {
+            "pt": "Fazemos pilotos."
+          },
           "titleTag": "h2",
-          "subtitle": "Gente que descola junta, que arruma a asa ao fim do dia e volta amanhã. Essa é a Happy Soaring.",
+          "subtitle": {
+            "pt": "Gente que descola junta, que arruma a asa ao fim do dia e volta amanhã. Essa é a Happy Soaring."
+          },
           "showDesktop": true,
           "showMobile": true
         },
@@ -135,9 +199,15 @@
           "widthMax": 340,
           "card": {
             "enabled": true,
-            "pre": "O",
-            "strong": "Chief",
-            "sub": "fundador & instrutor"
+            "pre": {
+              "pt": "O"
+            },
+            "strong": {
+              "pt": "Chief"
+            },
+            "sub": {
+              "pt": "fundador & instrutor"
+            }
           },
           "zIndex": null
         },
@@ -164,12 +234,20 @@
         {
           "role": "text",
           "align": "right",
-          "kicker": "Dealer oficial",
-          "title": "Flow Paragliders",
+          "kicker": {
+            "pt": "Dealer oficial"
+          },
+          "title": {
+            "pt": "Flow Paragliders"
+          },
           "titleTag": "h2",
-          "subtitle": "Representantes oficiais em Portugal. Aconselhamento a sério, primeira inspeção incluída, cor à tua escolha.",
+          "subtitle": {
+            "pt": "Representantes oficiais em Portugal. Aconselhamento a sério, primeira inspeção incluída, cor à tua escolha."
+          },
           "button": {
-            "label": "Fala connosco →",
+            "label": {
+              "pt": "Fala connosco →"
+            },
             "href": "#"
           },
           "showDesktop": true,
@@ -190,18 +268,30 @@
           "widthMax": 320,
           "card": {
             "enabled": true,
-            "pre": "Equipa",
-            "strong": "Flow",
-            "sub": "capacete laranja =)"
+            "pre": {
+              "pt": "Equipa"
+            },
+            "strong": {
+              "pt": "Flow"
+            },
+            "sub": {
+              "pt": "capacete laranja =)"
+            }
           }
         }
       ]
     }
   ],
   "footer": {
-    "line1": "HAPPY",
+    "line1": {
+      "pt": "HAPPY"
+    },
     "accent": "×",
-    "line2": "FLOW",
-    "note": "Conceito de demonstração · não é o site final"
+    "line2": {
+      "pt": "FLOW"
+    },
+    "note": {
+      "pt": "Conceito de demonstração · não é o site final"
+    }
   }
 }

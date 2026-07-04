@@ -50,9 +50,20 @@ collections:
             name: menu
             widget: list
             label_singular: Item
-            summary: "{{fields.label}}"
+            summary: "{{fields.label.pt}}"
             fields:
-              - { label: Texto, name: label, widget: string, i18n: true }
+              - label: Texto
+                name: label
+                widget: object
+                collapsed: true
+                summary: "{{fields.pt}}"
+                required: false
+                fields:
+                  - { label: Português, name: pt, widget: string, required: false }
+                  - { label: English, name: en, widget: string, required: false }
+                  - { label: Español, name: es, widget: string, required: false }
+                  - { label: Français, name: fr, widget: string, required: false }
+                  - { label: Deutsch, name: de, widget: string, required: false }
               - { label: Destino, name: target, widget: string, hint: "Id da secção (ex: hero, dealer) ou link completo (https://...)" }
 
           - label: Secções
@@ -63,7 +74,18 @@ collections:
             fields:
               - { label: Identificador, name: id, widget: string, hint: "Usado nas âncoras do menu (ex: hero, dealer)" }
               - { label: Fundo especial da apresentação, name: heroScrim, widget: boolean, default: false, required: false }
-              - { label: Texto de scroll (opcional), name: scrollHint, widget: string, required: false, i18n: true }
+              - label: Texto de scroll (opcional)
+                name: scrollHint
+                widget: object
+                collapsed: true
+                summary: "{{fields.pt}}"
+                required: false
+                fields:
+                  - { label: Português, name: pt, widget: string, required: false }
+                  - { label: English, name: en, widget: string, required: false }
+                  - { label: Español, name: es, widget: string, required: false }
+                  - { label: Français, name: fr, widget: string, required: false }
+                  - { label: Deutsch, name: de, widget: string, required: false }
               - label: Elementos
                 name: elements
                 widget: list
@@ -73,21 +95,76 @@ collections:
                   - label: Texto
                     name: text
                     widget: object
-                    summary: "Texto — {{fields.title}}"
+                    summary: "Texto — {{fields.title.pt}}"
                     fields:
                       - { label: Alinhamento, name: align, widget: select, options: [left, right], default: left }
-                      - { label: Etiqueta pequena, name: kicker, widget: string, required: false, i18n: true }
-                      - { label: Título, name: title, widget: string, required: false, i18n: true }
-                      - { label: Segunda linha do título, name: title2, widget: string, required: false, i18n: true }
+                      - label: Etiqueta pequena
+                        name: kicker
+                        widget: object
+                        collapsed: true
+                        summary: "{{fields.pt}}"
+                        required: false
+                        fields:
+                          - { label: Português, name: pt, widget: string, required: false }
+                          - { label: English, name: en, widget: string, required: false }
+                          - { label: Español, name: es, widget: string, required: false }
+                          - { label: Français, name: fr, widget: string, required: false }
+                          - { label: Deutsch, name: de, widget: string, required: false }
+                      - label: Título
+                        name: title
+                        widget: object
+                        collapsed: true
+                        summary: "{{fields.pt}}"
+                        required: false
+                        fields:
+                          - { label: Português, name: pt, widget: string, required: false }
+                          - { label: English, name: en, widget: string, required: false }
+                          - { label: Español, name: es, widget: string, required: false }
+                          - { label: Français, name: fr, widget: string, required: false }
+                          - { label: Deutsch, name: de, widget: string, required: false }
+                      - label: Segunda linha do título
+                        name: title2
+                        widget: object
+                        collapsed: true
+                        summary: "{{fields.pt}}"
+                        required: false
+                        fields:
+                          - { label: Português, name: pt, widget: string, required: false }
+                          - { label: English, name: en, widget: string, required: false }
+                          - { label: Español, name: es, widget: string, required: false }
+                          - { label: Français, name: fr, widget: string, required: false }
+                          - { label: Deutsch, name: de, widget: string, required: false }
                       - { label: Segunda linha a laranja, name: accent2, widget: boolean, default: false, required: false }
                       - { label: Tamanho do título, name: titleTag, widget: select, options: [h1, h2], default: h2 }
-                      - { label: Subtítulo, name: subtitle, widget: text, required: false, i18n: true }
+                      - label: Subtítulo
+                        name: subtitle
+                        widget: object
+                        collapsed: true
+                        summary: "{{fields.pt}}"
+                        required: false
+                        fields:
+                          - { label: Português, name: pt, widget: text, required: false }
+                          - { label: English, name: en, widget: text, required: false }
+                          - { label: Español, name: es, widget: text, required: false }
+                          - { label: Français, name: fr, widget: text, required: false }
+                          - { label: Deutsch, name: de, widget: text, required: false }
                       - label: Botão (opcional)
                         name: button
                         widget: object
                         required: false
                         fields:
-                          - { label: Texto do botão, name: label, widget: string, required: false, i18n: true }
+                          - label: Texto do botão
+                            name: label
+                            widget: object
+                            collapsed: true
+                            summary: "{{fields.pt}}"
+                            required: false
+                            fields:
+                              - { label: Português, name: pt, widget: string, required: false }
+                              - { label: English, name: en, widget: string, required: false }
+                              - { label: Español, name: es, widget: string, required: false }
+                              - { label: Français, name: fr, widget: string, required: false }
+                              - { label: Deutsch, name: de, widget: string, required: false }
                           - { label: Link, name: href, widget: string, required: false }
                       - { label: Mostrar no desktop, name: showDesktop, widget: boolean, default: true }
                       - { label: Mostrar no mobile, name: showMobile, widget: boolean, default: true }
@@ -147,9 +224,42 @@ collections:
                         required: false
                         fields:
                           - { label: Ativar, name: enabled, widget: boolean, default: false }
-                          - { label: Texto antes, name: pre, widget: string, required: false, i18n: true }
-                          - { label: Texto a negrito, name: strong, widget: string, required: false, i18n: true }
-                          - { label: Subtexto, name: sub, widget: string, required: false, i18n: true }
+                          - label: Texto antes
+                            name: pre
+                            widget: object
+                            collapsed: true
+                            summary: "{{fields.pt}}"
+                            required: false
+                            fields:
+                              - { label: Português, name: pt, widget: string, required: false }
+                              - { label: English, name: en, widget: string, required: false }
+                              - { label: Español, name: es, widget: string, required: false }
+                              - { label: Français, name: fr, widget: string, required: false }
+                              - { label: Deutsch, name: de, widget: string, required: false }
+                          - label: Texto a negrito
+                            name: strong
+                            widget: object
+                            collapsed: true
+                            summary: "{{fields.pt}}"
+                            required: false
+                            fields:
+                              - { label: Português, name: pt, widget: string, required: false }
+                              - { label: English, name: en, widget: string, required: false }
+                              - { label: Español, name: es, widget: string, required: false }
+                              - { label: Français, name: fr, widget: string, required: false }
+                              - { label: Deutsch, name: de, widget: string, required: false }
+                          - label: Subtexto
+                            name: sub
+                            widget: object
+                            collapsed: true
+                            summary: "{{fields.pt}}"
+                            required: false
+                            fields:
+                              - { label: Português, name: pt, widget: string, required: false }
+                              - { label: English, name: en, widget: string, required: false }
+                              - { label: Español, name: es, widget: string, required: false }
+                              - { label: Français, name: fr, widget: string, required: false }
+                              - { label: Deutsch, name: de, widget: string, required: false }
 
                   - label: Piloto no chão
                     name: groundImage
@@ -185,15 +295,81 @@ collections:
                         required: false
                         fields:
                           - { label: Ativar, name: enabled, widget: boolean, default: false }
-                          - { label: Texto antes, name: pre, widget: string, required: false, i18n: true }
-                          - { label: Texto a negrito, name: strong, widget: string, required: false, i18n: true }
-                          - { label: Subtexto, name: sub, widget: string, required: false, i18n: true }
+                          - label: Texto antes
+                            name: pre
+                            widget: object
+                            collapsed: true
+                            summary: "{{fields.pt}}"
+                            required: false
+                            fields:
+                              - { label: Português, name: pt, widget: string, required: false }
+                              - { label: English, name: en, widget: string, required: false }
+                              - { label: Español, name: es, widget: string, required: false }
+                              - { label: Français, name: fr, widget: string, required: false }
+                              - { label: Deutsch, name: de, widget: string, required: false }
+                          - label: Texto a negrito
+                            name: strong
+                            widget: object
+                            collapsed: true
+                            summary: "{{fields.pt}}"
+                            required: false
+                            fields:
+                              - { label: Português, name: pt, widget: string, required: false }
+                              - { label: English, name: en, widget: string, required: false }
+                              - { label: Español, name: es, widget: string, required: false }
+                              - { label: Français, name: fr, widget: string, required: false }
+                              - { label: Deutsch, name: de, widget: string, required: false }
+                          - label: Subtexto
+                            name: sub
+                            widget: object
+                            collapsed: true
+                            summary: "{{fields.pt}}"
+                            required: false
+                            fields:
+                              - { label: Português, name: pt, widget: string, required: false }
+                              - { label: English, name: en, widget: string, required: false }
+                              - { label: Español, name: es, widget: string, required: false }
+                              - { label: Français, name: fr, widget: string, required: false }
+                              - { label: Deutsch, name: de, widget: string, required: false }
 
           - label: Rodapé
             name: footer
             widget: object
             fields:
-              - { label: Primeira palavra, name: line1, widget: string, i18n: true }
+              - label: Primeira palavra
+                name: line1
+                widget: object
+                collapsed: true
+                summary: "{{fields.pt}}"
+                required: false
+                fields:
+                  - { label: Português, name: pt, widget: string, required: false }
+                  - { label: English, name: en, widget: string, required: false }
+                  - { label: Español, name: es, widget: string, required: false }
+                  - { label: Français, name: fr, widget: string, required: false }
+                  - { label: Deutsch, name: de, widget: string, required: false }
               - { label: Símbolo do meio, name: accent, widget: string, default: "×" }
-              - { label: Segunda palavra, name: line2, widget: string, i18n: true }
-              - { label: Nota, name: note, widget: string, required: false, i18n: true }
+              - label: Segunda palavra
+                name: line2
+                widget: object
+                collapsed: true
+                summary: "{{fields.pt}}"
+                required: false
+                fields:
+                  - { label: Português, name: pt, widget: string, required: false }
+                  - { label: English, name: en, widget: string, required: false }
+                  - { label: Español, name: es, widget: string, required: false }
+                  - { label: Français, name: fr, widget: string, required: false }
+                  - { label: Deutsch, name: de, widget: string, required: false }
+              - label: Nota
+                name: note
+                widget: object
+                collapsed: true
+                summary: "{{fields.pt}}"
+                required: false
+                fields:
+                  - { label: Português, name: pt, widget: string, required: false }
+                  - { label: English, name: en, widget: string, required: false }
+                  - { label: Español, name: es, widget: string, required: false }
+                  - { label: Français, name: fr, widget: string, required: false }
+                  - { label: Deutsch, name: de, widget: string, required: false }
