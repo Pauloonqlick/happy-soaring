@@ -159,20 +159,33 @@ h2.title{
 .burger.open span:nth-child(2){opacity:0}
 .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
-.menu-overlay{
-  position:fixed;inset:0;z-index:45;
-  background:rgba(9,40,82,.94);backdrop-filter:blur(8px);
-  display:flex;align-items:center;justify-content:center;
+/* fundo escurecido por trás do painel */
+.menu-backdrop{
+  position:fixed;inset:0;z-index:44;
+  background:rgba(9,40,82,.45);
   opacity:0;pointer-events:none;transition:opacity .3s;
 }
-.menu-overlay.open{opacity:1;pointer-events:auto}
-.menu-overlay ul{list-style:none;text-align:center}
-.menu-overlay li{margin:14px 0}
-.menu-overlay a{
-  color:#fff;text-decoration:none;font-weight:800;letter-spacing:-.5px;
-  font-size:clamp(30px,7vw,54px);transition:color .2s;
+.menu-backdrop.open{opacity:1;pointer-events:auto}
+
+/* painel lateral que desliza da direita para a esquerda */
+.menu-drawer{
+  position:fixed;top:0;right:0;height:100%;z-index:46;
+  width:min(360px,85vw);
+  background:rgba(9,40,82,.98);backdrop-filter:blur(8px);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:48px 40px;
+  transform:translateX(100%);
+  transition:transform .34s cubic-bezier(.4,0,.2,1);
+  box-shadow:-24px 0 60px rgba(0,0,0,.35);
 }
-.menu-overlay a:hover{color:var(--orange)}
+.menu-drawer.open{transform:translateX(0)}
+.menu-drawer ul{list-style:none}
+.menu-drawer li{margin:16px 0}
+.menu-drawer a{
+  color:#fff;text-decoration:none;font-weight:800;letter-spacing:-.5px;
+  font-size:clamp(26px,4vw,38px);transition:color .2s;
+}
+.menu-drawer a:hover{color:var(--orange)}
 
 .scrollhint{
   position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
