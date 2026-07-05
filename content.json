@@ -102,18 +102,26 @@
           "accent2": true,
           "titleTag": "h1",
           "subtitle": {
-            "pt": "Cursos de Parakite e Parapente em Portugal. Vive a tua paixão.",
-            "en": "Parakite and paragliding courses in Portugal. Live your passion.",
-            "es": "Cursos de Parakite y parapente en Portugal. Vive tu pasión.",
-            "fr": "Cours de Parakite et parapente au Portugal. Vis ta passion.",
-            "de": "Parakite- und Gleitschirmkurse in Portugal. Lebe deine Leidenschaft."
+            "pt": "Cursos de Parakite em Portugal\nVive a tua paixão",
+            "en": "Parakite courses in Portugal\nLive your passion",
+            "es": "Cursos de Parakite en Portugal\n Vive tu pasión",
+            "fr": "Cours de Parakite au Portugal\nVis ta passion",
+            "de": "Parakitekurs in Portugal\nLebe deine Leidenschaft"
+          },
+          "subtitleFormat": {
+            "bold": false,
+            "italic": false,
+            "uppercase": false,
+            "size": null,
+            "letterSpacing": null,
+            "color": "default"
           },
           "trust": {
-            "pt": "Dealer oficial Flow Paragliders · Portugal",
-            "en": "Official Flow Paragliders dealer · Portugal",
-            "es": "Distribuidor oficial Flow Paragliders · Portugal",
-            "fr": "Revendeur officiel Flow Paragliders · Portugal",
-            "de": "Offizieller Flow Paragliders Händler · Portugal"
+            "pt": "Dealer oficial",
+            "en": "Official dealer",
+            "es": "Distribuidor oficial",
+            "fr": "Revendeur officiel",
+            "de": "Offizieller Händler"
           },
           "badgeImage": "images/flow-logo.png",
           "buttons": [
@@ -169,7 +177,9 @@
           },
           "buttons": [
             {
-              "label": { "pt": "Flow Paragliders" },
+              "label": {
+                "pt": "Flow Paragliders"
+              },
               "href": "",
               "variant": "primary"
             }
@@ -296,7 +306,9 @@
           },
           "buttons": [
             {
-              "label": { "pt": "Fala connosco →" },
+              "label": {
+                "pt": "Fala connosco →"
+              },
               "href": "#",
               "variant": "primary"
             }
