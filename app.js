@@ -59,7 +59,9 @@ function buildText(item) {
 
   const trust = t(item.trust);
   if (trust || item.badgeImage) {
-    const tr = el('div', 'trust');
+    const isLink = !!item.trustHref;
+    const tr = el(isLink ? 'a' : 'div', 'trust');
+    if (isLink) { tr.href = item.trustHref; tr.target = '_blank'; tr.rel = 'noopener'; }
     if (item.badgeImage) { const bi = el('img'); bi.src = item.badgeImage; bi.alt = ''; tr.appendChild(bi); }
     if (trust) { const sp = el('span'); sp.textContent = trust; tr.appendChild(sp); }
     c.appendChild(tr);

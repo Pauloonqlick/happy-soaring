@@ -173,6 +173,7 @@ collections:
                           - { label: Français, name: fr, widget: string, required: false }
                           - { label: Deutsch, name: de, widget: string, required: false }
                       - { label: Selo/logo junto à linha de confiança (opcional), name: badgeImage, widget: image, required: false }
+                      - { label: Link do selo (opcional), name: trustHref, widget: string, required: false, hint: "Se preenchido, o logo e o texto tornam-se clicáveis (abre em novo separador)" }
                       - label: Botões (opcional)
                         name: buttons
                         widget: list

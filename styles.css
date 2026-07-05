@@ -114,7 +114,11 @@ h2.title{
   border-radius:14px;padding:12px 20px;
   font-size:13px;letter-spacing:.3px;
   text-shadow:0 1px 6px rgba(0,0,0,.4);
+  text-decoration:none;color:inherit;
+  transition:background .2s,border-color .2s,transform .2s;
 }
+a.trust{cursor:pointer}
+a.trust:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.4);transform:translateY(-2px)}
 .trust img{height:46px;width:auto;display:block}
 .trust img + span{border-left:1px solid rgba(255,255,255,.25);padding-left:16px}
 .trust span{opacity:.92;line-height:1.35;max-width:22ch}

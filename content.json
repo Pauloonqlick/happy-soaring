@@ -43,7 +43,11 @@
     },
     {
       "label": {
-        "pt": "Dealer Flow"
+        "pt": "Dealer Flow",
+        "en": "",
+        "es": "",
+        "fr": "",
+        "de": ""
       },
       "target": "dealer"
     }
@@ -117,13 +121,14 @@
             "color": "default"
           },
           "trust": {
-            "pt": "Dealer oficial",
-            "en": "Dealer oficial",
-            "es": "Dealer oficial",
-            "fr": "Dealer oficial",
-            "de": "Dealer oficial"
+            "pt": "Revendedor Oficial",
+            "en": "Official Dealer",
+            "es": "Distribuidor Oficial",
+            "fr": "Revendeur Officiel",
+            "de": "Offizieller Händler"
           },
           "badgeImage": "images/flow-logo.png",
+          "trustHref": "",
           "buttons": [
             {
               "label": {
