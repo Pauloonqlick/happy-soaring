@@ -67,7 +67,7 @@
           "src": "images/hero-pilot.png",
           "alt": "Piloto Happy Soaring com a Mullet 2",
           "heightPct": 100,
-          "heightPctMobile": 94,
+          "heightPctMobile": 100,
           "rotation": 0,
           "opacity": 100,
           "shadow": true,
@@ -118,10 +118,10 @@
           },
           "trust": {
             "pt": "Dealer oficial",
-            "en": "Official dealer",
-            "es": "Distribuidor oficial",
-            "fr": "Revendeur officiel",
-            "de": "Offizieller Händler"
+            "en": "Dealer oficial",
+            "es": "Dealer oficial",
+            "fr": "Dealer oficial",
+            "de": "Dealer oficial"
           },
           "badgeImage": "images/flow-logo.png",
           "buttons": [
