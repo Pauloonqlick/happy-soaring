@@ -55,6 +55,7 @@
   "sections": [
     {
       "id": "hero",
+      "visible": true,
       "heroScrim": true,
       "scrollHint": {
         "pt": "sobe connosco",
@@ -73,7 +74,7 @@
           "heightPct": 100,
           "heightPctMobile": 100,
           "rotation": 0,
-          "opacity": 100,
+          "opacity": 50,
           "shadow": true,
           "float": true,
           "floatSpeed": 7,
@@ -82,13 +83,7 @@
         {
           "role": "text",
           "align": "left",
-          "kicker": {
-            "pt": "Parakite · Portugal",
-            "en": "Parakite · Portugal",
-            "es": "Parakite · Portugal",
-            "fr": "Parakite · Portugal",
-            "de": "Parakite · Portugal"
-          },
+          "kicker": null,
           "title": {
             "pt": "HAPPY",
             "en": "HAPPY",
@@ -128,15 +123,14 @@
             "de": "Offizieller Händler"
           },
           "badgeImage": "images/flow-logo.png",
-          "trustHref": "https://www.flowparagliders.com.au/",
           "buttons": [
             {
               "label": {
-                "pt": "Marcar curso",
-                "en": "Book a course",
-                "es": "Reservar curso",
-                "fr": "Réserver un cours",
-                "de": "Kurs buchen"
+                "pt": "Cursos",
+                "en": "Courses",
+                "es": "Cursos",
+                "fr": "Cours",
+                "de": "Kurse"
               },
               "href": "#dealer",
               "variant": "primary"
@@ -160,6 +154,7 @@
     },
     {
       "id": "sobre",
+      "visible": true,
       "scrollHint": {
         "pt": ""
       },
@@ -226,6 +221,7 @@
     },
     {
       "id": "comunidade",
+      "visible": true,
       "scrollHint": {
         "pt": ""
       },
@@ -295,6 +291,7 @@
     },
     {
       "id": "dealer",
+      "visible": true,
       "elements": [
         {
           "role": "text",

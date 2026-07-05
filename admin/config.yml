@@ -73,6 +73,7 @@ collections:
             summary: "{{fields.id}}"
             fields:
               - { label: Identificador, name: id, widget: string, hint: "Usado nas âncoras do menu (ex: hero, dealer)" }
+              - { label: Mostrar secção, name: visible, widget: boolean, default: true, hint: "Desliga para esconder esta secção inteira no site, sem a apagar" }
               - { label: Fundo especial da apresentação, name: heroScrim, widget: boolean, default: false, required: false }
               - label: Texto de scroll (opcional)
                 name: scrollHint

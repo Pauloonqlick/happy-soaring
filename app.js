@@ -197,6 +197,7 @@ function render(data) {
 
   /* secções */
   (data.sections || []).forEach(sec => {
+    if (sec.visible === false) return;
     const s = el('section');
     s.id = sec.id;
     if (sec.heroScrim) s.classList.add('has-scrim', 'hero-fill');
