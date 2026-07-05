@@ -106,14 +106,24 @@ h2.title{
 }
 .btn.secondary:hover{border-color:#fff;background:rgba(255,255,255,.08)}
 
-/* linha de confiança (selo + texto) */
+/* selo de credencial (logo + texto) */
 .trust{
-  display:flex;align-items:center;gap:10px;margin-top:16px;
-  font-size:13px;letter-spacing:.3px;opacity:.9;
-  text-shadow:0 1px 6px rgba(0,0,0,.5);
+  display:inline-flex;align-items:center;gap:16px;margin-top:20px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:14px;padding:12px 20px;
+  font-size:13px;letter-spacing:.3px;
+  text-shadow:0 1px 6px rgba(0,0,0,.4);
 }
-.content.right .trust{justify-content:flex-end}
-.trust img{height:20px;width:auto;display:block}
+.trust img{height:46px;width:auto;display:block}
+.trust img + span{border-left:1px solid rgba(255,255,255,.25);padding-left:16px}
+.trust span{opacity:.92;line-height:1.35;max-width:22ch}
+
+@media(max-width:760px){
+  .trust{gap:12px;padding:10px 14px}
+  .trust img{height:38px}
+  .trust span{font-size:12px}
+}
 
 /* card ao passar o rato num piloto */
 .pilot{position:absolute}
