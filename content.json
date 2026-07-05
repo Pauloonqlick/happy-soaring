@@ -79,19 +79,67 @@
           "role": "text",
           "align": "left",
           "kicker": {
-            "pt": "Parapente · Portugal"
+            "pt": "Parakite · Portugal",
+            "en": "Parakite · Portugal",
+            "es": "Parakite · Portugal",
+            "fr": "Parakite · Portugal",
+            "de": "Parakite · Portugal"
           },
           "title": {
-            "pt": "HAPPY"
+            "pt": "HAPPY",
+            "en": "HAPPY",
+            "es": "HAPPY",
+            "fr": "HAPPY",
+            "de": "HAPPY"
           },
           "title2": {
-            "pt": "SOARING"
+            "pt": "SOARING",
+            "en": "SOARING",
+            "es": "SOARING",
+            "fr": "SOARING",
+            "de": "SOARING"
           },
           "accent2": true,
           "titleTag": "h1",
           "subtitle": {
-            "pt": "Cada piloto tem uma cor. Nós ajudamos-te a encontrá-la — e a voá-la."
+            "pt": "Cursos de Parakite e Parapente em Portugal. Vive a tua paixão.",
+            "en": "Parakite and paragliding courses in Portugal. Live your passion.",
+            "es": "Cursos de Parakite y parapente en Portugal. Vive tu pasión.",
+            "fr": "Cours de Parakite et parapente au Portugal. Vis ta passion.",
+            "de": "Parakite- und Gleitschirmkurse in Portugal. Lebe deine Leidenschaft."
           },
+          "trust": {
+            "pt": "Dealer oficial Flow Paragliders · Portugal",
+            "en": "Official Flow Paragliders dealer · Portugal",
+            "es": "Distribuidor oficial Flow Paragliders · Portugal",
+            "fr": "Revendeur officiel Flow Paragliders · Portugal",
+            "de": "Offizieller Flow Paragliders Händler · Portugal"
+          },
+          "badgeImage": "images/flow-logo.png",
+          "buttons": [
+            {
+              "label": {
+                "pt": "Marcar curso",
+                "en": "Book a course",
+                "es": "Reservar curso",
+                "fr": "Réserver un cours",
+                "de": "Kurs buchen"
+              },
+              "href": "#dealer",
+              "variant": "primary"
+            },
+            {
+              "label": {
+                "pt": "Ver serviços",
+                "en": "See services",
+                "es": "Ver servicios",
+                "fr": "Voir les services",
+                "de": "Leistungen ansehen"
+              },
+              "href": "#sobre",
+              "variant": "secondary"
+            }
+          ],
           "showDesktop": true,
           "showMobile": true
         }
@@ -119,12 +167,13 @@
           "subtitle": {
             "pt": "Da soft-acro ao freestyle. Vê a Mullet 2 de um ângulo que poucos vêem — de cima."
           },
-          "button": {
-            "label": {
-              "pt": "Flow Paragliders"
-            },
-            "href": ""
-          },
+          "buttons": [
+            {
+              "label": { "pt": "Flow Paragliders" },
+              "href": "",
+              "variant": "primary"
+            }
+          ],
           "showDesktop": true,
           "showMobile": true
         },
@@ -245,12 +294,13 @@
           "subtitle": {
             "pt": "Representantes oficiais em Portugal. Aconselhamento a sério, primeira inspeção incluída, cor à tua escolha."
           },
-          "button": {
-            "label": {
-              "pt": "Fala connosco →"
-            },
-            "href": "#"
-          },
+          "buttons": [
+            {
+              "label": { "pt": "Fala connosco →" },
+              "href": "#",
+              "variant": "primary"
+            }
+          ],
           "showDesktop": true,
           "showMobile": true
         },

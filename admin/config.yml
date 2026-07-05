@@ -148,9 +148,24 @@ collections:
                           - { label: Español, name: es, widget: text, required: false }
                           - { label: Français, name: fr, widget: text, required: false }
                           - { label: Deutsch, name: de, widget: text, required: false }
-                      - label: Botão (opcional)
-                        name: button
+                      - label: Linha de confiança (opcional)
+                        name: trust
                         widget: object
+                        collapsed: true
+                        summary: "{{fields.pt}}"
+                        required: false
+                        fields:
+                          - { label: Português, name: pt, widget: string, required: false }
+                          - { label: English, name: en, widget: string, required: false }
+                          - { label: Español, name: es, widget: string, required: false }
+                          - { label: Français, name: fr, widget: string, required: false }
+                          - { label: Deutsch, name: de, widget: string, required: false }
+                      - { label: Selo/logo junto à linha de confiança (opcional), name: badgeImage, widget: image, required: false }
+                      - label: Botões (opcional)
+                        name: buttons
+                        widget: list
+                        label_singular: Botão
+                        summary: "{{fields.label.pt}}"
                         required: false
                         fields:
                           - label: Texto do botão
@@ -165,7 +180,8 @@ collections:
                               - { label: Español, name: es, widget: string, required: false }
                               - { label: Français, name: fr, widget: string, required: false }
                               - { label: Deutsch, name: de, widget: string, required: false }
-                          - { label: Link, name: href, widget: string, required: false }
+                          - { label: Link, name: href, widget: string, required: false, hint: "Id da secção (ex: #dealer) ou link completo" }
+                          - { label: Estilo, name: variant, widget: select, options: [primary, secondary], default: primary, hint: "primary = laranja cheio · secondary = contorno" }
                       - { label: Mostrar no desktop, name: showDesktop, widget: boolean, default: true }
                       - { label: Mostrar no mobile, name: showMobile, widget: boolean, default: true }
 

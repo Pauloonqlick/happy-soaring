@@ -37,10 +37,24 @@ function buildText(item) {
   }
   c.appendChild(title);
   if (subtitle) { const p = el('p', 'lead'); p.textContent = subtitle; c.appendChild(p); }
-  const btnLabel = item.button && t(item.button.label);
-  if (btnLabel) {
-    const a = el('a', 'btn'); a.href = item.button.href || '#'; a.textContent = btnLabel;
-    c.appendChild(a);
+
+  const trust = t(item.trust);
+  if (trust || item.badgeImage) {
+    const tr = el('div', 'trust');
+    if (item.badgeImage) { const bi = el('img'); bi.src = item.badgeImage; bi.alt = ''; tr.appendChild(bi); }
+    if (trust) { const sp = el('span'); sp.textContent = trust; tr.appendChild(sp); }
+    c.appendChild(tr);
+  }
+
+  const buttons = (item.buttons || []).filter(b => b && t(b.label));
+  if (buttons.length) {
+    const row = el('div', 'btn-row');
+    buttons.forEach(b => {
+      const a = el('a', 'btn' + (b.variant === 'secondary' ? ' secondary' : ''));
+      a.href = b.href || '#'; a.textContent = t(b.label);
+      row.appendChild(a);
+    });
+    c.appendChild(row);
   }
   return c;
 }
@@ -211,18 +225,29 @@ const FLAGS = {
 };
 function buildLangSwitcher(locales) {
   const bar = el('div', 'lang-switcher');
-  locales.forEach(code => {
-    const b = el('button', 'lang' + (code === LOCALE ? ' active' : ''));
+  const current = el('button', 'lang current');
+  current.type = 'button';
+  current.setAttribute('aria-label', 'Mudar idioma (atual: ' + LOCALE + ')');
+  current.innerHTML = FLAGS[LOCALE] || LOCALE;
+
+  const list = el('div', 'lang-list');
+  locales.filter(code => code !== LOCALE).forEach(code => {
+    const b = el('button', 'lang');
     b.type = 'button';
     b.setAttribute('aria-label', code);
     b.innerHTML = FLAGS[code] || code;
     b.addEventListener('click', () => {
-      if (code === LOCALE) return;
       localStorage.setItem('lang', code);
       location.reload();
     });
-    bar.appendChild(b);
+    list.appendChild(b);
   });
+
+  current.addEventListener('click', () => bar.classList.toggle('open'));
+  document.addEventListener('click', e => { if (!bar.contains(e.target)) bar.classList.remove('open'); });
+
+  bar.appendChild(current);
+  bar.appendChild(list);
   document.body.appendChild(bar);
 }
 
