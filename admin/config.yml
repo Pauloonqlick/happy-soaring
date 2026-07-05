@@ -148,6 +148,18 @@ collections:
                           - { label: Español, name: es, widget: text, required: false }
                           - { label: Français, name: fr, widget: text, required: false }
                           - { label: Deutsch, name: de, widget: text, required: false }
+                      - label: Formatação do subtítulo (aplica-se a todos os idiomas)
+                        name: subtitleFormat
+                        widget: object
+                        collapsed: true
+                        required: false
+                        fields:
+                          - { label: Negrito, name: bold, widget: boolean, default: false, required: false }
+                          - { label: Itálico, name: italic, widget: boolean, default: false, required: false }
+                          - { label: Maiúsculas, name: uppercase, widget: boolean, default: false, required: false }
+                          - { label: Tamanho (px — vazio = automático), name: size, widget: number, value_type: int, min: 10, max: 60, required: false }
+                          - { label: Espaçamento entre letras (px), name: letterSpacing, widget: number, value_type: int, min: -2, max: 20, required: false }
+                          - { label: Cor, name: color, widget: select, options: [default, orange, white, black], default: default, required: false }
                       - label: Linha de confiança (opcional)
                         name: trust
                         widget: object

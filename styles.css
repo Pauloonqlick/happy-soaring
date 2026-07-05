@@ -82,6 +82,7 @@ h2.title{
   font-size:clamp(16px,2vw,21px);
   max-width:34ch;margin-top:18px;line-height:1.5;
   text-shadow:0 2px 10px rgba(0,0,0,.35);
+  white-space:pre-line;
 }
 .content{max-width:560px;position:relative;z-index:3}
 .content.right{margin-left:auto;text-align:right}

@@ -23,6 +23,20 @@ function visibilityClass(item) {
   return c;
 }
 
+/* aplica formatação partilhada (herdada por todos os idiomas) a um texto */
+function applyTextFormat(node, fmt) {
+  if (!fmt) return;
+  if (fmt.bold) node.style.fontWeight = '700';
+  if (fmt.italic) node.style.fontStyle = 'italic';
+  if (fmt.uppercase) node.style.textTransform = 'uppercase';
+  if (typeof fmt.size === 'number' && fmt.size > 0) node.style.fontSize = fmt.size + 'px';
+  if (typeof fmt.letterSpacing === 'number') node.style.letterSpacing = fmt.letterSpacing + 'px';
+  if (fmt.color && fmt.color !== 'default') {
+    const map = { orange: 'var(--orange)', white: '#ffffff', black: 'var(--black)' };
+    node.style.color = map[fmt.color] || fmt.color;
+  }
+}
+
 function buildText(item) {
   const c = el('div', 'content' + (item.align === 'right' ? ' right' : '') + visibilityClass(item));
   const kicker = t(item.kicker), title1 = t(item.title), title2 = t(item.title2), subtitle = t(item.subtitle);
@@ -36,7 +50,12 @@ function buildText(item) {
     else title.appendChild(document.createTextNode(title2));
   }
   c.appendChild(title);
-  if (subtitle) { const p = el('p', 'lead'); p.textContent = subtitle; c.appendChild(p); }
+  if (subtitle) {
+    const p = el('p', 'lead');
+    p.textContent = subtitle;
+    applyTextFormat(p, item.subtitleFormat);
+    c.appendChild(p);
+  }
 
   const trust = t(item.trust);
   if (trust || item.badgeImage) {
