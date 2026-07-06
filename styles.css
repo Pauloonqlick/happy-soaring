@@ -171,7 +171,9 @@ a.trust:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.4)
 .has-scrim .content{z-index:2}
 .has-scrim::after{
   content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:linear-gradient(90deg,rgba(9,40,82,.55) 0%,rgba(9,40,82,.15) 38%,transparent 60%);
+  background:
+    linear-gradient(90deg,rgba(9,40,82,.7) 0%,rgba(9,40,82,.35) 40%,rgba(9,40,82,.1) 62%,transparent 78%),
+    linear-gradient(180deg,transparent 0%,transparent 45%,rgba(9,40,82,.5) 72%,rgba(9,40,82,.78) 100%);
 }
 
 /* ---- Seletor de idioma (colapsado — só a bandeira atual até se clicar) ---- */
@@ -245,6 +247,7 @@ a.trust:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.4)
   position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
   font-size:13px;letter-spacing:2px;text-transform:uppercase;opacity:.85;
   animation:bob 2s ease-in-out infinite;
+  text-shadow:0 1px 6px rgba(0,0,0,.7),0 2px 16px rgba(0,0,0,.5);
 }
 .scrollhint::before{content:"↓";margin-right:8px}
 @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
@@ -274,5 +277,5 @@ footer small{opacity:.7}
   .has-scrim.hero-fill .content{margin-bottom:4vh}
   .hero-pilot{align-items:flex-end;justify-content:center}
   .hero-pilot img{height:var(--hm,94%)}
-  .has-scrim::after{background:linear-gradient(180deg,transparent 18%,rgba(9,40,82,.38) 46%,rgba(9,40,82,.8) 72%,transparent 100%)}
+  .has-scrim::after{background:linear-gradient(180deg,transparent 12%,rgba(9,40,82,.5) 38%,rgba(9,40,82,.85) 62%,rgba(9,40,82,.92) 100%)}
 }
