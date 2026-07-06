@@ -77,6 +77,7 @@ collections:
               - { label: Fundo especial da apresentação, name: heroScrim, widget: boolean, default: false, required: false }
               - { label: Foto de fundo (opcional), name: bgImage, widget: image, required: false, hint: "Foto a preto-e-branco com tom azul da marca por cima, para se fundir com o céu" }
               - { label: Foto de fundo — mobile (opcional), name: bgImageMobile, widget: image, required: false, hint: "Se vazio, usa a mesma foto de desktop" }
+              - { label: Cor no topo da secção (opcional), name: topTint, widget: color, required: false, hint: "Funde com o fundo da secção anterior — desvanece para transparente" }
               - label: Texto de scroll (opcional)
                 name: scrollHint
                 widget: object

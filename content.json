@@ -225,6 +225,7 @@
     {
       "id": "comunidade",
       "visible": true,
+      "topTint": "#1f6fc0",
       "scrollHint": {
         "pt": ""
       },

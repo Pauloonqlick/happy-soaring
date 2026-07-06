@@ -49,6 +49,10 @@ section{
 }
 .section-bg-tint{position:absolute;inset:0;mix-blend-mode:color}
 
+/* faixa de cor sólida no topo da secção (opcional) — funde com a secção anterior
+   sem depender do scroll do céu de fundo */
+.top-tint{position:absolute;top:0;left:0;right:0;height:45vh;z-index:-1;pointer-events:none}
+
 /* ---- Elementos que flutuam ---- */
 .floaty{
   position:absolute;
@@ -245,9 +249,12 @@ a.trust:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.4)
 
 .scrollhint{
   position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
-  font-size:13px;letter-spacing:2px;text-transform:uppercase;opacity:.85;
+  font-size:13px;letter-spacing:2px;text-transform:uppercase;opacity:.95;
   animation:bob 2s ease-in-out infinite;
   text-shadow:0 1px 6px rgba(0,0,0,.7),0 2px 16px rgba(0,0,0,.5);
+  background:rgba(9,40,82,.55);backdrop-filter:blur(4px);
+  padding:8px 18px;border-radius:100px;
+  white-space:nowrap;
 }
 .scrollhint::before{content:"↓";margin-right:8px}
 @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}

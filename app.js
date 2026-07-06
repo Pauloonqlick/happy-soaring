@@ -33,11 +33,20 @@ function buildSectionBg(sec, sky) {
   const tint = el('div', 'section-bg-tint');
   if (sky && sky.length) {
     const top = sky[0];
-    const mid = sky[Math.min(2, sky.length - 1)];
+    const mid = sky[Math.min(1, sky.length - 1)];
     tint.style.background = `linear-gradient(180deg, ${top} 0%, ${mid} 100%)`;
   }
   wrap.appendChild(tint);
   return wrap;
+}
+
+/* faixa de cor sólida no topo de uma secção, que desvanece para transparente —
+   garante que a secção "começa" numa cor exata, sem depender do scroll do céu */
+function buildTopTint(sec) {
+  if (!sec.topTint) return null;
+  const d = el('div', 'top-tint');
+  d.style.background = `linear-gradient(180deg, ${sec.topTint} 0%, transparent 100%)`;
+  return d;
 }
 
 function visibilityClass(item) {
@@ -227,6 +236,8 @@ function render(data) {
     if (sec.heroScrim) s.classList.add('has-scrim', 'hero-fill');
     const bg = buildSectionBg(sec, data.sky);
     if (bg) s.appendChild(bg);
+    const topTint = buildTopTint(sec);
+    if (topTint) s.appendChild(topTint);
     (sec.elements || []).forEach(item => {
       const node = buildElement(item);
       if (node) s.appendChild(node);
