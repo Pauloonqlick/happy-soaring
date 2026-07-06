@@ -57,6 +57,8 @@
       "id": "hero",
       "visible": true,
       "heroScrim": true,
+      "bgImage": "images/hero-bg.jpg",
+      "bgImageMobile": "images/hero-bg-mobile.jpg",
       "scrollHint": {
         "pt": "sobe connosco",
         "en": "Soar with us",
@@ -74,7 +76,7 @@
           "heightPct": 100,
           "heightPctMobile": 100,
           "rotation": 0,
-          "opacity": 50,
+          "opacity": 100,
           "shadow": true,
           "float": true,
           "floatSpeed": 7,
@@ -123,6 +125,7 @@
             "de": "Offizieller Händler"
           },
           "badgeImage": "images/flow-logo.png",
+          "trustHref": "",
           "buttons": [
             {
               "label": {
@@ -154,7 +157,7 @@
     },
     {
       "id": "sobre",
-      "visible": true,
+      "visible": false,
       "scrollHint": {
         "pt": ""
       },

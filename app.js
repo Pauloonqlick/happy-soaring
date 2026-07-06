@@ -16,6 +16,30 @@ function t(v) {
   return v[LOCALE] || v[DEFAULT_LOCALE] || Object.values(v).find(Boolean) || '';
 }
 
+/* fundo fotográfico de secção: foto a preto-e-branco + duotone azul
+   (usa as próprias cores do céu, para ficar sempre coerente com o resto) */
+function buildSectionBg(sec, sky) {
+  if (!sec.bgImage) return null;
+  const wrap = el('div', 'section-bg');
+
+  const imgD = el('img', 'hide-mobile');
+  imgD.src = sec.bgImage; imgD.alt = '';
+  wrap.appendChild(imgD);
+
+  const imgM = el('img', 'hide-desktop');
+  imgM.src = sec.bgImageMobile || sec.bgImage; imgM.alt = '';
+  wrap.appendChild(imgM);
+
+  const tint = el('div', 'section-bg-tint');
+  if (sky && sky.length) {
+    const top = sky[0];
+    const mid = sky[Math.min(2, sky.length - 1)];
+    tint.style.background = `linear-gradient(180deg, ${top} 0%, ${mid} 100%)`;
+  }
+  wrap.appendChild(tint);
+  return wrap;
+}
+
 function visibilityClass(item) {
   let c = '';
   if (item.showMobile === false) c += ' hide-mobile';
@@ -201,6 +225,8 @@ function render(data) {
     const s = el('section');
     s.id = sec.id;
     if (sec.heroScrim) s.classList.add('has-scrim', 'hero-fill');
+    const bg = buildSectionBg(sec, data.sky);
+    if (bg) s.appendChild(bg);
     (sec.elements || []).forEach(item => {
       const node = buildElement(item);
       if (node) s.appendChild(node);

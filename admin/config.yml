@@ -75,6 +75,8 @@ collections:
               - { label: Identificador, name: id, widget: string, hint: "Usado nas âncoras do menu (ex: hero, dealer)" }
               - { label: Mostrar secção, name: visible, widget: boolean, default: true, hint: "Desliga para esconder esta secção inteira no site, sem a apagar" }
               - { label: Fundo especial da apresentação, name: heroScrim, widget: boolean, default: false, required: false }
+              - { label: Foto de fundo (opcional), name: bgImage, widget: image, required: false, hint: "Foto a preto-e-branco com tom azul da marca por cima, para se fundir com o céu" }
+              - { label: Foto de fundo — mobile (opcional), name: bgImageMobile, widget: image, required: false, hint: "Se vazio, usa a mesma foto de desktop" }
               - label: Texto de scroll (opcional)
                 name: scrollHint
                 widget: object
