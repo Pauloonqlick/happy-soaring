@@ -385,7 +385,7 @@ function initMotion(data) {
       y: Math.random() * H,
       len: (70 + Math.random() * 180) * DPR,
       v: (0.5 + Math.random() * 1.7) * DPR,
-      a: 0.04 + Math.random() * 0.13,
+      a: 0.09 + Math.random() * 0.2,
       amp: (3 + Math.random() * 13) * DPR,
       ph: Math.random() * Math.PI * 2
     });
@@ -397,7 +397,7 @@ function initMotion(data) {
       const base = 1 + Math.sin(t * 0.6) * 0.35 + gust;
       gust *= 0.95;
       ctx.clearRect(0, 0, W, H);
-      ctx.lineCap = 'round'; ctx.lineWidth = 1.2 * DPR;
+      ctx.lineCap = 'round'; ctx.lineWidth = 1.5 * DPR;
       for (const p of P) {
         p.x += p.v * base;
         const yy = p.y + Math.sin(t * 1.2 + p.ph) * p.amp;

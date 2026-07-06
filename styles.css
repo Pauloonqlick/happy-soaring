@@ -15,7 +15,7 @@ body{
 .sky{
   position:fixed;
   inset:0;
-  z-index:-2;
+  z-index:-4;
   background-size:100% 320%;
   background-position:0% 0%;
 }
@@ -39,7 +39,7 @@ section{
 /* fundo fotográfico de secção (opcional) — foto a P&B + duotone azul
    por cima (mix-blend-mode:color), para se fundir com o resto do site */
 .section-bg{
-  position:absolute;inset:0;z-index:-2;overflow:hidden;
+  position:absolute;inset:0;z-index:-3;overflow:hidden;
   -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 78%,transparent 100%);
   mask-image:linear-gradient(180deg,#000 0%,#000 78%,transparent 100%);
 }
@@ -51,7 +51,7 @@ section{
 
 /* faixa de cor sólida no topo da secção (opcional) — funde com a secção anterior
    sem depender do scroll do céu de fundo */
-.top-tint{position:absolute;top:0;left:0;right:0;height:45vh;z-index:-2;pointer-events:none}
+.top-tint{position:absolute;top:0;left:0;right:0;height:45vh;z-index:-3;pointer-events:none}
 
 /* ---- Elementos que flutuam ---- */
 .floaty{
@@ -175,7 +175,7 @@ a.trust:hover{background:rgba(9,40,82,.85);border-color:rgba(255,255,255,.55);tr
 }
 .has-scrim .content{z-index:2}
 .has-scrim::after{
-  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+  content:'';position:absolute;inset:0;z-index:-2;pointer-events:none;
   background:
     linear-gradient(90deg,rgba(9,40,82,.7) 0%,rgba(9,40,82,.35) 40%,rgba(9,40,82,.1) 62%,transparent 78%),
     linear-gradient(180deg,transparent 0%,transparent 45%,rgba(9,40,82,.5) 72%,rgba(9,40,82,.78) 100%);
