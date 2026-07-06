@@ -6,7 +6,7 @@
   },
   "wind": {
     "enabled": true,
-    "density": 90
+    "density": 95
   },
   "sky": [
     "#0a3d7a",
@@ -60,7 +60,7 @@
       "bgImage": "images/hero-bg.jpg",
       "bgImageMobile": "images/hero-bg-mobile.jpg",
       "topTint": "",
-      "scrollHintVisible": true,
+      "scrollHintVisible": false,
       "scrollHint": {
         "pt": "sobe connosco",
         "en": "Soar with us",
@@ -160,6 +160,9 @@
     {
       "id": "sobre",
       "visible": true,
+      "heroScrim": true,
+      "bgImage": "images/course.jpg",
+      "bgImageMobile": "images/course-mobile.jpg",
       "topTint": "",
       "scrollHint": {
         "pt": ""
