@@ -243,7 +243,9 @@ function render(data) {
       if (node) s.appendChild(node);
     });
     const hint = t(sec.scrollHint);
-    if (hint) { const h = el('div', 'scrollhint'); h.textContent = hint; s.appendChild(h); }
+    if (hint && sec.scrollHintVisible !== false) {
+      const h = el('div', 'scrollhint'); h.textContent = hint; s.appendChild(h);
+    }
     root.appendChild(s);
   });
 

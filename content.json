@@ -59,6 +59,8 @@
       "heroScrim": true,
       "bgImage": "images/hero-bg.jpg",
       "bgImageMobile": "images/hero-bg-mobile.jpg",
+      "topTint": "",
+      "scrollHintVisible": true,
       "scrollHint": {
         "pt": "sobe connosco",
         "en": "Soar with us",
@@ -157,7 +159,8 @@
     },
     {
       "id": "sobre",
-      "visible": false,
+      "visible": true,
+      "topTint": "",
       "scrollHint": {
         "pt": ""
       },
@@ -178,6 +181,7 @@
           "subtitle": {
             "pt": "Da soft-acro ao freestyle. Vê a Mullet 2 de um ângulo que poucos vêem — de cima."
           },
+          "trustHref": "",
           "buttons": [
             {
               "label": {
@@ -246,6 +250,7 @@
           "subtitle": {
             "pt": "Gente que descola junta, que arruma a asa ao fim do dia e volta amanhã. Essa é a Happy Soaring."
           },
+          "trustHref": "",
           "showDesktop": true,
           "showMobile": true
         },
@@ -296,6 +301,7 @@
     {
       "id": "dealer",
       "visible": true,
+      "topTint": "",
       "elements": [
         {
           "role": "text",
