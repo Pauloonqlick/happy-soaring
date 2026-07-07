@@ -49,6 +49,67 @@ function buildTopTint(sec) {
   return d;
 }
 
+/* ---- camada de cor por secção ----
+   Um "véu" totalmente configurável por cima (ou por trás) do conteúdo:
+   cor sólida ou gradiente, intensidade, modo de mistura, cobertura (secção
+   inteira ou só um lado, com desvanecimento), desfoque/brilho/contraste/
+   saturação do que está por trás (efeito vidro), cantos, margem e profundidade.
+   Tudo opcional — se não houver cor ou estiver invisível, não renderiza nada. */
+function buildColorLayer(sec) {
+  const cl = sec.colorLayer;
+  if (!cl || cl.visible === false || !cl.color) return null;
+
+  const d = el('div', 'color-layer' + (cl.fade !== false ? ' fade' : '') + visibilityClass(cl));
+
+  /* preenchimento: cor sólida ou gradiente */
+  const c1 = cl.color;
+  const type = cl.gradientType || 'solid';
+  const dir = (typeof cl.direction === 'number' ? cl.direction : 180) + 'deg';
+  if (type === 'solid') {
+    d.style.background = c1;
+  } else {
+    const c2 = cl.color2 || 'transparent';
+    if (type === 'radial') d.style.background = `radial-gradient(circle at center, ${c1} 0%, ${c2} 100%)`;
+    else if (type === 'conic') d.style.background = `conic-gradient(from ${dir}, ${c1}, ${c2})`;
+    else d.style.background = `linear-gradient(${dir}, ${c1} 0%, ${c2} 100%)`;
+  }
+
+  /* cobertura: máscara que confina a camada a uma zona, desvanecendo para fora */
+  const cov = cl.coverage || 'full';
+  if (cov !== 'full') {
+    const size = (typeof cl.coverageSize === 'number' ? cl.coverageSize : 45);
+    const ang = ({ top: 180, bottom: 0, left: 90, right: 270 })[cov] ?? 180;
+    const mask = `linear-gradient(${ang}deg, #000 0%, transparent ${size}%)`;
+    d.style.webkitMaskImage = mask;
+    d.style.maskImage = mask;
+  }
+
+  /* intensidade (opacidade) */
+  if (typeof cl.intensity === 'number') {
+    d.style.opacity = Math.max(0, Math.min(100, cl.intensity)) / 100;
+  }
+
+  /* modo de mistura com o que está por baixo */
+  if (cl.blendMode && cl.blendMode !== 'normal') d.style.mixBlendMode = cl.blendMode;
+
+  /* efeito vidro: filtros aplicados ao que está por trás da camada */
+  const bf = [];
+  if (cl.blur) bf.push(`blur(${cl.blur}px)`);
+  if (typeof cl.brightness === 'number' && cl.brightness !== 100) bf.push(`brightness(${cl.brightness}%)`);
+  if (typeof cl.contrast === 'number' && cl.contrast !== 100) bf.push(`contrast(${cl.contrast}%)`);
+  if (typeof cl.saturation === 'number' && cl.saturation !== 100) bf.push(`saturate(${cl.saturation}%)`);
+  if (bf.length) { d.style.backdropFilter = bf.join(' '); d.style.webkitBackdropFilter = bf.join(' '); }
+
+  /* forma */
+  if (cl.radius) d.style.borderRadius = cl.radius + 'px';
+  if (cl.inset) d.style.inset = cl.inset + 'px';
+
+  /* profundidade (z-index) — por defeito atrás do conteúdo (ver .color-layer no CSS) */
+  if (typeof cl.depth === 'number') d.style.zIndex = cl.depth;
+
+  return d;
+}
+
 function visibilityClass(item) {
   let c = '';
   if (item.showMobile === false) c += ' hide-mobile';
@@ -238,6 +299,8 @@ function render(data) {
     if (bg) s.appendChild(bg);
     const topTint = buildTopTint(sec);
     if (topTint) s.appendChild(topTint);
+    const colorLayer = buildColorLayer(sec);
+    if (colorLayer) s.appendChild(colorLayer);
     (sec.elements || []).forEach(item => {
       const node = buildElement(item);
       if (node) s.appendChild(node);

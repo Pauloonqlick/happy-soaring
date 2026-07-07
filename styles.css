@@ -53,6 +53,15 @@ section{
    sem depender do scroll do céu de fundo */
 .top-tint{position:absolute;top:0;left:0;right:0;height:45vh;z-index:-3;pointer-events:none}
 
+/* camada de cor por secção (opcional) — véu configurável.
+   z-index -2 (por defeito) fica atrás do conteúdo mas à frente do fundo;
+   pode ser trazida para cima de tudo via "profundidade" no CMS.
+   Todas as propriedades visuais (cor, opacidade, mistura, filtros, forma)
+   são definidas inline pelo motor a partir de content.json. */
+.color-layer{position:absolute;inset:0;z-index:-2;pointer-events:none}
+.color-layer.fade{animation:layerFade .9s ease both}
+@keyframes layerFade{from{opacity:0}}
+
 /* ---- Elementos que flutuam ---- */
 .floaty{
   position:absolute;
