@@ -56,31 +56,13 @@
     {
       "id": "hero",
       "visible": true,
-      "heroScrim": true,
+      "heightScreens": null,
+      "heroScrim": false,
       "bgImage": "images/hero-bg.jpg",
       "bgImageMobile": "images/hero-bg-mobile.jpg",
+      "bgDarken": null,
       "topTint": "",
-      "colorLayer": {
-        "visible": false,
-        "color": "#0a3d7a",
-        "color2": "",
-        "gradientType": "solid",
-        "direction": 180,
-        "intensity": 40,
-        "coverage": "full",
-        "coverageSize": 45,
-        "blendMode": "normal",
-        "blur": 0,
-        "brightness": 100,
-        "contrast": 100,
-        "saturation": 100,
-        "radius": 0,
-        "inset": 0,
-        "fade": true,
-        "depth": -2,
-        "showDesktop": true,
-        "showMobile": true
-      },
+      "overlay": null,
       "scrollHintVisible": false,
       "scrollHint": {
         "pt": "sobe connosco",
@@ -92,7 +74,7 @@
       "elements": [
         {
           "role": "heroImage",
-          "showDesktop": true,
+          "showDesktop": false,
           "showMobile": true,
           "src": "images/hero-pilot.png",
           "alt": "Piloto Happy Soaring com a Mullet 2",
@@ -181,30 +163,17 @@
     {
       "id": "sobre",
       "visible": true,
+      "heightScreens": 2,
       "heroScrim": true,
       "bgImage": "images/course.jpg",
       "bgImageMobile": "images/course-mobile.jpg",
+      "bgDarken": 45,
       "topTint": "",
-      "colorLayer": {
-        "visible": false,
-        "color": "#c16e1f",
+      "overlay": {
+        "visible": true,
+        "color": "",
         "color2": "",
-        "gradientType": "solid",
-        "direction": 180,
-        "intensity": 40,
-        "coverage": "full",
-        "coverageSize": 45,
-        "blendMode": "normal",
-        "blur": 0,
-        "brightness": 100,
-        "contrast": 100,
-        "saturation": 100,
-        "radius": 0,
-        "inset": 0,
-        "fade": true,
-        "depth": -2,
-        "showDesktop": true,
-        "showMobile": true
+        "intensity": 100
       },
       "scrollHint": {
         "pt": ""
@@ -212,20 +181,30 @@
       "elements": [
         {
           "role": "text",
-          "align": "right",
+          "align": "left",
           "kicker": {
             "pt": "A nossa vela"
           },
           "title": {
-            "pt": "Feita para brincar"
+            "pt": "CURSOS",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
           },
           "title2": {
-            "pt": "com o vento"
+            "pt": "PARAKITE",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
           },
+          "accent2": true,
           "titleTag": "h2",
           "subtitle": {
             "pt": "Da soft-acro ao freestyle. Vê a Mullet 2 de um ângulo que poucos vêem — de cima."
           },
+          "subtitleFormat": null,
           "trustHref": "",
           "buttons": [
             {
@@ -274,27 +253,13 @@
     {
       "id": "comunidade",
       "visible": true,
-      "topTint": "#1f6fc0",
-      "colorLayer": {
-        "visible": false,
-        "color": "#1f6fc0",
+      "heightScreens": null,
+      "topTint": "",
+      "overlay": {
+        "visible": true,
+        "color": "",
         "color2": "",
-        "gradientType": "solid",
-        "direction": 180,
-        "intensity": 40,
-        "coverage": "full",
-        "coverageSize": 45,
-        "blendMode": "normal",
-        "blur": 0,
-        "brightness": 100,
-        "contrast": 100,
-        "saturation": 100,
-        "radius": 0,
-        "inset": 0,
-        "fade": true,
-        "depth": -2,
-        "showDesktop": true,
-        "showMobile": true
+        "intensity": 100
       },
       "scrollHint": {
         "pt": ""
@@ -367,27 +332,13 @@
     {
       "id": "dealer",
       "visible": true,
+      "heightScreens": null,
       "topTint": "",
-      "colorLayer": {
-        "visible": false,
-        "color": "#ff6a13",
+      "overlay": {
+        "visible": true,
+        "color": "",
         "color2": "",
-        "gradientType": "solid",
-        "direction": 180,
-        "intensity": 35,
-        "coverage": "full",
-        "coverageSize": 45,
-        "blendMode": "normal",
-        "blur": 0,
-        "brightness": 100,
-        "contrast": 100,
-        "saturation": 100,
-        "radius": 0,
-        "inset": 0,
-        "fade": true,
-        "depth": -2,
-        "showDesktop": true,
-        "showMobile": true
+        "intensity": 100
       },
       "elements": [
         {

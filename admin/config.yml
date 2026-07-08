@@ -74,35 +74,23 @@ collections:
             fields:
               - { label: Identificador, name: id, widget: string, hint: "Usado nas âncoras do menu (ex: hero, dealer)" }
               - { label: Mostrar secção, name: visible, widget: boolean, default: true, hint: "Desliga para esconder esta secção inteira no site, sem a apagar" }
+              - { label: Altura (nº de ecrãs), name: heightScreens, widget: number, value_type: int, min: 1, max: 3, default: 1, required: false, hint: "1 = altura normal (um ecrã) · 2 = ocupa dois ecrãs de altura · 3 = três. Mais alto = mais espaço a preencher" }
               - { label: Fundo especial da apresentação, name: heroScrim, widget: boolean, default: false, required: false }
               - { label: Foto de fundo (opcional), name: bgImage, widget: image, required: false, hint: "Foto a preto-e-branco com tom azul da marca por cima, para se fundir com o céu" }
               - { label: Foto de fundo — mobile (opcional), name: bgImageMobile, widget: image, required: false, hint: "Se vazio, usa a mesma foto de desktop" }
+              - { label: Escurecer fundo (%), name: bgDarken, widget: number, value_type: int, min: 0, max: 100, default: 0, required: false, hint: "Escurece a foto de fundo. Útil para igualar o tom do azul entre secções com fotos de brilho diferente" }
               - { label: Cor no topo da secção (opcional), name: topTint, widget: color, required: false, hint: "Funde com o fundo da secção anterior — desvanece para transparente" }
-              - label: Camada de cor (véu sobre a secção)
-                name: colorLayer
+              - label: Camada azul (tom da secção)
+                name: overlay
                 widget: object
                 collapsed: true
+                summary: "Camada azul"
                 required: false
                 fields:
-                  - { label: Mostrar camada, name: visible, widget: boolean, default: false, hint: "Liga/desliga a camada. Precisa de uma cor definida para aparecer" }
-                  - { label: Cor, name: color, widget: color, required: false }
-                  - { label: Segunda cor (para gradiente), name: color2, widget: color, required: false, hint: "Só usada nos tipos de gradiente. Vazio = desvanece para transparente" }
-                  - { label: Tipo de preenchimento, name: gradientType, widget: select, options: [solid, linear, radial, conic], default: solid, hint: "solid = cor cheia · os restantes misturam a 1ª e 2ª cor" }
-                  - { label: Direção do gradiente (graus), name: direction, widget: number, value_type: int, min: 0, max: 360, default: 180, hint: "0 = de baixo p/ cima · 90 = da esq. p/ dir. · 180 = de cima p/ baixo" }
-                  - { label: Intensidade (%), name: intensity, widget: number, value_type: int, min: 0, max: 100, default: 40, hint: "Opacidade da camada" }
-                  - { label: Cobertura, name: coverage, widget: select, options: [full, top, bottom, left, right], default: full, hint: "full = secção toda · as outras aplicam só a um lado, desvanecendo" }
-                  - { label: Tamanho da cobertura (%), name: coverageSize, widget: number, value_type: int, min: 5, max: 100, default: 45, hint: "Só quando a cobertura não é 'full'" }
-                  - { label: Modo de mistura, name: blendMode, widget: select, default: normal, options: [normal, multiply, screen, overlay, soft-light, hard-light, color, hue, saturation, luminosity, darken, lighten], hint: "Como a cor interage com a imagem/fundo por baixo" }
-                  - { label: Desfoque do fundo (px), name: blur, widget: number, value_type: int, min: 0, max: 40, default: 0, hint: "Efeito vidro fosco sobre o que está por trás" }
-                  - { label: Brilho do fundo (%), name: brightness, widget: number, value_type: int, min: 0, max: 200, default: 100 }
-                  - { label: Contraste do fundo (%), name: contrast, widget: number, value_type: int, min: 0, max: 200, default: 100 }
-                  - { label: Saturação do fundo (%), name: saturation, widget: number, value_type: int, min: 0, max: 200, default: 100 }
-                  - { label: Cantos arredondados (px), name: radius, widget: number, value_type: int, min: 0, max: 200, default: 0 }
-                  - { label: Margem interior (px), name: inset, widget: number, value_type: int, min: 0, max: 200, default: 0, hint: "Afasta a camada das bordas da secção" }
-                  - { label: Transição suave ao aparecer, name: fade, widget: boolean, default: true }
-                  - { label: Profundidade (z-index), name: depth, widget: number, value_type: int, min: -4, max: 5, default: -2, hint: "-2 = atrás do conteúdo (véu de fundo) · positivo = por cima de tudo" }
-                  - { label: Mostrar no desktop, name: showDesktop, widget: boolean, default: true }
-                  - { label: Mostrar no mobile, name: showMobile, widget: boolean, default: true }
+                  - { label: Mostrar camada (liga/desliga), name: visible, widget: boolean, default: true, hint: "Liga/desliga TODO o tom azul desta secção. Em secções com foto afeta a foto+scrim; nas outras é um véu sobre o céu" }
+                  - { label: Cor, name: color, widget: color, required: false, hint: "Cor principal do tom (aplica-se à foto/céu e ao scrim)" }
+                  - { label: Segunda cor (degradé), name: color2, widget: color, required: false, hint: "Cor no fundo do degradé sobre a foto. Vazio = igual à cor principal" }
+                  - { label: Intensidade (%), name: intensity, widget: number, value_type: int, min: 0, max: 100, default: 100, hint: "Força do tom azul (100 = como está agora)" }
               - { label: Mostrar texto de scroll, name: scrollHintVisible, widget: boolean, default: true, hint: "Desliga para esconder o texto e a seta (↓) juntos" }
               - label: Texto de scroll (opcional)
                 name: scrollHint

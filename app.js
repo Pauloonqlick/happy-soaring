@@ -16,11 +16,31 @@ function t(v) {
   return v[LOCALE] || v[DEFAULT_LOCALE] || Object.values(v).find(Boolean) || '';
 }
 
-/* fundo fotográfico de secção: foto a preto-e-branco + duotone azul
-   (usa as próprias cores do céu, para ficar sempre coerente com o resto) */
+/* hex (#rgb ou #rrggbb) -> {r,g,b}, para alimentar variáveis CSS do scrim */
+function hexToRgb(hex) {
+  if (typeof hex !== 'string') return null;
+  let h = hex.trim().replace('#', '');
+  if (h.length === 3) h = h.split('').map(c => c + c).join('');
+  if (h.length !== 6) return null;
+  const n = parseInt(h, 16);
+  if (Number.isNaN(n)) return null;
+  return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+}
+
+/* fundo fotográfico de secção: foto a preto-e-branco + duotone (camada azul).
+   A cor/intensidade do duotone vêm de sec.overlay (editável no CMS); se não
+   houver overlay, usa as cores do céu para se manter coerente com o resto.
+   overlay.visible === false esconde o duotone (foto fica só a cinzento). */
 function buildSectionBg(sec, sky) {
   if (!sec.bgImage) return null;
   const wrap = el('div', 'section-bg');
+
+  /* escurecer a foto de fundo (0-100%) — útil para igualar o tom do azul
+     entre secções cujas fotos têm brilhos diferentes */
+  if (typeof sec.bgDarken === 'number' && sec.bgDarken > 0) {
+    const dk = Math.max(0, Math.min(100, sec.bgDarken));
+    wrap.style.setProperty('--bg-bright', (1.05 * (1 - dk / 100)).toFixed(3));
+  }
 
   const imgD = el('img', 'hide-mobile');
   imgD.src = sec.bgImage; imgD.alt = '';
@@ -30,13 +50,15 @@ function buildSectionBg(sec, sky) {
   imgM.src = sec.bgImageMobile || sec.bgImage; imgM.alt = '';
   wrap.appendChild(imgM);
 
-  const tint = el('div', 'section-bg-tint');
-  if (sky && sky.length) {
-    const top = sky[0];
-    const mid = sky[Math.min(1, sky.length - 1)];
+  const ov = sec.overlay;
+  if (!ov || ov.visible !== false) {
+    const tint = el('div', 'section-bg-tint');
+    const top = (ov && ov.color) || (sky && sky[0]) || '#0a3d7a';
+    const mid = (ov && ov.color2) || (sky && sky[Math.min(1, sky.length - 1)]) || top;
     tint.style.background = `linear-gradient(180deg, ${top} 0%, ${mid} 100%)`;
+    if (ov && typeof ov.intensity === 'number') tint.style.opacity = Math.max(0, Math.min(100, ov.intensity)) / 100;
+    wrap.appendChild(tint);
   }
-  wrap.appendChild(tint);
   return wrap;
 }
 
@@ -49,64 +71,17 @@ function buildTopTint(sec) {
   return d;
 }
 
-/* ---- camada de cor por secção ----
-   Um "véu" totalmente configurável por cima (ou por trás) do conteúdo:
-   cor sólida ou gradiente, intensidade, modo de mistura, cobertura (secção
-   inteira ou só um lado, com desvanecimento), desfoque/brilho/contraste/
-   saturação do que está por trás (efeito vidro), cantos, margem e profundidade.
-   Tudo opcional — se não houver cor ou estiver invisível, não renderiza nada. */
-function buildColorLayer(sec) {
-  const cl = sec.colorLayer;
-  if (!cl || cl.visible === false || !cl.color) return null;
-
-  const d = el('div', 'color-layer' + (cl.fade !== false ? ' fade' : '') + visibilityClass(cl));
-
-  /* preenchimento: cor sólida ou gradiente */
-  const c1 = cl.color;
-  const type = cl.gradientType || 'solid';
-  const dir = (typeof cl.direction === 'number' ? cl.direction : 180) + 'deg';
-  if (type === 'solid') {
-    d.style.background = c1;
-  } else {
-    const c2 = cl.color2 || 'transparent';
-    if (type === 'radial') d.style.background = `radial-gradient(circle at center, ${c1} 0%, ${c2} 100%)`;
-    else if (type === 'conic') d.style.background = `conic-gradient(from ${dir}, ${c1}, ${c2})`;
-    else d.style.background = `linear-gradient(${dir}, ${c1} 0%, ${c2} 100%)`;
-  }
-
-  /* cobertura: máscara que confina a camada a uma zona, desvanecendo para fora */
-  const cov = cl.coverage || 'full';
-  if (cov !== 'full') {
-    const size = (typeof cl.coverageSize === 'number' ? cl.coverageSize : 45);
-    const ang = ({ top: 180, bottom: 0, left: 90, right: 270 })[cov] ?? 180;
-    const mask = `linear-gradient(${ang}deg, #000 0%, transparent ${size}%)`;
-    d.style.webkitMaskImage = mask;
-    d.style.maskImage = mask;
-  }
-
-  /* intensidade (opacidade) */
-  if (typeof cl.intensity === 'number') {
-    d.style.opacity = Math.max(0, Math.min(100, cl.intensity)) / 100;
-  }
-
-  /* modo de mistura com o que está por baixo */
-  if (cl.blendMode && cl.blendMode !== 'normal') d.style.mixBlendMode = cl.blendMode;
-
-  /* efeito vidro: filtros aplicados ao que está por trás da camada */
-  const bf = [];
-  if (cl.blur) bf.push(`blur(${cl.blur}px)`);
-  if (typeof cl.brightness === 'number' && cl.brightness !== 100) bf.push(`brightness(${cl.brightness}%)`);
-  if (typeof cl.contrast === 'number' && cl.contrast !== 100) bf.push(`contrast(${cl.contrast}%)`);
-  if (typeof cl.saturation === 'number' && cl.saturation !== 100) bf.push(`saturate(${cl.saturation}%)`);
-  if (bf.length) { d.style.backdropFilter = bf.join(' '); d.style.webkitBackdropFilter = bf.join(' '); }
-
-  /* forma */
-  if (cl.radius) d.style.borderRadius = cl.radius + 'px';
-  if (cl.inset) d.style.inset = cl.inset + 'px';
-
-  /* profundidade (z-index) — por defeito atrás do conteúdo (ver .color-layer no CSS) */
-  if (typeof cl.depth === 'number') d.style.zIndex = cl.depth;
-
+/* camada azul em secções SEM foto de fundo: um tom translúcido por cima do céu.
+   Usa a mesma cor/intensidade do overlay que comanda o duotone/scrim nas secções
+   com foto — assim a "Camada azul" do CMS controla todas as secções de igual modo. */
+function buildOverlayTint(sec) {
+  const ov = sec.overlay;
+  if (!ov || ov.visible === false || sec.bgImage) return null; // secções com foto tratam-no no duotone
+  const c1 = ov.color || '#0a3d7a';
+  const c2 = ov.color2 || c1;
+  const d = el('div', 'overlay-tint');
+  d.style.background = `linear-gradient(180deg, ${c1} 0%, ${c2} 100%)`;
+  if (typeof ov.intensity === 'number') d.style.opacity = Math.max(0, Math.min(100, ov.intensity)) / 100;
   return d;
 }
 
@@ -294,13 +269,31 @@ function render(data) {
     if (sec.visible === false) return;
     const s = el('section');
     s.id = sec.id;
-    if (sec.heroScrim) s.classList.add('has-scrim', 'hero-fill');
+    /* altura da secção em nº de ecrãs (1 = normal). Editável no CMS. */
+    if (typeof sec.heightScreens === 'number' && sec.heightScreens > 1) {
+      s.style.minHeight = (sec.heightScreens * 100) + 'vh';
+    }
+    if (sec.heroScrim) {
+      s.classList.add('has-scrim', 'hero-fill');
+      /* o scrim (degradé azul p/ legibilidade do texto) partilha a cor e a
+         intensidade da camada azul da secção — controladas por sec.overlay */
+      const ov = sec.overlay;
+      const rgb = hexToRgb((ov && ov.color) || '#092852');
+      if (rgb) {
+        s.style.setProperty('--scrim-r', rgb.r);
+        s.style.setProperty('--scrim-g', rgb.g);
+        s.style.setProperty('--scrim-b', rgb.b);
+      }
+      const on = !ov || ov.visible !== false;
+      const a = (ov && typeof ov.intensity === 'number') ? Math.max(0, Math.min(100, ov.intensity)) / 100 : 1;
+      s.style.setProperty('--scrim-a', on ? a : 0);
+    }
     const bg = buildSectionBg(sec, data.sky);
     if (bg) s.appendChild(bg);
     const topTint = buildTopTint(sec);
     if (topTint) s.appendChild(topTint);
-    const colorLayer = buildColorLayer(sec);
-    if (colorLayer) s.appendChild(colorLayer);
+    const ovTint = buildOverlayTint(sec);
+    if (ovTint) s.appendChild(ovTint);
     (sec.elements || []).forEach(item => {
       const node = buildElement(item);
       if (node) s.appendChild(node);
