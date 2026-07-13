@@ -331,6 +331,7 @@ function buildMusic(item) {
      no mobile ficam empilhadas (1 por linha) */
   const grid = el('div', 'music-genres');
   (item.genres || []).forEach(genre => {
+    if (genre.visible === false) return; // lista escondida no CMS
     const tracks = genre.tracks || [];
     const cell = el('div', 'music-genre');
     const ghead = el('div', 'music-ghead');
