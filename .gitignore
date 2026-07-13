@@ -12,12 +12,6 @@ dist
 dist-ssr
 *.local
 
-# Ficheiros de áudio (mantidos fora do Git — só locais / na Cloudflare)
-music/*.mp3
-music/*.m4a
-music/*.ogg
-music/*.wav
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
