@@ -108,9 +108,17 @@ h2.title{
 .content{max-width:560px;position:relative;z-index:3}
 .content.right{margin-left:auto;text-align:right}
 .content.right .lead{margin-left:auto}
+/* alinhamento horizontal ao centro */
+.content.center{margin-inline:auto;text-align:center}
+.content.center .lead{margin-left:auto;margin-right:auto}
+/* alinhamento vertical (a secção é flex; o bloco de texto muda de align-self) */
+.content.vtop{align-self:flex-start}
+.content.vcenter{align-self:center}
+.content.vbottom{align-self:flex-end}
 
 .btn-row{display:flex;flex-wrap:wrap;gap:16px;margin-top:28px}
 .content.right .btn-row{justify-content:flex-end}
+.content.center .btn-row{justify-content:center}
 
 .btn{
   display:inline-block;
@@ -304,4 +312,71 @@ footer small{opacity:.7}
     rgba(var(--scrim-r),var(--scrim-g),var(--scrim-b),calc(.5*var(--scrim-a))) 38%,
     rgba(var(--scrim-r),var(--scrim-g),var(--scrim-b),calc(.85*var(--scrim-a))) 62%,
     rgba(var(--scrim-r),var(--scrim-g),var(--scrim-b),calc(.92*var(--scrim-a))) 100%)}
+}
+
+/* ================= Happy Soaring Music ================= */
+/* o elemento de música é irmão do bloco de texto (cabeçalho) dentro da secção
+   flex: no desktop o texto fica à esquerda e a música preenche a direita */
+.music{position:relative;z-index:3;flex:1 1 0;min-width:0}
+.music-panel{width:100%}
+.music-topbtns{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 16px}
+.music-kicker{display:inline-block;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#fff;font-weight:700;background:rgba(255,255,255,.1);padding:7px 15px;border-radius:100px}
+.music-title{font-size:clamp(32px,6vw,56px);font-weight:800;color:#fff;line-height:1.02;letter-spacing:-1.5px;margin:14px 0 10px;text-shadow:0 3px 16px rgba(0,0,0,.4)}
+.music-sub{font-size:clamp(15px,2vw,17px);color:#c8c8c8;max-width:42ch;line-height:1.5}
+.music-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.music-btn{border:none;border-radius:100px;font-weight:700;font-size:13px;padding:11px 20px;cursor:pointer;text-decoration:none;display:inline-block;transition:transform .2s,background .2s}
+.music-btn.primary{background:var(--orange);color:#fff}
+.music-btn.primary:hover{transform:translateY(-2px)}
+.music-btn.ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.35)}
+.music-btn.ghost:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+
+.music-np{display:flex;align-items:center;gap:12px;background:#1e1e1e;border:1px solid #2c2c2c;border-radius:14px;padding:10px 12px;margin:18px 0 8px}
+.music-np-thumb{width:44px;height:44px;border-radius:8px;background:var(--orange);flex:none;display:flex;align-items:center;justify-content:center}
+.music-np-btn{width:38px;height:38px;border-radius:50%;border:none;background:#fff;color:#141414;flex:none;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.music-np-mid{flex:1;min-width:0}
+.music-np-title{color:#fff;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.music-np-title span{color:#888;font-weight:400}
+.music-np-bar{height:5px;border-radius:3px;background:#333;margin-top:7px;overflow:hidden;cursor:pointer}
+.music-np-fill{width:0;height:100%;background:var(--orange)}
+.music-np-time{color:#888;font-size:12px;flex:none}
+
+.music-genres{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));column-gap:20px;row-gap:36px;margin-top:22px}
+.music-genre{min-width:0}
+.music-ghead{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 8px}
+.music-gtitle{color:#fff;font-size:16px;font-weight:700}
+.music-gcount{color:#888;font-size:12px}
+.music-listbox{border:1px solid #2c2c2c;border-radius:12px;overflow:hidden}
+.music-list{max-height:184px;overflow-y:auto;scrollbar-width:thin}
+.music-list::-webkit-scrollbar{width:6px}
+.music-list::-webkit-scrollbar-thumb{background:#3a3a3a;border-radius:3px}
+.music-track{display:flex;align-items:center;gap:12px;padding:10px 14px;border-top:1px solid #242424}
+.music-track:first-child{border-top:none}
+.music-pl{width:30px;height:30px;border-radius:50%;border:none;flex:none;cursor:pointer;background:var(--orange);color:#fff;display:flex;align-items:center;justify-content:center}
+.music-pl:hover{background:var(--orange-dark,#e0570a)}
+.music-nm{flex:1;color:#eaeaea;font-size:14px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.music-dur{color:#888;font-size:12px;flex:none}
+
+.music-sec-title{color:#fff;font-size:17px;font-weight:700;margin:20px 0 10px}
+.music-licbox{border:1px solid #2c2c2c;border-radius:12px;overflow:hidden}
+.music-lic{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-top:1px solid #242424}
+.music-lic:first-child{border-top:none}
+.music-lic:nth-child(odd){background:#1c1c1c}
+.music-lic-label{color:#eee;font-size:13px}
+.music-lic-price{color:#ff9a4a;font-size:13px;font-weight:700}
+.music-lic-price.is-free{color:#4ade80}
+.music-lic-price.is-muted{color:#888}
+.music-legal{color:#6f6f6f;font-size:11px;line-height:1.55;margin:12px 0 18px}
+
+.music-cta{background:#1e1e1e;border:1px solid #2c2c2c;border-radius:14px;padding:18px;text-align:center}
+.music-cta-title{color:#fff;font-size:16px;font-weight:700}
+.music-cta-text{color:#aaa;font-size:13px;margin-top:3px}
+.music-wa{display:inline-flex;align-items:center;gap:8px;margin-top:14px;background:#25D366;color:#08351a;font-weight:800;font-size:14px;padding:12px 22px;border-radius:100px;text-decoration:none;transition:transform .2s}
+.music-wa:hover{transform:translateY(-2px)}
+
+/* secção de música: texto à esquerda + música à direita (duas colunas), alinhada ao topo.
+   No mobile empilha (texto em cima, listas em baixo). */
+#music{align-items:flex-start;gap:clamp(24px,4vw,56px)}
+@media(max-width:760px){
+  #music{flex-direction:column;gap:28px}
+  #music .music{flex:0 0 auto;width:100%}
 }

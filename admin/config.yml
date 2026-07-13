@@ -78,6 +78,7 @@ collections:
               - { label: Fundo especial da apresentação, name: heroScrim, widget: boolean, default: false, required: false }
               - { label: Foto de fundo (opcional), name: bgImage, widget: image, required: false, hint: "Foto a preto-e-branco com tom azul da marca por cima, para se fundir com o céu" }
               - { label: Foto de fundo — mobile (opcional), name: bgImageMobile, widget: image, required: false, hint: "Se vazio, usa a mesma foto de desktop" }
+              - { label: Mostrar foto de fundo, name: bgImageVisible, widget: boolean, default: true, required: false, hint: "Desliga para esconder a foto sem a apagar — a secção fica só com o fundo azul liso" }
               - { label: Escurecer fundo (%), name: bgDarken, widget: number, value_type: int, min: 0, max: 100, default: 0, required: false, hint: "Escurece a foto de fundo. Útil para igualar o tom do azul entre secções com fotos de brilho diferente" }
               - { label: Cor no topo da secção (opcional), name: topTint, widget: color, required: false, hint: "Funde com o fundo da secção anterior — desvanece para transparente" }
               - label: Camada azul (tom da secção)
@@ -115,7 +116,8 @@ collections:
                     widget: object
                     summary: "Texto — {{fields.title.pt}}"
                     fields:
-                      - { label: Alinhamento, name: align, widget: select, options: [left, right], default: left }
+                      - { label: Alinhamento horizontal, name: align, widget: select, default: left, options: [{label: Esquerda, value: left}, {label: Centro, value: center}, {label: Direita, value: right}] }
+                      - { label: Alinhamento vertical, name: valign, widget: select, default: center, options: [{label: Cima, value: top}, {label: Centro, value: center}, {label: Baixo, value: bottom}] }
                       - label: Etiqueta pequena
                         name: kicker
                         widget: object
@@ -378,6 +380,116 @@ collections:
                               - { label: Español, name: es, widget: string, required: false }
                               - { label: Français, name: fr, widget: string, required: false }
                               - { label: Deutsch, name: de, widget: string, required: false }
+
+                  - label: Música (Happy Soaring Music)
+                    name: music
+                    widget: object
+                    summary: "Música (leitor + listas)"
+                    hint: "Só o leitor, listas por género, licenças e CTA. O título/subtítulo do slide fazem-se com um elemento \"Texto\" à parte (com todas as opções)."
+                    fields:
+                      - { label: Número de WhatsApp, name: whatsapp, widget: string, required: false, hint: "Indicativo + número, só dígitos (ex: 351912345678). Usado no botão do CTA final" }
+                      - { label: Altura das listas (px), name: listHeight, widget: number, value_type: int, min: 80, max: 600, default: 184, required: false, hint: "Altura visível de cada lista antes de precisar de scroll" }
+                      - label: Botões no topo (laranja)
+                        name: buttons
+                        widget: list
+                        label_singular: Botão
+                        summary: "{{fields.label.pt}}"
+                        required: false
+                        fields:
+                          - label: Texto do botão
+                            name: label
+                            widget: object
+                            collapsed: true
+                            summary: "{{fields.pt}}"
+                            required: false
+                            fields:
+                              - { label: Português, name: pt, widget: string, required: false }
+                              - { label: English, name: en, widget: string, required: false }
+                              - { label: Español, name: es, widget: string, required: false }
+                              - { label: Français, name: fr, widget: string, required: false }
+                              - { label: Deutsch, name: de, widget: string, required: false }
+                          - { label: Mensagem WhatsApp, name: waMessage, widget: text, required: false, hint: "Mensagem pré-preenchida ao abrir o WhatsApp" }
+                          - { label: Link (alternativo ao WhatsApp), name: href, widget: string, required: false, hint: "Se preenchido, usa este link em vez do WhatsApp" }
+                      - label: Géneros
+                        name: genres
+                        widget: list
+                        label_singular: Género
+                        summary: "{{fields.name}}"
+                        fields:
+                          - { label: Nome do género, name: name, widget: string }
+                          - label: Faixas
+                            name: tracks
+                            widget: list
+                            label_singular: Faixa
+                            summary: "{{fields.name}}"
+                            fields:
+                              - { label: Nome, name: name, widget: string }
+                              - { label: Duração, name: duration, widget: string, required: false, hint: "Ex: 3:30" }
+                              - { label: Ficheiro MP3, name: file, widget: file, required: false }
+                      - { label: Título da tabela de licenças, name: licensesTitle, widget: string, required: false, default: Licenças }
+                      - label: Licenças
+                        name: licenses
+                        widget: list
+                        label_singular: Licença
+                        summary: "{{fields.label}}"
+                        fields:
+                          - { label: Nome, name: label, widget: string }
+                          - { label: Preço, name: price, widget: string, hint: "Ex: 0€ · 10€ – 20€ · price on request" }
+                      - label: Aviso legal
+                        name: legal
+                        widget: object
+                        collapsed: true
+                        summary: "{{fields.pt}}"
+                        required: false
+                        fields:
+                          - { label: Português, name: pt, widget: text, required: false }
+                          - { label: English, name: en, widget: text, required: false }
+                          - { label: Español, name: es, widget: text, required: false }
+                          - { label: Français, name: fr, widget: text, required: false }
+                          - { label: Deutsch, name: de, widget: text, required: false }
+                      - label: Chamada final (CTA)
+                        name: cta
+                        widget: object
+                        collapsed: true
+                        required: false
+                        fields:
+                          - label: Título
+                            name: title
+                            widget: object
+                            collapsed: true
+                            summary: "{{fields.pt}}"
+                            required: false
+                            fields:
+                              - { label: Português, name: pt, widget: string, required: false }
+                              - { label: English, name: en, widget: string, required: false }
+                              - { label: Español, name: es, widget: string, required: false }
+                              - { label: Français, name: fr, widget: string, required: false }
+                              - { label: Deutsch, name: de, widget: string, required: false }
+                          - label: Texto
+                            name: text
+                            widget: object
+                            collapsed: true
+                            summary: "{{fields.pt}}"
+                            required: false
+                            fields:
+                              - { label: Português, name: pt, widget: string, required: false }
+                              - { label: English, name: en, widget: string, required: false }
+                              - { label: Español, name: es, widget: string, required: false }
+                              - { label: Français, name: fr, widget: string, required: false }
+                              - { label: Deutsch, name: de, widget: string, required: false }
+                          - label: Texto do botão
+                            name: buttonLabel
+                            widget: object
+                            collapsed: true
+                            summary: "{{fields.pt}}"
+                            required: false
+                            fields:
+                              - { label: Português, name: pt, widget: string, required: false }
+                              - { label: English, name: en, widget: string, required: false }
+                              - { label: Español, name: es, widget: string, required: false }
+                              - { label: Français, name: fr, widget: string, required: false }
+                              - { label: Deutsch, name: de, widget: string, required: false }
+                          - { label: Mensagem WhatsApp, name: waMessage, widget: text, required: false }
 
           - label: Rodapé
             name: footer

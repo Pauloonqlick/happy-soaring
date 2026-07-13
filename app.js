@@ -27,12 +27,18 @@ function hexToRgb(hex) {
   return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
 }
 
+/* a foto de fundo está ativa se existir E o interruptor "Mostrar foto de fundo"
+   não estiver desligado (bgImageVisible !== false) */
+function photoActive(sec) {
+  return !!sec.bgImage && sec.bgImageVisible !== false;
+}
+
 /* fundo fotográfico de secção: foto a preto-e-branco + duotone (camada azul).
    A cor/intensidade do duotone vêm de sec.overlay (editável no CMS); se não
    houver overlay, usa as cores do céu para se manter coerente com o resto.
    overlay.visible === false esconde o duotone (foto fica só a cinzento). */
 function buildSectionBg(sec, sky) {
-  if (!sec.bgImage) return null;
+  if (!photoActive(sec)) return null;
   const wrap = el('div', 'section-bg');
 
   /* escurecer a foto de fundo (0-100%) — útil para igualar o tom do azul
@@ -76,7 +82,7 @@ function buildTopTint(sec) {
    com foto — assim a "Camada azul" do CMS controla todas as secções de igual modo. */
 function buildOverlayTint(sec) {
   const ov = sec.overlay;
-  if (!ov || ov.visible === false || sec.bgImage) return null; // secções com foto tratam-no no duotone
+  if (!ov || ov.visible === false || photoActive(sec)) return null; // secções com foto tratam-no no duotone
   const c1 = ov.color || '#0a3d7a';
   const c2 = ov.color2 || c1;
   const d = el('div', 'overlay-tint');
@@ -107,7 +113,13 @@ function applyTextFormat(node, fmt) {
 }
 
 function buildText(item) {
-  const c = el('div', 'content' + (item.align === 'right' ? ' right' : '') + visibilityClass(item));
+  let cls = 'content';
+  if (item.align === 'right') cls += ' right';
+  else if (item.align === 'center') cls += ' center';
+  if (item.valign === 'top') cls += ' vtop';
+  else if (item.valign === 'bottom') cls += ' vbottom';
+  else if (item.valign === 'center') cls += ' vcenter';
+  const c = el('div', cls + visibilityClass(item));
   const kicker = t(item.kicker), title1 = t(item.title), title2 = t(item.title2), subtitle = t(item.subtitle);
   if (kicker) { const k = el('span', 'kicker'); k.textContent = kicker; c.appendChild(k); }
   const tag = item.titleTag === 'h1' ? 'h1' : 'h2';
@@ -234,12 +246,159 @@ function buildHeroImage(item) {
   return wrap;
 }
 
+/* ---- secção de música (Happy Soaring Music) ----
+   Leitor de MP3 próprios, listas verticais por género (com scroll), tabela de
+   licenças, aviso legal e CTA de WhatsApp. Tudo vem de content.json / CMS. */
+const ICON_PLAY = '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+const ICON_PAUSE = '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>';
+
+function waLink(number, msg) {
+  const n = String(number || '').replace(/[^0-9]/g, '');
+  const base = 'https://wa.me/' + n;
+  const m = t(msg);
+  return m ? base + '?text=' + encodeURIComponent(m) : base;
+}
+
+function fmtTime(s) {
+  if (!isFinite(s) || s < 0) s = 0;
+  const m = Math.floor(s / 60), sec = Math.floor(s % 60);
+  return m + ':' + String(sec).padStart(2, '0');
+}
+
+function buildMusic(item) {
+  const wrap = el('div', 'music' + visibilityClass(item));
+  const panel = el('div', 'music-panel');
+  wrap.appendChild(panel);
+  const num = item.whatsapp;
+
+  /* botões no topo da área das listas (laranja) — contacto por WhatsApp */
+  if (item.buttons && item.buttons.length) {
+    const tb = el('div', 'music-topbtns');
+    item.buttons.forEach(b => {
+      if (!b || !t(b.label)) return;
+      const a = el('a', 'music-btn primary');
+      a.textContent = t(b.label);
+      a.href = b.href ? b.href : waLink(num, b.waMessage);
+      a.target = '_blank'; a.rel = 'noopener';
+      tb.appendChild(a);
+    });
+    if (tb.children.length) panel.appendChild(tb);
+  }
+
+  /* áudio partilhado + barra "a tocar agora" */
+  const audio = el('audio'); audio.preload = 'none';
+  const np = el('div', 'music-np');
+  const npThumb = el('div', 'music-np-thumb'); npThumb.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="#fff" aria-hidden="true"><path d="M12 3v10.55A4 4 0 1014 17V7h4V3z"/></svg>';
+  const npBtn = el('button', 'music-np-btn'); npBtn.type = 'button'; npBtn.setAttribute('aria-label', 'Play/Pause'); npBtn.innerHTML = ICON_PLAY;
+  const npMid = el('div', 'music-np-mid');
+  const npTitle = el('div', 'music-np-title'); npTitle.textContent = '—';
+  const npBar = el('div', 'music-np-bar'); const npFill = el('div', 'music-np-fill'); npBar.appendChild(npFill);
+  npMid.appendChild(npTitle); npMid.appendChild(npBar);
+  const npTime = el('span', 'music-np-time'); npTime.textContent = '0:00 / 0:00';
+  np.appendChild(npThumb); np.appendChild(npBtn); np.appendChild(npMid); np.appendChild(npTime);
+  np.appendChild(audio);
+  panel.appendChild(np);
+
+  const state = { btn: null };
+  function setIcon(btn, playing) { if (btn) btn.innerHTML = playing ? ICON_PAUSE : ICON_PLAY; }
+  audio.addEventListener('play', () => { setIcon(state.btn, true); setIcon(npBtn, true); });
+  audio.addEventListener('pause', () => { setIcon(state.btn, false); setIcon(npBtn, false); });
+  audio.addEventListener('timeupdate', () => {
+    const d = audio.duration;
+    npFill.style.width = (d ? (audio.currentTime / d * 100) : 0) + '%';
+    npTime.textContent = fmtTime(audio.currentTime) + ' / ' + fmtTime(d || 0);
+  });
+  audio.addEventListener('ended', () => { setIcon(state.btn, false); npFill.style.width = '0%'; });
+  npBtn.addEventListener('click', () => { if (!audio.src) return; audio.paused ? audio.play().catch(() => {}) : audio.pause(); });
+  npBar.addEventListener('click', (e) => {
+    if (!audio.duration) return;
+    const r = npBar.getBoundingClientRect();
+    audio.currentTime = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)) * audio.duration;
+  });
+
+  function playTrack(track, genreName, btn, name) {
+    if (state.btn === btn) { audio.paused ? audio.play().catch(() => {}) : audio.pause(); return; }
+    setIcon(state.btn, false);
+    state.btn = btn;
+    audio.src = track.file || '';
+    npTitle.innerHTML = '';
+    npTitle.appendChild(document.createTextNode(name + ' '));
+    const g = el('span'); g.textContent = '· ' + genreName; npTitle.appendChild(g);
+    audio.play().catch(() => {});
+  }
+
+  /* listas por género — grelha: no desktop cabem várias lado a lado,
+     no mobile ficam empilhadas (1 por linha) */
+  const grid = el('div', 'music-genres');
+  (item.genres || []).forEach(genre => {
+    const tracks = genre.tracks || [];
+    const cell = el('div', 'music-genre');
+    const ghead = el('div', 'music-ghead');
+    const gt = el('div', 'music-gtitle'); gt.textContent = genre.name || ''; ghead.appendChild(gt);
+    const gc = el('span', 'music-gcount'); gc.textContent = tracks.length + ' faixas'; ghead.appendChild(gc);
+    cell.appendChild(ghead);
+
+    const box = el('div', 'music-listbox');
+    const list = el('div', 'music-list');
+    if (typeof item.listHeight === 'number' && item.listHeight > 0) list.style.maxHeight = item.listHeight + 'px';
+    tracks.forEach(track => {
+      const row = el('div', 'music-track');
+      const b = el('button', 'music-pl'); b.type = 'button'; b.setAttribute('aria-label', 'Tocar ' + (track.name || '')); b.innerHTML = ICON_PLAY;
+      const nm = el('span', 'music-nm'); nm.textContent = track.name || '';
+      const du = el('span', 'music-dur'); du.textContent = track.duration || '';
+      b.addEventListener('click', () => playTrack(track, genre.name || '', b, track.name || ''));
+      row.appendChild(b); row.appendChild(nm); row.appendChild(du);
+      list.appendChild(row);
+    });
+    box.appendChild(list);
+    cell.appendChild(box);
+    grid.appendChild(cell);
+  });
+  panel.appendChild(grid);
+
+  /* tabela de licenças */
+  if (item.licenses && item.licenses.length) {
+    const lt = el('div', 'music-sec-title'); lt.textContent = t(item.licensesTitle) || 'Licenças'; panel.appendChild(lt);
+    const licBox = el('div', 'music-licbox');
+    item.licenses.forEach(l => {
+      const row = el('div', 'music-lic');
+      const lb = el('span', 'music-lic-label'); lb.textContent = l.label || '';
+      const pr = el('span', 'music-lic-price'); pr.textContent = l.price || '';
+      const p = String(l.price || '').toLowerCase();
+      if (p === '0€' || p.includes('free') || p === '0') pr.classList.add('is-free');
+      else if (p.includes('request') || p.includes('pedido')) pr.classList.add('is-muted');
+      row.appendChild(lb); row.appendChild(pr);
+      licBox.appendChild(row);
+    });
+    panel.appendChild(licBox);
+  }
+
+  /* aviso legal */
+  const legal = t(item.legal);
+  if (legal) { const lp = el('p', 'music-legal'); lp.textContent = legal; panel.appendChild(lp); }
+
+  /* CTA + WhatsApp */
+  if (item.cta && (t(item.cta.title) || t(item.cta.buttonLabel))) {
+    const cta = el('div', 'music-cta');
+    if (t(item.cta.title)) { const c1 = el('div', 'music-cta-title'); c1.textContent = t(item.cta.title); cta.appendChild(c1); }
+    if (t(item.cta.text)) { const c2 = el('div', 'music-cta-text'); c2.textContent = t(item.cta.text); cta.appendChild(c2); }
+    const wa = el('a', 'music-wa'); wa.href = waLink(num, item.cta.waMessage); wa.target = '_blank'; wa.rel = 'noopener';
+    wa.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 00-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1012 2zm5.7 14.2c-.2.7-1.2 1.3-1.9 1.4-.5.1-1.1.2-3.4-.7-2.9-1.2-4.7-4.1-4.9-4.3-.1-.2-1.1-1.5-1.1-2.8s.7-2 .9-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.2.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.9.9c.3.2.5.3.5.4.1.2.1.6-.1 1.3z"/></svg>';
+    const label = el('span'); label.textContent = t(item.cta.buttonLabel) || 'WhatsApp'; wa.appendChild(label);
+    cta.appendChild(wa);
+    panel.appendChild(cta);
+  }
+
+  return wrap;
+}
+
 function buildElement(item) {
   switch (item.role) {
     case 'text': return buildText(item);
     case 'floatImage': return buildFloatImage(item);
     case 'groundImage': return buildGroundImage(item);
     case 'heroImage': return buildHeroImage(item);
+    case 'music': return buildMusic(item);
     default: return null;
   }
 }
