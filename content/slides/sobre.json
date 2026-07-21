@@ -1,0 +1,91 @@
+{
+  "id": "sobre",
+  "visible": true,
+  "heightScreens": 1,
+  "heroScrim": true,
+  "bgImage": "images/course.jpg",
+  "bgImageMobile": "images/course-mobile.jpg",
+  "bgImageVisible": false,
+  "bgDarken": 45,
+  "topTint": "",
+  "overlay": {
+    "visible": true,
+    "color": "",
+    "color2": "",
+    "intensity": 100
+  },
+  "scrollHint": {
+    "pt": ""
+  },
+  "elements": [
+    {
+      "role": "text",
+      "align": "left",
+      "kicker": {
+        "pt": "A nossa vela"
+      },
+      "title": {
+        "pt": "CURSOS",
+        "en": "",
+        "es": "",
+        "fr": "",
+        "de": ""
+      },
+      "title2": {
+        "pt": "PARAKITE",
+        "en": "",
+        "es": "",
+        "fr": "",
+        "de": ""
+      },
+      "accent2": true,
+      "titleTag": "h2",
+      "subtitle": {
+        "pt": "Da soft-acro ao freestyle. Vê a Mullet 2 de um ângulo que poucos vêem — de cima."
+      },
+      "subtitleFormat": null,
+      "trustHref": "",
+      "buttons": [
+        {
+          "label": {
+            "pt": "Flow Paragliders"
+          },
+          "href": "",
+          "variant": "primary"
+        }
+      ],
+      "showDesktop": true,
+      "showMobile": true
+    },
+    {
+      "role": "floatImage",
+      "showDesktop": true,
+      "showMobile": true,
+      "src": "images/glider-top.png",
+      "alt": "Vela vista de cima",
+      "rotation": -8,
+      "opacity": 100,
+      "shadow": true,
+      "float": true,
+      "floatSpeed": 9,
+      "parallax": 20,
+      "x": 6,
+      "y": 24,
+      "anchorX": "right",
+      "widthVW": 30,
+      "widthMax": 360,
+      "card": {
+        "enabled": true,
+        "pre": {
+          "pt": "Flow"
+        },
+        "strong": {
+          "pt": "Mullet 2"
+        },
+        "sub": {
+          "pt": "vista de topo"
+        }
+      }
+    }
+  ]
+}

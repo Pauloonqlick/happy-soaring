@@ -53,6 +53,16 @@
     },
     {
       "label": {
+        "pt": "Produtos",
+        "en": "Products",
+        "es": "",
+        "fr": "",
+        "de": ""
+      },
+      "target": "produtos"
+    },
+    {
+      "label": {
         "pt": "Música",
         "en": "Music",
         "es": "",
@@ -421,6 +431,504 @@
       ]
     },
     {
+      "id": "produtos",
+      "visible": true,
+      "heightScreens": null,
+      "heroScrim": false,
+      "bgImage": "",
+      "bgImageMobile": "",
+      "bgImageVisible": true,
+      "bgDarken": null,
+      "topTint": "",
+      "overlay": {
+        "visible": true,
+        "color": "#1877c9",
+        "color2": "#1877c9",
+        "intensity": 100
+      },
+      "scrollHint": {
+        "pt": ""
+      },
+      "elements": [
+        {
+          "role": "flow",
+          "showDesktop": true,
+          "showMobile": true,
+          "dealerLabel": {
+            "pt": "Dealer oficial em Portugal",
+            "en": "Official dealer in Portugal",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "logoImage": "",
+          "title": {
+            "pt": "Flow Paragliders — a gama",
+            "en": "Flow Paragliders — the range",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "description": {
+            "pt": "Toda a gama Flow, agrupada por família. Abre a categoria que te interessa — cada asa liga ao site da Flow ou fala connosco no WhatsApp.",
+            "en": "The full Flow range, grouped by family. Open the category you want — each wing links to Flow’s site or chat with us on WhatsApp.",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "whatsapp": "351900000000",
+          "families": [
+            {
+              "visible": true,
+              "name": "Parakites",
+              "subfamilies": [
+                {
+                  "visible": true,
+                  "open": true,
+                  "name": "Parakite",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "XC Racer 2",
+                      "badge": "CCC",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na XC Racer 2 (Flow). Podem dar-me mais informação?"
+                    },
+                    {
+                      "image": "",
+                      "name": "Yoti 3",
+                      "badge": "ASA 1",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Yoti 3 (Flow). Podem dar-me mais informação?"
+                    },
+                    {
+                      "image": "",
+                      "name": "Freedom 2",
+                      "badge": "ASA 1",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Freedom 2 (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                },
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "Performance Parakite",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "visible": true,
+              "name": "Paragliders",
+              "subfamilies": [
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "School Glider — EN-A",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "EN-A",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                },
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "Intermediate / Low EN-B",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "EN-B",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                },
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "Intermediate / High EN-B",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "EN-B",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                },
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "Lightweight / High EN-B",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "EN-B",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                },
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "Intermediate–Advanced — EN-C",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "EN-C",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                },
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "Lightweight — EN-C",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "EN-C",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                },
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "Lightweight 2-Liner — EN-C",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "EN-C",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                },
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "XC / Competition — EN-D",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "EN-D",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                },
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "Competition — CCC",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "CCC",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "visible": true,
+              "name": "Paramotor Wings",
+              "subfamilies": [
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "Beginner–Intermediate",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                },
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "Novice / School — EN-A",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "EN-A",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                },
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "Intermediate / Semi-Reflex",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                },
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "Intermediate–Advanced / Full Reflex",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "visible": true,
+              "name": "Mini-Wings",
+              "subfamilies": [
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "Lightweight Mini-Wing — EN 926-1",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "EN 926-1",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                },
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "Mini-Wing — EN 926-1",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "EN 926-1",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                },
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "Speed Flying Wing",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "visible": true,
+              "name": "Tandem Wings",
+              "subfamilies": [
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "Tandem — EN 926-1 / LTF / EN-B",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "EN 926-1",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "visible": true,
+              "name": "Harnesses",
+              "subfamilies": [
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "Pod Harnesses — XC / Competition",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "visible": true,
+              "name": "Parawings",
+              "subfamilies": [
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "Parawing",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "visible": true,
+              "name": "Ground Handling",
+              "subfamilies": [
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "Ground Handling",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "visible": true,
+              "name": "Accessories",
+              "subfamilies": [
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "FLOW Wear",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                },
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "Line Sets",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                },
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "Risers",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                },
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "Rucksacks",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                },
+                {
+                  "visible": true,
+                  "open": false,
+                  "name": "Reserve Parachutes — EN/LTF",
+                  "wings": [
+                    {
+                      "image": "",
+                      "name": "Nova asa",
+                      "badge": "LTF",
+                      "flowHref": "",
+                      "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "music",
       "visible": true,
       "heightScreens": null,
@@ -465,7 +973,7 @@
             "fr": "",
             "de": ""
           },
-          "accent2": false,
+          "accent2": true,
           "titleTag": "h2",
           "subtitle": {
             "pt": "Música original inspirada no vento, mar, liberdade e voo.",
@@ -489,13 +997,37 @@
         },
         {
           "role": "music",
+          "buttons": [
+            {
+              "label": {
+                "pt": "Pilot Music Pack",
+                "en": "Pilot Music Pack",
+                "es": "",
+                "fr": "",
+                "de": ""
+              },
+              "href": "",
+              "waMessage": ""
+            },
+            {
+              "label": {
+                "pt": "Pedir música personalizada",
+                "en": "Request Custom Music",
+                "es": "",
+                "fr": "",
+                "de": ""
+              },
+              "href": "",
+              "waMessage": ""
+            }
+          ],
           "showDesktop": true,
           "showMobile": true,
           "whatsapp": "351900000000",
           "listHeight": 184,
           "genres": [
             {
-              "visible": true,
+              "visible": false,
               "name": "Soaring Vibes",
               "tracks": [
                 {
@@ -526,7 +1058,7 @@
               ]
             },
             {
-              "visible": true,
+              "visible": false,
               "name": "Low Flight Energy",
               "tracks": [
                 {
@@ -552,7 +1084,7 @@
               ]
             },
             {
-              "visible": true,
+              "visible": false,
               "name": "SmartGround Sessions",
               "tracks": [
                 {
@@ -573,7 +1105,7 @@
               ]
             },
             {
-              "visible": true,
+              "visible": false,
               "name": "Wind & Sea Ambient",
               "tracks": [
                 {
@@ -594,7 +1126,7 @@
               ]
             },
             {
-              "visible": true,
+              "visible": false,
               "name": "Trailer Flight Music",
               "tracks": [
                 {
@@ -695,43 +1227,7 @@
               "fr": "",
               "de": ""
             }
-          },
-          "buttons": [
-            {
-              "label": {
-                "pt": "Pilot Music Pack",
-                "en": "Pilot Music Pack",
-                "es": "",
-                "fr": "",
-                "de": ""
-              },
-              "waMessage": {
-                "pt": "Olá! Tenho interesse no Pilot Music Pack.",
-                "en": "Hi! I am interested in the Pilot Music Pack.",
-                "es": "",
-                "fr": "",
-                "de": ""
-              },
-              "href": ""
-            },
-            {
-              "label": {
-                "pt": "Pedir música personalizada",
-                "en": "Request Custom Music",
-                "es": "",
-                "fr": "",
-                "de": ""
-              },
-              "waMessage": {
-                "pt": "Olá! Quero música personalizada. Tipo de vídeo: ___ · Duração: ___ · Ambiente: ___ · Prazo: ___",
-                "en": "Hi! I want custom music. Video type: ___ · Length: ___ · Mood: ___ · Deadline: ___",
-                "es": "",
-                "fr": "",
-                "de": ""
-              },
-              "href": ""
-            }
-          ]
+          }
         }
       ]
     }

@@ -393,6 +393,108 @@ function buildMusic(item) {
   return wrap;
 }
 
+/* ---- secção Flow Paragliders ----
+   Família (título) > Sub-família (acordeão) > Asas (linhas com imagem multicor,
+   categoria, link para o site da Flow e WhatsApp). Tudo vem de content.json/CMS. */
+const FLOW_COLORS = ['#2b6cff', '#ff7a1a', '#22c55e', '#c026d3', '#eab308', '#0ea5e9', '#ef4444', '#38bdf8', '#a3e635', '#7c3aed', '#e11d48', '#14b8a6'];
+const ICON_EXT = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M10 14 20 4M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"/></svg>';
+const ICON_WA = '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 00-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1012 2zm5.7 14.2c-.2.7-1.2 1.3-1.9 1.4-.5.1-1.1.2-3.4-.7-2.9-1.2-4.7-4.1-4.9-4.3-.1-.2-1.1-1.5-1.1-2.8s.7-2 .9-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.2.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.9.9c.3.2.5.3.5.4.1.2.1.6-.1 1.3z"/></svg>';
+const ICON_CHEV = '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M9 6l6 6-6 6z"/></svg>';
+
+function placeholderWing(i) {
+  const c = k => FLOW_COLORS[(i * 3 + k) % FLOW_COLORS.length];
+  return '<svg viewBox="0 0 100 60" width="80" height="48" aria-hidden="true">' +
+    '<path d="M6 22 Q50 2 94 22 Q50 14 6 22Z" fill="' + c(0) + '"/>' +
+    '<path d="M10 39 Q50 19 90 39 Q50 31 10 39Z" fill="' + c(1) + '"/>' +
+    '<path d="M15 55 Q50 37 85 55 Q50 47 15 55Z" fill="' + c(2) + '"/></svg>';
+}
+
+function buildFlow(item) {
+  const wrap = el('div', 'flow' + visibilityClass(item));
+  const num = item.whatsapp;
+
+  /* cabeçalho centrado */
+  const head = el('div', 'flow-head');
+  const dl = t(item.dealerLabel);
+  if (dl) { const d = el('div', 'flow-dealer'); d.textContent = dl; head.appendChild(d); }
+  if (item.logoImage) { const img = el('img', 'flow-logo'); img.src = item.logoImage; img.alt = 'Flow Paragliders'; head.appendChild(img); }
+  const title = t(item.title);
+  if (title) { const h = el('h2', 'flow-title'); h.textContent = title; head.appendChild(h); }
+  const desc = t(item.description);
+  if (desc) { const p = el('p', 'flow-desc'); p.textContent = desc; head.appendChild(p); }
+  wrap.appendChild(head);
+
+  let wIdx = 0;
+  (item.families || []).forEach(fam => {
+    if (fam.visible === false) return;
+    const subs = (fam.subfamilies || []).filter(s => s && s.visible !== false);
+
+    /* família = acordeão (fechada por defeito, salvo fam.open) */
+    const famAcc = el('div', 'flow-fam-acc' + (fam.open ? ' open' : ''));
+    const famBtn = el('button', 'flow-famhead'); famBtn.type = 'button';
+    const fchev = el('span', 'flow-chev'); fchev.innerHTML = ICON_CHEV; famBtn.appendChild(fchev);
+    const fnm = el('span'); fnm.textContent = fam.name || ''; famBtn.appendChild(fnm);
+    famBtn.addEventListener('click', () => famAcc.classList.toggle('open'));
+    famAcc.appendChild(famBtn);
+
+    const famBody = el('div', 'flow-fambody');
+    const subAccs = [];
+
+    /* controlos expandir/fechar todas as sub-famílias desta família */
+    if (subs.length > 1) {
+      const ctrls = el('div', 'flow-ctrls');
+      const exp = el('button', 'flow-ctrl'); exp.type = 'button'; exp.textContent = 'Expandir tudo';
+      const col = el('button', 'flow-ctrl'); col.type = 'button'; col.textContent = 'Fechar tudo';
+      exp.addEventListener('click', () => subAccs.forEach(a => a.classList.add('open')));
+      col.addEventListener('click', () => subAccs.forEach(a => a.classList.remove('open')));
+      ctrls.appendChild(exp); ctrls.appendChild(col);
+      famBody.appendChild(ctrls);
+    }
+
+    subs.forEach(sub => {
+      const wings = (sub.wings || []).filter(w => w && w.name);
+      const acc = el('div', 'flow-sub' + (sub.open ? ' open' : ''));
+      const btn = el('button', 'flow-subhead'); btn.type = 'button';
+      const chev = el('span', 'flow-chev'); chev.innerHTML = ICON_CHEV; btn.appendChild(chev);
+      const nm = el('span'); nm.textContent = sub.name || ''; btn.appendChild(nm);
+      const cnt = el('span', 'flow-count'); cnt.textContent = wings.length + (wings.length === 1 ? ' asa' : ' asas'); btn.appendChild(cnt);
+      btn.addEventListener('click', () => acc.classList.toggle('open'));
+      acc.appendChild(btn);
+
+      const body = el('div', 'flow-subbody');
+      wings.forEach(w => {
+        const row = el('div', 'flow-row');
+        const thumb = el('div', 'flow-thumb');
+        if (w.image) { const img = el('img'); img.src = w.image; img.alt = w.name || ''; thumb.appendChild(img); }
+        else thumb.innerHTML = placeholderWing(wIdx);
+        wIdx++;
+        const info = el('div', 'flow-info');
+        const wn = el('span', 'flow-name'); wn.textContent = w.name || ''; info.appendChild(wn);
+        if (w.badge) { const bd = el('span', 'flow-badge'); bd.textContent = w.badge; info.appendChild(bd); }
+        const links = el('div', 'flow-links');
+        if (w.flowHref) {
+          const a = el('a', 'flow-ic'); a.href = w.flowHref; a.target = '_blank'; a.rel = 'noopener';
+          a.setAttribute('aria-label', 'Ver ' + (w.name || '') + ' no site da Flow'); a.innerHTML = ICON_EXT;
+          links.appendChild(a);
+        }
+        const wa = el('a', 'flow-ic wa'); wa.href = waLink(num, w.waMessage); wa.target = '_blank'; wa.rel = 'noopener';
+        wa.setAttribute('aria-label', 'Falar no WhatsApp sobre ' + (w.name || '')); wa.innerHTML = ICON_WA;
+        links.appendChild(wa);
+        row.appendChild(thumb); row.appendChild(info); row.appendChild(links);
+        body.appendChild(row);
+      });
+      acc.appendChild(body);
+      subAccs.push(acc);
+      famBody.appendChild(acc);
+    });
+
+    famAcc.appendChild(famBody);
+    wrap.appendChild(famAcc);
+  });
+
+  return wrap;
+}
+
 function buildElement(item) {
   switch (item.role) {
     case 'text': return buildText(item);
@@ -400,6 +502,7 @@ function buildElement(item) {
     case 'groundImage': return buildGroundImage(item);
     case 'heroImage': return buildHeroImage(item);
     case 'music': return buildMusic(item);
+    case 'flow': return buildFlow(item);
     default: return null;
   }
 }
@@ -632,8 +735,19 @@ function initMotion(data) {
   onScroll();
 }
 
-fetch('content.json')
-  .then(r => r.json())
+/* carrega settings.json (global + ordem dos slides) e depois cada slide
+   individual (content/slides/<id>.json), juntando tudo na estrutura que o
+   render() espera. Assim cada slide é um ficheiro/entrada própria no CMS. */
+async function loadSite() {
+  const settings = await fetch('content/settings.json').then(r => r.json());
+  const ids = Array.isArray(settings.slides) ? settings.slides : [];
+  const slides = await Promise.all(ids.map(id =>
+    fetch('content/slides/' + id + '.json').then(r => (r.ok ? r.json() : null)).catch(() => null)
+  ));
+  return Object.assign({}, settings, { sections: slides.filter(Boolean) });
+}
+
+loadSite()
   .then(render)
   .catch(err => {
     document.getElementById('app').innerHTML =

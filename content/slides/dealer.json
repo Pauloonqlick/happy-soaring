@@ -1,0 +1,69 @@
+{
+  "id": "dealer",
+  "visible": true,
+  "heightScreens": null,
+  "heroScrim": false,
+  "bgImage": "",
+  "bgImageMobile": "",
+  "bgImageVisible": true,
+  "topTint": "",
+  "overlay": {
+    "visible": true,
+    "color": "",
+    "color2": "",
+    "intensity": 100
+  },
+  "elements": [
+    {
+      "role": "text",
+      "align": "right",
+      "kicker": {
+        "pt": "Dealer oficial"
+      },
+      "title": {
+        "pt": "Flow Paragliders"
+      },
+      "titleTag": "h2",
+      "subtitle": {
+        "pt": "Representantes oficiais em Portugal. Aconselhamento a sério, primeira inspeção incluída, cor à tua escolha."
+      },
+      "buttons": [
+        {
+          "label": {
+            "pt": "Fala connosco →"
+          },
+          "href": "#",
+          "variant": "primary"
+        }
+      ],
+      "showDesktop": true,
+      "showMobile": true
+    },
+    {
+      "role": "groundImage",
+      "showDesktop": true,
+      "showMobile": true,
+      "src": "images/pilot-lines.png",
+      "alt": "Piloto Flow",
+      "opacity": 100,
+      "shadow": true,
+      "parallax": 0,
+      "x": 5,
+      "anchorX": "left",
+      "widthVW": 24,
+      "widthMax": 320,
+      "card": {
+        "enabled": true,
+        "pre": {
+          "pt": "Equipa"
+        },
+        "strong": {
+          "pt": "Flow"
+        },
+        "sub": {
+          "pt": "capacete laranja =)"
+        }
+      }
+    }
+  ]
+}

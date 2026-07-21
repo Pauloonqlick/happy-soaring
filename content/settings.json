@@ -1,0 +1,102 @@
+{
+  "brand": {
+    "orange": "#ff6a13",
+    "black": "#141414",
+    "font": "'Segoe UI', system-ui, -apple-system, sans-serif"
+  },
+  "wind": {
+    "enabled": true,
+    "density": 95
+  },
+  "sky": [
+    "#0a3d7a",
+    "#1f6fc0",
+    "#3f9adf",
+    "#8fd0ea",
+    "#e9f4f9",
+    "#f8dcac",
+    "#ff9a4a",
+    "#ff6a13"
+  ],
+  "menu": [
+    {
+      "label": {
+        "pt": "Início",
+        "en": "Start",
+        "es": "",
+        "fr": "",
+        "de": ""
+      },
+      "target": "hero"
+    },
+    {
+      "label": {
+        "pt": "A vela"
+      },
+      "target": "sobre"
+    },
+    {
+      "label": {
+        "pt": "A tribo"
+      },
+      "target": "comunidade"
+    },
+    {
+      "label": {
+        "pt": "Dealer Flow",
+        "en": "",
+        "es": "",
+        "fr": "",
+        "de": ""
+      },
+      "target": "dealer"
+    },
+    {
+      "label": {
+        "pt": "Produtos",
+        "en": "Products",
+        "es": "",
+        "fr": "",
+        "de": ""
+      },
+      "target": "produtos"
+    },
+    {
+      "label": {
+        "pt": "Música",
+        "en": "Music",
+        "es": "",
+        "fr": "",
+        "de": ""
+      },
+      "target": "music"
+    }
+  ],
+  "footer": {
+    "line1": {
+      "pt": "HAPPY"
+    },
+    "accent": "×",
+    "line2": {
+      "pt": "FLOW"
+    },
+    "note": {
+      "pt": "Conceito de demonstração · não é o site final"
+    }
+  },
+  "locales": [
+    "pt",
+    "en",
+    "es",
+    "fr",
+    "de"
+  ],
+  "slides": [
+    "hero",
+    "sobre",
+    "comunidade",
+    "dealer",
+    "produtos",
+    "music"
+  ]
+}

@@ -2,496 +2,94 @@ backend:
   name: github
   repo: Pauloonqlick/happy-soaring
   branch: master
-  # Depois de instalar o worker de login (sveltia-cms-auth), descomenta e
-  # coloca aqui o endereço do worker:
-  # base_url: https://SEU-WORKER.workers.dev
-
-# Permite testar localmente com: npx @sveltia/cms-proxy-server
 local_backend: true
-
-# Onde ficam as imagens carregadas pelo painel
 media_folder: images
 public_folder: images
-
-# Idioma do painel
 locale: pt
-
 collections:
-  - name: site
-    label: Conteúdo do site
+  - name: settings
+    label: Definições gerais
+    editor:
+      preview: false
     files:
-      - name: content
-        label: Página principal
-        file: content.json
+      - name: general
+        label: Geral (marca, menu, céu, rodapé, ordem)
+        file: content/settings.json
         format: json
-        description: Todo o conteúdo e layout da página.
+        description: Definições globais do site e a ordem dos slides.
         fields:
           - label: Marca
             name: brand
             widget: object
             fields:
-              - { label: Cor laranja, name: orange, widget: color }
-              - { label: Cor preta, name: black, widget: color }
-              - { label: Tipo de letra, name: font, widget: string }
-
+              - label: Cor laranja
+                name: orange
+                widget: color
+              - label: Cor preta
+                name: black
+                widget: color
+              - label: Tipo de letra
+                name: font
+                widget: string
           - label: Vento
             name: wind
             widget: object
             fields:
-              - { label: Ativar vento, name: enabled, widget: boolean, default: true }
-              - { label: Densidade, name: density, widget: number, value_type: int, min: 0, max: 200, default: 90 }
-
+              - label: Ativar vento
+                name: enabled
+                widget: boolean
+                default: true
+              - label: Densidade
+                name: density
+                widget: number
+                value_type: int
+                min: 0
+                max: 200
+                default: 90
           - label: Cores do céu (do topo ao fundo)
             name: sky
             widget: list
-            field: { label: Cor, name: cor, widget: color }
-
+            field:
+              label: Cor
+              name: cor
+              widget: color
           - label: Menu
             name: menu
             widget: list
             label_singular: Item
-            summary: "{{fields.label.pt}}"
+            summary: '{{fields.label.pt}}'
             fields:
               - label: Texto
                 name: label
                 widget: object
                 collapsed: true
-                summary: "{{fields.pt}}"
+                summary: '{{fields.pt}}'
                 required: false
                 fields:
-                  - { label: Português, name: pt, widget: string, required: false }
-                  - { label: English, name: en, widget: string, required: false }
-                  - { label: Español, name: es, widget: string, required: false }
-                  - { label: Français, name: fr, widget: string, required: false }
-                  - { label: Deutsch, name: de, widget: string, required: false }
-              - { label: Destino, name: target, widget: string, hint: "Id da secção (ex: hero, dealer) ou link completo (https://...)" }
-
-          - label: Secções
-            name: sections
-            widget: list
-            label_singular: Secção
-            summary: "{{fields.id}}"
-            fields:
-              - { label: Identificador, name: id, widget: string, hint: "Usado nas âncoras do menu (ex: hero, dealer)" }
-              - { label: Mostrar secção, name: visible, widget: boolean, default: true, hint: "Desliga para esconder esta secção inteira no site, sem a apagar" }
-              - { label: Altura (nº de ecrãs), name: heightScreens, widget: number, value_type: int, min: 1, max: 3, default: 1, required: false, hint: "1 = altura normal (um ecrã) · 2 = ocupa dois ecrãs de altura · 3 = três. Mais alto = mais espaço a preencher" }
-              - { label: Fundo especial da apresentação, name: heroScrim, widget: boolean, default: false, required: false }
-              - { label: Foto de fundo (opcional), name: bgImage, widget: image, required: false, hint: "Foto a preto-e-branco com tom azul da marca por cima, para se fundir com o céu" }
-              - { label: Foto de fundo — mobile (opcional), name: bgImageMobile, widget: image, required: false, hint: "Se vazio, usa a mesma foto de desktop" }
-              - { label: Mostrar foto de fundo, name: bgImageVisible, widget: boolean, default: true, required: false, hint: "Desliga para esconder a foto sem a apagar — a secção fica só com o fundo azul liso" }
-              - { label: Escurecer fundo (%), name: bgDarken, widget: number, value_type: int, min: 0, max: 100, default: 0, required: false, hint: "Escurece a foto de fundo. Útil para igualar o tom do azul entre secções com fotos de brilho diferente" }
-              - { label: Cor no topo da secção (opcional), name: topTint, widget: color, required: false, hint: "Funde com o fundo da secção anterior — desvanece para transparente" }
-              - label: Camada azul (tom da secção)
-                name: overlay
-                widget: object
-                collapsed: true
-                summary: "Camada azul"
-                required: false
-                fields:
-                  - { label: Mostrar camada (liga/desliga), name: visible, widget: boolean, default: true, hint: "Liga/desliga TODO o tom azul desta secção. Em secções com foto afeta a foto+scrim; nas outras é um véu sobre o céu" }
-                  - { label: Cor, name: color, widget: color, required: false, hint: "Cor principal do tom (aplica-se à foto/céu e ao scrim)" }
-                  - { label: Segunda cor (degradé), name: color2, widget: color, required: false, hint: "Cor no fundo do degradé sobre a foto. Vazio = igual à cor principal" }
-                  - { label: Intensidade (%), name: intensity, widget: number, value_type: int, min: 0, max: 100, default: 100, hint: "Força do tom azul (100 = como está agora)" }
-              - { label: Mostrar texto de scroll, name: scrollHintVisible, widget: boolean, default: true, hint: "Desliga para esconder o texto e a seta (↓) juntos" }
-              - label: Texto de scroll (opcional)
-                name: scrollHint
-                widget: object
-                collapsed: true
-                summary: "{{fields.pt}}"
-                required: false
-                fields:
-                  - { label: Português, name: pt, widget: string, required: false }
-                  - { label: English, name: en, widget: string, required: false }
-                  - { label: Español, name: es, widget: string, required: false }
-                  - { label: Français, name: fr, widget: string, required: false }
-                  - { label: Deutsch, name: de, widget: string, required: false }
-              - label: Elementos
-                name: elements
-                widget: list
-                label_singular: Elemento
-                typeKey: role
-                types:
-                  - label: Texto
-                    name: text
-                    widget: object
-                    summary: "Texto — {{fields.title.pt}}"
-                    fields:
-                      - { label: Alinhamento horizontal, name: align, widget: select, default: left, options: [{label: Esquerda, value: left}, {label: Centro, value: center}, {label: Direita, value: right}] }
-                      - { label: Alinhamento vertical, name: valign, widget: select, default: center, options: [{label: Cima, value: top}, {label: Centro, value: center}, {label: Baixo, value: bottom}] }
-                      - label: Etiqueta pequena
-                        name: kicker
-                        widget: object
-                        collapsed: true
-                        summary: "{{fields.pt}}"
-                        required: false
-                        fields:
-                          - { label: Português, name: pt, widget: string, required: false }
-                          - { label: English, name: en, widget: string, required: false }
-                          - { label: Español, name: es, widget: string, required: false }
-                          - { label: Français, name: fr, widget: string, required: false }
-                          - { label: Deutsch, name: de, widget: string, required: false }
-                      - label: Título
-                        name: title
-                        widget: object
-                        collapsed: true
-                        summary: "{{fields.pt}}"
-                        required: false
-                        fields:
-                          - { label: Português, name: pt, widget: string, required: false }
-                          - { label: English, name: en, widget: string, required: false }
-                          - { label: Español, name: es, widget: string, required: false }
-                          - { label: Français, name: fr, widget: string, required: false }
-                          - { label: Deutsch, name: de, widget: string, required: false }
-                      - label: Segunda linha do título
-                        name: title2
-                        widget: object
-                        collapsed: true
-                        summary: "{{fields.pt}}"
-                        required: false
-                        fields:
-                          - { label: Português, name: pt, widget: string, required: false }
-                          - { label: English, name: en, widget: string, required: false }
-                          - { label: Español, name: es, widget: string, required: false }
-                          - { label: Français, name: fr, widget: string, required: false }
-                          - { label: Deutsch, name: de, widget: string, required: false }
-                      - { label: Segunda linha a laranja, name: accent2, widget: boolean, default: false, required: false }
-                      - { label: Tamanho do título, name: titleTag, widget: select, options: [h1, h2], default: h2 }
-                      - label: Subtítulo
-                        name: subtitle
-                        widget: object
-                        collapsed: true
-                        summary: "{{fields.pt}}"
-                        required: false
-                        fields:
-                          - { label: Português, name: pt, widget: text, required: false }
-                          - { label: English, name: en, widget: text, required: false }
-                          - { label: Español, name: es, widget: text, required: false }
-                          - { label: Français, name: fr, widget: text, required: false }
-                          - { label: Deutsch, name: de, widget: text, required: false }
-                      - label: Formatação do subtítulo (aplica-se a todos os idiomas)
-                        name: subtitleFormat
-                        widget: object
-                        collapsed: true
-                        required: false
-                        fields:
-                          - { label: Negrito, name: bold, widget: boolean, default: false, required: false }
-                          - { label: Itálico, name: italic, widget: boolean, default: false, required: false }
-                          - { label: Maiúsculas, name: uppercase, widget: boolean, default: false, required: false }
-                          - { label: Tamanho (px — vazio = automático), name: size, widget: number, value_type: int, min: 10, max: 60, required: false }
-                          - { label: Espaçamento entre letras (px), name: letterSpacing, widget: number, value_type: int, min: -2, max: 20, required: false }
-                          - { label: Cor, name: color, widget: select, options: [default, orange, white, black], default: default, required: false }
-                      - label: Linha de confiança (opcional)
-                        name: trust
-                        widget: object
-                        collapsed: true
-                        summary: "{{fields.pt}}"
-                        required: false
-                        fields:
-                          - { label: Português, name: pt, widget: string, required: false }
-                          - { label: English, name: en, widget: string, required: false }
-                          - { label: Español, name: es, widget: string, required: false }
-                          - { label: Français, name: fr, widget: string, required: false }
-                          - { label: Deutsch, name: de, widget: string, required: false }
-                      - { label: Selo/logo junto à linha de confiança (opcional), name: badgeImage, widget: image, required: false }
-                      - { label: Link do selo (opcional), name: trustHref, widget: string, required: false, hint: "Se preenchido, o logo e o texto tornam-se clicáveis (abre em novo separador)" }
-                      - label: Botões (opcional)
-                        name: buttons
-                        widget: list
-                        label_singular: Botão
-                        summary: "{{fields.label.pt}}"
-                        required: false
-                        fields:
-                          - label: Texto do botão
-                            name: label
-                            widget: object
-                            collapsed: true
-                            summary: "{{fields.pt}}"
-                            required: false
-                            fields:
-                              - { label: Português, name: pt, widget: string, required: false }
-                              - { label: English, name: en, widget: string, required: false }
-                              - { label: Español, name: es, widget: string, required: false }
-                              - { label: Français, name: fr, widget: string, required: false }
-                              - { label: Deutsch, name: de, widget: string, required: false }
-                          - { label: Link, name: href, widget: string, required: false, hint: "Id da secção (ex: #dealer) ou link completo" }
-                          - { label: Estilo, name: variant, widget: select, options: [primary, secondary], default: primary, hint: "primary = laranja cheio · secondary = contorno" }
-                      - { label: Mostrar no desktop, name: showDesktop, widget: boolean, default: true }
-                      - { label: Mostrar no mobile, name: showMobile, widget: boolean, default: true }
-
-                  - label: Piloto da apresentação
-                    name: heroImage
-                    widget: object
-                    summary: "Apresentação — {{fields.src}}"
-                    fields:
-                      - { label: Imagem, name: src, widget: image }
-                      - { label: Texto alternativo, name: alt, widget: string, required: false }
-                      - { label: Altura no desktop (%), name: heightPct, widget: number, value_type: int, min: 20, max: 100, default: 100 }
-                      - { label: Altura no mobile (%), name: heightPctMobile, widget: number, value_type: int, min: 20, max: 100, default: 94 }
-                      - { label: Rotação (graus), name: rotation, widget: number, value_type: int, min: -45, max: 45, default: 0, required: false }
-                      - { label: Opacidade (%), name: opacity, widget: number, value_type: int, min: 0, max: 100, default: 100 }
-                      - { label: Sombra, name: shadow, widget: boolean, default: true }
-                      - { label: Flutuar, name: float, widget: boolean, default: true }
-                      - { label: Velocidade do flutuar (s), name: floatSpeed, widget: number, value_type: int, min: 1, max: 20, default: 7 }
-                      - { label: Parallax (0-30), name: parallax, widget: number, value_type: int, min: 0, max: 30, default: 8 }
-                      - { label: Mostrar no desktop, name: showDesktop, widget: boolean, default: true }
-                      - { label: Mostrar no mobile, name: showMobile, widget: boolean, default: true }
-
-                  - label: Piloto a flutuar
-                    name: floatImage
-                    widget: object
-                    summary: "A flutuar — {{fields.src}}"
-                    fields:
-                      - { label: Imagem, name: src, widget: image }
-                      - { label: Texto alternativo, name: alt, widget: string, required: false }
-                      - { label: Posição horizontal (%), name: x, widget: number, value_type: int, min: 0, max: 100, default: 6 }
-                      - { label: Posição vertical (%), name: y, widget: number, value_type: int, min: 0, max: 100, default: 24 }
-                      - { label: Ancorar à direita, name: anchorX, widget: select, options: [left, right], default: left }
-                      - { label: Largura (% do ecrã), name: widthVW, widget: number, value_type: int, min: 5, max: 90, default: 30 }
-                      - { label: Largura máxima (px), name: widthMax, widget: number, value_type: int, min: 100, max: 900, default: 360 }
-                      - { label: Rotação (graus), name: rotation, widget: number, value_type: int, min: -45, max: 45, default: 0, required: false }
-                      - { label: Opacidade (%), name: opacity, widget: number, value_type: int, min: 0, max: 100, default: 100 }
-                      - { label: Sombra, name: shadow, widget: boolean, default: true }
-                      - { label: Flutuar, name: float, widget: boolean, default: true }
-                      - { label: Velocidade do flutuar (s), name: floatSpeed, widget: number, value_type: int, min: 1, max: 20, default: 9 }
-                      - { label: Parallax (0-30), name: parallax, widget: number, value_type: int, min: 0, max: 30, default: 20 }
-                      - { label: Mostrar no desktop, name: showDesktop, widget: boolean, default: true }
-                      - { label: Mostrar no mobile, name: showMobile, widget: boolean, default: true }
-                      - label: Mobile (opcional — deixa vazio para herdar do desktop)
-                        name: mobile
-                        widget: object
-                        collapsed: true
-                        required: false
-                        fields:
-                          - { label: Posição horizontal (%), name: x, widget: number, value_type: int, min: 0, max: 100, required: false }
-                          - { label: Posição vertical (%), name: y, widget: number, value_type: int, min: 0, max: 100, required: false }
-                          - { label: Ancorar à direita, name: anchorX, widget: select, options: [left, right], required: false }
-                          - { label: Largura (% do ecrã), name: widthVW, widget: number, value_type: int, min: 5, max: 90, required: false }
-                          - { label: Largura máxima (px), name: widthMax, widget: number, value_type: int, min: 100, max: 900, required: false }
-                      - label: Cartão ao passar o rato (opcional)
-                        name: card
-                        widget: object
-                        required: false
-                        fields:
-                          - { label: Ativar, name: enabled, widget: boolean, default: false }
-                          - label: Texto antes
-                            name: pre
-                            widget: object
-                            collapsed: true
-                            summary: "{{fields.pt}}"
-                            required: false
-                            fields:
-                              - { label: Português, name: pt, widget: string, required: false }
-                              - { label: English, name: en, widget: string, required: false }
-                              - { label: Español, name: es, widget: string, required: false }
-                              - { label: Français, name: fr, widget: string, required: false }
-                              - { label: Deutsch, name: de, widget: string, required: false }
-                          - label: Texto a negrito
-                            name: strong
-                            widget: object
-                            collapsed: true
-                            summary: "{{fields.pt}}"
-                            required: false
-                            fields:
-                              - { label: Português, name: pt, widget: string, required: false }
-                              - { label: English, name: en, widget: string, required: false }
-                              - { label: Español, name: es, widget: string, required: false }
-                              - { label: Français, name: fr, widget: string, required: false }
-                              - { label: Deutsch, name: de, widget: string, required: false }
-                          - label: Subtexto
-                            name: sub
-                            widget: object
-                            collapsed: true
-                            summary: "{{fields.pt}}"
-                            required: false
-                            fields:
-                              - { label: Português, name: pt, widget: string, required: false }
-                              - { label: English, name: en, widget: string, required: false }
-                              - { label: Español, name: es, widget: string, required: false }
-                              - { label: Français, name: fr, widget: string, required: false }
-                              - { label: Deutsch, name: de, widget: string, required: false }
-
-                  - label: Piloto no chão
-                    name: groundImage
-                    widget: object
-                    summary: "No chão — {{fields.src}}"
-                    fields:
-                      - { label: Imagem, name: src, widget: image }
-                      - { label: Texto alternativo, name: alt, widget: string, required: false }
-                      - { label: Distância à margem (%), name: x, widget: number, value_type: int, min: 0, max: 100, default: 6 }
-                      - { label: Ancorar à direita, name: anchorX, widget: select, options: [left, right], default: right }
-                      - { label: Largura (% do ecrã), name: widthVW, widget: number, value_type: int, min: 5, max: 90, default: 26 }
-                      - { label: Largura máxima (px), name: widthMax, widget: number, value_type: int, min: 100, max: 900, default: 340 }
-                      - { label: Opacidade (%), name: opacity, widget: number, value_type: int, min: 0, max: 100, default: 100 }
-                      - { label: Sombra, name: shadow, widget: boolean, default: true }
-                      - { label: Escurecer (segundo plano), name: dim, widget: boolean, default: false, required: false }
-                      - { label: Profundidade (z-index), name: zIndex, widget: number, value_type: int, default: 0, required: false }
-                      - { label: Parallax (0-30), name: parallax, widget: number, value_type: int, min: 0, max: 30, default: 0 }
-                      - { label: Mostrar no desktop, name: showDesktop, widget: boolean, default: true }
-                      - { label: Mostrar no mobile, name: showMobile, widget: boolean, default: true }
-                      - label: Mobile (opcional — deixa vazio para herdar do desktop)
-                        name: mobile
-                        widget: object
-                        collapsed: true
-                        required: false
-                        fields:
-                          - { label: Distância à margem (%), name: x, widget: number, value_type: int, min: 0, max: 100, required: false }
-                          - { label: Ancorar à direita, name: anchorX, widget: select, options: [left, right], required: false }
-                          - { label: Largura (% do ecrã), name: widthVW, widget: number, value_type: int, min: 5, max: 90, required: false }
-                          - { label: Largura máxima (px), name: widthMax, widget: number, value_type: int, min: 100, max: 900, required: false }
-                      - label: Cartão ao passar o rato (opcional)
-                        name: card
-                        widget: object
-                        required: false
-                        fields:
-                          - { label: Ativar, name: enabled, widget: boolean, default: false }
-                          - label: Texto antes
-                            name: pre
-                            widget: object
-                            collapsed: true
-                            summary: "{{fields.pt}}"
-                            required: false
-                            fields:
-                              - { label: Português, name: pt, widget: string, required: false }
-                              - { label: English, name: en, widget: string, required: false }
-                              - { label: Español, name: es, widget: string, required: false }
-                              - { label: Français, name: fr, widget: string, required: false }
-                              - { label: Deutsch, name: de, widget: string, required: false }
-                          - label: Texto a negrito
-                            name: strong
-                            widget: object
-                            collapsed: true
-                            summary: "{{fields.pt}}"
-                            required: false
-                            fields:
-                              - { label: Português, name: pt, widget: string, required: false }
-                              - { label: English, name: en, widget: string, required: false }
-                              - { label: Español, name: es, widget: string, required: false }
-                              - { label: Français, name: fr, widget: string, required: false }
-                              - { label: Deutsch, name: de, widget: string, required: false }
-                          - label: Subtexto
-                            name: sub
-                            widget: object
-                            collapsed: true
-                            summary: "{{fields.pt}}"
-                            required: false
-                            fields:
-                              - { label: Português, name: pt, widget: string, required: false }
-                              - { label: English, name: en, widget: string, required: false }
-                              - { label: Español, name: es, widget: string, required: false }
-                              - { label: Français, name: fr, widget: string, required: false }
-                              - { label: Deutsch, name: de, widget: string, required: false }
-
-                  - label: Música (Happy Soaring Music)
-                    name: music
-                    widget: object
-                    summary: "Música (leitor + listas)"
-                    hint: "Só o leitor, listas por género, licenças e CTA. O título/subtítulo do slide fazem-se com um elemento \"Texto\" à parte (com todas as opções)."
-                    fields:
-                      - { label: Número de WhatsApp, name: whatsapp, widget: string, required: false, hint: "Indicativo + número, só dígitos (ex: 351912345678). Usado no botão do CTA final" }
-                      - { label: Altura das listas (px), name: listHeight, widget: number, value_type: int, min: 80, max: 600, default: 184, required: false, hint: "Altura visível de cada lista antes de precisar de scroll" }
-                      - label: Botões no topo (laranja)
-                        name: buttons
-                        widget: list
-                        label_singular: Botão
-                        summary: "{{fields.label.pt}}"
-                        required: false
-                        fields:
-                          - label: Texto do botão
-                            name: label
-                            widget: object
-                            collapsed: true
-                            summary: "{{fields.pt}}"
-                            required: false
-                            fields:
-                              - { label: Português, name: pt, widget: string, required: false }
-                              - { label: English, name: en, widget: string, required: false }
-                              - { label: Español, name: es, widget: string, required: false }
-                              - { label: Français, name: fr, widget: string, required: false }
-                              - { label: Deutsch, name: de, widget: string, required: false }
-                          - { label: Mensagem WhatsApp, name: waMessage, widget: text, required: false, hint: "Mensagem pré-preenchida ao abrir o WhatsApp" }
-                          - { label: Link (alternativo ao WhatsApp), name: href, widget: string, required: false, hint: "Se preenchido, usa este link em vez do WhatsApp" }
-                      - label: Géneros
-                        name: genres
-                        widget: list
-                        label_singular: Género
-                        summary: "{{fields.name}}"
-                        fields:
-                          - { label: Mostrar lista, name: visible, widget: boolean, default: true, hint: "Desliga para esconder esta lista/género no site, sem a apagar" }
-                          - { label: Nome do género, name: name, widget: string }
-                          - label: Faixas
-                            name: tracks
-                            widget: list
-                            label_singular: Faixa
-                            summary: "{{fields.name}}"
-                            fields:
-                              - { label: Nome, name: name, widget: string }
-                              - { label: Duração, name: duration, widget: string, required: false, hint: "Ex: 3:30" }
-                              - { label: Ficheiro MP3, name: file, widget: file, required: false }
-                      - { label: Título da tabela de licenças, name: licensesTitle, widget: string, required: false, default: Licenças }
-                      - label: Licenças
-                        name: licenses
-                        widget: list
-                        label_singular: Licença
-                        summary: "{{fields.label}}"
-                        fields:
-                          - { label: Nome, name: label, widget: string }
-                          - { label: Preço, name: price, widget: string, hint: "Ex: 0€ · 10€ – 20€ · price on request" }
-                      - label: Aviso legal
-                        name: legal
-                        widget: object
-                        collapsed: true
-                        summary: "{{fields.pt}}"
-                        required: false
-                        fields:
-                          - { label: Português, name: pt, widget: text, required: false }
-                          - { label: English, name: en, widget: text, required: false }
-                          - { label: Español, name: es, widget: text, required: false }
-                          - { label: Français, name: fr, widget: text, required: false }
-                          - { label: Deutsch, name: de, widget: text, required: false }
-                      - label: Chamada final (CTA)
-                        name: cta
-                        widget: object
-                        collapsed: true
-                        required: false
-                        fields:
-                          - label: Título
-                            name: title
-                            widget: object
-                            collapsed: true
-                            summary: "{{fields.pt}}"
-                            required: false
-                            fields:
-                              - { label: Português, name: pt, widget: string, required: false }
-                              - { label: English, name: en, widget: string, required: false }
-                              - { label: Español, name: es, widget: string, required: false }
-                              - { label: Français, name: fr, widget: string, required: false }
-                              - { label: Deutsch, name: de, widget: string, required: false }
-                          - label: Texto
-                            name: text
-                            widget: object
-                            collapsed: true
-                            summary: "{{fields.pt}}"
-                            required: false
-                            fields:
-                              - { label: Português, name: pt, widget: string, required: false }
-                              - { label: English, name: en, widget: string, required: false }
-                              - { label: Español, name: es, widget: string, required: false }
-                              - { label: Français, name: fr, widget: string, required: false }
-                              - { label: Deutsch, name: de, widget: string, required: false }
-                          - label: Texto do botão
-                            name: buttonLabel
-                            widget: object
-                            collapsed: true
-                            summary: "{{fields.pt}}"
-                            required: false
-                            fields:
-                              - { label: Português, name: pt, widget: string, required: false }
-                              - { label: English, name: en, widget: string, required: false }
-                              - { label: Español, name: es, widget: string, required: false }
-                              - { label: Français, name: fr, widget: string, required: false }
-                              - { label: Deutsch, name: de, widget: string, required: false }
-                          - { label: Mensagem WhatsApp, name: waMessage, widget: text, required: false }
-
+                  - label: Português
+                    name: pt
+                    widget: string
+                    required: false
+                  - label: English
+                    name: en
+                    widget: string
+                    required: false
+                  - label: Español
+                    name: es
+                    widget: string
+                    required: false
+                  - label: Français
+                    name: fr
+                    widget: string
+                    required: false
+                  - label: Deutsch
+                    name: de
+                    widget: string
+                    required: false
+              - label: Destino
+                name: target
+                widget: string
+                hint: 'Id da secção (ex: hero, dealer) ou link completo (https://...)'
           - label: Rodapé
             name: footer
             widget: object
@@ -500,36 +98,1405 @@ collections:
                 name: line1
                 widget: object
                 collapsed: true
-                summary: "{{fields.pt}}"
+                summary: '{{fields.pt}}'
                 required: false
                 fields:
-                  - { label: Português, name: pt, widget: string, required: false }
-                  - { label: English, name: en, widget: string, required: false }
-                  - { label: Español, name: es, widget: string, required: false }
-                  - { label: Français, name: fr, widget: string, required: false }
-                  - { label: Deutsch, name: de, widget: string, required: false }
-              - { label: Símbolo do meio, name: accent, widget: string, default: "×" }
+                  - label: Português
+                    name: pt
+                    widget: string
+                    required: false
+                  - label: English
+                    name: en
+                    widget: string
+                    required: false
+                  - label: Español
+                    name: es
+                    widget: string
+                    required: false
+                  - label: Français
+                    name: fr
+                    widget: string
+                    required: false
+                  - label: Deutsch
+                    name: de
+                    widget: string
+                    required: false
+              - label: Símbolo do meio
+                name: accent
+                widget: string
+                default: ×
               - label: Segunda palavra
                 name: line2
                 widget: object
                 collapsed: true
-                summary: "{{fields.pt}}"
+                summary: '{{fields.pt}}'
                 required: false
                 fields:
-                  - { label: Português, name: pt, widget: string, required: false }
-                  - { label: English, name: en, widget: string, required: false }
-                  - { label: Español, name: es, widget: string, required: false }
-                  - { label: Français, name: fr, widget: string, required: false }
-                  - { label: Deutsch, name: de, widget: string, required: false }
+                  - label: Português
+                    name: pt
+                    widget: string
+                    required: false
+                  - label: English
+                    name: en
+                    widget: string
+                    required: false
+                  - label: Español
+                    name: es
+                    widget: string
+                    required: false
+                  - label: Français
+                    name: fr
+                    widget: string
+                    required: false
+                  - label: Deutsch
+                    name: de
+                    widget: string
+                    required: false
               - label: Nota
                 name: note
                 widget: object
                 collapsed: true
-                summary: "{{fields.pt}}"
+                summary: '{{fields.pt}}'
                 required: false
                 fields:
-                  - { label: Português, name: pt, widget: string, required: false }
-                  - { label: English, name: en, widget: string, required: false }
-                  - { label: Español, name: es, widget: string, required: false }
-                  - { label: Français, name: fr, widget: string, required: false }
-                  - { label: Deutsch, name: de, widget: string, required: false }
+                  - label: Português
+                    name: pt
+                    widget: string
+                    required: false
+                  - label: English
+                    name: en
+                    widget: string
+                    required: false
+                  - label: Español
+                    name: es
+                    widget: string
+                    required: false
+                  - label: Français
+                    name: fr
+                    widget: string
+                    required: false
+                  - label: Deutsch
+                    name: de
+                    widget: string
+                    required: false
+          - label: Idiomas (códigos)
+            name: locales
+            widget: list
+            required: false
+            hint: 'Ex: pt, en, es, fr, de'
+            field:
+              label: Código
+              name: code
+              widget: string
+          - label: Ordem dos slides
+            name: slides
+            widget: list
+            hint: Arrasta para reordenar os slides no site. Para adicionar, escolhe um slide da lista.
+            field:
+              label: Slide
+              name: slide
+              widget: relation
+              collection: slides
+              value_field: id
+              search_fields:
+                - id
+              display_fields:
+                - id
+  - name: slides
+    label: Slides
+    editor:
+      preview: false
+    folder: content/slides
+    format: json
+    identifier_field: id
+    slug: '{{fields.id}}'
+    create: true
+    summary: '{{fields.id}}'
+    fields:
+      - label: Identificador
+        name: id
+        widget: string
+        hint: 'Usado nas âncoras do menu (ex: hero, dealer)'
+      - label: Mostrar secção
+        name: visible
+        widget: boolean
+        default: true
+        hint: Desliga para esconder esta secção inteira no site, sem a apagar
+      - label: Altura (nº de ecrãs)
+        name: heightScreens
+        widget: number
+        value_type: int
+        min: 1
+        max: 3
+        default: 1
+        required: false
+        hint: 1 = altura normal (um ecrã) · 2 = ocupa dois ecrãs de altura · 3 = três. Mais alto = mais espaço a preencher
+      - label: Fundo especial da apresentação
+        name: heroScrim
+        widget: boolean
+        default: false
+        required: false
+      - label: Foto de fundo (opcional)
+        name: bgImage
+        widget: image
+        required: false
+        hint: Foto a preto-e-branco com tom azul da marca por cima, para se fundir com o céu
+      - label: Foto de fundo — mobile (opcional)
+        name: bgImageMobile
+        widget: image
+        required: false
+        hint: Se vazio, usa a mesma foto de desktop
+      - label: Mostrar foto de fundo
+        name: bgImageVisible
+        widget: boolean
+        default: true
+        required: false
+        hint: Desliga para esconder a foto sem a apagar — a secção fica só com o fundo azul liso
+      - label: Escurecer fundo (%)
+        name: bgDarken
+        widget: number
+        value_type: int
+        min: 0
+        max: 100
+        default: 0
+        required: false
+        hint: Escurece a foto de fundo. Útil para igualar o tom do azul entre secções com fotos de brilho diferente
+      - label: Cor no topo da secção (opcional)
+        name: topTint
+        widget: color
+        required: false
+        hint: Funde com o fundo da secção anterior — desvanece para transparente
+      - label: Camada azul (tom da secção)
+        name: overlay
+        widget: object
+        collapsed: true
+        summary: Camada azul
+        required: false
+        fields:
+          - label: Mostrar camada (liga/desliga)
+            name: visible
+            widget: boolean
+            default: true
+            hint: Liga/desliga TODO o tom azul desta secção. Em secções com foto afeta a foto+scrim; nas outras é um véu sobre o céu
+          - label: Cor
+            name: color
+            widget: color
+            required: false
+            hint: Cor principal do tom (aplica-se à foto/céu e ao scrim)
+          - label: Segunda cor (degradé)
+            name: color2
+            widget: color
+            required: false
+            hint: Cor no fundo do degradé sobre a foto. Vazio = igual à cor principal
+          - label: Intensidade (%)
+            name: intensity
+            widget: number
+            value_type: int
+            min: 0
+            max: 100
+            default: 100
+            hint: Força do tom azul (100 = como está agora)
+      - label: Mostrar texto de scroll
+        name: scrollHintVisible
+        widget: boolean
+        default: true
+        hint: Desliga para esconder o texto e a seta (↓) juntos
+      - label: Texto de scroll (opcional)
+        name: scrollHint
+        widget: object
+        collapsed: true
+        summary: '{{fields.pt}}'
+        required: false
+        fields:
+          - label: Português
+            name: pt
+            widget: string
+            required: false
+          - label: English
+            name: en
+            widget: string
+            required: false
+          - label: Español
+            name: es
+            widget: string
+            required: false
+          - label: Français
+            name: fr
+            widget: string
+            required: false
+          - label: Deutsch
+            name: de
+            widget: string
+            required: false
+      - label: Elementos
+        name: elements
+        widget: list
+        label_singular: Elemento
+        typeKey: role
+        types:
+          - label: Texto
+            name: text
+            widget: object
+            summary: Texto — {{fields.title.pt}}
+            fields:
+              - label: Alinhamento horizontal
+                name: align
+                widget: select
+                default: left
+                options:
+                  - label: Esquerda
+                    value: left
+                  - label: Centro
+                    value: center
+                  - label: Direita
+                    value: right
+              - label: Alinhamento vertical
+                name: valign
+                widget: select
+                default: center
+                options:
+                  - label: Cima
+                    value: top
+                  - label: Centro
+                    value: center
+                  - label: Baixo
+                    value: bottom
+              - label: Etiqueta pequena
+                name: kicker
+                widget: object
+                collapsed: true
+                summary: '{{fields.pt}}'
+                required: false
+                fields:
+                  - label: Português
+                    name: pt
+                    widget: string
+                    required: false
+                  - label: English
+                    name: en
+                    widget: string
+                    required: false
+                  - label: Español
+                    name: es
+                    widget: string
+                    required: false
+                  - label: Français
+                    name: fr
+                    widget: string
+                    required: false
+                  - label: Deutsch
+                    name: de
+                    widget: string
+                    required: false
+              - label: Título
+                name: title
+                widget: object
+                collapsed: true
+                summary: '{{fields.pt}}'
+                required: false
+                fields:
+                  - label: Português
+                    name: pt
+                    widget: string
+                    required: false
+                  - label: English
+                    name: en
+                    widget: string
+                    required: false
+                  - label: Español
+                    name: es
+                    widget: string
+                    required: false
+                  - label: Français
+                    name: fr
+                    widget: string
+                    required: false
+                  - label: Deutsch
+                    name: de
+                    widget: string
+                    required: false
+              - label: Segunda linha do título
+                name: title2
+                widget: object
+                collapsed: true
+                summary: '{{fields.pt}}'
+                required: false
+                fields:
+                  - label: Português
+                    name: pt
+                    widget: string
+                    required: false
+                  - label: English
+                    name: en
+                    widget: string
+                    required: false
+                  - label: Español
+                    name: es
+                    widget: string
+                    required: false
+                  - label: Français
+                    name: fr
+                    widget: string
+                    required: false
+                  - label: Deutsch
+                    name: de
+                    widget: string
+                    required: false
+              - label: Segunda linha a laranja
+                name: accent2
+                widget: boolean
+                default: false
+                required: false
+              - label: Tamanho do título
+                name: titleTag
+                widget: select
+                options:
+                  - h1
+                  - h2
+                default: h2
+              - label: Subtítulo
+                name: subtitle
+                widget: object
+                collapsed: true
+                summary: '{{fields.pt}}'
+                required: false
+                fields:
+                  - label: Português
+                    name: pt
+                    widget: text
+                    required: false
+                  - label: English
+                    name: en
+                    widget: text
+                    required: false
+                  - label: Español
+                    name: es
+                    widget: text
+                    required: false
+                  - label: Français
+                    name: fr
+                    widget: text
+                    required: false
+                  - label: Deutsch
+                    name: de
+                    widget: text
+                    required: false
+              - label: Formatação do subtítulo (aplica-se a todos os idiomas)
+                name: subtitleFormat
+                widget: object
+                collapsed: true
+                required: false
+                fields:
+                  - label: Negrito
+                    name: bold
+                    widget: boolean
+                    default: false
+                    required: false
+                  - label: Itálico
+                    name: italic
+                    widget: boolean
+                    default: false
+                    required: false
+                  - label: Maiúsculas
+                    name: uppercase
+                    widget: boolean
+                    default: false
+                    required: false
+                  - label: Tamanho (px — vazio = automático)
+                    name: size
+                    widget: number
+                    value_type: int
+                    min: 10
+                    max: 60
+                    required: false
+                  - label: Espaçamento entre letras (px)
+                    name: letterSpacing
+                    widget: number
+                    value_type: int
+                    min: -2
+                    max: 20
+                    required: false
+                  - label: Cor
+                    name: color
+                    widget: select
+                    options:
+                      - default
+                      - orange
+                      - white
+                      - black
+                    default: default
+                    required: false
+              - label: Linha de confiança (opcional)
+                name: trust
+                widget: object
+                collapsed: true
+                summary: '{{fields.pt}}'
+                required: false
+                fields:
+                  - label: Português
+                    name: pt
+                    widget: string
+                    required: false
+                  - label: English
+                    name: en
+                    widget: string
+                    required: false
+                  - label: Español
+                    name: es
+                    widget: string
+                    required: false
+                  - label: Français
+                    name: fr
+                    widget: string
+                    required: false
+                  - label: Deutsch
+                    name: de
+                    widget: string
+                    required: false
+              - label: Selo/logo junto à linha de confiança (opcional)
+                name: badgeImage
+                widget: image
+                required: false
+              - label: Link do selo (opcional)
+                name: trustHref
+                widget: string
+                required: false
+                hint: Se preenchido, o logo e o texto tornam-se clicáveis (abre em novo separador)
+              - label: Botões (opcional)
+                name: buttons
+                widget: list
+                label_singular: Botão
+                summary: '{{fields.label.pt}}'
+                required: false
+                fields:
+                  - label: Texto do botão
+                    name: label
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
+                    required: false
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: string
+                        required: false
+                      - label: English
+                        name: en
+                        widget: string
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: string
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: string
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: string
+                        required: false
+                  - label: Link
+                    name: href
+                    widget: string
+                    required: false
+                    hint: 'Id da secção (ex: #dealer) ou link completo'
+                  - label: Estilo
+                    name: variant
+                    widget: select
+                    options:
+                      - primary
+                      - secondary
+                    default: primary
+                    hint: primary = laranja cheio · secondary = contorno
+              - label: Mostrar no desktop
+                name: showDesktop
+                widget: boolean
+                default: true
+              - label: Mostrar no mobile
+                name: showMobile
+                widget: boolean
+                default: true
+          - label: Piloto da apresentação
+            name: heroImage
+            widget: object
+            summary: Apresentação — {{fields.src}}
+            fields:
+              - label: Imagem
+                name: src
+                widget: image
+              - label: Texto alternativo
+                name: alt
+                widget: string
+                required: false
+              - label: Altura no desktop (%)
+                name: heightPct
+                widget: number
+                value_type: int
+                min: 20
+                max: 100
+                default: 100
+              - label: Altura no mobile (%)
+                name: heightPctMobile
+                widget: number
+                value_type: int
+                min: 20
+                max: 100
+                default: 94
+              - label: Rotação (graus)
+                name: rotation
+                widget: number
+                value_type: int
+                min: -45
+                max: 45
+                default: 0
+                required: false
+              - label: Opacidade (%)
+                name: opacity
+                widget: number
+                value_type: int
+                min: 0
+                max: 100
+                default: 100
+              - label: Sombra
+                name: shadow
+                widget: boolean
+                default: true
+              - label: Flutuar
+                name: float
+                widget: boolean
+                default: true
+              - label: Velocidade do flutuar (s)
+                name: floatSpeed
+                widget: number
+                value_type: int
+                min: 1
+                max: 20
+                default: 7
+              - label: Parallax (0-30)
+                name: parallax
+                widget: number
+                value_type: int
+                min: 0
+                max: 30
+                default: 8
+              - label: Mostrar no desktop
+                name: showDesktop
+                widget: boolean
+                default: true
+              - label: Mostrar no mobile
+                name: showMobile
+                widget: boolean
+                default: true
+          - label: Piloto a flutuar
+            name: floatImage
+            widget: object
+            summary: A flutuar — {{fields.src}}
+            fields:
+              - label: Imagem
+                name: src
+                widget: image
+              - label: Texto alternativo
+                name: alt
+                widget: string
+                required: false
+              - label: Posição horizontal (%)
+                name: x
+                widget: number
+                value_type: int
+                min: 0
+                max: 100
+                default: 6
+              - label: Posição vertical (%)
+                name: 'y'
+                widget: number
+                value_type: int
+                min: 0
+                max: 100
+                default: 24
+              - label: Ancorar à direita
+                name: anchorX
+                widget: select
+                options:
+                  - left
+                  - right
+                default: left
+              - label: Largura (% do ecrã)
+                name: widthVW
+                widget: number
+                value_type: int
+                min: 5
+                max: 90
+                default: 30
+              - label: Largura máxima (px)
+                name: widthMax
+                widget: number
+                value_type: int
+                min: 100
+                max: 900
+                default: 360
+              - label: Rotação (graus)
+                name: rotation
+                widget: number
+                value_type: int
+                min: -45
+                max: 45
+                default: 0
+                required: false
+              - label: Opacidade (%)
+                name: opacity
+                widget: number
+                value_type: int
+                min: 0
+                max: 100
+                default: 100
+              - label: Sombra
+                name: shadow
+                widget: boolean
+                default: true
+              - label: Flutuar
+                name: float
+                widget: boolean
+                default: true
+              - label: Velocidade do flutuar (s)
+                name: floatSpeed
+                widget: number
+                value_type: int
+                min: 1
+                max: 20
+                default: 9
+              - label: Parallax (0-30)
+                name: parallax
+                widget: number
+                value_type: int
+                min: 0
+                max: 30
+                default: 20
+              - label: Mostrar no desktop
+                name: showDesktop
+                widget: boolean
+                default: true
+              - label: Mostrar no mobile
+                name: showMobile
+                widget: boolean
+                default: true
+              - label: Mobile (opcional — deixa vazio para herdar do desktop)
+                name: mobile
+                widget: object
+                collapsed: true
+                required: false
+                fields:
+                  - label: Posição horizontal (%)
+                    name: x
+                    widget: number
+                    value_type: int
+                    min: 0
+                    max: 100
+                    required: false
+                  - label: Posição vertical (%)
+                    name: 'y'
+                    widget: number
+                    value_type: int
+                    min: 0
+                    max: 100
+                    required: false
+                  - label: Ancorar à direita
+                    name: anchorX
+                    widget: select
+                    options:
+                      - left
+                      - right
+                    required: false
+                  - label: Largura (% do ecrã)
+                    name: widthVW
+                    widget: number
+                    value_type: int
+                    min: 5
+                    max: 90
+                    required: false
+                  - label: Largura máxima (px)
+                    name: widthMax
+                    widget: number
+                    value_type: int
+                    min: 100
+                    max: 900
+                    required: false
+              - label: Cartão ao passar o rato (opcional)
+                name: card
+                widget: object
+                required: false
+                fields:
+                  - label: Ativar
+                    name: enabled
+                    widget: boolean
+                    default: false
+                  - label: Texto antes
+                    name: pre
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
+                    required: false
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: string
+                        required: false
+                      - label: English
+                        name: en
+                        widget: string
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: string
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: string
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: string
+                        required: false
+                  - label: Texto a negrito
+                    name: strong
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
+                    required: false
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: string
+                        required: false
+                      - label: English
+                        name: en
+                        widget: string
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: string
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: string
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: string
+                        required: false
+                  - label: Subtexto
+                    name: sub
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
+                    required: false
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: string
+                        required: false
+                      - label: English
+                        name: en
+                        widget: string
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: string
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: string
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: string
+                        required: false
+          - label: Piloto no chão
+            name: groundImage
+            widget: object
+            summary: No chão — {{fields.src}}
+            fields:
+              - label: Imagem
+                name: src
+                widget: image
+              - label: Texto alternativo
+                name: alt
+                widget: string
+                required: false
+              - label: Distância à margem (%)
+                name: x
+                widget: number
+                value_type: int
+                min: 0
+                max: 100
+                default: 6
+              - label: Ancorar à direita
+                name: anchorX
+                widget: select
+                options:
+                  - left
+                  - right
+                default: right
+              - label: Largura (% do ecrã)
+                name: widthVW
+                widget: number
+                value_type: int
+                min: 5
+                max: 90
+                default: 26
+              - label: Largura máxima (px)
+                name: widthMax
+                widget: number
+                value_type: int
+                min: 100
+                max: 900
+                default: 340
+              - label: Opacidade (%)
+                name: opacity
+                widget: number
+                value_type: int
+                min: 0
+                max: 100
+                default: 100
+              - label: Sombra
+                name: shadow
+                widget: boolean
+                default: true
+              - label: Escurecer (segundo plano)
+                name: dim
+                widget: boolean
+                default: false
+                required: false
+              - label: Profundidade (z-index)
+                name: zIndex
+                widget: number
+                value_type: int
+                default: 0
+                required: false
+              - label: Parallax (0-30)
+                name: parallax
+                widget: number
+                value_type: int
+                min: 0
+                max: 30
+                default: 0
+              - label: Mostrar no desktop
+                name: showDesktop
+                widget: boolean
+                default: true
+              - label: Mostrar no mobile
+                name: showMobile
+                widget: boolean
+                default: true
+              - label: Mobile (opcional — deixa vazio para herdar do desktop)
+                name: mobile
+                widget: object
+                collapsed: true
+                required: false
+                fields:
+                  - label: Distância à margem (%)
+                    name: x
+                    widget: number
+                    value_type: int
+                    min: 0
+                    max: 100
+                    required: false
+                  - label: Ancorar à direita
+                    name: anchorX
+                    widget: select
+                    options:
+                      - left
+                      - right
+                    required: false
+                  - label: Largura (% do ecrã)
+                    name: widthVW
+                    widget: number
+                    value_type: int
+                    min: 5
+                    max: 90
+                    required: false
+                  - label: Largura máxima (px)
+                    name: widthMax
+                    widget: number
+                    value_type: int
+                    min: 100
+                    max: 900
+                    required: false
+              - label: Cartão ao passar o rato (opcional)
+                name: card
+                widget: object
+                required: false
+                fields:
+                  - label: Ativar
+                    name: enabled
+                    widget: boolean
+                    default: false
+                  - label: Texto antes
+                    name: pre
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
+                    required: false
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: string
+                        required: false
+                      - label: English
+                        name: en
+                        widget: string
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: string
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: string
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: string
+                        required: false
+                  - label: Texto a negrito
+                    name: strong
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
+                    required: false
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: string
+                        required: false
+                      - label: English
+                        name: en
+                        widget: string
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: string
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: string
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: string
+                        required: false
+                  - label: Subtexto
+                    name: sub
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
+                    required: false
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: string
+                        required: false
+                      - label: English
+                        name: en
+                        widget: string
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: string
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: string
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: string
+                        required: false
+          - label: Música (Happy Soaring Music)
+            name: music
+            widget: object
+            summary: Música (leitor + listas)
+            hint: Só o leitor, listas por género, licenças e CTA. O título/subtítulo do slide fazem-se com um elemento "Texto" à parte (com todas as opções).
+            fields:
+              - label: Número de WhatsApp
+                name: whatsapp
+                widget: string
+                required: false
+                hint: 'Indicativo + número, só dígitos (ex: 351912345678). Usado no botão do CTA final'
+              - label: Altura das listas (px)
+                name: listHeight
+                widget: number
+                value_type: int
+                min: 80
+                max: 600
+                default: 184
+                required: false
+                hint: Altura visível de cada lista antes de precisar de scroll
+              - label: Botões no topo (laranja)
+                name: buttons
+                widget: list
+                label_singular: Botão
+                summary: '{{fields.label.pt}}'
+                required: false
+                fields:
+                  - label: Texto do botão
+                    name: label
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
+                    required: false
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: string
+                        required: false
+                      - label: English
+                        name: en
+                        widget: string
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: string
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: string
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: string
+                        required: false
+                  - label: Mensagem WhatsApp
+                    name: waMessage
+                    widget: text
+                    required: false
+                    hint: Mensagem pré-preenchida ao abrir o WhatsApp
+                  - label: Link (alternativo ao WhatsApp)
+                    name: href
+                    widget: string
+                    required: false
+                    hint: Se preenchido, usa este link em vez do WhatsApp
+              - label: Géneros
+                name: genres
+                widget: list
+                label_singular: Género
+                summary: '{{fields.name}}'
+                fields:
+                  - label: Mostrar lista
+                    name: visible
+                    widget: boolean
+                    default: true
+                    hint: Desliga para esconder esta lista/género no site, sem a apagar
+                  - label: Nome do género
+                    name: name
+                    widget: string
+                  - label: Faixas
+                    name: tracks
+                    widget: list
+                    label_singular: Faixa
+                    summary: '{{fields.name}}'
+                    fields:
+                      - label: Nome
+                        name: name
+                        widget: string
+                      - label: Duração
+                        name: duration
+                        widget: string
+                        required: false
+                        hint: 'Ex: 3:30'
+                      - label: Ficheiro MP3
+                        name: file
+                        widget: file
+                        required: false
+              - label: Título da tabela de licenças
+                name: licensesTitle
+                widget: string
+                required: false
+                default: Licenças
+              - label: Licenças
+                name: licenses
+                widget: list
+                label_singular: Licença
+                summary: '{{fields.label}}'
+                fields:
+                  - label: Nome
+                    name: label
+                    widget: string
+                  - label: Preço
+                    name: price
+                    widget: string
+                    hint: 'Ex: 0€ · 10€ – 20€ · price on request'
+              - label: Aviso legal
+                name: legal
+                widget: object
+                collapsed: true
+                summary: '{{fields.pt}}'
+                required: false
+                fields:
+                  - label: Português
+                    name: pt
+                    widget: text
+                    required: false
+                  - label: English
+                    name: en
+                    widget: text
+                    required: false
+                  - label: Español
+                    name: es
+                    widget: text
+                    required: false
+                  - label: Français
+                    name: fr
+                    widget: text
+                    required: false
+                  - label: Deutsch
+                    name: de
+                    widget: text
+                    required: false
+              - label: Chamada final (CTA)
+                name: cta
+                widget: object
+                collapsed: true
+                required: false
+                fields:
+                  - label: Título
+                    name: title
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
+                    required: false
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: string
+                        required: false
+                      - label: English
+                        name: en
+                        widget: string
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: string
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: string
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: string
+                        required: false
+                  - label: Texto
+                    name: text
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
+                    required: false
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: string
+                        required: false
+                      - label: English
+                        name: en
+                        widget: string
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: string
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: string
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: string
+                        required: false
+                  - label: Texto do botão
+                    name: buttonLabel
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
+                    required: false
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: string
+                        required: false
+                      - label: English
+                        name: en
+                        widget: string
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: string
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: string
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: string
+                        required: false
+                  - label: Mensagem WhatsApp
+                    name: waMessage
+                    widget: text
+                    required: false
+          - label: Flow Paragliders (produtos)
+            name: flow
+            widget: object
+            summary: Flow Paragliders
+            fields:
+              - label: 'Etiqueta de topo (ex: OFFICIAL DEALER IN PORTUGAL)'
+                name: dealerLabel
+                widget: object
+                collapsed: true
+                summary: '{{fields.pt}}'
+                required: false
+                fields:
+                  - label: Português
+                    name: pt
+                    widget: string
+                    required: false
+                  - label: English
+                    name: en
+                    widget: string
+                    required: false
+                  - label: Español
+                    name: es
+                    widget: string
+                    required: false
+                  - label: Français
+                    name: fr
+                    widget: string
+                    required: false
+                  - label: Deutsch
+                    name: de
+                    widget: string
+                    required: false
+              - label: Logo Flow Paragliders
+                name: logoImage
+                widget: image
+                required: false
+              - label: Título
+                name: title
+                widget: object
+                collapsed: true
+                summary: '{{fields.pt}}'
+                required: false
+                fields:
+                  - label: Português
+                    name: pt
+                    widget: string
+                    required: false
+                  - label: English
+                    name: en
+                    widget: string
+                    required: false
+                  - label: Español
+                    name: es
+                    widget: string
+                    required: false
+                  - label: Français
+                    name: fr
+                    widget: string
+                    required: false
+                  - label: Deutsch
+                    name: de
+                    widget: string
+                    required: false
+              - label: Descrição
+                name: description
+                widget: object
+                collapsed: true
+                summary: '{{fields.pt}}'
+                required: false
+                fields:
+                  - label: Português
+                    name: pt
+                    widget: text
+                    required: false
+                  - label: English
+                    name: en
+                    widget: text
+                    required: false
+                  - label: Español
+                    name: es
+                    widget: text
+                    required: false
+                  - label: Français
+                    name: fr
+                    widget: text
+                    required: false
+                  - label: Deutsch
+                    name: de
+                    widget: text
+                    required: false
+              - label: Número de WhatsApp
+                name: whatsapp
+                widget: string
+                required: false
+                hint: 'Indicativo + número, só dígitos (ex: 351912345678)'
+              - label: Famílias
+                name: families
+                widget: list
+                label_singular: Família
+                summary: '{{fields.name}}'
+                fields:
+                  - label: Mostrar família
+                    name: visible
+                    widget: boolean
+                    default: true
+                  - label: Começar aberta
+                    name: open
+                    widget: boolean
+                    default: false
+                    hint: Por defeito as famílias aparecem fechadas
+                  - label: Nome da família
+                    name: name
+                    widget: string
+                  - label: Sub-famílias
+                    name: subfamilies
+                    widget: list
+                    label_singular: Sub-família
+                    summary: '{{fields.name}}'
+                    fields:
+                      - label: Mostrar sub-família
+                        name: visible
+                        widget: boolean
+                        default: true
+                      - label: Começar aberta
+                        name: open
+                        widget: boolean
+                        default: false
+                      - label: Nome da sub-família
+                        name: name
+                        widget: string
+                      - label: Asas
+                        name: wings
+                        widget: list
+                        label_singular: Asa
+                        summary: '{{fields.name}}'
+                        fields:
+                          - label: Imagem da asa
+                            name: image
+                            widget: image
+                            required: false
+                          - label: Nome
+                            name: name
+                            widget: string
+                          - label: 'Categoria/Etiqueta (ex: EN-B, CCC)'
+                            name: badge
+                            widget: string
+                            required: false
+                          - label: Link do site da Flow
+                            name: flowHref
+                            widget: string
+                            required: false
+                            hint: URL da página da asa no site da Flow
+                          - label: Mensagem WhatsApp
+                            name: waMessage
+                            widget: text
+                            required: false

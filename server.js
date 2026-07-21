@@ -40,9 +40,11 @@ function broadcast() {
   clearTimeout(timer);
   timer = setTimeout(() => { for (const c of clients) c.write('data: reload\n\n'); }, 80);
 }
-for (const f of ['content.json', 'app.js', 'styles.css', 'index.html']) {
+for (const f of ['app.js', 'styles.css', 'index.html']) {
   try { watch(join(ROOT, f), broadcast); } catch {}
 }
+// vigia a pasta content/ (settings.json + slides/*.json), recursivamente
+try { watch(join(ROOT, 'content'), { recursive: true }, broadcast); } catch {}
 
 const server = createServer(async (req, res) => {
   let path = decodeURIComponent(new URL(req.url, 'http://x').pathname);

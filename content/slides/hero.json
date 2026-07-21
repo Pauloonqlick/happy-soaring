@@ -1,0 +1,114 @@
+{
+  "id": "hero",
+  "visible": true,
+  "heightScreens": null,
+  "heroScrim": true,
+  "bgImage": "images/hero-bg.jpg",
+  "bgImageMobile": "images/hero-bg-mobile.jpg",
+  "bgImageVisible": true,
+  "bgDarken": null,
+  "topTint": "",
+  "overlay": {
+    "visible": true,
+    "color": "",
+    "color2": "",
+    "intensity": 100
+  },
+  "scrollHintVisible": false,
+  "scrollHint": {
+    "pt": "sobe connosco",
+    "en": "Soar with us",
+    "es": "Vuela con nosotros",
+    "fr": "Prends de la hauteur avec nous",
+    "de": "Steig mit uns auf"
+  },
+  "elements": [
+    {
+      "role": "heroImage",
+      "showDesktop": true,
+      "showMobile": true,
+      "src": "images/hero-pilot.png",
+      "alt": "Piloto Happy Soaring com a Mullet 2",
+      "heightPct": 100,
+      "heightPctMobile": 100,
+      "rotation": 0,
+      "opacity": 100,
+      "shadow": true,
+      "float": true,
+      "floatSpeed": 7,
+      "parallax": 8
+    },
+    {
+      "role": "text",
+      "align": "left",
+      "valign": "center",
+      "kicker": null,
+      "title": {
+        "pt": "HAPPY",
+        "en": "HAPPY",
+        "es": "HAPPY",
+        "fr": "HAPPY",
+        "de": "HAPPY"
+      },
+      "title2": {
+        "pt": "SOARING",
+        "en": "SOARING",
+        "es": "SOARING",
+        "fr": "SOARING",
+        "de": "SOARING"
+      },
+      "accent2": true,
+      "titleTag": "h1",
+      "subtitle": {
+        "pt": "Cursos de Parakite em Portugal\nVive a tua paixão",
+        "en": "Parakite courses in Portugal\nLive your passion",
+        "es": "Cursos de Parakite en Portugal\n Vive tu pasión",
+        "fr": "Cours de Parakite au Portugal\nVis ta passion",
+        "de": "Parakitekurs in Portugal\nLebe deine Leidenschaft"
+      },
+      "subtitleFormat": {
+        "bold": false,
+        "italic": false,
+        "uppercase": false,
+        "size": null,
+        "letterSpacing": null,
+        "color": "default"
+      },
+      "trust": {
+        "pt": "Revendedor Oficial",
+        "en": "Official Dealer",
+        "es": "Distribuidor Oficial",
+        "fr": "Revendeur Officiel",
+        "de": "Offizieller Händler"
+      },
+      "badgeImage": "images/flow-logo.png",
+      "trustHref": "",
+      "buttons": [
+        {
+          "label": {
+            "pt": "Cursos",
+            "en": "Courses",
+            "es": "Cursos",
+            "fr": "Cours",
+            "de": "Kurse"
+          },
+          "href": "#dealer",
+          "variant": "primary"
+        },
+        {
+          "label": {
+            "pt": "Ver serviços",
+            "en": "See services",
+            "es": "Ver servicios",
+            "fr": "Voir les services",
+            "de": "Leistungen ansehen"
+          },
+          "href": "#sobre",
+          "variant": "secondary"
+        }
+      ],
+      "showDesktop": true,
+      "showMobile": true
+    }
+  ]
+}

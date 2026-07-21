@@ -380,3 +380,44 @@ footer small{opacity:.7}
   #music{flex-direction:column;gap:28px}
   #music .music{flex:0 0 auto;width:100%}
 }
+
+/* ================= Flow Paragliders (família > sub-família > asas) ================= */
+.flow{position:relative;z-index:3;width:100%;max-width:1000px;margin:0 auto}
+.flow-head{text-align:center;margin-bottom:8px}
+.flow-dealer{color:#fff;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.flow-logo{height:54px;width:auto;margin:12px auto 4px;display:block;filter:brightness(0) invert(1)}
+.flow-title{color:#fff;font-weight:800;font-size:clamp(22px,4vw,30px);margin:6px 0;letter-spacing:.5px}
+.flow-desc{color:rgba(255,255,255,.85);font-size:14px;max-width:56ch;margin:6px auto 0;line-height:1.5}
+.flow-fam-acc{margin:12px 0}
+.flow-famhead{width:100%;display:flex;align-items:center;gap:12px;background:none;border:none;cursor:pointer;color:#fff;font-weight:800;font-size:18px;letter-spacing:2px;text-transform:uppercase;padding:10px 0;text-align:left}
+.flow-famhead>span:nth-child(2){white-space:nowrap}
+.flow-famhead::after{content:"";flex:1;height:2px;background:rgba(255,255,255,.25)}
+.flow-fam-acc.open>.flow-famhead .flow-chev{transform:rotate(90deg)}
+.flow-fambody{display:none;padding-top:4px}
+.flow-fam-acc.open>.flow-fambody{display:block}
+.flow-ctrls{display:flex;gap:8px;margin:2px 0 12px}
+.flow-ctrl{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);color:#fff;font-size:12px;font-weight:600;padding:6px 13px;border-radius:100px;cursor:pointer;transition:background .15s}
+.flow-ctrl:hover{background:rgba(255,255,255,.26)}
+.flow-sub{border:1px solid rgba(255,255,255,.2);border-radius:12px;margin-bottom:10px;background:rgba(255,255,255,.07);overflow:hidden}
+.flow-subhead{width:100%;display:flex;align-items:center;gap:10px;padding:13px 15px;background:none;border:none;cursor:pointer;color:#fff;font-weight:700;font-size:14px;text-align:left}
+.flow-count{color:rgba(255,255,255,.65);font-size:12px;font-weight:600;margin-left:auto}
+.flow-chev{display:inline-flex;transition:transform .2s}
+.flow-sub.open .flow-chev{transform:rotate(90deg)}
+.flow-subbody{display:none;padding:0 8px 8px}
+.flow-sub.open .flow-subbody{display:block}
+.flow-row{display:flex;align-items:center;gap:14px;padding:10px;border-top:1px solid rgba(255,255,255,.14)}
+.flow-row:hover{background:rgba(255,255,255,.06);border-radius:8px}
+.flow-thumb{flex:none;width:84px;display:flex;justify-content:center}
+.flow-thumb img{max-width:84px;max-height:60px;object-fit:contain;display:block}
+.flow-info{flex:1;min-width:0;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.flow-name{color:#fff;font-weight:700;font-size:15px}
+.flow-badge{background:rgba(255,255,255,.2);color:#fff;font-size:10px;font-weight:700;letter-spacing:.5px;padding:3px 9px;border-radius:100px}
+.flow-links{flex:none;display:flex;gap:8px}
+.flow-ic{display:inline-flex;width:32px;height:32px;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;text-decoration:none;transition:background .15s}
+.flow-ic:hover{background:rgba(255,255,255,.28)}
+.flow-ic.wa{background:#25D366;color:#08351a}
+.flow-ic.wa:hover{background:#1fbe5a}
+@media(max-width:600px){
+  .flow-row{flex-wrap:wrap}
+  .flow-thumb{width:100%;justify-content:flex-start}
+}

@@ -1,0 +1,303 @@
+{
+  "id": "music",
+  "visible": true,
+  "heightScreens": null,
+  "heroScrim": false,
+  "bgImage": "",
+  "bgImageMobile": "",
+  "bgImageVisible": true,
+  "bgDarken": null,
+  "topTint": "",
+  "overlay": {
+    "visible": true,
+    "color": "#141414",
+    "color2": "#141414",
+    "intensity": 100
+  },
+  "scrollHint": {
+    "pt": ""
+  },
+  "elements": [
+    {
+      "role": "text",
+      "align": "left",
+      "valign": "center",
+      "kicker": {
+        "pt": "HAPPY SOARING",
+        "en": "HAPPY SOARING",
+        "es": "",
+        "fr": "",
+        "de": ""
+      },
+      "title": {
+        "pt": "Happy Soaring Music",
+        "en": "Happy Soaring Music",
+        "es": "",
+        "fr": "",
+        "de": ""
+      },
+      "title2": {
+        "pt": "",
+        "en": "",
+        "es": "",
+        "fr": "",
+        "de": ""
+      },
+      "accent2": true,
+      "titleTag": "h2",
+      "subtitle": {
+        "pt": "Música original inspirada no vento, mar, liberdade e voo.",
+        "en": "Original music inspired by wind, sea, freedom and flight.",
+        "es": "",
+        "fr": "",
+        "de": ""
+      },
+      "subtitleFormat": {
+        "bold": false,
+        "italic": false,
+        "uppercase": false,
+        "size": null,
+        "letterSpacing": null,
+        "color": "default"
+      },
+      "trustHref": "",
+      "buttons": [],
+      "showDesktop": true,
+      "showMobile": true
+    },
+    {
+      "role": "music",
+      "buttons": [
+        {
+          "label": {
+            "pt": "Pilot Music Pack",
+            "en": "Pilot Music Pack",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "href": "",
+          "waMessage": ""
+        },
+        {
+          "label": {
+            "pt": "Pedir música personalizada",
+            "en": "Request Custom Music",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "href": "",
+          "waMessage": ""
+        }
+      ],
+      "showDesktop": true,
+      "showMobile": true,
+      "whatsapp": "351900000000",
+      "listHeight": 184,
+      "genres": [
+        {
+          "visible": false,
+          "name": "Soaring Vibes",
+          "tracks": [
+            {
+              "name": "Golden Hour",
+              "duration": "3:30",
+              "file": "music/soaring-golden-hour.mp3"
+            },
+            {
+              "name": "Coastal Glide",
+              "duration": "3:12",
+              "file": "music/soaring-coastal-glide.mp3"
+            },
+            {
+              "name": "Thermal Dreams",
+              "duration": "2:48",
+              "file": "music/soaring-thermal-dreams.mp3"
+            },
+            {
+              "name": "Sea Breeze",
+              "duration": "4:05",
+              "file": "music/soaring-sea-breeze.mp3"
+            },
+            {
+              "name": "Dune Runner",
+              "duration": "2:55",
+              "file": "music/soaring-dune-runner.mp3"
+            }
+          ]
+        },
+        {
+          "visible": false,
+          "name": "Low Flight Energy",
+          "tracks": [
+            {
+              "name": "Ground Rush",
+              "duration": "2:40",
+              "file": "music/low-ground-rush.mp3"
+            },
+            {
+              "name": "Sand & Speed",
+              "duration": "3:02",
+              "file": "music/low-sand-speed.mp3"
+            },
+            {
+              "name": "Kite Pulse",
+              "duration": "3:18",
+              "file": "music/low-kite-pulse.mp3"
+            },
+            {
+              "name": "Shorebreak",
+              "duration": "2:33",
+              "file": "music/low-shorebreak.mp3"
+            }
+          ]
+        },
+        {
+          "visible": false,
+          "name": "SmartGround Sessions",
+          "tracks": [
+            {
+              "name": "First Steps",
+              "duration": "2:20",
+              "file": "music/sg-first-steps.mp3"
+            },
+            {
+              "name": "Kite Control",
+              "duration": "3:10",
+              "file": "music/sg-kite-control.mp3"
+            },
+            {
+              "name": "Beach Drill",
+              "duration": "2:44",
+              "file": "music/sg-beach-drill.mp3"
+            }
+          ]
+        },
+        {
+          "visible": false,
+          "name": "Wind & Sea Ambient",
+          "tracks": [
+            {
+              "name": "Tide",
+              "duration": "4:30",
+              "file": "music/amb-tide.mp3"
+            },
+            {
+              "name": "Salt Air",
+              "duration": "5:02",
+              "file": "music/amb-salt-air.mp3"
+            },
+            {
+              "name": "Horizon",
+              "duration": "4:12",
+              "file": "music/amb-horizon.mp3"
+            }
+          ]
+        },
+        {
+          "visible": false,
+          "name": "Trailer Flight Music",
+          "tracks": [
+            {
+              "name": "Takeoff",
+              "duration": "1:58",
+              "file": "music/tr-takeoff.mp3"
+            },
+            {
+              "name": "Rising",
+              "duration": "2:12",
+              "file": "music/tr-rising.mp3"
+            },
+            {
+              "name": "Epic Glide",
+              "duration": "2:40",
+              "file": "music/tr-epic-glide.mp3"
+            }
+          ]
+        },
+        {
+          "visible": true,
+          "name": "Dub & Roots Flight",
+          "tracks": [
+            {
+              "name": "African Roots",
+              "duration": "",
+              "file": "music/dub-african-roots.mp3"
+            },
+            {
+              "name": "Roots Wind",
+              "duration": "4:00",
+              "file": "music/dub-roots-wind.mp3"
+            },
+            {
+              "name": "Echo Bay",
+              "duration": "3:48",
+              "file": "music/dub-echo-bay.mp3"
+            }
+          ]
+        }
+      ],
+      "licensesTitle": "Licenças",
+      "licenses": [
+        {
+          "label": "Free Gift",
+          "price": "0€"
+        },
+        {
+          "label": "Single Track",
+          "price": "10€ – 20€"
+        },
+        {
+          "label": "Pilot Pack",
+          "price": "25€ – 40€"
+        },
+        {
+          "label": "Custom Track",
+          "price": "75€ – 250€"
+        },
+        {
+          "label": "Exclusive Track",
+          "price": "price on request"
+        }
+      ],
+      "legal": {
+        "pt": "A música oferecida pela Happy Soaring destina-se apenas a uso pessoal e em redes sociais. A revenda, redistribuição ou uso comercial por terceiros não é permitido sem autorização escrita.",
+        "en": "Music offered by Happy Soaring is for personal and social media use only. Resale, redistribution or commercial use by third parties is not allowed without written permission.",
+        "es": "",
+        "fr": "",
+        "de": ""
+      },
+      "cta": {
+        "title": {
+          "pt": "Precisas de música original para o teu vídeo de voo?",
+          "en": "Need original music for your flight video?",
+          "es": "",
+          "fr": "",
+          "de": ""
+        },
+        "text": {
+          "pt": "Fala com a Happy Soaring.",
+          "en": "Contact Happy Soaring.",
+          "es": "",
+          "fr": "",
+          "de": ""
+        },
+        "buttonLabel": {
+          "pt": "Falar no WhatsApp",
+          "en": "Chat on WhatsApp",
+          "es": "",
+          "fr": "",
+          "de": ""
+        },
+        "waMessage": {
+          "pt": "Olá! Vi a Happy Soaring Music e queria mais informação.",
+          "en": "Hi! I saw Happy Soaring Music and would like more info.",
+          "es": "",
+          "fr": "",
+          "de": ""
+        }
+      }
+    }
+  ]
+}

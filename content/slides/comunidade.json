@@ -1,0 +1,83 @@
+{
+  "id": "comunidade",
+  "visible": true,
+  "heightScreens": null,
+  "heroScrim": false,
+  "bgImage": "",
+  "bgImageMobile": "",
+  "bgImageVisible": true,
+  "topTint": "",
+  "overlay": {
+    "visible": true,
+    "color": "",
+    "color2": "",
+    "intensity": 100
+  },
+  "scrollHint": {
+    "pt": ""
+  },
+  "elements": [
+    {
+      "role": "text",
+      "align": "left",
+      "kicker": {
+        "pt": "A tribo"
+      },
+      "title": {
+        "pt": "Não vendemos velas."
+      },
+      "title2": {
+        "pt": "Fazemos pilotos."
+      },
+      "titleTag": "h2",
+      "subtitle": {
+        "pt": "Gente que descola junta, que arruma a asa ao fim do dia e volta amanhã. Essa é a Happy Soaring."
+      },
+      "trustHref": "",
+      "showDesktop": true,
+      "showMobile": true
+    },
+    {
+      "role": "groundImage",
+      "showDesktop": true,
+      "showMobile": true,
+      "src": "images/pilot-stand.png",
+      "alt": "Piloto",
+      "opacity": 100,
+      "shadow": true,
+      "parallax": 0,
+      "x": 6,
+      "anchorX": "right",
+      "widthVW": 26,
+      "widthMax": 340,
+      "card": {
+        "enabled": true,
+        "pre": {
+          "pt": "O"
+        },
+        "strong": {
+          "pt": "Chief"
+        },
+        "sub": {
+          "pt": "fundador & instrutor"
+        }
+      },
+      "zIndex": null
+    },
+    {
+      "role": "groundImage",
+      "showDesktop": true,
+      "showMobile": true,
+      "src": "images/pilot-walk.png",
+      "alt": "Piloto a arrumar a asa",
+      "opacity": 100,
+      "parallax": 0,
+      "x": 26,
+      "anchorX": "right",
+      "widthVW": 22,
+      "widthMax": 280,
+      "dim": true,
+      "zIndex": -1
+    }
+  ]
+}
