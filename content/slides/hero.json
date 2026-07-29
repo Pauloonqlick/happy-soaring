@@ -25,7 +25,7 @@
   "elements": [
     {
       "role": "heroImage",
-      "showDesktop": true,
+      "showDesktop": false,
       "showMobile": true,
       "src": "images/hero-pilot.png",
       "alt": "Piloto Happy Soaring com a Mullet 2",

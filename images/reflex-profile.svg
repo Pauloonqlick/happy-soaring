@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 300" width="420" height="300" fill="none">
+  <!-- linhas de corrente -->
+  <g stroke="#ffffff" stroke-width="2" opacity="0.35" stroke-linecap="round">
+    <path d="M10 70 C 120 70, 150 44, 210 44 C 270 44, 300 66, 410 66"/>
+    <path d="M10 104 C 120 104, 150 74, 210 74 C 270 74, 300 100, 410 100"/>
+    <path d="M10 150 C 130 150, 160 150, 210 150 C 300 150, 320 150, 410 150"/>
+  </g>
+  <!-- separação estimada (pontos) -->
+  <g fill="#ff8a45" opacity="0.8">
+    <circle cx="330" cy="66" r="2.4"/><circle cx="348" cy="60" r="2"/><circle cx="366" cy="70" r="2.6"/>
+    <circle cx="384" cy="58" r="1.8"/><circle cx="356" cy="76" r="2"/><circle cx="378" cy="80" r="2.3"/>
+  </g>
+  <!-- perfil reflex: bordo de fuga levantado -->
+  <path d="M40 118
+           C 60 92, 100 80, 150 82
+           C 210 84, 270 96, 300 92
+           L 322 78
+           C 300 104, 250 112, 200 112
+           C 140 112, 90 122, 40 118 Z"
+        fill="#ffffff" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+  <!-- linha de corda -->
+  <line x1="40" y1="118" x2="322" y2="78" stroke="#141414" stroke-width="1.4" stroke-dasharray="5 5" opacity="0.5"/>
+  <!-- centro de pressão -->
+  <circle cx="150" cy="98" r="6" fill="#3ddc84" stroke="#0d1a12" stroke-width="2"/>
+  <!-- linhas A / B / C / travão até ao piloto -->
+  <g stroke-width="2.2" stroke-linecap="round">
+    <line x1="70" y1="112" x2="205" y2="270" stroke="#ff5757"/>
+    <line x1="150" y1="104" x2="205" y2="270" stroke="#3ddc84"/>
+    <line x1="235" y1="102" x2="205" y2="270" stroke="#4aa8ff"/>
+    <line x1="322" y1="80" x2="205" y2="270" stroke="#ff6a13"/>
+  </g>
+  <!-- piloto -->
+  <circle cx="205" cy="278" r="10" fill="#2a3240" stroke="#8c95a1" stroke-width="2"/>
+  <!-- bordos -->
+  <text x="30" y="140" fill="#8c95a1" font-family="'Segoe UI',sans-serif" font-size="12" text-anchor="end">Ataque</text>
+  <text x="332" y="72" fill="#8c95a1" font-family="'Segoe UI',sans-serif" font-size="12">Fuga</text>
+</svg>

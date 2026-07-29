@@ -271,6 +271,70 @@ function buildMusic(item) {
   wrap.appendChild(panel);
   const num = item.whatsapp;
 
+  /* ---- preços por volume + seleção ("carrinho" leve, sem backend) ---- */
+  const pr = item.pricing || {};
+  const cur = pr.currency || '€';
+  const eur = n => (Math.round(n * 100) / 100).toFixed(2).replace('.', ',') + cur;
+  const tiers = (pr.tiers || []).filter(x => x && typeof x.price === 'number').slice().sort((a, b) => (a.minQty || 0) - (b.minQty || 0));
+  const unitFor = c => { let u = tiers.length ? tiers[0].price : 0; tiers.forEach(x => { if (c >= (x.minQty || 1)) u = x.price; }); return c > 0 ? u : 0; };
+
+  const SELKEY = 'hs-music-sel';
+  const sel = { paid: new Set(), free: new Set() };
+  try { const s = JSON.parse(localStorage.getItem(SELKEY) || '{}'); (s.paid || []).forEach(x => sel.paid.add(x)); (s.free || []).forEach(x => sel.free.add(x)); } catch (e) { }
+  const saveSel = () => { try { localStorage.setItem(SELKEY, JSON.stringify({ paid: [...sel.paid], free: [...sel.free] })); } catch (e) { } };
+
+  const PLUS = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+  const CHECK = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>';
+  const TRASH = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M9 7V5h6v2M6 8l1 12h10l1-12"/></svg>';
+  const WA_SMALL = '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 00-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1012 2zm5.7 14.2c-.2.7-1.2 1.3-1.9 1.4-.5.1-1.1.2-3.4-.7-2.9-1.2-4.7-4.1-4.9-4.3-.1-.2-1.1-1.5-1.1-2.8s.7-2 .9-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.2.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.9.9c.3.2.5.3.5.4.1.2.1.6-.1 1.3z"/></svg>';
+
+  const availNames = new Set();
+  const selCount = el('span');
+  let mode = 'all', genreSel = 'all', searchQ = '';
+  let flatBody = null;
+
+  /* barra de total (fixa em baixo, só aparece quando há seleção) */
+  const cart = el('div', 'music-cart');
+  const cInfo = el('div', 'music-cart-info');
+  const cTotal = el('div', 'music-cart-total');
+  const cSub = el('div', 'music-cart-sub');
+  cInfo.appendChild(cTotal); cInfo.appendChild(cSub);
+  const cNudge = el('div', 'music-cart-nudge');
+  const cBuy = el('a', 'music-cart-buy'); cBuy.target = '_blank'; cBuy.rel = 'noopener';
+  cBuy.innerHTML = WA_SMALL; const cBuyLbl = el('span'); cBuyLbl.textContent = t(pr.buyLabel) || 'Comprar no WhatsApp'; cBuy.appendChild(cBuyLbl);
+  const cClear = el('button', 'music-cart-clear'); cClear.type = 'button'; cClear.setAttribute('aria-label', 'Limpar seleção'); cClear.innerHTML = TRASH;
+  cart.appendChild(cInfo); cart.appendChild(cNudge); cart.appendChild(cBuy); cart.appendChild(cClear);
+  panel.appendChild(cart);
+
+  function refresh() {
+    const c = sel.paid.size, f = sel.free.size, u = unitFor(c), total = c * u;
+    cart.classList.toggle('show', (c + f) > 0);
+    cTotal.textContent = (c + f) + ((c + f) === 1 ? ' música · ' : ' músicas · ') + eur(total);
+    cSub.textContent = c ? ('a ' + eur(u) + '/música' + (f ? (' · ' + f + ' grátis') : '')) : (f ? (f + ' grátis') : '');
+    let nudge = '';
+    for (const x of tiers) { if (c > 0 && c < (x.minQty || 0)) { nudge = 'faltam ' + (x.minQty - c) + ' para ' + eur(x.price) + '/música'; break; } }
+    cNudge.textContent = nudge; cNudge.style.display = nudge ? '' : 'none';
+    const names = [...sel.paid].concat([...sel.free].map(n => n + ' (grátis)'));
+    const intro = t(pr.intro) || 'Olá! Quero estas faixas:';
+    cBuy.href = waLink(num, intro + ' ' + names.join(', ') + '. Total: ' + c + (c === 1 ? ' música' : ' músicas') + ' · ' + eur(total) + '.');
+    selCount.textContent = '(' + (c + f) + ')';
+  }
+  function applyFilter() {
+    if (!flatBody) return;
+    flatBody.querySelectorAll('.music-track').forEach(r => {
+      const okL = mode === 'all' || (mode === 'sel' ? r.classList.contains('sel') : r.dataset.lang === mode);
+      const okG = genreSel === 'all' || r.dataset.genre === genreSel;
+      const okQ = !searchQ || (r.dataset.nm || '').indexOf(searchQ) >= 0;
+      r.classList.toggle('mfhide', !(okL && okG && okQ));
+    });
+  }
+  cClear.addEventListener('click', () => {
+    sel.paid.clear(); sel.free.clear(); saveSel();
+    grid.querySelectorAll('.music-track.sel').forEach(r => r.classList.remove('sel'));
+    grid.querySelectorAll('.music-add').forEach(b => { b.innerHTML = PLUS; });
+    refresh(); applyFilter();
+  });
+
   /* botões no topo da área das listas (laranja) — contacto por WhatsApp */
   if (item.buttons && item.buttons.length) {
     const tb = el('div', 'music-topbtns');
@@ -327,69 +391,117 @@ function buildMusic(item) {
     audio.play().catch(() => {});
   }
 
-  /* listas por género — grelha: no desktop cabem várias lado a lado,
-     no mobile ficam empilhadas (1 por linha) */
-  const grid = el('div', 'music-genres');
-  (item.genres || []).forEach(genre => {
-    if (genre.visible === false) return; // lista escondida no CMS
-    const tracks = genre.tracks || [];
-    const cell = el('div', 'music-genre');
-    const ghead = el('div', 'music-ghead');
-    const gt = el('div', 'music-gtitle'); gt.textContent = genre.name || ''; ghead.appendChild(gt);
-    const gc = el('span', 'music-gcount'); gc.textContent = tracks.length + ' faixas'; ghead.appendChild(gc);
-    cell.appendChild(ghead);
-
-    const box = el('div', 'music-listbox');
-    const list = el('div', 'music-list');
-    if (typeof item.listHeight === 'number' && item.listHeight > 0) list.style.maxHeight = item.listHeight + 'px';
-    tracks.forEach(track => {
-      const row = el('div', 'music-track');
-      const b = el('button', 'music-pl'); b.type = 'button'; b.setAttribute('aria-label', 'Tocar ' + (track.name || '')); b.innerHTML = ICON_PLAY;
-      const nm = el('span', 'music-nm'); nm.textContent = track.name || '';
-      const du = el('span', 'music-dur'); du.textContent = track.duration || '';
-      b.addEventListener('click', () => playTrack(track, genre.name || '', b, track.name || ''));
-      row.appendChild(b); row.appendChild(nm); row.appendChild(du);
-      list.appendChild(row);
-    });
-    box.appendChild(list);
-    cell.appendChild(box);
-    grid.appendChild(cell);
+  /* filtro por idioma: Todas / Português / Inglês */
+  const filter = el('div', 'music-filter');
+  const fdefs = [['all', 'Todas'], ['pt', 'Português'], ['en', 'Inglês']];
+  const fbtns = [];
+  fdefs.forEach(([f, label]) => {
+    const b = el('button', 'music-fbtn' + (f === 'all' ? ' on' : '')); b.type = 'button';
+    b.textContent = label;
+    b.addEventListener('click', () => { mode = f; fbtns.forEach(x => x.classList.remove('on')); b.classList.add('on'); applyFilter(); });
+    fbtns.push(b); filter.appendChild(b);
   });
-  panel.appendChild(grid);
+  panel.appendChild(filter);
 
-  /* tabela de licenças */
-  if (item.licenses && item.licenses.length) {
-    const lt = el('div', 'music-sec-title'); lt.textContent = t(item.licensesTitle) || 'Licenças'; panel.appendChild(lt);
-    const licBox = el('div', 'music-licbox');
-    item.licenses.forEach(l => {
-      const row = el('div', 'music-lic');
-      const lb = el('span', 'music-lic-label'); lb.textContent = l.label || '';
-      const pr = el('span', 'music-lic-price'); pr.textContent = l.price || '';
-      const p = String(l.price || '').toLowerCase();
-      if (p === '0€' || p.includes('free') || p === '0') pr.classList.add('is-free');
-      else if (p.includes('request') || p.includes('pedido')) pr.classList.add('is-muted');
-      row.appendChild(lb); row.appendChild(pr);
-      licBox.appendChild(row);
+  /* lista única de faixas (cada uma com o seu género) */
+  const allTracks = (item.tracks || []).filter(tr => tr && tr.name && tr.file);
+
+  /* controlos: combo de géneros (antes) + pesquisa */
+  const controls = el('div', 'music-controls');
+  const gsel = el('select', 'music-gsel'); gsel.setAttribute('aria-label', 'Filtrar por género');
+  const optAll = el('option'); optAll.value = 'all'; optAll.textContent = 'Todos os géneros'; gsel.appendChild(optAll);
+  const genreNames = [];
+  allTracks.forEach(tr => { const g = (tr.genre || '').trim(); if (g && genreNames.indexOf(g) < 0) genreNames.push(g); });
+  genreNames.forEach(g => { const o = el('option'); o.value = g; o.textContent = g; gsel.appendChild(o); });
+  gsel.addEventListener('change', () => { genreSel = gsel.value; applyFilter(); });
+  const search = el('input', 'music-search'); search.type = 'text'; search.placeholder = 'Pesquisar música…'; search.setAttribute('aria-label', 'Pesquisar música');
+  search.addEventListener('input', () => { searchQ = search.value.toLowerCase().trim(); applyFilter(); });
+  controls.appendChild(gsel); controls.appendChild(search);
+  panel.appendChild(controls);
+
+  /* uma lista única com todas as faixas DISPONÍVEIS (com ficheiro), altura fixa + scroll */
+  const listbox = el('div', 'music-listbox music-flat');
+  const colhead = el('div', 'music-colhead');
+  ['', 'Música', 'Idioma', 'Género', 'Duração', ''].forEach((h, i) => {
+    const c = el('span'); c.textContent = h;
+    if (i === 2 || i === 3) c.style.textAlign = 'center';
+    if (i === 4) c.style.textAlign = 'right';
+    colhead.appendChild(c);
+  });
+  listbox.appendChild(colhead);
+  flatBody = el('div', 'music-flatbody');
+  if (typeof item.listHeight === 'number' && item.listHeight > 0) flatBody.style.maxHeight = 'min(' + item.listHeight + 'px, 62vh)';
+  allTracks.forEach(track => {
+    const id = track.name || '';
+    availNames.add(id);
+    const isFree = track.free === true;
+    const lang = track.lang || 'inst';
+    const genre = (track.genre || '').trim();
+    const row = el('div', 'music-track');
+    row.dataset.lang = lang; row.dataset.genre = genre; row.dataset.nm = id.toLowerCase();
+    const b = el('button', 'music-pl'); b.type = 'button'; b.setAttribute('aria-label', 'Tocar ' + id); b.innerHTML = ICON_PLAY;
+    const nm = el('span', 'music-nm'); nm.textContent = id;
+    if (isFree) { const fb = el('span', 'music-free'); fb.textContent = 'GRÁTIS'; nm.appendChild(fb); }
+    const lg = el('span', 'music-lang ' + lang); lg.textContent = ({ pt: 'PT', en: 'EN', inst: 'INST' })[lang] || lang;
+    const gn = el('span', genre ? 'music-gen' : ''); gn.textContent = genre;
+    const du = el('span', 'music-dur'); du.textContent = track.duration || '';
+    const add = el('button', 'music-add'); add.type = 'button'; add.dataset.free = isFree ? '1' : '0';
+    add.setAttribute('aria-label', (isFree ? 'Marcar faixa grátis ' : 'Marcar para comprar ') + id);
+    const setAdd = () => { const on = (isFree ? sel.free : sel.paid).has(id); add.innerHTML = on ? CHECK : PLUS; row.classList.toggle('sel', on); };
+    add.addEventListener('click', () => { const s = isFree ? sel.free : sel.paid; if (s.has(id)) s.delete(id); else s.add(id); setAdd(); saveSel(); refresh(); applyFilter(); });
+    setAdd();
+    b.addEventListener('click', () => playTrack(track, genre, b, id));
+    row.appendChild(b); row.appendChild(nm); row.appendChild(lg); row.appendChild(gn); row.appendChild(du); row.appendChild(add);
+    flatBody.appendChild(row);
+  });
+  listbox.appendChild(flatBody);
+  panel.appendChild(listbox);
+  applyFilter();
+
+  /* limpa da seleção guardada as faixas que já não estão disponíveis */
+  [...sel.paid].forEach(id => { if (!availNames.has(id)) sel.paid.delete(id); });
+  [...sel.free].forEach(id => { if (!availNames.has(id)) sel.free.delete(id); });
+  saveSel();
+
+  /* rodapé compacto: preços (esquerda) + CTA WhatsApp (direita), aviso legal por baixo */
+  const foot = el('div', 'music-foot');
+
+  /* escalões de preço — chips inline para poupar altura */
+  if (tiers.length) {
+    const pcol = el('div', 'music-foot-prices');
+    const lt = el('span', 'music-foot-title'); lt.textContent = pr.title || 'Preços'; pcol.appendChild(lt);
+    tiers.forEach(x => {
+      const chip = el('span', 'music-pchip');
+      const lb = el('span', 'music-pchip-q'); lb.textContent = (x.minQty <= 1 ? '1' : x.minQty + '+');
+      const price = el('span', 'music-pchip-p'); price.textContent = eur(x.price);
+      if (x.price === 0) price.classList.add('is-free');
+      chip.appendChild(lb); chip.appendChild(price);
+      pcol.appendChild(chip);
     });
-    panel.appendChild(licBox);
+    const unit = el('span', 'music-foot-unit'); unit.textContent = '/ música'; pcol.appendChild(unit);
+    foot.appendChild(pcol);
   }
 
-  /* aviso legal */
-  const legal = t(item.legal);
-  if (legal) { const lp = el('p', 'music-legal'); lp.textContent = legal; panel.appendChild(lp); }
-
-  /* CTA + WhatsApp */
+  /* CTA + WhatsApp (compacto, à direita) */
   if (item.cta && (t(item.cta.title) || t(item.cta.buttonLabel))) {
     const cta = el('div', 'music-cta');
-    if (t(item.cta.title)) { const c1 = el('div', 'music-cta-title'); c1.textContent = t(item.cta.title); cta.appendChild(c1); }
-    if (t(item.cta.text)) { const c2 = el('div', 'music-cta-text'); c2.textContent = t(item.cta.text); cta.appendChild(c2); }
+    const ct = el('div', 'music-cta-txt');
+    if (t(item.cta.title)) { const c1 = el('div', 'music-cta-title'); c1.textContent = t(item.cta.title); ct.appendChild(c1); }
+    if (t(item.cta.text)) { const c2 = el('div', 'music-cta-text'); c2.textContent = t(item.cta.text); ct.appendChild(c2); }
+    cta.appendChild(ct);
     const wa = el('a', 'music-wa'); wa.href = waLink(num, item.cta.waMessage); wa.target = '_blank'; wa.rel = 'noopener';
     wa.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 00-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1012 2zm5.7 14.2c-.2.7-1.2 1.3-1.9 1.4-.5.1-1.1.2-3.4-.7-2.9-1.2-4.7-4.1-4.9-4.3-.1-.2-1.1-1.5-1.1-2.8s.7-2 .9-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.2.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.9.9c.3.2.5.3.5.4.1.2.1.6-.1 1.3z"/></svg>';
     const label = el('span'); label.textContent = t(item.cta.buttonLabel) || 'WhatsApp'; wa.appendChild(label);
     cta.appendChild(wa);
-    panel.appendChild(cta);
+    foot.appendChild(cta);
   }
+  panel.appendChild(foot);
 
+  /* aviso legal — linha fina por baixo do rodapé */
+  const legal = t(item.legal);
+  if (legal) { const lp = el('p', 'music-legal'); lp.textContent = legal; panel.appendChild(lp); }
+
+  refresh();
   return wrap;
 }
 
@@ -532,6 +644,8 @@ function render(data) {
     if (sec.visible === false) return;
     const s = el('section');
     s.id = sec.id;
+    /* animação de vento neste slide (liga/desliga por slide; por defeito ligada) */
+    s.dataset.wind = sec.wind === false ? '0' : '1';
     /* altura da secção em nº de ecrãs (1 = normal). Editável no CMS. */
     if (typeof sec.heightScreens === 'number' && sec.heightScreens > 1) {
       s.style.minHeight = (sec.heightScreens * 100) + 'vh';
@@ -729,6 +843,19 @@ function initMotion(data) {
       }
       requestAnimationFrame(tick);
     })();
+
+    /* liga/desliga o vento por slide: faz fade conforme o slide mais visível */
+    const secs = [...document.querySelectorAll('section')];
+    if (secs.length) {
+      const ratios = new Map();
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => ratios.set(e.target, e.intersectionRatio));
+        let top = null, best = -1;
+        ratios.forEach((r, sec) => { if (r > best) { best = r; top = sec; } });
+        canvas.style.opacity = (top && top.dataset.wind === '0') ? '0' : '1';
+      }, { threshold: [0, 0.15, 0.35, 0.55, 0.75, 1] });
+      secs.forEach(s => io.observe(s));
+    }
   } else {
     canvas.style.display = 'none';
   }

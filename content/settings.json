@@ -63,6 +63,16 @@
     },
     {
       "label": {
+        "pt": "Reflex Lab",
+        "en": "",
+        "es": "",
+        "fr": "",
+        "de": ""
+      },
+      "target": "reflex-lab"
+    },
+    {
+      "label": {
         "pt": "Música",
         "en": "Music",
         "es": "",
@@ -97,6 +107,7 @@
     "comunidade",
     "dealer",
     "produtos",
+    "reflex-lab",
     "music"
   ]
 }

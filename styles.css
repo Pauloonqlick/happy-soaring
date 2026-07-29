@@ -25,6 +25,7 @@ body{
   inset:0;
   z-index:-1;
   pointer-events:none;
+  transition:opacity .5s ease;
 }
 
 section{
@@ -317,7 +318,7 @@ footer small{opacity:.7}
 /* ================= Happy Soaring Music ================= */
 /* o elemento de música é irmão do bloco de texto (cabeçalho) dentro da secção
    flex: no desktop o texto fica à esquerda e a música preenche a direita */
-.music{position:relative;z-index:3;flex:1 1 0;min-width:0}
+.music{position:relative;z-index:3;width:100%;min-width:0}
 .music-panel{width:100%}
 .music-topbtns{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 16px}
 .music-kicker{display:inline-block;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#fff;font-weight:700;background:rgba(255,255,255,.1);padding:7px 15px;border-radius:100px}
@@ -356,26 +357,34 @@ footer small{opacity:.7}
 .music-nm{flex:1;color:#eaeaea;font-size:14px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .music-dur{color:#888;font-size:12px;flex:none}
 
-.music-sec-title{color:#fff;font-size:17px;font-weight:700;margin:20px 0 10px}
-.music-licbox{border:1px solid #2c2c2c;border-radius:12px;overflow:hidden}
-.music-lic{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-top:1px solid #242424}
-.music-lic:first-child{border-top:none}
-.music-lic:nth-child(odd){background:#1c1c1c}
-.music-lic-label{color:#eee;font-size:13px}
-.music-lic-price{color:#ff9a4a;font-size:13px;font-weight:700}
-.music-lic-price.is-free{color:#4ade80}
-.music-lic-price.is-muted{color:#888}
-.music-legal{color:#6f6f6f;font-size:11px;line-height:1.55;margin:12px 0 18px}
+/* rodapé compacto: preços (chips) à esquerda + CTA à direita, numa só linha */
+.music-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px;margin-top:14px;padding:12px 16px;border:1px solid #2c2c2c;border-radius:14px;background:#1a1a1a}
+.music-foot-prices{display:flex;flex-wrap:wrap;align-items:center;gap:8px;min-width:0}
+.music-foot-title{color:#fff;font-size:14px;font-weight:700;margin-right:2px}
+.music-pchip{display:inline-flex;align-items:center;gap:6px;background:#242424;border:1px solid #333;border-radius:100px;padding:4px 10px}
+.music-pchip-q{color:#bbb;font-size:12px;font-weight:600}
+.music-pchip-p{color:#ff9a4a;font-size:13px;font-weight:800}
+.music-pchip-p.is-free{color:#4ade80}
+.music-foot-unit{color:#7d7d7d;font-size:12px}
 
-.music-cta{background:#1e1e1e;border:1px solid #2c2c2c;border-radius:14px;padding:18px;text-align:center}
-.music-cta-title{color:#fff;font-size:16px;font-weight:700}
-.music-cta-text{color:#aaa;font-size:13px;margin-top:3px}
-.music-wa{display:inline-flex;align-items:center;gap:8px;margin-top:14px;background:#25D366;color:#08351a;font-weight:800;font-size:14px;padding:12px 22px;border-radius:100px;text-decoration:none;transition:transform .2s}
+.music-cta{display:flex;align-items:center;gap:14px;min-width:0}
+.music-cta-txt{text-align:right;min-width:0}
+.music-cta-title{color:#fff;font-size:14px;font-weight:700;line-height:1.2}
+.music-cta-text{color:#9a9a9a;font-size:12px}
+.music-wa{flex:none;display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#08351a;font-weight:800;font-size:14px;padding:10px 18px;border-radius:100px;text-decoration:none;transition:transform .2s}
 .music-wa:hover{transform:translateY(-2px)}
+
+.music-legal{color:#6f6f6f;font-size:11px;line-height:1.5;margin:8px 2px 0}
+
+@media (max-width:640px){
+  .music-foot{flex-direction:column;align-items:stretch}
+  .music-cta{justify-content:space-between}
+  .music-cta-txt{text-align:left}
+}
 
 /* secção de música: texto à esquerda + música à direita (duas colunas), alinhada ao topo.
    No mobile empilha (texto em cima, listas em baixo). */
-#music{align-items:flex-start;gap:clamp(24px,4vw,56px)}
+#music{flex-direction:column;align-items:flex-start;gap:16px;overflow:visible}
 @media(max-width:760px){
   #music{flex-direction:column;gap:28px}
   #music .music{flex:0 0 auto;width:100%}
@@ -421,3 +430,59 @@ footer small{opacity:.7}
   .flow-row{flex-wrap:wrap}
   .flow-thumb{width:100%;justify-content:flex-start}
 }
+
+/* ===== Música: seleção de faixas + barra de total ===== */
+.music-add{width:32px;height:32px;border-radius:50%;border:1.6px solid var(--orange);background:transparent;color:var(--orange);flex:none;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-left:4px;transition:background .15s}
+.music-track.sel{background:rgba(255,106,19,.16)}
+.music-track.sel .music-add{background:var(--orange);color:#fff}
+.music-free{background:#134e2b;color:#4ade80;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;margin-left:8px;vertical-align:middle}
+.music-filter{display:flex;gap:8px;margin:6px 0 10px}
+.music-fbtn{background:#1e1e1e;border:1px solid #2c2c2c;color:#ccc;font-size:12px;font-weight:600;padding:7px 14px;border-radius:100px;cursor:pointer}
+.music-fbtn.on{background:var(--orange);border-color:var(--orange);color:#fff}
+.music-track.mfhide{display:none}
+.music-lang{font-size:9px;font-weight:700;letter-spacing:.5px;padding:2px 7px;border-radius:100px;margin-left:8px;vertical-align:middle}
+.music-lang.pt{background:#0e3b26;color:#4ade80}
+.music-lang.en{background:#0c2f52;color:#68b6ff}
+.music-lang.inst{background:#33240c;color:#f5b661}
+.music-cart{position:sticky;top:12px;z-index:40;width:100%;background:var(--orange);border-radius:14px;padding:12px 16px;display:none;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 10px 28px rgba(0,0,0,.4);margin-bottom:14px}
+.music-cart.show{display:flex}
+.music-cart-total{color:#fff;font-weight:800;font-size:19px;line-height:1.1}
+.music-cart-sub{color:#fff;opacity:.9;font-size:12px}
+.music-cart-nudge{color:#fff;background:rgba(0,0,0,.2);border-radius:100px;padding:5px 12px;font-size:12px;font-weight:600}
+.music-cart-buy{margin-left:auto;background:#25D366;color:#08351a;font-weight:800;font-size:13px;padding:10px 16px;border-radius:100px;text-decoration:none;display:inline-flex;align-items:center;gap:7px}
+.music-cart-buy:hover{background:#1fbe5a}
+.music-cart-clear{background:rgba(0,0,0,.22);border:none;color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;flex:none;display:flex;align-items:center;justify-content:center}
+@media(max-width:600px){
+  .music-cart{flex-wrap:wrap}
+  .music-cart-buy{margin-left:0;flex:1}
+}
+
+/* ===== Música: lista única (título no topo, full-width) ===== */
+.music-controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:2px 0 10px}
+.music-gsel{background:#1a1a1a;border:1px solid #2c2c2c;border-radius:100px;padding:8px 14px;color:#eee;font-size:13px;cursor:pointer;appearance:auto}
+.music-search{margin-left:auto;background:#1a1a1a;border:1px solid #2c2c2c;border-radius:100px;padding:8px 14px;color:#eee;font-size:13px;min-width:200px;outline:none}
+.music-search::placeholder{color:#777}
+.music-colhead,.music-flat .music-track{display:grid;grid-template-columns:34px minmax(0,1fr) 66px 130px 54px 34px;gap:10px;align-items:center;padding:9px 14px}
+.music-colhead{background:#191919;border-bottom:1px solid #2c2c2c;color:#888;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.music-flatbody{overflow-y:auto;scrollbar-width:thin}
+.music-flatbody::-webkit-scrollbar{width:7px}
+.music-flatbody::-webkit-scrollbar-thumb{background:#3a3a3a;border-radius:4px}
+.music-flat .music-track{border-top:1px solid #232323}
+.music-flat .music-track:first-child{border-top:none}
+.music-flat .music-nm{margin:0}
+.music-flat .music-lang{margin-left:0;justify-self:center;text-align:center}
+.music-gen{font-size:11px;color:#cfcfcf;background:#222;border:1px solid #303030;border-radius:100px;padding:3px 10px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;justify-self:center;max-width:100%}
+.music-flat .music-dur{text-align:right}
+@media(max-width:640px){
+  .music-colhead{display:none}
+  .music-flat .music-track{grid-template-columns:34px minmax(0,1fr) 34px;grid-template-areas:"play name add" "play meta add";row-gap:2px;align-items:center}
+  .music-flat .music-pl{grid-area:play}
+  .music-flat .music-nm{grid-area:name}
+  .music-flat .music-add{grid-area:add}
+  .music-flat .music-lang{grid-area:meta;justify-self:start;margin-right:6px}
+  .music-flat .music-gen{grid-area:meta;justify-self:start;margin-left:52px}
+  .music-flat .music-dur{grid-area:meta;justify-self:end}
+}
+
+/* garante que esconder faixa filtrada vence a grelha da lista única */
+.music-flat .music-track.mfhide{display:none}

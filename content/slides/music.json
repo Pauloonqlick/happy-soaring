@@ -1,6 +1,7 @@
 {
   "id": "music",
   "visible": true,
+  "wind": false,
   "heightScreens": null,
   "heroScrim": false,
   "bgImage": "",
@@ -15,13 +16,17 @@
     "intensity": 100
   },
   "scrollHint": {
-    "pt": ""
+    "pt": "",
+    "en": "",
+    "es": "",
+    "fr": "",
+    "de": ""
   },
   "elements": [
     {
       "role": "text",
       "align": "left",
-      "valign": "center",
+      "valign": "top",
       "kicker": {
         "pt": "HAPPY SOARING",
         "en": "HAPPY SOARING",
@@ -67,198 +72,435 @@
     },
     {
       "role": "music",
-      "buttons": [
-        {
-          "label": {
-            "pt": "Pilot Music Pack",
-            "en": "Pilot Music Pack",
-            "es": "",
-            "fr": "",
-            "de": ""
-          },
-          "href": "",
-          "waMessage": ""
-        },
-        {
-          "label": {
-            "pt": "Pedir música personalizada",
-            "en": "Request Custom Music",
-            "es": "",
-            "fr": "",
-            "de": ""
-          },
-          "href": "",
-          "waMessage": ""
-        }
-      ],
+      "buttons": [],
       "showDesktop": true,
       "showMobile": true,
-      "whatsapp": "351900000000",
-      "listHeight": 184,
-      "genres": [
+      "whatsapp": "351927187912",
+      "listHeight": 620,
+      "pricing": {
+        "currency": "€",
+        "title": "Preços",
+        "buyLabel": {
+          "pt": "Comprar no WhatsApp",
+          "en": "Buy on WhatsApp",
+          "es": "",
+          "fr": "",
+          "de": ""
+        },
+        "intro": {
+          "pt": "Olá! Quero comprar estas faixas:",
+          "en": "Hi! I want to buy these tracks:",
+          "es": "",
+          "fr": "",
+          "de": ""
+        },
+        "tiers": [
+          {
+            "minQty": 1,
+            "price": 1
+          },
+          {
+            "minQty": 5,
+            "price": 0.75
+          },
+          {
+            "minQty": 20,
+            "price": 0.5
+          }
+        ]
+      },
+      "tracks": [
         {
-          "visible": false,
-          "name": "Soaring Vibes",
-          "tracks": [
-            {
-              "name": "Golden Hour",
-              "duration": "3:30",
-              "file": "music/soaring-golden-hour.mp3"
-            },
-            {
-              "name": "Coastal Glide",
-              "duration": "3:12",
-              "file": "music/soaring-coastal-glide.mp3"
-            },
-            {
-              "name": "Thermal Dreams",
-              "duration": "2:48",
-              "file": "music/soaring-thermal-dreams.mp3"
-            },
-            {
-              "name": "Sea Breeze",
-              "duration": "4:05",
-              "file": "music/soaring-sea-breeze.mp3"
-            },
-            {
-              "name": "Dune Runner",
-              "duration": "2:55",
-              "file": "music/soaring-dune-runner.mp3"
-            }
-          ]
+          "name": "2026 05 16 12 02 06 2",
+          "lang": "en",
+          "genre": "",
+          "duration": "1:38",
+          "file": "music/happy-soaring_2026-05-16-12-02-06-2_total-01m38s_preview-00m32s.mp3",
+          "free": false
         },
         {
-          "visible": false,
-          "name": "Low Flight Energy",
-          "tracks": [
-            {
-              "name": "Ground Rush",
-              "duration": "2:40",
-              "file": "music/low-ground-rush.mp3"
-            },
-            {
-              "name": "Sand & Speed",
-              "duration": "3:02",
-              "file": "music/low-sand-speed.mp3"
-            },
-            {
-              "name": "Kite Pulse",
-              "duration": "3:18",
-              "file": "music/low-kite-pulse.mp3"
-            },
-            {
-              "name": "Shorebreak",
-              "duration": "2:33",
-              "file": "music/low-shorebreak.mp3"
-            }
-          ]
+          "name": "African Roots",
+          "lang": "en",
+          "genre": "Reggae",
+          "duration": "1:03",
+          "file": "music/happy-soaring_african-roots-reggae-soul-1_total-01m03s_preview-00m30s.mp3",
+          "free": false
         },
         {
-          "visible": false,
-          "name": "SmartGround Sessions",
-          "tracks": [
-            {
-              "name": "First Steps",
-              "duration": "2:20",
-              "file": "music/sg-first-steps.mp3"
-            },
-            {
-              "name": "Kite Control",
-              "duration": "3:10",
-              "file": "music/sg-kite-control.mp3"
-            },
-            {
-              "name": "Beach Drill",
-              "duration": "2:44",
-              "file": "music/sg-beach-drill.mp3"
-            }
-          ]
+          "name": "African Roots Reggae Soul",
+          "lang": "en",
+          "genre": "",
+          "duration": "1:03",
+          "file": "music/happy-soaring_african-roots-reggae-soul_total-01m03s_preview-00m30s.mp3",
+          "free": false
         },
         {
-          "visible": false,
-          "name": "Wind & Sea Ambient",
-          "tracks": [
-            {
-              "name": "Tide",
-              "duration": "4:30",
-              "file": "music/amb-tide.mp3"
-            },
-            {
-              "name": "Salt Air",
-              "duration": "5:02",
-              "file": "music/amb-salt-air.mp3"
-            },
-            {
-              "name": "Horizon",
-              "duration": "4:12",
-              "file": "music/amb-horizon.mp3"
-            }
-          ]
+          "name": "Alegria Agora",
+          "lang": "pt",
+          "genre": "",
+          "duration": "1:20",
+          "file": "music/happy-soaring_alegria-agora_total-01m20s_preview-00m30s.mp3",
+          "free": false
         },
         {
-          "visible": false,
-          "name": "Trailer Flight Music",
-          "tracks": [
-            {
-              "name": "Takeoff",
-              "duration": "1:58",
-              "file": "music/tr-takeoff.mp3"
-            },
-            {
-              "name": "Rising",
-              "duration": "2:12",
-              "file": "music/tr-rising.mp3"
-            },
-            {
-              "name": "Epic Glide",
-              "duration": "2:40",
-              "file": "music/tr-epic-glide.mp3"
-            }
-          ]
+          "name": "Bd Dacing Together",
+          "lang": "en",
+          "genre": "",
+          "duration": "0:58",
+          "file": "music/happy-soaring_bd-dacing-together_total-00m58s_preview-00m23s.mp3",
+          "free": false
         },
         {
-          "visible": true,
-          "name": "Dub & Roots Flight",
-          "tracks": [
-            {
-              "name": "African Roots",
-              "duration": "",
-              "file": "music/dub-african-roots.mp3"
-            },
-            {
-              "name": "Roots Wind",
-              "duration": "4:00",
-              "file": "music/dub-roots-wind.mp3"
-            },
-            {
-              "name": "Echo Bay",
-              "duration": "3:48",
-              "file": "music/dub-echo-bay.mp3"
-            }
-          ]
-        }
-      ],
-      "licensesTitle": "Licenças",
-      "licenses": [
-        {
-          "label": "Free Gift",
-          "price": "0€"
+          "name": "Bezugo",
+          "lang": "en",
+          "genre": "",
+          "duration": "3:04",
+          "file": "music/happy-soaring_bezugo_total-03m04s_preview-00m35s.mp3",
+          "free": false
         },
         {
-          "label": "Single Track",
-          "price": "10€ – 20€"
+          "name": "Colors Smiles Love 1",
+          "lang": "en",
+          "genre": "",
+          "duration": "0:30",
+          "file": "music/happy-soaring_colors-smiles-love-1_total-00m30s_preview-00m13s.mp3",
+          "free": false
         },
         {
-          "label": "Pilot Pack",
-          "price": "25€ – 40€"
+          "name": "Colors Smiles Love",
+          "lang": "en",
+          "genre": "",
+          "duration": "0:28",
+          "file": "music/happy-soaring_colors-smiles-love_total-00m28s_preview-com-voz-00m13s.mp3",
+          "free": false
         },
         {
-          "label": "Custom Track",
-          "price": "75€ – 250€"
+          "name": "Come Closer Baby",
+          "lang": "en",
+          "genre": "",
+          "duration": "4:32",
+          "file": "music/happy-soaring_come-closer-baby_total-04m32s_preview-com-voz-00m40s.mp3",
+          "free": false
         },
         {
-          "label": "Exclusive Track",
-          "price": "price on request"
+          "name": "Deixa O Fogo Subir",
+          "lang": "pt",
+          "genre": "",
+          "duration": "3:31",
+          "file": "music/happy-soaring_deixa-o-fogo-subir_total-03m31s_preview-com-voz-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "Ela E Demais 10",
+          "lang": "pt",
+          "genre": "",
+          "duration": "2:56",
+          "file": "music/happy-soaring_ela-e-demais-10_total-02m56s_preview-com-voz-00m35s.mp3",
+          "free": false
+        },
+        {
+          "name": "Eli Hhh 1",
+          "lang": "en",
+          "genre": "",
+          "duration": "3:49",
+          "file": "music/happy-soaring_eli-hhh-1_total-03m49s_preview-com-voz-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "Eu Sou Eu 6",
+          "lang": "pt",
+          "genre": "",
+          "duration": "1:33",
+          "file": "music/happy-soaring_eu-sou-eu-6_total-01m33s_preview-com-voz-00m32s.mp3",
+          "free": false
+        },
+        {
+          "name": "Fly With Me",
+          "lang": "en",
+          "genre": "",
+          "duration": "3:16",
+          "file": "music/happy-soaring_fly-with-me_total-03m16s_preview-com-voz-00m35s.mp3",
+          "free": false
+        },
+        {
+          "name": "Go Fly",
+          "lang": "en",
+          "genre": "",
+          "duration": "0:49",
+          "file": "music/happy-soaring_go-fly_total-00m49s_preview-com-voz-00m20s.mp3",
+          "free": false
+        },
+        {
+          "name": "Go Flyy 2",
+          "lang": "en",
+          "genre": "",
+          "duration": "0:31",
+          "file": "music/happy-soaring_go-flyy-2_total-00m31s_preview-com-voz-00m14s.mp3",
+          "free": false
+        },
+        {
+          "name": "Hoje Celebro A Vida",
+          "lang": "pt",
+          "genre": "",
+          "duration": "4:17",
+          "file": "music/happy-soaring_hoje-celebro-a-vida_total-04m17s_preview-com-voz-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "Keep It Alive",
+          "lang": "en",
+          "genre": "",
+          "duration": "2:06",
+          "file": "music/happy-soaring_keep-it-alive_total-02m06s_preview-com-voz-00m32s.mp3",
+          "free": false
+        },
+        {
+          "name": "Let S Be Happy",
+          "lang": "en",
+          "genre": "",
+          "duration": "1:12",
+          "file": "music/happy-soaring_let-s-be-happy_total-01m12s_preview-com-voz-00m30s.mp3",
+          "free": false
+        },
+        {
+          "name": "Live In Peace 1",
+          "lang": "en",
+          "genre": "",
+          "duration": "3:51",
+          "file": "music/happy-soaring_live-in-peace-1_total-03m51s_preview-com-voz-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "Live In Peace",
+          "lang": "en",
+          "genre": "",
+          "duration": "3:50",
+          "file": "music/happy-soaring_live-in-peace_total-03m50s_preview-com-voz-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "No Wind No Fun 1",
+          "lang": "en",
+          "genre": "",
+          "duration": "0:35",
+          "file": "music/happy-soaring_no-wind-no-fun-1_total-00m35s_preview-com-voz-00m14s.mp3",
+          "free": false
+        },
+        {
+          "name": "Ola Sou Eu 1",
+          "lang": "pt",
+          "genre": "",
+          "duration": "2:07",
+          "file": "music/happy-soaring_ola-sou-eu-1_total-02m07s_preview-com-voz-00m32s.mp3",
+          "free": false
+        },
+        {
+          "name": "One World One Love",
+          "lang": "en",
+          "genre": "",
+          "duration": "0:53",
+          "file": "music/happy-soaring_one-world-one-love_total-00m53s_preview-com-voz-00m21s.mp3",
+          "free": false
+        },
+        {
+          "name": "Se Por Acaso A Porta Nao Abrir 9",
+          "lang": "pt",
+          "genre": "",
+          "duration": "3:09",
+          "file": "music/happy-soaring_se-por-acaso-a-porta-nao-abrir-9_total-03m09s_preview-com-voz-00m35s.mp3",
+          "free": false
+        },
+        {
+          "name": "Super Man",
+          "lang": "en",
+          "genre": "",
+          "duration": "2:03",
+          "file": "music/happy-soaring_super-man_total-02m03s_preview-com-voz-00m32s.mp3",
+          "free": false
+        },
+        {
+          "name": "Tenho Uma Filha Live",
+          "lang": "pt",
+          "genre": "",
+          "duration": "3:41",
+          "file": "music/happy-soaring_tenho-uma-filha-live_total-03m41s_preview-com-voz-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "Tenho Uma Filha",
+          "lang": "pt",
+          "genre": "",
+          "duration": "3:41",
+          "file": "music/happy-soaring_tenho-uma-filha_total-03m41s_preview-com-voz-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "This World Needs More Colors 1",
+          "lang": "en",
+          "genre": "",
+          "duration": "1:09",
+          "file": "music/happy-soaring_this-world-needs-more-colors-1_total-01m09s_preview-com-voz-00m30s.mp3",
+          "free": false
+        },
+        {
+          "name": "Up Acaso 1",
+          "lang": "pt",
+          "genre": "",
+          "duration": "3:30",
+          "file": "music/happy-soaring_up-acaso-1_total-03m30s_preview-com-voz-00m35s.mp3",
+          "free": false
+        },
+        {
+          "name": "Vai So",
+          "lang": "pt",
+          "genre": "",
+          "duration": "1:18",
+          "file": "music/happy-soaring_vai-so_total-01m18s_preview-com-voz-00m30s.mp3",
+          "free": false
+        },
+        {
+          "name": "Wing Of The Wind 5",
+          "lang": "en",
+          "genre": "",
+          "duration": "0:55",
+          "file": "music/happy-soaring_wing-of-the-wind-5_total-00m55s_preview-com-voz-00m22s.mp3",
+          "free": false
+        },
+        {
+          "name": "Dub 1",
+          "lang": "inst",
+          "genre": "Dub",
+          "duration": "3:35",
+          "file": "music/happy-soaring_dub-1_total-03m35s_preview-instrumental-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "Dub Bass 3",
+          "lang": "inst",
+          "genre": "Dub",
+          "duration": "4:10",
+          "file": "music/happy-soaring_dub-bass-3_total-04m10s_preview-instrumental-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "Dub Bass",
+          "lang": "inst",
+          "genre": "Dub",
+          "duration": "3:49",
+          "file": "music/happy-soaring_dub-bass_total-03m49s_preview-instrumental-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "Dub Violino 2",
+          "lang": "inst",
+          "genre": "Dub",
+          "duration": "3:42",
+          "file": "music/happy-soaring_dub-violino-2_total-03m42s_preview-instrumental-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "Dub Violino",
+          "lang": "inst",
+          "genre": "Dub",
+          "duration": "4:15",
+          "file": "music/happy-soaring_dub-violino_total-04m15s_preview-instrumental-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "Beauty 2",
+          "lang": "inst",
+          "genre": "Instrumental",
+          "duration": "0:25",
+          "file": "music/happy-soaring_beauty-2_total-00m25s_preview-00m11s.mp3",
+          "free": false
+        },
+        {
+          "name": "Beauty",
+          "lang": "inst",
+          "genre": "Instrumental",
+          "duration": "0:25",
+          "file": "music/happy-soaring_beauty_total-00m25s_preview-00m11s.mp3",
+          "free": false
+        },
+        {
+          "name": "Dunes At 145 1",
+          "lang": "inst",
+          "genre": "Instrumental",
+          "duration": "3:07",
+          "file": "music/happy-soaring_dunes-at-145-1_total-03m07s_preview-instrumental-00m35s.mp3",
+          "free": false
+        },
+        {
+          "name": "Fly With Groove",
+          "lang": "inst",
+          "genre": "Instrumental",
+          "duration": "1:00",
+          "file": "music/happy-soaring_fly-with-groove_total-01m00s_preview-instrumental-00m24s.mp3",
+          "free": false
+        },
+        {
+          "name": "Golden Sand Dive 1",
+          "lang": "inst",
+          "genre": "Instrumental",
+          "duration": "6:48",
+          "file": "music/happy-soaring_golden-sand-dive-1_total-06m48s_preview-instrumental-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "Guitaras So Goodddd",
+          "lang": "inst",
+          "genre": "Instrumental",
+          "duration": "2:30",
+          "file": "music/happy-soaring_guitaras-so-goodddd_total-02m30s_preview-instrumental-00m32s.mp3",
+          "free": false
+        },
+        {
+          "name": "Percussive Rhythm",
+          "lang": "inst",
+          "genre": "Instrumental",
+          "duration": "2:29",
+          "file": "music/happy-soaring_percussive-rhythm_total-02m29s_preview-instrumental-00m32s.mp3",
+          "free": false
+        },
+        {
+          "name": "Untitled",
+          "lang": "inst",
+          "genre": "Instrumental",
+          "duration": "1:38",
+          "file": "music/happy-soaring_untitled_total-01m38s_preview-instrumental-00m32s.mp3",
+          "free": false
+        },
+        {
+          "name": "Big Wind Transitions With Wow",
+          "lang": "inst",
+          "genre": "Efeitos",
+          "duration": "0:08",
+          "file": "music/happy-soaring_big-wind-transitions-with-wow_total-00m08s_preview-00m08s.mp3",
+          "free": false
+        },
+        {
+          "name": "Create Transitions Effects",
+          "lang": "inst",
+          "genre": "Efeitos",
+          "duration": "0:05",
+          "file": "music/happy-soaring_create-transitions-effects_total-00m05s_preview-instrumental-00m05s.mp3",
+          "free": false
+        },
+        {
+          "name": "Energy Responsive Ease 1",
+          "lang": "inst",
+          "genre": "Efeitos",
+          "duration": "0:29",
+          "file": "music/happy-soaring_energy-responsive-ease-1_total-00m29s_preview-instrumental-00m13s.mp3",
+          "free": false
+        },
+        {
+          "name": "Midnight Static",
+          "lang": "inst",
+          "genre": "Efeitos",
+          "duration": "3:18",
+          "file": "music/happy-soaring_midnight-static_total-03m18s_preview-instrumental-00m35s.mp3",
+          "free": false
         }
       ],
       "legal": {
@@ -291,11 +533,11 @@
           "de": ""
         },
         "waMessage": {
-          "pt": "Olá! Vi a Happy Soaring Music e queria mais informação.",
-          "en": "Hi! I saw Happy Soaring Music and would like more info.",
-          "es": "",
+          "de": "",
           "fr": "",
-          "de": ""
+          "es": "",
+          "en": "Hi! I saw Happy Soaring Music and would like more info.",
+          "pt": "Olá! Vi a Happy Soaring Music e queria mais informação."
         }
       }
     }

@@ -222,6 +222,12 @@ collections:
         widget: boolean
         default: true
         hint: Desliga para esconder esta secção inteira no site, sem a apagar
+      - label: Animação de vento neste slide
+        name: wind
+        widget: boolean
+        default: true
+        required: false
+        hint: Liga/desliga as linhas de vento enquanto este slide está visível. A animação global tem de estar ligada nas Definições gerais.
       - label: Altura (nº de ecrãs)
         name: heightScreens
         widget: number
@@ -1128,10 +1134,98 @@ collections:
                 widget: number
                 value_type: int
                 min: 80
-                max: 600
-                default: 184
+                max: 900
+                default: 620
                 required: false
-                hint: Altura visível de cada lista antes de precisar de scroll
+                hint: 'Altura máxima da lista antes de precisar de scroll (o site limita sempre a 62% da altura do ecrã). Ex: 620'
+              - label: Preços (por volume)
+                name: pricing
+                widget: object
+                collapsed: true
+                required: false
+                fields:
+                  - label: Moeda (símbolo)
+                    name: currency
+                    widget: string
+                    default: €
+                    required: false
+                  - label: Título da secção de preços
+                    name: title
+                    widget: string
+                    default: Preços
+                    required: false
+                  - label: Texto do botão de compra
+                    name: buyLabel
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
+                    required: false
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: string
+                        required: false
+                      - label: English
+                        name: en
+                        widget: string
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: string
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: string
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: string
+                        required: false
+                  - label: Mensagem inicial do WhatsApp
+                    name: intro
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
+                    required: false
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: string
+                        required: false
+                      - label: English
+                        name: en
+                        widget: string
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: string
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: string
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: string
+                        required: false
+                  - label: Escalões
+                    name: tiers
+                    widget: list
+                    label_singular: Escalão
+                    summary: A partir de {{fields.minQty}} → {{fields.price}}
+                    fields:
+                      - label: A partir de (nº de músicas)
+                        name: minQty
+                        widget: number
+                        value_type: int
+                        min: 1
+                        default: 1
+                      - label: Preço por música
+                        name: price
+                        widget: number
+                        value_type: float
+                        min: 0
+                        default: 1
               - label: Botões no topo (laranja)
                 name: buttons
                 widget: list
@@ -1176,56 +1270,47 @@ collections:
                     widget: string
                     required: false
                     hint: Se preenchido, usa este link em vez do WhatsApp
-              - label: Géneros
-                name: genres
+              - label: Faixas
+                name: tracks
                 widget: list
-                label_singular: Género
-                summary: '{{fields.name}}'
-                fields:
-                  - label: Mostrar lista
-                    name: visible
-                    widget: boolean
-                    default: true
-                    hint: Desliga para esconder esta lista/género no site, sem a apagar
-                  - label: Nome do género
-                    name: name
-                    widget: string
-                  - label: Faixas
-                    name: tracks
-                    widget: list
-                    label_singular: Faixa
-                    summary: '{{fields.name}}'
-                    fields:
-                      - label: Nome
-                        name: name
-                        widget: string
-                      - label: Duração
-                        name: duration
-                        widget: string
-                        required: false
-                        hint: 'Ex: 3:30'
-                      - label: Ficheiro MP3
-                        name: file
-                        widget: file
-                        required: false
-              - label: Título da tabela de licenças
-                name: licensesTitle
-                widget: string
-                required: false
-                default: Licenças
-              - label: Licenças
-                name: licenses
-                widget: list
-                label_singular: Licença
-                summary: '{{fields.label}}'
+                label_singular: Faixa
+                summary: '{{fields.name}}  ·  {{fields.genre}}'
                 fields:
                   - label: Nome
-                    name: label
+                    name: name
                     widget: string
-                  - label: Preço
-                    name: price
+                  - label: Idioma / Classificação
+                    name: lang
+                    widget: select
+                    default: inst
+                    options:
+                      - label: Português
+                        value: pt
+                      - label: English
+                        value: en
+                      - label: Instrumental
+                        value: inst
+                  - label: Género
+                    name: genre
                     widget: string
-                    hint: 'Ex: 0€ · 10€ – 20€ · price on request'
+                    required: false
+                    default: ''
+                    hint: 'Escreve o género (ex: Dub, Instrumental, Efeitos, Reggae…). Deixa vazio para faixas só distinguidas por idioma. Géneros iguais têm de ter exactamente o mesmo texto para ficarem no mesmo filtro.'
+                  - label: Duração
+                    name: duration
+                    widget: string
+                    required: false
+                    hint: 'Ex: 3:30'
+                  - label: Ficheiro MP3
+                    name: file
+                    widget: file
+                    required: false
+                  - label: Grátis
+                    name: free
+                    widget: boolean
+                    default: false
+                    required: false
+                    hint: Mostra etiqueta GRÁTIS e não conta para o total
               - label: Aviso legal
                 name: legal
                 widget: object

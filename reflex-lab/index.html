@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Reflex Lab — Happy Soaring</title>
+<meta name="description" content="Simulador aerodinâmico conceptual de uma asa parakite com perfil reflex. Happy Soaring." />
+<link rel="stylesheet" href="reflex-lab.css" />
+</head>
+<body>
+<div class="rl-app" id="rl-app">
+
+  <!-- Topo -->
+  <header class="rl-top">
+    <a class="rl-brand" href="../index.html" title="Voltar ao site Happy Soaring">
+      <svg class="rl-mark" viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M24 4C16 12 10 20 10 30a14 14 0 0 0 28 0c0-4-1.6-8-4-11 1 6-2 9-5 10 3-8-1-17-5-25Z"/>
+      </svg>
+      <span class="rl-brand-name">HAPPY SOARING</span>
+    </a>
+    <div class="rl-title-wrap">
+      <h1 class="rl-title">REFLEX LAB</h1>
+      <p class="rl-subtitle">Simulador aerodinâmico conceptual</p>
+    </div>
+    <a class="rl-close" href="../index.html" aria-label="Fechar simulador" title="Fechar">&#10005;</a>
+  </header>
+
+  <!-- Leitura rápida -->
+  <div class="rl-readout" id="rl-readout"></div>
+
+  <!-- Corpo -->
+  <div class="rl-body">
+    <!-- Presets (esquerda) -->
+    <aside class="rl-presets" id="rl-presets">
+      <div class="rl-panel-title">Cenários</div>
+      <div class="rl-preset-list" id="rl-preset-list"></div>
+      <p class="rl-disclaimer">
+        Simulação conceptual para fins educativos. Não substitui dados de
+        fabricante nem ensaios de homologação.
+      </p>
+    </aside>
+
+    <!-- Palco / SVG (centro) -->
+    <main class="rl-stage">
+      <div class="rl-scene-wrap">
+        <svg id="rl-scene" class="rl-scene" viewBox="0 0 1000 660" preserveAspectRatio="xMidYMid meet" aria-label="Perfil da asa reflex"></svg>
+      </div>
+      <div class="rl-legend" id="rl-legend"></div>
+    </main>
+
+    <!-- Dados (direita) -->
+    <aside class="rl-data">
+      <div class="rl-card">
+        <div class="rl-panel-title">Dados de voo</div>
+        <div class="rl-metrics" id="rl-metrics"></div>
+      </div>
+      <div class="rl-card">
+        <div class="rl-panel-title">Estabilidade</div>
+        <div class="rl-stab" id="rl-stab"></div>
+      </div>
+      <button class="rl-reset" id="rl-reset" type="button">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+        Repor trim
+      </button>
+    </aside>
+  </div>
+
+  <!-- Controlos (baixo) -->
+  <div class="rl-controls" id="rl-controls"></div>
+
+</div>
+<script src="reflex-lab.js"></script>
+</body>
+</html>
