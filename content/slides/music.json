@@ -71,6 +71,33 @@
       "showMobile": true
     },
     {
+      "role": "floatImage",
+      "showDesktop": true,
+      "showMobile": false,
+      "src": "images/music-guitar.png",
+      "alt": {
+        "pt": "Happy Soaring Music — guitarra"
+      },
+      "opacity": 100,
+      "shadow": true,
+      "dim": false,
+      "rotation": 0,
+      "floatSpeed": 11,
+      "parallax": 0,
+      "zIndex": 2,
+      "y": 4,
+      "x": 4,
+      "anchorX": "right",
+      "widthVW": 20,
+      "widthMax": 280,
+      "mobile": {
+        "x": 2,
+        "y": 2,
+        "widthVW": 32,
+        "widthMax": 170
+      }
+    },
+    {
       "role": "music",
       "buttons": [],
       "showDesktop": true,
@@ -111,9 +138,9 @@
       },
       "tracks": [
         {
-          "name": "2026 05 16 12 02 06 2",
+          "name": "Reggae Groove",
           "lang": "en",
-          "genre": "",
+          "genre": "Reggae",
           "duration": "1:38",
           "file": "music/happy-soaring_2026-05-16-12-02-06-2_total-01m38s_preview-00m32s.mp3",
           "free": false
@@ -127,57 +154,41 @@
           "free": false
         },
         {
-          "name": "African Roots Reggae Soul",
-          "lang": "en",
-          "genre": "",
-          "duration": "1:03",
-          "file": "music/happy-soaring_african-roots-reggae-soul_total-01m03s_preview-00m30s.mp3",
-          "free": false
-        },
-        {
           "name": "Alegria Agora",
           "lang": "pt",
-          "genre": "",
+          "genre": "Reggae",
           "duration": "1:20",
           "file": "music/happy-soaring_alegria-agora_total-01m20s_preview-00m30s.mp3",
           "free": false
         },
         {
-          "name": "Bd Dacing Together",
+          "name": "Dancing Together",
           "lang": "en",
-          "genre": "",
+          "genre": "Reggae",
           "duration": "0:58",
           "file": "music/happy-soaring_bd-dacing-together_total-00m58s_preview-00m23s.mp3",
           "free": false
         },
         {
-          "name": "Bezugo",
+          "name": "Lá vai o Velho",
           "lang": "en",
-          "genre": "",
+          "genre": "Reggae",
           "duration": "3:04",
           "file": "music/happy-soaring_bezugo_total-03m04s_preview-00m35s.mp3",
           "free": false
         },
         {
-          "name": "Colors Smiles Love 1",
+          "name": "This World need more Colors",
           "lang": "en",
-          "genre": "",
+          "genre": "Message",
           "duration": "0:30",
           "file": "music/happy-soaring_colors-smiles-love-1_total-00m30s_preview-00m13s.mp3",
-          "free": false
-        },
-        {
-          "name": "Colors Smiles Love",
-          "lang": "en",
-          "genre": "",
-          "duration": "0:28",
-          "file": "music/happy-soaring_colors-smiles-love_total-00m28s_preview-com-voz-00m13s.mp3",
-          "free": false
+          "free": true
         },
         {
           "name": "Come Closer Baby",
           "lang": "en",
-          "genre": "",
+          "genre": "Reggae",
           "duration": "4:32",
           "file": "music/happy-soaring_come-closer-baby_total-04m32s_preview-com-voz-00m40s.mp3",
           "free": false
@@ -185,39 +196,31 @@
         {
           "name": "Deixa O Fogo Subir",
           "lang": "pt",
-          "genre": "",
+          "genre": "Funk",
           "duration": "3:31",
           "file": "music/happy-soaring_deixa-o-fogo-subir_total-03m31s_preview-com-voz-00m40s.mp3",
           "free": false
         },
         {
-          "name": "Ela E Demais 10",
+          "name": "Ela É Demais",
           "lang": "pt",
-          "genre": "",
+          "genre": "Reggae",
           "duration": "2:56",
           "file": "music/happy-soaring_ela-e-demais-10_total-02m56s_preview-com-voz-00m35s.mp3",
           "free": false
         },
         {
-          "name": "Eli Hhh 1",
-          "lang": "en",
-          "genre": "",
-          "duration": "3:49",
-          "file": "music/happy-soaring_eli-hhh-1_total-03m49s_preview-com-voz-00m40s.mp3",
-          "free": false
-        },
-        {
-          "name": "Eu Sou Eu 6",
+          "name": "Eu Sou Eu",
           "lang": "pt",
-          "genre": "",
+          "genre": "Acoustic",
           "duration": "1:33",
           "file": "music/happy-soaring_eu-sou-eu-6_total-01m33s_preview-com-voz-00m32s.mp3",
           "free": false
         },
         {
-          "name": "Fly With Me",
+          "name": "Golden Cliffs",
           "lang": "en",
-          "genre": "",
+          "genre": "Alternative Rock",
           "duration": "3:16",
           "file": "music/happy-soaring_fly-with-me_total-03m16s_preview-com-voz-00m35s.mp3",
           "free": false
@@ -225,23 +228,23 @@
         {
           "name": "Go Fly",
           "lang": "en",
-          "genre": "",
+          "genre": "Message",
           "duration": "0:49",
           "file": "music/happy-soaring_go-fly_total-00m49s_preview-com-voz-00m20s.mp3",
-          "free": false
+          "free": true
         },
         {
-          "name": "Go Flyy 2",
+          "name": "Beautiful Moments",
           "lang": "en",
-          "genre": "",
+          "genre": "Message",
           "duration": "0:31",
           "file": "music/happy-soaring_go-flyy-2_total-00m31s_preview-com-voz-00m14s.mp3",
-          "free": false
+          "free": true
         },
         {
           "name": "Hoje Celebro A Vida",
           "lang": "pt",
-          "genre": "",
+          "genre": "Reggae",
           "duration": "4:17",
           "file": "music/happy-soaring_hoje-celebro-a-vida_total-04m17s_preview-com-voz-00m40s.mp3",
           "free": false
@@ -249,47 +252,39 @@
         {
           "name": "Keep It Alive",
           "lang": "en",
-          "genre": "",
+          "genre": "Message",
           "duration": "2:06",
           "file": "music/happy-soaring_keep-it-alive_total-02m06s_preview-com-voz-00m32s.mp3",
-          "free": false
+          "free": true
         },
         {
-          "name": "Let S Be Happy",
+          "name": "Let Be Happy",
           "lang": "en",
-          "genre": "",
+          "genre": "Reggae",
           "duration": "1:12",
           "file": "music/happy-soaring_let-s-be-happy_total-01m12s_preview-com-voz-00m30s.mp3",
           "free": false
         },
         {
-          "name": "Live In Peace 1",
-          "lang": "en",
-          "genre": "",
-          "duration": "3:51",
-          "file": "music/happy-soaring_live-in-peace-1_total-03m51s_preview-com-voz-00m40s.mp3",
-          "free": false
-        },
-        {
           "name": "Live In Peace",
           "lang": "en",
-          "genre": "",
+          "genre": "Acoustic",
           "duration": "3:50",
           "file": "music/happy-soaring_live-in-peace_total-03m50s_preview-com-voz-00m40s.mp3",
           "free": false
         },
         {
-          "name": "No Wind No Fun 1",
+          "name": "No Wind No Fun",
           "lang": "en",
-          "genre": "",
+          "genre": "Message",
           "duration": "0:35",
           "file": "music/happy-soaring_no-wind-no-fun-1_total-00m35s_preview-com-voz-00m14s.mp3",
-          "free": false
+          "free": true
         },
         {
-          "name": "Ola Sou Eu 1",
+          "name": "Olá Sou Eu",
           "lang": "pt",
-          "genre": "",
+          "genre": "Alternative Rock",
           "duration": "2:07",
           "file": "music/happy-soaring_ola-sou-eu-1_total-02m07s_preview-com-voz-00m32s.mp3",
           "free": false
@@ -297,15 +292,15 @@
         {
           "name": "One World One Love",
           "lang": "en",
-          "genre": "",
+          "genre": "Reggae",
           "duration": "0:53",
           "file": "music/happy-soaring_one-world-one-love_total-00m53s_preview-com-voz-00m21s.mp3",
           "free": false
         },
         {
-          "name": "Se Por Acaso A Porta Nao Abrir 9",
-          "lang": "pt",
-          "genre": "",
+          "name": "Se Por Acaso A Porta Não Abrir",
+          "lang": "inst",
+          "genre": "Instrumental",
           "duration": "3:09",
           "file": "music/happy-soaring_se-por-acaso-a-porta-nao-abrir-9_total-03m09s_preview-com-voz-00m35s.mp3",
           "free": false
@@ -313,61 +308,53 @@
         {
           "name": "Super Man",
           "lang": "en",
-          "genre": "",
+          "genre": "Reggae",
           "duration": "2:03",
           "file": "music/happy-soaring_super-man_total-02m03s_preview-com-voz-00m32s.mp3",
           "free": false
         },
         {
-          "name": "Tenho Uma Filha Live",
-          "lang": "pt",
-          "genre": "",
-          "duration": "3:41",
-          "file": "music/happy-soaring_tenho-uma-filha-live_total-03m41s_preview-com-voz-00m40s.mp3",
-          "free": false
-        },
-        {
           "name": "Tenho Uma Filha",
           "lang": "pt",
-          "genre": "",
+          "genre": "Acoustic",
           "duration": "3:41",
           "file": "music/happy-soaring_tenho-uma-filha_total-03m41s_preview-com-voz-00m40s.mp3",
           "free": false
         },
         {
-          "name": "This World Needs More Colors 1",
+          "name": "This World Needs More Colors",
           "lang": "en",
-          "genre": "",
+          "genre": "Message",
           "duration": "1:09",
           "file": "music/happy-soaring_this-world-needs-more-colors-1_total-01m09s_preview-com-voz-00m30s.mp3",
-          "free": false
+          "free": true
         },
         {
-          "name": "Up Acaso 1",
+          "name": "Nada Vem Por Acaso",
           "lang": "pt",
-          "genre": "",
+          "genre": "Acoustic",
           "duration": "3:30",
           "file": "music/happy-soaring_up-acaso-1_total-03m30s_preview-com-voz-00m35s.mp3",
           "free": false
         },
         {
-          "name": "Vai So",
+          "name": "Vai Só",
           "lang": "pt",
-          "genre": "",
+          "genre": "Reggae",
           "duration": "1:18",
           "file": "music/happy-soaring_vai-so_total-01m18s_preview-com-voz-00m30s.mp3",
           "free": false
         },
         {
-          "name": "Wing Of The Wind 5",
+          "name": "Wing Of The Wind",
           "lang": "en",
-          "genre": "",
+          "genre": "Reggae",
           "duration": "0:55",
           "file": "music/happy-soaring_wing-of-the-wind-5_total-00m55s_preview-com-voz-00m22s.mp3",
           "free": false
         },
         {
-          "name": "Dub 1",
+          "name": "Sunset Dub",
           "lang": "inst",
           "genre": "Dub",
           "duration": "3:35",
@@ -375,7 +362,7 @@
           "free": false
         },
         {
-          "name": "Dub Bass 3",
+          "name": "Bass Rider",
           "lang": "inst",
           "genre": "Dub",
           "duration": "4:10",
@@ -383,7 +370,7 @@
           "free": false
         },
         {
-          "name": "Dub Bass",
+          "name": "Deep Bass Dub",
           "lang": "inst",
           "genre": "Dub",
           "duration": "3:49",
@@ -391,7 +378,7 @@
           "free": false
         },
         {
-          "name": "Dub Violino 2",
+          "name": "Slow Strings Dub",
           "lang": "inst",
           "genre": "Dub",
           "duration": "3:42",
@@ -399,7 +386,7 @@
           "free": false
         },
         {
-          "name": "Dub Violino",
+          "name": "Strings in Dub",
           "lang": "inst",
           "genre": "Dub",
           "duration": "4:15",
@@ -407,23 +394,7 @@
           "free": false
         },
         {
-          "name": "Beauty 2",
-          "lang": "inst",
-          "genre": "Instrumental",
-          "duration": "0:25",
-          "file": "music/happy-soaring_beauty-2_total-00m25s_preview-00m11s.mp3",
-          "free": false
-        },
-        {
-          "name": "Beauty",
-          "lang": "inst",
-          "genre": "Instrumental",
-          "duration": "0:25",
-          "file": "music/happy-soaring_beauty_total-00m25s_preview-00m11s.mp3",
-          "free": false
-        },
-        {
-          "name": "Dunes At 145 1",
+          "name": "Dune Drift",
           "lang": "inst",
           "genre": "Instrumental",
           "duration": "3:07",
@@ -431,7 +402,7 @@
           "free": false
         },
         {
-          "name": "Fly With Groove",
+          "name": "Groove Flight",
           "lang": "inst",
           "genre": "Instrumental",
           "duration": "1:00",
@@ -439,7 +410,7 @@
           "free": false
         },
         {
-          "name": "Golden Sand Dive 1",
+          "name": "Golden Glide",
           "lang": "inst",
           "genre": "Instrumental",
           "duration": "6:48",
@@ -447,7 +418,7 @@
           "free": false
         },
         {
-          "name": "Guitaras So Goodddd",
+          "name": "Coastal Guitars",
           "lang": "inst",
           "genre": "Instrumental",
           "duration": "2:30",
@@ -455,7 +426,7 @@
           "free": false
         },
         {
-          "name": "Percussive Rhythm",
+          "name": "Ridge Rhythm",
           "lang": "inst",
           "genre": "Instrumental",
           "duration": "2:29",
@@ -463,7 +434,7 @@
           "free": false
         },
         {
-          "name": "Untitled",
+          "name": "Thermal Lift",
           "lang": "inst",
           "genre": "Instrumental",
           "duration": "1:38",
@@ -471,36 +442,36 @@
           "free": false
         },
         {
-          "name": "Big Wind Transitions With Wow",
+          "name": "FX - Wind Whoosh",
           "lang": "inst",
-          "genre": "Efeitos",
+          "genre": "FX",
           "duration": "0:08",
           "file": "music/happy-soaring_big-wind-transitions-with-wow_total-00m08s_preview-00m08s.mp3",
-          "free": false
+          "free": true
         },
         {
-          "name": "Create Transitions Effects",
+          "name": "FX - Deep Impact",
           "lang": "inst",
-          "genre": "Efeitos",
+          "genre": "FX",
           "duration": "0:05",
           "file": "music/happy-soaring_create-transitions-effects_total-00m05s_preview-instrumental-00m05s.mp3",
-          "free": false
+          "free": true
         },
         {
-          "name": "Energy Responsive Ease 1",
+          "name": "FX - Energy Riser",
           "lang": "inst",
-          "genre": "Efeitos",
+          "genre": "FX",
           "duration": "0:29",
           "file": "music/happy-soaring_energy-responsive-ease-1_total-00m29s_preview-instrumental-00m13s.mp3",
-          "free": false
+          "free": true
         },
         {
-          "name": "Midnight Static",
+          "name": "Midnight Drift",
           "lang": "inst",
-          "genre": "Efeitos",
+          "genre": "Instrumental",
           "duration": "3:18",
           "file": "music/happy-soaring_midnight-static_total-03m18s_preview-instrumental-00m35s.mp3",
-          "free": false
+          "free": true
         }
       ],
       "legal": {
@@ -539,7 +510,17 @@
           "en": "Hi! I saw Happy Soaring Music and would like more info.",
           "pt": "Olá! Vi a Happy Soaring Music e queria mais informação."
         }
-      }
+      },
+      "genreList": [
+        "Acoustic",
+        "Alternative Rock",
+        "Dub",
+        "FX",
+        "Funk",
+        "Instrumental",
+        "Message",
+        "Reggae"
+      ]
     }
   ]
 }

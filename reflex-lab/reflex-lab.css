@@ -37,8 +37,9 @@ body{
 a{color:inherit;text-decoration:none}
 
 .rl-app{
-  min-height:100vh;
-  min-height:100dvh;
+  height:100vh;
+  height:100dvh;
+  overflow:hidden;               /* tudo encaixa no ecrã; o palco encolhe */
   display:flex;
   flex-direction:column;
   padding:14px 18px 18px;
@@ -46,6 +47,9 @@ a{color:inherit;text-decoration:none}
   max-width:1600px;
   margin:0 auto;
 }
+/* barras fixas: não encolhem — só o corpo/palco absorve a diferença */
+.rl-top,.rl-readout,.rl-controls{flex:none}
+.rl-body{flex:1 1 auto;min-height:0}
 
 /* ---------- Topo ---------- */
 .rl-top{
@@ -225,9 +229,13 @@ a{color:inherit;text-decoration:none}
 .rl-scene .lbl-line{font:800 15px var(--font)}
 .rl-scene .lbl-reflex{fill:var(--rl-b);font:800 13px var(--font);letter-spacing:2px}
 .rl-scene .lbl-cop{fill:var(--rl-cop);font:700 13px var(--font)}
+.rl-scene .lbl-sep{fill:var(--orange-soft);font:700 12px var(--font);letter-spacing:1px}
+.rl-scene .sep-lead{stroke:var(--orange-soft);stroke-width:1.2;stroke-dasharray:4 4;opacity:.75}
+.rl-scene .brake-handle{fill:var(--orange);stroke:#2a1200;stroke-width:2}
 
 /* ---------- Responsivo / telemóvel ---------- */
 @media (max-width:1080px){
+  .rl-app{height:auto;min-height:100dvh;overflow:visible}  /* deixa a página fazer scroll */
   .rl-body{grid-template-columns:1fr;grid-auto-rows:min-content}
   .rl-presets{order:3}
   .rl-stage{order:1;min-height:44vh}

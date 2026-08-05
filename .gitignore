@@ -12,6 +12,15 @@ dist
 dist-ssr
 *.local
 
+# Masters e entregas — NUNCA vão para o GitHub nem para o site publicado.
+# É aqui que ficam os WAV originais que vendes; a pasta music/ é pública.
+masters/
+entregas/
+RENOMEAR-MUSICAS.txt
+
+# faixas removidas do catálogo, guardadas para recuperação — não vão para o site
+music/_apagados/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,3 +31,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# ficheiros de trabalho já aplicados
+_arquivo/

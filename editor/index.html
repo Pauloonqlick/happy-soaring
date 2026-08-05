@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Editor de Músicas — Happy Soaring</title>
+<link rel="stylesheet" href="editor.css" />
+</head>
+<body>
+
+<header class="ed-top">
+  <div class="ed-brand">
+    <svg class="ed-mark" viewBox="0 0 48 48" aria-hidden="true">
+      <path d="M24 4C16 12 10 20 10 30a14 14 0 0 0 28 0c0-4-1.6-8-4-11 1 6-2 9-5 10 3-8-1-17-5-25Z"/>
+    </svg>
+    <div>
+      <h1>Editor de Músicas</h1>
+      <p class="ed-sub">Happy Soaring · edição local</p>
+    </div>
+  </div>
+  <div class="ed-actions">
+    <span class="ed-folder" id="ed-folder">nenhuma pasta aberta</span>
+    <button class="ed-btn" id="ed-open" type="button">Abrir pasta do projeto</button>
+    <button class="ed-btn primary" id="ed-save" type="button" disabled>Gravar</button>
+  </div>
+</header>
+
+<!-- ecrã inicial -->
+<section class="ed-intro" id="ed-intro">
+  <div class="ed-card">
+    <h2>Como usar</h2>
+    <ol>
+      <li>Carrega em <b>Abrir pasta do projeto</b> e escolhe a pasta <code>HappySoaring</code>.</li>
+      <li>Autoriza o browser a <b>ver e editar</b> os ficheiros.</li>
+      <li>Edita nome, género, grátis e duplicado. Carrega em <b>Gravar</b>.</li>
+    </ol>
+    <p class="ed-note">
+      <b>Só funciona em Chrome ou Edge</b> — usa a API de ficheiros que o Firefox e o Safari não têm.
+      Esta página não envia nada para lado nenhum: escreve diretamente no teu disco.
+    </p>
+    <p class="ed-note warn">
+      Marcar <b>Duplicado</b> não apaga nada. Só assinala a faixa. A remoção
+      (preview + WAV) é feita depois, com confirmação, e os ficheiros vão para
+      uma pasta de recuperação.
+    </p>
+  </div>
+</section>
+
+<!-- editor -->
+<section class="ed-main" id="ed-main" hidden>
+  <div class="ed-bar">
+    <div class="ed-stats" id="ed-stats"></div>
+    <input class="ed-search" id="ed-search" type="search" placeholder="Filtrar por nome ou género…" aria-label="Filtrar" />
+  </div>
+
+  <details class="ed-genrepanel" id="ed-genrepanel">
+    <summary>Géneros <span class="ed-gcount" id="ed-gcount"></span></summary>
+    <div class="ed-gbody">
+      <p class="ed-ghelp">
+        Muda o nome aqui e ele é alterado em <b>todas</b> as faixas desse género.
+        Também podes escrever o género direto na tabela — se for novo, é criado.
+      </p>
+      <div class="ed-glist" id="ed-glist"></div>
+      <div class="ed-gnew">
+        <input class="ed-in" id="ed-gnew-in" type="text" placeholder="Nome do novo género" />
+        <button class="ed-btn" id="ed-gnew-add" type="button">+ Criar género</button>
+      </div>
+    </div>
+  </details>
+
+  <div class="ed-tablewrap">
+    <table class="ed-table">
+      <thead>
+        <tr>
+          <th class="c-play"></th>
+          <th class="c-num">#</th>
+          <th class="c-oldname">Nome atual</th>
+          <th class="c-name">Nome final</th>
+          <th class="c-genre">Género</th>
+          <th class="c-flag">Grátis</th>
+          <th class="c-flag">Duplicado</th>
+          <th class="c-meta">Idioma</th>
+          <th class="c-meta">Duração</th>
+        </tr>
+      </thead>
+      <tbody id="ed-rows"></tbody>
+    </table>
+  </div>
+
+  <datalist id="ed-genres"></datalist>
+  <audio id="ed-audio" preload="none"></audio>
+</section>
+
+<!-- leitor fixo em baixo -->
+<div class="ed-player" id="ed-player" hidden>
+  <button class="ed-play big" id="ed-pl-btn" type="button" aria-label="Tocar/pausar"></button>
+  <div class="ed-pl-info">
+    <div class="ed-pl-name" id="ed-pl-name">—</div>
+    <div class="ed-pl-src" id="ed-pl-src"></div>
+  </div>
+  <span class="ed-pl-time" id="ed-pl-cur">0:00</span>
+  <input class="ed-seek" id="ed-seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Posição" />
+  <span class="ed-pl-time" id="ed-pl-dur">0:00</span>
+  <button class="ed-gdel" id="ed-pl-close" type="button" aria-label="Fechar leitor">✕</button>
+</div>
+
+<div class="ed-toast" id="ed-toast" hidden></div>
+
+<script src="editor.js"></script>
+</body>
+</html>

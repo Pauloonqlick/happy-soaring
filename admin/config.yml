@@ -1270,6 +1270,16 @@ collections:
                     widget: string
                     required: false
                     hint: Se preenchido, usa este link em vez do WhatsApp
+              - label: Géneros disponíveis
+                name: genreList
+                widget: list
+                required: false
+                collapsed: true
+                hint: Lista de géneros usada como sugestão no editor de músicas. Gerida automaticamente — normalmente não precisas de mexer aqui.
+                field:
+                  label: Género
+                  name: genre
+                  widget: string
               - label: Faixas
                 name: tracks
                 widget: list
@@ -1311,6 +1321,12 @@ collections:
                     default: false
                     required: false
                     hint: Mostra etiqueta GRÁTIS e não conta para o total
+                  - label: Duplicado (marcar para remoção)
+                    name: duplicate
+                    widget: boolean
+                    default: false
+                    required: false
+                    hint: Assinala a faixa como duplicada. Não apaga nada por si — a remoção do preview e do WAV é feita à parte, com confirmação.
               - label: Aviso legal
                 name: legal
                 widget: object

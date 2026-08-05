@@ -53,7 +53,7 @@
       },
       "opacity": 100,
       "shadow": false,
-      "parallax": 6,
+      "parallax": 0,
       "floatSpeed": 9,
       "y": 30,
       "x": 6,

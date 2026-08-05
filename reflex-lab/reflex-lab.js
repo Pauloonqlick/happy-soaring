@@ -12,7 +12,7 @@
 
   /* ---------- Definição dos controlos ---------- */
   var CONTROLS = [
-    { key: 'aoa',       label: 'Ângulo de ataque', min: -10, max: 30, step: 0.5, def: -2,  cls: '',      fmt: function (v) { return v.toFixed(1) + '°'; } },
+    { key: 'aoa',       label: 'Ângulo de ataque', min: -30, max: 30, step: 0.5, def: -2,  cls: '',      fmt: function (v) { return v.toFixed(1) + '°'; } },
     { key: 'brake',     label: 'Travão',           min: 0,   max: 100, step: 1,  def: 0,   cls: 'brake', fmt: function (v) { return Math.round(v) + '%'; } },
     { key: 'lineA',     label: 'Linha A',          min: 80,  max: 120, step: 1,  def: 100, cls: 'a',     fmt: function (v) { return Math.round(v) + '%'; } },
     { key: 'lineB',     label: 'Linha B',          min: 80,  max: 120, step: 1,  def: 100, cls: 'b',     fmt: function (v) { return Math.round(v) + '%'; } },
@@ -83,8 +83,8 @@
 
     /* Reflex: quanto o bordo de fuga está levantado (perfil auto-estável).
        Alto com pouco flap e trim limpo; some com travão/desregulação. */
-    var reflexAmount = clamp((16 - effFlap) / 16, 0, 1) * clamp(1 - bcMag / 45, 0, 1);
-    var reflexActive = reflexAmount > 0.45 && effFlap < 14;
+    var reflexAmount = clamp((25 - effFlap) / 25, 0, 1) * clamp(1 - bcMag / 45, 0, 1);
+    var reflexActive = reflexAmount > 0.6 && effFlap < 14;
 
     /* Camber adicional pelo flap */
     var camber = effFlap / 100;                                     // 0..1.3
@@ -92,17 +92,20 @@
     /* Ângulo de perda (baixa com mais camber/flap) */
     var aoaStall = 15 - camber * 5.5;
 
-    /* Separação estimada (0..1): cresce perto/acima da perda e com flap alto */
-    var sepFrac = 0;
-    if (aoaEff > aoaStall - 4) sepFrac += (aoaEff - (aoaStall - 4)) / 8;
-    sepFrac += Math.max(0, camber - 0.75) * 0.7;
-    sepFrac = clamp(sepFrac, 0, 1);
+    /* Separação estimada (0..1), separada por causa:
+       - perda (ângulo de ataque alto)  - bordo de fuga (travão/flap) */
+    var sepStall = aoaEff > aoaStall - 4 ? clamp((aoaEff - (aoaStall - 4)) / 8, 0, 1) : 0;
+    var sepTE = clamp(Math.max(0, camber - 0.55) * 1.25, 0, 1);
+    var sepFrac = clamp(sepStall + sepTE, 0, 1);
+    var sepType = sepFrac < 0.12 ? null : (sepStall >= sepTE ? 'stall' : 'te');
 
     /* Coeficiente de sustentação */
     var CL = 0.50 + 0.05 * aoaEff + camber * 0.55;
     if (aoaEff > aoaStall) CL -= (aoaEff - aoaStall) * 0.10;         // queda pós-perda
+    var aoaStallNeg = -14;                                           // perda negativa: o CL achata
+    if (aoaEff < aoaStallNeg) CL += (aoaStallNeg - aoaEff) * 0.035;
     CL *= (1 - sepFrac * 0.35);
-    CL = clamp(CL, -0.1, 1.6);
+    CL = clamp(CL, -0.5, 1.6);
 
     /* Coeficiente de arrasto */
     var AR = 5.2, e = 0.9;
@@ -112,28 +115,40 @@
 
     var LD = CD > 0 ? CL / CD : 0;
 
-    /* Momento de pitch (Cm ~ 1/4 corda): reflex => positivo (nariz p/ cima),
-       flap/camber => negativo; desregulação adiciona ruído */
-    var Cm = 0.02 + reflexAmount * 0.11 - camber * 0.14 - bcMag * 0.002;
+    /* Momento a sustentação nula (Cm0), a assinatura do perfil:
+       reflex (bordo de fuga levantado) => Cm0 POSITIVO — é isto que torna a asa
+       auto-estável. O travão/camber tira o reflex e leva o Cm0 a negativo. */
+    var Cm0 = 0.055 * reflexAmount - 0.115 * camber - bcMag * 0.0012;
 
-    /* Centro de pressão (fração da corda a partir do bordo de ataque).
-       Reflex empurra o CoP para trás (estável); camber/CL puxam-no p/ a frente. */
-    var cop = 0.30 - camber * 0.11 + reflexAmount * 0.14 - Math.max(0, aoaEff) * 0.002 + bcAsym * 0.0015;
-    cop = clamp(cop, 0.14, 0.52);
+    /* Centro de pressão: x_cp = x_ac - Cm0/CL  (fração da corda a partir do BA).
+       Com Cm0 > 0 (reflex) o CoP fica À FRENTE do centro aerodinâmico e RECUA
+       à medida que o CL sobe — o comportamento típico de um perfil reflex.
+       Quando o travão anula o reflex, Cm0 troca de sinal e o CoP inverte-se. */
+    var XAC = 0.32;                                                  // centro aerodinâmico
+    /* Perto de sustentação nula a resultante é um binário puro: o CoP deixa de
+       ter significado físico. Dizemos isso em vez de inventar um valor. */
+    var copValid = CL > 0.22;
+    var cop = copValid ? clamp(XAC - Cm0 / CL + bcAsym * 0.0012, 0.02, 0.95) : 0.5;
 
-    /* Margem de estabilidade (0..100): CoP atrás + reflex - desregulação - perda */
-    var stab = 45 + (cop - 0.28) * 260 + reflexAmount * 22 - bcMag * 0.8 - sepFrac * 30;
+    /* Margem de estabilidade (0..100): manda o Cm0 (reflex), penalizada por
+       desregulação, separação e atitude muito picada (risco de frontal). */
+    var stab = 46 + Cm0 * 300 + reflexAmount * 18 - bcMag * 0.8 - sepFrac * 32
+      - Math.max(0, -8 - aoaEff) * 1.2
+      - residual * 1.6;                    // travão engatado com as mãos em cima
     stab = clamp(stab, 3, 98);
 
     /* Avisos */
     var warn = null;
-    if (residual > 6 && s.brake < 8) warn = 'Bordo de fuga acionado com o comando solto — risco de colapso em velocidade.';
+    if (residual > 6 && s.brake < 8) warn = 'Bordo de fuga acionado com o comando solto — o reflex está a ser anulado (Cm₀ a cair). Risco de colapso em velocidade.';
+    else if (!copValid) warn = 'Sustentação quase nula ou negativa — o CoP deixa de ter significado. Risco de frontal.';
+    else if (Cm0 < 0 && s.brake < 25) warn = 'Reflex anulado — a asa perdeu a auto-estabilidade.';
     else if (sepFrac > 0.6) warn = 'Fluxo largamente separado — perda iminente.';
     else if (bcMag > 18) warn = 'Perfil deformado (B/C fora de trim) — estabilidade reduzida.';
 
     return {
       effFlap: effFlap, aoaEff: aoaEff, reflexAmount: reflexAmount, reflexActive: reflexActive,
-      camber: camber, sepFrac: sepFrac, CL: CL, CD: CD, LD: LD, Cm: Cm, cop: cop,
+      camber: camber, sepFrac: sepFrac, sepStall: sepStall, sepTE: sepTE, sepType: sepType,
+      CL: CL, CD: CD, LD: LD, Cm: Cm0, cop: cop, copValid: copValid,
       stab: stab, warn: warn
     };
   }
@@ -193,8 +208,9 @@
   }
 
   // pivô do palco e do piloto
-  var PIVOT = { x: 380, y: 300 };   // onde assenta ~1/4 de corda
-  var PILOT = { x: 520, y: 600 };
+  var PIVOT = { x: 380, y: 300 };          // onde assenta ~1/4 de corda
+  var PILOT = { x: 500, y: 600 };          // riser (linhas A/B/C)
+  var BRAKE_HANDLE = { x: 690, y: 560 };   // punho do travão — ponto próprio
 
   function buildScene() {
     scene.innerHTML = '';
@@ -254,13 +270,18 @@
     els.lblTE = svg('text', { class: 'lbl', 'text-anchor': 'start' }); els.lblTE.textContent = 'Bordo de fuga';
     els.lblReflex = svg('text', { class: 'lbl-reflex', 'text-anchor': 'middle' }); els.lblReflex.textContent = 'REFLEX ATIVO';
     els.lblCoP = svg('text', { class: 'lbl-cop', 'text-anchor': 'middle' }); els.lblCoP.textContent = 'CoP';
-    els.lblBrake = svg('text', { class: 'lbl', fill: 'var(--orange)', 'text-anchor': 'middle' }); els.lblBrake.textContent = 'TRAVÃO';
-    [els.lblLE, els.lblTE, els.lblReflex, els.lblCoP, els.lblBrake].forEach(function (e) { scene.appendChild(e); });
+    els.lblBrake = svg('text', { class: 'lbl', fill: 'var(--orange)', 'text-anchor': 'middle' }); els.lblBrake.textContent = 'Punho do travão';
+    els.lblPilot = svg('text', { class: 'lbl', 'text-anchor': 'middle' }); els.lblPilot.textContent = 'Piloto / riser';
+    /* etiqueta do tipo de separação (perda vs bordo de fuga) */
+    els.lblSep = svg('text', { class: 'lbl-sep', 'text-anchor': 'middle' });
+    els.sepLead = svg('line', { class: 'sep-lead' });
+    [els.lblLE, els.lblTE, els.lblReflex, els.lblCoP, els.lblBrake, els.lblPilot, els.sepLead, els.lblSep].forEach(function (e) { scene.appendChild(e); });
 
-    // piloto
+    // piloto (riser) + punho do travão, em pontos distintos
     els.pilot = svg('g');
     els.pilot.appendChild(svg('line', { x1: PILOT.x, y1: PILOT.y - 26, x2: PILOT.x, y2: PILOT.y - 8, stroke: '#5f6772', 'stroke-width': '3' }));
     els.pilot.appendChild(svg('circle', { class: 'pilot-body', cx: PILOT.x, cy: PILOT.y, r: '16' }));
+    els.pilot.appendChild(svg('circle', { class: 'brake-handle', cx: BRAKE_HANDLE.x, cy: BRAKE_HANDLE.y, r: '7' }));
     scene.appendChild(els.pilot);
 
     // linhas de corrente estáticas (animadas por CSS)
@@ -311,6 +332,9 @@
     var copFrac = m.cop;
     var copY = copFrac < 0.3 ? (8 + copFrac * 18) : (14 + (wp.teY - 14) * ((copFrac - 0.3) / 0.7));
     els.copDot.setAttribute('cx', copX); els.copDot.setAttribute('cy', copY - 30);
+    /* sem CL útil o CoP não existe: escondemos o ponto e a etiqueta */
+    els.copDot.setAttribute('opacity', m.copValid ? '1' : '0');
+    els.lblCoP.setAttribute('opacity', m.copValid ? '1' : '0');
     // haste do CoP até à corda
     // (desenhada como parte do grupo — atualizamos via linha simples reutilizando chordLine? mantemos dot)
 
@@ -321,11 +345,13 @@
       els.attach[k].setAttribute('cx', cp.x);
       els.attach[k].setAttribute('cy', cp.y);
       var stg = toStage(cp.x, cp.y, aoa);
-      var d = 'M ' + stg.x + ',' + stg.y + ' L ' + PILOT.x + ',' + (PILOT.y - 12);
+      /* o travão desce para o punho próprio; A/B/C vão ao riser do piloto */
+      var end = (k === 'brake') ? { x: BRAKE_HANDLE.x, y: BRAKE_HANDLE.y - 8 } : { x: PILOT.x, y: PILOT.y - 12 };
+      var d = 'M ' + stg.x + ',' + stg.y + ' L ' + end.x + ',' + end.y;
       els.lineEls[k].setAttribute('d', d);
       // etiqueta da linha a meio
       if (els.lineLbls[k]) {
-        var mx = (stg.x + PILOT.x) / 2, my = (stg.y + (PILOT.y - 12)) / 2;
+        var mx = (stg.x + end.x) / 2, my = (stg.y + end.y) / 2;
         els.lineLbls[k].setAttribute('x', mx - 12);
         els.lineLbls[k].setAttribute('y', my);
       }
@@ -339,7 +365,8 @@
     var leP = toStage(LEx, 4, aoa), teP = toStage(CHORD, wp.teY, aoa);
     els.lblLE.setAttribute('x', leP.x - 26); els.lblLE.setAttribute('y', leP.y - 14);
     els.lblTE.setAttribute('x', teP.x + 20); els.lblTE.setAttribute('y', teP.y - 6);
-    els.lblBrake.setAttribute('x', PILOT.x - 8); els.lblBrake.setAttribute('y', PILOT.y - 70);
+    els.lblBrake.setAttribute('x', BRAKE_HANDLE.x + 4); els.lblBrake.setAttribute('y', BRAKE_HANDLE.y + 26);
+    els.lblPilot.setAttribute('x', PILOT.x); els.lblPilot.setAttribute('y', PILOT.y + 34);
     var topP = toStage(CHORD * 0.55, -70, aoa);
     els.lblReflex.setAttribute('x', topP.x); els.lblReflex.setAttribute('y', topP.y - 8);
     els.lblReflex.setAttribute('opacity', m.reflexActive ? '1' : '0');
@@ -369,6 +396,20 @@
 
   function updateSeparation(m) {
     els.sepGroup.innerHTML = '';
+    /* rótulo do tipo de separação */
+    var teLbl = toStage(CHORD, -22 + (m.effFlap / 100) * 78, m.aoaEff);
+    if (!m.sepType) {
+      els.lblSep.setAttribute('opacity', '0');
+      els.sepLead.setAttribute('opacity', '0');
+    } else {
+      var lx = teLbl.x + 90, ly = teLbl.y - 78;
+      els.lblSep.textContent = m.sepType === 'stall' ? 'SEPARAÇÃO (PERDA)' : 'SEPARAÇÃO NO BORDO DE FUGA (TRAVÃO)';
+      els.lblSep.setAttribute('x', lx); els.lblSep.setAttribute('y', ly);
+      els.lblSep.setAttribute('opacity', '1');
+      els.sepLead.setAttribute('x1', lx); els.sepLead.setAttribute('y1', ly + 8);
+      els.sepLead.setAttribute('x2', teLbl.x + 14); els.sepLead.setAttribute('y2', teLbl.y - 10);
+      els.sepLead.setAttribute('opacity', '1');
+    }
     if (m.sepFrac < 0.12) return;
     // ponto de separação sobe pela extradorso conforme sepFrac; dispersa a jusante do BF
     var teP = toStage(CHORD, -22 + (m.effFlap / 100) * 78, m.aoaEff);
@@ -399,7 +440,8 @@
   function buildMetrics() {
     var m = document.getElementById('rl-metrics');
     m.innerHTML =
-      metric('CL', 'm-cl') + metric('CD', 'm-cd') + metric('L / D', 'm-ld') + metric('Momento (Cm)', 'm-cm');
+      metric('CoP (% corda)', 'm-cop') +
+      metric('CL', 'm-cl') + metric('CD', 'm-cd') + metric('L / D', 'm-ld') + metric('Cm₀ (momento)', 'm-cm');
   }
   function metric(label, id) {
     return '<div class="rl-metric"><span class="m-label">' + label + '</span><span class="m-value" id="' + id + '">—</span></div>';
@@ -523,6 +565,12 @@
     else { flag.className = 'ro-flag'; flagTxt.textContent = m.effFlap > 40 ? 'Travagem' : 'Voo neutro'; }
 
     // métricas
+    setTxt('m-cop', m.copValid ? (Math.round(m.cop * 100) + '%') : 'indefinido');
+    var copEl = document.getElementById('m-cop');
+    if (copEl) {
+      copEl.style.color = m.copValid ? 'var(--rl-cop)' : 'var(--warn)';
+      copEl.style.fontSize = m.copValid ? '' : '13px';
+    }
     setTxt('m-cl', m.CL.toFixed(2));
     setTxt('m-cd', m.CD.toFixed(3));
     setTxt('m-ld', m.LD.toFixed(1));

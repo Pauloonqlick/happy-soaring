@@ -1,0 +1,100 @@
+================================================================
+  HAPPY SOARING MUSIC — LICENCA DE UTILIZACAO
+  HAPPY SOARING MUSIC — LICENCE OF USE
+================================================================
+
+  Referencia da encomenda / Order reference : {{REF}}
+  Data / Date                               : {{DATA}}
+  Comprador / Buyer                         : {{COMPRADOR}}
+
+----------------------------------------------------------------
+  FAIXAS INCLUIDAS / TRACKS INCLUDED
+----------------------------------------------------------------
+{{FAIXAS}}
+
+  Total: {{TOTAL}}
+  Formatos incluidos / Formats included: WAV + FLAC
+
+================================================================
+  PORTUGUES
+================================================================
+
+O QUE PODES FAZER
+  - Usar estas musicas nos teus videos pessoais de voo (parapente,
+    parakite, speedfly) e publica-los nas redes sociais: Instagram,
+    YouTube, TikTok, Facebook e semelhantes.
+  - Usar em videos do teu canal, mesmo que o canal tenha monetizacao.
+  - Editar, cortar e ajustar a musica para a duracao do teu video.
+
+O QUE NAO PODES FAZER
+  - Revender, redistribuir ou partilhar os ficheiros com terceiros.
+  - Disponibilizar as musicas para descarga em qualquer plataforma.
+  - Publicar as faixas em servicos de streaming musical (Spotify,
+    Apple Music, etc.) como se fossem tuas.
+  - Registar as musicas em sistemas de identificacao de conteudo
+    (Content ID ou equivalentes). Isto e importante: esse registo
+    bloquearia os videos de outros clientes que compraram a mesma
+    faixa.
+  - Usar as musicas em publicidade paga, em produtos comerciais de
+    terceiros ou em campanhas de marcas, sem autorizacao escrita.
+
+CREDITOS
+  Nao sao obrigatorios, mas agradecemos: "Musica: Happy Soaring".
+
+PROPRIEDADE
+  A Happy Soaring mantem a propriedade das musicas. Esta licenca da
+  o direito de as utilizar nas condicoes acima, e nao transfere a
+  autoria nem os direitos de autor.
+
+LICENCAS ALARGADAS
+  Precisas de usar a musica em publicidade, num filme, num produto
+  comercial ou noutro contexto nao previsto acima? Fala connosco;
+  tratamos disso caso a caso.
+
+================================================================
+  ENGLISH
+================================================================
+
+YOU MAY
+  - Use this music in your personal flying videos (paragliding,
+    parakite, speedflying) and post them on social media: Instagram,
+    YouTube, TikTok, Facebook and similar.
+  - Use it on your own channel, including monetised channels.
+  - Edit, cut and adapt the music to the length of your video.
+
+YOU MAY NOT
+  - Resell, redistribute or share the files with third parties.
+  - Offer the music for download on any platform.
+  - Upload the tracks to music streaming services (Spotify, Apple
+    Music, etc.) as if they were your own.
+  - Register the music with content identification systems
+    (Content ID or equivalent). This matters: such a registration
+    would block the videos of other customers who bought the same
+    track.
+  - Use the music in paid advertising, in third-party commercial
+    products or in brand campaigns, without written permission.
+
+CREDIT
+  Not required, but appreciated: "Music: Happy Soaring".
+
+OWNERSHIP
+  Happy Soaring retains ownership of the music. This licence grants
+  the right to use it under the conditions above; it does not
+  transfer authorship or copyright.
+
+EXTENDED LICENCES
+  Need the music for advertising, a film, a commercial product or
+  any other use not covered above? Get in touch — we handle those
+  case by case.
+
+================================================================
+  CONTACTO / CONTACT
+  WhatsApp: {{WHATSAPP}}
+  https://happysoaring.com
+================================================================
+
+  Guarda este ficheiro. E o comprovativo da tua licenca.
+  Keep this file. It is the proof of your licence.
+
+  O link de descarga expira 30 dias apos a entrega.
+  The download link expires 30 days after delivery.

@@ -280,8 +280,24 @@ function buildMusic(item) {
 
   const SELKEY = 'hs-music-sel';
   const sel = { paid: new Set(), free: new Set() };
-  try { const s = JSON.parse(localStorage.getItem(SELKEY) || '{}'); (s.paid || []).forEach(x => sel.paid.add(x)); (s.free || []).forEach(x => sel.free.add(x)); } catch (e) { }
-  const saveSel = () => { try { localStorage.setItem(SELKEY, JSON.stringify({ paid: [...sel.paid], free: [...sel.free] })); } catch (e) { } };
+  let orderCode = null;
+  try {
+    const s = JSON.parse(localStorage.getItem(SELKEY) || '{}');
+    (s.paid || []).forEach(x => sel.paid.add(x)); (s.free || []).forEach(x => sel.free.add(x));
+    if (typeof s.code === 'string') orderCode = s.code;
+  } catch (e) { }
+  const saveSel = () => { try { localStorage.setItem(SELKEY, JSON.stringify({ paid: [...sel.paid], free: [...sel.free], code: orderCode })); } catch (e) { } };
+
+  /* referência da encomenda: HS-AAAAMMDD-XXXX.
+     Nasce quando a primeira faixa é marcada e mantém-se até limpar a seleção,
+     para que a mensagem de WhatsApp e o ZIP entregue partilhem a mesma ref. */
+  function newOrderCode() {
+    const d = new Date(), p = n => String(n).padStart(2, '0');
+    /* alfabeto sem I, O, 0 e 1 — a ref é lida e escrita por pessoas */
+    const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let r = ''; for (let i = 0; i < 4; i++) r += A[Math.floor(Math.random() * A.length)];
+    return 'HS-' + d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) + '-' + r;
+  }
 
   const PLUS = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
   const CHECK = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>';
@@ -292,13 +308,15 @@ function buildMusic(item) {
   const selCount = el('span');
   let mode = 'all', genreSel = 'all', searchQ = '';
   let flatBody = null;
+  let refreshSelAll = () => { };   /* atribuído quando os controlos são criados */
 
   /* barra de total (fixa em baixo, só aparece quando há seleção) */
   const cart = el('div', 'music-cart');
   const cInfo = el('div', 'music-cart-info');
   const cTotal = el('div', 'music-cart-total');
   const cSub = el('div', 'music-cart-sub');
-  cInfo.appendChild(cTotal); cInfo.appendChild(cSub);
+  const cRef = el('div', 'music-cart-ref');
+  cInfo.appendChild(cTotal); cInfo.appendChild(cSub); cInfo.appendChild(cRef);
   const cNudge = el('div', 'music-cart-nudge');
   const cBuy = el('a', 'music-cart-buy'); cBuy.target = '_blank'; cBuy.rel = 'noopener';
   cBuy.innerHTML = WA_SMALL; const cBuyLbl = el('span'); cBuyLbl.textContent = t(pr.buyLabel) || 'Comprar no WhatsApp'; cBuy.appendChild(cBuyLbl);
@@ -308,16 +326,29 @@ function buildMusic(item) {
 
   function refresh() {
     const c = sel.paid.size, f = sel.free.size, u = unitFor(c), total = c * u;
-    cart.classList.toggle('show', (c + f) > 0);
-    cTotal.textContent = (c + f) + ((c + f) === 1 ? ' música · ' : ' músicas · ') + eur(total);
+    const n = c + f;
+    /* gera a ref quando a encomenda começa; apaga-a quando o carrinho esvazia */
+    if (n > 0 && !orderCode) { orderCode = newOrderCode(); saveSel(); }
+    else if (n === 0 && orderCode) { orderCode = null; saveSel(); }
+
+    cart.classList.toggle('show', n > 0);
+    cTotal.textContent = n + (n === 1 ? ' música · ' : ' músicas · ') + eur(total);
     cSub.textContent = c ? ('a ' + eur(u) + '/música' + (f ? (' · ' + f + ' grátis') : '')) : (f ? (f + ' grátis') : '');
+    cRef.textContent = orderCode ? ('Ref. ' + orderCode) : '';
     let nudge = '';
     for (const x of tiers) { if (c > 0 && c < (x.minQty || 0)) { nudge = 'faltam ' + (x.minQty - c) + ' para ' + eur(x.price) + '/música'; break; } }
     cNudge.textContent = nudge; cNudge.style.display = nudge ? '' : 'none';
-    const names = [...sel.paid].concat([...sel.free].map(n => n + ' (grátis)'));
-    const intro = t(pr.intro) || 'Olá! Quero estas faixas:';
-    cBuy.href = waLink(num, intro + ' ' + names.join(', ') + '. Total: ' + c + (c === 1 ? ' música' : ' músicas') + ' · ' + eur(total) + '.');
-    selCount.textContent = '(' + (c + f) + ')';
+
+    /* mensagem: uma faixa por linha (legível no WhatsApp e sem ambiguidade a ler,
+       mesmo que um nome tenha vírgulas) */
+    const lines = [...sel.paid].map(x => '• ' + x)
+      .concat([...sel.free].map(x => '• ' + x + ' (grátis)'));
+    const intro = t(pr.intro) || 'Olá! Quero comprar estas faixas:';
+    const msg = intro + '\n' + lines.join('\n') +
+      '\n\nTotal: ' + c + (c === 1 ? ' música' : ' músicas') + ' · ' + eur(total) +
+      (orderCode ? ('\nRef: ' + orderCode) : '');
+    cBuy.href = waLink(num, msg);
+    selCount.textContent = '(' + n + ')';
   }
   function applyFilter() {
     if (!flatBody) return;
@@ -327,12 +358,22 @@ function buildMusic(item) {
       const okQ = !searchQ || (r.dataset.nm || '').indexOf(searchQ) >= 0;
       r.classList.toggle('mfhide', !(okL && okG && okQ));
     });
+    refreshSelAll();
+  }
+  /* põe todas as linhas de acordo com a seleção guardada */
+  function syncRows() {
+    if (!flatBody) return;
+    flatBody.querySelectorAll('.music-track').forEach(r => {
+      const b = r.querySelector('.music-add');
+      if (!b) return;
+      const on = (b.dataset.free === '1' ? sel.free : sel.paid).has(r.dataset.id);
+      r.classList.toggle('sel', on);
+      b.innerHTML = on ? CHECK : PLUS;
+    });
   }
   cClear.addEventListener('click', () => {
     sel.paid.clear(); sel.free.clear(); saveSel();
-    grid.querySelectorAll('.music-track.sel').forEach(r => r.classList.remove('sel'));
-    grid.querySelectorAll('.music-add').forEach(b => { b.innerHTML = PLUS; });
-    refresh(); applyFilter();
+    syncRows(); refresh(); applyFilter();
   });
 
   /* botões no topo da área das listas (laranja) — contacto por WhatsApp */
@@ -372,7 +413,18 @@ function buildMusic(item) {
     npFill.style.width = (d ? (audio.currentTime / d * 100) : 0) + '%';
     npTime.textContent = fmtTime(audio.currentTime) + ' / ' + fmtTime(d || 0);
   });
-  audio.addEventListener('ended', () => { setIcon(state.btn, false); npFill.style.width = '0%'; });
+  /* ao acabar, passa à faixa seguinte VISÍVEL (respeita os filtros ativos),
+     para se poder explorar a lista sem estar sempre a clicar */
+  audio.addEventListener('ended', () => {
+    setIcon(state.btn, false); npFill.style.width = '0%';
+    if (!flatBody || !state.btn) return;
+    const linhas = [...flatBody.querySelectorAll('.music-track:not(.mfhide)')];
+    const atual = state.btn.closest('.music-track');
+    const i = linhas.indexOf(atual);
+    if (i < 0 || i + 1 >= linhas.length) return;      /* era a última: pára */
+    const prox = linhas[i + 1].querySelector('.music-pl');
+    if (prox) { prox.click(); linhas[i + 1].scrollIntoView({ block: 'nearest' }); }
+  });
   npBtn.addEventListener('click', () => { if (!audio.src) return; audio.paused ? audio.play().catch(() => {}) : audio.pause(); });
   npBar.addEventListener('click', (e) => {
     if (!audio.duration) return;
@@ -393,7 +445,7 @@ function buildMusic(item) {
 
   /* filtro por idioma: Todas / Português / Inglês */
   const filter = el('div', 'music-filter');
-  const fdefs = [['all', 'Todas'], ['pt', 'Português'], ['en', 'Inglês']];
+  const fdefs = [['all', 'Todas'], ['pt', 'Português'], ['en', 'Inglês'], ['inst', 'Instrumental']];
   const fbtns = [];
   fdefs.forEach(([f, label]) => {
     const b = el('button', 'music-fbtn' + (f === 'all' ? ' on' : '')); b.type = 'button';
@@ -416,7 +468,26 @@ function buildMusic(item) {
   gsel.addEventListener('change', () => { genreSel = gsel.value; applyFilter(); });
   const search = el('input', 'music-search'); search.type = 'text'; search.placeholder = 'Pesquisar música…'; search.setAttribute('aria-label', 'Pesquisar música');
   search.addEventListener('input', () => { searchQ = search.value.toLowerCase().trim(); applyFilter(); });
-  controls.appendChild(gsel); controls.appendChild(search);
+  /* marcar / desmarcar todas as faixas visíveis (respeita os filtros ativos) */
+  const selAll = el('button', 'music-selall'); selAll.type = 'button';
+  const setSelAllLabel = () => {
+    const rows = flatBody ? [...flatBody.querySelectorAll('.music-track:not(.mfhide)')] : [];
+    const allOn = rows.length > 0 && rows.every(r => r.classList.contains('sel'));
+    selAll.textContent = allOn ? 'Desmarcar todas' : 'Marcar todas';
+    selAll.dataset.on = allOn ? '1' : '0';
+  };
+  selAll.addEventListener('click', () => {
+    const rows = [...flatBody.querySelectorAll('.music-track:not(.mfhide)')];
+    const turnOn = selAll.dataset.on !== '1';
+    rows.forEach(r => {
+      const b = r.querySelector('.music-add');
+      const s = b.dataset.free === '1' ? sel.free : sel.paid;
+      if (turnOn) s.add(r.dataset.id); else s.delete(r.dataset.id);
+    });
+    saveSel(); syncRows(); refresh(); applyFilter();
+  });
+  refreshSelAll = setSelAllLabel;
+  controls.appendChild(gsel); controls.appendChild(search); controls.appendChild(selAll);
   panel.appendChild(controls);
 
   /* uma lista única com todas as faixas DISPONÍVEIS (com ficheiro), altura fixa + scroll */
@@ -438,13 +509,25 @@ function buildMusic(item) {
     const lang = track.lang || 'inst';
     const genre = (track.genre || '').trim();
     const row = el('div', 'music-track');
-    row.dataset.lang = lang; row.dataset.genre = genre; row.dataset.nm = id.toLowerCase();
+    row.dataset.lang = lang; row.dataset.genre = genre; row.dataset.nm = id.toLowerCase(); row.dataset.id = id;
     const b = el('button', 'music-pl'); b.type = 'button'; b.setAttribute('aria-label', 'Tocar ' + id); b.innerHTML = ICON_PLAY;
     const nm = el('span', 'music-nm'); nm.textContent = id;
     if (isFree) { const fb = el('span', 'music-free'); fb.textContent = 'GRÁTIS'; nm.appendChild(fb); }
     const lg = el('span', 'music-lang ' + lang); lg.textContent = ({ pt: 'PT', en: 'EN', inst: 'INST' })[lang] || lang;
     const gn = el('span', genre ? 'music-gen' : ''); gn.textContent = genre;
-    const du = el('span', 'music-dur'); du.textContent = track.duration || '';
+    /* duração: o que se ouve é um excerto; o que se compra é a música completa.
+       A duração do excerto vem do nome do ficheiro (…preview-00m32s.mp3). */
+    const du = el('span', 'music-dur');
+    const pm = String(track.file || '').match(/preview-(?:com-voz-|instrumental-)?(\d+)m(\d+)s/);
+    const tot = el('span', 'music-dur-tot'); tot.textContent = track.duration || '';
+    du.appendChild(tot);
+    if (pm) {
+      const exc = el('span', 'music-dur-exc');
+      exc.textContent = 'excerto ' + parseInt(pm[1], 10) + ':' + pm[2];
+      du.appendChild(exc);
+      du.title = 'Ouves um excerto de ' + parseInt(pm[1], 10) + ':' + pm[2] +
+        '. A compra inclui a música completa (' + (track.duration || '') + ').';
+    }
     const add = el('button', 'music-add'); add.type = 'button'; add.dataset.free = isFree ? '1' : '0';
     add.setAttribute('aria-label', (isFree ? 'Marcar faixa grátis ' : 'Marcar para comprar ') + id);
     const setAdd = () => { const on = (isFree ? sel.free : sel.paid).has(id); add.innerHTML = on ? CHECK : PLUS; row.classList.toggle('sel', on); };
