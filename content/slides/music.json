@@ -30,16 +30,16 @@
       "kicker": {
         "pt": "HAPPY SOARING",
         "en": "HAPPY SOARING",
-        "es": "",
-        "fr": "",
-        "de": ""
+        "es": "HAPPY SOARING",
+        "fr": "HAPPY SOARING",
+        "de": "HAPPY SOARING"
       },
       "title": {
         "pt": "Happy Soaring Music",
         "en": "Happy Soaring Music",
-        "es": "",
-        "fr": "",
-        "de": ""
+        "es": "Happy Soaring Music",
+        "fr": "Happy Soaring Music",
+        "de": "Happy Soaring Music"
       },
       "title2": {
         "pt": "",
@@ -53,9 +53,9 @@
       "subtitle": {
         "pt": "Música original inspirada no vento, mar, liberdade e voo.",
         "en": "Original music inspired by wind, sea, freedom and flight.",
-        "es": "",
-        "fr": "",
-        "de": ""
+        "es": "Música original inspirada en el viento, el mar, la libertad y el vuelo.",
+        "fr": "Musique originale inspirée par le vent, la mer, la liberté et le vol.",
+        "de": "Originalmusik, inspiriert von Wind, Meer, Freiheit und Flug."
       },
       "subtitleFormat": {
         "bold": false,
@@ -76,7 +76,11 @@
       "showMobile": false,
       "src": "images/music-guitar.png",
       "alt": {
-        "pt": "Happy Soaring Music — guitarra"
+        "pt": "Happy Soaring Music — guitarra",
+        "es": "Happy Soaring Music — guitarra",
+        "fr": "Happy Soaring Music — guitare",
+        "de": "Happy Soaring Music — Gitarre",
+        "en": "Happy Soaring Music — guitar"
       },
       "opacity": 100,
       "shadow": true,
@@ -106,20 +110,26 @@
       "listHeight": 620,
       "pricing": {
         "currency": "€",
-        "title": "Preços",
+        "title": {
+          "pt": "Preços",
+          "en": "Prices",
+          "es": "Precios",
+          "fr": "Tarifs",
+          "de": "Preise"
+        },
         "buyLabel": {
           "pt": "Comprar no WhatsApp",
           "en": "Buy on WhatsApp",
-          "es": "",
-          "fr": "",
-          "de": ""
+          "es": "Comprar por WhatsApp",
+          "fr": "Acheter sur WhatsApp",
+          "de": "Über WhatsApp kaufen"
         },
         "intro": {
           "pt": "Olá! Quero comprar estas faixas:",
           "en": "Hi! I want to buy these tracks:",
-          "es": "",
-          "fr": "",
-          "de": ""
+          "es": "¡Hola! Quiero comprar estas canciones:",
+          "fr": "Bonjour ! Je souhaite acheter ces morceaux :",
+          "de": "Hallo! Ich möchte diese Titel kaufen:"
         },
         "tiers": [
           {
@@ -131,7 +141,7 @@
             "price": 0.75
           },
           {
-            "minQty": 20,
+            "minQty": 14,
             "price": 0.5
           }
         ]
@@ -477,36 +487,36 @@
       "legal": {
         "pt": "A música oferecida pela Happy Soaring destina-se apenas a uso pessoal e em redes sociais. A revenda, redistribuição ou uso comercial por terceiros não é permitido sem autorização escrita.",
         "en": "Music offered by Happy Soaring is for personal and social media use only. Resale, redistribution or commercial use by third parties is not allowed without written permission.",
-        "es": "",
-        "fr": "",
-        "de": ""
+        "es": "La música ofrecida por Happy Soaring es solo para uso personal y en redes sociales. No se permite la reventa, redistribución ni el uso comercial por parte de terceros sin autorización escrita.",
+        "fr": "La musique proposée par Happy Soaring est réservée à un usage personnel et aux réseaux sociaux. La revente, la redistribution ou l’usage commercial par des tiers ne sont pas autorisés sans accord écrit.",
+        "de": "Die Musik von Happy Soaring ist ausschliesslich für den persönlichen Gebrauch und für soziale Medien bestimmt. Weiterverkauf, Weiterverbreitung oder kommerzielle Nutzung durch Dritte sind ohne schriftliche Genehmigung nicht gestattet."
       },
       "cta": {
         "title": {
           "pt": "Precisas de música original para o teu vídeo de voo?",
           "en": "Need original music for your flight video?",
-          "es": "",
-          "fr": "",
-          "de": ""
+          "es": "¿Necesitas música original para tu vídeo de vuelo?",
+          "fr": "Besoin d’une musique originale pour votre vidéo de vol ?",
+          "de": "Brauchst du Originalmusik für dein Flugvideo?"
         },
         "text": {
           "pt": "Fala com a Happy Soaring.",
           "en": "Contact Happy Soaring.",
-          "es": "",
-          "fr": "",
-          "de": ""
+          "es": "Habla con Happy Soaring.",
+          "fr": "Contactez Happy Soaring.",
+          "de": "Sprich mit Happy Soaring."
         },
         "buttonLabel": {
           "pt": "Falar no WhatsApp",
           "en": "Chat on WhatsApp",
-          "es": "",
-          "fr": "",
-          "de": ""
+          "es": "Hablar por WhatsApp",
+          "fr": "Discuter sur WhatsApp",
+          "de": "Auf WhatsApp schreiben"
         },
         "waMessage": {
-          "de": "",
-          "fr": "",
-          "es": "",
+          "de": "Hallo! Ich habe Happy Soaring Music gesehen und hätte gerne mehr Informationen.",
+          "fr": "Bonjour ! J’ai vu Happy Soaring Music et je voudrais plus d’informations.",
+          "es": "¡Hola! He visto Happy Soaring Music y quería más información.",
           "en": "Hi! I saw Happy Soaring Music and would like more info.",
           "pt": "Olá! Vi a Happy Soaring Music e queria mais informação."
         }

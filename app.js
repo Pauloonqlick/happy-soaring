@@ -16,6 +16,94 @@ function t(v) {
   return v[LOCALE] || v[DEFAULT_LOCALE] || Object.values(v).find(Boolean) || '';
 }
 
+/* ---- textos da interface ----
+   Aquilo que é mecânica do site (botões, colunas, avisos) vive aqui e não no
+   CMS: são textos técnicos que não se editam no dia-a-dia e que têm de existir
+   nos 5 idiomas. O conteúdo editorial continua no CMS.
+   ui('chave', {var: valor}) substitui {var} no texto. */
+const UI = {
+  /* filtros */
+  fAll:   { pt: 'Todas', en: 'All', es: 'Todas', fr: 'Toutes', de: 'Alle' },
+  fPt:    { pt: 'Português', en: 'Portuguese', es: 'Portugués', fr: 'Portugais', de: 'Portugiesisch' },
+  fEn:    { pt: 'Inglês', en: 'English', es: 'Inglés', fr: 'Anglais', de: 'Englisch' },
+  fInst:  { pt: 'Instrumental', en: 'Instrumental', es: 'Instrumental', fr: 'Instrumental', de: 'Instrumental' },
+  /* controlos */
+  allGenres:  { pt: 'Todos os géneros', en: 'All genres', es: 'Todos los géneros', fr: 'Tous les genres', de: 'Alle Genres' },
+  filterGenre:{ pt: 'Filtrar por género', en: 'Filter by genre', es: 'Filtrar por género', fr: 'Filtrer par genre', de: 'Nach Genre filtern' },
+  search:     { pt: 'Pesquisar música…', en: 'Search music…', es: 'Buscar música…', fr: 'Rechercher…', de: 'Musik suchen…' },
+  searchAria: { pt: 'Pesquisar música', en: 'Search music', es: 'Buscar música', fr: 'Rechercher une musique', de: 'Musik suchen' },
+  selectAll:  { pt: 'Marcar todas', en: 'Select all', es: 'Seleccionar todas', fr: 'Tout sélectionner', de: 'Alle auswählen' },
+  deselectAll:{ pt: 'Desmarcar todas', en: 'Deselect all', es: 'Deseleccionar todas', fr: 'Tout désélectionner', de: 'Alle abwählen' },
+  /* colunas */
+  colTrack:  { pt: 'Música', en: 'Track', es: 'Música', fr: 'Titre', de: 'Titel' },
+  colLang:   { pt: 'Idioma', en: 'Language', es: 'Idioma', fr: 'Langue', de: 'Sprache' },
+  colGenre:  { pt: 'Género', en: 'Genre', es: 'Género', fr: 'Genre', de: 'Genre' },
+  colLength: { pt: 'Duração', en: 'Length', es: 'Duración', fr: 'Durée', de: 'Dauer' },
+  /* faixas */
+  free:      { pt: 'GRÁTIS', en: 'FREE', es: 'GRATIS', fr: 'GRATUIT', de: 'GRATIS' },
+  excerpt:   { pt: 'excerto {e}', en: 'excerpt {e}', es: 'extracto {e}', fr: 'extrait {e}', de: 'Auszug {e}' },
+  excerptTip:{ pt: 'Ouves um excerto de {e}. A compra inclui a música completa ({t}).',
+               en: 'You are hearing a {e} excerpt. Your purchase includes the full track ({t}).',
+               es: 'Escuchas un extracto de {e}. La compra incluye la canción completa ({t}).',
+               fr: 'Vous écoutez un extrait de {e}. L’achat inclut le morceau complet ({t}).',
+               de: 'Du hörst einen Auszug von {e}. Der Kauf enthält den vollständigen Titel ({t}).' },
+  play:      { pt: 'Tocar {n}', en: 'Play {n}', es: 'Reproducir {n}', fr: 'Écouter {n}', de: '{n} abspielen' },
+  markFree:  { pt: 'Marcar faixa grátis {n}', en: 'Select free track {n}', es: 'Seleccionar pista gratis {n}', fr: 'Sélectionner le titre gratuit {n}', de: 'Gratis-Titel {n} auswählen' },
+  markBuy:   { pt: 'Marcar para comprar {n}', en: 'Select {n} to buy', es: 'Seleccionar {n} para comprar', fr: 'Sélectionner {n} pour acheter', de: '{n} zum Kauf auswählen' },
+  playPause: { pt: 'Tocar/Pausar', en: 'Play/Pause', es: 'Reproducir/Pausar', fr: 'Lecture/Pause', de: 'Abspielen/Pause' },
+  /* carrinho */
+  nTrack:    { pt: '{n} música', en: '{n} track', es: '{n} canción', fr: '{n} morceau', de: '{n} Titel' },
+  nTracks:   { pt: '{n} músicas', en: '{n} tracks', es: '{n} canciones', fr: '{n} morceaux', de: '{n} Titel' },
+  nFreeOne:  { pt: '{n} música grátis', en: '{n} free track', es: '{n} canción gratis', fr: '{n} morceau gratuit', de: '{n} Gratis-Titel' },
+  nFreeMany: { pt: '{n} músicas grátis', en: '{n} free tracks', es: '{n} canciones gratis', fr: '{n} morceaux gratuits', de: '{n} Gratis-Titel' },
+  mixed:     { pt: '{n} músicas ({c} {pag} + {f} grátis)', en: '{n} tracks ({c} {pag} + {f} free)',
+               es: '{n} canciones ({c} {pag} + {f} gratis)', fr: '{n} morceaux ({c} {pag} + {f} gratuits)',
+               de: '{n} Titel ({c} {pag} + {f} gratis)' },
+  paidOne:   { pt: 'paga', en: 'paid', es: 'pagada', fr: 'payant', de: 'bezahlt' },
+  paidMany:  { pt: 'pagas', en: 'paid', es: 'pagadas', fr: 'payants', de: 'bezahlt' },
+  freeSuffix:{ pt: '(grátis)', en: '(free)', es: '(gratis)', fr: '(gratuit)', de: '(gratis)' },
+  freeCount: { pt: '{n} grátis', en: '{n} free', es: '{n} gratis', fr: '{n} gratuits', de: '{n} gratis' },
+  perTrack:  { pt: 'a {p}/música', en: '{p} per track', es: 'a {p}/canción', fr: '{p} par morceau', de: '{p} pro Titel' },
+  bestPrice: { pt: 'melhor preço aplicado', en: 'best price applied', es: 'mejor precio aplicado', fr: 'meilleur prix appliqué', de: 'bester Preis angewendet' },
+  /* frases com número: cada idioma escreve o substantivo na posição certa —
+     encaixar "2 morceaux" numa frase feita dá gramática errada */
+  takeMoreOne: { pt: 'podes levar mais {n} música pelo mesmo preço', en: 'you can add {n} more track for the same price',
+                 es: 'puedes llevar {n} canción más al mismo precio', fr: 'vous pouvez ajouter {n} morceau de plus au même prix',
+                 de: 'du kannst {n} weiteren Titel zum gleichen Preis mitnehmen' },
+  takeMoreMany:{ pt: 'podes levar mais {n} músicas pelo mesmo preço', en: 'you can add {n} more tracks for the same price',
+                 es: 'puedes llevar {n} canciones más al mismo precio', fr: 'vous pouvez ajouter {n} morceaux de plus au même prix',
+                 de: 'du kannst {n} weitere Titel zum gleichen Preis mitnehmen' },
+  missingFor:{ pt: 'faltam {n} para {p}/música', en: '{n} more for {p} per track', es: 'faltan {n} para {p}/canción',
+               fr: 'encore {n} pour {p} par morceau', de: 'noch {n} für {p} pro Titel' },
+  clearSel:  { pt: 'Limpar seleção', en: 'Clear selection', es: 'Limpiar selección', fr: 'Vider la sélection', de: 'Auswahl leeren' },
+  buyWa:     { pt: 'Comprar no WhatsApp', en: 'Buy on WhatsApp', es: 'Comprar por WhatsApp', fr: 'Acheter sur WhatsApp', de: 'Über WhatsApp kaufen' },
+  introMsg:  { pt: 'Olá! Quero comprar estas faixas:', en: 'Hi! I want to buy these tracks:',
+               es: '¡Hola! Quiero comprar estas canciones:', fr: 'Bonjour ! Je souhaite acheter ces morceaux :',
+               de: 'Hallo! Ich möchte diese Titel kaufen:' },
+  totalWord: { pt: 'Total', en: 'Total', es: 'Total', fr: 'Total', de: 'Gesamt' },
+  refWord:   { pt: 'Ref', en: 'Ref', es: 'Ref', fr: 'Réf', de: 'Ref' },
+  refLabel:  { pt: 'Ref. {r}', en: 'Ref. {r}', es: 'Ref. {r}', fr: 'Réf. {r}', de: 'Ref. {r}' },
+  sentAsk:   { pt: 'Enviaste a encomenda {r}?', en: 'Did you send order {r}?', es: '¿Enviaste el pedido {r}?',
+               fr: 'Avez-vous envoyé la commande {r} ?', de: 'Hast du die Bestellung {r} gesendet?' },
+  sentYes:   { pt: 'Sim, limpar', en: 'Yes, clear', es: 'Sí, limpiar', fr: 'Oui, vider', de: 'Ja, leeren' },
+  sentNo:    { pt: 'Ainda não', en: 'Not yet', es: 'Todavía no', fr: 'Pas encore', de: 'Noch nicht' },
+  /* preços */
+  pricesTitle:{ pt: 'Preços', en: 'Prices', es: 'Precios', fr: 'Tarifs', de: 'Preise' },
+  perTrackUnit:{ pt: '/ música', en: '/ track', es: '/ canción', fr: '/ morceau', de: '/ Titel' },
+  tierOne:   { pt: '1 música', en: '1 track', es: '1 canción', fr: '1 morceau', de: '1 Titel' },
+  tierFrom:  { pt: 'A partir de {n} músicas', en: 'From {n} tracks', es: 'A partir de {n} canciones',
+               fr: 'À partir de {n} morceaux', de: 'Ab {n} Titeln' }
+};
+function ui(k, vars) {
+  const e = UI[k];
+  if (!e) return '';
+  let s = e[LOCALE] || e[DEFAULT_LOCALE] || '';
+  if (vars) for (const v in vars) s = s.split('{' + v + '}').join(vars[v]);
+  return s;
+}
+/* "{n} música/músicas" conforme o número */
+function nTracks(n) { return ui(n === 1 ? 'nTrack' : 'nTracks', { n: n }); }
+
 /* hex (#rgb ou #rrggbb) -> {r,g,b}, para alimentar variáveis CSS do scrim */
 function hexToRgb(hex) {
   if (typeof hex !== 'string') return null;
@@ -278,6 +366,21 @@ function buildMusic(item) {
   const tiers = (pr.tiers || []).filter(x => x && typeof x.price === 'number').slice().sort((a, b) => (a.minQty || 0) - (b.minQty || 0));
   const unitFor = c => { let u = tiers.length ? tiers[0].price : 0; tiers.forEach(x => { if (c >= (x.minQty || 1)) u = x.price; }); return c > 0 ? u : 0; };
 
+  /* Preço a pagar por c músicas.
+     Como o desconto de escalão se aplica a TODAS as unidades, há quantidades
+     em que levar menos sairia mais caro (ex: 13 a 0,75€ = 9,75€, mas 14 a
+     0,50€ = 7,00€). Aqui espreitamos as quantidades seguintes e nunca cobramos
+     mais do que uma encomenda maior custaria. Assim o preço nunca desce
+     quando se acrescenta uma música. */
+  function totalFor(c) {
+    if (c <= 0) return 0;
+    let melhor = c * unitFor(c);
+    /* basta olhar até ao maior minQty: daí para a frente o preço só sobe */
+    const topo = tiers.reduce((mx, x) => Math.max(mx, x.minQty || 1), 1);
+    for (let n = c + 1; n <= topo; n++) melhor = Math.min(melhor, n * unitFor(n));
+    return melhor;
+  }
+
   const SELKEY = 'hs-music-sel';
   const sel = { paid: new Set(), free: new Set() };
   let orderCode = null;
@@ -319,34 +422,82 @@ function buildMusic(item) {
   cInfo.appendChild(cTotal); cInfo.appendChild(cSub); cInfo.appendChild(cRef);
   const cNudge = el('div', 'music-cart-nudge');
   const cBuy = el('a', 'music-cart-buy'); cBuy.target = '_blank'; cBuy.rel = 'noopener';
-  cBuy.innerHTML = WA_SMALL; const cBuyLbl = el('span'); cBuyLbl.textContent = t(pr.buyLabel) || 'Comprar no WhatsApp'; cBuy.appendChild(cBuyLbl);
-  const cClear = el('button', 'music-cart-clear'); cClear.type = 'button'; cClear.setAttribute('aria-label', 'Limpar seleção'); cClear.innerHTML = TRASH;
+  cBuy.innerHTML = WA_SMALL; const cBuyLbl = el('span'); cBuyLbl.textContent = t(pr.buyLabel) || ui('buyWa'); cBuy.appendChild(cBuyLbl);
+  const cClear = el('button', 'music-cart-clear'); cClear.type = 'button'; cClear.setAttribute('aria-label', ui('clearSel')); cClear.innerHTML = TRASH;
+  /* depois de abrir o WhatsApp não há forma de saber se a mensagem foi mesmo
+     enviada — o site não tem acesso a isso. Por isso perguntamos ao regressar,
+     em vez de limpar às cegas e arriscar deitar fora a seleção de quem desistiu. */
+  const cAsk = el('div', 'music-cart-ask');
+  const cAskTxt = el('span', 'music-cart-ask-txt');
+  const cYes = el('button', 'music-cart-yes'); cYes.type = 'button'; cYes.textContent = ui('sentYes');
+  const cNo = el('button', 'music-cart-no'); cNo.type = 'button'; cNo.textContent = ui('sentNo');
+  cAsk.appendChild(cAskTxt); cAsk.appendChild(cYes); cAsk.appendChild(cNo);
   cart.appendChild(cInfo); cart.appendChild(cNudge); cart.appendChild(cBuy); cart.appendChild(cClear);
+  cart.appendChild(cAsk);
   panel.appendChild(cart);
 
+  let aguardaEnvio = null;
+  cBuy.addEventListener('click', () => { aguardaEnvio = orderCode || '—'; });
+  function perguntaSeEnviou() {
+    if (!aguardaEnvio) return;
+    if (sel.paid.size + sel.free.size === 0) { aguardaEnvio = null; return; }
+    cAskTxt.textContent = ui('sentAsk', { r: aguardaEnvio });
+    cart.classList.add('asking');
+  }
+  window.addEventListener('focus', perguntaSeEnviou);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) perguntaSeEnviou(); });
+  cYes.addEventListener('click', () => {
+    aguardaEnvio = null; cart.classList.remove('asking');
+    sel.paid.clear(); sel.free.clear(); orderCode = null; saveSel();
+    syncRows(); refresh(); applyFilter();
+  });
+  cNo.addEventListener('click', () => { aguardaEnvio = null; cart.classList.remove('asking'); });
+
   function refresh() {
-    const c = sel.paid.size, f = sel.free.size, u = unitFor(c), total = c * u;
+    const c = sel.paid.size, f = sel.free.size;
+    const total = totalFor(c);
+    /* preço unitário efetivo: pode ser melhor que o do escalão, quando o total
+       ficou limitado pelo preço de uma encomenda maior */
+    const u = c ? total / c : 0;
     const n = c + f;
     /* gera a ref quando a encomenda começa; apaga-a quando o carrinho esvazia */
     if (n > 0 && !orderCode) { orderCode = newOrderCode(); saveSel(); }
     else if (n === 0 && orderCode) { orderCode = null; saveSel(); }
 
     cart.classList.toggle('show', n > 0);
-    cTotal.textContent = n + (n === 1 ? ' música · ' : ' músicas · ') + eur(total);
-    cSub.textContent = c ? ('a ' + eur(u) + '/música' + (f ? (' · ' + f + ' grátis') : '')) : (f ? (f + ' grátis') : '');
-    cRef.textContent = orderCode ? ('Ref. ' + orderCode) : '';
+    cTotal.textContent = nTracks(n) + ' · ' + eur(total);
+    const limitado = c > 0 && total < c * unitFor(c) - 0.001;   /* preço travado por uma encomenda maior */
+    cSub.textContent = c
+      ? ((limitado ? ui('bestPrice') : ui('perTrack', { p: eur(u) })) + (f ? (' · ' + ui('freeCount', { n: f })) : ''))
+      : (f ? ui('freeCount', { n: f }) : '');
+    cRef.textContent = orderCode ? ui('refLabel', { r: orderCode }) : '';
+
+    /* incentivo: se o preço está travado, o cliente pode levar mais faixas
+       sem pagar nada a mais — é a informação mais útil que lhe podemos dar */
     let nudge = '';
-    for (const x of tiers) { if (c > 0 && c < (x.minQty || 0)) { nudge = 'faltam ' + (x.minQty - c) + ' para ' + eur(x.price) + '/música'; break; } }
+    if (limitado) {
+      let extra = 0;
+      while (totalFor(c + extra + 1) <= total + 0.001) extra++;
+      if (extra > 0) nudge = ui(extra === 1 ? 'takeMoreOne' : 'takeMoreMany', { n: extra });
+    } else {
+      for (const x of tiers) { if (c > 0 && c < (x.minQty || 0)) { nudge = ui('missingFor', { n: x.minQty - c, p: eur(x.price) }); break; } }
+    }
     cNudge.textContent = nudge; cNudge.style.display = nudge ? '' : 'none';
 
     /* mensagem: uma faixa por linha (legível no WhatsApp e sem ambiguidade a ler,
        mesmo que um nome tenha vírgulas) */
     const lines = [...sel.paid].map(x => '• ' + x)
-      .concat([...sel.free].map(x => '• ' + x + ' (grátis)'));
-    const intro = t(pr.intro) || 'Olá! Quero comprar estas faixas:';
+      .concat([...sel.free].map(x => '• ' + x + ' ' + ui('freeSuffix')));
+    const intro = t(pr.intro) || ui('introMsg');
+    /* o total tem de bater certo com o nº de linhas listadas: se disser
+       "3 músicas" mas listar 5, quem recebe a encomenda fica sem saber o que enviar */
+    let resumo;
+    if (!f) resumo = nTracks(n);
+    else if (!c) resumo = ui(n === 1 ? 'nFreeOne' : 'nFreeMany', { n: n });
+    else resumo = ui('mixed', { n: n, c: c, f: f, pag: ui(c === 1 ? 'paidOne' : 'paidMany') });
     const msg = intro + '\n' + lines.join('\n') +
-      '\n\nTotal: ' + c + (c === 1 ? ' música' : ' músicas') + ' · ' + eur(total) +
-      (orderCode ? ('\nRef: ' + orderCode) : '');
+      '\n\n' + ui('totalWord') + ': ' + resumo + ' · ' + eur(total) +
+      (orderCode ? ('\n' + ui('refWord') + ': ' + orderCode) : '');
     cBuy.href = waLink(num, msg);
     selCount.textContent = '(' + n + ')';
   }
@@ -394,7 +545,7 @@ function buildMusic(item) {
   const audio = el('audio'); audio.preload = 'none';
   const np = el('div', 'music-np');
   const npThumb = el('div', 'music-np-thumb'); npThumb.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="#fff" aria-hidden="true"><path d="M12 3v10.55A4 4 0 1014 17V7h4V3z"/></svg>';
-  const npBtn = el('button', 'music-np-btn'); npBtn.type = 'button'; npBtn.setAttribute('aria-label', 'Play/Pause'); npBtn.innerHTML = ICON_PLAY;
+  const npBtn = el('button', 'music-np-btn'); npBtn.type = 'button'; npBtn.setAttribute('aria-label', ui('playPause')); npBtn.innerHTML = ICON_PLAY;
   const npMid = el('div', 'music-np-mid');
   const npTitle = el('div', 'music-np-title'); npTitle.textContent = '—';
   const npBar = el('div', 'music-np-bar'); const npFill = el('div', 'music-np-fill'); npBar.appendChild(npFill);
@@ -445,7 +596,7 @@ function buildMusic(item) {
 
   /* filtro por idioma: Todas / Português / Inglês */
   const filter = el('div', 'music-filter');
-  const fdefs = [['all', 'Todas'], ['pt', 'Português'], ['en', 'Inglês'], ['inst', 'Instrumental']];
+  const fdefs = [['all', ui('fAll')], ['pt', ui('fPt')], ['en', ui('fEn')], ['inst', ui('fInst')]];
   const fbtns = [];
   fdefs.forEach(([f, label]) => {
     const b = el('button', 'music-fbtn' + (f === 'all' ? ' on' : '')); b.type = 'button';
@@ -460,20 +611,20 @@ function buildMusic(item) {
 
   /* controlos: combo de géneros (antes) + pesquisa */
   const controls = el('div', 'music-controls');
-  const gsel = el('select', 'music-gsel'); gsel.setAttribute('aria-label', 'Filtrar por género');
-  const optAll = el('option'); optAll.value = 'all'; optAll.textContent = 'Todos os géneros'; gsel.appendChild(optAll);
+  const gsel = el('select', 'music-gsel'); gsel.setAttribute('aria-label', ui('filterGenre'));
+  const optAll = el('option'); optAll.value = 'all'; optAll.textContent = ui('allGenres'); gsel.appendChild(optAll);
   const genreNames = [];
   allTracks.forEach(tr => { const g = (tr.genre || '').trim(); if (g && genreNames.indexOf(g) < 0) genreNames.push(g); });
   genreNames.forEach(g => { const o = el('option'); o.value = g; o.textContent = g; gsel.appendChild(o); });
   gsel.addEventListener('change', () => { genreSel = gsel.value; applyFilter(); });
-  const search = el('input', 'music-search'); search.type = 'text'; search.placeholder = 'Pesquisar música…'; search.setAttribute('aria-label', 'Pesquisar música');
+  const search = el('input', 'music-search'); search.type = 'text'; search.placeholder = ui('search'); search.setAttribute('aria-label', ui('searchAria'));
   search.addEventListener('input', () => { searchQ = search.value.toLowerCase().trim(); applyFilter(); });
   /* marcar / desmarcar todas as faixas visíveis (respeita os filtros ativos) */
   const selAll = el('button', 'music-selall'); selAll.type = 'button';
   const setSelAllLabel = () => {
     const rows = flatBody ? [...flatBody.querySelectorAll('.music-track:not(.mfhide)')] : [];
     const allOn = rows.length > 0 && rows.every(r => r.classList.contains('sel'));
-    selAll.textContent = allOn ? 'Desmarcar todas' : 'Marcar todas';
+    selAll.textContent = allOn ? ui('deselectAll') : ui('selectAll');
     selAll.dataset.on = allOn ? '1' : '0';
   };
   selAll.addEventListener('click', () => {
@@ -493,7 +644,7 @@ function buildMusic(item) {
   /* uma lista única com todas as faixas DISPONÍVEIS (com ficheiro), altura fixa + scroll */
   const listbox = el('div', 'music-listbox music-flat');
   const colhead = el('div', 'music-colhead');
-  ['', 'Música', 'Idioma', 'Género', 'Duração', ''].forEach((h, i) => {
+  ['', ui('colTrack'), ui('colLang'), ui('colGenre'), ui('colLength'), ''].forEach((h, i) => {
     const c = el('span'); c.textContent = h;
     if (i === 2 || i === 3) c.style.textAlign = 'center';
     if (i === 4) c.style.textAlign = 'right';
@@ -510,9 +661,9 @@ function buildMusic(item) {
     const genre = (track.genre || '').trim();
     const row = el('div', 'music-track');
     row.dataset.lang = lang; row.dataset.genre = genre; row.dataset.nm = id.toLowerCase(); row.dataset.id = id;
-    const b = el('button', 'music-pl'); b.type = 'button'; b.setAttribute('aria-label', 'Tocar ' + id); b.innerHTML = ICON_PLAY;
+    const b = el('button', 'music-pl'); b.type = 'button'; b.setAttribute('aria-label', ui('play', { n: id })); b.innerHTML = ICON_PLAY;
     const nm = el('span', 'music-nm'); nm.textContent = id;
-    if (isFree) { const fb = el('span', 'music-free'); fb.textContent = 'GRÁTIS'; nm.appendChild(fb); }
+    if (isFree) { const fb = el('span', 'music-free'); fb.textContent = ui('free'); nm.appendChild(fb); }
     const lg = el('span', 'music-lang ' + lang); lg.textContent = ({ pt: 'PT', en: 'EN', inst: 'INST' })[lang] || lang;
     const gn = el('span', genre ? 'music-gen' : ''); gn.textContent = genre;
     /* duração: o que se ouve é um excerto; o que se compra é a música completa.
@@ -523,13 +674,12 @@ function buildMusic(item) {
     du.appendChild(tot);
     if (pm) {
       const exc = el('span', 'music-dur-exc');
-      exc.textContent = 'excerto ' + parseInt(pm[1], 10) + ':' + pm[2];
+      exc.textContent = ui('excerpt', { e: parseInt(pm[1], 10) + ':' + pm[2] });
       du.appendChild(exc);
-      du.title = 'Ouves um excerto de ' + parseInt(pm[1], 10) + ':' + pm[2] +
-        '. A compra inclui a música completa (' + (track.duration || '') + ').';
+      du.title = ui('excerptTip', { e: parseInt(pm[1], 10) + ':' + pm[2], t: track.duration || '' });
     }
     const add = el('button', 'music-add'); add.type = 'button'; add.dataset.free = isFree ? '1' : '0';
-    add.setAttribute('aria-label', (isFree ? 'Marcar faixa grátis ' : 'Marcar para comprar ') + id);
+    add.setAttribute('aria-label', ui(isFree ? 'markFree' : 'markBuy', { n: id }));
     const setAdd = () => { const on = (isFree ? sel.free : sel.paid).has(id); add.innerHTML = on ? CHECK : PLUS; row.classList.toggle('sel', on); };
     add.addEventListener('click', () => { const s = isFree ? sel.free : sel.paid; if (s.has(id)) s.delete(id); else s.add(id); setAdd(); saveSel(); refresh(); applyFilter(); });
     setAdd();
@@ -552,7 +702,7 @@ function buildMusic(item) {
   /* escalões de preço — chips inline para poupar altura */
   if (tiers.length) {
     const pcol = el('div', 'music-foot-prices');
-    const lt = el('span', 'music-foot-title'); lt.textContent = pr.title || 'Preços'; pcol.appendChild(lt);
+    const lt = el('span', 'music-foot-title'); lt.textContent = t(pr.title) || ui('pricesTitle'); pcol.appendChild(lt);
     tiers.forEach(x => {
       const chip = el('span', 'music-pchip');
       const lb = el('span', 'music-pchip-q'); lb.textContent = (x.minQty <= 1 ? '1' : x.minQty + '+');
@@ -561,7 +711,7 @@ function buildMusic(item) {
       chip.appendChild(lb); chip.appendChild(price);
       pcol.appendChild(chip);
     });
-    const unit = el('span', 'music-foot-unit'); unit.textContent = '/ música'; pcol.appendChild(unit);
+    const unit = el('span', 'music-foot-unit'); unit.textContent = ui('perTrackUnit'); pcol.appendChild(unit);
     foot.appendChild(pcol);
   }
 
@@ -790,6 +940,7 @@ function render(data) {
   }
 
   initMotion(data);
+  reporPosicao();      /* volta à secção onde se estava, se veio de mudança de idioma */
 }
 
 /* ---- seletor de idioma (bandeiras) ---- */
@@ -800,6 +951,40 @@ const FLAGS = {
   fr: '<svg viewBox="0 0 9 6"><rect width="3" height="6" fill="#0055A4"/><rect width="3" height="6" x="3" fill="#fff"/><rect width="3" height="6" x="6" fill="#EF4135"/></svg>',
   de: '<svg viewBox="0 0 5 3"><rect width="5" height="1" fill="#000"/><rect width="5" height="1" y="1" fill="#D00"/><rect width="5" height="1" y="2" fill="#FFCE00"/></svg>',
 };
+/* ---- manter a posição ao mudar de idioma ----
+   Mudar de idioma recarrega a página. Guardamos a secção onde o utilizador
+   estava e a distância a que estava do topo dela; ao voltar, repomos aí.
+   Guardamos a secção (e não só o scrollY) porque os textos traduzidos têm
+   comprimentos diferentes e deslocariam a página. */
+const POSKEY = 'hs-scroll';
+function guardaPosicao() {
+  try {
+    const meio = window.scrollY + window.innerHeight / 2;
+    let alvo = null;
+    document.querySelectorAll('section').forEach(s => {
+      const topo = s.offsetTop;
+      if (topo <= meio) alvo = s;
+    });
+    if (!alvo) return;
+    sessionStorage.setItem(POSKEY, JSON.stringify({ id: alvo.id, off: Math.round(window.scrollY - alvo.offsetTop) }));
+  } catch (e) { }
+}
+function reporPosicao() {
+  let p;
+  try { p = JSON.parse(sessionStorage.getItem(POSKEY) || 'null'); sessionStorage.removeItem(POSKEY); } catch (e) { }
+  if (!p || !p.id) return;
+  const ir = () => {
+    const s = document.getElementById(p.id);
+    if (!s) return;
+    window.scrollTo({ top: Math.max(0, s.offsetTop + (p.off || 0)), behavior: 'instant' in window ? 'instant' : 'auto' });
+  };
+  ir();
+  requestAnimationFrame(ir);
+  /* as imagens ainda podem estar a carregar e a mudar a altura da página */
+  window.addEventListener('load', ir, { once: true });
+  setTimeout(ir, 250);
+}
+
 function buildLangSwitcher(locales) {
   const bar = el('div', 'lang-switcher');
   const current = el('button', 'lang current');
@@ -814,6 +999,7 @@ function buildLangSwitcher(locales) {
     b.setAttribute('aria-label', code);
     b.innerHTML = FLAGS[code] || code;
     b.addEventListener('click', () => {
+      guardaPosicao();                 /* para voltar ao mesmo sítio depois do reload */
       localStorage.setItem('lang', code);
       location.reload();
     });

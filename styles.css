@@ -454,6 +454,21 @@ footer small{opacity:.7}
 .music-cart-buy{margin-left:auto;background:#25D366;color:#08351a;font-weight:800;font-size:13px;padding:10px 16px;border-radius:100px;text-decoration:none;display:inline-flex;align-items:center;gap:7px}
 .music-cart-buy:hover{background:#1fbe5a}
 .music-cart-clear{background:rgba(0,0,0,.22);border:none;color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;flex:none;display:flex;align-items:center;justify-content:center}
+
+/* pergunta "enviaste?" ao voltar do WhatsApp */
+.music-cart-ask{display:none;align-items:center;gap:10px;flex:1;flex-wrap:wrap;justify-content:space-between}
+.music-cart.asking .music-cart-info,
+.music-cart.asking .music-cart-nudge,
+.music-cart.asking .music-cart-buy,
+.music-cart.asking .music-cart-clear{display:none}
+.music-cart.asking .music-cart-ask{display:flex}
+.music-cart-ask-txt{color:#fff;font-size:14px;font-weight:700}
+.music-cart-yes,.music-cart-no{
+  font-family:inherit;font-size:13px;font-weight:800;padding:9px 16px;border-radius:100px;cursor:pointer;
+}
+.music-cart-yes{background:#fff;color:#141414;border:none}
+.music-cart-no{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.5)}
+.music-cart-no:hover{border-color:#fff}
 @media(max-width:600px){
   .music-cart{flex-wrap:wrap}
   .music-cart-buy{margin-left:0;flex:1}

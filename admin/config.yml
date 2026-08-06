@@ -1151,9 +1151,31 @@ collections:
                     required: false
                   - label: Título da secção de preços
                     name: title
-                    widget: string
-                    default: Preços
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
                     required: false
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: string
+                        required: false
+                      - label: English
+                        name: en
+                        widget: string
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: string
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: string
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: string
+                        required: false
                   - label: Texto do botão de compra
                     name: buyLabel
                     widget: object

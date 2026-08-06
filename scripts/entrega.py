@@ -4,11 +4,13 @@ Gerador de entregas — Happy Soaring Music
 =========================================
 
 Recebe a mensagem de encomenda (a que o cliente envia por WhatsApp),
-junta os WAV correspondentes, cria também FLAC, mete a licenca preenchida,
+junta os WAV correspondentes, mete a licenca preenchida,
 faz o ZIP e envia-o para a Cloudflare R2. Devolve o link para reencaminhar.
 
+Por defeito entrega SÓ WAV. Usa --com-flac se quiseres incluir também FLAC.
+
 Uso:
-    python scripts/entrega.py <ficheiro-da-encomenda.txt> [--nome "Comprador"] [--so-wav] [--sem-upload]
+    python scripts/entrega.py <ficheiro-da-encomenda.txt> [--nome "Comprador"] [--com-flac] [--sem-upload]
 
 Nada aqui toca no site.
 """
@@ -71,7 +73,7 @@ def indexa_wav():
 
 
 # ---------------------------------------------------------------- licenca
-def licenca(ref, comprador, faixas, total, whatsapp):
+def licenca(ref, comprador, faixas, total, whatsapp, formatos='WAV'):
     txt = open(MODELO, encoding='utf-8').read()
     lista = '\n'.join('  - ' + n for n in faixas)
     subs = {
@@ -81,6 +83,8 @@ def licenca(ref, comprador, faixas, total, whatsapp):
         '{{FAIXAS}}': lista,
         '{{TOTAL}}': total or (str(len(faixas)) + ' faixas'),
         '{{WHATSAPP}}': whatsapp or '',
+        'Formatos incluidos / Formats included: WAV + FLAC':
+            'Formatos incluidos / Formats included: ' + formatos,
     }
     for k, v in subs.items():
         txt = txt.replace(k, v)
@@ -95,7 +99,7 @@ def main():
         sys.exit(1)
     pedido = args[0]
     comprador = None
-    so_wav = '--so-wav' in args
+    com_flac = '--com-flac' in args
     sem_upload = '--sem-upload' in args
     if '--nome' in args:
         comprador = args[args.index('--nome') + 1]
@@ -141,7 +145,7 @@ def main():
         shutil.rmtree(tmp)
     os.makedirs(tmp)
 
-    ff = None if so_wav else ffmpeg()
+    ff = ffmpeg() if com_flac else None
     zip_path = os.path.join(ENTREGAS, ref + '.zip')
     if os.path.exists(zip_path):
         os.remove(zip_path)
@@ -152,14 +156,15 @@ def main():
             seguro = re.sub(r'[\\/:*?"<>|]', '-', nome).strip()
             print('   [%2d/%d] %s' % (i, len(encontrados), nome))
             z.write(wav, 'WAV/%s.wav' % seguro)
-            if not so_wav:
+            if com_flac:
                 flac = os.path.join(tmp, seguro + '.flac')
                 subprocess.run([ff, '-loglevel', 'error', '-y', '-i', wav,
                                 '-compression_level', '8', flac], check=True)
                 z.write(flac, 'FLAC/%s.flac' % seguro)
                 os.remove(flac)
         wa = el.get('whatsapp', '')
-        z.writestr('LICENCA.txt', licenca(ref, comprador, [n for n, _ in encontrados], total, wa))
+        z.writestr('LICENCA.txt', licenca(ref, comprador, [n for n, _ in encontrados], total, wa,
+                                          'WAV + FLAC' if com_flac else 'WAV'))
 
     shutil.rmtree(tmp, ignore_errors=True)
     mb = os.path.getsize(zip_path) / 1048576
