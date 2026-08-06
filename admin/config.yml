@@ -1562,64 +1562,311 @@ collections:
                 widget: string
                 required: false
                 hint: 'Indicativo + número, só dígitos (ex: 351912345678)'
-              - label: Famílias
-                name: families
-                widget: list
-                label_singular: Família
-                summary: '{{fields.name}}'
+              - label: Nota sobre cores personalizadas
+                name: customColourNote
+                widget: object
+                collapsed: true
+                summary: '{{fields.pt}}'
+                required: false
                 fields:
-                  - label: Mostrar família
+                  - label: Português
+                    name: pt
+                    widget: text
+                    required: false
+                  - label: English
+                    name: en
+                    widget: text
+                    required: false
+                  - label: Español
+                    name: es
+                    widget: text
+                    required: false
+                  - label: Français
+                    name: fr
+                    widget: text
+                    required: false
+                  - label: Deutsch
+                    name: de
+                    widget: text
+                    required: false
+              - label: Produtos
+                name: produtos
+                widget: list
+                label_singular: Produto
+                summary: '{{fields.nome}}  ·  {{fields.familia}}'
+                collapsed: true
+                required: false
+                hint: A gama Flow. Cada família só ganha filtros no site quando tem mais do que uma classificação.
+                fields:
+                  - label: Mostrar
                     name: visible
                     widget: boolean
                     default: true
-                  - label: Começar aberta
-                    name: open
-                    widget: boolean
-                    default: false
-                    hint: Por defeito as famílias aparecem fechadas
-                  - label: Nome da família
-                    name: name
+                    required: false
+                  - label: Nome
+                    name: nome
                     widget: string
-                  - label: Sub-famílias
-                    name: subfamilies
-                    widget: list
-                    label_singular: Sub-família
-                    summary: '{{fields.name}}'
+                    hint: Tem de coincidir com o nome das fotos em images/asas
+                  - label: Família
+                    name: familia
+                    widget: string
+                    hint: 'Ex: Parapentes, Parakites, Paramotor, Arneses'
+                  - label: Classificação
+                    name: classificacao
+                    widget: string
+                    required: false
+                    hint: 'Ex: EN-B, Parakite, Full reflex. Vazio = sem classificação.'
+                  - label: Frase curta
+                    name: tagline
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
+                    required: false
                     fields:
-                      - label: Mostrar sub-família
-                        name: visible
-                        widget: boolean
-                        default: true
-                      - label: Começar aberta
-                        name: open
-                        widget: boolean
-                        default: false
-                      - label: Nome da sub-família
-                        name: name
+                      - label: Português
+                        name: pt
                         widget: string
-                      - label: Asas
-                        name: wings
-                        widget: list
-                        label_singular: Asa
-                        summary: '{{fields.name}}'
-                        fields:
-                          - label: Imagem da asa
-                            name: image
-                            widget: image
-                            required: false
-                          - label: Nome
-                            name: name
-                            widget: string
-                          - label: 'Categoria/Etiqueta (ex: EN-B, CCC)'
-                            name: badge
-                            widget: string
-                            required: false
-                          - label: Link do site da Flow
-                            name: flowHref
-                            widget: string
-                            required: false
-                            hint: URL da página da asa no site da Flow
-                          - label: Mensagem WhatsApp
-                            name: waMessage
-                            widget: text
-                            required: false
+                        required: false
+                      - label: English
+                        name: en
+                        widget: string
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: string
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: string
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: string
+                        required: false
+                  - label: Descrição
+                    name: descricao
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
+                    required: false
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: text
+                        required: false
+                      - label: English
+                        name: en
+                        widget: text
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: text
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: text
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: text
+                        required: false
+                  - label: Para quem é
+                    name: paraQuem
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
+                    required: false
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: text
+                        required: false
+                      - label: English
+                        name: en
+                        widget: text
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: text
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: text
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: text
+                        required: false
+                  - label: Pontos fortes
+                    name: pontosFortes
+                    widget: list
+                    required: false
+                    label_singular: Ponto forte
+                    summary: '{{fields.pt}}'
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: string
+                        required: false
+                      - label: English
+                        name: en
+                        widget: string
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: string
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: string
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: string
+                        required: false
+                  - label: Vem incluído
+                    name: incluido
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
+                    required: false
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: text
+                        required: false
+                      - label: English
+                        name: en
+                        widget: text
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: text
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: text
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: text
+                        required: false
+                  - label: Aviso
+                    name: aviso
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
+                    required: false
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: text
+                        required: false
+                      - label: English
+                        name: en
+                        widget: text
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: text
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: text
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: text
+                        required: false
+                  - label: Tamanhos
+                    name: tamanhos
+                    widget: list
+                    required: false
+                    field:
+                      label: Tamanho
+                      name: tamanho
+                      widget: string
+                  - label: Cores (nome das fotos)
+                    name: cores
+                    widget: list
+                    required: false
+                    hint: Cada cor tem de ter foto em images/asas com o nome <modelo>__<cor>.webp
+                    field:
+                      label: Cor
+                      name: cor
+                      widget: string
+                  - label: Especificações por tamanho
+                    name: specs
+                    widget: list
+                    required: false
+                    label_singular: Tamanho
+                    summary: '{{fields.tamanho}}'
+                    collapsed: true
+                    fields:
+                      - label: Tamanho
+                        name: tamanho
+                        widget: string
+                      - label: Área plana
+                        name: areaPlana
+                        widget: string
+                        required: false
+                      - label: Área projetada
+                        name: areaProjetada
+                        widget: string
+                        required: false
+                      - label: Envergadura
+                        name: envergadura
+                        widget: string
+                        required: false
+                      - label: Células
+                        name: celulas
+                        widget: number
+                        value_type: int
+                        required: false
+                      - label: Alongamento
+                        name: alongamento
+                        widget: number
+                        value_type: float
+                        required: false
+                      - label: Alongamento projetado
+                        name: alongamentoProjetado
+                        widget: number
+                        value_type: float
+                        required: false
+                      - label: Peso
+                        name: pesoAsa
+                        widget: string
+                        required: false
+                      - label: PTV
+                        name: ptv
+                        widget: string
+                        required: false
+                      - label: Carga máxima
+                        name: cargaMax
+                        widget: string
+                        required: false
+                      - label: Taxa de queda
+                        name: taxaQueda
+                        widget: string
+                        required: false
+                      - label: Altura de suspensão
+                        name: alturaSuspensao
+                        widget: string
+                        required: false
+                      - label: Assento
+                        name: assento
+                        widget: string
+                        required: false
+                      - label: Painéis
+                        name: paineis
+                        widget: number
+                        value_type: int
+                        required: false
+                      - label: Homologação
+                        name: homologacao
+                        widget: string
+                        required: false
+                  - label: Link oficial Flow
+                    name: flowHref
+                    widget: string
+                    required: false

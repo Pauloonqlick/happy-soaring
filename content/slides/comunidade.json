@@ -1,11 +1,12 @@
 {
   "id": "comunidade",
-  "visible": true,
+  "visible": false,
   "heightScreens": null,
   "heroScrim": false,
   "bgImage": "",
   "bgImageMobile": "",
   "bgImageVisible": true,
+  "bgDarken": null,
   "topTint": "",
   "overlay": {
     "visible": true,

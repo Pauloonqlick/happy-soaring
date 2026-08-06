@@ -34,3 +34,13 @@ music/_apagados/
 
 # ficheiros de trabalho já aplicados
 _arquivo/
+
+# mockups de trabalho (nao vao para o site)
+mockups/
+
+# catalogo recolhido do site da Flow — texto deles, pendente de autorizacao
+catalogo-flow/
+
+# cache do Python
+__pycache__/
+*.pyc

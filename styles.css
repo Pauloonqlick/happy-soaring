@@ -397,38 +397,139 @@ footer small{opacity:.7}
 .flow-logo{height:54px;width:auto;margin:12px auto 4px;display:block;filter:brightness(0) invert(1)}
 .flow-title{color:#fff;font-weight:800;font-size:clamp(22px,4vw,30px);margin:6px 0;letter-spacing:.5px}
 .flow-desc{color:rgba(255,255,255,.85);font-size:14px;max-width:56ch;margin:6px auto 0;line-height:1.5}
-.flow-fam-acc{margin:12px 0}
-.flow-famhead{width:100%;display:flex;align-items:center;gap:12px;background:none;border:none;cursor:pointer;color:#fff;font-weight:800;font-size:18px;letter-spacing:2px;text-transform:uppercase;padding:10px 0;text-align:left}
-.flow-famhead>span:nth-child(2){white-space:nowrap}
-.flow-famhead::after{content:"";flex:1;height:2px;background:rgba(255,255,255,.25)}
-.flow-fam-acc.open>.flow-famhead .flow-chev{transform:rotate(90deg)}
-.flow-fambody{display:none;padding-top:4px}
-.flow-fam-acc.open>.flow-fambody{display:block}
-.flow-ctrls{display:flex;gap:8px;margin:2px 0 12px}
-.flow-ctrl{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);color:#fff;font-size:12px;font-weight:600;padding:6px 13px;border-radius:100px;cursor:pointer;transition:background .15s}
-.flow-ctrl:hover{background:rgba(255,255,255,.26)}
-.flow-sub{border:1px solid rgba(255,255,255,.2);border-radius:12px;margin-bottom:10px;background:rgba(255,255,255,.07);overflow:hidden}
-.flow-subhead{width:100%;display:flex;align-items:center;gap:10px;padding:13px 15px;background:none;border:none;cursor:pointer;color:#fff;font-weight:700;font-size:14px;text-align:left}
-.flow-count{color:rgba(255,255,255,.65);font-size:12px;font-weight:600;margin-left:auto}
-.flow-chev{display:inline-flex;transition:transform .2s}
-.flow-sub.open .flow-chev{transform:rotate(90deg)}
-.flow-subbody{display:none;padding:0 8px 8px}
-.flow-sub.open .flow-subbody{display:block}
-.flow-row{display:flex;align-items:center;gap:14px;padding:10px;border-top:1px solid rgba(255,255,255,.14)}
-.flow-row:hover{background:rgba(255,255,255,.06);border-radius:8px}
-.flow-thumb{flex:none;width:84px;display:flex;justify-content:center}
-.flow-thumb img{max-width:84px;max-height:60px;object-fit:contain;display:block}
-.flow-info{flex:1;min-width:0;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.flow-name{color:#fff;font-weight:700;font-size:15px}
-.flow-badge{background:rgba(255,255,255,.2);color:#fff;font-size:10px;font-weight:700;letter-spacing:.5px;padding:3px 9px;border-radius:100px}
-.flow-links{flex:none;display:flex;gap:8px}
-.flow-ic{display:inline-flex;width:32px;height:32px;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;text-decoration:none;transition:background .15s}
-.flow-ic:hover{background:rgba(255,255,255,.28)}
-.flow-ic.wa{background:#25D366;color:#08351a}
-.flow-ic.wa:hover{background:#1fbe5a}
+/* a secção dos produtos é alta: alinha ao topo em vez de centrar,
+   e deixa a grelha respirar a toda a largura */
+#produtos{align-items:flex-start;padding-top:6vh;padding-bottom:8vh;padding-left:4vw;padding-right:4vw;overflow:visible}
+/* catálogo precisa de mais largura que as secções de texto: com 1000px a
+   tabela de especificações não cabe e obriga a scroll horizontal */
+#produtos .flow{width:100%;max-width:1240px}
+
+/* ---- famílias e filtros ---- */
+.flow-fams{display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid rgba(255,255,255,.28);margin:18px 0 0}
+.flow-fam{
+  background:none;border:none;font-family:inherit;font-size:14.5px;font-weight:700;
+  color:rgba(255,255,255,.72);padding:14px 15px;cursor:pointer;white-space:nowrap;
+  border-bottom:3px solid transparent;
+}
+.flow-fam:hover{color:#fff}
+.flow-fam.on{color:#fff;border-bottom-color:#fff}
+.flow-fam-n{opacity:.6;font-weight:600}
+.flow-filters{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:14px 0;min-height:56px}
+.flow-filters-label{font-size:11.5px;letter-spacing:1.3px;text-transform:uppercase;color:rgba(255,255,255,.7);font-weight:700;margin-right:4px}
+.flow-filters-none{font-size:13px;color:rgba(255,255,255,.8);font-style:italic}
+.flow-chip{
+  background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:100px;
+  padding:7px 15px;font-family:inherit;font-size:13px;font-weight:700;color:#fff;cursor:pointer;
+}
+.flow-chip:hover{background:rgba(255,255,255,.26)}
+.flow-chip.on{background:#fff;color:#0b63c5;border-color:#fff}
+
+/* ---- grelha de cartões ---- */
+/* align-items:stretch (por defeito): todos os cartões da mesma linha ficam
+   com a altura do mais alto. Os botões descem com margin-top:auto. */
+.flow-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+/* Vidro escuro: um véu branco sobre o azul clareia o fundo e deixa o texto
+   branco abaixo do contraste legível. Escurecer mantém-no acima de 7:1. */
+.flow-card{
+  background:rgba(6,32,64,.30);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.28);border-radius:15px;overflow:hidden;cursor:pointer;
+  display:flex;flex-direction:column;color:#fff;box-shadow:0 10px 26px rgba(4,26,56,.26);
+  transition:box-shadow .18s,transform .18s,background .18s;
+}
+.flow-card:hover{background:rgba(6,32,64,.42);box-shadow:0 18px 40px rgba(4,26,56,.4);transform:translateY(-3px)}
+.flow-card.aberta{border-color:rgba(255,255,255,.8);box-shadow:0 0 0 2px rgba(255,255,255,.5)}
+.flow-shot{background:rgba(255,255,255,.07);padding:16px 14px 12px}
+.flow-shot-img{height:140px;display:flex;align-items:center;justify-content:center}
+.flow-shot-img img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.flow-shot-img svg{max-width:100%;max-height:100%}
+.flow-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:9px;flex:1}
+.flow-name{font-size:17px;font-weight:800;color:#fff}
+.flow-clas{font-size:11px;letter-spacing:1.1px;text-transform:uppercase;font-weight:700;color:#ffd6ad}
+.flow-tagline{font-size:13px;color:rgba(255,255,255,.82);line-height:1.45}
+.flow-lbl{font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.7);font-weight:700;margin-bottom:6px}
+.flow-swatches{display:flex;gap:7px;flex-wrap:wrap}
+.flow-sw{width:22px;height:22px;border-radius:50%;border:2px solid #fff;padding:0;cursor:pointer;box-shadow:0 0 0 1px rgba(255,255,255,.55)}
+.flow-sw.on{box-shadow:0 0 0 2px #fff}
+.flow-sizes{display:flex;gap:5px;flex-wrap:wrap}
+.flow-size{border:1px solid rgba(255,255,255,.38);border-radius:7px;padding:3px 9px;font-size:11.5px;color:rgba(255,255,255,.92)}
+.flow-actions{display:flex;gap:8px;margin-top:auto;padding-top:4px}
+.flow-btn{
+  flex:1;border-radius:10px;padding:10px 8px;font-family:inherit;font-size:13px;font-weight:800;
+  cursor:pointer;text-align:center;text-decoration:none;
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.4);color:#fff;
+}
+.flow-btn:hover{background:rgba(255,255,255,.24);border-color:rgba(255,255,255,.7)}
+.flow-btn.primary{background:var(--orange);border-color:var(--orange);color:#fff}
+.flow-btn.primary:hover{background:#ff7c31}
+
+/* ---- detalhe expandido dentro da grelha ---- */
+.flow-det{
+  grid-column:1 / -1;display:block;background:#fff;border-radius:16px;overflow:hidden;
+  color:#12161c;cursor:default;min-height:0;padding:0;align-items:initial;
+  box-shadow:0 20px 50px rgba(4,26,56,.34);animation:flowAbre .22s ease;
+}
+@keyframes flowAbre{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.flow-det-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:20px 24px 0}
+.flow-det-name{font-size:25px;font-weight:900;line-height:1.1}
+.flow-det-sub{color:#0b63c5;font-weight:700;font-size:13.5px;margin-top:4px}
+.flow-det-x{
+  background:#f2f5f9;border:none;border-radius:50%;width:34px;height:34px;flex:none;
+  font-size:15px;color:#6b7683;cursor:pointer;line-height:1;
+}
+.flow-det-x:hover{background:#e6ebf2;color:#12161c}
+.flow-det-cols{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:26px;padding:16px 24px 24px}
+.flow-det-foto{
+  background:linear-gradient(160deg,#eef4fb,#dce7f4);border-radius:14px;padding:20px;
+  display:flex;align-items:center;justify-content:center;min-height:320px;
+}
+.flow-det-foto img{max-width:100%;max-height:420px;width:auto;height:auto;object-fit:contain}
+.flow-det-foto svg{max-width:100%}
+.flow-det-cores{margin-top:14px}
+.flow-det .flow-lbl{color:#6b7683}
+.flow-det .flow-sw{box-shadow:0 0 0 1px #cfd8e3}
+.flow-det .flow-sw.on{box-shadow:0 0 0 2px #0b63c5}
+.flow-det-desc{font-size:14.5px;line-height:1.65;color:#39434f}
+.flow-feat{display:flex;gap:12px;margin-top:16px}
+.flow-feat-ico{flex:none;color:#0b63c5;display:inline-flex}
+.flow-feat b{display:block;font-size:13.5px;margin-bottom:3px}
+.flow-feat p{font-size:13px;color:#6b7683;line-height:1.55}
+.flow-det-h{
+  font-size:11.5px;letter-spacing:1.4px;text-transform:uppercase;color:#6b7683;font-weight:800;
+  margin:22px 0 10px;padding-top:16px;border-top:1px solid #e3e8ee;
+}
+.flow-tablewrap{overflow-x:auto}
+.flow-specs{width:100%;border-collapse:collapse;font-size:13px}
+.flow-specs th{
+  text-align:left;padding:6px 12px 6px 0;font-size:10.5px;letter-spacing:.6px;text-transform:uppercase;
+  color:#6b7683;border-bottom:1px solid #e3e8ee;white-space:nowrap;
+}
+.flow-specs td{padding:7px 12px 7px 0;border-bottom:1px solid #f2f5f9;white-space:nowrap}
+.flow-aviso{
+  margin-top:14px;background:#fff6e8;border:1px solid #f0d4a8;border-radius:10px;
+  padding:10px 12px;font-size:12.5px;line-height:1.5;color:#7a5320;
+}
+.flow-det-acoes{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.flow-big{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:12px;
+  padding:12px 18px;font-family:inherit;font-size:14px;font-weight:800;cursor:pointer;
+  text-decoration:none;border:1px solid #e3e8ee;background:#fff;color:#12161c;
+}
+.flow-big:hover{border-color:#b9c5d2}
+.flow-big.wa{background:#25D366;border-color:#25D366;color:#08351a}
+.flow-big.custom{background:var(--orange);border-color:var(--orange);color:#fff}
+.flow-big.custom:hover{background:#ff7c31;border-color:#ff7c31}
+.flow-nota{font-size:11.5px;color:#6b7683;margin-top:10px;line-height:1.5}
+
+@media(max-width:860px){
+  .flow-det-cols{grid-template-columns:1fr;gap:18px}
+  .flow-det-foto{min-height:190px}
+}
 @media(max-width:600px){
-  .flow-row{flex-wrap:wrap}
-  .flow-thumb{width:100%;justify-content:flex-start}
+  .flow-grid{grid-template-columns:1fr}
+  .flow-shot-img{height:170px}
+  .flow-det-name{font-size:21px}
+  .flow-det-top{padding:16px 16px 0}
+  .flow-det-cols{padding:14px 16px 20px}
 }
 
 /* ===== Música: seleção de faixas + barra de total ===== */

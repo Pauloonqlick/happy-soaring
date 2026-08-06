@@ -1,6 +1,7 @@
 {
   "id": "produtos",
   "visible": true,
+  "wind": false,
   "heightScreens": null,
   "heroScrim": false,
   "bgImage": "",
@@ -20,8 +21,16 @@
   "elements": [
     {
       "role": "flow",
+      "title": {
+        "pt": "Flow Paragliders",
+        "en": "Flow Paragliders",
+        "es": "Flow Paragliders",
+        "fr": "Flow Paragliders",
+        "de": "Flow Paragliders"
+      },
       "showDesktop": true,
       "showMobile": true,
+      "whatsapp": "351927187912",
       "dealerLabel": {
         "pt": "Dealer oficial em Portugal",
         "en": "Official dealer in Portugal",
@@ -30,467 +39,2394 @@
         "de": ""
       },
       "logoImage": "",
-      "title": {
-        "pt": "Flow Paragliders — a gama",
-        "en": "Flow Paragliders — the range",
-        "es": "",
-        "fr": "",
-        "de": ""
-      },
       "description": {
-        "pt": "Toda a gama Flow, agrupada por família. Abre a categoria que te interessa — cada asa liga ao site da Flow ou fala connosco no WhatsApp.",
-        "en": "The full Flow range, grouped by family. Open the category you want — each wing links to Flow’s site or chat with us on WhatsApp.",
-        "es": "",
-        "fr": "",
-        "de": ""
+        "pt": "Represento a gama completa da Flow. Escolhe a família, filtra pelo teu nível e vê a asa na cor que quiseres.",
+        "en": "I represent the complete Flow range. Pick a family, filter by your level and see the wing in the colour you want.",
+        "es": "Represento la gama completa de Flow. Elige la familia, filtra por tu nivel y mira el ala en el color que quieras.",
+        "fr": "Je représente toute la gamme Flow. Choisissez une famille, filtrez selon votre niveau et voyez l’aile dans la couleur souhaitée.",
+        "de": "Ich vertrete das komplette Flow-Sortiment. Wähle eine Familie, filtere nach deinem Niveau und sieh dir den Schirm in der gewünschten Farbe an."
       },
-      "whatsapp": "351900000000",
-      "families": [
+      "customColourNote": {
+        "pt": "Cores à medida: +200€ e 4+ semanas de prazo (condições da Flow).",
+        "en": "Custom colours: +€200 and 4+ weeks lead time (Flow terms).",
+        "es": "Colores a medida: +200€ y 4+ semanas de plazo (condiciones de Flow).",
+        "fr": "Couleurs sur mesure : +200 € et 4+ semaines de délai (conditions Flow).",
+        "de": "Sonderfarben: +200 € und 4+ Wochen Lieferzeit (Flow-Konditionen)."
+      },
+      "produtos": [
         {
           "visible": true,
-          "name": "Parakites",
-          "subfamilies": [
+          "nome": "Future 2",
+          "familia": "Parapentes",
+          "classificacao": "EN-A",
+          "tagline": {
+            "pt": "A evolução da segurança e desempenho EN-A para quem começa.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "descricao": {
+            "pt": "Entrega segurança passiva, facilidade de uso e desempenho para pilotos em formação, através de refinamento e não de redesenho total. Perfil shark-nose para melhor retenção de pressão, vela mais leve, linhas Liros TSL e risers simplificados. Capaz de voos acima de 200 km apesar de ser uma asa de escola.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "paraQuem": {
+            "pt": "Pilotos em formação e recém-brevetados que procuram equipamento que inspire confiança e dure.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "pontosFortes": [
             {
-              "visible": true,
-              "open": true,
-              "name": "Parakite",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "XC Racer 2",
-                  "badge": "CCC",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na XC Racer 2 (Flow). Podem dar-me mais informação?"
-                },
-                {
-                  "image": "",
-                  "name": "Yoti 3",
-                  "badge": "ASA 1",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Yoti 3 (Flow). Podem dar-me mais informação?"
-                },
-                {
-                  "image": "",
-                  "name": "Freedom 2",
-                  "badge": "ASA 1",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Freedom 2 (Flow). Podem dar-me mais informação?"
-                }
-              ]
+              "pt": "Perfil shark-nose refinado, com melhor resistência a fechos e estabilidade em pitch",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
             },
             {
-              "visible": true,
-              "open": false,
-              "name": "Performance Parakite",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
+              "pt": "Vela mais leve, de inflação fácil e resposta mais viva",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Linhas Liros TSL — mais duráveis e menos manutenção",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Verdadeiro 3 linhas, com menos arrasto parasita e melhor planeio",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Risers com código de cores claro, para facilitar o ensino",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
             }
-          ]
+          ],
+          "incluido": null,
+          "aviso": null,
+          "tamanhos": [
+            "XS",
+            "S",
+            "M",
+            "L"
+          ],
+          "cores": [],
+          "specs": [
+            {
+              "tamanho": "XS",
+              "areaPlana": "23.9 m²",
+              "celulas": 40,
+              "alongamento": 4.9,
+              "pesoAsa": "4.3 kg",
+              "ptv": "55–80 kg"
+            },
+            {
+              "tamanho": "S",
+              "areaPlana": "25.3 m²",
+              "celulas": 40,
+              "alongamento": 4.9,
+              "pesoAsa": "4.55 kg",
+              "ptv": "70–95 kg"
+            },
+            {
+              "tamanho": "M",
+              "areaPlana": "27.5 m²",
+              "celulas": 40,
+              "alongamento": 4.9,
+              "pesoAsa": "4.7 kg",
+              "ptv": "85–110 kg"
+            },
+            {
+              "tamanho": "L",
+              "areaPlana": "29.2 m²",
+              "celulas": 40,
+              "alongamento": 4.9,
+              "pesoAsa": "5.0 kg",
+              "ptv": "100–120 kg"
+            }
+          ],
+          "flowHref": "https://www.flowparagliders.com.au/product/future-2/"
         },
         {
           "visible": true,
-          "name": "Paragliders",
-          "subfamilies": [
+          "nome": "Freedom 2",
+          "familia": "Parapentes",
+          "classificacao": "EN-B",
+          "tagline": {
+            "pt": "Desempenho EN-C num pacote EN-B.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "descricao": {
+            "pt": "Ganhos de desempenho sem precedentes para a classe EN-B. Conforto assente na estabilidade em pitch, direção eficiente, descolagem fácil e pilotagem refinada, tanto para voo de desempenho como recreativo.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "paraQuem": {
+            "pt": "Pilotos intermédios a avançados que querem desempenho com margem de segurança, para cross-country e térmica.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "pontosFortes": [
             {
-              "visible": true,
-              "open": false,
-              "name": "School Glider — EN-A",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "EN-A",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
+              "pt": "Traçado híbrido 3-2 linhas: menos arrasto, melhor planeio",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
             },
             {
-              "visible": true,
-              "open": false,
-              "name": "Intermediate / Low EN-B",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "EN-B",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
+              "pt": "Perfil shark-nose avançado, com estabilidade em pitch",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
             },
             {
-              "visible": true,
-              "open": false,
-              "name": "Intermediate / High EN-B",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "EN-B",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
+              "pt": "Sistema VPA com A's divididos em 4, para resistência a fechos",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
             },
             {
-              "visible": true,
-              "open": false,
-              "name": "Lightweight / High EN-B",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "EN-B",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
+              "pt": "Novo arco de competição, otimizado para centrar térmicas e planar",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
             },
             {
-              "visible": true,
-              "open": false,
-              "name": "Intermediate–Advanced — EN-C",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "EN-C",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
-            },
-            {
-              "visible": true,
-              "open": false,
-              "name": "Lightweight — EN-C",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "EN-C",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
-            },
-            {
-              "visible": true,
-              "open": false,
-              "name": "Lightweight 2-Liner — EN-C",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "EN-C",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
-            },
-            {
-              "visible": true,
-              "open": false,
-              "name": "XC / Competition — EN-D",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "EN-D",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
-            },
-            {
-              "visible": true,
-              "open": false,
-              "name": "Competition — CCC",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "CCC",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
+              "pt": "Corte 3D e construção semi-leve",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
             }
-          ]
+          ],
+          "incluido": null,
+          "aviso": null,
+          "tamanhos": [
+            "XS",
+            "S",
+            "M",
+            "L"
+          ],
+          "cores": [],
+          "specs": [
+            {
+              "tamanho": "XS",
+              "areaPlana": "22.40 m²",
+              "celulas": 60,
+              "alongamento": 5.75,
+              "pesoAsa": "4.40 kg",
+              "ptv": "60–80 kg"
+            },
+            {
+              "tamanho": "S",
+              "areaPlana": "24.00 m²",
+              "celulas": 60,
+              "alongamento": 5.75,
+              "pesoAsa": "4.65 kg",
+              "ptv": "70–95 kg"
+            },
+            {
+              "tamanho": "M",
+              "areaPlana": "26.00 m²",
+              "celulas": 60,
+              "alongamento": 5.75,
+              "pesoAsa": "4.85 kg",
+              "ptv": "85–108 kg"
+            },
+            {
+              "tamanho": "L",
+              "areaPlana": "27.50 m²",
+              "celulas": 60,
+              "alongamento": 5.75,
+              "pesoAsa": "5.1 kg",
+              "ptv": "105–122 kg"
+            }
+          ],
+          "flowHref": "https://www.flowparagliders.com.au/freedom-2/"
         },
         {
           "visible": true,
-          "name": "Paramotor Wings",
-          "subfamilies": [
+          "nome": "F2 Light",
+          "familia": "Parapentes",
+          "classificacao": "EN-B",
+          "tagline": {
+            "pt": "Desempenho sem paralelo, agora leve.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "descricao": {
+            "pt": "Usa a tecnologia VPA e o traçado híbrido 3-2 linhas para entregar eficiência superior. Asa leve que junta estabilidade em pitch, pilotagem viva e descolagem sem esforço a um planeio e velocidade de ponta excecionais.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "paraQuem": {
+            "pt": "Pilotos intermédios (nível EN-B).",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "pontosFortes": [
             {
-              "visible": true,
-              "open": false,
-              "name": "Beginner–Intermediate",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
+              "pt": "Sistema VPA com A dividido em 4, para maior resistência a fechos",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
             },
             {
-              "visible": true,
-              "open": false,
-              "name": "Novice / School — EN-A",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "EN-A",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
+              "pt": "Traçado híbrido 3-2 linhas reduz muito o arrasto e melhora o planeio",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
             },
             {
-              "visible": true,
-              "open": false,
-              "name": "Intermediate / Semi-Reflex",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
+              "pt": "Perfil shark-nose com menos oscilações",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
             },
             {
-              "visible": true,
-              "open": false,
-              "name": "Intermediate–Advanced / Full Reflex",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
+              "pt": "Inflação rápida e sem esforço",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Excelente em térmica, com direção pelos risers traseiros",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
             }
-          ]
+          ],
+          "incluido": null,
+          "aviso": null,
+          "tamanhos": [
+            "XS",
+            "S",
+            "M",
+            "L"
+          ],
+          "cores": [],
+          "specs": [
+            {
+              "tamanho": "XS",
+              "areaPlana": "22.40 m²",
+              "celulas": 60,
+              "alongamento": 5.75,
+              "pesoAsa": "3.7 kg",
+              "ptv": "60–80 kg"
+            },
+            {
+              "tamanho": "S",
+              "areaPlana": "24.00 m²",
+              "celulas": 60,
+              "alongamento": 5.75,
+              "pesoAsa": "3.9 kg",
+              "ptv": "70–95 kg"
+            },
+            {
+              "tamanho": "M",
+              "areaPlana": "26.00 m²",
+              "celulas": 60,
+              "alongamento": 5.75,
+              "pesoAsa": "4.4 kg",
+              "ptv": "85–108 kg"
+            },
+            {
+              "tamanho": "L",
+              "areaPlana": "27.50 m²",
+              "celulas": 60,
+              "alongamento": 5.75,
+              "pesoAsa": "4.6 kg",
+              "ptv": "105–122 kg"
+            }
+          ],
+          "flowHref": "https://www.flowparagliders.com.au/f2-light/"
         },
         {
           "visible": true,
-          "name": "Mini-Wings",
-          "subfamilies": [
+          "nome": "Fusion Light",
+          "familia": "Parapentes",
+          "classificacao": "EN-C",
+          "tagline": {
+            "pt": "A leve que muda o jogo.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "descricao": {
+            "pt": "Versão leve da Fusion, em tecido Porcher Skytex 27 g e risers em dyneema. Traçado híbrido 3-2 linhas, com melhor gama de velocidade, desempenho e pilotagem direta — ideal para hike-and-fly.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "paraQuem": {
+            "pt": "Pilotos intermédios que querem a praticidade de uma 3 linhas com a eficiência de uma 2 linhas; aventura e hike-and-fly.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "pontosFortes": [
             {
-              "visible": true,
-              "open": false,
-              "name": "Lightweight Mini-Wing — EN 926-1",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "EN 926-1",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
+              "pt": "Híbrido 3-2 linhas com direção direta pelos risers traseiros",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
             },
             {
-              "visible": true,
-              "open": false,
-              "name": "Mini-Wing — EN 926-1",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "EN 926-1",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
+              "pt": "Perfil shark-nose estável em pitch, sólido a alta velocidade",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
             },
             {
-              "visible": true,
-              "open": false,
-              "name": "Speed Flying Wing",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
+              "pt": "Estrutura interna otimizada, menos arrasto e melhor planeio",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Construção leve, mais compacta de transportar",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Desempenho EN-C certificado, com boa velocidade de ponta",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
             }
-          ]
+          ],
+          "incluido": null,
+          "aviso": null,
+          "tamanhos": [
+            "S",
+            "M",
+            "ML"
+          ],
+          "cores": [],
+          "specs": [
+            {
+              "tamanho": "S",
+              "areaPlana": "22.95 m²",
+              "celulas": 68,
+              "alongamento": 6.35,
+              "pesoAsa": "3.6 kg",
+              "ptv": "72–92 kg"
+            },
+            {
+              "tamanho": "M",
+              "areaPlana": "24.45 m²",
+              "celulas": 68,
+              "alongamento": 6.35,
+              "pesoAsa": "3.8 kg",
+              "ptv": "80–103 kg"
+            },
+            {
+              "tamanho": "ML",
+              "areaPlana": "26.3 m²",
+              "celulas": 68,
+              "alongamento": 6.35,
+              "pesoAsa": "3.95 kg",
+              "ptv": "92–115 kg"
+            }
+          ],
+          "flowHref": "https://www.flowparagliders.com.au/fusion-light/"
         },
         {
           "visible": true,
-          "name": "Tandem Wings",
-          "subfamilies": [
+          "nome": "Mystic",
+          "familia": "Parapentes",
+          "classificacao": "EN-C",
+          "tagline": {
+            "pt": "Foco em desempenho a sério.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "descricao": {
+            "pt": "Duas linhas EN-C com uma relação peso/resistência excecional. Perfil shark-nose dedicado e tensionamento de vela avançado, tanto para competição como para voo do dia a dia.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "paraQuem": {
+            "pt": "Pilotos intermédios a avançados, competições tipo X-Alps e série SRS, ou quem quer uma asa exigente para todos os dias.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "pontosFortes": [
             {
-              "visible": true,
-              "open": false,
-              "name": "Tandem — EN 926-1 / LTF / EN-B",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "EN 926-1",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
+              "pt": "Construção leve e durável em Skytex 27 Classic 2",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Ligação muito direta entre asa e piloto, graças ao alongamento compacto",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Inflação fácil com varetas Nitinol",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Grande capacidade de abrandar, com o novo perfil",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Muito ágil, com viragem apertada",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
             }
-          ]
+          ],
+          "incluido": null,
+          "aviso": {
+            "pt": "Só o tamanho S é certificado — os outros tamanhos usam perfil diferente.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "tamanhos": [
+            "S"
+          ],
+          "cores": [],
+          "specs": [
+            {
+              "tamanho": "S",
+              "areaPlana": "22.7 m²",
+              "celulas": 63,
+              "alongamento": 6.55,
+              "pesoAsa": "3.5 kg",
+              "ptv": "80–95 kg"
+            }
+          ],
+          "flowHref": "https://www.flowparagliders.com.au/mystic/"
         },
         {
           "visible": true,
-          "name": "Harnesses",
-          "subfamilies": [
+          "nome": "XCRacer 2",
+          "familia": "Parapentes",
+          "classificacao": "EN-D",
+          "tagline": {
+            "pt": "Shark-nose de última geração, com mais conforto e controlo.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "descricao": {
+            "pt": "EN-D com mais conforto, mais autoridade nos travões e mais velocidade de ponta do que a antecessora. Perfil redesenhado com arrasto parasita mínimo, mais estabilidade em pitch e menos necessidade de correção do piloto.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "paraQuem": {
+            "pt": "Pilotos de cross-country e competição que procuram desempenho máximo com conforto e controlo a toda a velocidade.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "pontosFortes": [
             {
-              "visible": true,
-              "open": false,
-              "name": "Pod Harnesses — XC / Competition",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
+              "pt": "Desenho depurado, com menor coeficiente de arrasto parasita",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Sistema de tensionamento interno sofisticado",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Direção precisa pelos risers traseiros",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Melhor estabilidade em pitch e pressão interna",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Projeto equilibrado, que permite explorar todo o potencial",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
             }
-          ]
+          ],
+          "incluido": null,
+          "aviso": null,
+          "tamanhos": [
+            "S",
+            "M",
+            "ML",
+            "L"
+          ],
+          "cores": [],
+          "specs": [
+            {
+              "tamanho": "S",
+              "areaPlana": "21.75 m²",
+              "celulas": 83,
+              "alongamento": 7,
+              "pesoAsa": "5.0 kg",
+              "ptv": "80–95 kg"
+            },
+            {
+              "tamanho": "M",
+              "areaPlana": "23.25 m²",
+              "celulas": 83,
+              "alongamento": 7,
+              "pesoAsa": "5.4 kg",
+              "ptv": "90–105 kg"
+            },
+            {
+              "tamanho": "ML",
+              "areaPlana": "24.75 m²",
+              "celulas": 83,
+              "alongamento": 7,
+              "pesoAsa": "5.8 kg",
+              "ptv": "100–115 kg"
+            },
+            {
+              "tamanho": "L",
+              "areaPlana": "26.55 m²",
+              "celulas": 83,
+              "alongamento": 7,
+              "pesoAsa": "6.2 kg",
+              "ptv": "110–125 kg"
+            }
+          ],
+          "flowHref": "https://www.flowparagliders.com.au/xcracer-2/"
         },
         {
           "visible": true,
-          "name": "Parawings",
-          "subfamilies": [
+          "nome": "Mullet 2",
+          "familia": "Parakites",
+          "classificacao": "Parakite",
+          "tagline": {
+            "pt": "O melhor da Mullet com a energia da MulletX.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "descricao": {
+            "pt": "Herda a pilotagem doce e a eficiência da Mullet original, juntando o dive, a velocidade e a retenção de energia da MulletX. É o culminar da experiência da Flow em parakites, num só desenho.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "paraQuem": {
+            "pt": "Desde quem começa no parakite até pilotos muito experientes que procuram voo dinâmico e loops. Acessível e previsível, com ponto de perda bem definido.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "pontosFortes": [
             {
-              "visible": true,
-              "open": false,
-              "name": "Parawing",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
+              "pt": "Gama de vento utilizável muito larga",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Perfil reflex refinado, eficiente e resistente a fechos",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Excelente estabilidade em pitch",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Direção 2D nas pontas — novidade na gama de parakites da Flow",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Risers com mais curso, para mais dive e velocidade",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Construção durável: Skytex 38, linhas Spectra, risers Dyneema",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
             }
-          ]
+          ],
+          "incluido": null,
+          "aviso": null,
+          "tamanhos": [
+            "13",
+            "15",
+            "17.5",
+            "20",
+            "23",
+            "26"
+          ],
+          "cores": [
+            "maui",
+            "sunrise"
+          ],
+          "specs": [
+            {
+              "tamanho": "13",
+              "areaPlana": "13.00 m²",
+              "areaProjetada": "10.82 m²",
+              "envergadura": "8.38 m",
+              "celulas": 59,
+              "alongamento": 5.4,
+              "pesoAsa": "2.9 kg",
+              "ptv": "50–120 kg"
+            },
+            {
+              "tamanho": "15",
+              "areaPlana": "15.00 m²",
+              "areaProjetada": "12.49 m²",
+              "envergadura": "9.12 m",
+              "celulas": 59,
+              "alongamento": 5.6,
+              "pesoAsa": "3.2 kg",
+              "ptv": "50–120 kg"
+            },
+            {
+              "tamanho": "17.5",
+              "areaPlana": "17.50 m²",
+              "areaProjetada": "14.56 m²",
+              "envergadura": "9.98 m",
+              "celulas": 63,
+              "alongamento": 5.7,
+              "pesoAsa": "3.7 kg",
+              "ptv": "50–120 kg"
+            },
+            {
+              "tamanho": "20",
+              "areaPlana": "20.00 m²",
+              "areaProjetada": "16.58 m²",
+              "envergadura": "10.73 m",
+              "celulas": 63,
+              "alongamento": 5.8,
+              "pesoAsa": "4.0 kg",
+              "ptv": "50–120 kg"
+            },
+            {
+              "tamanho": "23",
+              "areaPlana": "23.00 m²",
+              "areaProjetada": "19.08 m²",
+              "envergadura": "11.58 m",
+              "celulas": 63,
+              "alongamento": 6,
+              "pesoAsa": "4.4 kg",
+              "ptv": "50–120 kg"
+            },
+            {
+              "tamanho": "26",
+              "areaPlana": "26.00 m²",
+              "areaProjetada": "21.65 m²",
+              "envergadura": "12.49 m",
+              "celulas": 63,
+              "alongamento": 6,
+              "pesoAsa": "4.7 kg",
+              "ptv": "70–120 kg"
+            }
+          ],
+          "flowHref": "https://www.flowparagliders.com.au/product/mullet-2/"
         },
         {
           "visible": true,
-          "name": "Ground Handling",
-          "subfamilies": [
+          "nome": "MulletX",
+          "familia": "Parakites",
+          "classificacao": "Parakite",
+          "tagline": {
+            "pt": "Um salto grande na tecnologia de parakites.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "descricao": {
+            "pt": "Parakite de alto desempenho: mais rápida, com mais dive e melhor conversão de energia do que a antecessora. Perfil reflex para grande resistência a fechos, tanto dinâmica como acessível, conforme a preferência do piloto.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "paraQuem": {
+            "pt": "Quem procura voo vivo e energético; speed flyers, pilotos de montanha e parapentistas experientes que querem manobrabilidade dinâmica.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "pontosFortes": [
             {
-              "visible": true,
-              "open": false,
-              "name": "Ground Handling",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
+              "pt": "Perfil reflex shark-nose — o mais resistente a fechos de toda a gama",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Conversão de energia superior, recupera altura depois das manobras",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Arco preciso: controlo de roll fácil e autoridade em barrels",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Linhas de baixo arrasto, com menos risco de nós na inflação",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Serve tanto para soaring tranquilo como para velocidade",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
             }
-          ]
+          ],
+          "incluido": null,
+          "aviso": null,
+          "tamanhos": [
+            "13",
+            "15",
+            "17.5",
+            "20.5",
+            "23.5"
+          ],
+          "cores": [],
+          "specs": [
+            {
+              "tamanho": "13",
+              "areaPlana": "13 m²",
+              "celulas": 55,
+              "alongamento": 5.4,
+              "pesoAsa": "2.9 kg",
+              "ptv": "50–120 kg"
+            },
+            {
+              "tamanho": "15",
+              "areaPlana": "15 m²",
+              "celulas": 55,
+              "alongamento": 5.5,
+              "pesoAsa": "3.2 kg",
+              "ptv": "50–120 kg"
+            },
+            {
+              "tamanho": "17.5",
+              "areaPlana": "17.5 m²",
+              "celulas": 55,
+              "alongamento": 5.65,
+              "pesoAsa": "3.7 kg",
+              "ptv": "50–120 kg"
+            },
+            {
+              "tamanho": "20.5",
+              "areaPlana": "20.5 m²",
+              "celulas": 55,
+              "alongamento": 5.95,
+              "pesoAsa": "4.0 kg",
+              "ptv": "60–120 kg"
+            },
+            {
+              "tamanho": "23.5",
+              "areaPlana": "23.5 m²",
+              "celulas": 55,
+              "alongamento": 6,
+              "pesoAsa": "4.3 kg",
+              "ptv": "70–120 kg"
+            }
+          ],
+          "flowHref": "https://www.flowparagliders.com.au/mulletx/"
         },
         {
           "visible": true,
-          "name": "Accessories",
-          "subfamilies": [
+          "nome": "AlbatroXX",
+          "familia": "Parakites",
+          "classificacao": "Performance Parakite",
+          "tagline": {
+            "pt": "O parakite mais avançado da Flow.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "descricao": {
+            "pt": "Mais velocidade, eficiência e pilotagem, através de um alongamento maior e 65 células. Conversão de energia sem igual, para viragens mais definidas, comandos mais suaves e resposta mais viva.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "paraQuem": {
+            "pt": "Pilotos costeiros e de speed flying com experiência; intermédios a avançados.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "pontosFortes": [
             {
-              "visible": true,
-              "open": false,
-              "name": "FLOW Wear",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
+              "pt": "Asa eficiente, com boa sustentação e planeio",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
             },
             {
-              "visible": true,
-              "open": false,
-              "name": "Line Sets",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
+              "pt": "Alongamento maior: velocidade e dive dinâmico",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
             },
             {
-              "visible": true,
-              "open": false,
-              "name": "Risers",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
+              "pt": "Resistência a fechos excecional, com perfil reflex",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
             },
             {
-              "visible": true,
-              "open": false,
-              "name": "Rucksacks",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
+              "pt": "Permite voar tamanhos mais pequenos sem perder desempenho",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
             },
             {
-              "visible": true,
-              "open": false,
-              "name": "Reserve Parachutes — EN/LTF",
-              "wings": [
-                {
-                  "image": "",
-                  "name": "Nova asa",
-                  "badge": "LTF",
-                  "flowHref": "",
-                  "waMessage": "Olá! Tenho interesse na Nova asa (Flow). Podem dar-me mais informação?"
-                }
-              ]
+              "pt": "Estabilidade que inspira confiança, com bom flare",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
             }
-          ]
+          ],
+          "incluido": null,
+          "aviso": null,
+          "tamanhos": [
+            "13",
+            "16",
+            "19",
+            "22"
+          ],
+          "cores": [
+            "lilac",
+            "lime",
+            "yellow"
+          ],
+          "specs": [
+            {
+              "tamanho": "13",
+              "areaPlana": "13.00 m²",
+              "celulas": 65,
+              "alongamento": 6.8,
+              "pesoAsa": "3.40 kg",
+              "ptv": "50–100 kg"
+            },
+            {
+              "tamanho": "16",
+              "areaPlana": "16.00 m²",
+              "celulas": 65,
+              "alongamento": 6.8,
+              "pesoAsa": "3.90 kg",
+              "ptv": "55–105 kg"
+            },
+            {
+              "tamanho": "19",
+              "areaPlana": "19.00 m²",
+              "celulas": 65,
+              "alongamento": 6.8,
+              "pesoAsa": "4.10 kg",
+              "ptv": "60–110 kg"
+            },
+            {
+              "tamanho": "22",
+              "areaPlana": "22.50 m²",
+              "celulas": 65,
+              "alongamento": 6.8,
+              "pesoAsa": "4.40 kg",
+              "ptv": "65–120 kg"
+            }
+          ],
+          "flowHref": "https://www.flowparagliders.com.au/albatroxx/"
+        },
+        {
+          "visible": true,
+          "nome": "Mohawk",
+          "familia": "Speed flying",
+          "classificacao": "Speed flying",
+          "tagline": {
+            "pt": "Speedflying de precisão.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "descricao": {
+            "pt": "Asa dedicada a speedflying, feita para energia máxima, precisão e ligação ao terreno. Herda tecnologia da MulletX num desenho mais compacto e agressivo, para descidas de montanha com resposta viva e resistência a fechos.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "paraQuem": {
+            "pt": "Pilotos de speedflying que querem seguir o terreno e mergulhar com precisão.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "pontosFortes": [
+            {
+              "pt": "Tecnologia de parakite ao serviço do desempenho e da segurança",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Controlo do ângulo de ataque a pedido, para seguir o relevo",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Resistência a fechos pensada para turbulência",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Potência e aceleração imediatas",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Comandos diretos e limpos",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            }
+          ],
+          "incluido": null,
+          "aviso": null,
+          "tamanhos": [
+            "9",
+            "11",
+            "13",
+            "15"
+          ],
+          "cores": [],
+          "specs": [
+            {
+              "tamanho": "9",
+              "areaPlana": "9 m²",
+              "areaProjetada": "8.99 m²",
+              "envergadura": "6.15 m",
+              "celulas": 34,
+              "alongamento": 4.2,
+              "pesoAsa": "2.1 kg"
+            },
+            {
+              "tamanho": "11",
+              "areaPlana": "11 m²",
+              "areaProjetada": "9.18 m²",
+              "envergadura": "6.8 m",
+              "celulas": 34,
+              "alongamento": 4.2,
+              "pesoAsa": "2.3 kg"
+            },
+            {
+              "tamanho": "13",
+              "areaPlana": "13 m²",
+              "areaProjetada": "10.85 m²",
+              "envergadura": "7.39 m",
+              "celulas": 34,
+              "alongamento": 4.2,
+              "pesoAsa": "2.5 kg"
+            },
+            {
+              "tamanho": "15",
+              "areaPlana": "15 m²",
+              "areaProjetada": "12.52 m²",
+              "envergadura": "8.12 m",
+              "celulas": 34,
+              "alongamento": 4.4,
+              "pesoAsa": "2.8 kg"
+            }
+          ],
+          "flowHref": "https://www.flowparagliders.com.au/mohawk/"
+        },
+        {
+          "visible": true,
+          "nome": "Yoti 3",
+          "familia": "Mini-wings",
+          "classificacao": "EN 926-1",
+          "tagline": {
+            "pt": "Mini-asa para o ar mais exigente.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "descricao": {
+            "pt": "Evolução da Yoti 2, com perfil atualizado e novos risers para melhor tensionamento das células. Desempenho dinâmico e mais estabilidade a alta velocidade, mantendo a pilotagem divertida da original.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "paraQuem": {
+            "pt": "Pilotos experientes que procuram uma mini-asa de desempenho para condições exigentes.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "pontosFortes": [
+            {
+              "pt": "Perfil shark-nose avançado",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Pilotagem divertida e muito reativa",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Melhor tensionamento das células",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Materiais leves e duráveis",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Trimmers e acelerador integrados",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            }
+          ],
+          "incluido": null,
+          "aviso": null,
+          "tamanhos": [
+            "15",
+            "17",
+            "19",
+            "21"
+          ],
+          "cores": [],
+          "specs": [
+            {
+              "tamanho": "15",
+              "areaPlana": "15 m²",
+              "celulas": 37,
+              "alongamento": 5,
+              "pesoAsa": "3.55 kg",
+              "ptv": "55–160 kg"
+            },
+            {
+              "tamanho": "17",
+              "areaPlana": "17 m²",
+              "celulas": 37,
+              "alongamento": 5,
+              "pesoAsa": "3.70 kg",
+              "ptv": "55–160 kg"
+            },
+            {
+              "tamanho": "19",
+              "areaPlana": "19.05 m²",
+              "celulas": 37,
+              "alongamento": 5,
+              "pesoAsa": "4.05 kg",
+              "ptv": "55–160 kg"
+            },
+            {
+              "tamanho": "21",
+              "areaPlana": "21 m²",
+              "celulas": 37,
+              "alongamento": 5,
+              "pesoAsa": "4.3 kg",
+              "ptv": "55–160 kg"
+            }
+          ],
+          "flowHref": "https://www.flowparagliders.com.au/yoti-3/"
+        },
+        {
+          "visible": true,
+          "nome": "RPM 3",
+          "familia": "Paramotor",
+          "classificacao": "Full reflex",
+          "tagline": {
+            "pt": "Velocidade, eficiência, estabilidade.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "descricao": {
+            "pt": "Asa de paramotor completamente redesenhada, que junta velocidade, estabilidade e pilotagem divertida. Perfil reflex refinado, novo traçado de linhas e winglets. Tecido Porcher Skytex 38, para voo recreativo e cross-country de longa distância.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "paraQuem": {
+            "pt": "Pilotos intermédios a experientes — do voo local a tentativas de recorde de distância.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "pontosFortes": [
+            {
+              "pt": "Redesenhada de raiz, com winglets para estabilidade e voo direito",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Rápida e eficiente, com excelente planeio",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Descolagens e aterragens fáceis, pilotagem precisa e ágil",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Mantém o trim durante mais tempo, com materiais premium",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Serve tanto para distância como para voos descontraídos",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            }
+          ],
+          "incluido": null,
+          "aviso": null,
+          "tamanhos": [
+            "15",
+            "17.5",
+            "20",
+            "23"
+          ],
+          "cores": [],
+          "specs": [
+            {
+              "tamanho": "15",
+              "areaPlana": "15.20 m²",
+              "celulas": 65,
+              "alongamento": 5.7,
+              "pesoAsa": "4.1 kg",
+              "ptv": "60–125 kg (avançado) / 55–105 kg (intermédio)"
+            },
+            {
+              "tamanho": "17.5",
+              "areaPlana": "17.60 m²",
+              "celulas": 65,
+              "alongamento": 5.75,
+              "pesoAsa": "4.2 kg",
+              "ptv": "70–135 kg / 65–115 kg"
+            },
+            {
+              "tamanho": "20",
+              "areaPlana": "20.20 m²",
+              "celulas": 65,
+              "alongamento": 6,
+              "pesoAsa": "4.5 kg",
+              "ptv": "85–150 kg / 80–130 kg"
+            },
+            {
+              "tamanho": "23",
+              "areaPlana": "23.20 m²",
+              "celulas": 65,
+              "alongamento": 6,
+              "pesoAsa": "4.7 kg",
+              "ptv": "95–160 kg / 90–140 kg"
+            }
+          ],
+          "flowHref": "https://www.flowparagliders.com.au/product/rpm-3/"
+        },
+        {
+          "visible": true,
+          "nome": "Cosmos Power 2",
+          "familia": "Paramotor",
+          "classificacao": "Semi-reflex",
+          "tagline": {
+            "pt": "Diversão pura em paramotor.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "descricao": {
+            "pt": "Asa de paramotor para intermédios, com perfil full-reflex eficiente e grande estabilidade em pitch. A versão 2 traz maior gama de velocidade, pilotagem mais divertida e consumo de combustível notável a baixa e a alta velocidade.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "paraQuem": {
+            "pt": "Pilotos de paramotor intermédios a avançados que querem eficiência e estabilidade, para distância ou voo local.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "pontosFortes": [
+            {
+              "pt": "Perfil reflex shark-nose com grande estabilidade em pitch",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Eficiência de combustível em toda a gama de velocidade",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Muito estável em roll, sem oscilações indesejadas",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Inflação e descolagem fáceis, com vento fraco ou forte",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Aterragens suaves e previsíveis, com bom flare",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            }
+          ],
+          "incluido": null,
+          "aviso": null,
+          "tamanhos": [
+            "19",
+            "21",
+            "24",
+            "27"
+          ],
+          "cores": [],
+          "specs": [
+            {
+              "tamanho": "19",
+              "areaPlana": "19 m²",
+              "celulas": 50,
+              "alongamento": 5.4,
+              "pesoAsa": "4.5 kg",
+              "ptv": "75–105 kg (intermédio) / 75–120 kg (avançado)"
+            },
+            {
+              "tamanho": "21",
+              "areaPlana": "21 m²",
+              "celulas": 50,
+              "alongamento": 5.4,
+              "pesoAsa": "4.8 kg",
+              "ptv": "85–110 kg / 85–130 kg"
+            },
+            {
+              "tamanho": "24",
+              "areaPlana": "24 m²",
+              "celulas": 50,
+              "alongamento": 5.4,
+              "pesoAsa": "5.2 kg",
+              "ptv": "95–120 kg / 95–140 kg"
+            },
+            {
+              "tamanho": "27",
+              "areaPlana": "27 m²",
+              "celulas": 50,
+              "alongamento": 5.4,
+              "pesoAsa": "5.4 kg",
+              "ptv": "100–130 kg / 100–160 kg"
+            }
+          ],
+          "flowHref": "https://www.flowparagliders.com.au/cosmos-power-2/"
+        },
+        {
+          "visible": true,
+          "nome": "Fusion",
+          "familia": "Parapentes",
+          "classificacao": "EN-C",
+          "tagline": {
+            "pt": "A asa que mudou o jogo.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "descricao": {
+            "pt": "A primeira 3-2 linhas híbrida certificada: sensação de 2 linhas com certificação EN-C. Três linhas ao centro e duas nas pontas, o que reduz o arrasto e aumenta o desempenho sem aumentar a carga de trabalho.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "paraQuem": {
+            "pt": "Pilotos intermédios a avançados que procuram uma EN-C orientada ao desempenho, mas acessível de pilotar.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "pontosFortes": [
+            {
+              "pt": "Configuração híbrida 3-2 linhas: menos arrasto, mais desempenho",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Perfil shark-nose estável em pitch, com menos oscilações",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Excelente em térmica, com viragem composta",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Direção pelos risers ao estilo das 2 linhas, sem deformar o perfil",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Menos propensa a fechos, graças à estrutura interna otimizada",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            }
+          ],
+          "incluido": null,
+          "aviso": null,
+          "tamanhos": [
+            "S",
+            "M",
+            "ML",
+            "L"
+          ],
+          "cores": [],
+          "specs": [
+            {
+              "tamanho": "S",
+              "areaPlana": "22.95 m²",
+              "celulas": 68,
+              "alongamento": 6.35,
+              "pesoAsa": "4.45 kg",
+              "ptv": "72–92 kg"
+            },
+            {
+              "tamanho": "M",
+              "areaPlana": "24.45 m²",
+              "celulas": 68,
+              "alongamento": 6.35,
+              "pesoAsa": "4.65 kg",
+              "ptv": "80–103 kg"
+            },
+            {
+              "tamanho": "ML",
+              "areaPlana": "26.3 m²",
+              "celulas": 68,
+              "alongamento": 6.35,
+              "pesoAsa": "4.80 kg",
+              "ptv": "92–115 kg"
+            },
+            {
+              "tamanho": "L",
+              "areaPlana": "28.4 m²",
+              "celulas": 68,
+              "alongamento": 6.35,
+              "pesoAsa": "4.95 kg",
+              "ptv": "107–128 kg"
+            }
+          ],
+          "flowHref": "https://www.flowparagliders.com.au/fusion/"
+        },
+        {
+          "visible": true,
+          "nome": "Yoti 3 Light",
+          "familia": "Mini-wings",
+          "classificacao": "EN 926-1",
+          "tagline": {
+            "pt": "Mini-asa leve, fácil no chão e ágil no ar.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "descricao": {
+            "pt": "Extremamente versátil, com apenas 2,15 kg. Serve para hike-and-fly, soaring com vento forte e cross-country em térmica. Perfil shark-nose estável, com boa velocidade, estabilidade e planeio.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "paraQuem": {
+            "pt": "Quem procura equipamento leve e portátil para hike-and-fly, cross-country e soaring com vento forte.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "pontosFortes": [
+            {
+              "pt": "Perfil shark-nose avançado",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Construção muito leve — desde 2,15 kg",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Traçado de linhas reduzido, mais simples",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Trimmers e acelerador integrados",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Pilotagem divertida e reativa",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            }
+          ],
+          "incluido": null,
+          "aviso": null,
+          "tamanhos": [
+            "15",
+            "17",
+            "19",
+            "21"
+          ],
+          "cores": [],
+          "specs": [
+            {
+              "tamanho": "15",
+              "areaPlana": "15 m²",
+              "celulas": 37,
+              "alongamento": 5,
+              "pesoAsa": "2.15 kg",
+              "ptv": "55–160 kg"
+            },
+            {
+              "tamanho": "17",
+              "areaPlana": "17 m²",
+              "celulas": 37,
+              "alongamento": 5,
+              "pesoAsa": "2.40 kg",
+              "ptv": "55–160 kg"
+            },
+            {
+              "tamanho": "19",
+              "areaPlana": "19.05 m²",
+              "celulas": 37,
+              "alongamento": 5,
+              "pesoAsa": "2.65 kg",
+              "ptv": "55–160 kg"
+            },
+            {
+              "tamanho": "21",
+              "areaPlana": "21 m²",
+              "celulas": 37,
+              "alongamento": 5,
+              "pesoAsa": "2.85 kg",
+              "ptv": "55–160 kg"
+            }
+          ],
+          "flowHref": "https://www.flowparagliders.com.au/yoti-3-light/"
+        },
+        {
+          "visible": true,
+          "nome": "Panorama",
+          "familia": "Tandem",
+          "classificacao": "EN-B / EN 926-1",
+          "tagline": {
+            "pt": "A tandem EN-B da Flow.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "descricao": {
+            "pt": "Feita para partilhar o voo. Junta pilotagem precisa e direta a descolagens fáceis com vento nulo ou forte, e aterragens tranquilas com boa retenção de energia.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "paraQuem": {
+            "pt": "Pilotos tandem e instrutores que querem apresentar o voo a passageiros, com pilotagem responsiva.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "pontosFortes": [
+            {
+              "pt": "Pilotagem precisa e direta, com muita autoridade",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Descolagem notavelmente fácil, com vento fraco ou forte",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Sobe bem — muitas vezes melhor que asas solo",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Pressão de travão leve em toda a gama de peso",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Muito durável, em Porcher Skytex de dupla camada",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            }
+          ],
+          "incluido": null,
+          "aviso": {
+            "pt": "A página é da Panorama (1a versão), mas os tamanhos coincidem com a Panorama 2 da lista de preços 2026. CONFIRMAR com a Flow.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "tamanhos": [
+            "32",
+            "39",
+            "41"
+          ],
+          "cores": [],
+          "specs": [
+            {
+              "tamanho": "32",
+              "areaPlana": "32.50 m²",
+              "celulas": 54,
+              "alongamento": 5.4,
+              "pesoAsa": "6.3 kg",
+              "ptv": "110–220 kg"
+            },
+            {
+              "tamanho": "39",
+              "areaPlana": "38.5 m²",
+              "celulas": 54,
+              "alongamento": 5.4,
+              "pesoAsa": "6.6 kg",
+              "ptv": "110–190 kg"
+            },
+            {
+              "tamanho": "41",
+              "areaPlana": "41.15 m²",
+              "celulas": 54,
+              "alongamento": 5.4,
+              "pesoAsa": "6.7 kg",
+              "ptv": "120–220 kg"
+            }
+          ],
+          "flowHref": "https://www.flowparagliders.com.au/panorama/"
+        },
+        {
+          "visible": true,
+          "nome": "Future Power",
+          "familia": "Paramotor",
+          "classificacao": "EN-A",
+          "tagline": {
+            "pt": "Uma asa para motor e para voo livre.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "descricao": {
+            "pt": "Conceito de asa única, para aprender e progredir tanto em voo motorizado como livre. Boa estabilidade em roll, inflação fácil e resistência a fechos, com planeio otimizado para a classe EN-A.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "paraQuem": {
+            "pt": "Iniciados e intermédios que querem uma só asa para as duas utilizações.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "pontosFortes": [
+            {
+              "pt": "Perfil shark-nose estável em pitch",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Verdadeiro 3 linhas com varetas curtas em nylon",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Tensionamento interno avançado, para resistir a fechos",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Fluxo de ar alinhado e sem perturbações",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Bom planeio para a classe EN-A",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            }
+          ],
+          "incluido": null,
+          "aviso": {
+            "pt": "A página é da Future Power (1a versão). A lista de preços 2026 tem Future Power 2, com faixas de peso diferentes. CONFIRMAR.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "tamanhos": [
+            "XS",
+            "S",
+            "M",
+            "L"
+          ],
+          "cores": [],
+          "specs": [
+            {
+              "tamanho": "XS",
+              "areaPlana": "23.9 m²",
+              "celulas": 40,
+              "alongamento": 4.9,
+              "pesoAsa": "4.5 kg",
+              "ptv": "60–105 kg"
+            },
+            {
+              "tamanho": "S",
+              "areaPlana": "25.3 m²",
+              "celulas": 40,
+              "alongamento": 4.9,
+              "pesoAsa": "4.75 kg",
+              "ptv": "80–115 kg"
+            },
+            {
+              "tamanho": "M",
+              "areaPlana": "27.5 m²",
+              "celulas": 40,
+              "alongamento": 4.9,
+              "pesoAsa": "4.9 kg",
+              "ptv": "95–135 kg"
+            },
+            {
+              "tamanho": "L",
+              "areaPlana": "29.2 m²",
+              "celulas": 40,
+              "alongamento": 4.9,
+              "pesoAsa": "5.2 kg",
+              "ptv": "110–155 kg"
+            }
+          ],
+          "flowHref": "https://www.flowparagliders.com.au/future-power/"
+        },
+        {
+          "visible": true,
+          "nome": "Vissta",
+          "familia": "Arneses",
+          "classificacao": "Arnês aberto",
+          "tagline": {
+            "pt": "Robusto, leve e confortável, com boa sensação no ar.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "descricao": {
+            "pt": "Arnês aberto semi-leve para iniciados e pilotos de cross-country que procuram conforto e liberdade de movimentos. Contentor de reserva integrado, componentes com código de cores e grande protetor dorsal em espuma.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "paraQuem": {
+            "pt": "Iniciados e pilotos de cross-country que querem um arnês aberto confortável.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "pontosFortes": [
+            {
+              "pt": "Muito confortável, com bom apoio dorsal",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Leve — 3,7 kg no tamanho M",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Fitas ajustáveis em voo",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Contentor de reserva integrado",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Bolso grande e acessível, com íman para o acelerador",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            }
+          ],
+          "incluido": null,
+          "aviso": null,
+          "tamanhos": [
+            "S (155–170 cm)",
+            "M (160–185 cm)",
+            "L (180–205 cm)"
+          ],
+          "cores": [],
+          "specs": [
+            {
+              "tamanho": "S",
+              "pesoAsa": "3.6 kg",
+              "cargaMax": "120 kg",
+              "alturaSuspensao": "47 cm",
+              "assento": "36x36 cm"
+            },
+            {
+              "tamanho": "M",
+              "pesoAsa": "3.7 kg",
+              "cargaMax": "120 kg",
+              "alturaSuspensao": "49 cm",
+              "assento": "38x38 cm"
+            },
+            {
+              "tamanho": "L",
+              "pesoAsa": "4.1 kg",
+              "cargaMax": "120 kg",
+              "alturaSuspensao": "51 cm",
+              "assento": "40x40 cm"
+            }
+          ],
+          "flowHref": "https://www.flowparagliders.com.au/vissta/"
+        },
+        {
+          "visible": true,
+          "nome": "Vissta XC",
+          "familia": "Arneses",
+          "classificacao": "Arnês pod",
+          "tagline": {
+            "pt": "Pod de competição: robusto, leve e confortável.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "descricao": {
+            "pt": "Para pilotos de cross-country e competição que procuram baixo arrasto e conforto. Dois contentores de reserva integrados, bolsos para D-chute e grande protetor em espuma, mantendo-se leve e dobrável.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "paraQuem": {
+            "pt": "Pilotos de cross-country e competição que valorizam conforto e eficiência aerodinâmica.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "pontosFortes": [
+            {
+              "pt": "Posição de voo muito eficiente em termos aerodinâmicos",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Construção leve e compacta de dobrar",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Dois contentores de reserva e bolsos para D-chute",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Grande protetor em espuma",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Arruma em mochila média ou grande",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            }
+          ],
+          "incluido": null,
+          "aviso": null,
+          "tamanhos": [
+            "S (155–170 cm)",
+            "M (160–185 cm)",
+            "L (175–195 cm)"
+          ],
+          "cores": [],
+          "specs": [
+            {
+              "tamanho": "S",
+              "pesoAsa": "5.45 kg",
+              "cargaMax": "120 kg",
+              "alturaSuspensao": "47 cm",
+              "assento": "29x34 cm"
+            },
+            {
+              "tamanho": "M",
+              "pesoAsa": "5.75 kg",
+              "cargaMax": "120 kg",
+              "alturaSuspensao": "49 cm",
+              "assento": "32x40 cm"
+            },
+            {
+              "tamanho": "L",
+              "pesoAsa": "5.9 kg",
+              "cargaMax": "120 kg",
+              "alturaSuspensao": "49 cm",
+              "assento": "32x40 cm"
+            }
+          ],
+          "flowHref": "https://www.flowparagliders.com.au/vissta-xc/"
+        },
+        {
+          "visible": true,
+          "nome": "Aura 2 Square",
+          "familia": "Reservas",
+          "classificacao": "Reserva quadrada",
+          "tagline": {
+            "pt": "Máximo em segurança, funcionalidade e qualidade.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "descricao": {
+            "pt": "Paraquedas de emergência quadrado, exclusivo para parapente. Abertura rápida, taxa de queda baixa e estabilidade em roll, num sistema leve mas robusto.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "paraQuem": {
+            "pt": "Todos os pilotos de parapente.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "pontosFortes": [
+            {
+              "pt": "Abertura rápida e fiável",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Descida estável em toda a gama de carga",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Leve sem perder durabilidade",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Várias aberturas reais bem-sucedidas",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Quatro tamanhos para diferentes pesos",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            }
+          ],
+          "incluido": null,
+          "aviso": null,
+          "tamanhos": [
+            "90",
+            "105",
+            "125",
+            "150"
+          ],
+          "cores": [],
+          "specs": [
+            {
+              "tamanho": "90",
+              "areaPlana": "27 m²",
+              "pesoAsa": "980 g",
+              "cargaMax": "90 kg",
+              "taxaQueda": "5.2 m/s",
+              "paineis": 16,
+              "homologacao": "EP_265.2019"
+            },
+            {
+              "tamanho": "105",
+              "areaPlana": "32.64 m²",
+              "pesoAsa": "1280 g",
+              "cargaMax": "105 kg",
+              "taxaQueda": "5.2 m/s",
+              "paineis": 20,
+              "homologacao": "EP_198.2017"
+            },
+            {
+              "tamanho": "125",
+              "areaPlana": "40.6 m²",
+              "pesoAsa": "1545 g",
+              "cargaMax": "125 kg",
+              "taxaQueda": "5.4 m/s",
+              "paineis": 24,
+              "homologacao": "EP_199.2017"
+            },
+            {
+              "tamanho": "150",
+              "areaPlana": "46.4 m²",
+              "pesoAsa": "1850 g",
+              "cargaMax": "150 kg",
+              "taxaQueda": "5.2 m/s",
+              "paineis": 24,
+              "homologacao": "EP_205.2017"
+            }
+          ],
+          "flowHref": "https://www.flowparagliders.com.au/aura-2/"
+        },
+        {
+          "visible": true,
+          "nome": "D-Chute",
+          "familia": "Reservas",
+          "classificacao": "Paraquedas de arrasto",
+          "tagline": {
+            "pt": "Para descer depressa.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "descricao": {
+            "pt": "Paraquedas de arrasto feito para reduzir o tempo de descida em asas de alto desempenho. Diminui as forças G em espirais e aumenta a taxa de queda.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "paraQuem": {
+            "pt": "Pilotos de asas de alto desempenho que precisam de perder altura rapidamente.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "pontosFortes": [
+            {
+              "pt": "Reduz as forças G em espiral",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Aumenta a taxa de queda",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Leve e compacto — 185 g",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "O mais pequeno e leve do mercado",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Simples de usar",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            }
+          ],
+          "incluido": null,
+          "aviso": null,
+          "tamanhos": [
+            "tamanho único"
+          ],
+          "cores": [],
+          "specs": [
+            {
+              "tamanho": "único",
+              "pesoAsa": "185 g"
+            }
+          ],
+          "flowHref": "https://www.flowparagliders.com.au/d-chute/"
+        },
+        {
+          "visible": true,
+          "nome": "D-Wing V2",
+          "familia": "Parawing",
+          "classificacao": "Parawing",
+          "tagline": {
+            "pt": "Estabilidade, alcance e desempenho contra o vento, redefinidos.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "descricao": {
+            "pt": "Parawing com perfil reflex, com grande estabilidade e desempenho contra o vento tanto com pouco como com muito vento. Pode ser totalmente despotenciada sem risco de fecho, com gama de uso mais larga e melhor arrumação que a versão anterior.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "paraQuem": {
+            "pt": "Quem anda de parawing e quer subir bem contra o vento, com estabilidade e arrumação e relançamento fáceis; foil e ondulação.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "pontosFortes": [
+            {
+              "pt": "Excelente contra o vento, com pouco ou muito vento",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Muito mais estável, com gama de uso mais larga",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Pilotagem intuitiva, com viragens e jibes mais suaves",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Linhas mais curtas (do comprimento do braço), arrumação mais rápida",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            },
+            {
+              "pt": "Materiais premium e menor volume de arrumação",
+              "en": "",
+              "es": "",
+              "fr": "",
+              "de": ""
+            }
+          ],
+          "incluido": {
+            "pt": "1x parawing D-Wing V2, 1x linha de arnês, 1x saco Flow. Stash Belt V2 opcional.",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "aviso": null,
+          "tamanhos": [
+            "1.8",
+            "2.5",
+            "3.0",
+            "3.7",
+            "4.2",
+            "5.1",
+            "5.8"
+          ],
+          "cores": [],
+          "specs": [
+            {
+              "tamanho": "1.8",
+              "celulas": 19,
+              "alongamentoProjetado": 2.11,
+              "pesoAsa": "0.4 kg"
+            },
+            {
+              "tamanho": "2.5",
+              "celulas": 19,
+              "alongamentoProjetado": 2.11,
+              "pesoAsa": "0.4 kg"
+            },
+            {
+              "tamanho": "3.0",
+              "celulas": 19,
+              "alongamentoProjetado": 2.15,
+              "pesoAsa": "0.55 kg"
+            },
+            {
+              "tamanho": "3.7",
+              "celulas": 19,
+              "alongamentoProjetado": 2.15,
+              "pesoAsa": "0.6 kg"
+            },
+            {
+              "tamanho": "4.2",
+              "celulas": 21,
+              "alongamentoProjetado": 2.15,
+              "pesoAsa": "0.7 kg"
+            },
+            {
+              "tamanho": "5.1",
+              "celulas": 21,
+              "alongamentoProjetado": 1.91,
+              "pesoAsa": "0.75 kg"
+            },
+            {
+              "tamanho": "5.8",
+              "celulas": 21,
+              "alongamentoProjetado": 1.87,
+              "pesoAsa": "0.8 kg"
+            }
+          ],
+          "flowHref": "https://www.flowparagliders.com.au/product/flow-d-wing-v2/"
         }
       ]
     }

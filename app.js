@@ -92,7 +92,56 @@ const UI = {
   perTrackUnit:{ pt: '/ música', en: '/ track', es: '/ canción', fr: '/ morceau', de: '/ Titel' },
   tierOne:   { pt: '1 música', en: '1 track', es: '1 canción', fr: '1 morceau', de: '1 Titel' },
   tierFrom:  { pt: 'A partir de {n} músicas', en: 'From {n} tracks', es: 'A partir de {n} canciones',
-               fr: 'À partir de {n} morceaux', de: 'Ab {n} Titeln' }
+               fr: 'À partir de {n} morceaux', de: 'Ab {n} Titeln' },
+
+  /* ---- secção Flow ---- */
+  flowHomologacao:{ pt:'Homologação', en:'Certification', es:'Homologación', fr:'Homologation', de:'Zulassung' },
+  flowTipo:       { pt:'Tipo', en:'Type', es:'Tipo', fr:'Type', de:'Typ' },
+  flowListaSimples:{ pt:'Esta família não se divide por níveis — é uma lista simples.',
+                     en:'This family is not split by level — it is a simple list.',
+                     es:'Esta familia no se divide por niveles — es una lista simple.',
+                     fr:'Cette famille ne se divise pas par niveaux — c’est une liste simple.',
+                     de:'Diese Familie ist nicht nach Stufen unterteilt — es ist eine einfache Liste.' },
+  flowCores:      { pt:'Cores disponíveis', en:'Available colours', es:'Colores disponibles', fr:'Couleurs disponibles', de:'Verfügbare Farben' },
+  flowTamanhos:   { pt:'Tamanhos', en:'Sizes', es:'Tallas', fr:'Tailles', de:'Größen' },
+  flowVerDetalhes:{ pt:'Ver detalhes', en:'View details', es:'Ver detalles', fr:'Voir les détails', de:'Details ansehen' },
+  flowFechar:     { pt:'Fechar', en:'Close', es:'Cerrar', fr:'Fermer', de:'Schließen' },
+  flowPedirPreco: { pt:'Pedir preço', en:'Ask for a price', es:'Pedir precio', fr:'Demander le prix', de:'Preis anfragen' },
+  flowPedirPrecoWa:{ pt:'Pedir preço no WhatsApp', en:'Ask for a price on WhatsApp', es:'Pedir precio por WhatsApp',
+                     fr:'Demander le prix sur WhatsApp', de:'Preis über WhatsApp anfragen' },
+  flowPersonalizar:{ pt:'Personalizar cores', en:'Custom colours', es:'Personalizar colores',
+                     fr:'Couleurs sur mesure', de:'Farben anpassen' },
+  flowMsgCores:   { pt:'Olá! Queria saber sobre cores personalizadas para a {n}.',
+                    en:'Hi! I would like to know about custom colours for the {n}.',
+                    es:'¡Hola! Quería saber sobre colores personalizados para la {n}.',
+                    fr:'Bonjour ! Je voudrais des informations sur les couleurs sur mesure pour la {n}.',
+                    de:'Hallo! Ich hätte gerne Informationen zu Sonderfarben für die {n}.' },
+  flowMsgPreco:   { pt:'Olá! Queria pedir preço para a {n}.', en:'Hi! I would like a price for the {n}.',
+                    es:'¡Hola! Quería pedir precio para la {n}.', fr:'Bonjour ! Je voudrais le prix de la {n}.',
+                    de:'Hallo! Ich hätte gerne einen Preis für die {n}.' },
+  flowParaQuem:   { pt:'Para quem é', en:'Who it is for', es:'Para quién es', fr:'Pour qui', de:'Für wen' },
+  flowPontosFortes:{ pt:'Pontos fortes', en:'Strengths', es:'Puntos fuertes', fr:'Points forts', de:'Stärken' },
+  flowIncluido:   { pt:'Vem incluído', en:'Included', es:'Incluido', fr:'Inclus', de:'Im Lieferumfang' },
+  flowSpecs:      { pt:'Tamanhos e especificações', en:'Sizes and specifications', es:'Tallas y especificaciones',
+                    fr:'Tailles et spécifications', de:'Größen und technische Daten' },
+  flowPaginaOficial:{ pt:'Página oficial Flow', en:'Official Flow page', es:'Página oficial Flow',
+                      fr:'Page officielle Flow', de:'Offizielle Flow-Seite' },
+  /* cabeçalhos da tabela de especificações */
+  sTam:      { pt:'Tam.', en:'Size', es:'Talla', fr:'Taille', de:'Größe' },
+  sArea:     { pt:'Área plana', en:'Flat area', es:'Área plana', fr:'Surface à plat', de:'Fläche' },
+  sAreaProj: { pt:'Área proj.', en:'Proj. area', es:'Área proy.', fr:'Surface proj.', de:'Proj. Fläche' },
+  sEnv:      { pt:'Envergadura', en:'Wingspan', es:'Envergadura', fr:'Envergure', de:'Spannweite' },
+  sCelulas:  { pt:'Células', en:'Cells', es:'Celdas', fr:'Caissons', de:'Zellen' },
+  sAlong:    { pt:'Along.', en:'Aspect ratio', es:'Alarg.', fr:'Allongement', de:'Streckung' },
+  sAlongProj:{ pt:'Along. proj.', en:'Proj. AR', es:'Alarg. proy.', fr:'Allong. proj.', de:'Proj. Streckung' },
+  sPeso:     { pt:'Peso', en:'Weight', es:'Peso', fr:'Poids', de:'Gewicht' },
+  sPtv:      { pt:'PTV', en:'Weight range', es:'PTV', fr:'PTV', de:'Startgewicht' },
+  sCarga:    { pt:'Carga máx.', en:'Max load', es:'Carga máx.', fr:'Charge max.', de:'Max. Last' },
+  sQueda:    { pt:'Taxa de queda', en:'Descent rate', es:'Tasa de caída', fr:'Taux de chute', de:'Sinkrate' },
+  sSusp:     { pt:'Alt. susp.', en:'Susp. height', es:'Alt. susp.', fr:'Haut. susp.', de:'Aufhängung' },
+  sAssento:  { pt:'Assento', en:'Seat board', es:'Asiento', fr:'Planchette', de:'Sitzbrett' },
+  sPaineis:  { pt:'Painéis', en:'Panels', es:'Paneles', fr:'Panneaux', de:'Bahnen' },
+  sHomol:    { pt:'Homologação', en:'Certification', es:'Homologación', fr:'Homologation', de:'Zulassung' }
 };
 function ui(k, vars) {
   const e = UI[k];
@@ -739,106 +788,349 @@ function buildMusic(item) {
 }
 
 /* ---- secção Flow Paragliders ----
-   Família (título) > Sub-família (acordeão) > Asas (linhas com imagem multicor,
-   categoria, link para o site da Flow e WhatsApp). Tudo vem de content.json/CMS. */
-const FLOW_COLORS = ['#2b6cff', '#ff7a1a', '#22c55e', '#c026d3', '#eab308', '#0ea5e9', '#ef4444', '#38bdf8', '#a3e635', '#7c3aed', '#e11d48', '#14b8a6'];
+   Uma lista única de produtos. Cada família escolhe o seu próprio eixo de
+   classificação (os parapentes usam a escada EN, os parakites não), e só
+   ganha filtros quando tem mais do que uma classificação.
+   O detalhe abre dentro da grelha, a toda a largura, por baixo da linha do
+   cartão — em vez de uma gaveta que tapava o catálogo. */
 const ICON_EXT = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M10 14 20 4M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"/></svg>';
 const ICON_WA = '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 00-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1012 2zm5.7 14.2c-.2.7-1.2 1.3-1.9 1.4-.5.1-1.1.2-3.4-.7-2.9-1.2-4.7-4.1-4.9-4.3-.1-.2-1.1-1.5-1.1-2.8s.7-2 .9-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.2.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.9.9c.3.2.5.3.5.4.1.2.1.6-.1 1.3z"/></svg>';
-const ICON_CHEV = '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M9 6l6 6-6 6z"/></svg>';
 
-function placeholderWing(i) {
+/* cores do desenho de recurso, para modelos ainda sem foto */
+const FLOW_COLORS = ['#2b6cff', '#ff7a1a', '#22c55e', '#c026d3', '#eab308', '#0ea5e9', '#ef4444', '#38bdf8', '#a3e635', '#7c3aed', '#e11d48', '#14b8a6'];
+const FOTO_CORES = {
+  azul: '#1f6fc0', laranja: '#ff7a1a', vermelho: '#e03131', lima: '#a3e635', roxo: '#7c3aed',
+  teal: '#17a2a2', preto: '#22262b', branco: '#e8eef5', amarelo: '#facc15', rosa: '#ec4899',
+  lilac: '#7c3aed', lime: '#a3e635', yellow: '#facc15', maui: '#17a2a2', sunrise: '#ff7a1a',
+  blue: '#1f6fc0', red: '#e03131', white: '#e8eef5', pink: '#ec4899', orange: '#ff7a1a'
+};
+const corHex = c => FOTO_CORES[String(c).toLowerCase()] || '#9bb4cf';
+const slugProd = n => String(n).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+  .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const chaveFoto = n => String(n).toLowerCase().replace(/[^a-z0-9]/g, '');
+const fotoSrc = (nome, cor, card) =>
+  'images/asas/' + chaveFoto(nome) + '__' + cor + (card ? '-card' : '') + '.webp';
+
+/* desenho de recurso para quem ainda não tem foto */
+function asaPlaceholder(i) {
   const c = k => FLOW_COLORS[(i * 3 + k) % FLOW_COLORS.length];
-  return '<svg viewBox="0 0 100 60" width="80" height="48" aria-hidden="true">' +
-    '<path d="M6 22 Q50 2 94 22 Q50 14 6 22Z" fill="' + c(0) + '"/>' +
-    '<path d="M10 39 Q50 19 90 39 Q50 31 10 39Z" fill="' + c(1) + '"/>' +
-    '<path d="M15 55 Q50 37 85 55 Q50 47 15 55Z" fill="' + c(2) + '"/></svg>';
+  return '<svg viewBox="0 0 300 150" width="100%" height="100%" aria-hidden="true">' +
+    '<path d="M18 96 Q150 20 282 96 Q150 62 18 96Z" fill="' + c(0) + '"/>' +
+    '<path d="M40 108 Q150 44 260 108 Q150 80 40 108Z" fill="' + c(1) + '" opacity=".95"/>' +
+    '<path d="M64 120 Q150 66 236 120 Q150 98 64 120Z" fill="' + c(2) + '" opacity=".9"/></svg>';
 }
 
 function buildFlow(item) {
   const wrap = el('div', 'flow' + visibilityClass(item));
   const num = item.whatsapp;
+  const produtos = (item.produtos || []).filter(p => p && p.nome && p.visible !== false);
 
-  /* cabeçalho centrado */
+  /* cabeçalho */
   const head = el('div', 'flow-head');
   const dl = t(item.dealerLabel);
   if (dl) { const d = el('div', 'flow-dealer'); d.textContent = dl; head.appendChild(d); }
   if (item.logoImage) { const img = el('img', 'flow-logo'); img.src = item.logoImage; img.alt = 'Flow Paragliders'; head.appendChild(img); }
-  const title = t(item.title);
-  if (title) { const h = el('h2', 'flow-title'); h.textContent = title; head.appendChild(h); }
+  const titulo = t(item.title);
+  if (titulo) { const h = el('h2', 'flow-title'); h.textContent = titulo; head.appendChild(h); }
   const desc = t(item.description);
   if (desc) { const p = el('p', 'flow-desc'); p.textContent = desc; head.appendChild(p); }
   wrap.appendChild(head);
 
-  let wIdx = 0;
-  (item.families || []).forEach(fam => {
-    if (fam.visible === false) return;
-    const subs = (fam.subfamilies || []).filter(s => s && s.visible !== false);
+  if (!produtos.length) return wrap;
 
-    /* família = acordeão (fechada por defeito, salvo fam.open) */
-    const famAcc = el('div', 'flow-fam-acc' + (fam.open ? ' open' : ''));
-    const famBtn = el('button', 'flow-famhead'); famBtn.type = 'button';
-    const fchev = el('span', 'flow-chev'); fchev.innerHTML = ICON_CHEV; famBtn.appendChild(fchev);
-    const fnm = el('span'); fnm.textContent = fam.name || ''; famBtn.appendChild(fnm);
-    famBtn.addEventListener('click', () => famAcc.classList.toggle('open'));
-    famAcc.appendChild(famBtn);
+  /* famílias, pela ordem em que aparecem; eixo só se houver >1 classificação */
+  const familias = [];
+  produtos.forEach(p => { if (familias.indexOf(p.familia) < 0) familias.push(p.familia); });
+  const eixoDe = fam => {
+    const cls = [];
+    produtos.filter(p => p.familia === fam).forEach(p => {
+      if (p.classificacao && cls.indexOf(p.classificacao) < 0) cls.push(p.classificacao);
+    });
+    return cls.length > 1 ? cls : null;
+  };
 
-    const famBody = el('div', 'flow-fambody');
-    const subAccs = [];
+  let famAtiva = familias[0], filtro = null, aberto = null;
 
-    /* controlos expandir/fechar todas as sub-famílias desta família */
-    if (subs.length > 1) {
-      const ctrls = el('div', 'flow-ctrls');
-      const exp = el('button', 'flow-ctrl'); exp.type = 'button'; exp.textContent = 'Expandir tudo';
-      const col = el('button', 'flow-ctrl'); col.type = 'button'; col.textContent = 'Fechar tudo';
-      exp.addEventListener('click', () => subAccs.forEach(a => a.classList.add('open')));
-      col.addEventListener('click', () => subAccs.forEach(a => a.classList.remove('open')));
-      ctrls.appendChild(exp); ctrls.appendChild(col);
-      famBody.appendChild(ctrls);
+  const barraFam = el('div', 'flow-fams');
+  const barraFiltros = el('div', 'flow-filters');
+  const grelha = el('div', 'flow-grid');
+  wrap.appendChild(barraFam); wrap.appendChild(barraFiltros); wrap.appendChild(grelha);
+
+  /* link partilhável: #produtos/<asa> abre já nessa asa */
+  const m = (location.hash || '').match(/^#produtos\/(.+)$/);
+  if (m) {
+    const p = produtos.filter(x => slugProd(x.nome) === m[1])[0];
+    if (p) { aberto = p; famAtiva = p.familia; }
+  }
+
+  function visiveis() {
+    return produtos.filter(p => p.familia === famAtiva && (!filtro || p.classificacao === filtro));
+  }
+
+  function renderFams() {
+    barraFam.innerHTML = '';
+    familias.forEach(f => {
+      const b = el('button', 'flow-fam' + (f === famAtiva ? ' on' : '')); b.type = 'button';
+      b.appendChild(document.createTextNode(f + ' '));
+      const n = el('span', 'flow-fam-n'); n.textContent = produtos.filter(p => p.familia === f).length;
+      b.appendChild(n);
+      b.addEventListener('click', () => {
+        famAtiva = f; filtro = null; aberto = null; limparHash(); render();
+      });
+      barraFam.appendChild(b);
+    });
+  }
+  function renderFiltros() {
+    barraFiltros.innerHTML = '';
+    const cls = eixoDe(famAtiva);
+    if (!cls) {
+      const s = el('span', 'flow-filters-none'); s.textContent = ui('flowListaSimples');
+      barraFiltros.appendChild(s); return;
+    }
+    const lab = el('span', 'flow-filters-label');
+    lab.textContent = famAtiva === 'Parapentes' ? ui('flowHomologacao') : ui('flowTipo');
+    barraFiltros.appendChild(lab);
+    [[null, ui('fAll')]].concat(cls.map(c => [c, c])).forEach(([v, txt]) => {
+      const b = el('button', 'flow-chip' + (filtro === v ? ' on' : '')); b.type = 'button';
+      b.textContent = txt;
+      b.addEventListener('click', () => { filtro = v; aberto = null; limparHash(); render(); });
+      barraFiltros.appendChild(b);
+    });
+  }
+
+  function cartao(p, i) {
+    const c = el('article', 'flow-card' + (p === aberto ? ' aberta' : ''));
+    const shot = el('div', 'flow-shot');
+    const img = el('div', 'flow-shot-img');
+    img.innerHTML = p.cores && p.cores.length ? imgTag(p, p.cores[0], true) : asaPlaceholder(i);
+    shot.appendChild(img); c.appendChild(shot);
+
+    const body = el('div', 'flow-body');
+    const nome = el('div', 'flow-name'); nome.textContent = p.nome; body.appendChild(nome);
+    if (p.classificacao) { const cl = el('div', 'flow-clas'); cl.textContent = p.classificacao; body.appendChild(cl); }
+    const tag = t(p.tagline);
+    if (tag) { const tl = el('div', 'flow-tagline'); tl.textContent = tag; body.appendChild(tl); }
+
+    if (p.cores && p.cores.length) {
+      const box = el('div');
+      const l = el('div', 'flow-lbl'); l.textContent = ui('flowCores'); box.appendChild(l);
+      const sws = el('div', 'flow-swatches');
+      p.cores.forEach((cor, j) => {
+        const b = el('button', 'flow-sw' + (j === 0 ? ' on' : '')); b.type = 'button';
+        b.style.background = corHex(cor); b.title = cor;
+        b.setAttribute('aria-label', cor);
+        b.addEventListener('click', ev => {
+          ev.stopPropagation();
+          sws.querySelectorAll('.flow-sw').forEach(x => x.classList.remove('on'));
+          b.classList.add('on');
+          img.innerHTML = imgTag(p, cor, true);
+        });
+        sws.appendChild(b);
+      });
+      box.appendChild(sws); body.appendChild(box);
+    }
+    if ((p.tamanhos || []).length) {
+      const box = el('div');
+      const l = el('div', 'flow-lbl'); l.textContent = ui('flowTamanhos'); box.appendChild(l);
+      const ts = el('div', 'flow-sizes');
+      p.tamanhos.forEach(s => { const x = el('span', 'flow-size'); x.textContent = s; ts.appendChild(x); });
+      box.appendChild(ts); body.appendChild(box);
     }
 
-    subs.forEach(sub => {
-      const wings = (sub.wings || []).filter(w => w && w.name);
-      const acc = el('div', 'flow-sub' + (sub.open ? ' open' : ''));
-      const btn = el('button', 'flow-subhead'); btn.type = 'button';
-      const chev = el('span', 'flow-chev'); chev.innerHTML = ICON_CHEV; btn.appendChild(chev);
-      const nm = el('span'); nm.textContent = sub.name || ''; btn.appendChild(nm);
-      const cnt = el('span', 'flow-count'); cnt.textContent = wings.length + (wings.length === 1 ? ' asa' : ' asas'); btn.appendChild(cnt);
-      btn.addEventListener('click', () => acc.classList.toggle('open'));
-      acc.appendChild(btn);
+    const acoes = el('div', 'flow-actions');
+    const ver = el('button', 'flow-btn'); ver.type = 'button';
+    ver.textContent = p === aberto ? ui('flowFechar') : ui('flowVerDetalhes');
+    const preco = el('a', 'flow-btn primary'); preco.target = '_blank'; preco.rel = 'noopener';
+    preco.textContent = ui('flowPedirPreco');
+    preco.href = waLink(num, ui('flowMsgPreco', { n: p.nome }));
+    preco.addEventListener('click', ev => ev.stopPropagation());
+    acoes.appendChild(ver); acoes.appendChild(preco);
+    body.appendChild(acoes);
+    c.appendChild(body);
 
-      const body = el('div', 'flow-subbody');
-      wings.forEach(w => {
-        const row = el('div', 'flow-row');
-        const thumb = el('div', 'flow-thumb');
-        if (w.image) { const img = el('img'); img.src = w.image; img.alt = w.name || ''; thumb.appendChild(img); }
-        else thumb.innerHTML = placeholderWing(wIdx);
-        wIdx++;
-        const info = el('div', 'flow-info');
-        const wn = el('span', 'flow-name'); wn.textContent = w.name || ''; info.appendChild(wn);
-        if (w.badge) { const bd = el('span', 'flow-badge'); bd.textContent = w.badge; info.appendChild(bd); }
-        const links = el('div', 'flow-links');
-        if (w.flowHref) {
-          const a = el('a', 'flow-ic'); a.href = w.flowHref; a.target = '_blank'; a.rel = 'noopener';
-          a.setAttribute('aria-label', 'Ver ' + (w.name || '') + ' no site da Flow'); a.innerHTML = ICON_EXT;
-          links.appendChild(a);
-        }
-        const wa = el('a', 'flow-ic wa'); wa.href = waLink(num, w.waMessage); wa.target = '_blank'; wa.rel = 'noopener';
-        wa.setAttribute('aria-label', 'Falar no WhatsApp sobre ' + (w.name || '')); wa.innerHTML = ICON_WA;
-        links.appendChild(wa);
-        row.appendChild(thumb); row.appendChild(info); row.appendChild(links);
-        body.appendChild(row);
-      });
-      acc.appendChild(body);
-      subAccs.push(acc);
-      famBody.appendChild(acc);
+    c.addEventListener('click', () => {
+      const abriuAgora = p !== aberto;
+      aberto = abriuAgora ? p : null;
+      sincronizaHash(); render();
+      if (abriuAgora) irParaDetalhe();
     });
+    return c;
+  }
+  function imgTag(p, cor, card) {
+    return '<img src="' + fotoSrc(p.nome, cor, card) + '" alt="' + p.nome + ' ' + cor + '" loading="lazy">';
+  }
 
-    famAcc.appendChild(famBody);
-    wrap.appendChild(famAcc);
+  function detalhe(p) {
+    /* div, não section: o site tem uma regra global para <section>
+       (display:flex, min-height:100vh) que destruiria este layout */
+    const d = el('div', 'flow-det'); d.id = 'flow-det';
+    const top = el('div', 'flow-det-top');
+    const tit = el('div');
+    const n = el('div', 'flow-det-name'); n.textContent = p.nome;
+    const s = el('div', 'flow-det-sub'); s.textContent = p.familia + (p.classificacao ? ' · ' + p.classificacao : '');
+    tit.appendChild(n); tit.appendChild(s);
+    const x = el('button', 'flow-det-x'); x.type = 'button'; x.innerHTML = '&#10005;';
+    x.setAttribute('aria-label', ui('flowFechar'));
+    x.addEventListener('click', ev => { ev.stopPropagation(); aberto = null; sincronizaHash(); render(); });
+    top.appendChild(tit); top.appendChild(x); d.appendChild(top);
+
+    const cols = el('div', 'flow-det-cols');
+
+    /* coluna esquerda: foto, cores, especificações */
+    const esq = el('div');
+    const foto = el('div', 'flow-det-foto');
+    foto.innerHTML = p.cores && p.cores.length ? imgTag(p, p.cores[0], false) : asaPlaceholder(produtos.indexOf(p));
+    esq.appendChild(foto);
+    if (p.cores && p.cores.length) {
+      const box = el('div', 'flow-det-cores');
+      const l = el('div', 'flow-lbl'); l.textContent = ui('flowCores'); box.appendChild(l);
+      const sws = el('div', 'flow-swatches');
+      p.cores.forEach((cor, j) => {
+        const b = el('button', 'flow-sw' + (j === 0 ? ' on' : '')); b.type = 'button';
+        b.style.background = corHex(cor); b.title = cor; b.setAttribute('aria-label', cor);
+        b.addEventListener('click', ev => {
+          ev.stopPropagation();
+          sws.querySelectorAll('.flow-sw').forEach(y => y.classList.remove('on'));
+          b.classList.add('on');
+          foto.innerHTML = imgTag(p, cor, false);
+        });
+        sws.appendChild(b);
+      });
+      box.appendChild(sws); esq.appendChild(box);
+    }
+    if ((p.specs || []).length) {
+      const h = el('div', 'flow-det-h'); h.textContent = ui('flowSpecs'); esq.appendChild(h);
+      const chaves = [['areaPlana', ui('sArea')], ['areaProjetada', ui('sAreaProj')], ['envergadura', ui('sEnv')],
+        ['celulas', ui('sCelulas')], ['alongamento', ui('sAlong')], ['alongamentoProjetado', ui('sAlongProj')],
+        ['pesoAsa', ui('sPeso')], ['ptv', ui('sPtv')], ['cargaMax', ui('sCarga')], ['taxaQueda', ui('sQueda')],
+        ['alturaSuspensao', ui('sSusp')], ['assento', ui('sAssento')], ['paineis', ui('sPaineis')],
+        ['homologacao', ui('sHomol')]];
+      const usadas = chaves.filter(k => p.specs.some(sp => sp[k[0]] !== undefined));
+      const scroll = el('div', 'flow-tablewrap');
+      const tb = el('table', 'flow-specs');
+      let html = '<thead><tr><th>' + ui('sTam') + '</th>' + usadas.map(k => '<th>' + k[1] + '</th>').join('') + '</tr></thead><tbody>';
+      p.specs.forEach(sp => {
+        html += '<tr><td><b>' + (sp.tamanho || '') + '</b></td>' +
+          usadas.map(k => '<td>' + (sp[k[0]] !== undefined ? sp[k[0]] : '—') + '</td>').join('') + '</tr>';
+      });
+      tb.innerHTML = html + '</tbody>';
+      scroll.appendChild(tb); esq.appendChild(scroll);
+    }
+    cols.appendChild(esq);
+
+    /* coluna direita: texto e ações */
+    const dir = el('div');
+    const dsc = t(p.descricao);
+    if (dsc) { const q = el('p', 'flow-det-desc'); q.textContent = dsc; dir.appendChild(q); }
+    const pq = t(p.paraQuem);
+    if (pq) dir.appendChild(feature(ICON_PESSOA, ui('flowParaQuem'), pq));
+    const fortes = (p.pontosFortes || []).map(t).filter(Boolean);
+    if (fortes.length) dir.appendChild(feature(ICON_ESTRELA, ui('flowPontosFortes'), '· ' + fortes.join('\n· '), true));
+    const inc = t(p.incluido);
+    if (inc) {
+      const h = el('div', 'flow-det-h'); h.textContent = ui('flowIncluido'); dir.appendChild(h);
+      const q = el('p', 'flow-det-desc'); q.textContent = inc; dir.appendChild(q);
+    }
+    const av = t(p.aviso);
+    if (av) { const q = el('p', 'flow-aviso'); q.textContent = '⚠ ' + av; dir.appendChild(q); }
+
+    const acoes = el('div', 'flow-det-acoes');
+    const wa = el('a', 'flow-big wa'); wa.target = '_blank'; wa.rel = 'noopener';
+    wa.href = waLink(num, ui('flowMsgPreco', { n: p.nome }));
+    wa.innerHTML = ICON_WA; const wl = el('span'); wl.textContent = ui('flowPedirPrecoWa'); wa.appendChild(wl);
+    acoes.appendChild(wa);
+    /* cores à medida: até haver editor próprio, abre o WhatsApp com o pedido */
+    const cc = el('a', 'flow-big custom'); cc.target = '_blank'; cc.rel = 'noopener';
+    cc.href = waLink(num, ui('flowMsgCores', { n: p.nome }));
+    cc.innerHTML = ICON_PALETA; const cl = el('span'); cl.textContent = ui('flowPersonalizar'); cc.appendChild(cl);
+    acoes.appendChild(cc);
+    if (p.flowHref) {
+      const of = el('a', 'flow-big'); of.href = p.flowHref; of.target = '_blank'; of.rel = 'noopener';
+      of.innerHTML = ICON_EXT; const ol = el('span'); ol.textContent = ui('flowPaginaOficial'); of.appendChild(ol);
+      acoes.appendChild(of);
+    }
+    dir.appendChild(acoes);
+    const nota = t(item.customColourNote);
+    if (nota) { const q = el('p', 'flow-nota'); q.textContent = nota; dir.appendChild(q); }
+    cols.appendChild(dir);
+
+    d.appendChild(cols);
+    d.addEventListener('click', ev => ev.stopPropagation());
+    return d;
+  }
+  function feature(icone, titulo, texto, multilinha) {
+    const f = el('div', 'flow-feat');
+    const i = el('span', 'flow-feat-ico'); i.innerHTML = icone;
+    const b = el('div');
+    const h = el('b'); h.textContent = titulo;
+    const p = el('p'); p.textContent = texto;
+    if (multilinha) p.style.whiteSpace = 'pre-line';
+    b.appendChild(h); b.appendChild(p);
+    f.appendChild(i); f.appendChild(b);
+    return f;
+  }
+
+  function colunas() {
+    const g = getComputedStyle(grelha).gridTemplateColumns;
+    return g.split(' ').filter(Boolean).length || 1;
+  }
+  function renderGrelha() {
+    grelha.innerHTML = '';
+    const lista = visiveis();
+    lista.forEach((p, i) => grelha.appendChild(cartao(p, produtos.indexOf(p))));
+    if (aberto && lista.indexOf(aberto) >= 0) {
+      const pos = lista.indexOf(aberto), cols = colunas();
+      const fim = Math.min(Math.floor(pos / cols) * cols + cols - 1, lista.length - 1);
+      grelha.children[fim].insertAdjacentElement('afterend', detalhe(aberto));
+    }
+  }
+  function render() { renderFams(); renderFiltros(); renderGrelha(); }
+
+  /* leva o ecrã ao topo do detalhe: sem isto, ao abrir uma asa de uma linha
+     de baixo o painel abre fora do campo de visão */
+  function irParaDetalhe() {
+    const ir = suave => {
+      const d = document.getElementById('flow-det');
+      if (!d) return;
+      const y = Math.max(0, d.getBoundingClientRect().top + window.scrollY - 16);
+      try { window.scrollTo({ top: y, behavior: suave ? 'smooth' : 'auto' }); }
+      catch (e) { window.scrollTo(0, y); }        /* browsers sem opções */
+    };
+    requestAnimationFrame(() => ir(true));
+    /* as fotos entram depois (loading=lazy) e empurram a página:
+       segunda passagem para corrigir o desvio */
+    setTimeout(() => ir(false), 420);
+  }
+
+  function sincronizaHash() {
+    try {
+      if (aberto) history.replaceState(null, '', '#produtos/' + slugProd(aberto.nome));
+      else history.replaceState(null, '', location.pathname + location.search);
+    } catch (e) { }
+  }
+  function limparHash() { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { } }
+
+  /* o nº de colunas muda com a largura: o detalhe tem de trocar de linha */
+  let tr; window.addEventListener('resize', () => {
+    if (!aberto) return;
+    clearTimeout(tr); tr = setTimeout(renderGrelha, 150);
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && aberto) { aberto = null; sincronizaHash(); render(); }
   });
 
+  render();
+  /* veio de um link partilhado: só dá para rolar depois de a secção estar
+     no documento e as fotos terem chegado */
+  if (aberto) {
+    setTimeout(irParaDetalhe, 300);
+    window.addEventListener('load', () => setTimeout(irParaDetalhe, 100), { once: true });
+  }
   return wrap;
 }
+const ICON_PESSOA = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"/></svg>';
+const ICON_ESTRELA = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.8-4.5 4.2 1.2 6L12 16.8 6.6 19.6l1.2-6L3.3 9.4l6.1-.8z"/></svg>';
+const ICON_PALETA = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 100 18c1.1 0 2-.9 2-2 0-.5-.2-1-.6-1.4-.3-.3-.4-.7-.4-1.1 0-.8.7-1.5 1.5-1.5H16a5 5 0 005-5c0-3.9-4-7-9-7z"/><circle cx="7.5" cy="11" r="1.1" fill="currentColor" stroke="none"/><circle cx="10.5" cy="7.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="15" cy="8" r="1.1" fill="currentColor" stroke="none"/></svg>';
 
 function buildElement(item) {
   switch (item.role) {

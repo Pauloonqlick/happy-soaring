@@ -1,11 +1,13 @@
 {
   "id": "reflex-lab",
-  "visible": true,
+  "visible": false,
+  "wind": true,
   "heightScreens": null,
   "heroScrim": false,
   "bgImage": "",
   "bgImageMobile": "",
   "bgImageVisible": true,
+  "bgDarken": null,
   "topTint": "",
   "overlay": {
     "visible": true,
@@ -28,6 +30,9 @@
       "subtitle": {
         "pt": "Percebe como funciona uma asa parakite de perfil reflex. Mexe no ângulo de ataque, no travão e nas linhas A, B, C e vê o centro de pressão, as linhas de fluxo e os valores de CL, CD e L/D a reagirem em tempo real."
       },
+      "trust": {
+        "pt": "Simulação conceptual para fins educativos"
+      },
       "buttons": [
         {
           "label": {
@@ -37,9 +42,6 @@
           "variant": "primary"
         }
       ],
-      "trust": {
-        "pt": "Simulação conceptual para fins educativos"
-      },
       "showDesktop": true,
       "showMobile": true
     },
@@ -48,18 +50,18 @@
       "showDesktop": true,
       "showMobile": false,
       "src": "images/reflex-profile.svg",
-      "alt": {
-        "pt": "Perfil reflex simplificado"
-      },
       "opacity": 100,
       "shadow": false,
-      "parallax": 0,
       "floatSpeed": 9,
-      "y": 30,
+      "parallax": 0,
       "x": 6,
+      "y": 30,
       "anchorX": "right",
       "widthVW": 34,
-      "widthMax": 440
+      "widthMax": 440,
+      "alt": {
+        "pt": "Perfil reflex simplificado"
+      }
     }
   ]
 }
