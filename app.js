@@ -141,7 +141,15 @@ const UI = {
   sSusp:     { pt:'Alt. susp.', en:'Susp. height', es:'Alt. susp.', fr:'Haut. susp.', de:'Aufhängung' },
   sAssento:  { pt:'Assento', en:'Seat board', es:'Asiento', fr:'Planchette', de:'Sitzbrett' },
   sPaineis:  { pt:'Painéis', en:'Panels', es:'Paneles', fr:'Panneaux', de:'Bahnen' },
-  sHomol:    { pt:'Homologação', en:'Certification', es:'Homologación', fr:'Homologation', de:'Zulassung' }
+  sHomol:    { pt:'Homologação', en:'Certification', es:'Homologación', fr:'Homologation', de:'Zulassung' },
+
+  videoPlay: { pt:'Ver o vídeo: {n}', en:'Play the video: {n}', es:'Ver el vídeo: {n}',
+               fr:'Voir la vidéo : {n}', de:'Video ansehen: {n}' },
+  flowVideo: { pt:'Vídeo', en:'Video', es:'Vídeo', fr:'Vidéo', de:'Video' },
+  flowVento: { pt:'Gama de vento', en:'Wind range', es:'Rango de viento', fr:'Plage de vent', de:'Windbereich' },
+  unidadeKn: { pt:'nós', en:'knots', es:'nudos', fr:'nœuds', de:'Knoten' },
+  unidadeKmh:{ pt:'km/h', en:'km/h', es:'km/h', fr:'km/h', de:'km/h' },
+  flowDescricao:{ pt:'Descrição', en:'Description', es:'Descripción', fr:'Description', de:'Beschreibung' }
 };
 function ui(k, vars) {
   const e = UI[k];
@@ -998,24 +1006,6 @@ function buildFlow(item) {
       });
       box.appendChild(sws); esq.appendChild(box);
     }
-    if ((p.specs || []).length) {
-      const h = el('div', 'flow-det-h'); h.textContent = ui('flowSpecs'); esq.appendChild(h);
-      const chaves = [['areaPlana', ui('sArea')], ['areaProjetada', ui('sAreaProj')], ['envergadura', ui('sEnv')],
-        ['celulas', ui('sCelulas')], ['alongamento', ui('sAlong')], ['alongamentoProjetado', ui('sAlongProj')],
-        ['pesoAsa', ui('sPeso')], ['ptv', ui('sPtv')], ['cargaMax', ui('sCarga')], ['taxaQueda', ui('sQueda')],
-        ['alturaSuspensao', ui('sSusp')], ['assento', ui('sAssento')], ['paineis', ui('sPaineis')],
-        ['homologacao', ui('sHomol')]];
-      const usadas = chaves.filter(k => p.specs.some(sp => sp[k[0]] !== undefined));
-      const scroll = el('div', 'flow-tablewrap');
-      const tb = el('table', 'flow-specs');
-      let html = '<thead><tr><th>' + ui('sTam') + '</th>' + usadas.map(k => '<th>' + k[1] + '</th>').join('') + '</tr></thead><tbody>';
-      p.specs.forEach(sp => {
-        html += '<tr><td><b>' + (sp.tamanho || '') + '</b></td>' +
-          usadas.map(k => '<td>' + (sp[k[0]] !== undefined ? sp[k[0]] : '—') + '</td>').join('') + '</tr>';
-      });
-      tb.innerHTML = html + '</tbody>';
-      scroll.appendChild(tb); esq.appendChild(scroll);
-    }
     cols.appendChild(esq);
 
     /* coluna direita: texto e ações */
@@ -1055,9 +1045,167 @@ function buildFlow(item) {
     cols.appendChild(dir);
 
     d.appendChild(cols);
+
+    /* vídeo a toda a largura do painel, por baixo das duas colunas:
+       numa coluna ficava com metade do tamanho */
+    if (p.videoId) {
+      const bloco = el('div', 'flow-det-video');
+      const h = el('div', 'flow-det-h'); h.textContent = ui('flowVideo'); bloco.appendChild(h);
+      bloco.appendChild(buildVideo({
+        role: 'video', videoId: p.videoId, startAt: p.videoStartAt || 0,
+        thumbnail: p.videoThumbnail || '', title: { pt: p.nome }
+      }));
+      d.appendChild(bloco);
+    }
+
+    /* gama de vento: barras por tamanho, com alternador nós / km/h */
+    if (p.windRange && (p.windRange.groups || []).length) {
+      d.appendChild(graficoVento(p));
+    }
+
+    if ((p.specs || []).length) {
+      const specsBox = el('div', 'flow-det-specs');
+      const h = el('div', 'flow-det-h'); h.textContent = ui('flowSpecs'); specsBox.appendChild(h);
+      const chaves = [['areaPlana', ui('sArea')], ['areaProjetada', ui('sAreaProj')], ['envergadura', ui('sEnv')],
+        ['celulas', ui('sCelulas')], ['alongamento', ui('sAlong')], ['alongamentoProjetado', ui('sAlongProj')],
+        ['pesoAsa', ui('sPeso')], ['ptv', ui('sPtv')], ['cargaMax', ui('sCarga')], ['taxaQueda', ui('sQueda')],
+        ['alturaSuspensao', ui('sSusp')], ['assento', ui('sAssento')], ['paineis', ui('sPaineis')],
+        ['homologacao', ui('sHomol')]];
+      const usadas = chaves.filter(k => p.specs.some(sp => sp[k[0]] !== undefined));
+      const scroll = el('div', 'flow-tablewrap');
+      const tb = el('table', 'flow-specs');
+      let html = '<thead><tr><th>' + ui('sTam') + '</th>' + usadas.map(k => '<th>' + k[1] + '</th>').join('') + '</tr></thead><tbody>';
+      p.specs.forEach(sp => {
+        html += '<tr><td><b>' + (sp.tamanho || '') + '</b></td>' +
+          usadas.map(k => '<td>' + (sp[k[0]] !== undefined ? sp[k[0]] : '—') + '</td>').join('') + '</tr>';
+      });
+      tb.innerHTML = html + '</tbody>';
+      scroll.appendChild(tb); specsBox.appendChild(scroll);
+      d.appendChild(specsBox);
+    }
+
+    /* descrição longa do fabricante, no fim */
+    const longa = t(p.descricaoLonga);
+    if (longa) {
+      const bloco = el('div', 'flow-det-longa');
+      const h = el('div', 'flow-det-h'); h.textContent = ui('flowDescricao'); bloco.appendChild(h);
+      const corpo = el('div', 'flow-longa-txt');
+      paragrafos(longa).forEach(n => corpo.appendChild(n));
+      bloco.appendChild(corpo);
+      d.appendChild(bloco);
+    }
+
+    /* secções extra do fabricante (materiais, perfil, risers…) */
+    (p.seccoes || []).forEach(sx => {
+      const corpo = t(sx.texto);
+      if (!corpo) return;
+      const bloco = el('div', 'flow-det-extra');
+      const ht = t(sx.titulo);
+      if (ht) { const h = el('div', 'flow-det-h'); h.textContent = ht; bloco.appendChild(h); }
+      const txt = el('div', 'flow-longa-txt');
+      paragrafos(corpo).forEach(n => txt.appendChild(n));
+      bloco.appendChild(txt);
+      d.appendChild(bloco);
+    });
+
     d.addEventListener('click', ev => ev.stopPropagation());
     return d;
   }
+  /* Texto em vários parágrafos, com **negrito**. Construído com nós de texto
+     e não com innerHTML: o conteúdo vem do CMS e não deve poder injetar HTML. */
+  function paragrafos(txt) {
+    return String(txt).split(/\n\s*\n/).filter(s => s.trim()).map(bloco => {
+      const p = el('p');
+      bloco.split(/\*\*/).forEach((parte, i) => {
+        if (!parte) return;
+        if (i % 2) { const b = el('strong'); b.textContent = parte; p.appendChild(b); }
+        else p.appendChild(document.createTextNode(parte));
+      });
+      return p;
+    });
+  }
+
+  /* ---- gráfico de gama de vento ----
+     Os valores são guardados em nós (é como o fabricante os publica); a
+     conversão para km/h é feita na apresentação, para não haver dois
+     conjuntos de números a divergir. */
+  const KN_PARA_KMH = 1.852;
+  function graficoVento(p) {
+    const wr = p.windRange;
+    const box = el('div', 'flow-wind');
+    let unidade = 'kn';
+
+    const topo = el('div', 'flow-wind-top');
+    const h = el('div', 'flow-det-h'); h.textContent = ui('flowVento'); topo.appendChild(h);
+    const sw = el('div', 'flow-wind-units');
+    const bKn = el('button', 'flow-unit on'); bKn.type = 'button'; bKn.textContent = ui('unidadeKn');
+    const bKm = el('button', 'flow-unit'); bKm.type = 'button'; bKm.textContent = ui('unidadeKmh');
+    sw.appendChild(bKn); sw.appendChild(bKm); topo.appendChild(sw);
+    box.appendChild(topo);
+
+    const grupos = el('div', 'flow-wind-groups');
+    box.appendChild(grupos);
+
+    /* escala: arredonda o máximo para cima, para as barras não tocarem no fim */
+    let maxKn = 0;
+    wr.groups.forEach(g => (g.rows || []).forEach(r => { maxKn = Math.max(maxKn, +r.max || 0); }));
+    maxKn = Math.ceil((maxKn + 2) / 5) * 5;
+
+    function desenha() {
+      const fator = unidade === 'kn' ? 1 : KN_PARA_KMH;
+      const maxU = maxKn * fator;
+      /* marcas de 5 em 5 em nós, de 10 em 10 em km/h */
+      const passo = unidade === 'kn' ? 5 : 10;
+      grupos.innerHTML = '';
+      wr.groups.forEach(g => {
+        const gd = el('div', 'flow-wind-group');
+        const lb = t(g.label);
+        if (lb) { const l = el('div', 'flow-wind-glabel'); l.textContent = lb; gd.appendChild(l); }
+        const chart = el('div', 'flow-wind-chart');
+        (g.rows || []).forEach(r => {
+          const linha = el('div', 'flow-wind-row');
+          const tam = el('span', 'flow-wind-size'); tam.textContent = r.tamanho;
+          const track = el('span', 'flow-wind-track');
+          const ini = (+r.min * fator) / maxU * 100;
+          const fim = (+r.max * fator) / maxU * 100;
+          const bar = el('span', 'flow-wind-bar');
+          bar.style.left = ini + '%';
+          bar.style.width = Math.max(0, fim - ini) + '%';
+          bar.title = Math.round(+r.min * fator) + '–' + Math.round(+r.max * fator) + ' ' +
+            (unidade === 'kn' ? ui('unidadeKn') : ui('unidadeKmh'));
+          track.appendChild(bar);
+          const val = el('span', 'flow-wind-val');
+          val.textContent = Math.round(+r.min * fator) + '–' + Math.round(+r.max * fator);
+          linha.appendChild(tam); linha.appendChild(track); linha.appendChild(val);
+          chart.appendChild(linha);
+        });
+        /* eixo */
+        const eixo = el('div', 'flow-wind-row flow-wind-axis');
+        eixo.appendChild(el('span', 'flow-wind-size'));
+        const et = el('span', 'flow-wind-track');
+        for (let v = 0; v <= maxU + 0.001; v += passo) {
+          const m = el('span', 'flow-wind-tick');
+          m.style.left = (v / maxU * 100) + '%';
+          const n = el('i'); n.textContent = Math.round(v);
+          m.appendChild(n); et.appendChild(m);
+        }
+        eixo.appendChild(et);
+        const u = el('span', 'flow-wind-val'); u.textContent = unidade === 'kn' ? ui('unidadeKn') : ui('unidadeKmh');
+        eixo.appendChild(u);
+        chart.appendChild(eixo);
+        gd.appendChild(chart);
+        grupos.appendChild(gd);
+      });
+    }
+    bKn.addEventListener('click', ev => { ev.stopPropagation(); unidade = 'kn'; bKn.classList.add('on'); bKm.classList.remove('on'); desenha(); });
+    bKm.addEventListener('click', ev => { ev.stopPropagation(); unidade = 'kmh'; bKm.classList.add('on'); bKn.classList.remove('on'); desenha(); });
+    desenha();
+
+    const nota = t(wr.note);
+    if (nota) { const n = el('p', 'flow-wind-note'); n.textContent = nota; box.appendChild(n); }
+    return box;
+  }
+
   function feature(icone, titulo, texto, multilinha) {
     const f = el('div', 'flow-feat');
     const i = el('span', 'flow-feat-ico'); i.innerHTML = icone;
@@ -1132,8 +1280,67 @@ const ICON_PESSOA = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none"
 const ICON_ESTRELA = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.8-4.5 4.2 1.2 6L12 16.8 6.6 19.6l1.2-6L3.3 9.4l6.1-.8z"/></svg>';
 const ICON_PALETA = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 100 18c1.1 0 2-.9 2-2 0-.5-.2-1-.6-1.4-.3-.3-.4-.7-.4-1.1 0-.8.7-1.5 1.5-1.5H16a5 5 0 005-5c0-3.9-4-7-9-7z"/><circle cx="7.5" cy="11" r="1.1" fill="currentColor" stroke="none"/><circle cx="10.5" cy="7.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="15" cy="8" r="1.1" fill="currentColor" stroke="none"/></svg>';
 
+/* ---- vídeo do YouTube ----
+   Mostra só a miniatura; o iframe do YouTube entra apenas quando se carrega
+   no play. Assim a página não carrega os scripts nem os cookies do YouTube
+   a quem nunca vê o vídeo — e poupa muito peso no telemóvel. */
+function buildVideo(item) {
+  const id = String(item.videoId || '').trim();
+  const wrap = el('div', 'hs-video' + visibilityClass(item));
+  if (!id) return wrap;
+
+  const box = el('button', 'hs-video-box');   /* botão: acessível por teclado */
+  box.type = 'button';
+  const titulo = t(item.title);
+  box.setAttribute('aria-label', ui('videoPlay', { n: titulo || 'YouTube' }));
+
+  const img = el('img', 'hs-video-thumb');
+  /* nem todos os vídeos têm maxresdefault; se faltar, cai para hqdefault */
+  img.src = item.thumbnail || ('https://img.youtube.com/vi/' + id + '/maxresdefault.jpg');
+  img.alt = '';
+  img.loading = 'lazy';
+  img.addEventListener('error', () => {
+    if (img.dataset.fallback) return;
+    img.dataset.fallback = '1';
+    img.src = 'https://img.youtube.com/vi/' + id + '/hqdefault.jpg';
+  }, { once: false });
+  box.appendChild(img);
+
+  box.appendChild(el('span', 'hs-video-scrim'));
+
+  const kicker = t(item.kicker);
+  if (kicker || titulo) {
+    const cap = el('span', 'hs-video-cap');
+    if (kicker) { const k = el('span', 'hs-video-kicker'); k.textContent = kicker; cap.appendChild(k); }
+    if (titulo) { const h = el('span', 'hs-video-title'); h.textContent = titulo; cap.appendChild(h); }
+    box.appendChild(cap);
+  }
+
+  const play = el('span', 'hs-play');
+  play.innerHTML = '<svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+  box.appendChild(play);
+
+  box.addEventListener('click', () => {
+    const start = parseInt(item.startAt, 10);
+    const src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) +
+      '?autoplay=1&rel=0' + (start > 0 ? '&start=' + start : '');
+    const frame = el('iframe', 'hs-video-frame');
+    frame.src = src;
+    frame.title = titulo || 'YouTube';
+    frame.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture');
+    frame.setAttribute('allowfullscreen', '');
+    frame.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+    wrap.innerHTML = '';
+    wrap.appendChild(frame);
+  });
+
+  wrap.appendChild(box);
+  return wrap;
+}
+
 function buildElement(item) {
   switch (item.role) {
+    case 'video': return buildVideo(item);
     case 'text': return buildText(item);
     case 'floatImage': return buildFloatImage(item);
     case 'groundImage': return buildGroundImage(item);

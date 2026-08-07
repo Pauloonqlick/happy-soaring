@@ -1,5 +1,6 @@
 {
   "id": "music",
+  "nome": "Música",
   "visible": true,
   "wind": false,
   "heightScreens": null,

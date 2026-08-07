@@ -1,6 +1,7 @@
 {
   "id": "sobre",
-  "visible": true,
+  "nome": "A nossa vela",
+  "visible": false,
   "heightScreens": 1,
   "heroScrim": true,
   "bgImage": "images/course.jpg",

@@ -1,5 +1,6 @@
 {
   "id": "hero",
+  "nome": "Início",
   "visible": true,
   "wind": true,
   "heightScreens": null,

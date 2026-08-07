@@ -211,12 +211,17 @@ collections:
     identifier_field: id
     slug: '{{fields.id}}'
     create: true
-    summary: '{{fields.id}}'
+    summary: '{{fields.nome}}'
     fields:
       - label: Identificador
         name: id
         widget: string
         hint: 'Usado nas âncoras do menu (ex: hero, dealer)'
+      - label: Nome (para te orientares)
+        name: nome
+        widget: string
+        required: false
+        hint: Só para veres na lista do CMS. O que aparece no site é o texto do menu.
       - label: Mostrar secção
         name: visible
         widget: boolean
@@ -1670,6 +1675,34 @@ collections:
                         name: de
                         widget: text
                         required: false
+                  - label: Descrição longa
+                    name: descricaoLonga
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
+                    required: false
+                    hint: Texto do fabricante. Separa parágrafos com uma linha em branco. Usa **texto** para negrito.
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: text
+                        required: false
+                      - label: English
+                        name: en
+                        widget: text
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: text
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: text
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: text
+                        required: false
                   - label: Para quem é
                     name: paraQuem
                     widget: object
@@ -1866,7 +1899,171 @@ collections:
                         name: homologacao
                         widget: string
                         required: false
+                  - label: Vídeo YouTube — ID
+                    name: videoId
+                    widget: string
+                    required: false
+                    hint: Só o código. Em https://youtu.be/3hD4TJKcNIQ o ID é 3hD4TJKcNIQ. Vazio = sem vídeo.
+                  - label: Vídeo — começar aos (segundos)
+                    name: videoStartAt
+                    widget: number
+                    value_type: int
+                    min: 0
+                    default: 0
+                    required: false
+                  - label: Vídeo — miniatura própria
+                    name: videoThumbnail
+                    widget: image
+                    required: false
+                    hint: Se vazio, usa a miniatura do YouTube
+                  - label: Secções extra
+                    name: seccoes
+                    widget: list
+                    label_singular: Secção
+                    summary: '{{fields.titulo.pt}}'
+                    collapsed: true
+                    required: false
+                    hint: Blocos de texto no fim do detalhe (materiais, perfil, risers…). Uma linha em branco separa parágrafos; **texto** fica a negrito.
+                    fields:
+                      - label: Título
+                        name: titulo
+                        widget: object
+                        collapsed: true
+                        summary: '{{fields.pt}}'
+                        required: false
+                        fields:
+                          - label: Português
+                            name: pt
+                            widget: string
+                            required: false
+                          - label: English
+                            name: en
+                            widget: string
+                            required: false
+                          - label: Español
+                            name: es
+                            widget: string
+                            required: false
+                          - label: Français
+                            name: fr
+                            widget: string
+                            required: false
+                          - label: Deutsch
+                            name: de
+                            widget: string
+                            required: false
+                      - label: Texto
+                        name: texto
+                        widget: object
+                        collapsed: true
+                        summary: '{{fields.pt}}'
+                        required: false
+                        fields:
+                          - label: Português
+                            name: pt
+                            widget: text
+                            required: false
+                          - label: English
+                            name: en
+                            widget: text
+                            required: false
+                          - label: Español
+                            name: es
+                            widget: text
+                            required: false
+                          - label: Français
+                            name: fr
+                            widget: text
+                            required: false
+                          - label: Deutsch
+                            name: de
+                            widget: text
+                            required: false
                   - label: Link oficial Flow
                     name: flowHref
                     widget: string
                     required: false
+          - label: Vídeo (YouTube)
+            name: video
+            fields:
+              - label: Mostrar no desktop
+                name: showDesktop
+                widget: boolean
+                default: true
+                required: false
+              - label: Mostrar no telemóvel
+                name: showMobile
+                widget: boolean
+                default: true
+                required: false
+              - label: ID do vídeo
+                name: videoId
+                widget: string
+                hint: Só o código. Em https://youtu.be/3hD4TJKcNIQ o ID é 3hD4TJKcNIQ
+              - label: Texto pequeno por cima
+                name: kicker
+                widget: object
+                collapsed: true
+                summary: '{{fields.pt}}'
+                required: false
+                fields:
+                  - label: Português
+                    name: pt
+                    widget: string
+                    required: false
+                  - label: English
+                    name: en
+                    widget: string
+                    required: false
+                  - label: Español
+                    name: es
+                    widget: string
+                    required: false
+                  - label: Français
+                    name: fr
+                    widget: string
+                    required: false
+                  - label: Deutsch
+                    name: de
+                    widget: string
+                    required: false
+              - label: Título
+                name: title
+                widget: object
+                collapsed: true
+                summary: '{{fields.pt}}'
+                required: false
+                fields:
+                  - label: Português
+                    name: pt
+                    widget: string
+                    required: false
+                  - label: English
+                    name: en
+                    widget: string
+                    required: false
+                  - label: Español
+                    name: es
+                    widget: string
+                    required: false
+                  - label: Français
+                    name: fr
+                    widget: string
+                    required: false
+                  - label: Deutsch
+                    name: de
+                    widget: string
+                    required: false
+              - label: Começar aos (segundos)
+                name: startAt
+                widget: number
+                value_type: int
+                min: 0
+                default: 0
+                required: false
+                hint: 0 = do início
+              - label: Miniatura própria (opcional)
+                name: thumbnail
+                widget: image
+                required: false
+                hint: Se vazio, usa a miniatura do YouTube

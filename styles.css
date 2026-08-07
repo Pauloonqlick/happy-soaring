@@ -399,6 +399,9 @@ footer small{opacity:.7}
 .flow-desc{color:rgba(255,255,255,.85);font-size:14px;max-width:56ch;margin:6px auto 0;line-height:1.5}
 /* a secção dos produtos é alta: alinha ao topo em vez de centrar,
    e deixa a grelha respirar a toda a largura */
+/* o scrim traz a classe hero-fill, que no telemóvel alinha ao fundo —
+   não faz sentido numa secção alta de catálogo */
+#produtos.has-scrim.hero-fill{align-items:flex-start}
 #produtos{align-items:flex-start;padding-top:6vh;padding-bottom:8vh;padding-left:4vw;padding-right:4vw;overflow:visible}
 /* catálogo precisa de mais largura que as secções de texto: com 1000px a
    tabela de especificações não cabe e obriga a scroll horizontal */
@@ -609,3 +612,118 @@ footer small{opacity:.7}
 
 /* garante que esconder faixa filtrada vence a grelha da lista única */
 .music-flat .music-track.mfhide{display:none}
+
+/* ===== Vídeo do YouTube (miniatura + iframe só ao clicar) ===== */
+.hs-video{position:relative;z-index:3;width:100%;max-width:1000px;margin:0 auto}
+.hs-video-box{
+  position:relative;display:block;width:100%;aspect-ratio:16/9;
+  padding:0;border:1px solid rgba(255,255,255,.22);border-radius:18px;overflow:hidden;
+  background:#000;cursor:pointer;font-family:inherit;
+  box-shadow:0 18px 44px rgba(0,0,0,.4);
+}
+.hs-video-box:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+.hs-video-thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.hs-video-box:hover .hs-video-thumb{transform:scale(1.04)}
+.hs-video-scrim{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.85),rgba(0,0,0,.05));
+}
+.hs-video-cap{position:absolute;left:40px;bottom:34px;right:40px;text-align:left;z-index:2}
+.hs-video-kicker{
+  display:block;color:var(--orange);font-size:13px;font-weight:800;
+  letter-spacing:3px;text-transform:uppercase;
+}
+.hs-video-title{
+  display:block;color:#fff;margin-top:6px;
+  font-size:clamp(24px,3.4vw,46px);font-weight:800;line-height:1.05;
+  text-shadow:0 3px 16px rgba(0,0,0,.4);
+}
+.hs-play{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:82px;height:82px;border-radius:50%;border:2px solid #fff;
+  background:var(--orange);color:#fff;z-index:3;
+  display:flex;align-items:center;justify-content:center;padding-left:5px;
+  box-shadow:0 8px 30px rgba(0,0,0,.35);
+  transition:transform .25s ease,background .25s ease;
+}
+.hs-video-box:hover .hs-play{transform:translate(-50%,-50%) scale(1.12);background:#ff7a1a}
+.hs-video-frame{
+  display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:18px;
+  box-shadow:0 18px 44px rgba(0,0,0,.4);
+}
+@media(max-width:600px){
+  .hs-video-box,.hs-video-frame{border-radius:12px}
+  .hs-video-cap{left:20px;right:20px;bottom:18px}
+  .hs-video-kicker{font-size:11px;letter-spacing:2px}
+  .hs-play{width:62px;height:62px}
+  .hs-play svg{width:24px;height:24px}
+}
+
+/* vídeo dentro do detalhe de produto: ocupa a largura toda do painel */
+.flow-det-video{padding:0 24px 26px}
+.flow-det-video .flow-det-h{margin-top:0}
+.flow-det .hs-video{max-width:none}
+@media(max-width:600px){ .flow-det-video{padding:0 16px 20px} }
+
+/* tabela de especificações a toda a largura, depois do vídeo */
+.flow-det-specs{padding:0 24px 26px}
+.flow-det-specs .flow-det-h{margin-top:0}
+@media(max-width:600px){ .flow-det-specs{padding:0 16px 20px} }
+
+/* ===== Gama de vento (barras por tamanho, nós ou km/h) ===== */
+.flow-wind{padding:0 24px 26px}
+.flow-wind-top{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.flow-wind-top .flow-det-h{margin-top:0;border-top:none;padding-top:0;flex:1}
+.flow-wind-units{display:flex;background:#f2f5f9;border-radius:100px;padding:3px;flex:none}
+.flow-unit{
+  border:none;background:none;font-family:inherit;font-size:12.5px;font-weight:800;
+  color:#6b7683;padding:6px 14px;border-radius:100px;cursor:pointer;
+}
+.flow-unit.on{background:#0b63c5;color:#fff}
+.flow-wind-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:26px;margin-top:14px}
+.flow-wind-glabel{font-size:12.5px;font-weight:800;color:#12161c;margin-bottom:10px}
+.flow-wind-chart{display:flex;flex-direction:column;gap:6px}
+.flow-wind-row{display:grid;grid-template-columns:44px minmax(0,1fr) 62px;align-items:center;gap:10px}
+.flow-wind-size{font-size:12.5px;font-weight:700;color:#39434f;text-align:right}
+.flow-wind-track{
+  position:relative;height:20px;border-radius:5px;background:#f2f5f9;
+  border-left:1px solid #dbe2ea;
+}
+.flow-wind-bar{
+  position:absolute;top:2px;bottom:2px;border-radius:4px;
+  /* extremos esbatidos: a gama não tem limites bruscos */
+  background:linear-gradient(90deg,rgba(30,150,225,.15),#1e96e1 22%,#1e96e1 78%,rgba(30,150,225,.15));
+}
+.flow-wind-val{font-size:11.5px;color:#6b7683;font-variant-numeric:tabular-nums}
+.flow-wind-axis{margin-top:2px}
+.flow-wind-axis .flow-wind-track{background:none;border-left:none;height:16px}
+.flow-wind-tick{position:absolute;top:0;bottom:0;border-left:1px solid #e3e8ee}
+.flow-wind-tick i{
+  position:absolute;top:2px;left:3px;font-style:normal;font-size:10.5px;color:#8b95a1;
+}
+.flow-wind-note{font-size:11.5px;line-height:1.5;color:#6b7683;margin-top:14px}
+@media(max-width:600px){
+  .flow-wind{padding:0 16px 20px}
+  .flow-wind-groups{grid-template-columns:1fr;gap:20px}
+  .flow-wind-row{grid-template-columns:36px minmax(0,1fr) 56px;gap:7px}
+}
+
+/* descrição longa do fabricante, no fim do detalhe */
+.flow-det-longa{padding:0 24px 26px}
+.flow-det-longa .flow-det-h{margin-top:0}
+/* duas colunas: ocupa a largura toda do painel sem criar linhas de 150
+   caracteres, que são desconfortáveis de ler */
+.flow-longa-txt{columns:2;column-gap:46px}
+.flow-longa-txt p{
+  font-size:14.5px;line-height:1.7;color:#39434f;margin-bottom:14px;
+  break-inside:avoid;                 /* não parte um parágrafo entre colunas */
+}
+.flow-longa-txt p:last-child{margin-bottom:0}
+.flow-longa-txt strong{color:#12161c;font-weight:700}
+@media(max-width:860px){ .flow-longa-txt{columns:1;max-width:70ch} }
+@media(max-width:600px){ .flow-det-longa{padding:0 16px 20px} }
+
+/* secções extra do fabricante, no fim do detalhe */
+.flow-det-extra{padding:0 24px 26px}
+.flow-det-extra .flow-det-h{margin-top:0}
+@media(max-width:600px){ .flow-det-extra{padding:0 16px 20px} }

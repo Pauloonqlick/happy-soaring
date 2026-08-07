@@ -1,18 +1,19 @@
 {
   "id": "produtos",
+  "nome": "Produtos Flow",
   "visible": true,
   "wind": false,
   "heightScreens": null,
-  "heroScrim": false,
-  "bgImage": "",
-  "bgImageMobile": "",
-  "bgImageVisible": true,
-  "bgDarken": null,
+  "heroScrim": true,
+  "bgImage": "images/course.jpg",
+  "bgImageMobile": "images/course-mobile.jpg",
+  "bgImageVisible": false,
+  "bgDarken": 45,
   "topTint": "",
   "overlay": {
     "visible": true,
-    "color": "#1877c9",
-    "color2": "#1877c9",
+    "color": "",
+    "color2": "",
     "intensity": 100
   },
   "scrollHint": {
@@ -160,7 +161,18 @@
               "ptv": "100–120 kg"
             }
           ],
-          "flowHref": "https://www.flowparagliders.com.au/product/future-2/"
+          "flowHref": "https://www.flowparagliders.com.au/product/future-2/",
+          "videoId": "",
+          "videoStartAt": 0,
+          "videoThumbnail": "",
+          "descricaoLonga": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "seccoes": []
         },
         {
           "visible": true,
@@ -268,7 +280,18 @@
               "ptv": "105–122 kg"
             }
           ],
-          "flowHref": "https://www.flowparagliders.com.au/freedom-2/"
+          "flowHref": "https://www.flowparagliders.com.au/freedom-2/",
+          "videoId": "",
+          "videoStartAt": 0,
+          "videoThumbnail": "",
+          "descricaoLonga": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "seccoes": []
         },
         {
           "visible": true,
@@ -376,7 +399,18 @@
               "ptv": "105–122 kg"
             }
           ],
-          "flowHref": "https://www.flowparagliders.com.au/f2-light/"
+          "flowHref": "https://www.flowparagliders.com.au/f2-light/",
+          "videoId": "",
+          "videoStartAt": 0,
+          "videoThumbnail": "",
+          "descricaoLonga": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "seccoes": []
         },
         {
           "visible": true,
@@ -475,7 +509,18 @@
               "ptv": "92–115 kg"
             }
           ],
-          "flowHref": "https://www.flowparagliders.com.au/fusion-light/"
+          "flowHref": "https://www.flowparagliders.com.au/fusion-light/",
+          "videoId": "",
+          "videoStartAt": 0,
+          "videoThumbnail": "",
+          "descricaoLonga": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "seccoes": []
         },
         {
           "visible": true,
@@ -562,7 +607,18 @@
               "ptv": "80–95 kg"
             }
           ],
-          "flowHref": "https://www.flowparagliders.com.au/mystic/"
+          "flowHref": "https://www.flowparagliders.com.au/mystic/",
+          "videoId": "",
+          "videoStartAt": 0,
+          "videoThumbnail": "",
+          "descricaoLonga": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "seccoes": []
         },
         {
           "visible": true,
@@ -670,7 +726,18 @@
               "ptv": "110–125 kg"
             }
           ],
-          "flowHref": "https://www.flowparagliders.com.au/xcracer-2/"
+          "flowHref": "https://www.flowparagliders.com.au/xcracer-2/",
+          "videoId": "",
+          "videoStartAt": 0,
+          "videoThumbnail": "",
+          "descricaoLonga": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "seccoes": []
         },
         {
           "visible": true,
@@ -818,7 +885,160 @@
               "ptv": "70–120 kg"
             }
           ],
-          "flowHref": "https://www.flowparagliders.com.au/product/mullet-2/"
+          "flowHref": "https://www.flowparagliders.com.au/product/mullet-2/",
+          "videoId": "3hD4TJKcNIQ",
+          "videoStartAt": 0,
+          "videoThumbnail": "",
+          "windRange": {
+            "note": {
+              "pt": "*A gama de vento é indicativa — baseada num piloto intermédio/avançado. Os extremos das barras são esbatidos de propósito: não há limites bruscos.",
+              "en": "*Wind range is indicative only — based on an intermediate/advanced pilot.",
+              "es": "*El rango de viento es orientativo — basado en un piloto intermedio/avanzado.",
+              "fr": "*La plage de vent est indicative — basée sur un pilote intermédiaire/avancé.",
+              "de": "*Der Windbereich ist nur ein Richtwert — basierend auf einem fortgeschrittenen Piloten."
+            },
+            "groups": [
+              {
+                "label": {
+                  "pt": "Piloto 75–95 kg",
+                  "en": "Pilot 75–95 kg",
+                  "es": "Piloto 75–95 kg",
+                  "fr": "Pilote 75–95 kg",
+                  "de": "Pilot 75–95 kg"
+                },
+                "rows": [
+                  {
+                    "tamanho": "13",
+                    "min": 21,
+                    "max": 31
+                  },
+                  {
+                    "tamanho": "15",
+                    "min": 18,
+                    "max": 29
+                  },
+                  {
+                    "tamanho": "17.5",
+                    "min": 16,
+                    "max": 27
+                  },
+                  {
+                    "tamanho": "20",
+                    "min": 14,
+                    "max": 25
+                  },
+                  {
+                    "tamanho": "23",
+                    "min": 12,
+                    "max": 23
+                  },
+                  {
+                    "tamanho": "26",
+                    "min": 9,
+                    "max": 20
+                  }
+                ]
+              },
+              {
+                "label": {
+                  "pt": "Piloto 55–75 kg",
+                  "en": "Pilot 55–75 kg",
+                  "es": "Piloto 55–75 kg",
+                  "fr": "Pilote 55–75 kg",
+                  "de": "Pilot 55–75 kg"
+                },
+                "rows": [
+                  {
+                    "tamanho": "13",
+                    "min": 19,
+                    "max": 29
+                  },
+                  {
+                    "tamanho": "15",
+                    "min": 17,
+                    "max": 28
+                  },
+                  {
+                    "tamanho": "17.5",
+                    "min": 16,
+                    "max": 26
+                  },
+                  {
+                    "tamanho": "20",
+                    "min": 14,
+                    "max": 24
+                  },
+                  {
+                    "tamanho": "23",
+                    "min": 12,
+                    "max": 22
+                  },
+                  {
+                    "tamanho": "26",
+                    "min": 9,
+                    "max": 19
+                  }
+                ]
+              }
+            ]
+          },
+          "descricaoLonga": {
+            "pt": "A **Mullet2** junta a pilotagem doce e a eficiência da Mullet original ao dive, à velocidade e à retenção de energia desenvolvidos na Mullet X, reunindo tudo numa só asa refinada.\n\nRepresenta o culminar da experiência ganha no desenvolvimento da nossa última geração de parakites, integrando tudo o que aprendemos num único desenho.\n\nNa base está o nosso comprovado **perfil reflex**, já usado nos outros parakites, mas ainda mais refinado para aumentar a eficiência sem perder a excelente resistência a fechos e a notável estabilidade em pitch. O resultado é uma asa de pilotagem muito suave, com dive impressionante, grande gama de velocidade e uma retenção de energia excecional.\n\nUma das qualidades que definem a Mullet2 é a sua **gama de vento utilizável muito larga.** A maior eficiência permite usar o mesmo tamanho de asa com vento mais fraco e ainda assim gerar sustentação para voar. Ao mesmo tempo, a asa mergulha muito melhor com as mãos em cima, o que lhe permite aguentar confortavelmente ventos mais fortes.\n\nEsta amplitude de desempenho faz com que esteja igualmente à vontade **em soaring de falésias com vento forte ou em voo dinâmico na montanha,** a seguir o contorno das cristas e dos picos.\n\nApesar do desempenho, a Mullet2 continua **acessível e previsível.** Tem um ponto de perda muito bem definido e um carácter calmo e bem comportado, que a torna fácil de gerir.\n\nIsso torna-a adequada a um leque alargado de pilotos, desde quem está a entrar no parakite até pilotos muito experientes que querem levar a asa ao limite com voo dinâmico e loops.\n\nA durabilidade foi também um objetivo central do projeto. A vela usa **tecido Skytex 38**, com **linhas Spectra e risers em Dyneema**, o que resulta numa asa robusta e duradoura, capaz de aguentar uso intenso durante várias épocas.\n\nA combinação de **eficiência, gama, durabilidade e versatilidade** é o que define a Mullet2. O seu desempenho abrange várias disciplinas e condições, sendo igualmente capaz com vento fraco, vento forte, soaring costeiro ou voo de montanha.\n\n**Por tudo isto, a Mullet2 é o nosso parakite mais completo e versátil.**",
+            "en": "The **Mullet2** blends the sweet handling and efficiency of the original Mullet with the extra dive, speed and energy retention developed in the Mullet X, bringing these characteristics together into one refined wing.\n\nIt represents the culmination of the experience gained while developing our latest generation of parakites, integrating everything we’ve learned into a single design.\n\nAt its core is our proven **reflex airfoil**, already used across our other parakites, but further refined to increase efficiency while maintaining excellent collapse resistance and outstanding pitch stability. The result is a wing with beautifully smooth handling, impressive dive, strong speed range and exceptional energy retention.\n\nOne of the defining qualities of the Mullet2 is its **very broad usable wind range.** Its improved efficiency allows riders to use the same size wing in lighter winds and still generate enough lift to soar. At the same time, the wing dives much more effectively with hands up, allowing it to comfortably handle stronger winds as well.\n\nThis wide performance envelope makes it equally at home **soaring coastal cliffs in strong wind or flying dynamic terrain in the mountains,** following the contours of ridges and peaks.\n\nDespite its performance, the Mullet2 remains **approachable and predictable.** The wing has a very well-defined stall point and a calm, well-behaved character that makes it easy to manage.\n\nThis makes it suitable for a wide range of pilots, from riders entering the parakite sport to highly experienced pilots looking to push the limits with dynamic flying and loops.\n\nDurability was also a key design goal. The canopy uses **Skytex 38 fabric**, paired with **Spectra lines and Dyneema risers**, creating a robust and long-lasting wing capable of withstanding heavy use over multiple seasons.\n\nThe combination of **efficiency, range, durability and versatility** is what defines the Mullet2. Its performance spans multiple disciplines and conditions, making it equally capable in light winds, strong winds, coastal soaring or mountain flying.\n\n**For these reasons, the Mullet2 stands as our ultimate and most versatile parakite.**",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "seccoes": [
+            {
+              "titulo": {
+                "pt": "Materiais",
+                "en": "Materials",
+                "es": "",
+                "fr": "",
+                "de": ""
+              },
+              "texto": {
+                "pt": "Materiais escolhidos a pensar numa vela resistente e duradoura.\n\n**Porcher Skytex 38 g** — extradorso e intradorso\n\n**Porcher Skytex 40 Hard** — diagonais e perfis",
+                "en": "Materials carefully selected for a tough and durable canopy.\n\n**Porcher Skytex 38 g** — top and bottom\n\n**Porcher Skytex 40 Hard** — diagonals and profiles",
+                "es": "",
+                "fr": "",
+                "de": ""
+              }
+            },
+            {
+              "titulo": {
+                "pt": "Perfil reflex",
+                "en": "Reflex profile",
+                "es": "",
+                "fr": "",
+                "de": ""
+              },
+              "texto": {
+                "pt": "**Perfil reflex — desempenho refinado e estabilidade sem igual**\n\nA Mullet2 usa o nosso perfil reflex mais recente e eficiente, uma das características centrais por trás da sua solidez, eficiência e segurança.\n\nPartindo do perfil original, este desenho foi refinado para dar melhor eficiência aerodinâmica e melhor planeio, sem comprometer aquilo que define a série Mullet. A estabilidade em pitch mantém-se sólida como uma rocha, e a asa conserva a forte resistência a fechos — uma marca da gama de parakites da Flow.\n\nO resultado é um perfil que permite explorar velocidades mais altas e dives mais profundos com confiança, mantendo uma sensação estável e controlada. Mesmo em ar turbulento e com rajadas, a asa demonstra um nível excecional de integridade estrutural, que reforça a confiança de quem a pilota.\n\nÉ este equilíbrio entre eficiência, desempenho e segurança que faz o perfil da Mullet2 brilhar — empurra o desempenho para a frente sem tirar ao piloto a confiança de que depende.",
+                "en": "**Reflex Profile — Refined Performance & Unmatched Stability**\n\nThe Mullet2 features our latest, efficient reflex profile, representing one of the key performance features behind its exceptional solidity, efficiency and safety.\n\nBuilding on the foundation of the original profile, this updated design has been refined to deliver better aerodynamic efficiency and improved glide, without compromising the core characteristics that define the Mullet series. Pitch stability remains rock-solid, and the wing retains its strong resistance to collapse — a key feature of the Flow parakite range.\n\nThe result is a profile that allows pilots to confidently explore higher speeds and deeper dives, while maintaining a reassuringly stable and controlled feel. Even in gusty, turbulent air the wing demonstrates an exceptional level of structural integrity, reinforcing the trust pilots place in it.\n\nThis balance of efficiency, performance and inherent safety is what makes the Mullet2 profile truly shine — pushing performance forward while preserving the confidence pilots rely on.",
+                "es": "",
+                "fr": "",
+                "de": ""
+              }
+            },
+            {
+              "titulo": {
+                "pt": "Risers e direção nas pontas",
+                "en": "Risers and tip steering",
+                "es": "",
+                "fr": "",
+                "de": ""
+              },
+              "texto": {
+                "pt": "**Sistema de risers avançado**\n\nBoa parte da magia da Mullet 2 está no sistema de risers redesenhado.\n\nNesta geração introduzimos uma nova geometria de roldanas que aumenta o curso, permitindo à asa gerar mais dive e mais velocidade com a mesma amplitude de movimento das mãos — de forma excecionalmente suave e previsível.\n\nO resultado é uma asa que acelera de modo progressivo e intuitivo, dando total confiança a quem procura desempenho.\n\nA pressão dos travões foi cuidadosamente equilibrada — nem demasiado leve, nem demasiado pesada — com a quantidade certa de retorno para afinar as trajetórias e desenhar as curvas com precisão.\n\nPela primeira vez na nossa gama de parakites, a Mullet 2 tem também **direção 2D nas pontas**. Comum em asas de paramotor de alto desempenho com perfil reflex, este sistema permite curvas mais fechadas e dinâmicas, incluindo manobras de pivot, sem perder estabilidade.\n\nO resultado é uma asa mais ágil, mais reativa, que abre uma dimensão de controlo completamente nova — mais uma camada na já imersiva experiência de voo em 3D.",
+                "en": "**Advanced Riser System**\n\nA big part of the Mullet 2’s magic lies in its redesigned riser system.\n\nFor this generation, we introduced a new pulley geometry that increases travel, allowing the wing to generate more dive and higher speed with the same amplitude of hand movement, delivered in an exceptionally smooth and predictable way.\n\nThe result is a glider that accelerates progressively and intuitively, giving pilots full confidence when pushing performance.\n\nBrake pressure has been carefully balanced — not too light, not too heavy — providing the perfect amount of feedback so pilots can precisely refine their lines and carve turns with accuracy.\n\nFor the first time in our parakite range, the Mullet 2 also features **2D tip steering**. Commonly found on high-performance paramotor wings with reflex profiles, this system allows for sharper, more dynamic turns, including pivot-style manoeuvres, while maintaining stability.\n\nThe result is a wing that feels more agile, more responsive, and opens up an entirely new dimension of control — adding another layer to the already immersive 3D flying experience.",
+                "es": "",
+                "fr": "",
+                "de": ""
+              }
+            }
+          ]
         },
         {
           "visible": true,
@@ -935,7 +1155,18 @@
               "ptv": "70–120 kg"
             }
           ],
-          "flowHref": "https://www.flowparagliders.com.au/mulletx/"
+          "flowHref": "https://www.flowparagliders.com.au/mulletx/",
+          "videoId": "",
+          "videoStartAt": 0,
+          "videoThumbnail": "",
+          "descricaoLonga": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "seccoes": []
         },
         {
           "visible": true,
@@ -1047,7 +1278,18 @@
               "ptv": "65–120 kg"
             }
           ],
-          "flowHref": "https://www.flowparagliders.com.au/albatroxx/"
+          "flowHref": "https://www.flowparagliders.com.au/albatroxx/",
+          "videoId": "",
+          "videoStartAt": 0,
+          "videoThumbnail": "",
+          "descricaoLonga": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "seccoes": []
         },
         {
           "visible": true,
@@ -1159,7 +1401,18 @@
               "pesoAsa": "2.8 kg"
             }
           ],
-          "flowHref": "https://www.flowparagliders.com.au/mohawk/"
+          "flowHref": "https://www.flowparagliders.com.au/mohawk/",
+          "videoId": "",
+          "videoStartAt": 0,
+          "videoThumbnail": "",
+          "descricaoLonga": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "seccoes": []
         },
         {
           "visible": true,
@@ -1267,7 +1520,18 @@
               "ptv": "55–160 kg"
             }
           ],
-          "flowHref": "https://www.flowparagliders.com.au/yoti-3/"
+          "flowHref": "https://www.flowparagliders.com.au/yoti-3/",
+          "videoId": "",
+          "videoStartAt": 0,
+          "videoThumbnail": "",
+          "descricaoLonga": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "seccoes": []
         },
         {
           "visible": true,
@@ -1375,7 +1639,18 @@
               "ptv": "95–160 kg / 90–140 kg"
             }
           ],
-          "flowHref": "https://www.flowparagliders.com.au/product/rpm-3/"
+          "flowHref": "https://www.flowparagliders.com.au/product/rpm-3/",
+          "videoId": "",
+          "videoStartAt": 0,
+          "videoThumbnail": "",
+          "descricaoLonga": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "seccoes": []
         },
         {
           "visible": true,
@@ -1483,7 +1758,18 @@
               "ptv": "100–130 kg / 100–160 kg"
             }
           ],
-          "flowHref": "https://www.flowparagliders.com.au/cosmos-power-2/"
+          "flowHref": "https://www.flowparagliders.com.au/cosmos-power-2/",
+          "videoId": "",
+          "videoStartAt": 0,
+          "videoThumbnail": "",
+          "descricaoLonga": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "seccoes": []
         },
         {
           "visible": true,
@@ -1591,7 +1877,18 @@
               "ptv": "107–128 kg"
             }
           ],
-          "flowHref": "https://www.flowparagliders.com.au/fusion/"
+          "flowHref": "https://www.flowparagliders.com.au/fusion/",
+          "videoId": "",
+          "videoStartAt": 0,
+          "videoThumbnail": "",
+          "descricaoLonga": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "seccoes": []
         },
         {
           "visible": true,
@@ -1699,7 +1996,18 @@
               "ptv": "55–160 kg"
             }
           ],
-          "flowHref": "https://www.flowparagliders.com.au/yoti-3-light/"
+          "flowHref": "https://www.flowparagliders.com.au/yoti-3-light/",
+          "videoId": "",
+          "videoStartAt": 0,
+          "videoThumbnail": "",
+          "descricaoLonga": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "seccoes": []
         },
         {
           "visible": true,
@@ -1804,7 +2112,18 @@
               "ptv": "120–220 kg"
             }
           ],
-          "flowHref": "https://www.flowparagliders.com.au/panorama/"
+          "flowHref": "https://www.flowparagliders.com.au/panorama/",
+          "videoId": "",
+          "videoStartAt": 0,
+          "videoThumbnail": "",
+          "descricaoLonga": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "seccoes": []
         },
         {
           "visible": true,
@@ -1918,7 +2237,18 @@
               "ptv": "110–155 kg"
             }
           ],
-          "flowHref": "https://www.flowparagliders.com.au/future-power/"
+          "flowHref": "https://www.flowparagliders.com.au/future-power/",
+          "videoId": "",
+          "videoStartAt": 0,
+          "videoThumbnail": "",
+          "descricaoLonga": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "seccoes": []
         },
         {
           "visible": true,
@@ -2014,7 +2344,18 @@
               "assento": "40x40 cm"
             }
           ],
-          "flowHref": "https://www.flowparagliders.com.au/vissta/"
+          "flowHref": "https://www.flowparagliders.com.au/vissta/",
+          "videoId": "",
+          "videoStartAt": 0,
+          "videoThumbnail": "",
+          "descricaoLonga": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "seccoes": []
         },
         {
           "visible": true,
@@ -2110,7 +2451,18 @@
               "assento": "32x40 cm"
             }
           ],
-          "flowHref": "https://www.flowparagliders.com.au/vissta-xc/"
+          "flowHref": "https://www.flowparagliders.com.au/vissta-xc/",
+          "videoId": "",
+          "videoStartAt": 0,
+          "videoThumbnail": "",
+          "descricaoLonga": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "seccoes": []
         },
         {
           "visible": true,
@@ -2222,7 +2574,18 @@
               "homologacao": "EP_205.2017"
             }
           ],
-          "flowHref": "https://www.flowparagliders.com.au/aura-2/"
+          "flowHref": "https://www.flowparagliders.com.au/aura-2/",
+          "videoId": "",
+          "videoStartAt": 0,
+          "videoThumbnail": "",
+          "descricaoLonga": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "seccoes": []
         },
         {
           "visible": true,
@@ -2299,7 +2662,18 @@
               "pesoAsa": "185 g"
             }
           ],
-          "flowHref": "https://www.flowparagliders.com.au/d-chute/"
+          "flowHref": "https://www.flowparagliders.com.au/d-chute/",
+          "videoId": "",
+          "videoStartAt": 0,
+          "videoThumbnail": "",
+          "descricaoLonga": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "seccoes": []
         },
         {
           "visible": true,
@@ -2426,7 +2800,18 @@
               "pesoAsa": "0.8 kg"
             }
           ],
-          "flowHref": "https://www.flowparagliders.com.au/product/flow-d-wing-v2/"
+          "flowHref": "https://www.flowparagliders.com.au/product/flow-d-wing-v2/",
+          "videoId": "",
+          "videoStartAt": 0,
+          "videoThumbnail": "",
+          "descricaoLonga": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          },
+          "seccoes": []
         }
       ]
     }
