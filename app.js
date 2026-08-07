@@ -149,7 +149,9 @@ const UI = {
   flowVento: { pt:'Gama de vento', en:'Wind range', es:'Rango de viento', fr:'Plage de vent', de:'Windbereich' },
   unidadeKn: { pt:'nós', en:'knots', es:'nudos', fr:'nœuds', de:'Knoten' },
   unidadeKmh:{ pt:'km/h', en:'km/h', es:'km/h', fr:'km/h', de:'km/h' },
-  flowDescricao:{ pt:'Descrição', en:'Description', es:'Descripción', fr:'Description', de:'Beschreibung' }
+  flowDescricao:{ pt:'Descrição', en:'Description', es:'Descripción', fr:'Description', de:'Beschreibung' },
+  flowAbrirTudo:{ pt:'Abrir tudo', en:'Expand all', es:'Abrir todo', fr:'Tout ouvrir', de:'Alle öffnen' },
+  flowFecharTudo:{ pt:'Fechar tudo', en:'Collapse all', es:'Cerrar todo', fr:'Tout fermer', de:'Alle schließen' }
 };
 function ui(k, vars) {
   const e = UI[k];
@@ -810,9 +812,30 @@ const FOTO_CORES = {
   azul: '#1f6fc0', laranja: '#ff7a1a', vermelho: '#e03131', lima: '#a3e635', roxo: '#7c3aed',
   teal: '#17a2a2', preto: '#22262b', branco: '#e8eef5', amarelo: '#facc15', rosa: '#ec4899',
   lilac: '#7c3aed', lime: '#a3e635', yellow: '#facc15', maui: '#17a2a2', sunrise: '#ff7a1a',
-  blue: '#1f6fc0', red: '#e03131', white: '#e8eef5', pink: '#ec4899', orange: '#ff7a1a'
+  blue: '#1f6fc0', red: '#e03131', white: '#e8eef5', pink: '#ec4899', orange: '#ff7a1a',
+  black: '#22262b', green: '#22c55e', purple: '#7c3aed', grey: '#c9d1d9', gray: '#c9d1d9',
+  ice: '#dbeafe', sand: '#e8d5a8', navy: '#0a3d7a', turquoise: '#17a2a2',
+  fire: '#ef6820', ocean: '#0a63b8'
 };
+/* Alguns fabricantes dão nome próprio às combinações (a Freedom 2 vende-se em
+   Disco, Jazz e Sky). A bola mostra só a cor base — a cor de fundo da vela —
+   e não todas as cores do esquema, que ficam à vista na própria foto. */
+const COR_BASE = { disco: 'lime', jazz: 'red', sky: 'blue' };
 const corHex = c => FOTO_CORES[String(c).toLowerCase()] || '#9bb4cf';
+/* Uma cor pode ser composta ("black-blue-white"): nesse caso a amostra é um
+   gradiente com as cores reais, em vez de um cinzento sem significado. */
+function corAmostra(c) {
+  const chave = String(c).toLowerCase();
+  if (FOTO_CORES[chave]) return FOTO_CORES[chave];
+  if (COR_BASE[chave]) return FOTO_CORES[COR_BASE[chave]];
+  /* nomes compostos ("black-blue-pink"): a primeira é a cor base */
+  const partes = chave.split('-').filter(x => FOTO_CORES[x]);
+  return partes.length ? FOTO_CORES[partes[0]] : corHex(chave);
+}
+function pintaAmostra(botao, cor) {
+  botao.style.backgroundImage = 'none';
+  botao.style.background = corAmostra(cor);
+}
 const slugProd = n => String(n).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
   .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const chaveFoto = n => String(n).toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -914,7 +937,21 @@ function buildFlow(item) {
     shot.appendChild(img); c.appendChild(shot);
 
     const body = el('div', 'flow-body');
-    const nome = el('div', 'flow-name'); nome.textContent = p.nome; body.appendChild(nome);
+    /* O logótipo da Flow substitui o nome escrito, quando existe. O nome
+       continua a ser lido por leitores de ecrã através do alt. */
+    const nome = el('div', 'flow-name' + (p.logo ? ' com-logo' : ''));
+    if (p.logo) {
+      const lg = el('img', 'flow-name-logo');
+      lg.src = 'images/logos/' + p.logo + '.webp';
+      lg.alt = p.nome;
+      lg.loading = 'lazy';
+      /* se o ficheiro faltar, volta ao nome escrito em vez de deixar buraco */
+      lg.addEventListener('error', () => { nome.classList.remove('com-logo'); nome.textContent = p.nome; });
+      nome.appendChild(lg);
+    } else {
+      nome.textContent = p.nome;
+    }
+    body.appendChild(nome);
     if (p.classificacao) { const cl = el('div', 'flow-clas'); cl.textContent = p.classificacao; body.appendChild(cl); }
     const tag = t(p.tagline);
     if (tag) { const tl = el('div', 'flow-tagline'); tl.textContent = tag; body.appendChild(tl); }
@@ -925,7 +962,7 @@ function buildFlow(item) {
       const sws = el('div', 'flow-swatches');
       p.cores.forEach((cor, j) => {
         const b = el('button', 'flow-sw' + (j === 0 ? ' on' : '')); b.type = 'button';
-        b.style.background = corHex(cor); b.title = cor;
+        pintaAmostra(b, cor); b.title = cor;
         b.setAttribute('aria-label', cor);
         b.addEventListener('click', ev => {
           ev.stopPropagation();
@@ -974,7 +1011,20 @@ function buildFlow(item) {
     const d = el('div', 'flow-det'); d.id = 'flow-det';
     const top = el('div', 'flow-det-top');
     const tit = el('div');
-    const n = el('div', 'flow-det-name'); n.textContent = p.nome;
+    /* o painel de detalhe tem fundo branco, por isso usa a variante escura do
+       logótipo — a clara serve os cartões, que assentam no azul */
+    const n = el('div', 'flow-det-name');
+    if (p.logo) {
+      const lg = el('img', 'flow-det-logo');
+      /* o cabeçalho do painel é azul, por isso o logótipo vai na versão branca */
+      lg.src = 'images/logos/' + p.logo + '.webp';
+      lg.alt = p.nome;
+      lg.addEventListener('error', () => { n.classList.remove('com-logo'); n.textContent = p.nome; });
+      n.classList.add('com-logo');
+      n.appendChild(lg);
+    } else {
+      n.textContent = p.nome;
+    }
     const s = el('div', 'flow-det-sub'); s.textContent = p.familia + (p.classificacao ? ' · ' + p.classificacao : '');
     tit.appendChild(n); tit.appendChild(s);
     const x = el('button', 'flow-det-x'); x.type = 'button'; x.innerHTML = '&#10005;';
@@ -995,7 +1045,7 @@ function buildFlow(item) {
       const sws = el('div', 'flow-swatches');
       p.cores.forEach((cor, j) => {
         const b = el('button', 'flow-sw' + (j === 0 ? ' on' : '')); b.type = 'button';
-        b.style.background = corHex(cor); b.title = cor; b.setAttribute('aria-label', cor);
+        pintaAmostra(b, cor); b.title = cor; b.setAttribute('aria-label', cor);
         b.addEventListener('click', ev => {
           ev.stopPropagation();
           sws.querySelectorAll('.flow-sw').forEach(y => y.classList.remove('on'));
@@ -1092,21 +1142,138 @@ function buildFlow(item) {
       const corpo = el('div', 'flow-longa-txt');
       paragrafos(longa).forEach(n => corpo.appendChild(n));
       bloco.appendChild(corpo);
+      /* imagem que acompanha a apresentação, quando o fabricante tem uma */
+      if (Array.isArray(p.imagensLonga) && p.imagensLonga.length) {
+        const fig = el('div', 'flow-det-figs' + (p.imagensLonga.length > 1 ? ' duas' : ''));
+        p.imagensLonga.forEach(nome => {
+          if (!nome) return;
+          const im = el('img');
+          im.src = 'images/flow/' + nome + '.webp';
+          im.alt = p.nome;
+          im.loading = 'lazy';
+          im.addEventListener('error', () => im.remove());
+          fig.appendChild(im);
+        });
+        if (fig.childNodes.length) bloco.appendChild(fig);
+      }
       d.appendChild(bloco);
     }
 
-    /* secções extra do fabricante (materiais, perfil, risers…) */
+    /* ---- secções extra do fabricante (materiais, perfil, risers…) ----
+       Quando são muitas, ficam fechadas: os títulos passam a servir de índice
+       e evita-se um painel de sete ecrãs de altura. Ligado por produto. */
+    const acordeao = !!p.acordeao && (p.seccoes || []).length > 1;
+    const cabecas = [];
+    /* fechar uma secção acima do que se está a ver empurraria a página para
+       cima; ancoramos o topo do painel para o scroll não saltar */
+    const semSalto = fn => {
+      const antes = d.getBoundingClientRect().top;
+      fn();
+      const depois = d.getBoundingClientRect().top;
+      if (depois !== antes) window.scrollBy(0, depois - antes);
+    };
+    if (acordeao) {
+      const barra = el('div', 'flow-acord-barra');
+      const btn = el('button', 'flow-acord-todos'); btn.type = 'button';
+      const sinc = () => {
+        const abertas = cabecas.filter(c => c.getAttribute('aria-expanded') === 'true').length;
+        btn.textContent = abertas === cabecas.length ? ui('flowFecharTudo') : ui('flowAbrirTudo');
+      };
+      btn.addEventListener('click', ev => {
+        ev.stopPropagation();
+        const abrir = cabecas.some(c => c.getAttribute('aria-expanded') !== 'true');
+        semSalto(() => cabecas.forEach(c => c.__define(abrir)));
+        sinc();
+      });
+      barra.appendChild(btn);
+      d.appendChild(barra);
+      d.__sincAcord = sinc;
+    }
+
     (p.seccoes || []).forEach(sx => {
       const corpo = t(sx.texto);
-      if (!corpo) return;
-      const bloco = el('div', 'flow-det-extra');
+      const temImg = Array.isArray(sx.imagens) && sx.imagens.filter(Boolean).length;
+      const temFich = Array.isArray(sx.ficheiros) && sx.ficheiros.filter(x => x && x.url).length;
+      /* há secções da Flow que são só diagramas ou só ficheiros, sem texto nenhum */
+      if (!corpo && !temImg && !temFich) return;
+      const bloco = el('div', 'flow-det-extra' + (acordeao ? ' acord' : ''));
       const ht = t(sx.titulo);
-      if (ht) { const h = el('div', 'flow-det-h'); h.textContent = ht; bloco.appendChild(h); }
-      const txt = el('div', 'flow-longa-txt');
-      paragrafos(corpo).forEach(n => txt.appendChild(n));
-      bloco.appendChild(txt);
+      /* fora do acordeão o título é só texto; dentro, é o botão que abre */
+      let caixa = bloco;
+      if (acordeao) {
+        const cab = el('button', 'flow-sec-cab'); cab.type = 'button';
+        const h = el('div', 'flow-det-h'); h.textContent = ht || p.nome;
+        const seta = el('span', 'flow-sec-seta'); seta.setAttribute('aria-hidden', 'true');
+        cab.appendChild(h); cab.appendChild(seta);
+        const env = el('div', 'flow-sec-env');
+        env.hidden = true;
+        cab.setAttribute('aria-expanded', 'false');
+        cab.__define = abrir => {
+          cab.setAttribute('aria-expanded', abrir ? 'true' : 'false');
+          env.hidden = !abrir;
+          bloco.classList.toggle('aberta', abrir);   /* o CSS levanta o cartão */
+        };
+        cab.addEventListener('click', ev => {
+          ev.stopPropagation();
+          const abrir = cab.getAttribute('aria-expanded') !== 'true';
+          semSalto(() => cab.__define(abrir));
+          if (d.__sincAcord) d.__sincAcord();
+        });
+        bloco.appendChild(cab); bloco.appendChild(env);
+        cabecas.push(cab);
+        caixa = env;
+      } else if (ht) {
+        const h = el('div', 'flow-det-h'); h.textContent = ht; bloco.appendChild(h);
+      }
+
+      /* Corpo em duas faixas: texto de um lado, diagramas do outro. Quando só
+         há uma das duas coisas, ela ocupa a largura toda. */
+      const temTxt = !!corpo;
+      const nImg = Array.isArray(sx.imagens) ? sx.imagens.filter(Boolean).length : 0;
+      const body = el('div', 'flow-sec-body' + (temTxt && nImg ? ' lado-a-lado' : '') +
+        (temTxt && !nImg ? ' so-texto' : ''));
+
+      if (temTxt) {
+        const txt = el('div', 'flow-longa-txt');
+        paragrafos(corpo).forEach(n => txt.appendChild(n));
+        body.appendChild(txt);
+      }
+      /* diagramas técnicos que acompanham a secção (images/flow/<nome>.webp) */
+      if (nImg) {
+        const fig = el('div', 'flow-det-figs' + (nImg > 1 && !temTxt ? ' varias' : ''));
+        sx.imagens.forEach(nome => {
+          if (!nome) return;
+          const im = el('img');
+          im.src = 'images/flow/' + nome + '.webp';
+          im.alt = (t(sx.titulo) || p.nome) + ' — ' + p.nome;
+          im.loading = 'lazy';
+          im.addEventListener('error', () => im.remove());
+          fig.appendChild(im);
+        });
+        if (fig.childNodes.length) body.appendChild(fig);
+      }
+      if (body.childNodes.length) caixa.appendChild(body);
+      /* manuais, planos de linhas e folhas de trim — apontam para a Flow,
+         para estarem sempre na versão mais recente */
+      if (Array.isArray(sx.ficheiros) && sx.ficheiros.length) {
+        const lista = el('div', 'flow-det-files');
+        sx.ficheiros.forEach(fx => {
+          if (!fx || !fx.url) return;
+          const a = el('a', 'flow-file');
+          a.href = fx.url;
+          /* o nome pode vir traduzido (objeto pt/en/…) ou como texto simples */
+          a.textContent = (fx.nome && typeof fx.nome === 'object' ? t(fx.nome) : fx.nome) || fx.url;
+          a.target = '_blank';
+          a.rel = 'noopener';
+          lista.appendChild(a);
+        });
+        if (lista.childNodes.length) caixa.appendChild(lista);
+      }
       d.appendChild(bloco);
     });
+
+    /* acerta o rótulo do botão com o estado inicial (tudo fechado) */
+    if (d.__sincAcord) d.__sincAcord();
 
     d.addEventListener('click', ev => ev.stopPropagation());
     return d;
@@ -1114,15 +1281,29 @@ function buildFlow(item) {
   /* Texto em vários parágrafos, com **negrito**. Construído com nós de texto
      e não com innerHTML: o conteúdo vem do CMS e não deve poder injetar HTML. */
   function paragrafos(txt) {
-    return String(txt).split(/\n\s*\n/).filter(s => s.trim()).map(bloco => {
-      const p = el('p');
+    /* preenche um elemento com o texto do bloco, tratando **negrito** */
+    const enche = (no, bloco) => {
       bloco.split(/\*\*/).forEach((parte, i) => {
         if (!parte) return;
-        if (i % 2) { const b = el('strong'); b.textContent = parte; p.appendChild(b); }
-        else p.appendChild(document.createTextNode(parte));
+        if (i % 2) { const b = el('strong'); b.textContent = parte; no.appendChild(b); }
+        else no.appendChild(document.createTextNode(parte));
       });
-      return p;
+      return no;
+    };
+    const saida = [];
+    let lista = null;
+    String(txt).split(/\n\s*\n/).filter(s => s.trim()).forEach(bloco => {
+      const b = bloco.trim();
+      /* linhas começadas por "- " são itens de lista e agrupam-se num <ul> */
+      if (b.startsWith('- ')) {
+        if (!lista) { lista = el('ul'); saida.push(lista); }
+        lista.appendChild(enche(el('li'), b.slice(2).trim()));
+        return;
+      }
+      lista = null;
+      saida.push(enche(el('p'), b));
     });
+    return saida;
   }
 
   /* ---- gráfico de gama de vento ----

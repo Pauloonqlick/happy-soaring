@@ -442,11 +442,19 @@ footer small{opacity:.7}
 .flow-card:hover{background:rgba(6,32,64,.42);box-shadow:0 18px 40px rgba(4,26,56,.4);transform:translateY(-3px)}
 .flow-card.aberta{border-color:rgba(255,255,255,.8);box-shadow:0 0 0 2px rgba(255,255,255,.5)}
 .flow-shot{background:rgba(255,255,255,.07);padding:16px 14px 12px}
-.flow-shot-img{height:140px;display:flex;align-items:center;justify-content:center}
-.flow-shot-img img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.flow-shot-img{height:128px;display:flex;align-items:center;justify-content:center}
+/* o limite de largura é o que trava as asas mais achatadas (Freedom 2, Fusion):
+   sem ele encostavam às margens e pareciam maiores que as outras */
+.flow-shot-img img{max-width:84%;max-height:100%;width:auto;height:auto;object-fit:contain}
 .flow-shot-img svg{max-width:100%;max-height:100%}
 .flow-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:9px;flex:1}
-.flow-name{font-size:17px;font-weight:800;color:#fff}
+.flow-name{font-size:17px;font-weight:800;color:#fff;min-height:26px;display:flex;align-items:center}
+/* logótipo da asa: altura fixa para todos os cartões ficarem alinhados,
+   largura livre porque os logos têm proporções muito diferentes.
+   Só o logótipo fica ao centro — o texto continua alinhado à esquerda,
+   como a classificação e a frase curta que vêm a seguir. */
+.flow-name.com-logo{justify-content:center}
+.flow-name-logo{height:26px;width:auto;max-width:100%;margin:0;display:block;object-fit:contain}
 .flow-clas{font-size:11px;letter-spacing:1.1px;text-transform:uppercase;font-weight:700;color:#ffd6ad}
 .flow-tagline{font-size:13px;color:rgba(255,255,255,.82);line-height:1.45}
 .flow-lbl{font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.7);font-weight:700;margin-bottom:6px}
@@ -467,19 +475,32 @@ footer small{opacity:.7}
 
 /* ---- detalhe expandido dentro da grelha ---- */
 .flow-det{
-  grid-column:1 / -1;display:block;background:#fff;border-radius:16px;overflow:hidden;
+  grid-column:1 / -1;display:block;background:#f6f9fd;border-radius:16px;overflow:hidden;
   color:#12161c;cursor:default;min-height:0;padding:0;align-items:initial;
   box-shadow:0 20px 50px rgba(4,26,56,.34);animation:flowAbre .22s ease;
 }
 @keyframes flowAbre{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
-.flow-det-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:20px 24px 0}
-.flow-det-name{font-size:25px;font-weight:900;line-height:1.1}
-.flow-det-sub{color:#0b63c5;font-weight:700;font-size:13.5px;margin-top:4px}
-.flow-det-x{
-  background:#f2f5f9;border:none;border-radius:50%;width:34px;height:34px;flex:none;
-  font-size:15px;color:#6b7683;cursor:pointer;line-height:1;
+
+/* ---- cabeçalho azul: o painel nasce do azul da secção em vez de aterrar
+        lá em cima como uma laje branca ---- */
+.flow-det-top{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+  background:linear-gradient(160deg,#0e3b6d,#0a2c53);
+  padding:22px 24px 20px;margin-bottom:4px;
 }
-.flow-det-x:hover{background:#e6ebf2;color:#12161c}
+.flow-det-name{color:#fff}
+.flow-det-sub{color:#8fc0f0}
+.flow-det-x{background:rgba(255,255,255,.16);color:#dce8f6}
+.flow-det-x:hover{background:rgba(255,255,255,.28);color:#fff}
+
+.flow-det-name{font-size:25px;font-weight:900;line-height:1.1}
+.flow-det-name.com-logo{display:flex;align-items:center;min-height:40px}
+.flow-det-logo{height:40px;width:auto;max-width:100%;display:block;object-fit:contain}
+.flow-det-sub{font-weight:700;font-size:13.5px;margin-top:4px}
+.flow-det-x{
+  border:none;border-radius:50%;width:34px;height:34px;flex:none;
+  font-size:15px;cursor:pointer;line-height:1;
+}
 .flow-det-cols{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:26px;padding:16px 24px 24px}
 .flow-det-foto{
   background:linear-gradient(160deg,#eef4fb,#dce7f4);border-radius:14px;padding:20px;
@@ -723,7 +744,138 @@ footer small{opacity:.7}
 @media(max-width:860px){ .flow-longa-txt{columns:1;max-width:70ch} }
 @media(max-width:600px){ .flow-det-longa{padding:0 16px 20px} }
 
-/* secções extra do fabricante, no fim do detalhe */
-.flow-det-extra{padding:0 24px 26px}
-.flow-det-extra .flow-det-h{margin-top:0}
-@media(max-width:600px){ .flow-det-extra{padding:0 16px 20px} }
+/* ---- secções do fabricante ----
+   São muitas (a Future 2 tem 14), por isso precisam de ritmo próprio: um filete
+   a separar, um título com peso a sério e o diagrama ao lado do texto em vez de
+   empilhado por baixo. */
+/* ---- acordeão ----
+   Com muitas secções, fechadas por omissão: os títulos são o índice.
+   A coluna de conteúdo é estreitada e centrada — a largura toda do painel dava
+   linhas de 120 caracteres e meia página vazia à direita. */
+.flow-acord-barra{
+  max-width:690px;margin:0 auto;padding:22px 24px 6px;
+  display:flex;justify-content:flex-end;border-top:1px solid #e4ebf4;
+}
+.flow-acord-todos{
+  background:#fff;border:1px solid #dde8f4;border-radius:8px;padding:8px 14px;
+  color:#0b63c5;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit;
+  transition:background .15s,border-color .15s;
+}
+.flow-acord-todos:hover{background:#eef5fd;border-color:#a9caea}
+
+.flow-det-extra.acord{
+  display:block;max-width:690px;margin:0 auto;padding:0 8px;border-top:none;
+  border-radius:14px;transition:background .18s,box-shadow .18s;
+}
+/* aberta ganha um cartão branco: distingue-se de relance das fechadas */
+.flow-det-extra.acord.aberta{
+  background:#fff;box-shadow:0 3px 16px rgba(10,44,83,.09);
+  padding:0 22px;margin:10px auto 14px;
+}
+.flow-det-extra.acord:last-child{padding-bottom:0}
+.flow-det-extra.acord.aberta:last-child{padding-bottom:6px}
+
+.flow-sec-cab{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;
+  background:none;border:none;border-top:1px solid #e4ebf4;
+  padding:18px 14px;cursor:pointer;text-align:left;font-family:inherit;
+  border-radius:12px;transition:background .15s;
+}
+.flow-det-extra.acord.aberta .flow-sec-cab{border-top:none;padding:18px 0 10px}
+.flow-det-extra.acord:first-of-type .flow-sec-cab{border-top:none}
+.flow-sec-cab:hover{background:rgba(11,99,197,.05)}
+.flow-det-extra.acord.aberta .flow-sec-cab:hover{background:none}
+/* azul-marinho em repouso; o azul vivo fica reservado ao estado aberto */
+.flow-sec-cab .flow-det-h{
+  margin:0;font-size:16.5px;font-weight:700;color:#12314f;
+  text-transform:none;letter-spacing:-.15px;padding:0;border:none;
+  transition:color .15s;
+}
+.flow-sec-cab .flow-det-h::before{display:none}
+.flow-sec-cab:hover .flow-det-h,
+.flow-sec-cab[aria-expanded="true"] .flow-det-h{color:#0b63c5}
+/* seta dentro de um círculo, para ser um alvo claro e não um traço solto */
+.flow-sec-seta{
+  flex:none;width:26px;height:26px;border-radius:50%;background:#eef3f9;
+  position:relative;transition:background .15s,transform .2s;
+}
+.flow-sec-seta::before{
+  content:"";position:absolute;left:9px;top:8px;width:7px;height:7px;
+  border-right:2px solid #5b6b7f;border-bottom:2px solid #5b6b7f;
+  transform:rotate(45deg);
+}
+.flow-sec-cab:hover .flow-sec-seta{background:#dceaf8}
+.flow-sec-cab[aria-expanded="true"] .flow-sec-seta{background:#dceaf8;transform:rotate(180deg)}
+.flow-sec-env{padding:0 0 22px}
+
+/* Título à esquerda, conteúdo à direita. Com 14 secções, é esta coluna fixa
+   que dá estrutura à página e deixa o olho correr a lista de temas. */
+.flow-det-extra:not(.acord){
+  display:grid;grid-template-columns:minmax(140px,190px) minmax(0,1fr);
+  gap:14px 36px;padding:30px 24px 0;border-top:1px solid #e9eef5;
+}
+.flow-det-extra:not(.acord):last-child{padding-bottom:32px}
+.flow-det-extra:not(.acord) .flow-det-h{
+  grid-column:1;align-self:start;                /* senão a barra estica pela secção toda */
+  margin:0;font-size:15.5px;font-weight:800;color:#12161c;
+  text-transform:none;letter-spacing:-.1px;line-height:1.35;
+  padding-left:12px;position:relative;
+}
+.flow-det-extra:not(.acord) .flow-det-h::before{
+  content:"";position:absolute;left:0;top:3px;bottom:3px;
+  width:3px;border-radius:2px;background:#0b63c5;
+}
+.flow-sec-body{grid-column:2;display:grid;gap:26px}
+/* texto e diagrama lado a lado quando existem os dois */
+.flow-sec-body.lado-a-lado{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}
+/* nunca em colunas CSS: partia as listas e atirava o fecho para cima delas */
+.flow-longa-txt{columns:auto;max-width:74ch}
+.flow-det-extra.acord .flow-longa-txt{max-width:none}
+.flow-det-extra.acord .flow-longa-txt p{font-size:15px;line-height:1.75;color:#3d4a5c;margin-bottom:15px}
+.flow-det-extra.acord .flow-longa-txt li{font-size:15px;line-height:1.7;color:#3d4a5c}
+.flow-det-extra.acord .flow-det-files{padding-top:2px}
+.flow-sec-body.lado-a-lado .flow-longa-txt{max-width:none}
+
+/* listas a sério, em vez de parágrafos soltos */
+.flow-longa-txt ul{margin:0 0 14px;padding:0;list-style:none;break-inside:avoid}
+.flow-longa-txt li{
+  position:relative;padding-left:19px;margin-bottom:9px;
+  font-size:14.5px;line-height:1.6;color:#39434f;break-inside:avoid;
+}
+.flow-longa-txt li:last-child{margin-bottom:0}
+.flow-longa-txt li::before{
+  content:"";position:absolute;left:1px;top:.6em;
+  width:6px;height:6px;border-radius:50%;background:#0b63c5;
+}
+.flow-longa-txt li strong{color:#12161c}
+
+/* diagramas da Flow */
+.flow-det-figs{display:grid;gap:14px;align-content:start}
+.flow-det-figs.varias{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.flow-det-figs img{
+  width:100%;height:auto;display:block;border-radius:12px;
+  max-height:460px;object-fit:contain;
+  background:#f5f8fc;border:1px solid #eaeff6;
+}
+/* ficheiros da Flow (manual, plano de linhas, folhas de trim) */
+.flow-det-files{display:flex;flex-wrap:wrap;gap:8px}
+.flow-file{
+  display:inline-block;padding:9px 15px;border-radius:9px;background:#f4f8fd;
+  border:1px solid #dde8f4;color:#0b63c5;font-size:13px;font-weight:700;text-decoration:none;
+  transition:background .15s,border-color .15s;
+}
+.flow-file:hover{background:#e6f0fb;border-color:#b9d3ee}
+.flow-file::before{content:"↓";margin-right:7px;opacity:.75}
+@media(max-width:900px){
+  .flow-det-extra:not(.acord){grid-template-columns:1fr;gap:14px}
+  .flow-det-extra:not(.acord) .flow-det-h{grid-column:1}
+  .flow-sec-body{grid-column:1}
+  .flow-sec-body.lado-a-lado{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .flow-det-extra{padding:22px 16px 0}
+  /* no telemóvel os ficheiros ficam um por linha: em grelha ficavam órfãos,
+     ora dois ora um, conforme o comprimento do nome */
+  .flow-det-files{flex-direction:column;align-items:stretch}
+  .flow-file{text-align:left}
+}
