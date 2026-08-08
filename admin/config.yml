@@ -620,6 +620,11 @@ collections:
                       - secondary
                     default: primary
                     hint: primary = laranja cheio · secondary = contorno
+                  - label: Visível
+                    name: visible
+                    widget: boolean
+                    default: true
+                    hint: Desliga para esconder o botão sem perder o texto
               - label: Mostrar no desktop
                 name: showDesktop
                 widget: boolean

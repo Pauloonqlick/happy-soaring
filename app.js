@@ -300,7 +300,9 @@ function buildText(item) {
     c.appendChild(tr);
   }
 
-  const buttons = (item.buttons || []).filter(b => b && t(b.label));
+  /* visible:false esconde o botão sem perder o texto nem as traduções — serve
+     para os que apontam a secções ainda por fazer */
+  const buttons = (item.buttons || []).filter(b => b && b.visible !== false && t(b.label));
   if (buttons.length) {
     const row = el('div', 'btn-row');
     buttons.forEach(b => {

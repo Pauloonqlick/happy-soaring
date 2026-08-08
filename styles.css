@@ -136,28 +136,32 @@ h2.title{
 }
 .btn.secondary:hover{border-color:#fff;background:rgba(255,255,255,.08)}
 
-/* selo de credencial (logo + texto) */
+/* selo de credencial (logo + texto).
+   Sem caixa: a moldura fechava-o num cartão pequeno ao lado do título e fazia-o
+   parecer um rodapé. Solto sobre a foto, com o logótipo grande, lê-se como
+   aquilo que é — a credencial da casa. A legibilidade que a caixa dava passa a
+   vir das sombras, já que o herói tem véu escuro por baixo. */
 .trust{
-  display:inline-flex;align-items:center;gap:16px;margin-top:20px;
-  background:rgba(9,40,82,.72);backdrop-filter:blur(6px);
-  border:1px solid rgba(255,255,255,.35);
-  border-radius:14px;padding:12px 20px;
-  font-size:13px;letter-spacing:.3px;
-  text-shadow:0 1px 6px rgba(0,0,0,.5);
+  display:inline-flex;align-items:center;gap:20px;margin-top:24px;
+  font-size:15px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;
+  text-shadow:0 2px 10px rgba(0,0,0,.75),0 1px 3px rgba(0,0,0,.6);
   text-decoration:none;color:#fff;
-  box-shadow:0 8px 24px rgba(0,0,0,.25);
-  transition:background .2s,border-color .2s,transform .2s;
+  transition:transform .2s,opacity .2s;
 }
 a.trust{cursor:pointer}
-a.trust:hover{background:rgba(9,40,82,.85);border-color:rgba(255,255,255,.55);transform:translateY(-2px)}
-.trust img{height:46px;width:auto;display:block}
-.trust img + span{border-left:1px solid rgba(255,255,255,.3);padding-left:16px}
-.trust span{color:#fff;line-height:1.35;max-width:22ch}
+a.trust:hover{transform:translateY(-2px);opacity:.88}
+.trust img{height:72px;width:auto;display:block;filter:drop-shadow(0 3px 10px rgba(0,0,0,.6))}
+.trust img + span{border-left:1px solid rgba(255,255,255,.45);padding-left:20px}
+/* 26ch chega para o mais comprido dos cinco (o espanhol, 218px): no desktop
+   todos ficam numa linha só */
+.trust span{color:#fff;line-height:1.35;max-width:26ch}
 
 @media(max-width:760px){
-  .trust{gap:12px;padding:10px 14px}
-  .trust img{height:38px}
-  .trust span{font-size:12px}
+  .trust{gap:13px;margin-top:20px;font-size:12.5px;letter-spacing:1.2px}
+  .trust img{height:50px}
+  .trust img + span{padding-left:13px}
+  /* no telemóvel não cabe numa linha: parte em duas, de propósito */
+  .trust span{max-width:15ch}
 }
 
 /* card ao passar o rato num piloto */
