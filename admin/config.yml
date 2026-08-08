@@ -1612,12 +1612,6 @@ collections:
                     name: nome
                     widget: string
                     hint: Tem de coincidir com o nome das fotos em images/asas
-                  - label: Secções fechadas (acordeão)
-                    name: acordeao
-                    widget: boolean
-                    default: false
-                    required: false
-                    hint: Com muitas secções, mostra só os títulos e abre a pedido.
                   - label: Logótipo
                     name: logo
                     widget: string

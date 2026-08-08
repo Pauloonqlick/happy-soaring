@@ -472,6 +472,13 @@ footer small{opacity:.7}
 .flow-btn:hover{background:rgba(255,255,255,.24);border-color:rgba(255,255,255,.7)}
 .flow-btn.primary{background:var(--orange);border-color:var(--orange);color:#fff}
 .flow-btn.primary:hover{background:#ff7c31}
+/* pedir preço abre o WhatsApp: leva o verde e o ícone da própria aplicação */
+.flow-btn.wa{
+  background:#25d366;border-color:#25d366;color:#0a2b16;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+}
+.flow-btn.wa:hover{background:#1fbb59;border-color:#1fbb59}
+.flow-btn.wa svg{flex:none}
 
 /* ---- detalhe expandido dentro da grelha ---- */
 .flow-det{
@@ -484,9 +491,9 @@ footer small{opacity:.7}
 /* ---- cabeçalho azul: o painel nasce do azul da secção em vez de aterrar
         lá em cima como uma laje branca ---- */
 .flow-det-top{
-  display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+  position:relative;text-align:center;
   background:linear-gradient(160deg,#0e3b6d,#0a2c53);
-  padding:22px 24px 20px;margin-bottom:4px;
+  padding:22px 60px 20px;margin-bottom:4px;
 }
 .flow-det-name{color:#fff}
 .flow-det-sub{color:#8fc0f0}
@@ -494,14 +501,21 @@ footer small{opacity:.7}
 .flow-det-x:hover{background:rgba(255,255,255,.28);color:#fff}
 
 .flow-det-name{font-size:25px;font-weight:900;line-height:1.1}
-.flow-det-name.com-logo{display:flex;align-items:center;min-height:40px}
+.flow-det-name.com-logo{display:flex;align-items:center;justify-content:center;min-height:40px}
 .flow-det-logo{height:40px;width:auto;max-width:100%;display:block;object-fit:contain}
+/* fora do fluxo: senao o logo ficava centrado no espaco que sobra, nao no painel */
+.flow-det-x{position:absolute;top:18px;right:20px}
 .flow-det-sub{font-weight:700;font-size:13.5px;margin-top:4px}
 .flow-det-x{
   border:none;border-radius:50%;width:34px;height:34px;flex:none;
   font-size:15px;cursor:pointer;line-height:1;
 }
-.flow-det-cols{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:26px;padding:16px 24px 24px}
+/* sem foto, o topo e' so' texto: ocupa a largura toda e reparte-se em duas
+   colunas, como o resto do painel */
+.flow-det-cols{padding:20px 24px 24px}
+.flow-det-intro{columns:2;column-gap:46px}
+.flow-det-intro > *{break-inside:avoid}
+.flow-det-intro > :first-child{margin-top:0}
 .flow-det-foto{
   background:linear-gradient(160deg,#eef4fb,#dce7f4);border-radius:14px;padding:20px;
   display:flex;align-items:center;justify-content:center;min-height:320px;
@@ -512,11 +526,11 @@ footer small{opacity:.7}
 .flow-det .flow-lbl{color:#6b7683}
 .flow-det .flow-sw{box-shadow:0 0 0 1px #cfd8e3}
 .flow-det .flow-sw.on{box-shadow:0 0 0 2px #0b63c5}
-.flow-det-desc{font-size:14.5px;line-height:1.65;color:#39434f}
-.flow-feat{display:flex;gap:12px;margin-top:16px}
+.flow-det-desc{font-size:15px;line-height:1.8;color:#3d4a5c;margin-bottom:16px}
+.flow-feat{display:flex;gap:12px;margin:0 0 16px}
 .flow-feat-ico{flex:none;color:#0b63c5;display:inline-flex}
-.flow-feat b{display:block;font-size:13.5px;margin-bottom:3px}
-.flow-feat p{font-size:13px;color:#6b7683;line-height:1.55}
+.flow-feat b{display:block;font-size:14px;color:#12314f;margin-bottom:5px}
+.flow-feat p{font-size:14px;color:#3d4a5c;line-height:1.7}
 .flow-det-h{
   font-size:11.5px;letter-spacing:1.4px;text-transform:uppercase;color:#6b7683;font-weight:800;
   margin:22px 0 10px;padding-top:16px;border-top:1px solid #e3e8ee;
@@ -532,20 +546,10 @@ footer small{opacity:.7}
   margin-top:14px;background:#fff6e8;border:1px solid #f0d4a8;border-radius:10px;
   padding:10px 12px;font-size:12.5px;line-height:1.5;color:#7a5320;
 }
-.flow-det-acoes{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
-.flow-big{
-  display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:12px;
-  padding:12px 18px;font-family:inherit;font-size:14px;font-weight:800;cursor:pointer;
-  text-decoration:none;border:1px solid #e3e8ee;background:#fff;color:#12161c;
-}
-.flow-big:hover{border-color:#b9c5d2}
-.flow-big.wa{background:#25D366;border-color:#25D366;color:#08351a}
-.flow-big.custom{background:var(--orange);border-color:var(--orange);color:#fff}
-.flow-big.custom:hover{background:#ff7c31;border-color:#ff7c31}
-.flow-nota{font-size:11.5px;color:#6b7683;margin-top:10px;line-height:1.5}
+
 
 @media(max-width:860px){
-  .flow-det-cols{grid-template-columns:1fr;gap:18px}
+  .flow-det-intro{columns:1}
   .flow-det-foto{min-height:190px}
 }
 @media(max-width:600px){
@@ -681,26 +685,24 @@ footer small{opacity:.7}
 }
 
 /* vídeo dentro do detalhe de produto: ocupa a largura toda do painel */
-.flow-det-video{padding:0 24px 26px}
-.flow-det-video .flow-det-h{margin-top:0}
+.flow-det-video{padding:0}
 .flow-det .hs-video{max-width:none}
-@media(max-width:600px){ .flow-det-video{padding:0 16px 20px} }
+
 
 /* tabela de especificações a toda a largura, depois do vídeo */
-.flow-det-specs{padding:0 24px 26px}
-.flow-det-specs .flow-det-h{margin-top:0}
-@media(max-width:600px){ .flow-det-specs{padding:0 16px 20px} }
+.flow-det-specs{padding:0}
+
 
 /* ===== Gama de vento (barras por tamanho, nós ou km/h) ===== */
-.flow-wind{padding:0 24px 26px}
+.flow-wind{padding:0}
 .flow-wind-top{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
-.flow-wind-top .flow-det-h{margin-top:0;border-top:none;padding-top:0;flex:1}
-.flow-wind-units{display:flex;background:#f2f5f9;border-radius:100px;padding:3px;flex:none}
+.flow-wind-top .flow-det-h{flex:1}
+.flow-wind-units{display:flex;background:rgba(255,255,255,.18);border-radius:100px;padding:3px;flex:none}
 .flow-unit{
-  border:none;background:none;font-family:inherit;font-size:12.5px;font-weight:800;
-  color:#6b7683;padding:6px 14px;border-radius:100px;cursor:pointer;
+  border:none;background:none;font-family:inherit;font-size:12px;font-weight:700;
+  color:rgba(255,255,255,.78);padding:5px 13px;border-radius:100px;cursor:pointer;
 }
-.flow-unit.on{background:#0b63c5;color:#fff}
+.flow-unit.on{background:#fff;color:#2b689f}
 .flow-wind-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:26px;margin-top:14px}
 .flow-wind-glabel{font-size:12.5px;font-weight:800;color:#12161c;margin-bottom:10px}
 .flow-wind-chart{display:flex;flex-direction:column;gap:6px}
@@ -730,11 +732,11 @@ footer small{opacity:.7}
 }
 
 /* descrição longa do fabricante, no fim do detalhe */
-.flow-det-longa{padding:0 24px 26px}
-.flow-det-longa .flow-det-h{margin-top:0}
+.flow-det-longa{padding:0}
 /* duas colunas: ocupa a largura toda do painel sem criar linhas de 150
    caracteres, que são desconfortáveis de ler */
 .flow-longa-txt{columns:2;column-gap:46px}
+.flow-det-longa .flow-longa-txt{max-width:none;columns:2;column-gap:46px}
 .flow-longa-txt p{
   font-size:14.5px;line-height:1.7;color:#39434f;margin-bottom:14px;
   break-inside:avoid;                 /* não parte um parágrafo entre colunas */
@@ -742,102 +744,73 @@ footer small{opacity:.7}
 .flow-longa-txt p:last-child{margin-bottom:0}
 .flow-longa-txt strong{color:#12161c;font-weight:700}
 @media(max-width:860px){ .flow-longa-txt{columns:1;max-width:70ch} }
-@media(max-width:600px){ .flow-det-longa{padding:0 16px 20px} }
+
 
 /* ---- secções do fabricante ----
    São muitas (a Future 2 tem 14), por isso precisam de ritmo próprio: um filete
    a separar, um título com peso a sério e o diagrama ao lado do texto em vez de
    empilhado por baixo. */
-/* ---- acordeão ----
-   Com muitas secções, fechadas por omissão: os títulos são o índice.
-   A coluna de conteúdo é estreitada e centrada — a largura toda do painel dava
-   linhas de 120 caracteres e meia página vazia à direita. */
-.flow-acord-barra{
-  max-width:690px;margin:0 auto;padding:22px 24px 6px;
-  display:flex;justify-content:flex-end;border-top:1px solid #e4ebf4;
+/* ---- secções do fabricante ----
+   Sempre abertas. A faixa azul atravessa o painel de lado a lado e é ela que
+   marca os capítulos — fina o suficiente para não riscar a página. */
+.flow-det-extra{padding:0;border-top:none}
+.flow-det-extra:last-child{padding-bottom:26px}
+.flow-sec-faixa{
+  background:linear-gradient(160deg,#3378b4,#2b689f);
+  padding:9px 24px;margin-top:22px;
 }
-.flow-acord-todos{
-  background:#fff;border:1px solid #dde8f4;border-radius:8px;padding:8px 14px;
-  color:#0b63c5;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit;
-  transition:background .15s,border-color .15s;
+.flow-sec-faixa .flow-det-h{
+  margin:0;font-size:13px;font-weight:500;color:#fff;
+  text-transform:uppercase;letter-spacing:1.2px;line-height:1.4;
+  padding:0;border:none;
 }
-.flow-acord-todos:hover{background:#eef5fd;border-color:#a9caea}
+.flow-sec-faixa .flow-det-h::before{display:none}
+/* corpo dos blocos com faixa: as margens vivem aqui, para a faixa poder
+   atravessar o painel de lado a lado */
+.flow-sec-env,
+.flow-bloco-corpo{padding:20px 24px 6px}
+/* cores: todas a vista de uma vez, com o nome que a Flow lhes da */
+.flow-cores-grelha{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.flow-cor{margin:0}
+.flow-cor img{
+  width:100%;height:170px;object-fit:contain;display:block;
+  background:linear-gradient(160deg,#eef4fb,#dce7f4);border-radius:12px;padding:10px;
+}
+.flow-cor-nome{
+  display:flex;align-items:center;gap:8px;margin-top:9px;
+  font-size:12.5px;font-weight:700;color:#39434f;text-transform:capitalize;
+}
+.flow-cor-bola{width:14px;height:14px;border-radius:50%;flex:none;box-shadow:0 0 0 1px #cfd8e3}
 
-.flow-det-extra.acord{
-  display:block;max-width:690px;margin:0 auto;padding:0 8px;border-top:none;
-  border-radius:14px;transition:background .18s,box-shadow .18s;
+@media(max-width:600px){
+  .flow-sec-env,
+  .flow-bloco-corpo{padding:16px 16px 4px}
+  .flow-sec-faixa{padding:9px 16px}
 }
-/* aberta ganha um cartão branco: distingue-se de relance das fechadas */
-.flow-det-extra.acord.aberta{
-  background:#fff;box-shadow:0 3px 16px rgba(10,44,83,.09);
-  padding:0 22px;margin:10px auto 14px;
-}
-.flow-det-extra.acord:last-child{padding-bottom:0}
-.flow-det-extra.acord.aberta:last-child{padding-bottom:6px}
 
-.flow-sec-cab{
-  width:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;
-  background:none;border:none;border-top:1px solid #e4ebf4;
-  padding:18px 14px;cursor:pointer;text-align:left;font-family:inherit;
-  border-radius:12px;transition:background .15s;
-}
-.flow-det-extra.acord.aberta .flow-sec-cab{border-top:none;padding:18px 0 10px}
-.flow-det-extra.acord:first-of-type .flow-sec-cab{border-top:none}
-.flow-sec-cab:hover{background:rgba(11,99,197,.05)}
-.flow-det-extra.acord.aberta .flow-sec-cab:hover{background:none}
-/* azul-marinho em repouso; o azul vivo fica reservado ao estado aberto */
-.flow-sec-cab .flow-det-h{
-  margin:0;font-size:16.5px;font-weight:700;color:#12314f;
-  text-transform:none;letter-spacing:-.15px;padding:0;border:none;
-  transition:color .15s;
-}
-.flow-sec-cab .flow-det-h::before{display:none}
-.flow-sec-cab:hover .flow-det-h,
-.flow-sec-cab[aria-expanded="true"] .flow-det-h{color:#0b63c5}
-/* seta dentro de um círculo, para ser um alvo claro e não um traço solto */
-.flow-sec-seta{
-  flex:none;width:26px;height:26px;border-radius:50%;background:#eef3f9;
-  position:relative;transition:background .15s,transform .2s;
-}
-.flow-sec-seta::before{
-  content:"";position:absolute;left:9px;top:8px;width:7px;height:7px;
-  border-right:2px solid #5b6b7f;border-bottom:2px solid #5b6b7f;
-  transform:rotate(45deg);
-}
-.flow-sec-cab:hover .flow-sec-seta{background:#dceaf8}
-.flow-sec-cab[aria-expanded="true"] .flow-sec-seta{background:#dceaf8;transform:rotate(180deg)}
-.flow-sec-env{padding:0 0 22px}
-
-/* Título à esquerda, conteúdo à direita. Com 14 secções, é esta coluna fixa
-   que dá estrutura à página e deixa o olho correr a lista de temas. */
-.flow-det-extra:not(.acord){
-  display:grid;grid-template-columns:minmax(140px,190px) minmax(0,1fr);
-  gap:14px 36px;padding:30px 24px 0;border-top:1px solid #e9eef5;
-}
-.flow-det-extra:not(.acord):last-child{padding-bottom:32px}
-.flow-det-extra:not(.acord) .flow-det-h{
-  grid-column:1;align-self:start;                /* senão a barra estica pela secção toda */
-  margin:0;font-size:15.5px;font-weight:800;color:#12161c;
-  text-transform:none;letter-spacing:-.1px;line-height:1.35;
-  padding-left:12px;position:relative;
-}
-.flow-det-extra:not(.acord) .flow-det-h::before{
-  content:"";position:absolute;left:0;top:3px;bottom:3px;
-  width:3px;border-radius:2px;background:#0b63c5;
-}
-.flow-sec-body{grid-column:2;display:grid;gap:26px}
+.flow-sec-body{display:grid;gap:26px}
 /* texto e diagrama lado a lado quando existem os dois */
 .flow-sec-body.lado-a-lado{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}
 /* nunca em colunas CSS: partia as listas e atirava o fecho para cima delas */
 .flow-longa-txt{columns:auto;max-width:74ch}
-.flow-det-extra.acord .flow-longa-txt{max-width:none}
-.flow-det-extra.acord .flow-longa-txt p{font-size:15px;line-height:1.75;color:#3d4a5c;margin-bottom:15px}
-.flow-det-extra.acord .flow-longa-txt li{font-size:15px;line-height:1.7;color:#3d4a5c}
-.flow-det-extra.acord .flow-det-files{padding-top:2px}
+/* duas colunas: aproveita a largura sem deixar linhas de 158 caracteres.
+   Parágrafos e listas nunca partem entre colunas. */
+
+
+
+.flow-det-extra .flow-longa-txt p{font-size:15px;line-height:1.8;color:#3d4a5c;margin-bottom:15px}
+.flow-det-extra .flow-longa-txt li{font-size:15px;line-height:1.75;color:#3d4a5c}
+/* duas colunas: sem elas as linhas ficavam com 158 caracteres */
+.flow-det-extra .flow-longa-txt{max-width:none;columns:2;column-gap:46px}
+/* parágrafos inteiros, mas a lista pode repartir-se entre colunas:
+   presa como bloco único saltava toda para a 2.ª coluna e deixava a 1.ª vazia.
+   Cada item continua indivisível, por isso não há linhas cortadas a meio. */
+.flow-det-extra .flow-longa-txt > p{break-inside:avoid}
+@media(max-width:820px){ .flow-det-extra .flow-longa-txt{columns:1} }
 .flow-sec-body.lado-a-lado .flow-longa-txt{max-width:none}
 
 /* listas a sério, em vez de parágrafos soltos */
-.flow-longa-txt ul{margin:0 0 14px;padding:0;list-style:none;break-inside:avoid}
+.flow-longa-txt ul{margin:0 0 14px;padding:0;list-style:none;break-inside:auto}
 .flow-longa-txt li{
   position:relative;padding-left:19px;margin-bottom:9px;
   font-size:14.5px;line-height:1.6;color:#39434f;break-inside:avoid;
@@ -867,9 +840,6 @@ footer small{opacity:.7}
 .flow-file:hover{background:#e6f0fb;border-color:#b9d3ee}
 .flow-file::before{content:"↓";margin-right:7px;opacity:.75}
 @media(max-width:900px){
-  .flow-det-extra:not(.acord){grid-template-columns:1fr;gap:14px}
-  .flow-det-extra:not(.acord) .flow-det-h{grid-column:1}
-  .flow-sec-body{grid-column:1}
   .flow-sec-body.lado-a-lado{grid-template-columns:1fr}
 }
 @media(max-width:600px){
@@ -878,4 +848,50 @@ footer small{opacity:.7}
      ora dois ora um, conforme o comprimento do nome */
   .flow-det-files{flex-direction:column;align-items:stretch}
   .flow-file{text-align:left}
+}
+
+/* ---- escolha do tamanho antes de pedir preço ---- */
+.flow-modal-fundo{
+  position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;
+  padding:20px;background:rgba(4,20,40,.62);backdrop-filter:blur(3px);
+  animation:flowModalFundo .16s ease;
+}
+@keyframes flowModalFundo{from{opacity:0}to{opacity:1}}
+.flow-modal{
+  background:#fff;color:#12161c;border-radius:16px;padding:24px;
+  width:100%;max-width:420px;box-shadow:0 24px 60px rgba(4,26,56,.42);
+  animation:flowModalCx .2s ease;
+}
+@keyframes flowModalCx{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.flow-modal-tit{font-size:19px;font-weight:800;color:#12314f}
+.flow-modal-sub{font-size:14px;color:#5b6b7f;margin-top:4px}
+.flow-modal-tams{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 20px}
+.flow-modal-tam{
+  font-family:inherit;font-size:14px;font-weight:700;color:#12314f;cursor:pointer;
+  background:#f2f6fb;border:1.5px solid #dbe6f2;border-radius:10px;padding:10px 16px;
+  transition:background .15s,border-color .15s,color .15s;
+}
+.flow-modal-tam:hover{background:#e6f0fb;border-color:#b9d3ee}
+.flow-modal-tam.on{background:#0b63c5;border-color:#0b63c5;color:#fff}
+.flow-modal-pais{margin-bottom:22px}
+.flow-modal-lbl{display:block;font-size:14px;font-weight:700;color:#12314f;margin-bottom:7px}
+.flow-modal-input{
+  width:100%;font-family:inherit;font-size:15px;color:#12161c;
+  background:#f8fafd;border:1.5px solid #dbe6f2;border-radius:10px;padding:11px 13px;
+  transition:border-color .15s,background .15s;
+}
+.flow-modal-input:focus{outline:none;border-color:#0b63c5;background:#fff}
+.flow-modal-dica{font-size:12px;color:#6b7683;margin-top:6px}
+/* sem país escrito o botão não tem href: fica visivelmente inerte */
+.flow-modal-enviar.desativado{
+  background:#cfe9d8;border-color:#cfe9d8;color:#6f8a7a;cursor:not-allowed;
+}
+.flow-modal-enviar.desativado:hover{background:#cfe9d8;border-color:#cfe9d8}
+.flow-modal-acoes{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+.flow-modal-acoes .flow-btn{background:#f2f6fb;border-color:#dbe6f2;color:#12314f}
+.flow-modal-acoes .flow-btn:hover{background:#e6f0fb;border-color:#b9d3ee}
+.flow-modal-enviar{flex:1;min-width:180px}
+@media(max-width:520px){
+  .flow-modal-acoes{flex-direction:column-reverse}
+  .flow-modal-acoes .flow-btn{width:100%}
 }

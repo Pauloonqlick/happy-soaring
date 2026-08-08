@@ -107,25 +107,32 @@ const UI = {
   flowVerDetalhes:{ pt:'Ver detalhes', en:'View details', es:'Ver detalles', fr:'Voir les détails', de:'Details ansehen' },
   flowFechar:     { pt:'Fechar', en:'Close', es:'Cerrar', fr:'Fermer', de:'Schließen' },
   flowPedirPreco: { pt:'Pedir preço', en:'Ask for a price', es:'Pedir precio', fr:'Demander le prix', de:'Preis anfragen' },
-  flowPedirPrecoWa:{ pt:'Pedir preço no WhatsApp', en:'Ask for a price on WhatsApp', es:'Pedir precio por WhatsApp',
-                     fr:'Demander le prix sur WhatsApp', de:'Preis über WhatsApp anfragen' },
-  flowPersonalizar:{ pt:'Personalizar cores', en:'Custom colours', es:'Personalizar colores',
-                     fr:'Couleurs sur mesure', de:'Farben anpassen' },
-  flowMsgCores:   { pt:'Olá! Queria saber sobre cores personalizadas para a {n}.',
-                    en:'Hi! I would like to know about custom colours for the {n}.',
-                    es:'¡Hola! Quería saber sobre colores personalizados para la {n}.',
-                    fr:'Bonjour ! Je voudrais des informations sur les couleurs sur mesure pour la {n}.',
-                    de:'Hallo! Ich hätte gerne Informationen zu Sonderfarben für die {n}.' },
-  flowMsgPreco:   { pt:'Olá! Queria pedir preço para a {n}.', en:'Hi! I would like a price for the {n}.',
-                    es:'¡Hola! Quería pedir precio para la {n}.', fr:'Bonjour ! Je voudrais le prix de la {n}.',
-                    de:'Hallo! Ich hätte gerne einen Preis für die {n}.' },
+  flowMsgPreco:   { pt:'Olá! Queria pedir preço para a {n}. Estou em {p}.',
+                    en:'Hi! I would like a price for the {n}. I am in {p}.',
+                    es:'¡Hola! Quería pedir precio para la {n}. Estoy en {p}.',
+                    fr:'Bonjour ! Je voudrais le prix de la {n}. Je suis en {p}.',
+                    de:'Hallo! Ich hätte gerne einen Preis für die {n}. Ich bin in {p}.' },
+  flowMsgPrecoTam:{ pt:'Olá! Queria pedir preço para a {n}, tamanho {t}. Estou em {p}.',
+                    en:'Hi! I would like a price for the {n}, size {t}. I am in {p}.',
+                    es:'¡Hola! Quería pedir precio para la {n}, talla {t}. Estoy en {p}.',
+                    fr:'Bonjour ! Je voudrais le prix de la {n}, taille {t}. Je suis en {p}.',
+                    de:'Hallo! Ich hätte gerne einen Preis für die {n}, Größe {t}. Ich bin in {p}.' },
+  flowPais:       { pt:'De que país és?', en:'Which country are you in?', es:'¿De qué país eres?',
+                    fr:'De quel pays es-tu ?', de:'Aus welchem Land kommst du?' },
+  flowPaisDica:   { pt:'Obrigatório — é o que me diz os portes e o prazo.',
+                    en:'Required — it tells me shipping and lead time.',
+                    es:'Obligatorio: me dice los portes y el plazo.',
+                    fr:'Obligatoire — cela me donne les frais de port et le délai.',
+                    de:'Pflichtfeld — daraus ergeben sich Versand und Lieferzeit.' },
+  flowEscolheTam: { pt:'Que tamanho queres?', en:'Which size do you want?', es:'¿Qué talla quieres?',
+                    fr:'Quelle taille veux-tu ?', de:'Welche Größe möchtest du?' },
+  flowEnviarWa:   { pt:'Enviar no WhatsApp', en:'Send on WhatsApp', es:'Enviar por WhatsApp',
+                    fr:'Envoyer sur WhatsApp', de:'Über WhatsApp senden' },
   flowParaQuem:   { pt:'Para quem é', en:'Who it is for', es:'Para quién es', fr:'Pour qui', de:'Für wen' },
   flowPontosFortes:{ pt:'Pontos fortes', en:'Strengths', es:'Puntos fuertes', fr:'Points forts', de:'Stärken' },
   flowIncluido:   { pt:'Vem incluído', en:'Included', es:'Incluido', fr:'Inclus', de:'Im Lieferumfang' },
   flowSpecs:      { pt:'Tamanhos e especificações', en:'Sizes and specifications', es:'Tallas y especificaciones',
                     fr:'Tailles et spécifications', de:'Größen und technische Daten' },
-  flowPaginaOficial:{ pt:'Página oficial Flow', en:'Official Flow page', es:'Página oficial Flow',
-                      fr:'Page officielle Flow', de:'Offizielle Flow-Seite' },
   /* cabeçalhos da tabela de especificações */
   sTam:      { pt:'Tam.', en:'Size', es:'Talla', fr:'Taille', de:'Größe' },
   sArea:     { pt:'Área plana', en:'Flat area', es:'Área plana', fr:'Surface à plat', de:'Fläche' },
@@ -149,9 +156,7 @@ const UI = {
   flowVento: { pt:'Gama de vento', en:'Wind range', es:'Rango de viento', fr:'Plage de vent', de:'Windbereich' },
   unidadeKn: { pt:'nós', en:'knots', es:'nudos', fr:'nœuds', de:'Knoten' },
   unidadeKmh:{ pt:'km/h', en:'km/h', es:'km/h', fr:'km/h', de:'km/h' },
-  flowDescricao:{ pt:'Descrição', en:'Description', es:'Descripción', fr:'Description', de:'Beschreibung' },
-  flowAbrirTudo:{ pt:'Abrir tudo', en:'Expand all', es:'Abrir todo', fr:'Tout ouvrir', de:'Alle öffnen' },
-  flowFecharTudo:{ pt:'Fechar tudo', en:'Collapse all', es:'Cerrar todo', fr:'Tout fermer', de:'Alle schließen' }
+  flowDescricao:{ pt:'Descrição', en:'Description', es:'Descripción', fr:'Description', de:'Beschreibung' }
 };
 function ui(k, vars) {
   const e = UI[k];
@@ -803,7 +808,6 @@ function buildMusic(item) {
    ganha filtros quando tem mais do que uma classificação.
    O detalhe abre dentro da grelha, a toda a largura, por baixo da linha do
    cartão — em vez de uma gaveta que tapava o catálogo. */
-const ICON_EXT = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M10 14 20 4M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"/></svg>';
 const ICON_WA = '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 00-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1012 2zm5.7 14.2c-.2.7-1.2 1.3-1.9 1.4-.5.1-1.1.2-3.4-.7-2.9-1.2-4.7-4.1-4.9-4.3-.1-.2-1.1-1.5-1.1-2.8s.7-2 .9-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.2.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.9.9c.3.2.5.3.5.4.1.2.1.6-.1 1.3z"/></svg>';
 
 /* cores do desenho de recurso, para modelos ainda sem foto */
@@ -929,6 +933,123 @@ function buildFlow(item) {
     });
   }
 
+  /* ---- bloco das cores ----
+     Gerado a partir das cores da própria asa: mostra-as todas de uma vez, em
+     vez do seletor que obrigava a clicar uma a uma. Nada para preencher à mão —
+     acrescentar uma cor à asa faz a foto aparecer aqui. */
+  function blocoCores(p, faixaTitulo) {
+    const bloco = el('div', 'flow-det-cores-bloco');
+    bloco.appendChild(faixaTitulo(ui('flowCores')));
+    const corpo = el('div', 'flow-bloco-corpo');
+    const grelha = el('div', 'flow-cores-grelha');
+    p.cores.forEach(cor => {
+      const cx = el('figure', 'flow-cor');
+      const im = el('img');
+      im.src = fotoSrc(p.nome, cor, false);
+      im.alt = p.nome + ' — ' + cor;
+      im.loading = 'lazy';
+      im.addEventListener('error', () => cx.remove());
+      const leg = el('figcaption', 'flow-cor-nome');
+      const bola = el('span', 'flow-cor-bola');
+      bola.style.background = corAmostra(cor);
+      leg.appendChild(bola);
+      leg.appendChild(document.createTextNode(cor.replace(/-/g, ' ')));
+      cx.appendChild(im); cx.appendChild(leg);
+      grelha.appendChild(cx);
+    });
+    corpo.appendChild(grelha); bloco.appendChild(corpo);
+    return bloco;
+  }
+
+  /* ---- escolha do tamanho antes de pedir preço ----
+     Sem isto chegava-te uma mensagem sem tamanho e tinhas de perguntar sempre.
+     O envio é um <a>, não um window.open: os bloqueadores de popups deixam
+     passar a ligação e o WhatsApp abre à primeira. */
+  function pedirPreco(p, num) {
+    const fecha = () => { document.removeEventListener('keydown', tecla); fundo.remove(); };
+    const tecla = ev => { if (ev.key === 'Escape') fecha(); };
+
+    const fundo = el('div', 'flow-modal-fundo');
+    const cx = el('div', 'flow-modal');
+    cx.setAttribute('role', 'dialog');
+    cx.setAttribute('aria-modal', 'true');
+    cx.setAttribute('aria-label', ui('flowEscolheTam'));
+
+    const tit = el('div', 'flow-modal-tit'); tit.textContent = p.nome;
+    cx.appendChild(tit);
+    if ((p.tamanhos || []).length) {
+      const sub = el('div', 'flow-modal-sub'); sub.textContent = ui('flowEscolheTam');
+      cx.appendChild(sub);
+    }
+
+    let escolhido = '';
+    const enviar = el('a', 'flow-btn wa flow-modal-enviar');
+    enviar.target = '_blank'; enviar.rel = 'noopener';
+    enviar.innerHTML = ICON_WA;
+    const et = el('span'); et.textContent = ui('flowEnviarWa'); enviar.appendChild(et);
+    /* o país é obrigatório: sem ele o <a> fica sem href, por isso não é
+       clicável nem focável — não há botão morto a fingir que funciona */
+    const refresca = () => {
+      const pais = campoPais.value.trim();
+      /* tamanho e país são ambos obrigatórios */
+      const valido = pais.length >= 2 && (!(p.tamanhos || []).length || !!escolhido);
+      enviar.classList.toggle('desativado', !valido);
+      enviar.setAttribute('aria-disabled', valido ? 'false' : 'true');
+      if (!valido) { enviar.removeAttribute('href'); return; }
+      enviar.href = waLink(num, escolhido
+        ? ui('flowMsgPrecoTam', { n: p.nome, t: escolhido, p: pais })
+        : ui('flowMsgPreco', { n: p.nome, p: pais }));
+    };
+
+    const lista = el('div', 'flow-modal-tams');
+    (p.tamanhos || []).forEach(tam => {
+      const b = el('button', 'flow-modal-tam'); b.type = 'button';
+      b.textContent = tam;
+      b.addEventListener('click', () => {
+        lista.querySelectorAll('.flow-modal-tam').forEach(x => x.classList.remove('on'));
+        b.classList.add('on');
+        escolhido = tam;
+        refresca();
+      });
+      lista.appendChild(b);
+    });
+    cx.appendChild(lista);
+
+    const cxPais = el('div', 'flow-modal-pais');
+    const lbl = el('label', 'flow-modal-lbl');
+    lbl.textContent = ui('flowPais');
+    lbl.htmlFor = 'flow-pais';
+    const campoPais = el('input', 'flow-modal-input');
+    campoPais.id = 'flow-pais';
+    campoPais.type = 'text';
+    campoPais.required = true;
+    campoPais.autocomplete = 'country-name';
+    const dica = el('div', 'flow-modal-dica'); dica.textContent = ui('flowPaisDica');
+    cxPais.appendChild(lbl); cxPais.appendChild(campoPais); cxPais.appendChild(dica);
+    cx.appendChild(cxPais);
+    campoPais.addEventListener('input', refresca);
+    campoPais.addEventListener('keydown', ev => {
+      if (ev.key === 'Enter' && enviar.hasAttribute('href')) enviar.click();
+    });
+
+    refresca();
+
+    const rodape = el('div', 'flow-modal-acoes');
+    const cancelar = el('button', 'flow-btn'); cancelar.type = 'button';
+    cancelar.textContent = ui('flowFechar');
+    cancelar.addEventListener('click', fecha);
+    enviar.addEventListener('click', () => setTimeout(fecha, 60));
+    rodape.appendChild(cancelar); rodape.appendChild(enviar);
+    cx.appendChild(rodape);
+
+    fundo.appendChild(cx);
+    fundo.addEventListener('click', ev => { if (ev.target === fundo) fecha(); });
+    document.addEventListener('keydown', tecla);
+    document.body.appendChild(fundo);
+    const primeiro = lista.querySelector('.flow-modal-tam');
+    if (primeiro) primeiro.focus();
+  }
+
   function cartao(p, i) {
     const c = el('article', 'flow-card' + (p === aberto ? ' aberta' : ''));
     const shot = el('div', 'flow-shot');
@@ -985,10 +1106,13 @@ function buildFlow(item) {
     const acoes = el('div', 'flow-actions');
     const ver = el('button', 'flow-btn'); ver.type = 'button';
     ver.textContent = p === aberto ? ui('flowFechar') : ui('flowVerDetalhes');
-    const preco = el('a', 'flow-btn primary'); preco.target = '_blank'; preco.rel = 'noopener';
-    preco.textContent = ui('flowPedirPreco');
-    preco.href = waLink(num, ui('flowMsgPreco', { n: p.nome }));
-    preco.addEventListener('click', ev => ev.stopPropagation());
+    /* abre sempre a escolha: o país é obrigatório, por isso nunca há caminho
+       que vá direto ao WhatsApp. Se a asa não tiver tamanhos, a janela pede
+       só o país. */
+    const preco = el('button', 'flow-btn wa'); preco.type = 'button';
+    preco.innerHTML = ICON_WA;
+    const pl = el('span'); pl.textContent = ui('flowPedirPreco'); preco.appendChild(pl);
+    preco.addEventListener('click', ev => { ev.stopPropagation(); pedirPreco(p, num); });
     acoes.appendChild(ver); acoes.appendChild(preco);
     body.appendChild(acoes);
     c.appendChild(body);
@@ -1009,6 +1133,14 @@ function buildFlow(item) {
     /* div, não section: o site tem uma regra global para <section>
        (display:flex, min-height:100vh) que destruiria este layout */
     const d = el('div', 'flow-det'); d.id = 'flow-det';
+    /* faixa azul de título: a mesma para todos os blocos do painel */
+    const faixaTitulo = (texto, extra) => {
+      const faixa = el('div', 'flow-sec-faixa');
+      const h = el('h4', 'flow-det-h'); h.textContent = texto;
+      faixa.appendChild(h);
+      if (extra) faixa.appendChild(extra);
+      return faixa;
+    };
     const top = el('div', 'flow-det-top');
     const tit = el('div');
     /* o painel de detalhe tem fundo branco, por isso usa a variante escura do
@@ -1032,34 +1164,11 @@ function buildFlow(item) {
     x.addEventListener('click', ev => { ev.stopPropagation(); aberto = null; sincronizaHash(); render(); });
     top.appendChild(tit); top.appendChild(x); d.appendChild(top);
 
+    /* Sem foto nem seletor de cor: a foto repetia o cartão que se acabou de
+       clicar, e as cores mostram-se muito melhor todas juntas, na secção
+       própria. Assim o topo segue o mesmo padrão do resto do painel. */
     const cols = el('div', 'flow-det-cols');
-
-    /* coluna esquerda: foto, cores, especificações */
-    const esq = el('div');
-    const foto = el('div', 'flow-det-foto');
-    foto.innerHTML = p.cores && p.cores.length ? imgTag(p, p.cores[0], false) : asaPlaceholder(produtos.indexOf(p));
-    esq.appendChild(foto);
-    if (p.cores && p.cores.length) {
-      const box = el('div', 'flow-det-cores');
-      const l = el('div', 'flow-lbl'); l.textContent = ui('flowCores'); box.appendChild(l);
-      const sws = el('div', 'flow-swatches');
-      p.cores.forEach((cor, j) => {
-        const b = el('button', 'flow-sw' + (j === 0 ? ' on' : '')); b.type = 'button';
-        pintaAmostra(b, cor); b.title = cor; b.setAttribute('aria-label', cor);
-        b.addEventListener('click', ev => {
-          ev.stopPropagation();
-          sws.querySelectorAll('.flow-sw').forEach(y => y.classList.remove('on'));
-          b.classList.add('on');
-          foto.innerHTML = imgTag(p, cor, false);
-        });
-        sws.appendChild(b);
-      });
-      box.appendChild(sws); esq.appendChild(box);
-    }
-    cols.appendChild(esq);
-
-    /* coluna direita: texto e ações */
-    const dir = el('div');
+    const dir = el('div', 'flow-det-intro');
     const dsc = t(p.descricao);
     if (dsc) { const q = el('p', 'flow-det-desc'); q.textContent = dsc; dir.appendChild(q); }
     const pq = t(p.paraQuem);
@@ -1074,37 +1183,24 @@ function buildFlow(item) {
     const av = t(p.aviso);
     if (av) { const q = el('p', 'flow-aviso'); q.textContent = '⚠ ' + av; dir.appendChild(q); }
 
-    const acoes = el('div', 'flow-det-acoes');
-    const wa = el('a', 'flow-big wa'); wa.target = '_blank'; wa.rel = 'noopener';
-    wa.href = waLink(num, ui('flowMsgPreco', { n: p.nome }));
-    wa.innerHTML = ICON_WA; const wl = el('span'); wl.textContent = ui('flowPedirPrecoWa'); wa.appendChild(wl);
-    acoes.appendChild(wa);
-    /* cores à medida: até haver editor próprio, abre o WhatsApp com o pedido */
-    const cc = el('a', 'flow-big custom'); cc.target = '_blank'; cc.rel = 'noopener';
-    cc.href = waLink(num, ui('flowMsgCores', { n: p.nome }));
-    cc.innerHTML = ICON_PALETA; const cl = el('span'); cl.textContent = ui('flowPersonalizar'); cc.appendChild(cl);
-    acoes.appendChild(cc);
-    if (p.flowHref) {
-      const of = el('a', 'flow-big'); of.href = p.flowHref; of.target = '_blank'; of.rel = 'noopener';
-      of.innerHTML = ICON_EXT; const ol = el('span'); ol.textContent = ui('flowPaginaOficial'); of.appendChild(ol);
-      acoes.appendChild(of);
-    }
-    dir.appendChild(acoes);
-    const nota = t(item.customColourNote);
-    if (nota) { const q = el('p', 'flow-nota'); q.textContent = nota; dir.appendChild(q); }
     cols.appendChild(dir);
 
     d.appendChild(cols);
+
+    /* cores: montadas a partir das cores da asa, sem precisar de secção à mão */
+    if (p.cores && p.cores.length) d.appendChild(blocoCores(p, faixaTitulo));
 
     /* vídeo a toda a largura do painel, por baixo das duas colunas:
        numa coluna ficava com metade do tamanho */
     if (p.videoId) {
       const bloco = el('div', 'flow-det-video');
-      const h = el('div', 'flow-det-h'); h.textContent = ui('flowVideo'); bloco.appendChild(h);
-      bloco.appendChild(buildVideo({
+      bloco.appendChild(faixaTitulo(ui('flowVideo')));
+      const cxVideo = el('div', 'flow-bloco-corpo');
+      cxVideo.appendChild(buildVideo({
         role: 'video', videoId: p.videoId, startAt: p.videoStartAt || 0,
         thumbnail: p.videoThumbnail || '', title: { pt: p.nome }
       }));
+      bloco.appendChild(cxVideo);
       d.appendChild(bloco);
     }
 
@@ -1115,7 +1211,8 @@ function buildFlow(item) {
 
     if ((p.specs || []).length) {
       const specsBox = el('div', 'flow-det-specs');
-      const h = el('div', 'flow-det-h'); h.textContent = ui('flowSpecs'); specsBox.appendChild(h);
+      specsBox.appendChild(faixaTitulo(ui('flowSpecs')));
+      const cxSpecs = el('div', 'flow-bloco-corpo');
       const chaves = [['areaPlana', ui('sArea')], ['areaProjetada', ui('sAreaProj')], ['envergadura', ui('sEnv')],
         ['celulas', ui('sCelulas')], ['alongamento', ui('sAlong')], ['alongamentoProjetado', ui('sAlongProj')],
         ['pesoAsa', ui('sPeso')], ['ptv', ui('sPtv')], ['cargaMax', ui('sCarga')], ['taxaQueda', ui('sQueda')],
@@ -1130,7 +1227,7 @@ function buildFlow(item) {
           usadas.map(k => '<td>' + (sp[k[0]] !== undefined ? sp[k[0]] : '—') + '</td>').join('') + '</tr>';
       });
       tb.innerHTML = html + '</tbody>';
-      scroll.appendChild(tb); specsBox.appendChild(scroll);
+      scroll.appendChild(tb); cxSpecs.appendChild(scroll); specsBox.appendChild(cxSpecs);
       d.appendChild(specsBox);
     }
 
@@ -1138,10 +1235,11 @@ function buildFlow(item) {
     const longa = t(p.descricaoLonga);
     if (longa) {
       const bloco = el('div', 'flow-det-longa');
-      const h = el('div', 'flow-det-h'); h.textContent = ui('flowDescricao'); bloco.appendChild(h);
+      bloco.appendChild(faixaTitulo(ui('flowDescricao')));
+      const cxLonga = el('div', 'flow-bloco-corpo');
       const corpo = el('div', 'flow-longa-txt');
       paragrafos(longa).forEach(n => corpo.appendChild(n));
-      bloco.appendChild(corpo);
+      cxLonga.appendChild(corpo);
       /* imagem que acompanha a apresentação, quando o fabricante tem uma */
       if (Array.isArray(p.imagensLonga) && p.imagensLonga.length) {
         const fig = el('div', 'flow-det-figs' + (p.imagensLonga.length > 1 ? ' duas' : ''));
@@ -1154,77 +1252,33 @@ function buildFlow(item) {
           im.addEventListener('error', () => im.remove());
           fig.appendChild(im);
         });
-        if (fig.childNodes.length) bloco.appendChild(fig);
+        if (fig.childNodes.length) cxLonga.appendChild(fig);
       }
+      bloco.appendChild(cxLonga);
       d.appendChild(bloco);
     }
 
     /* ---- secções extra do fabricante (materiais, perfil, risers…) ----
-       Quando são muitas, ficam fechadas: os títulos passam a servir de índice
-       e evita-se um painel de sete ecrãs de altura. Ligado por produto. */
-    const acordeao = !!p.acordeao && (p.seccoes || []).length > 1;
-    const cabecas = [];
-    /* fechar uma secção acima do que se está a ver empurraria a página para
-       cima; ancoramos o topo do painel para o scroll não saltar */
-    const semSalto = fn => {
-      const antes = d.getBoundingClientRect().top;
-      fn();
-      const depois = d.getBoundingClientRect().top;
-      if (depois !== antes) window.scrollBy(0, depois - antes);
-    };
-    if (acordeao) {
-      const barra = el('div', 'flow-acord-barra');
-      const btn = el('button', 'flow-acord-todos'); btn.type = 'button';
-      const sinc = () => {
-        const abertas = cabecas.filter(c => c.getAttribute('aria-expanded') === 'true').length;
-        btn.textContent = abertas === cabecas.length ? ui('flowFecharTudo') : ui('flowAbrirTudo');
-      };
-      btn.addEventListener('click', ev => {
-        ev.stopPropagation();
-        const abrir = cabecas.some(c => c.getAttribute('aria-expanded') !== 'true');
-        semSalto(() => cabecas.forEach(c => c.__define(abrir)));
-        sinc();
-      });
-      barra.appendChild(btn);
-      d.appendChild(barra);
-      d.__sincAcord = sinc;
-    }
-
+       Ficam sempre abertas: o acordeão escondia o conteúdo atrás de um clique
+       que a maioria não dá. A faixa azul de cada título é que serve de âncora
+       para percorrer os temas depressa. */
     (p.seccoes || []).forEach(sx => {
       const corpo = t(sx.texto);
       const temImg = Array.isArray(sx.imagens) && sx.imagens.filter(Boolean).length;
       const temFich = Array.isArray(sx.ficheiros) && sx.ficheiros.filter(x => x && x.url).length;
       /* há secções da Flow que são só diagramas ou só ficheiros, sem texto nenhum */
       if (!corpo && !temImg && !temFich) return;
-      const bloco = el('div', 'flow-det-extra' + (acordeao ? ' acord' : ''));
+      const bloco = el('div', 'flow-det-extra');
       const ht = t(sx.titulo);
-      /* fora do acordeão o título é só texto; dentro, é o botão que abre */
-      let caixa = bloco;
-      if (acordeao) {
-        const cab = el('button', 'flow-sec-cab'); cab.type = 'button';
-        const h = el('div', 'flow-det-h'); h.textContent = ht || p.nome;
-        const seta = el('span', 'flow-sec-seta'); seta.setAttribute('aria-hidden', 'true');
-        cab.appendChild(h); cab.appendChild(seta);
-        const env = el('div', 'flow-sec-env');
-        env.hidden = true;
-        cab.setAttribute('aria-expanded', 'false');
-        cab.__define = abrir => {
-          cab.setAttribute('aria-expanded', abrir ? 'true' : 'false');
-          env.hidden = !abrir;
-          bloco.classList.toggle('aberta', abrir);   /* o CSS levanta o cartão */
-        };
-        cab.addEventListener('click', ev => {
-          ev.stopPropagation();
-          const abrir = cab.getAttribute('aria-expanded') !== 'true';
-          semSalto(() => cab.__define(abrir));
-          if (d.__sincAcord) d.__sincAcord();
-        });
-        bloco.appendChild(cab); bloco.appendChild(env);
-        cabecas.push(cab);
-        caixa = env;
-      } else if (ht) {
-        const h = el('div', 'flow-det-h'); h.textContent = ht; bloco.appendChild(h);
+      /* a faixa azul atravessa o painel de lado a lado; o conteúdo vem por baixo */
+      if (ht) {
+        const faixa = el('div', 'flow-sec-faixa');
+        const h = el('h4', 'flow-det-h'); h.textContent = ht;
+        faixa.appendChild(h);
+        bloco.appendChild(faixa);
       }
+      const caixa = el('div', 'flow-sec-env');
+      bloco.appendChild(caixa);
 
       /* Corpo em duas faixas: texto de um lado, diagramas do outro. Quando só
          há uma das duas coisas, ela ocupa a largura toda. */
@@ -1316,16 +1370,18 @@ function buildFlow(item) {
     const box = el('div', 'flow-wind');
     let unidade = 'kn';
 
-    const topo = el('div', 'flow-wind-top');
-    const h = el('div', 'flow-det-h'); h.textContent = ui('flowVento'); topo.appendChild(h);
+    /* o alternador nós / km/h vive dentro da faixa, à direita do título */
+    const topo = el('div', 'flow-sec-faixa flow-wind-top');
+    const h = el('h4', 'flow-det-h'); h.textContent = ui('flowVento'); topo.appendChild(h);
     const sw = el('div', 'flow-wind-units');
     const bKn = el('button', 'flow-unit on'); bKn.type = 'button'; bKn.textContent = ui('unidadeKn');
     const bKm = el('button', 'flow-unit'); bKm.type = 'button'; bKm.textContent = ui('unidadeKmh');
     sw.appendChild(bKn); sw.appendChild(bKm); topo.appendChild(sw);
     box.appendChild(topo);
+    const cxVento = el('div', 'flow-bloco-corpo');
 
     const grupos = el('div', 'flow-wind-groups');
-    box.appendChild(grupos);
+    cxVento.appendChild(grupos); box.appendChild(cxVento);
 
     /* escala: arredonda o máximo para cima, para as barras não tocarem no fim */
     let maxKn = 0;
@@ -1459,7 +1515,6 @@ function buildFlow(item) {
 }
 const ICON_PESSOA = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"/></svg>';
 const ICON_ESTRELA = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.8-4.5 4.2 1.2 6L12 16.8 6.6 19.6l1.2-6L3.3 9.4l6.1-.8z"/></svg>';
-const ICON_PALETA = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 100 18c1.1 0 2-.9 2-2 0-.5-.2-1-.6-1.4-.3-.3-.4-.7-.4-1.1 0-.8.7-1.5 1.5-1.5H16a5 5 0 005-5c0-3.9-4-7-9-7z"/><circle cx="7.5" cy="11" r="1.1" fill="currentColor" stroke="none"/><circle cx="10.5" cy="7.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="15" cy="8" r="1.1" fill="currentColor" stroke="none"/></svg>';
 
 /* ---- vídeo do YouTube ----
    Mostra só a miniatura; o iframe do YouTube entra apenas quando se carrega

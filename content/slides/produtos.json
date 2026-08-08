@@ -367,27 +367,6 @@
             },
             {
               "titulo": {
-                "pt": "Cores",
-                "en": "Colors",
-                "es": "Colores",
-                "fr": "Couleurs",
-                "de": "Farben"
-              },
-              "texto": {
-                "pt": "",
-                "en": "",
-                "es": "",
-                "fr": "",
-                "de": ""
-              },
-              "imagens": [
-                "future2-cor-blue",
-                "future2-cor-pink",
-                "future2-cor-lime"
-              ]
-            },
-            {
-              "titulo": {
                 "pt": "Documentos",
                 "en": "Downloads",
                 "es": "Documentos",
@@ -508,8 +487,7 @@
           "logo": "future2",
           "imagensLonga": [
             "future2-intro"
-          ],
-          "acordeao": true
+          ]
         },
         {
           "visible": true,
@@ -759,25 +737,6 @@
             },
             {
               "titulo": {
-                "pt": "Cores",
-                "en": "Colours",
-                "es": "Colores",
-                "fr": "Couleurs",
-                "de": "Farben"
-              },
-              "texto": {
-                "pt": "",
-                "en": "",
-                "es": "",
-                "fr": "",
-                "de": ""
-              },
-              "imagens": [
-                "freedom2-cores"
-              ]
-            },
-            {
-              "titulo": {
                 "pt": "Documentos",
                 "en": "Downloads",
                 "es": "Documentos",
@@ -856,7 +815,6 @@
             }
           ],
           "logo": "freedom2",
-          "acordeao": true,
           "imagensLonga": []
         },
         {
@@ -1042,8 +1000,7 @@
               }
             }
           ],
-          "logo": "",
-          "acordeao": false
+          "logo": ""
         },
         {
           "visible": true,
@@ -1235,8 +1192,7 @@
               }
             }
           ],
-          "logo": "fusionlight",
-          "acordeao": false
+          "logo": "fusionlight"
         },
         {
           "visible": true,
@@ -1405,8 +1361,7 @@
               }
             }
           ],
-          "logo": "mystic",
-          "acordeao": false
+          "logo": "mystic"
         },
         {
           "visible": true,
@@ -1526,8 +1481,7 @@
             "de": "Die **XCRacer 2** bietet ein komfortableres Flugerlebnis als ihr Vorgänger, mit mehr Bremsautorität und mehr Komfort über den gesamten Geschwindigkeitsbereich. Die Leistungssteigerungen sind sofort spürbar, und auch die Endgeschwindigkeit konnten wir anheben.\n\nDiese neue Version ist ein ausgewogenes Projekt ohne Kompromisse. Sie erlaubt es, mit voller Geschwindigkeit bei vollem Komfort und voller Kontrolle zu fliegen. Unser Ziel war ein Schirm, der es leicht macht, sein volles Potenzial auszuschöpfen — komfortabel und zugleich maximal effizient und leistungsfähig.\n\nDas Profil wurde vollständig neu gestaltet, mit neuen Schnitten und neuen Parametern. Es ist nun das effizienteste unserer Palette, mit deutlich reduziertem **parasitärem Widerstandsbeiwert**. Diese Neugestaltung erlaubte mehr eingebaute Anstellwinkel-Verwindung im Tuch, was Aerodynamik und Washout auf eine Weise verbessert hat, wie wir es zuvor nie erreicht haben. Das Gesamtergebnis ist ein Schirm mit besserer Nickstabilität und höherem Innendruck, der weniger Pilotenkorrektur verlangt und in Nick- wie Rollachse stabiler ist.\n\nDie überarbeitete Tuchspannung verbessert Zusammenhalt und Feedback bei weniger Flex und gibt dem Piloten bessere Information. Druck und Gefühl an den hinteren Tragegurten haben wir vom Vorgängermodell übernommen; sie liegen weiterhin im mittleren bis leichten Bereich. Das ergibt ein instinktives Gefühl und eine makellose Verbindung zwischen Pilot und Schirm, die den Maßstab in unserem gesamten Programm setzt. Wir halten diese Verbindung für einen der wichtigsten Aspekte — wir wollen den Schirm **als Erweiterung unserer selbst** erleben.\n\nWir sind überzeugt, dass die XCRacer2 einen bedeutenden Fortschritt gegenüber unserem sehr erfolgreichen EN-D-Zweileiner darstellt. Wir haben auf ganzer Linie verbessert und nichts unangetastet gelassen. Dieser Schirm ist darauf ausgelegt, auf höchstem Niveau zu bestehen — und dabei Spaß zu machen und angenehm zu fliegen zu sein."
           },
           "seccoes": [],
-          "logo": "",
-          "acordeao": false
+          "logo": ""
         },
         {
           "visible": true,
@@ -1829,8 +1783,7 @@
               }
             }
           ],
-          "logo": "",
-          "acordeao": false
+          "logo": ""
         },
         {
           "visible": true,
@@ -2058,8 +2011,7 @@
               }
             }
           ],
-          "logo": "",
-          "acordeao": false
+          "logo": ""
         },
         {
           "visible": true,
@@ -2216,8 +2168,7 @@
               }
             }
           ],
-          "logo": "albatroxx",
-          "acordeao": false
+          "logo": "albatroxx"
         },
         {
           "visible": true,
@@ -2358,8 +2309,7 @@
               }
             }
           ],
-          "logo": "",
-          "acordeao": false
+          "logo": ""
         },
         {
           "visible": true,
@@ -2479,8 +2429,7 @@
             "de": "Die **Yoti 3** ist ein Miniwing für die anspruchsvollste Luft.\n\nDas Design wurde aus der Yoti 2 weiterentwickelt, die auf maximalen Spaßfaktor ausgelegt war. Ein überarbeitetes Profil in Verbindung mit neuen Tragegurten und neuer Grundrissform sorgt für bessere Zellenspannung — das macht die Yoti 3 dynamischer und bei hohen Geschwindigkeiten stabiler. Das großartige Handling, für das die ursprüngliche Yoti bekannt ist, bleibt unverändert."
           },
           "seccoes": [],
-          "logo": "",
-          "acordeao": false
+          "logo": ""
         },
         {
           "visible": true,
@@ -2713,8 +2662,7 @@
               }
             }
           ],
-          "logo": "",
-          "acordeao": false
+          "logo": ""
         },
         {
           "visible": true,
@@ -2851,8 +2799,7 @@
               }
             }
           ],
-          "logo": "",
-          "acordeao": false
+          "logo": ""
         },
         {
           "visible": true,
@@ -3041,8 +2988,7 @@
               }
             }
           ],
-          "logo": "fusion",
-          "acordeao": false
+          "logo": "fusion"
         },
         {
           "visible": true,
@@ -3162,8 +3108,7 @@
             "de": "Die **Yoti 3 Light** ist ein leichter Miniwing für Piloten, die maximale Einfachheit am Boden und Agilität in der Luft suchen.\n\nHike & Fly, Starkwind-Soaring, Thermik-Streckenflug — die Yoti 3 Light kann das alles. Mit **2,15 kg** ist sie der vielseitigste Schirm unserer Palette und der perfekte Reisebegleiter. Geschwindigkeit, Stabilität und die beste Gleitleistung ihrer Klasse, auf einem stabilen Shark-Nose-Profil."
           },
           "seccoes": [],
-          "logo": "",
-          "acordeao": false
+          "logo": ""
         },
         {
           "visible": true,
@@ -3301,8 +3246,7 @@
               }
             }
           ],
-          "logo": "",
-          "acordeao": false
+          "logo": ""
         },
         {
           "visible": true,
@@ -3428,8 +3372,7 @@
             "de": "Die **Future Power** ist ein vielseitiger Schirm, ideal für alle, die eine Ein-Schirm-Lösung für Motor- und Freiflug suchen.\n\nSie ist der perfekte Schirm zum Lernen und Fortschreiten: ein Ein-Schirm-Konzept für die Schule und darüber hinaus. Entwickelt mit hervorragender Rollstabilität, einfachem Aufziehen, Klappresistenz und einer für die EN-A-Klasse beispiellosen Gleitleistung."
           },
           "seccoes": [],
-          "logo": "",
-          "acordeao": false
+          "logo": ""
         },
         {
           "visible": true,
@@ -3554,8 +3497,7 @@
               }
             }
           ],
-          "logo": "",
-          "acordeao": false
+          "logo": ""
         },
         {
           "visible": true,
@@ -3680,8 +3622,7 @@
               }
             }
           ],
-          "logo": "",
-          "acordeao": false
+          "logo": ""
         },
         {
           "visible": true,
@@ -3805,8 +3746,7 @@
             "de": "Der **AURA2 Square** ist ein quadratischer Rettungsschirm, ausschließlich für den Gleitschirmeinsatz entwickelt. Er steht für das Maximum an Sicherheit, Funktionalität und Qualität.\n\nSchnelle Öffnungszeiten, niedrige Sinkrate und Rollstabilität gehören zu seinen wichtigsten Eigenschaften. Die Materialien wurden sorgfältig ausgewählt, um ein Rettungssystem zu schaffen, das leicht und dennoch robust und langlebig ist.\n\nZuverlässigkeit und Stabilität waren die entscheidenden Faktoren in der Entwurfs- und Entwicklungsphase des AURA2 Square. Nach **zahlreichen Auslösungen mit durchweg erfolgreichen Ergebnissen** kommen wir zu dem Schluss: Der AURA2 Square öffnet schnell und zuverlässig und sinkt stabil — er bringt dich im Ernstfall sicher zurück auf den Boden."
           },
           "seccoes": [],
-          "logo": "aura2square",
-          "acordeao": false
+          "logo": "aura2square"
         },
         {
           "visible": true,
@@ -3895,8 +3835,7 @@
             "de": "Der **Flow D-CHUTE** ist ein Bremsschirm, der eigens dafür entwickelt wurde, die Sinkrate bei Hochleistungsgleitschirmen zu erhöhen.\n\nIm Einsatz **verringert der D-CHUTE die G-Kräfte** in steilen Spiralen und steigert dadurch die Sinkrate.\n\nUnser Bremsschirm ist einfach zu bedienen, wirksam und ein wichtiges Hilfsmittel, um bei Bedarf Höhe abzubauen.\n\nLeicht und kompakt mit **185 g** — der kleinste und leichteste Bremsschirm am Markt."
           },
           "seccoes": [],
-          "logo": "",
-          "acordeao": false
+          "logo": ""
         },
         {
           "visible": true,
@@ -4132,8 +4071,7 @@
               }
             }
           ],
-          "logo": "",
-          "acordeao": false
+          "logo": ""
         }
       ]
     }
