@@ -465,6 +465,7 @@ footer small{opacity:.7}
 .flow-size{border:1px solid rgba(255,255,255,.38);border-radius:7px;padding:3px 9px;font-size:11.5px;color:rgba(255,255,255,.92)}
 .flow-actions{display:flex;gap:8px;margin-top:auto;padding-top:4px}
 .flow-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
   flex:1;border-radius:10px;padding:10px 8px;font-family:inherit;font-size:13px;font-weight:800;
   cursor:pointer;text-align:center;text-decoration:none;
   background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.4);color:#fff;

@@ -104,9 +104,9 @@ const UI = {
                      de:'Diese Familie ist nicht nach Stufen unterteilt — es ist eine einfache Liste.' },
   flowCores:      { pt:'Cores disponíveis', en:'Available colours', es:'Colores disponibles', fr:'Couleurs disponibles', de:'Verfügbare Farben' },
   flowTamanhos:   { pt:'Tamanhos', en:'Sizes', es:'Tallas', fr:'Tailles', de:'Größen' },
-  flowVerDetalhes:{ pt:'Ver detalhes', en:'View details', es:'Ver detalles', fr:'Voir les détails', de:'Details ansehen' },
+  flowVerDetalhes:{ pt:'Detalhes', en:'Details', es:'Detalles', fr:'Détails', de:'Details' },
   flowFechar:     { pt:'Fechar', en:'Close', es:'Cerrar', fr:'Fermer', de:'Schließen' },
-  flowPedirPreco: { pt:'Pedir preço', en:'Ask for a price', es:'Pedir precio', fr:'Demander le prix', de:'Preis anfragen' },
+  flowPedirPreco: { pt:'Preço', en:'Price', es:'Precio', fr:'Prix', de:'Preis' },
   flowMsgPreco:   { pt:'Olá! Queria pedir preço para a {n}. Estou em {p}.',
                     en:'Hi! I would like a price for the {n}. I am in {p}.',
                     es:'¡Hola! Quería pedir precio para la {n}. Estoy en {p}.',
@@ -808,6 +808,8 @@ function buildMusic(item) {
    ganha filtros quando tem mais do que uma classificação.
    O detalhe abre dentro da grelha, a toda a largura, por baixo da linha do
    cartão — em vez de uma gaveta que tapava o catálogo. */
+const ICON_OLHO = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.6"/></svg>';
+const ICON_X = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
 const ICON_WA = '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 00-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1012 2zm5.7 14.2c-.2.7-1.2 1.3-1.9 1.4-.5.1-1.1.2-3.4-.7-2.9-1.2-4.7-4.1-4.9-4.3-.1-.2-1.1-1.5-1.1-2.8s.7-2 .9-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.2.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.9.9c.3.2.5.3.5.4.1.2.1.6-.1 1.3z"/></svg>';
 
 /* cores do desenho de recurso, para modelos ainda sem foto */
@@ -1105,7 +1107,11 @@ function buildFlow(item) {
 
     const acoes = el('div', 'flow-actions');
     const ver = el('button', 'flow-btn'); ver.type = 'button';
-    ver.textContent = p === aberto ? ui('flowFechar') : ui('flowVerDetalhes');
+    /* o verbo vive no ícone; a palavra fica só com o substantivo, para o botão
+       não partir em duas linhas nos idiomas mais compridos */
+    ver.innerHTML = p === aberto ? ICON_X : ICON_OLHO;
+    const vl = el('span'); vl.textContent = p === aberto ? ui('flowFechar') : ui('flowVerDetalhes');
+    ver.appendChild(vl);
     /* abre sempre a escolha: o país é obrigatório, por isso nunca há caminho
        que vá direto ao WhatsApp. Se a asa não tiver tamanhos, a janela pede
        só o país. */

@@ -888,39 +888,55 @@
             "M",
             "L"
           ],
-          "cores": [],
+          "cores": [
+            "blue",
+            "orange",
+            "red"
+          ],
           "specs": [
             {
               "tamanho": "XS",
               "areaPlana": "22.40 m²",
-              "celulas": 60,
+              "areaProjetada": "19.10 m²",
+              "envergadura": "11.35 m",
               "alongamento": 5.75,
+              "celulas": 60,
               "pesoAsa": "3.7 kg",
-              "ptv": "60–80 kg"
+              "ptv": "60–80 kg",
+              "homologacao": "LTF/EN B"
             },
             {
               "tamanho": "S",
               "areaPlana": "24.00 m²",
-              "celulas": 60,
+              "areaProjetada": "20.47 m²",
+              "envergadura": "11.74 m",
               "alongamento": 5.75,
+              "celulas": 60,
               "pesoAsa": "3.9 kg",
-              "ptv": "70–95 kg"
+              "ptv": "70–95 kg",
+              "homologacao": "LTF/EN B"
             },
             {
               "tamanho": "M",
               "areaPlana": "26.00 m²",
-              "celulas": 60,
+              "areaProjetada": "22.12 m²",
+              "envergadura": "12.23 m",
               "alongamento": 5.75,
+              "celulas": 60,
               "pesoAsa": "4.4 kg",
-              "ptv": "85–108 kg"
+              "ptv": "85–108 kg",
+              "homologacao": "LTF/EN B"
             },
             {
               "tamanho": "L",
               "areaPlana": "27.50 m²",
-              "celulas": 60,
+              "areaProjetada": "23.45 m²",
+              "envergadura": "12.57 m",
               "alongamento": 5.75,
+              "celulas": 60,
               "pesoAsa": "4.6 kg",
-              "ptv": "105–122 kg"
+              "ptv": "105–122 kg",
+              "homologacao": "LTF/EN B"
             }
           ],
           "flowHref": "https://www.flowparagliders.com.au/f2-light/",
@@ -937,6 +953,22 @@
           "seccoes": [
             {
               "titulo": {
+                "pt": "Tecnologia",
+                "en": "Technology",
+                "es": "Tecnología",
+                "fr": "Technologie",
+                "de": "Technologie"
+              },
+              "texto": {
+                "pt": "Além da tecnologia que lidera a classe, a F2 Light tem:\n\n- Direção eficiente pelos risers traseiros\n\n- Varetas de Nitinol\n\n- Perfil shark-nose avançado\n\n- Sistema exclusivo de fixação das A dividida em quatro\n\n- Construção leve e durável",
+                "en": "In addition to the class-leading technology, the F2 Light features:\n\n- Efficient rear riser steering\n\n- Nitinol rods\n\n- Advanced shark-nose aerofoil\n\n- Unique 4-way split-A attachment point system\n\n- Durable, lightweight construction",
+                "es": "Además de la tecnología que lidera la clase, la F2 Light tiene:\n\n- Pilotaje eficiente por las bandas traseras\n\n- Varillas de Nitinol\n\n- Perfil shark-nose avanzado\n\n- Sistema exclusivo de fijación de las A dividida en cuatro\n\n- Construcción ligera y duradera",
+                "fr": "Outre la technologie qui domine la catégorie, la F2 Light dispose de :\n\n- Pilotage efficace aux élévateurs arrière\n\n- Joncs en Nitinol\n\n- Profil shark-nose avancé\n\n- Système exclusif d'attache des A divisée en quatre\n\n- Construction légère et durable",
+                "de": "Zusätzlich zur klassenführenden Technologie bietet die F2 Light:\n\n- Effiziente Steuerung über die hinteren Tragegurte\n\n- Nitinol-Stäbchen\n\n- Fortschrittliches Shark-Nose-Profil\n\n- Exklusives vierfach geteiltes A-Anknüpfsystem\n\n- Leichte, langlebige Bauweise"
+              }
+            },
+            {
+              "titulo": {
                 "pt": "Traçado híbrido 3-2 linhas",
                 "en": "Hybrid 3-2 line layout",
                 "es": "Trazado híbrido 3-2 líneas",
@@ -944,27 +976,27 @@
                 "de": "Hybrides 3-2-Leinenlayout"
               },
               "texto": {
-                "pt": "O traçado híbrido 3-2 linhas reduz muito o arrasto face ao traçado tradicional de 3 linhas, o que se traduz em ganhos de desempenho evidentes.\n\nA Flow foi a empresa que inventou a tecnologia 3-2 linhas (por vezes chamada 2.5 linhas), pelo que trazemos a este desenho um conhecimento e uma experiência muito profundos.",
-                "en": "The hybrid 3-2 line layout significantly reduces drag compared to the traditional 3-line setup. This advancement translates into notable performance gains.\n\nFlow was the company who invented the 3-2 line technology (sometimes referred to as the 2.5 liner), so we bring extensive know-how and expertise to this advanced design.",
-                "es": "El trazado híbrido 3-2 líneas reduce mucho la resistencia frente al trazado tradicional de 3 líneas, lo que se traduce en ganancias de rendimiento evidentes.\n\nFlow fue la empresa que inventó la tecnología 3-2 líneas (a veces llamada 2.5 líneas), por lo que aportamos a este diseño un conocimiento y una experiencia muy profundos.",
-                "fr": "Le suspentage hybride 3-2 lignes réduit fortement la traînée par rapport au suspentage traditionnel à 3 lignes, ce qui se traduit par des gains de performance évidents.\n\nFlow est l'entreprise qui a inventé la technologie 3-2 lignes (parfois appelée 2.5 lignes) ; nous apportons donc à ce dessin un savoir-faire et une expertise très approfondis.",
-                "de": "Das hybride 3-2-Leinenlayout senkt den Widerstand deutlich gegenüber dem klassischen Dreileiner — mit klar spürbaren Leistungsgewinnen.\n\nFlow hat die 3-2-Leinentechnologie (mitunter 2.5-Leiner genannt) erfunden; wir bringen also sehr tiefes Wissen und viel Erfahrung in dieses Design ein."
+                "pt": "O traçado híbrido 3-2 linhas reduz muito o arrasto face ao traçado tradicional de 3 linhas. Este avanço traduz-se em ganhos de desempenho evidentes:\n\n- Melhor planeio\n\n- Mais solidez\n\n- Mais eficiência\n\n- Maior velocidade de ponta\n\n- Mais estabilidade a todas as velocidades\n\nA Flow foi a empresa que inventou a tecnologia 3-2 linhas (por vezes chamada 2.5 linhas), pelo que trazemos a este desenho um conhecimento e uma experiência muito profundos.",
+                "en": "The hybrid 3-2 line layout significantly reduces drag compared to the traditional 3-line setup. This advancement translates into notable performance gains, including:\n\n- Enhanced glide\n\n- Greater solidity\n\n- Improved efficiency\n\n- Higher top-end speed\n\n- Increased stability at all speeds\n\nFlow was the company who invented the 3-2 line technology (sometimes referred to as the 2.5 liner), so we bring extensive know-how and expertise to this advanced design.",
+                "es": "El trazado híbrido 3-2 líneas reduce mucho la resistencia frente al trazado tradicional de 3 líneas. Este avance se traduce en ganancias de rendimiento evidentes:\n\n- Mejor planeo\n\n- Más solidez\n\n- Más eficiencia\n\n- Mayor velocidad punta\n\n- Más estabilidad a todas las velocidades\n\nFlow fue la empresa que inventó la tecnología 3-2 líneas (a veces llamada 2.5 líneas), por lo que aportamos a este diseño un conocimiento y una experiencia muy profundos.",
+                "fr": "Le suspentage hybride 3-2 lignes réduit fortement la traînée par rapport au suspentage traditionnel à 3 lignes. Cette avancée se traduit par des gains de performance nets :\n\n- Meilleure finesse\n\n- Plus de solidité\n\n- Plus d'efficacité\n\n- Vitesse max plus élevée\n\n- Plus de stabilité à toutes les vitesses\n\nFlow est l'entreprise qui a inventé la technologie 3-2 lignes (parfois appelée 2.5 lignes) ; nous apportons donc à ce dessin un savoir-faire très approfondi.",
+                "de": "Das hybride 3-2-Leinenlayout senkt den Widerstand deutlich gegenüber dem klassischen Dreileiner. Dieser Fortschritt bringt spürbare Leistungsgewinne:\n\n- Bessere Gleitleistung\n\n- Mehr Solidität\n\n- Mehr Effizienz\n\n- Höhere Endgeschwindigkeit\n\n- Mehr Stabilität bei allen Geschwindigkeiten\n\nFlow hat die 3-2-Leinentechnologie (mitunter 2.5-Leiner genannt) erfunden; wir bringen also sehr tiefes Wissen und viel Erfahrung in dieses Design ein."
               }
             },
             {
               "titulo": {
-                "pt": "Sistema VPA",
-                "en": "VPA system (variable pressure A-attachment)",
-                "es": "Sistema VPA",
-                "fr": "Système VPA",
-                "de": "VPA-System"
+                "pt": "Perfil shark nose avançado",
+                "en": "Advanced shark nose",
+                "es": "Perfil shark nose avanzado",
+                "fr": "Profil shark nose avancé",
+                "de": "Fortschrittliches Shark-Nose-Profil"
               },
               "texto": {
-                "pt": "O sistema **VPA**, com fixação das A's dividida em quatro, não só melhora a estabilidade estrutural do bordo de ataque — mantendo o ângulo de ataque positivo mesmo em ângulos negativos — como melhora significativamente a facilidade de descolagem. O sistema posiciona geometricamente os pontos de fixação das A's da melhor forma, o que leva a uma distribuição mais uniforme dos esforços.\n\nUma das características que mais se destacam é justamente o efeito na inflação: simplifica todo o processo e faz da F2 Light uma das asas mais fáceis de inflar e de descolar. Quando se aplica o acelerador, o VPA **transfere a pressão para as linhas de trás** da divisão em quatro, estabilizando o bordo de ataque e dando-lhe melhor suporte estrutural. Esta transferência é especialmente eficaz nos ângulos de ataque mais críticos, como a acelerador cheio.\n\nO VPA usa uma abordagem semelhante à das asas de topo de gama, onde os pontos de fixação das A's ficam mais recuados. Este deslocamento do centro de massa para as linhas da frente resulta num bordo de ataque mais forte e mais resistente a fechos, sobretudo em ângulos de ataque baixos. No conjunto, melhora tanto a descolagem como o desempenho em condições turbulentas.",
-                "en": "The 4-way A-attachment **VPA** system not only enhances the structural stability of the glider's leading edge — maintaining a positive Angle of Attack even at negative angles — but also significantly improves the ease of takeoff. This innovative system optimally positions the A-attachment points geometrically, leading to a more even distribution of forces.\n\nOne of the standout features of the VPA system is its effect on takeoff inflation. It simplifies the inflation process, making the F2 Light one of the easiest gliders to inflate and launch. When you engage the speed bar, the VPA **shifts pressure towards the rear lines** of the \"4-line split\", stabilizing the leading edge and providing better structural support. This shift is especially effective during critical AoA scenarios, such as when fully on the speed bar.\n\nThe VPA system incorporates a design approach similar to high-end gliders, where A-attachment points are set further back. This shift in the centre of mass towards the front lines results in a stronger, more collapse-resistant leading edge, particularly effective at lower AoAs. Overall, this combination of features enhances both the takeoff experience and performance in turbulent conditions.",
-                "es": "El sistema **VPA**, con fijación de las A dividida en cuatro, no solo mejora la estabilidad estructural del borde de ataque —manteniendo el ángulo de ataque positivo incluso en ángulos negativos— sino que mejora significativamente la facilidad de despegue. El sistema posiciona geométricamente los puntos de fijación de las A de la mejor forma, lo que lleva a una distribución más uniforme de los esfuerzos.\n\nUna de las características que más destacan es justamente el efecto en el inflado: simplifica todo el proceso y hace de la F2 Light una de las alas más fáciles de inflar y de despegar. Cuando se aplica el acelerador, el VPA **transfiere la presión a las líneas traseras** de la división en cuatro, estabilizando el borde de ataque y dándole mejor soporte estructural. Esta transferencia es especialmente eficaz en los ángulos de ataque más críticos, como a acelerador completo.\n\nEl VPA usa un enfoque similar al de las alas de gama alta, donde los puntos de fijación de las A quedan más retrasados. Este desplazamiento del centro de masa hacia las líneas delanteras resulta en un borde de ataque más fuerte y más resistente a las plegadas, sobre todo en ángulos de ataque bajos. En conjunto, mejora tanto el despegue como el rendimiento en condiciones turbulentas.",
-                "fr": "Le système **VPA**, avec attache des A divisée en quatre, améliore non seulement la stabilité structurelle du bord d'attaque — en maintenant une incidence positive même à des angles négatifs — mais améliore aussi nettement la facilité de décollage. Le système positionne géométriquement les points d'attache des A de façon optimale, ce qui donne une répartition plus uniforme des efforts.\n\nL'une des caractéristiques les plus marquantes est justement son effet sur le gonflage : il simplifie tout le processus et fait de la F2 Light l'une des ailes les plus faciles à gonfler et à décoller. Lorsqu'on enfonce l'accélérateur, le VPA **transfère la pression vers les suspentes arrière** de la division en quatre, stabilisant le bord d'attaque et lui donnant un meilleur soutien structurel. Ce transfert est particulièrement efficace aux incidences les plus critiques, comme à accélérateur plein.\n\nLe VPA emprunte une approche similaire à celle des ailes haut de gamme, où les points d'attache des A sont placés plus en arrière. Ce déplacement du centre de masse vers les suspentes avant donne un bord d'attaque plus solide et plus résistant aux fermetures, surtout à faible incidence. Au total, cela améliore à la fois le décollage et les performances en conditions turbulentes.",
-                "de": "Das **VPA**-System mit vierfach geteilter A-Anknüpfung verbessert nicht nur die strukturelle Stabilität der Eintrittskante — es hält den Anstellwinkel selbst bei negativen Winkeln positiv — sondern erleichtert auch den Start erheblich. Das System positioniert die A-Anknüpfpunkte geometrisch optimal, was zu einer gleichmäßigeren Kraftverteilung führt.\n\nEine der auffälligsten Eigenschaften ist genau dieser Effekt beim Aufziehen: Er vereinfacht den gesamten Vorgang und macht die F2 Light zu einem der am leichtesten aufzuziehenden und zu startenden Schirme. Beim Treten des Beschleunigers **verlagert das VPA den Druck auf die hinteren Leinen** der vierfachen Teilung, stabilisiert die Eintrittskante und gibt ihr besseren strukturellen Halt. Diese Verlagerung wirkt besonders bei den kritischsten Anstellwinkeln, etwa bei voll getretenem Beschleuniger.\n\nDas VPA folgt einem Ansatz ähnlich dem von Hochleistungsschirmen, bei denen die A-Anknüpfpunkte weiter hinten sitzen. Die Verlagerung des Massenschwerpunkts zu den vorderen Leinen ergibt eine stärkere, klappresistentere Eintrittskante, vor allem bei niedrigen Anstellwinkeln. Insgesamt verbessert das sowohl den Start als auch die Leistung in turbulenten Bedingungen."
+                "pt": "O nosso perfil shark nose avançado é um perfil estável em pitch, derivado das nossas 2 linhas de topo de gama. O que significa:\n\n- Mais solidez\n\n- Pressão interna mais alta\n\n- Menos oscilações\n\n- Planeios mais eficientes\n\n- Mais conforto",
+                "en": "Our advanced shark nose profile is a pitch stable aerofoil derived from our high-end 2-liners, which means:\n\n- More solidity\n\n- Higher internal pressure\n\n- Less oscillations\n\n- More efficient glides\n\n- Higher comfort",
+                "es": "Nuestro perfil shark nose avanzado es un perfil estable en cabeceo, derivado de nuestras 2 líneas de gama alta. Lo que significa:\n\n- Más solidez\n\n- Presión interna más alta\n\n- Menos oscilaciones\n\n- Planeos más eficientes\n\n- Más confort",
+                "fr": "Notre profil shark nose avancé est un profil stable en tangage, dérivé de nos 2 lignes haut de gamme. C'est-à-dire :\n\n- Plus de solidité\n\n- Pression interne plus élevée\n\n- Moins d'oscillations\n\n- Des transitions plus efficaces\n\n- Plus de confort",
+                "de": "Unser fortschrittliches Shark-Nose-Profil ist ein nickstabiles Profil, abgeleitet von unseren Hochleistungs-Zweileinern. Das bedeutet:\n\n- Mehr Solidität\n\n- Höherer Innendruck\n\n- Weniger Oszillationen\n\n- Effizientere Gleitflüge\n\n- Mehr Komfort"
               }
             },
             {
@@ -977,10 +1009,26 @@
               },
               "texto": {
                 "pt": "Cada painel e cada diagonal foi cuidadosamente dimensionado e analisado com modelação por computador, para garantir o equilíbrio ideal de tensão da vela na corda e na envergadura. Este processo minucioso dá uma vela com menos distorção ao longo da envergadura, com uma sensação mais esticada e mais reativa. A flexibilidade da vela está afinada para transmitir o feedback ideal.\n\nUma vela bem tensionada é essencial para dar ao piloto o retorno preciso de que precisa para perceber a dinâmica do ar à sua volta. É particularmente importante em térmica, onde conseguir sentir as variações subtis de ascendência e de descendência ajuda a encontrar o núcleo e a manter-se nele durante mais tempo.",
-                "en": "Each panel and diagonal has been carefully dimensioned and analyzed using advanced computer models to ensure the optimal balance of chord and span-wise sail tension. This meticulous process results in a canopy with reduced spanwise distortion, providing a tighter and more responsive feel. The sail's flex characteristics are perfectly tuned to deliver ideal feedback.\n\nA well-tensioned sail is crucial for giving pilots the precise feedback they need to understand the air dynamics around them. This is particularly important while thermalling, where being able to sense subtle changes in lift and sink helps in finding and staying in the core for longer.",
+                "en": "Each panel and diagonal has been carefully dimensioned and analyzed using advanced computer models to ensure the optimal balance of chord and span-wise sail tension. This meticulous process results in a canopy with reduced spanwise distortion, providing a tighter and more responsive feel. The sail's flex characteristics are perfectly tuned to deliver ideal feedback.\n\nA well-tensioned sail is crucial for giving pilots the precise feedback they need to understand the air dynamics around them. This is particularly important while thermalling, where being able to sense subtle changes in lift and sink helps in finding and staying in the core longer.",
                 "es": "Cada panel y cada diagonal se ha dimensionado y analizado cuidadosamente con modelos por ordenador, para garantizar el equilibrio ideal de tensión de la vela en la cuerda y en la envergadura. Este proceso minucioso da una vela con menos distorsión a lo largo de la envergadura, con una sensación más tensa y más reactiva. La flexibilidad de la vela está afinada para transmitir el retorno ideal.\n\nUna vela bien tensada es esencial para dar al piloto la información precisa que necesita para entender la dinámica del aire a su alrededor. Es particularmente importante en térmica, donde poder sentir las variaciones sutiles de ascendencia y descendencia ayuda a encontrar el núcleo y a mantenerse en él más tiempo.",
                 "fr": "Chaque panneau et chaque diagonale a été soigneusement dimensionné et analysé à l'aide de modèles informatiques avancés, afin d'assurer l'équilibre optimal de tension de voile dans la corde et dans l'envergure. Ce processus minutieux donne une voile avec moins de distorsion en envergure, plus tendue et plus réactive. La souplesse de la voile est réglée pour transmettre le retour idéal.\n\nUne voile bien tendue est essentielle pour donner au pilote l'information précise dont il a besoin pour comprendre la dynamique de l'air autour de lui. C'est particulièrement important en thermique, où percevoir les variations subtiles d'ascendance et de descendance aide à trouver le noyau et à y rester plus longtemps.",
                 "de": "Jedes Panel und jede Diagonale wurde sorgfältig dimensioniert und mit fortschrittlicher Computermodellierung analysiert, um die optimale Balance der Tuchspannung in Profiltiefe und Spannweite sicherzustellen. Dieser akribische Prozess ergibt ein Tuch mit weniger Verformung über die Spannweite, das sich straffer und reaktionsfreudiger anfühlt. Die Flexibilität des Tuchs ist auf ideales Feedback abgestimmt.\n\nEin gut gespanntes Tuch ist entscheidend, um dem Piloten die präzise Rückmeldung zu geben, die er braucht, um die Luftdynamik um sich herum zu verstehen. Besonders in der Thermik hilft das Erspüren feiner Auf- und Abwindänderungen dabei, den Kern zu finden und länger darin zu bleiben."
+              }
+            },
+            {
+              "titulo": {
+                "pt": "Sistema VPA",
+                "en": "VPA system (variable pressure A-attachment)",
+                "es": "Sistema VPA",
+                "fr": "Système VPA",
+                "de": "VPA-System"
+              },
+              "texto": {
+                "pt": "O sistema **VPA**, com fixação das A dividida em quatro, não só melhora a estabilidade estrutural do bordo de ataque — mantendo o ângulo de ataque positivo mesmo em ângulos negativos — como melhora significativamente a facilidade de descolagem. O sistema posiciona geometricamente os pontos de fixação das A da melhor forma, o que leva a uma distribuição mais uniforme dos esforços ao longo da envergadura do bordo de ataque.\n\nUma das características que mais se destacam é justamente o efeito na inflação: simplifica todo o processo e faz da F2 Light uma das asas mais fáceis de inflar e de descolar. Quando se aplica o acelerador, o VPA **transfere a pressão para as linhas de trás** da divisão em quatro, estabilizando o bordo de ataque e dando-lhe melhor suporte estrutural. Esta transferência é especialmente eficaz nos ângulos de ataque mais críticos, como a acelerador cheio.\n\nO VPA usa uma abordagem semelhante à das asas de topo de gama, onde os pontos de fixação das A ficam mais recuados. Este deslocamento do centro de massa para as linhas da frente resulta num bordo de ataque mais forte e mais resistente a fechos, sobretudo em ângulos de ataque baixos. No conjunto, melhora tanto a descolagem como o desempenho em condições turbulentas.",
+                "en": "The 4-way A-attachment **VPA** system not only enhances the structural stability of the glider's leading edge — maintaining a positive Angle of Attack even at negative angles — but also significantly improves the ease of takeoff. This innovative system optimally positions the A-attachment points geometrically, leading to a more even distribution of forces along the leading-edge span.\n\nOne of the standout features of the VPA system is its effect on takeoff inflation. It simplifies the inflation process, making the F2 Light one of the easiest gliders to inflate and launch. When you engage the speed bar, the VPA **shifts pressure towards the rear lines** of the \"4-line split\", stabilizing the leading edge and providing better structural support. This shift is especially effective during critical AoA scenarios, such as when fully on the speed bar.\n\nThe VPA system incorporates a design approach similar to high-end gliders, where A-attachment points are set further back. This shift in the centre of mass towards the front lines results in a stronger, more collapse-resistant leading edge, particularly effective at lower AoAs. Overall, this combination of features enhances both the takeoff experience and performance in turbulent conditions.",
+                "es": "El sistema **VPA**, con fijación de las A dividida en cuatro, no solo mejora la estabilidad estructural del borde de ataque —manteniendo el ángulo de ataque positivo incluso en ángulos negativos— sino que mejora significativamente la facilidad de despegue. El sistema posiciona geométricamente los puntos de fijación de las A de la mejor forma, lo que lleva a una distribución más uniforme de los esfuerzos a lo largo de la envergadura del borde de ataque.\n\nUna de las características que más destacan es justamente el efecto en el inflado: simplifica todo el proceso y hace de la F2 Light una de las alas más fáciles de inflar y de despegar. Cuando se aplica el acelerador, el VPA **transfiere la presión a las líneas traseras** de la división en cuatro, estabilizando el borde de ataque y dándole mejor soporte estructural. Esta transferencia es especialmente eficaz en los ángulos de ataque más críticos, como a acelerador completo.\n\nEl VPA usa un enfoque similar al de las alas de gama alta, donde los puntos de fijación de las A quedan más retrasados. Este desplazamiento del centro de masa hacia las líneas delanteras resulta en un borde de ataque más fuerte y más resistente a las plegadas, sobre todo en ángulos de ataque bajos. En conjunto, mejora tanto el despegue como el rendimiento en condiciones turbulentas.",
+                "fr": "Le système **VPA**, avec attache des A divisée en quatre, améliore non seulement la stabilité structurelle du bord d'attaque — en maintenant une incidence positive même à des angles négatifs — mais améliore aussi nettement la facilité de décollage. Le système positionne géométriquement les points d'attache des A de façon optimale, ce qui donne une répartition plus uniforme des efforts sur l'envergure du bord d'attaque.\n\nL'une des caractéristiques les plus marquantes est justement son effet sur le gonflage : il simplifie tout le processus et fait de la F2 Light l'une des ailes les plus faciles à gonfler et à décoller. Lorsqu'on enfonce l'accélérateur, le VPA **transfère la pression vers les suspentes arrière** de la division en quatre, stabilisant le bord d'attaque et lui donnant un meilleur soutien structurel. Ce transfert est particulièrement efficace aux incidences les plus critiques, comme à accélérateur plein.\n\nLe VPA emprunte une approche similaire à celle des ailes haut de gamme, où les points d'attache des A sont placés plus en arrière. Ce déplacement du centre de masse vers les suspentes avant donne un bord d'attaque plus solide et plus résistant aux fermetures, surtout à faible incidence. Au total, cela améliore à la fois le décollage et les performances en conditions turbulentes.",
+                "de": "Das **VPA**-System mit vierfach geteilter A-Anknüpfung verbessert nicht nur die strukturelle Stabilität der Eintrittskante — es hält den Anstellwinkel selbst bei negativen Winkeln positiv — sondern erleichtert auch den Start erheblich. Das System positioniert die A-Anknüpfpunkte geometrisch optimal, was zu einer gleichmäßigeren Kraftverteilung über die Spannweite der Eintrittskante führt.\n\nEine der auffälligsten Eigenschaften ist genau dieser Effekt beim Aufziehen: Er vereinfacht den gesamten Vorgang und macht die F2 Light zu einem der am leichtesten aufzuziehenden und zu startenden Schirme. Beim Treten des Beschleunigers **verlagert das VPA den Druck auf die hinteren Leinen** der vierfachen Teilung, stabilisiert die Eintrittskante und gibt ihr besseren strukturellen Halt. Diese Verlagerung wirkt besonders bei den kritischsten Anstellwinkeln, etwa bei voll getretenem Beschleuniger.\n\nDas VPA folgt einem Ansatz ähnlich dem von Hochleistungsschirmen, bei denen die A-Anknüpfpunkte weiter hinten sitzen. Die Verlagerung des Massenschwerpunkts zu den vorderen Leinen ergibt eine stärkere, klappresistentere Eintrittskante, vor allem bei niedrigen Anstellwinkeln. Insgesamt verbessert das sowohl den Start als auch die Leistung in turbulenten Bedingungen."
               }
             },
             {
@@ -998,9 +1046,103 @@
                 "fr": "La F2 Light dispose d'un arc redessiné, qui offre une autorité en roulis exceptionnelle pour le vol thermique et le centrage des ascendances. Avec davantage de wash-out aérodynamique près des bouts d'aile, il optimise l'angle de plané et améliore la stabilité en roulis à vitesse élevée.\n\nCe nouvel arc, inspiré de nos ailes haut de gamme, allie une approche orientée performance à une économie globale de suspentage par rapport à la version originale.",
                 "de": "Die F2 Light hat einen neu gestalteten Bogen mit außergewöhnlicher Rollautorität fürs Thermikfliegen und fürs Zentrieren. Durch mehr aerodynamischen Washout an den Flügelenden optimiert er den Gleitwinkel und verbessert die Rollstabilität bei höheren Geschwindigkeiten.\n\nDieser neue Bogen, inspiriert von unseren Hochleistungsschirmen, verbindet einen leistungsorientierten Ansatz mit insgesamt weniger Leinenmaterial als in der Ursprungsversion."
               }
+            },
+            {
+              "titulo": {
+                "pt": "Materiais",
+                "en": "Materials",
+                "es": "Materiales",
+                "fr": "Matériaux",
+                "de": "Materialien"
+              },
+              "texto": {
+                "pt": "Vela\n\n- **Porcher Skytex 32 g** — extradorso, bordo de ataque\n\n- **Porcher Skytex 27 g** — extradorso\n\n- **Porcher Skytex 27 g** — intradorso e internos\n\n- **Varetas de Nitinol (titânio)** — reforço\n\nLinhas\n\n- **Liros DC 35, DC 60** — cascatas superiores\n\n- **Edelrid 8001 130/090/050 · Liros PPSLS 65/125** — cascatas intermédias\n\n- **Liros PPSLS 200/191/120 com bainha** — linhas principais",
+                "en": "Canopy\n\n- **Porcher Skytex 32g** — upper surface, leading edge\n\n- **Porcher Skytex 27g** — upper surface\n\n- **Porcher Skytex 27g** — bottom surface and internals\n\n- **Titanium Nitinol rods** — reinforcement\n\nSuspension lines\n\n- **Liros DC 35, DC 60** — upper cascades\n\n- **Edelrid 8001 130/090/050 · Liros PPSLS 65/125** — middle cascades\n\n- **Sheathed Liros PPSLS 200/191/120** — main lines",
+                "es": "Vela\n\n- **Porcher Skytex 32 g** — extradós, borde de ataque\n\n- **Porcher Skytex 27 g** — extradós\n\n- **Porcher Skytex 27 g** — intradós e internos\n\n- **Varillas de Nitinol (titanio)** — refuerzo\n\nLíneas\n\n- **Liros DC 35, DC 60** — cascadas superiores\n\n- **Edelrid 8001 130/090/050 · Liros PPSLS 65/125** — cascadas intermedias\n\n- **Liros PPSLS 200/191/120 con funda** — líneas principales",
+                "fr": "Voile\n\n- **Porcher Skytex 32 g** — extrados, bord d'attaque\n\n- **Porcher Skytex 27 g** — extrados\n\n- **Porcher Skytex 27 g** — intrados et internes\n\n- **Joncs Nitinol (titane)** — renfort\n\nSuspentes\n\n- **Liros DC 35, DC 60** — cascades supérieures\n\n- **Edelrid 8001 130/090/050 · Liros PPSLS 65/125** — cascades intermédiaires\n\n- **Liros PPSLS 200/191/120 gainées** — suspentes principales",
+                "de": "Tuch\n\n- **Porcher Skytex 32 g** — Obersegel, Eintrittskante\n\n- **Porcher Skytex 27 g** — Obersegel\n\n- **Porcher Skytex 27 g** — Untersegel und Innenteile\n\n- **Nitinol-Stäbchen (Titan)** — Verstärkung\n\nLeinen\n\n- **Liros DC 35, DC 60** — obere Kaskaden\n\n- **Edelrid 8001 130/090/050 · Liros PPSLS 65/125** — mittlere Kaskaden\n\n- **Ummantelte Liros PPSLS 200/191/120** — Hauptleinen"
+              }
+            },
+            {
+              "titulo": {
+                "pt": "Documentos",
+                "en": "Downloads",
+                "es": "Documentos",
+                "fr": "Documents",
+                "de": "Downloads"
+              },
+              "texto": {
+                "pt": "",
+                "en": "",
+                "es": "",
+                "fr": "",
+                "de": ""
+              },
+              "ficheiros": [
+                {
+                  "nome": {
+                    "pt": "Manual do utilizador",
+                    "en": "User manual",
+                    "es": "Manual de usuario",
+                    "fr": "Manuel d'utilisation",
+                    "de": "Benutzerhandbuch"
+                  },
+                  "url": "https://www.flowparagliders.com.au/wp-content/uploads/2025/01/F2-LIGHT-Users-Manual-V01.03.pdf"
+                },
+                {
+                  "nome": {
+                    "pt": "Manual do utilizador — Deutsch",
+                    "en": "User manual — Deutsch",
+                    "es": "Manual de usuario — Deutsch",
+                    "fr": "Manuel d'utilisation — Deutsch",
+                    "de": "Benutzerhandbuch — Deutsch"
+                  },
+                  "url": "https://www.flowparagliders.com.au/wp-content/uploads/2025/01/F2-Light-Handbuch-Deutsch-V01.03.pdf"
+                },
+                {
+                  "nome": {
+                    "pt": "Folha de fábrica — XS",
+                    "en": "Factory spreadsheet — XS",
+                    "es": "Hoja de fábrica — XS",
+                    "fr": "Feuille d'usine — XS",
+                    "de": "Werks-Tabelle — XS"
+                  },
+                  "url": "https://www.flowparagliders.com.au/wp-content/uploads/2026/03/F2-LIGHT-XS-FACTORY-V2.xlsm"
+                },
+                {
+                  "nome": {
+                    "pt": "Folha de fábrica — S",
+                    "en": "Factory spreadsheet — S",
+                    "es": "Hoja de fábrica — S",
+                    "fr": "Feuille d'usine — S",
+                    "de": "Werks-Tabelle — S"
+                  },
+                  "url": "https://www.flowparagliders.com.au/wp-content/uploads/2025/01/F2-LIGHT-S-FACTORY.xlsm"
+                },
+                {
+                  "nome": {
+                    "pt": "Folha de fábrica — M",
+                    "en": "Factory spreadsheet — M",
+                    "es": "Hoja de fábrica — M",
+                    "fr": "Feuille d'usine — M",
+                    "de": "Werks-Tabelle — M"
+                  },
+                  "url": "https://www.flowparagliders.com.au/wp-content/uploads/2025/01/F2-LIGHT-M-FACTORY.xlsm"
+                },
+                {
+                  "nome": {
+                    "pt": "Folha de fábrica — L",
+                    "en": "Factory spreadsheet — L",
+                    "es": "Hoja de fábrica — L",
+                    "fr": "Feuille d'usine — L",
+                    "de": "Werks-Tabelle — L"
+                  },
+                  "url": "https://www.flowparagliders.com.au/wp-content/uploads/2025/01/F2-LIGHT-L-FACTORY.xlsm"
+                }
+              ]
             }
           ],
-          "logo": ""
+          "logo": "f2light"
         },
         {
           "visible": true,
@@ -1072,7 +1214,10 @@
             "M",
             "ML"
           ],
-          "cores": [],
+          "cores": [
+            "ocean",
+            "sunrise"
+          ],
           "specs": [
             {
               "tamanho": "S",
@@ -1434,7 +1579,11 @@
             "ML",
             "L"
           ],
-          "cores": [],
+          "cores": [
+            "lime",
+            "orange",
+            "blue"
+          ],
           "specs": [
             {
               "tamanho": "S",
@@ -1481,7 +1630,7 @@
             "de": "Die **XCRacer 2** bietet ein komfortableres Flugerlebnis als ihr Vorgänger, mit mehr Bremsautorität und mehr Komfort über den gesamten Geschwindigkeitsbereich. Die Leistungssteigerungen sind sofort spürbar, und auch die Endgeschwindigkeit konnten wir anheben.\n\nDiese neue Version ist ein ausgewogenes Projekt ohne Kompromisse. Sie erlaubt es, mit voller Geschwindigkeit bei vollem Komfort und voller Kontrolle zu fliegen. Unser Ziel war ein Schirm, der es leicht macht, sein volles Potenzial auszuschöpfen — komfortabel und zugleich maximal effizient und leistungsfähig.\n\nDas Profil wurde vollständig neu gestaltet, mit neuen Schnitten und neuen Parametern. Es ist nun das effizienteste unserer Palette, mit deutlich reduziertem **parasitärem Widerstandsbeiwert**. Diese Neugestaltung erlaubte mehr eingebaute Anstellwinkel-Verwindung im Tuch, was Aerodynamik und Washout auf eine Weise verbessert hat, wie wir es zuvor nie erreicht haben. Das Gesamtergebnis ist ein Schirm mit besserer Nickstabilität und höherem Innendruck, der weniger Pilotenkorrektur verlangt und in Nick- wie Rollachse stabiler ist.\n\nDie überarbeitete Tuchspannung verbessert Zusammenhalt und Feedback bei weniger Flex und gibt dem Piloten bessere Information. Druck und Gefühl an den hinteren Tragegurten haben wir vom Vorgängermodell übernommen; sie liegen weiterhin im mittleren bis leichten Bereich. Das ergibt ein instinktives Gefühl und eine makellose Verbindung zwischen Pilot und Schirm, die den Maßstab in unserem gesamten Programm setzt. Wir halten diese Verbindung für einen der wichtigsten Aspekte — wir wollen den Schirm **als Erweiterung unserer selbst** erleben.\n\nWir sind überzeugt, dass die XCRacer2 einen bedeutenden Fortschritt gegenüber unserem sehr erfolgreichen EN-D-Zweileiner darstellt. Wir haben auf ganzer Linie verbessert und nichts unangetastet gelassen. Dieser Schirm ist darauf ausgelegt, auf höchstem Niveau zu bestehen — und dabei Spaß zu machen und angenehm zu fliegen zu sein."
           },
           "seccoes": [],
-          "logo": ""
+          "logo": "xcracer2"
         },
         {
           "visible": true,
@@ -1783,7 +1932,7 @@
               }
             }
           ],
-          "logo": ""
+          "logo": "mullet2"
         },
         {
           "visible": true,
@@ -2241,7 +2390,10 @@
             "13",
             "15"
           ],
-          "cores": [],
+          "cores": [
+            "blue",
+            "pink"
+          ],
           "specs": [
             {
               "tamanho": "9",
@@ -2309,7 +2461,7 @@
               }
             }
           ],
-          "logo": ""
+          "logo": "mohawk"
         },
         {
           "visible": true,
@@ -2382,7 +2534,11 @@
             "19",
             "21"
           ],
-          "cores": [],
+          "cores": [
+            "lime",
+            "purple",
+            "blue"
+          ],
           "specs": [
             {
               "tamanho": "15",
@@ -2429,7 +2585,7 @@
             "de": "Die **Yoti 3** ist ein Miniwing für die anspruchsvollste Luft.\n\nDas Design wurde aus der Yoti 2 weiterentwickelt, die auf maximalen Spaßfaktor ausgelegt war. Ein überarbeitetes Profil in Verbindung mit neuen Tragegurten und neuer Grundrissform sorgt für bessere Zellenspannung — das macht die Yoti 3 dynamischer und bei hohen Geschwindigkeiten stabiler. Das großartige Handling, für das die ursprüngliche Yoti bekannt ist, bleibt unverändert."
           },
           "seccoes": [],
-          "logo": ""
+          "logo": "yoti3"
         },
         {
           "visible": true,
@@ -2502,7 +2658,12 @@
             "20",
             "23"
           ],
-          "cores": [],
+          "cores": [
+            "green",
+            "yellow",
+            "orange",
+            "red"
+          ],
           "specs": [
             {
               "tamanho": "15",
@@ -2662,7 +2823,7 @@
               }
             }
           ],
-          "logo": ""
+          "logo": "rpm3"
         },
         {
           "visible": true,
@@ -2735,7 +2896,11 @@
             "24",
             "27"
           ],
-          "cores": [],
+          "cores": [
+            "orange",
+            "blue",
+            "lime"
+          ],
           "specs": [
             {
               "tamanho": "19",
@@ -2799,7 +2964,7 @@
               }
             }
           ],
-          "logo": ""
+          "logo": "cosmospower2"
         },
         {
           "visible": true,
@@ -3061,7 +3226,9 @@
             "19",
             "21"
           ],
-          "cores": [],
+          "cores": [
+            "white"
+          ],
           "specs": [
             {
               "tamanho": "15",
@@ -3108,7 +3275,7 @@
             "de": "Die **Yoti 3 Light** ist ein leichter Miniwing für Piloten, die maximale Einfachheit am Boden und Agilität in der Luft suchen.\n\nHike & Fly, Starkwind-Soaring, Thermik-Streckenflug — die Yoti 3 Light kann das alles. Mit **2,15 kg** ist sie der vielseitigste Schirm unserer Palette und der perfekte Reisebegleiter. Geschwindigkeit, Stabilität und die beste Gleitleistung ihrer Klasse, auf einem stabilen Shark-Nose-Profil."
           },
           "seccoes": [],
-          "logo": ""
+          "logo": "yoti3light"
         },
         {
           "visible": true,
@@ -3246,7 +3413,7 @@
               }
             }
           ],
-          "logo": ""
+          "logo": "panorama"
         },
         {
           "visible": true,
@@ -3325,7 +3492,11 @@
             "M",
             "L"
           ],
-          "cores": [],
+          "cores": [
+            "blue",
+            "red",
+            "lime"
+          ],
           "specs": [
             {
               "tamanho": "XS",
@@ -3372,7 +3543,7 @@
             "de": "Die **Future Power** ist ein vielseitiger Schirm, ideal für alle, die eine Ein-Schirm-Lösung für Motor- und Freiflug suchen.\n\nSie ist der perfekte Schirm zum Lernen und Fortschreiten: ein Ein-Schirm-Konzept für die Schule und darüber hinaus. Entwickelt mit hervorragender Rollstabilität, einfachem Aufziehen, Klappresistenz und einer für die EN-A-Klasse beispiellosen Gleitleistung."
           },
           "seccoes": [],
-          "logo": ""
+          "logo": "futurepower"
         },
         {
           "visible": true,
@@ -3444,7 +3615,9 @@
             "M (160–185 cm)",
             "L (180–205 cm)"
           ],
-          "cores": [],
+          "cores": [
+            "navy"
+          ],
           "specs": [
             {
               "tamanho": "S",
@@ -3622,7 +3795,7 @@
               }
             }
           ],
-          "logo": ""
+          "logo": "visstaxc"
         },
         {
           "visible": true,
@@ -3835,7 +4008,7 @@
             "de": "Der **Flow D-CHUTE** ist ein Bremsschirm, der eigens dafür entwickelt wurde, die Sinkrate bei Hochleistungsgleitschirmen zu erhöhen.\n\nIm Einsatz **verringert der D-CHUTE die G-Kräfte** in steilen Spiralen und steigert dadurch die Sinkrate.\n\nUnser Bremsschirm ist einfach zu bedienen, wirksam und ein wichtiges Hilfsmittel, um bei Bedarf Höhe abzubauen.\n\nLeicht und kompakt mit **185 g** — der kleinste und leichteste Bremsschirm am Markt."
           },
           "seccoes": [],
-          "logo": ""
+          "logo": "dchute"
         },
         {
           "visible": true,
@@ -3917,7 +4090,9 @@
             "5.1",
             "5.8"
           ],
-          "cores": [],
+          "cores": [
+            "blue"
+          ],
           "specs": [
             {
               "tamanho": "1.8",
@@ -4071,7 +4246,7 @@
               }
             }
           ],
-          "logo": ""
+          "logo": "dwingv2"
         }
       ]
     }
