@@ -23,31 +23,39 @@
       "label": {
         "pt": "Início",
         "en": "Start",
-        "es": "",
-        "fr": "",
-        "de": ""
+        "es": "Inicio",
+        "fr": "Accueil",
+        "de": "Start"
       },
       "target": "hero"
     },
     {
       "label": {
-        "pt": "A vela"
+        "pt": "A vela",
+        "en": "The wing",
+        "es": "La vela",
+        "fr": "L’aile",
+        "de": "Der Flügel"
       },
       "target": "sobre"
     },
     {
       "label": {
-        "pt": "A tribo"
+        "pt": "A tribo",
+        "en": "The tribe",
+        "es": "La tribu",
+        "fr": "La tribu",
+        "de": "Die Community"
       },
       "target": "comunidade"
     },
     {
       "label": {
         "pt": "Dealer Flow",
-        "en": "",
-        "es": "",
-        "fr": "",
-        "de": ""
+        "en": "Flow dealer",
+        "es": "Distribuidor Flow",
+        "fr": "Revendeur Flow",
+        "de": "Flow Händler"
       },
       "target": "dealer"
     },
@@ -55,19 +63,19 @@
       "label": {
         "pt": "Produtos",
         "en": "Products",
-        "es": "",
-        "fr": "",
-        "de": ""
+        "es": "Productos",
+        "fr": "Produits",
+        "de": "Produkte"
       },
       "target": "produtos"
     },
     {
       "label": {
         "pt": "Reflex Lab",
-        "en": "",
-        "es": "",
-        "fr": "",
-        "de": ""
+        "en": "Reflex Lab",
+        "es": "Reflex Lab",
+        "fr": "Reflex Lab",
+        "de": "Reflex Lab"
       },
       "target": "reflex-lab"
     },
@@ -75,9 +83,9 @@
       "label": {
         "pt": "Música",
         "en": "Music",
-        "es": "",
-        "fr": "",
-        "de": ""
+        "es": "Música",
+        "fr": "Musique",
+        "de": "Musik"
       },
       "target": "music"
     }
