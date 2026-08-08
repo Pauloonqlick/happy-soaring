@@ -233,10 +233,13 @@ a.trust:hover{background:rgba(9,40,82,.85);border-color:rgba(255,255,255,.55);tr
   position:fixed;top:20px;right:20px;z-index:50;
   width:48px;height:48px;border:none;cursor:pointer;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
-  background:rgba(9,40,82,.35);backdrop-filter:blur(6px);border-radius:12px;
+  /* escuro neutro em vez do azul: o botão fica fixo por cima de tudo — céu
+     azul, fotos e o rodapé cor de laranja — e o neutro é o único que não
+     briga com nenhum deles */
+  background:rgba(20,10,4,.38);backdrop-filter:blur(6px);border-radius:12px;
   transition:background .2s;
 }
-.burger:hover{background:rgba(9,40,82,.55)}
+.burger:hover{background:rgba(20,10,4,.6)}
 .burger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:transform .25s,opacity .2s}
 .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 .burger.open span:nth-child(2){opacity:0}
@@ -245,7 +248,7 @@ a.trust:hover{background:rgba(9,40,82,.85);border-color:rgba(255,255,255,.55);tr
 /* fundo escurecido por trás do painel */
 .menu-backdrop{
   position:fixed;inset:0;z-index:44;
-  background:rgba(9,40,82,.45);
+  background:rgba(20,10,4,.55);
   opacity:0;pointer-events:none;transition:opacity .3s;
 }
 .menu-backdrop.open{opacity:1;pointer-events:auto}
@@ -254,7 +257,10 @@ a.trust:hover{background:rgba(9,40,82,.85);border-color:rgba(255,255,255,.55);tr
 .menu-drawer{
   position:fixed;top:0;right:0;height:100%;z-index:46;
   width:min(360px,85vw);
-  background:rgba(9,40,82,.98);backdrop-filter:blur(8px);
+  /* a cor do rodapé: o laranja da marca com o mesmo véu preto por cima.
+     O laranja puro dá 2,9:1 com texto branco e não passa em contraste;
+     assim fica entre 6:1 e 10:1, confortável de ler de alto a baixo. */
+  background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.62)),var(--orange);
   display:flex;flex-direction:column;justify-content:center;
   padding:48px 40px;
   transform:translateX(100%);
@@ -268,7 +274,9 @@ a.trust:hover{background:rgba(9,40,82,.85);border-color:rgba(255,255,255,.55);tr
   color:#fff;text-decoration:none;font-weight:800;letter-spacing:-.5px;
   font-size:clamp(26px,4vw,38px);transition:color .2s;
 }
-.menu-drawer a:hover{color:var(--orange)}
+/* o laranja da marca em cima do laranja do painel não se via: passa a um tom
+   claro e quente, que sobre este fundo dá 4,3:1 */
+.menu-drawer a:hover,.menu-drawer a:focus-visible{color:#ffd2a8}
 
 .scrollhint{
   position:absolute;bottom:30px;left:50%;transform:translateX(-50%);

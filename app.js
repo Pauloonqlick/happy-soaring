@@ -1757,6 +1757,18 @@ function buildLangSwitcher(locales) {
 
 /* ---- menu burger + âncoras ---- */
 function buildMenu(items) {
+  /* só entram as secções que estão mesmo na página: uma secção escondida no CMS
+     não é desenhada, e a entrada de menu ficava a apontar para uma âncora que
+     não existe — clicava-se e não acontecia nada. As ligações externas passam
+     sempre, porque não dependem de nenhuma secção daqui. */
+  const vivos = items.filter(mi => {
+    const target = String(mi.target || '');
+    if (!target) return false;
+    if (/^https?:\/\//.test(target)) return true;
+    return !!document.getElementById(target);
+  });
+  if (!vivos.length) return;
+
   const burger = el('button', 'burger');
   burger.setAttribute('aria-label', 'Abrir menu');
   burger.innerHTML = '<span></span><span></span><span></span>';
@@ -1765,7 +1777,7 @@ function buildMenu(items) {
   const drawer = el('nav', 'menu-drawer');
   drawer.setAttribute('aria-hidden', 'true');
   const ul = el('ul');
-  items.forEach(mi => {
+  vivos.forEach(mi => {
     const li = el('li');
     const a = el('a');
     const target = String(mi.target || '');
