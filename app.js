@@ -1340,34 +1340,6 @@ function buildFlow(item) {
     d.addEventListener('click', ev => ev.stopPropagation());
     return d;
   }
-  /* Texto em vários parágrafos, com **negrito**. Construído com nós de texto
-     e não com innerHTML: o conteúdo vem do CMS e não deve poder injetar HTML. */
-  function paragrafos(txt) {
-    /* preenche um elemento com o texto do bloco, tratando **negrito** */
-    const enche = (no, bloco) => {
-      bloco.split(/\*\*/).forEach((parte, i) => {
-        if (!parte) return;
-        if (i % 2) { const b = el('strong'); b.textContent = parte; no.appendChild(b); }
-        else no.appendChild(document.createTextNode(parte));
-      });
-      return no;
-    };
-    const saida = [];
-    let lista = null;
-    String(txt).split(/\n\s*\n/).filter(s => s.trim()).forEach(bloco => {
-      const b = bloco.trim();
-      /* linhas começadas por "- " são itens de lista e agrupam-se num <ul> */
-      if (b.startsWith('- ')) {
-        if (!lista) { lista = el('ul'); saida.push(lista); }
-        lista.appendChild(enche(el('li'), b.slice(2).trim()));
-        return;
-      }
-      lista = null;
-      saida.push(enche(el('p'), b));
-    });
-    return saida;
-  }
-
   /* ---- gráfico de gama de vento ----
      Os valores são guardados em nós (é como o fabricante os publica); a
      conversão para km/h é feita na apresentação, para não haver dois
@@ -1582,6 +1554,107 @@ function buildVideo(item) {
   return wrap;
 }
 
+/* Texto em vários parágrafos, com **negrito**. Construído com nós de texto
+   e não com innerHTML: o conteúdo vem do CMS e não deve poder injetar HTML.
+   Estava aninhada dentro de buildFlow; passou para aqui quando a biografia
+   também precisou dela. Só usa el() e o document, não fechava sobre nada. */
+function paragrafos(txt) {
+  /* preenche um elemento com o texto do bloco, tratando **negrito** */
+  const enche = (no, bloco) => {
+    bloco.split(/\*\*/).forEach((parte, i) => {
+      if (!parte) return;
+      if (i % 2) { const b = el('strong'); b.textContent = parte; no.appendChild(b); }
+      else no.appendChild(document.createTextNode(parte));
+    });
+    return no;
+  };
+  const saida = [];
+  let lista = null;
+  String(txt).split(/\n\s*\n/).filter(s => s.trim()).forEach(bloco => {
+    const b = bloco.trim();
+    /* linhas começadas por "- " são itens de lista e agrupam-se num <ul> */
+    if (b.startsWith('- ')) {
+      if (!lista) { lista = el('ul'); saida.push(lista); }
+      lista.appendChild(enche(el('li'), b.slice(2).trim()));
+      return;
+    }
+    lista = null;
+    saida.push(enche(el('p'), b));
+  });
+  return saida;
+}
+
+/* ---- biografia ----
+   Faixa de imagem, credenciais, abertura em prosa e o percurso em linha de
+   tempo. Os anos vêm dos dados e não do código, porque um marco novo tem de se
+   poder acrescentar no CMS sem tocar aqui.
+   Nomes de bandas, discos, músicas e locais são texto simples de propósito:
+   não se traduzem, e t() devolve as strings tal e qual. */
+function buildBio(item) {
+  const wrap = el('article', 'bio' + visibilityClass(item));
+
+  if (item.imagem) {
+    const fig = el('figure', 'bio-faixa');
+    const pic = el('picture');
+    /* o banner é largo (2.33:1); numa caixa alta de telemóvel cortava as
+       figuras pelo meio, por isso abaixo dos 820 entra um recorte fechado */
+    if (item.imagemMobile) {
+      const src = el('source');
+      src.media = '(max-width:820px)';
+      src.srcset = item.imagemMobile;
+      pic.appendChild(src);
+    }
+    const im = el('img');
+    im.src = item.imagem;
+    im.alt = t(item.alt) || '';
+    im.loading = 'lazy';
+    pic.appendChild(im);
+    fig.appendChild(pic);
+    const leg = t(item.legenda);
+    if (leg) { const fc = el('figcaption'); fc.textContent = leg; fig.appendChild(fc); }
+    wrap.appendChild(fig);
+  }
+
+  const corpo = el('div', 'bio-corpo');
+
+  if (item.nome) { const h = el('h3', 'bio-nome'); h.textContent = t(item.nome); corpo.appendChild(h); }
+
+  if ((item.credenciais || []).length) {
+    const ul = el('ul', 'bio-cred');
+    item.credenciais.forEach(c => { const li = el('li'); li.textContent = t(c); ul.appendChild(li); });
+    corpo.appendChild(ul);
+  }
+
+  const abre = t(item.abertura);
+  if (abre) paragrafos(abre).forEach(p => { p.classList.add('bio-abre'); corpo.appendChild(p); });
+
+  if ((item.marcos || []).length) {
+    const ul = el('ul', 'bio-linha');
+    item.marcos.forEach(m => {
+      const li = el('li');
+      const ano = t(m.ano);
+      if (ano) { const s = el('span', 'bio-ano'); s.textContent = ano; li.appendChild(s); }
+      const facto = t(m.facto);
+      if (facto) { const s = el('span', 'bio-facto'); s.textContent = facto; li.appendChild(s); }
+      const nota = t(m.nota);
+      if (nota) { const s = el('span', 'bio-nota'); s.textContent = nota; li.appendChild(s); }
+      ul.appendChild(li);
+    });
+    corpo.appendChild(ul);
+  }
+
+  const remate = t(item.remate), lema = t(item.lema);
+  if (remate || lema) {
+    const bloco = el('div', 'bio-remate');
+    if (remate) paragrafos(remate).forEach(p => bloco.appendChild(p));
+    if (lema) { const s = el('span'); s.textContent = lema; bloco.appendChild(s); }
+    corpo.appendChild(bloco);
+  }
+
+  wrap.appendChild(corpo);
+  return wrap;
+}
+
 function buildElement(item) {
   switch (item.role) {
     case 'video': return buildVideo(item);
@@ -1591,6 +1664,7 @@ function buildElement(item) {
     case 'heroImage': return buildHeroImage(item);
     case 'music': return buildMusic(item);
     case 'flow': return buildFlow(item);
+    case 'bio': return buildBio(item);
     default: return null;
   }
 }

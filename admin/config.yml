@@ -1128,6 +1128,145 @@ collections:
                         name: de
                         widget: string
                         required: false
+          - label: Biografia
+            name: bio
+            widget: object
+            summary: 'Biografia - {{fields.nome}}'
+            hint: Faixa de imagem, credenciais, abertura e o percurso em linha de tempo.
+            fields:
+              - label: Nome
+                name: nome
+                widget: string
+                required: false
+              - label: Imagem (larga)
+                name: imagem
+                widget: image
+                required: false
+                hint: Faixa larga, para ecras grandes
+              - label: Imagem (telemovel)
+                name: imagemMobile
+                widget: image
+                required: false
+                hint: Recorte mais fechado. Abaixo de 820px e esta que aparece - a larga cortaria as figuras ao meio
+              - label: Texto alternativo da imagem
+                name: alt
+                widget: object
+                collapsed: true
+                required: false
+                summary: '{{fields.pt}}'
+                fields:
+                  - {label: Portugues, name: pt, widget: string, required: false}
+                  - {label: English, name: en, widget: string, required: false}
+                  - {label: Espanol, name: es, widget: string, required: false}
+                  - {label: Francais, name: fr, widget: string, required: false}
+                  - {label: Deutsch, name: de, widget: string, required: false}
+              - label: Legenda sobre a imagem
+                name: legenda
+                widget: object
+                collapsed: true
+                required: false
+                summary: '{{fields.pt}}'
+                fields:
+                  - {label: Portugues, name: pt, widget: string, required: false}
+                  - {label: English, name: en, widget: string, required: false}
+                  - {label: Espanol, name: es, widget: string, required: false}
+                  - {label: Francais, name: fr, widget: string, required: false}
+                  - {label: Deutsch, name: de, widget: string, required: false}
+              - label: Credenciais
+                name: credenciais
+                widget: list
+                label_singular: Credencial
+                required: false
+                field: {label: Nome, name: nome, widget: string}
+                hint: Os nomes fortes, a cabeca. Nao se traduzem
+              - label: Abertura
+                name: abertura
+                widget: object
+                collapsed: true
+                required: false
+                summary: '{{fields.pt}}'
+                fields:
+                  - {label: Portugues, name: pt, widget: text, required: false}
+                  - {label: English, name: en, widget: text, required: false}
+                  - {label: Espanol, name: es, widget: text, required: false}
+                  - {label: Francais, name: fr, widget: text, required: false}
+                  - {label: Deutsch, name: de, widget: text, required: false}
+              - label: Percurso (linha de tempo)
+                name: marcos
+                widget: list
+                label_singular: Marco
+                required: false
+                fields:
+                  - label: Ano
+                    name: ano
+                    widget: object
+                    collapsed: true
+                    required: false
+                    summary: '{{fields.pt}}'
+                    hint: Um ano (1990) escreve-se so em Portugues - os numeros sao iguais em todas as linguas
+                    fields:
+                        - {label: Portugues, name: pt, widget: string, required: false}
+                        - {label: English, name: en, widget: string, required: false}
+                        - {label: Espanol, name: es, widget: string, required: false}
+                        - {label: Francais, name: fr, widget: string, required: false}
+                        - {label: Deutsch, name: de, widget: string, required: false}
+                  - label: Facto (banda, disco, etapa)
+                    name: facto
+                    widget: object
+                    collapsed: true
+                    required: false
+                    summary: '{{fields.pt}}'
+                    hint: Nomes de bandas so em Portugues - nao se traduzem
+                    fields:
+                        - {label: Portugues, name: pt, widget: string, required: false}
+                        - {label: English, name: en, widget: string, required: false}
+                        - {label: Espanol, name: es, widget: string, required: false}
+                        - {label: Francais, name: fr, widget: string, required: false}
+                        - {label: Deutsch, name: de, widget: string, required: false}
+                  - label: Nota
+                    name: nota
+                    widget: object
+                    collapsed: true
+                    required: false
+                    summary: '{{fields.pt}}'
+                    fields:
+                        - {label: Portugues, name: pt, widget: text, required: false}
+                        - {label: English, name: en, widget: text, required: false}
+                        - {label: Espanol, name: es, widget: text, required: false}
+                        - {label: Francais, name: fr, widget: text, required: false}
+                        - {label: Deutsch, name: de, widget: text, required: false}
+              - label: Remate (paragrafo em destaque)
+                name: remate
+                widget: object
+                collapsed: true
+                required: false
+                summary: '{{fields.pt}}'
+                fields:
+                  - {label: Portugues, name: pt, widget: text, required: false}
+                  - {label: English, name: en, widget: text, required: false}
+                  - {label: Espanol, name: es, widget: text, required: false}
+                  - {label: Francais, name: fr, widget: text, required: false}
+                  - {label: Deutsch, name: de, widget: text, required: false}
+              - label: Lema
+                name: lema
+                widget: object
+                collapsed: true
+                required: false
+                summary: '{{fields.pt}}'
+                fields:
+                  - {label: Portugues, name: pt, widget: string, required: false}
+                  - {label: English, name: en, widget: string, required: false}
+                  - {label: Espanol, name: es, widget: string, required: false}
+                  - {label: Francais, name: fr, widget: string, required: false}
+                  - {label: Deutsch, name: de, widget: string, required: false}
+              - label: Mostrar no desktop
+                name: showDesktop
+                widget: boolean
+                default: true
+              - label: Mostrar no mobile
+                name: showMobile
+                widget: boolean
+                default: true
           - label: Música (Happy Soaring Music)
             name: music
             widget: object
