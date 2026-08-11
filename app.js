@@ -1590,8 +1590,11 @@ function paragrafos(txt) {
    poder acrescentar no CMS sem tocar aqui.
    Nomes de bandas, discos, músicas e locais são texto simples de propósito:
    não se traduzem, e t() devolve as strings tal e qual. */
+let bioSeq = 0;
+
 function buildBio(item) {
-  const wrap = el('article', 'bio' + visibilityClass(item));
+  const caixa = el('div', 'bio-caixa' + visibilityClass(item));
+  const wrap = el('article', 'bio');
 
   if (item.imagem) {
     const fig = el('figure', 'bio-faixa');
@@ -1652,7 +1655,35 @@ function buildBio(item) {
   }
 
   wrap.appendChild(corpo);
-  return wrap;
+
+  /* A biografia só aparece por acção: sem clique fica um texto e mais nada.
+     É uma divulgação (disclosure), não um link — não muda de página, mostra o
+     que já está aqui. Por isso <button> com aria-expanded e aria-controls, que
+     é o que um leitor de ecrã precisa para anunciar "recolhido/expandido". */
+  const id = 'bio-' + (++bioSeq);
+  wrap.id = id;
+  wrap.hidden = true;
+
+  const abrir = el('button', 'bio-abrir');
+  abrir.type = 'button';
+  abrir.setAttribute('aria-expanded', 'false');
+  abrir.setAttribute('aria-controls', id);
+  const rot = el('span');
+  rot.textContent = t(item.gatilho) || t(item.nome) || '';
+  abrir.appendChild(rot);
+  abrir.insertAdjacentHTML('beforeend',
+    '<svg width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true">' +
+    '<path d="M1 1.5 7 7.5l6-6" stroke="currentColor" stroke-width="2" ' +
+    'stroke-linecap="round" stroke-linejoin="round"/></svg>');
+  abrir.addEventListener('click', () => {
+    const aberto = abrir.getAttribute('aria-expanded') === 'true';
+    abrir.setAttribute('aria-expanded', aberto ? 'false' : 'true');
+    wrap.hidden = aberto;
+  });
+
+  caixa.appendChild(abrir);
+  caixa.appendChild(wrap);
+  return caixa;
 }
 
 function buildElement(item) {

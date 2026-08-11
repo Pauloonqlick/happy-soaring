@@ -941,8 +941,25 @@ footer small{opacity:.7}
    Vive na secção da música, que é escura. O percurso vai em linha de tempo
    porque o meio da biografia é cronologia pura e em prosa lê-se mal: assim os
    nomes das bandas saltam à vista em vez de ficarem enterrados nas frases. */
-.bio{position:relative;z-index:3;width:100%;max-width:1000px;margin:0 auto;
-  background:#131313;border:1px solid #262626;border-radius:16px;overflow:hidden}
+.bio-caixa{position:relative;z-index:3;width:100%;max-width:1000px;margin:0 auto}
+
+/* o gatilho: sem clique é isto que se vê da biografia, e mais nada */
+.bio-abrir{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  width:100%;background:#131313;border:1px solid #262626;border-radius:16px;
+  padding:18px 24px;color:#fff;font:inherit;font-size:16px;font-weight:700;
+  letter-spacing:-.2px;text-align:left;cursor:pointer;
+  transition:border-color .18s,background .18s;
+}
+.bio-abrir:hover{border-color:var(--orange);background:#171717}
+.bio-abrir:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.bio-abrir svg{flex:none;color:var(--orange);transition:transform .25s}
+.bio-abrir[aria-expanded="true"]{border-radius:16px 16px 0 0;border-bottom-color:transparent}
+.bio-abrir[aria-expanded="true"] svg{transform:rotate(180deg)}
+
+.bio{background:#131313;border:1px solid #262626;border-top:none;
+  border-radius:0 0 16px 16px;overflow:hidden}
+.bio[hidden]{display:none}
 
 /* faixa da imagem: baixa de propósito — é apoio, não é o assunto */
 .bio-faixa{position:relative;height:190px;overflow:hidden}

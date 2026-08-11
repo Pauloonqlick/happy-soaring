@@ -536,6 +536,13 @@
   {
    "role": "bio",
    "nome": "Paulo Pereira",
+   "gatilho": {
+    "pt": "Paulo Pereira Biografia",
+    "en": "Paulo Pereira Biography",
+    "es": "Paulo Pereira Biografía",
+    "fr": "Paulo Pereira Biographie",
+    "de": "Paulo Pereira Biografie"
+   },
    "imagem": "images/bio/banner.webp",
    "imagemMobile": "images/bio/banner-mobile.webp",
    "alt": {
@@ -545,19 +552,6 @@
     "fr": "Paulo Pereira sur six instruments différents",
     "de": "Paulo Pereira an sechs verschiedenen Instrumenten"
    },
-   "legenda": {
-    "pt": "Seis músicos. Todos a mesma pessoa.",
-    "en": "Six musicians. All the same person.",
-    "es": "Seis músicos. Todos la misma persona.",
-    "fr": "Six musiciens. Tous la même personne.",
-    "de": "Sechs Musiker. Alle dieselbe Person."
-   },
-   "credenciais": [
-    "Kussondulola",
-    "Aqui d’El Rock, RTP",
-    "Rock Rendez-Vous",
-    "Mola Dudle"
-   ],
    "abertura": {
     "pt": "Começou a tocar guitarra aos 13 anos e nunca mais deixou de procurar novas formas de fazer música. Ao longo do tempo tornou-se multi-instrumentista, passando também pelo baixo, bateria e teclados, e desenvolvendo igualmente trabalho como compositor.",
     "en": "He picked up the guitar at 13 and never stopped looking for new ways to make music. Over time he became a multi-instrumentalist, taking on bass, drums and keyboards, and working as a composer as well.",

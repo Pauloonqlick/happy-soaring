@@ -1138,6 +1138,19 @@ collections:
                 name: nome
                 widget: string
                 required: false
+              - label: Texto que abre a biografia
+                name: gatilho
+                widget: object
+                collapsed: true
+                required: false
+                summary: '{{fields.pt}}'
+                hint: E so isto que se ve ate alguem clicar
+                fields:
+                  - {label: Portugues, name: pt, widget: string, required: false}
+                  - {label: English, name: en, widget: string, required: false}
+                  - {label: Espanol, name: es, widget: string, required: false}
+                  - {label: Francais, name: fr, widget: string, required: false}
+                  - {label: Deutsch, name: de, widget: string, required: false}
               - label: Imagem (larga)
                 name: imagem
                 widget: image
