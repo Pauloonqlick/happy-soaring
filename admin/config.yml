@@ -206,7 +206,7 @@ collections:
             name: avisos
             widget: list
             required: false
-            hint: 'So os avisos nesta lista sao carregados. So aparece um de cada vez - o primeiro que estiver dentro das datas'
+            hint: 'Só os avisos nesta lista são carregados. Só aparece um de cada vez — o primeiro que estiver dentro das datas'
             field:
               label: Aviso
               name: aviso
@@ -1162,17 +1162,17 @@ collections:
                 summary: '{{fields.pt}}'
                 hint: E so isto que se ve ate alguem clicar
                 fields:
-                  - {label: Portugues, name: pt, widget: string, required: false}
+                  - {label: Português, name: pt, widget: string, required: false}
                   - {label: English, name: en, widget: string, required: false}
-                  - {label: Espanol, name: es, widget: string, required: false}
-                  - {label: Francais, name: fr, widget: string, required: false}
+                  - {label: Español, name: es, widget: string, required: false}
+                  - {label: Français, name: fr, widget: string, required: false}
                   - {label: Deutsch, name: de, widget: string, required: false}
               - label: Imagem (larga)
                 name: imagem
                 widget: image
                 required: false
                 hint: Faixa larga, para ecras grandes
-              - label: Imagem (telemovel)
+              - label: Imagem (telemóvel)
                 name: imagemMobile
                 widget: image
                 required: false
@@ -1184,10 +1184,10 @@ collections:
                 required: false
                 summary: '{{fields.pt}}'
                 fields:
-                  - {label: Portugues, name: pt, widget: string, required: false}
+                  - {label: Português, name: pt, widget: string, required: false}
                   - {label: English, name: en, widget: string, required: false}
-                  - {label: Espanol, name: es, widget: string, required: false}
-                  - {label: Francais, name: fr, widget: string, required: false}
+                  - {label: Español, name: es, widget: string, required: false}
+                  - {label: Français, name: fr, widget: string, required: false}
                   - {label: Deutsch, name: de, widget: string, required: false}
               - label: Legenda sobre a imagem
                 name: legenda
@@ -1196,10 +1196,10 @@ collections:
                 required: false
                 summary: '{{fields.pt}}'
                 fields:
-                  - {label: Portugues, name: pt, widget: string, required: false}
+                  - {label: Português, name: pt, widget: string, required: false}
                   - {label: English, name: en, widget: string, required: false}
-                  - {label: Espanol, name: es, widget: string, required: false}
-                  - {label: Francais, name: fr, widget: string, required: false}
+                  - {label: Español, name: es, widget: string, required: false}
+                  - {label: Français, name: fr, widget: string, required: false}
                   - {label: Deutsch, name: de, widget: string, required: false}
               - label: Credenciais
                 name: credenciais
@@ -1215,10 +1215,10 @@ collections:
                 required: false
                 summary: '{{fields.pt}}'
                 fields:
-                  - {label: Portugues, name: pt, widget: text, required: false}
+                  - {label: Português, name: pt, widget: text, required: false}
                   - {label: English, name: en, widget: text, required: false}
-                  - {label: Espanol, name: es, widget: text, required: false}
-                  - {label: Francais, name: fr, widget: text, required: false}
+                  - {label: Español, name: es, widget: text, required: false}
+                  - {label: Français, name: fr, widget: text, required: false}
                   - {label: Deutsch, name: de, widget: text, required: false}
               - label: Percurso (linha de tempo)
                 name: marcos
@@ -1234,10 +1234,10 @@ collections:
                     summary: '{{fields.pt}}'
                     hint: Um ano (1990) escreve-se so em Portugues - os numeros sao iguais em todas as linguas
                     fields:
-                        - {label: Portugues, name: pt, widget: string, required: false}
+                        - {label: Português, name: pt, widget: string, required: false}
                         - {label: English, name: en, widget: string, required: false}
-                        - {label: Espanol, name: es, widget: string, required: false}
-                        - {label: Francais, name: fr, widget: string, required: false}
+                        - {label: Español, name: es, widget: string, required: false}
+                        - {label: Français, name: fr, widget: string, required: false}
                         - {label: Deutsch, name: de, widget: string, required: false}
                   - label: Facto (banda, disco, etapa)
                     name: facto
@@ -1247,10 +1247,10 @@ collections:
                     summary: '{{fields.pt}}'
                     hint: Nomes de bandas so em Portugues - nao se traduzem
                     fields:
-                        - {label: Portugues, name: pt, widget: string, required: false}
+                        - {label: Português, name: pt, widget: string, required: false}
                         - {label: English, name: en, widget: string, required: false}
-                        - {label: Espanol, name: es, widget: string, required: false}
-                        - {label: Francais, name: fr, widget: string, required: false}
+                        - {label: Español, name: es, widget: string, required: false}
+                        - {label: Français, name: fr, widget: string, required: false}
                         - {label: Deutsch, name: de, widget: string, required: false}
                   - label: Nota
                     name: nota
@@ -1259,10 +1259,10 @@ collections:
                     required: false
                     summary: '{{fields.pt}}'
                     fields:
-                        - {label: Portugues, name: pt, widget: text, required: false}
+                        - {label: Português, name: pt, widget: text, required: false}
                         - {label: English, name: en, widget: text, required: false}
-                        - {label: Espanol, name: es, widget: text, required: false}
-                        - {label: Francais, name: fr, widget: text, required: false}
+                        - {label: Español, name: es, widget: text, required: false}
+                        - {label: Français, name: fr, widget: text, required: false}
                         - {label: Deutsch, name: de, widget: text, required: false}
               - label: Remate (paragrafo em destaque)
                 name: remate
@@ -1271,10 +1271,10 @@ collections:
                 required: false
                 summary: '{{fields.pt}}'
                 fields:
-                  - {label: Portugues, name: pt, widget: text, required: false}
+                  - {label: Português, name: pt, widget: text, required: false}
                   - {label: English, name: en, widget: text, required: false}
-                  - {label: Espanol, name: es, widget: text, required: false}
-                  - {label: Francais, name: fr, widget: text, required: false}
+                  - {label: Español, name: es, widget: text, required: false}
+                  - {label: Français, name: fr, widget: text, required: false}
                   - {label: Deutsch, name: de, widget: text, required: false}
               - label: Lema
                 name: lema
@@ -1283,10 +1283,10 @@ collections:
                 required: false
                 summary: '{{fields.pt}}'
                 fields:
-                  - {label: Portugues, name: pt, widget: string, required: false}
+                  - {label: Português, name: pt, widget: string, required: false}
                   - {label: English, name: en, widget: string, required: false}
-                  - {label: Espanol, name: es, widget: string, required: false}
-                  - {label: Francais, name: fr, widget: string, required: false}
+                  - {label: Español, name: es, widget: string, required: false}
+                  - {label: Français, name: fr, widget: string, required: false}
                   - {label: Deutsch, name: de, widget: string, required: false}
               - label: Mostrar no desktop
                 name: showDesktop
@@ -2246,7 +2246,7 @@ collections:
                 required: false
                 hint: Se vazio, usa a miniatura do YouTube
   - name: avisos
-    label: Avisos e promocoes
+    label: Avisos e promoções
     label_singular: Aviso
     editor:
       preview: false
@@ -2256,12 +2256,12 @@ collections:
     slug: '{{fields.id}}'
     create: true
     summary: '{{fields.nome}}'
-    description: 'Faixas e janelas. Depois de criares um, junta-o a lista em Definicoes gerais - so os que estao la sao carregados.'
+    description: 'Faixas e janelas. Depois de criares um, junta-o à lista em Definições gerais — só os que estão lá são carregados.'
     fields:
       - label: Identificador
         name: id
         widget: string
-        hint: 'Ex: promo-mullet2-2026. E a chave do "ja vi este". Muda-o quando for outra mensagem, mantem-no quando for so uma correccao'
+        hint: 'Ex: promo-mullet2-2026. É a chave do "ja vi este". Muda-o quando for outra mensagem, mantém-no quando for só uma correcção'
       - label: Nome (para te orientares)
         name: nome
         widget: string
@@ -2271,22 +2271,22 @@ collections:
         widget: boolean
         default: false
         hint: 'O interruptor. Desliga e desaparece do site'
-      - label: Comeca em
+      - label: Começa em
         name: inicio
         widget: string
         required: false
-        hint: 'AAAA-MM-DD. Vazio = comeca ja'
+        hint: 'AAAA-MM-DD. Vazio = começa já'
       - label: Acaba em
         name: fim
         widget: string
         required: false
-        hint: 'AAAA-MM-DD. Vazio = nao acaba. Preenche sempre numa promocao'
+        hint: 'AAAA-MM-DD. Vazio = não acaba. Preenche sempre numa promoção'
       - label: Tipo
         name: tipo
         widget: select
         default: aviso
         options:
-          - {label: Promocao (laranja), value: promocao}
+          - {label: Promoção (laranja), value: promocao}
           - {label: Aviso (amarelo), value: aviso}
           - {label: Novidade (verde), value: novidade}
       - label: Como aparece
@@ -2303,7 +2303,7 @@ collections:
         min: 0
         default: 20
         required: false
-        hint: 'So para a janela. Quanto tempo espera antes de aparecer'
+        hint: 'Só para a janela. Quanto tempo espera antes de aparecer'
       - label: Voltar a mostrar ao fim de (dias)
         name: repetirDias
         widget: number
@@ -2311,21 +2311,21 @@ collections:
         min: 0
         default: 0
         required: false
-        hint: '0 = se a pessoa fechar, nao volta'
+        hint: '0 = se a pessoa fechar, não volta'
       - label: Etiqueta
         name: etiqueta
         widget: object
         collapsed: true
         required: false
         summary: '{{fields.pt}}'
-        hint: 'A palavra pequena. Ex: Promocao, Aviso'
+        hint: 'A palavra pequena. Ex: Promoção, Aviso'
         fields:
-          - {label: Portugues, name: pt, widget: string, required: false}
+          - {label: Português, name: pt, widget: string, required: false}
           - {label: English, name: en, widget: string, required: false}
-          - {label: Espanol, name: es, widget: string, required: false}
-          - {label: Francais, name: fr, widget: string, required: false}
+          - {label: Español, name: es, widget: string, required: false}
+          - {label: Français, name: fr, widget: string, required: false}
           - {label: Deutsch, name: de, widget: string, required: false}
-      - label: Titulo
+      - label: Título
         name: titulo
         widget: object
         collapsed: true
@@ -2333,32 +2333,32 @@ collections:
         summary: '{{fields.pt}}'
         hint: 'Na janela assenta no canto da imagem'
         fields:
-          - {label: Portugues, name: pt, widget: string, required: false}
+          - {label: Português, name: pt, widget: string, required: false}
           - {label: English, name: en, widget: string, required: false}
-          - {label: Espanol, name: es, widget: string, required: false}
-          - {label: Francais, name: fr, widget: string, required: false}
+          - {label: Español, name: es, widget: string, required: false}
+          - {label: Français, name: fr, widget: string, required: false}
           - {label: Deutsch, name: de, widget: string, required: false}
-      - label: Enquadramento do titulo
+      - label: Enquadramento do título
         name: tituloFormato
         widget: object
-        collapsed: true
+        collapsed: false
         required: false
-        hint: 'So conta quando ha imagem. Tudo e relativo a largura da imagem, para ficar igual em qualquer ecra'
+        hint: 'Só conta quando há imagem. Tudo é relativo à largura da imagem, para ficar igual em qualquer ecrã'
         fields:
-          - label: Posicao
+          - label: Posição
             name: ancora
             widget: select
             default: cima-esquerda
             options:
-              - {label: Cima a esquerda, value: cima-esquerda}
+              - {label: Cima à esquerda, value: cima-esquerda}
               - {label: Cima ao centro, value: cima-centro}
-              - {label: Cima a direita, value: cima-direita}
-              - {label: Meio a esquerda, value: meio-esquerda}
+              - {label: Cima à direita, value: cima-direita}
+              - {label: Meio à esquerda, value: meio-esquerda}
               - {label: Meio ao centro, value: meio-centro}
-              - {label: Meio a direita, value: meio-direita}
-              - {label: Baixo a esquerda, value: baixo-esquerda}
+              - {label: Meio à direita, value: meio-direita}
+              - {label: Baixo à esquerda, value: baixo-esquerda}
               - {label: Baixo ao centro, value: baixo-centro}
-              - {label: Baixo a direita, value: baixo-direita}
+              - {label: Baixo à direita, value: baixo-direita}
           - {label: Afastamento lateral (%), name: x, widget: number, value_type: int, min: 0, max: 45, default: 5, required: false}
           - {label: Afastamento do topo ou do fundo (%), name: y, widget: number, value_type: int, min: 0, max: 80, default: 16, required: false}
           - label: Largura do bloco (%)
@@ -2369,7 +2369,7 @@ collections:
             max: 95
             default: 52
             required: false
-            hint: 'E isto que decide onde o texto muda de linha'
+            hint: 'É isto que decide onde o texto muda de linha'
           - label: Tamanho da letra
             name: tamanho
             widget: number
@@ -2379,7 +2379,7 @@ collections:
             step: 0.2
             default: 6
             required: false
-            hint: 'Percentagem da largura da imagem. 6 e o normal'
+            hint: 'Percentagem da largura da imagem. 6 é o normal'
           - label: Alinhamento
             name: alinhar
             widget: select
@@ -2398,12 +2398,12 @@ collections:
             widget: select
             default: apertada
             options: [apertada, normal, solta]
-          - label: Espacamento das letras
+          - label: Espaçamento das letras
             name: espacamento
             widget: select
             default: normal
             options: [apertado, normal, solto]
-          - {label: Maiusculas, name: maiusculas, widget: boolean, default: false, required: false}
+          - {label: Maiúsculas, name: maiusculas, widget: boolean, default: false, required: false}
           - label: Cor
             name: cor
             widget: select
@@ -2414,24 +2414,24 @@ collections:
             widget: boolean
             default: true
             required: false
-            hint: 'Deixa ligada sobre arte carregada, e o que salva a leitura'
-          - label: No telemovel, tirar o titulo de cima da imagem
+            hint: 'Deixa ligada sobre arte carregada — é o que salva a leitura'
+          - label: No telemóvel, tirar o título de cima da imagem
             name: saiNoTelemovel
             widget: boolean
             default: false
             required: false
-            hint: 'Liga so se o enquadramento que escolheste nao servir no ecra estreito'
-      - label: Subtitulo
+            hint: 'Liga só se o enquadramento que escolheste não servir no ecrã estreito'
+      - label: Subtítulo
         name: subtitulo
         widget: object
         collapsed: true
         required: false
         summary: '{{fields.pt}}'
         fields:
-          - {label: Portugues, name: pt, widget: string, required: false}
+          - {label: Português, name: pt, widget: string, required: false}
           - {label: English, name: en, widget: string, required: false}
-          - {label: Espanol, name: es, widget: string, required: false}
-          - {label: Francais, name: fr, widget: string, required: false}
+          - {label: Español, name: es, widget: string, required: false}
+          - {label: Français, name: fr, widget: string, required: false}
           - {label: Deutsch, name: de, widget: string, required: false}
       - label: Texto
         name: texto
@@ -2441,17 +2441,17 @@ collections:
         summary: '{{fields.pt}}'
         hint: 'Na faixa e o texto todo. Na janela e opcional'
         fields:
-          - {label: Portugues, name: pt, widget: text, required: false}
+          - {label: Português, name: pt, widget: text, required: false}
           - {label: English, name: en, widget: text, required: false}
-          - {label: Espanol, name: es, widget: text, required: false}
-          - {label: Francais, name: fr, widget: text, required: false}
+          - {label: Español, name: es, widget: text, required: false}
+          - {label: Français, name: fr, widget: text, required: false}
           - {label: Deutsch, name: de, widget: text, required: false}
       - label: Imagem
         name: imagem
         widget: image
         required: false
-        hint: 'So para a janela. Sem texto la dentro - o texto e escrito aqui, para poder ser traduzido'
-      - label: Imagem (telemovel)
+        hint: 'Só para a janela. Sem texto lá dentro — o texto é escrito aqui, para poder ser traduzido'
+      - label: Imagem (telemóvel)
         name: imagemMobile
         widget: image
         required: false
@@ -2463,33 +2463,33 @@ collections:
         required: false
         summary: '{{fields.pt}}'
         fields:
-          - {label: Portugues, name: pt, widget: string, required: false}
+          - {label: Português, name: pt, widget: string, required: false}
           - {label: English, name: en, widget: string, required: false}
-          - {label: Espanol, name: es, widget: string, required: false}
-          - {label: Francais, name: fr, widget: string, required: false}
+          - {label: Español, name: es, widget: string, required: false}
+          - {label: Français, name: fr, widget: string, required: false}
           - {label: Deutsch, name: de, widget: string, required: false}
       - label: Pontos
         name: pontos
         widget: list
         label_singular: Ponto
         required: false
-        hint: 'As caixas com icone. So para a janela'
+        hint: 'As caixas com ícone. Só para a janela'
         fields:
-          - label: Icone
+          - label: Ícone
             name: icone
             widget: image
             required: false
-          - label: Titulo
+          - label: Título
             name: titulo
             widget: object
             collapsed: true
             required: false
             summary: '{{fields.pt}}'
             fields:
-              - {label: Portugues, name: pt, widget: string, required: false}
+              - {label: Português, name: pt, widget: string, required: false}
               - {label: English, name: en, widget: string, required: false}
-              - {label: Espanol, name: es, widget: string, required: false}
-              - {label: Francais, name: fr, widget: string, required: false}
+              - {label: Español, name: es, widget: string, required: false}
+              - {label: Français, name: fr, widget: string, required: false}
               - {label: Deutsch, name: de, widget: string, required: false}
           - label: Nota
             name: nota
@@ -2498,100 +2498,100 @@ collections:
             required: false
             summary: '{{fields.pt}}'
             fields:
-              - {label: Portugues, name: pt, widget: string, required: false}
+              - {label: Português, name: pt, widget: string, required: false}
               - {label: English, name: en, widget: string, required: false}
-              - {label: Espanol, name: es, widget: string, required: false}
-              - {label: Francais, name: fr, widget: string, required: false}
+              - {label: Español, name: es, widget: string, required: false}
+              - {label: Français, name: fr, widget: string, required: false}
               - {label: Deutsch, name: de, widget: string, required: false}
-      - label: Botao principal
+      - label: Botão principal
         name: botao1
         widget: object
         collapsed: true
         required: false
         fields:
-          - label: Texto do botao
+          - label: Texto do botão
             name: texto
             widget: object
             collapsed: true
             required: false
             summary: '{{fields.pt}}'
             fields:
-              - {label: Portugues, name: pt, widget: string, required: false}
+              - {label: Português, name: pt, widget: string, required: false}
               - {label: English, name: en, widget: string, required: false}
-              - {label: Espanol, name: es, widget: string, required: false}
-              - {label: Francais, name: fr, widget: string, required: false}
+              - {label: Español, name: es, widget: string, required: false}
+              - {label: Français, name: fr, widget: string, required: false}
               - {label: Deutsch, name: de, widget: string, required: false}
           - label: O que faz
             name: acao
             widget: select
             default: fechar
             options:
-              - {label: So fechar, value: fechar}
-              - {label: Ir para uma seccao, value: seccao}
+              - {label: Só fechar, value: fechar}
+              - {label: Ir para uma secção, value: seccao}
               - {label: Abrir o WhatsApp, value: whatsapp}
               - {label: Abrir um link, value: url}
           - label: Destino
             name: alvo
             widget: string
             required: false
-            hint: 'Seccao: o id (produtos, music). Link: o endereco completo. Nos outros deixa vazio'
+            hint: 'Secção: o id (produtos, music). Link: o endereço completo. Nos outros deixa vazio'
           - label: Mensagem do WhatsApp
             name: mensagem
             widget: object
             collapsed: true
             required: false
             summary: '{{fields.pt}}'
-            hint: 'A referencia do aviso vai junto, para saberes de onde veio o contacto'
+            hint: 'A referência do aviso vai junto, para saberes de onde veio o contacto'
             fields:
-              - {label: Portugues, name: pt, widget: text, required: false}
+              - {label: Português, name: pt, widget: text, required: false}
               - {label: English, name: en, widget: text, required: false}
-              - {label: Espanol, name: es, widget: text, required: false}
-              - {label: Francais, name: fr, widget: text, required: false}
+              - {label: Español, name: es, widget: text, required: false}
+              - {label: Français, name: fr, widget: text, required: false}
               - {label: Deutsch, name: de, widget: text, required: false}
-      - label: Botao secundario
+      - label: Botão secundário
         name: botao2
         widget: object
         collapsed: true
         required: false
         fields:
-          - label: Texto do botao
+          - label: Texto do botão
             name: texto
             widget: object
             collapsed: true
             required: false
             summary: '{{fields.pt}}'
             fields:
-              - {label: Portugues, name: pt, widget: string, required: false}
+              - {label: Português, name: pt, widget: string, required: false}
               - {label: English, name: en, widget: string, required: false}
-              - {label: Espanol, name: es, widget: string, required: false}
-              - {label: Francais, name: fr, widget: string, required: false}
+              - {label: Español, name: es, widget: string, required: false}
+              - {label: Français, name: fr, widget: string, required: false}
               - {label: Deutsch, name: de, widget: string, required: false}
           - label: O que faz
             name: acao
             widget: select
             default: fechar
             options:
-              - {label: So fechar, value: fechar}
-              - {label: Ir para uma seccao, value: seccao}
+              - {label: Só fechar, value: fechar}
+              - {label: Ir para uma secção, value: seccao}
               - {label: Abrir o WhatsApp, value: whatsapp}
               - {label: Abrir um link, value: url}
           - label: Destino
             name: alvo
             widget: string
             required: false
-            hint: 'Seccao: o id (produtos, music). Link: o endereco completo. Nos outros deixa vazio'
+            hint: 'Secção: o id (produtos, music). Link: o endereço completo. Nos outros deixa vazio'
           - label: Mensagem do WhatsApp
             name: mensagem
             widget: object
             collapsed: true
             required: false
             summary: '{{fields.pt}}'
-            hint: 'A referencia do aviso vai junto, para saberes de onde veio o contacto'
+            hint: 'A referência do aviso vai junto, para saberes de onde veio o contacto'
             fields:
-              - {label: Portugues, name: pt, widget: text, required: false}
+              - {label: Português, name: pt, widget: text, required: false}
               - {label: English, name: en, widget: text, required: false}
-              - {label: Espanol, name: es, widget: text, required: false}
-              - {label: Francais, name: fr, widget: text, required: false}
+              - {label: Español, name: es, widget: text, required: false}
+              - {label: Français, name: fr, widget: text, required: false}
               - {label: Deutsch, name: de, widget: text, required: false}
       - label: Letra pequena
         name: letraPequena
@@ -2599,10 +2599,10 @@ collections:
         collapsed: true
         required: false
         summary: '{{fields.pt}}'
-        hint: 'As condicoes da promocao: ate quando, para que asas, quem faz o que'
+        hint: 'As condições da promoção: até quando, para que asas, quem faz o quê'
         fields:
-          - {label: Portugues, name: pt, widget: text, required: false}
+          - {label: Português, name: pt, widget: text, required: false}
           - {label: English, name: en, widget: text, required: false}
-          - {label: Espanol, name: es, widget: text, required: false}
-          - {label: Francais, name: fr, widget: text, required: false}
+          - {label: Español, name: es, widget: text, required: false}
+          - {label: Français, name: fr, widget: text, required: false}
           - {label: Deutsch, name: de, widget: text, required: false}
