@@ -2296,6 +2296,7 @@ collections:
         options:
           - {label: Faixa no topo, value: faixa}
           - {label: Janela, value: janela}
+          - {label: Faixa + janela, value: faixa-janela}
       - label: Espera (segundos)
         name: esperaSegundos
         widget: number
@@ -2304,14 +2305,31 @@ collections:
         default: 20
         required: false
         hint: 'Só para a janela. Quanto tempo espera antes de aparecer'
-      - label: Voltar a mostrar ao fim de (dias)
-        name: repetirDias
-        widget: number
-        value_type: int
-        min: 0
-        default: 0
+      - label: Volta a aparecer
+        name: repetir
+        widget: select
+        default: sessao
+        options:
+          - {label: Em cada visita nova, value: sessao}
+          - {label: Uma vez e nunca mais, value: nunca}
+          - {label: Ao fim de 7 dias, value: '7'}
+          - {label: Ao fim de 30 dias, value: '30'}
+        hint: 'Na faixa usa "em cada visita" — não tapa nada. Na janela usa "uma vez", senão vira armadilha'
+      - label: Prazo na faixa
+        name: prazo
+        widget: select
+        default: data
+        options:
+          - {label: A data de fim, value: data}
+          - {label: Contagem decrescente, value: contagem}
+          - {label: Não mostrar, value: nenhum}
+        hint: 'Escrito a partir do campo "Acaba em". Assim a data existe num sítio só'
+      - label: Mostrar as ofertas na faixa
+        name: ofertasNaFaixa
+        widget: boolean
+        default: true
         required: false
-        hint: '0 = se a pessoa fechar, não volta'
+        hint: 'Até três, tiradas dos Pontos. No telemóvel desaparecem para a faixa não virar parede'
       - label: Etiqueta
         name: etiqueta
         widget: object
@@ -2479,6 +2497,12 @@ collections:
             name: icone
             widget: image
             required: false
+          - label: Mostrar na faixa
+            name: naFaixa
+            widget: boolean
+            default: true
+            required: false
+            hint: 'Desliga nos que são slogans — na faixa só devem ir as coisas que o cliente recebe'
           - label: Título
             name: titulo
             widget: object
@@ -2521,6 +2545,11 @@ collections:
               - {label: Español, name: es, widget: string, required: false}
               - {label: Français, name: fr, widget: string, required: false}
               - {label: Deutsch, name: de, widget: string, required: false}
+          - label: Visível
+            name: visivel
+            widget: boolean
+            default: true
+            hint: 'Desliga para esconder o botão sem perder o texto'
           - label: O que faz
             name: acao
             widget: select
@@ -2566,6 +2595,62 @@ collections:
               - {label: Español, name: es, widget: string, required: false}
               - {label: Français, name: fr, widget: string, required: false}
               - {label: Deutsch, name: de, widget: string, required: false}
+          - label: Visível
+            name: visivel
+            widget: boolean
+            default: true
+            hint: 'Desliga para esconder o botão sem perder o texto'
+          - label: O que faz
+            name: acao
+            widget: select
+            default: fechar
+            options:
+              - {label: Só fechar, value: fechar}
+              - {label: Ir para uma secção, value: seccao}
+              - {label: Abrir o WhatsApp, value: whatsapp}
+              - {label: Abrir um link, value: url}
+          - label: Destino
+            name: alvo
+            widget: string
+            required: false
+            hint: 'Secção: o id (produtos, music). Link: o endereço completo. Nos outros deixa vazio'
+          - label: Mensagem do WhatsApp
+            name: mensagem
+            widget: object
+            collapsed: true
+            required: false
+            summary: '{{fields.pt}}'
+            hint: 'A referência do aviso vai junto, para saberes de onde veio o contacto'
+            fields:
+              - {label: Português, name: pt, widget: text, required: false}
+              - {label: English, name: en, widget: text, required: false}
+              - {label: Español, name: es, widget: text, required: false}
+              - {label: Français, name: fr, widget: text, required: false}
+              - {label: Deutsch, name: de, widget: text, required: false}
+      - label: Botão da cor (terceiro)
+        name: botao3
+        widget: object
+        collapsed: true
+        required: false
+        hint: 'O acesso a escolha da cor. Deixa invisivel enquanto a pagina nao existir'
+        fields:
+          - label: Texto do botão
+            name: texto
+            widget: object
+            collapsed: true
+            required: false
+            summary: '{{fields.pt}}'
+            fields:
+              - {label: Português, name: pt, widget: string, required: false}
+              - {label: English, name: en, widget: string, required: false}
+              - {label: Español, name: es, widget: string, required: false}
+              - {label: Français, name: fr, widget: string, required: false}
+              - {label: Deutsch, name: de, widget: string, required: false}
+          - label: Visível
+            name: visivel
+            widget: boolean
+            default: true
+            hint: 'Desliga para esconder o botão sem perder o texto'
           - label: O que faz
             name: acao
             widget: select

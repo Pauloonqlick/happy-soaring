@@ -106,6 +106,14 @@ const UI = {
   flowTamanhos:   { pt:'Tamanhos', en:'Sizes', es:'Tallas', fr:'Tailles', de:'Größen' },
   flowVerDetalhes:{ pt:'Detalhes', en:'Details', es:'Detalles', fr:'Détails', de:'Details' },
   flowFechar:     { pt:'Fechar', en:'Close', es:'Cerrar', fr:'Fermer', de:'Schließen' },
+  /* prazo dos avisos — escrito a partir da data de fim, nunca à mão */
+  avisoAte:       { pt:'Até {d}', en:'Until {d}', es:'Hasta el {d}', fr:'Jusqu’au {d}', de:'Bis {d}' },
+  avisoFaltam:    { pt:'Faltam {n} dias', en:'{n} days left', es:'Quedan {n} días',
+                    fr:'Encore {n} jours', de:'Noch {n} Tage' },
+  avisoFaltaUm:   { pt:'Falta 1 dia', en:'1 day left', es:'Queda 1 día',
+                    fr:'Encore 1 jour', de:'Noch 1 Tag' },
+  avisoUltimoDia: { pt:'Último dia', en:'Last day', es:'Último día',
+                    fr:'Dernier jour', de:'Letzter Tag' },
   flowPedirPreco: { pt:'Preço', en:'Price', es:'Precio', fr:'Prix', de:'Preis' },
   flowMsgPreco:   { pt:'Olá! Queria pedir preço para a {n}. Estou em {p}.',
                     en:'Hi! I would like a price for the {n}. I am in {p}.',
@@ -1693,13 +1701,21 @@ function buildBio(item) {
 
 const AVISO_MEM = 'hs-avisos';
 
-function avisosFechados() {
-  try { return JSON.parse(localStorage.getItem(AVISO_MEM)) || {}; } catch (e) { return {}; }
+function leMem(loja) {
+  try { return JSON.parse(loja.getItem(AVISO_MEM)) || {}; } catch (e) { return {}; }
 }
+function avisosFechados() { return leMem(localStorage); }
+function avisosFechadosSessao() { return leMem(sessionStorage); }
+
+/* Fechar guarda-se nos dois sítios: a sessão serve o "fica fechado enquanto cá
+   estou", o localStorage serve o "não voltes durante N dias". Qual deles conta
+   depende do que o aviso pedir. */
 function marcaFechado(id) {
-  const m = avisosFechados();
-  m[id] = Date.now();
-  try { localStorage.setItem(AVISO_MEM, JSON.stringify(m)); } catch (e) {}
+  [localStorage, sessionStorage].forEach(loja => {
+    const m = leMem(loja);
+    m[id] = Date.now();
+    try { loja.setItem(AVISO_MEM, JSON.stringify(m)); } catch (e) {}
+  });
 }
 
 /* Datas em AAAA-MM-DD. Comparadas como texto para não haver surpresas de fuso:
@@ -1716,13 +1732,40 @@ function avisoElegivel(a, fechados) {
   if (a.inicio && hoje < String(a.inicio).slice(0, 10)) return false;
   if (a.fim && hoje > String(a.fim).slice(0, 10)) return false;
 
+  /* três políticas:
+       sessao — volta em cada visita nova, mas fica fechado nesta
+       nunca  — fechou uma vez, não volta mais
+       <n>    — volta ao fim de n dias
+     A faixa não tapa nada, por isso a omissão dela é "sessao"; a janela
+     interrompe, e uma janela que salta a cada visita é uma armadilha. */
+  const politica = a.repetir || (a.forma === 'faixa' ? 'sessao' : 'nunca');
+
+  if (politica === 'sessao') return !avisosFechadosSessao()[a.id];
+  if (politica === 'nunca') return !fechados[a.id];
+
   const quando = fechados[a.id];
-  if (quando) {
-    /* repetir: "nunca" não volta; um número é o nº de dias até poder voltar */
-    if (!a.repetirDias) return false;
-    if (Date.now() - quando < a.repetirDias * 86400000) return false;
-  }
+  const dias = Number(politica) || 0;
+  if (quando && (!dias || Date.now() - quando < dias * 86400000)) return false;
   return true;
+}
+
+/* O prazo é escrito a partir da data de fim, para a data existir num sítio só:
+   estica-se a promoção uma semana e não há cinco textos para corrigir. */
+function prazoAviso(a) {
+  if (!a.fim || a.prazo === 'nenhum') return '';
+  const fim = new Date(String(a.fim).slice(0, 10) + 'T23:59:59');
+  if (isNaN(fim)) return '';
+  if (a.prazo === 'contagem') {
+    const dias = Math.ceil((fim - Date.now()) / 86400000);
+    if (dias < 0) return '';
+    if (dias === 0) return ui('avisoUltimoDia');
+    if (dias === 1) return ui('avisoFaltaUm');
+    return ui('avisoFaltam', { n: dias });
+  }
+  let d;
+  try { d = fim.toLocaleDateString(LOCALE, { day: 'numeric', month: 'long' }); }
+  catch (e) { d = String(a.fim).slice(0, 10); }
+  return ui('avisoAte', { d: d });
 }
 
 /* O botão faz uma de quatro coisas. Nada de endereços à mão: o que existe está
@@ -1768,8 +1811,28 @@ function faixaAviso(a, num) {
   const txt = el('span', 'av-txt'); txt.textContent = t(a.texto) || t(a.titulo);
   faixa.appendChild(txt);
 
+  /* as ofertas saem dos pontos que já preencheste para a janela — não se
+     reescrevem. No estreito desaparecem: uma faixa de três linhas num telemóvel
+     deixa de ser uma faixa e passa a ser uma parede. */
+  if (a.ofertasNaFaixa !== false && (a.pontos || []).length) {
+    const g = el('span', 'av-ofertas');
+    /* só os pontos marcados como oferta: entre eles há slogans, e um slogan
+       na faixa ocupa o lugar de uma coisa que se recebe */
+    a.pontos.filter(p => p.naFaixa !== false).slice(0, 3).forEach(p => {
+      const nome = t(p.titulo);
+      if (!nome) return;
+      const c = el('span', 'av-oferta');
+      c.textContent = nome;
+      g.appendChild(c);
+    });
+    if (g.children.length) faixa.appendChild(g);
+  }
+
+  const prazo = prazoAviso(a);
+  if (prazo) { const s = el('span', 'av-prazo'); s.textContent = prazo; faixa.appendChild(s); }
+
   const b1 = a.botao1;
-  if (b1 && t(b1.texto)) {
+  if (b1 && b1.visivel !== false && t(b1.texto)) {
     const n = acaoAviso(b1, a, num, fecha);
     n.className = 'av-btn';
     n.textContent = t(b1.texto);
@@ -1896,8 +1959,8 @@ function janelaAviso(a, num) {
   }
 
   const acoes = el('div', 'av-acoes');
-  [[a.botao1, 'av-p'], [a.botao2, 'av-s']].forEach(([b, cls]) => {
-    if (!b || !t(b.texto)) return;
+  [[a.botao1, 'av-p'], [a.botao2, 'av-s'], [a.botao3, 'av-s']].forEach(([b, cls]) => {
+    if (!b || b.visivel === false || !t(b.texto)) return;
     const n = acaoAviso(b, a, num, fecha);
     n.className = cls;
     n.textContent = t(b.texto);
@@ -1919,6 +1982,23 @@ function iniciaAvisos(lista, num) {
   /* um de cada vez: a ordem da lista é a prioridade */
   const a = lista.find(x => avisoElegivel(x, fechados));
   if (!a) return;
+
+  /* "faixa-janela": a janela aparece uma vez, a faixa fica. É o que uma
+     campanha quer — impressão à chegada, lembrete depois. */
+  if (a.forma === 'faixa-janela') {
+    document.body.insertBefore(faixaAviso(a, num), document.body.firstChild);
+    document.body.classList.add('tem-faixa');
+    const jaViu = avisosFechados()[a.id];
+    if (!jaViu) {
+      setTimeout(() => {
+        if (document.querySelector('.flow-modal-fundo, .av-fundo')) return;
+        const r = janelaAviso(a, num);
+        document.body.appendChild(r.fundo);
+        r.foco.focus();
+      }, Math.max(0, Number(a.esperaSegundos) || 0) * 1000);
+    }
+    return;
+  }
 
   if (a.forma === 'janela') {
     const espera = Math.max(0, Number(a.esperaSegundos) || 0) * 1000;

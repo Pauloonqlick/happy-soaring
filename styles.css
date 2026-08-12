@@ -1119,7 +1119,8 @@ body.tem-faixa .burger{top:76px}
   .av-fundo{padding:0;align-items:flex-end}
   .av-janela{max-width:none;border-radius:18px 18px 0 0;border-bottom:none;
     max-height:94vh;overflow-y:auto}
-  .av-arte .av-titulo{font-size:calc(var(--fs,6cqw) * 1.25);width:calc(var(--w,52%) + 12%)}
+  /* nada de ampliar aqui: o cqw já mede pela janela, e mexer-lhe no estreito
+     desfazia o enquadramento escolhido — o título crescia para cima do logótipo */
   /* se o enquadramento escolhido nao servir no estreito, sai da imagem */
   .av-arte .av-titulo.sai-tele{position:static;width:auto;transform:none;
     font-size:26px;color:#fff;text-shadow:none;padding:18px 18px 0}
@@ -1128,4 +1129,19 @@ body.tem-faixa .burger{top:76px}
   .av-pontos{grid-template-columns:1fr;gap:10px}
   .av-acoes{flex-direction:column}
   .av-corpo{padding:18px 18px 20px}
+}
+
+/* ofertas e prazo na faixa: saem dos campos do aviso, não se reescrevem */
+.av-ofertas{flex:none;display:flex;gap:7px}
+.av-oferta{font-size:11.5px;font-weight:800;letter-spacing:.3px;white-space:nowrap;
+  padding:4px 10px;border-radius:100px;background:rgba(0,0,0,.16);
+  border:1px solid rgba(0,0,0,.14)}
+.av-oferta::before{content:'✓';margin-right:6px;opacity:.75}
+.av-prazo{flex:none;font-size:12px;font-weight:900;letter-spacing:.6px;
+  text-transform:uppercase;padding:4px 11px;border-radius:100px;
+  background:rgba(0,0,0,.3)}
+
+@media(max-width:860px){
+  /* o que fica sempre é o texto e o prazo; as ofertas são as primeiras a sair */
+  .av-ofertas{display:none}
 }

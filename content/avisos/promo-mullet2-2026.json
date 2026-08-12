@@ -1,13 +1,15 @@
 {
  "id": "promo-mullet2-2026",
  "nome": "Promoção Mullet 2 — cor + inspeção",
- "ativo": false,
+ "ativo": true,
  "inicio": "",
- "fim": "2026-12-31",
+ "fim": "2026-09-30",
  "tipo": "promocao",
- "forma": "janela",
- "esperaSegundos": 20,
- "repetirDias": 2,
+ "forma": "faixa-janela",
+ "repetir": "sessao",
+ "prazo": "contagem",
+ "ofertasNaFaixa": true,
+ "esperaSegundos": 1,
  "etiqueta": {
   "pt": "Promoção",
   "en": "Offer",
@@ -16,23 +18,23 @@
   "de": "Aktion"
  },
  "titulo": {
-  "pt": "Cada piloto tem a sua cor.",
-  "en": "Every pilot has a color.",
-  "es": "Cada piloto tiene su color.",
-  "fr": "Chaque pilote a sa couleur.",
-  "de": "Jeder Pilot hat seine Farbe."
+  "pt": "Cada piloto tem a sua cor",
+  "en": "Every pilot has a color",
+  "es": "Cada piloto tiene su color",
+  "fr": "Chaque pilote a sa couleur",
+  "de": "Jeder Pilot hat seine Farbe"
  },
  "tituloFormato": {
   "ancora": "cima-esquerda",
   "x": 5,
-  "y": 16,
+  "y": 25,
   "largura": 52,
-  "tamanho": 6,
-  "alinhar": "esquerda",
+  "tamanho": 8,
+  "alinhar": "centro",
   "peso": 900,
   "entrelinha": "apertada",
   "espacamento": "normal",
-  "maiusculas": false,
+  "maiusculas": true,
   "cor": "branco",
   "sombra": true,
   "saiNoTelemovel": false
@@ -45,11 +47,11 @@
   "de": "Leistung. Präzision. Freiheit."
  },
  "texto": {
-  "pt": "",
-  "en": "",
-  "es": "",
-  "fr": "",
-  "de": ""
+  "pt": "Mullet 2 com cor à escolha e primeira inspeção de segurança incluídas.",
+  "en": "Mullet 2 with custom colour and first safety inspection included.",
+  "es": "Mullet 2 con color a elegir y primera inspección de seguridad incluidas.",
+  "fr": "Mullet 2 avec couleur au choix et première inspection de sécurité incluses.",
+  "de": "Mullet 2 mit Wunschfarbe und erster Sicherheitsüberprüfung inklusive."
  },
  "imagem": "images/avisos/promo.webp",
  "imagemMobile": "",
@@ -76,7 +78,8 @@
     "es": "incluido",
     "fr": "incluse",
     "de": "inklusive"
-   }
+   },
+   "naFaixa": true
   },
   {
    "icone": "images/avisos/ic-inspecao.webp",
@@ -93,7 +96,8 @@
     "es": "incluida",
     "fr": "incluse",
     "de": "inklusive"
-   }
+   },
+   "naFaixa": true
   },
   {
    "icone": "images/avisos/ic-qualidade.webp",
@@ -110,7 +114,8 @@
     "es": "Vuela con confianza.",
     "fr": "Vole en confiance.",
     "de": "Flieg mit Vertrauen."
-   }
+   },
+   "naFaixa": false
   },
   {
    "icone": "images/avisos/ic-paixao.webp",
@@ -127,7 +132,8 @@
     "es": "Construida para la libertad.",
     "fr": "Construite pour la liberté.",
     "de": "Für die Freiheit gebaut."
-   }
+   },
+   "naFaixa": false
   }
  ],
  "botao1": {
@@ -146,7 +152,8 @@
    "es": "¡Hola! Quería saber el precio de la Mullet 2 con la promoción de color a elegir e inspección incluidas.",
    "fr": "Bonjour ! Je voudrais le prix de la Mullet 2 avec l’offre couleur au choix et inspection incluses.",
    "de": "Hallo! Ich hätte gern den Preis der Mullet 2 mit der Aktion Wunschfarbe und Inspektion inklusive."
-  }
+  },
+  "visivel": true
  },
  "botao2": {
   "texto": {
@@ -158,6 +165,26 @@
   },
   "acao": "seccao",
   "alvo": "produtos",
+  "mensagem": {
+   "pt": "",
+   "en": "",
+   "es": "",
+   "fr": "",
+   "de": ""
+  },
+  "visivel": true
+ },
+ "botao3": {
+  "texto": {
+   "pt": "Escolher a minha cor",
+   "en": "Choose my colour",
+   "es": "Elegir mi color",
+   "fr": "Choisir ma couleur",
+   "de": "Meine Farbe wählen"
+  },
+  "acao": "url",
+  "alvo": "/escolher-cor/",
+  "visivel": false,
   "mensagem": {
    "pt": "",
    "en": "",
