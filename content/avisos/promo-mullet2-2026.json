@@ -1,21 +1,21 @@
 {
  "id": "promo-mullet2-2026",
- "nome": "Promoção Mullet 2 — cor + inspeção",
+ "nome": "Oferta parakites — cor + inspeção",
  "ativo": true,
  "inicio": "",
  "fim": "2026-09-30",
- "tipo": "promocao",
+ "tipo": "oferta",
  "forma": "faixa-janela",
  "repetir": "sessao",
  "prazo": "contagem",
- "ofertasNaFaixa": true,
+ "ofertasNaFaixa": false,
  "esperaSegundos": 1,
  "etiqueta": {
-  "pt": "Promoção",
+  "pt": "Oferta",
   "en": "Offer",
-  "es": "Promoción",
+  "es": "Oferta",
   "fr": "Offre",
-  "de": "Aktion"
+  "de": "Angebot"
  },
  "titulo": {
   "pt": "Cada piloto tem a sua cor",
@@ -47,11 +47,11 @@
   "de": "Leistung. Präzision. Freiheit."
  },
  "texto": {
-  "pt": "Mullet 2 com cor à escolha e primeira inspeção de segurança incluídas.",
-  "en": "Mullet 2 with custom colour and first safety inspection included.",
-  "es": "Mullet 2 con color a elegir y primera inspección de seguridad incluidas.",
-  "fr": "Mullet 2 avec couleur au choix et première inspection de sécurité incluses.",
-  "de": "Mullet 2 mit Wunschfarbe und erster Sicherheitsüberprüfung inklusive."
+  "pt": "Toda a gama de parakites com cor à escolha e primeira inspeção de segurança incluídas.",
+  "en": "The whole parakite range with custom colour and first safety inspection included.",
+  "es": "Toda la gama de parakites con color a elegir y primera inspección de seguridad incluidas.",
+  "fr": "Toute la gamme de parakites avec couleur au choix et première inspection de sécurité incluses.",
+  "de": "Die gesamte Parakite-Reihe mit Wunschfarbe und erster Sicherheitsüberprüfung inklusive."
  },
  "imagem": "images/avisos/promo.webp",
  "imagemMobile": "",

@@ -1019,7 +1019,8 @@ footer small{opacity:.7}
   font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
 .av-faixa .av-tag{flex:none;font-size:10px;font-weight:800;letter-spacing:1.4px;
   text-transform:uppercase;padding:4px 9px;border-radius:100px;background:rgba(0,0,0,.28)}
-.av-faixa .av-txt{flex:1;min-width:0}
+.av-faixa .av-txt{flex:1;min-width:0;text-transform:uppercase;font-weight:800;
+  letter-spacing:.6px;font-size:13.5px}
 .av-faixa .av-btn{flex:none;font:inherit;font-size:12.5px;font-weight:800;text-decoration:none;
   padding:7px 15px;border-radius:100px;border:1.5px solid currentColor;background:none;
   color:inherit;cursor:pointer;white-space:nowrap}
@@ -1027,10 +1028,15 @@ footer small{opacity:.7}
 .av-faixa .av-x{flex:none;background:none;border:none;color:inherit;opacity:.65;
   cursor:pointer;font-size:19px;line-height:1;padding:2px 4px}
 .av-faixa .av-x:hover{opacity:1}
-/* a cor vem do tipo e não da mão: assim os avisos não ficam cada um de sua cor */
-.av-faixa.t-promocao{background:var(--orange);color:#2a1002}
+/* a cor vem do tipo e não da mão: assim os avisos não ficam cada um de sua cor.
+   O laranja da faixa é mais escuro do que o da marca porque o texto é branco:
+   sobre o #ff6a13 o branco dá 2,87:1 e não se lê. Neste dá 5,18:1. */
+.av-faixa.t-oferta{background:#c2410c;color:#fff}
+.av-faixa.t-promocao{background:#b3123f;color:#fff}
+.av-faixa.t-novidade{background:#127b6b;color:#fff}
+/* o amarelo é o único que fica com letra escura: branco sobre ele dá 1,63:1,
+   e não há amarelo que aguente branco sem deixar de ser amarelo */
 .av-faixa.t-aviso{background:#f5c518;color:#3a2c00}
-.av-faixa.t-novidade{background:#127b6b;color:#eafffb}
 /* tudo o que é fixo no topo desce o que a faixa ocupa. A altura vem medida da
    própria faixa, não de um número escrito à mão: no telemóvel ela parte em
    linhas e passa dos 130px. */
@@ -1081,7 +1087,8 @@ body.tem-faixa .lang-switcher{top:calc(24px + var(--faixa-h,56px))}
 
 /* a etiqueta fica fixa no canto da arte, com o peso do tipo do aviso */
 .av-arte .av-etiqueta{position:absolute;left:5%;top:6%;z-index:2;margin:0}
-.av-etiqueta.t-promocao{background:var(--orange);border-color:var(--orange);color:#2a1002}
+.av-etiqueta.t-oferta{background:var(--orange);border-color:var(--orange);color:#2a1002}
+.av-etiqueta.t-promocao{background:#b3123f;border-color:#b3123f;color:#fff}
 .av-etiqueta.t-aviso{background:#f5c518;border-color:#f5c518;color:#3a2c00}
 .av-etiqueta.t-novidade{background:#127b6b;border-color:#127b6b;color:#eafffb}
 .av-titulo-so{font-size:24px;font-weight:800;color:#fff;letter-spacing:-.5px;margin-bottom:10px}

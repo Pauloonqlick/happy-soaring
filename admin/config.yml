@@ -2286,7 +2286,8 @@ collections:
         widget: select
         default: aviso
         options:
-          - {label: Promoção (laranja), value: promocao}
+          - {label: Oferta (laranja), value: oferta}
+          - {label: Promoção (framboesa), value: promocao}
           - {label: Aviso (amarelo), value: aviso}
           - {label: Novidade (verde), value: novidade}
       - label: Como aparece
