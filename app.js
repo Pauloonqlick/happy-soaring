@@ -1889,7 +1889,11 @@ function aplicaFormatoTitulo(no, f) {
   no.style.setProperty('--peso', n(f.peso, 900));
 }
 
-function janelaAviso(a, num) {
+/* chave: a faixa e a janela do mesmo aviso não podem partilhar a memória do
+   "fechado". Se partilharem, fechar a janela fecha também a faixa — e como
+   mudar de idioma recarrega a página, a faixa desaparecia sem ninguém lhe ter
+   tocado. */
+function janelaAviso(a, num, chave) {
   const fundo = el('div', 'av-fundo');
   const cx = el('div', 'av-janela');
   cx.setAttribute('role', 'dialog');
@@ -1899,7 +1903,7 @@ function janelaAviso(a, num) {
   const fecha = () => {
     document.removeEventListener('keydown', tecla);
     fundo.remove();
-    marcaFechado(a.id);
+    marcaFechado(chave || a.id);
   };
   document.addEventListener('keydown', tecla);
   fundo.addEventListener('click', ev => { if (ev.target === fundo) fecha(); });
@@ -2024,11 +2028,11 @@ function iniciaAvisos(lista, num) {
      campanha quer — impressão à chegada, lembrete depois. */
   if (a.forma === 'faixa-janela') {
     poeFaixa(a, num);
-    const jaViu = avisosFechados()[a.id];
-    if (!jaViu) {
+    const chaveJanela = a.id + '#janela';
+    if (!avisosFechados()[chaveJanela]) {
       setTimeout(() => {
         if (document.querySelector('.flow-modal-fundo, .av-fundo')) return;
-        const r = janelaAviso(a, num);
+        const r = janelaAviso(a, num, chaveJanela);
         document.body.appendChild(r.fundo);
         r.foco.focus();
       }, Math.max(0, Number(a.esperaSegundos) || 0) * 1000);
