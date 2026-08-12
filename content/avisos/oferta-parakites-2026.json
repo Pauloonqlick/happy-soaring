@@ -1,9 +1,9 @@
 {
- "id": "promo-mullet2-2026",
+ "id": "oferta-parakites-2026",
  "nome": "Oferta parakites — cor + inspeção",
  "ativo": true,
  "inicio": "",
- "fim": "2026-09-30",
+ "fim": "2026-12-31",
  "tipo": "oferta",
  "forma": "faixa-janela",
  "repetir": "sessao",
@@ -157,14 +157,14 @@
  },
  "botao2": {
   "texto": {
-   "pt": "Ver a Mullet 2",
-   "en": "See the Mullet 2",
-   "es": "Ver la Mullet 2",
-   "fr": "Voir la Mullet 2",
-   "de": "Mullet 2 ansehen"
+   "pt": "Ver os parakites",
+   "en": "See the parakites",
+   "es": "Ver los parakites",
+   "fr": "Voir les parakites",
+   "de": "Parakites ansehen"
   },
-  "acao": "seccao",
-  "alvo": "produtos",
+  "acao": "familia",
+  "alvo": "Parakites",
   "mensagem": {
    "pt": "",
    "en": "",

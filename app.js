@@ -1773,6 +1773,22 @@ function prazoAviso(a) {
 function acaoAviso(botao, aviso, num, fecha) {
   const alvo = String(botao.alvo || '');
   switch (botao.acao) {
+    /* leva à secção dos produtos E escolhe a família: sem isto quem clica cai
+       nos Parapentes, que é a família que abre por omissão, e não vê um
+       parakite sequer */
+    case 'familia': {
+      const b = el('button'); b.type = 'button';
+      b.addEventListener('click', () => {
+        fecha();
+        const sec = document.getElementById('produtos');
+        if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const alvoNorm = alvo.trim().toLowerCase();
+        const tab = [...document.querySelectorAll('.flow-fam')]
+          .find(x => x.textContent.trim().toLowerCase().startsWith(alvoNorm));
+        if (tab) tab.click();
+      });
+      return b;
+    }
     case 'seccao': {
       const a = el('a'); a.href = '#' + alvo.replace(/^#/, '');
       a.addEventListener('click', fecha);

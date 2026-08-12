@@ -2558,13 +2558,14 @@ collections:
             options:
               - {label: Só fechar, value: fechar}
               - {label: Ir para uma secção, value: seccao}
+              - {label: Abrir uma família de asas, value: familia}
               - {label: Abrir o WhatsApp, value: whatsapp}
               - {label: Abrir um link, value: url}
           - label: Destino
             name: alvo
             widget: string
             required: false
-            hint: 'Secção: o id (produtos, music). Link: o endereço completo. Nos outros deixa vazio'
+            hint: 'Secção: o id (produtos, music). Família: o nome (Parakites, Parapentes). Link: o endereço completo'
           - label: Mensagem do WhatsApp
             name: mensagem
             widget: object
@@ -2608,13 +2609,14 @@ collections:
             options:
               - {label: Só fechar, value: fechar}
               - {label: Ir para uma secção, value: seccao}
+              - {label: Abrir uma família de asas, value: familia}
               - {label: Abrir o WhatsApp, value: whatsapp}
               - {label: Abrir um link, value: url}
           - label: Destino
             name: alvo
             widget: string
             required: false
-            hint: 'Secção: o id (produtos, music). Link: o endereço completo. Nos outros deixa vazio'
+            hint: 'Secção: o id (produtos, music). Família: o nome (Parakites, Parapentes). Link: o endereço completo'
           - label: Mensagem do WhatsApp
             name: mensagem
             widget: object
@@ -2659,13 +2661,14 @@ collections:
             options:
               - {label: Só fechar, value: fechar}
               - {label: Ir para uma secção, value: seccao}
+              - {label: Abrir uma família de asas, value: familia}
               - {label: Abrir o WhatsApp, value: whatsapp}
               - {label: Abrir um link, value: url}
           - label: Destino
             name: alvo
             widget: string
             required: false
-            hint: 'Secção: o id (produtos, music). Link: o endereço completo. Nos outros deixa vazio'
+            hint: 'Secção: o id (produtos, music). Família: o nome (Parakites, Parapentes). Link: o endereço completo'
           - label: Mensagem do WhatsApp
             name: mensagem
             widget: object
