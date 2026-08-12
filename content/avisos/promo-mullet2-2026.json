@@ -3,11 +3,11 @@
  "nome": "Promoção Mullet 2 — cor + inspeção",
  "ativo": false,
  "inicio": "",
- "fim": "",
+ "fim": "2026-12-31",
  "tipo": "promocao",
  "forma": "janela",
  "esperaSegundos": 20,
- "repetirDias": 0,
+ "repetirDias": 2,
  "etiqueta": {
   "pt": "Promoção",
   "en": "Offer",
@@ -22,12 +22,34 @@
   "fr": "Chaque pilote a sa couleur.",
   "de": "Jeder Pilot hat seine Farbe."
  },
+ "tituloFormato": {
+  "ancora": "cima-esquerda",
+  "x": 5,
+  "y": 16,
+  "largura": 52,
+  "tamanho": 6,
+  "alinhar": "esquerda",
+  "peso": 900,
+  "entrelinha": "apertada",
+  "espacamento": "normal",
+  "maiusculas": false,
+  "cor": "branco",
+  "sombra": true,
+  "saiNoTelemovel": false
+ },
  "subtitulo": {
   "pt": "Desempenho. Precisão. Liberdade.",
   "en": "Performance. Precision. Freedom.",
   "es": "Rendimiento. Precisión. Libertad.",
   "fr": "Performance. Précision. Liberté.",
   "de": "Leistung. Präzision. Freiheit."
+ },
+ "texto": {
+  "pt": "",
+  "en": "",
+  "es": "",
+  "fr": "",
+  "de": ""
  },
  "imagem": "images/avisos/promo.webp",
  "imagemMobile": "",
@@ -37,13 +59,6 @@
   "es": "Mullet 2 — Happy Soaring y FelloFly",
   "fr": "Mullet 2 — Happy Soaring et FelloFly",
   "de": "Mullet 2 — Happy Soaring und FelloFly"
- },
- "texto": {
-  "pt": "",
-  "en": "",
-  "es": "",
-  "fr": "",
-  "de": ""
  },
  "pontos": [
   {

@@ -1053,9 +1053,34 @@ body.tem-faixa .burger{top:76px}
 .av-arte img{width:100%;display:block}
 /* cqw = percentagem da largura da JANELA. É o que faz o título encolher com ela
    em vez de aterrar em cima da arte quando o ecrã é pequeno. */
-.av-arte .av-titulo{position:absolute;left:5%;top:6%;width:52%;
-  font-size:6cqw;line-height:1.02;font-weight:900;letter-spacing:-1.5px;color:#fff;
-  text-shadow:0 3px 16px rgba(0,0,0,.55)}
+/* O título é enquadrado a partir do CMS. As variáveis vêm de lá; a âncora
+   escolhe de que lado se conta a distância, para "5% da direita" ser mesmo 5%
+   da direita e não uma conta feita à mão. */
+.av-arte .av-titulo{position:absolute;width:var(--w,52%);margin:0;
+  font-size:var(--fs,6cqw);line-height:var(--lh,1.02);font-weight:var(--peso,900);
+  letter-spacing:var(--ls,-.02em);color:#fff;
+  text-shadow:0 3px 16px rgba(0,0,0,.55),0 1px 4px rgba(0,0,0,.5)}
+.av-titulo.h-esquerda{left:var(--x,5%)}
+.av-titulo.h-direita{right:var(--x,5%);text-align:right}
+.av-titulo.h-centro{left:50%;--tx:-50%}
+.av-titulo.v-cima{top:var(--y,16%)}
+.av-titulo.v-baixo{bottom:var(--y,16%)}
+.av-titulo.v-meio{top:50%;--ty:-50%}
+.av-titulo{transform:translate(var(--tx,0),var(--ty,0))}
+.av-titulo.al-esquerda{text-align:left}
+.av-titulo.al-centro{text-align:center}
+.av-titulo.al-direita{text-align:right}
+.av-titulo.cor-branco{color:#fff}
+.av-titulo.cor-preto{color:#10141a;text-shadow:0 2px 10px rgba(255,255,255,.45)}
+.av-titulo.cor-laranja{color:var(--orange)}
+.av-titulo.maius{text-transform:uppercase}
+.av-titulo.sem-sombra{text-shadow:none}
+
+/* a etiqueta fica fixa no canto da arte, com o peso do tipo do aviso */
+.av-arte .av-etiqueta{position:absolute;left:5%;top:6%;z-index:2;margin:0}
+.av-etiqueta.t-promocao{background:var(--orange);border-color:var(--orange);color:#2a1002}
+.av-etiqueta.t-aviso{background:#f5c518;border-color:#f5c518;color:#3a2c00}
+.av-etiqueta.t-novidade{background:#127b6b;border-color:#127b6b;color:#eafffb}
 .av-titulo-so{font-size:24px;font-weight:800;color:#fff;letter-spacing:-.5px;margin-bottom:10px}
 
 .av-fechar{position:absolute;top:14px;right:14px;z-index:3;width:36px;height:36px;
@@ -1065,9 +1090,10 @@ body.tem-faixa .burger{top:76px}
 .av-fechar:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
 
 .av-corpo{padding:22px 24px 24px}
-.av-etiqueta{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:1.8px;
+.av-etiqueta{display:inline-block;font-size:13px;font-weight:900;letter-spacing:2.2px;
   text-transform:uppercase;color:var(--orange);border:1px solid #4a2a0d;background:#241304;
-  padding:4px 11px;border-radius:100px;margin-bottom:16px}
+  padding:7px 16px;border-radius:100px;margin-bottom:16px;
+  box-shadow:0 4px 14px rgba(0,0,0,.35)}
 .av-sub{font-size:13px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
   color:#c9d2dc;margin:0 0 16px}
 .av-texto p{font-size:14.5px;line-height:1.65;color:#c2cad4;margin-bottom:12px}
@@ -1093,7 +1119,12 @@ body.tem-faixa .burger{top:76px}
   .av-fundo{padding:0;align-items:flex-end}
   .av-janela{max-width:none;border-radius:18px 18px 0 0;border-bottom:none;
     max-height:94vh;overflow-y:auto}
-  .av-arte .av-titulo{font-size:7.6cqw;width:60%}
+  .av-arte .av-titulo{font-size:calc(var(--fs,6cqw) * 1.25);width:calc(var(--w,52%) + 12%)}
+  /* se o enquadramento escolhido nao servir no estreito, sai da imagem */
+  .av-arte .av-titulo.sai-tele{position:static;width:auto;transform:none;
+    font-size:26px;color:#fff;text-shadow:none;padding:18px 18px 0}
+  .av-arte:has(.sai-tele){display:flex;flex-direction:column}
+  .av-arte .av-etiqueta{font-size:11.5px;padding:5px 12px}
   .av-pontos{grid-template-columns:1fr;gap:10px}
   .av-acoes{flex-direction:column}
   .av-corpo{padding:18px 18px 20px}

@@ -2338,6 +2338,89 @@ collections:
           - {label: Espanol, name: es, widget: string, required: false}
           - {label: Francais, name: fr, widget: string, required: false}
           - {label: Deutsch, name: de, widget: string, required: false}
+      - label: Enquadramento do titulo
+        name: tituloFormato
+        widget: object
+        collapsed: true
+        required: false
+        hint: 'So conta quando ha imagem. Tudo e relativo a largura da imagem, para ficar igual em qualquer ecra'
+        fields:
+          - label: Posicao
+            name: ancora
+            widget: select
+            default: cima-esquerda
+            options:
+              - {label: Cima a esquerda, value: cima-esquerda}
+              - {label: Cima ao centro, value: cima-centro}
+              - {label: Cima a direita, value: cima-direita}
+              - {label: Meio a esquerda, value: meio-esquerda}
+              - {label: Meio ao centro, value: meio-centro}
+              - {label: Meio a direita, value: meio-direita}
+              - {label: Baixo a esquerda, value: baixo-esquerda}
+              - {label: Baixo ao centro, value: baixo-centro}
+              - {label: Baixo a direita, value: baixo-direita}
+          - {label: Afastamento lateral (%), name: x, widget: number, value_type: int, min: 0, max: 45, default: 5, required: false}
+          - {label: Afastamento do topo ou do fundo (%), name: y, widget: number, value_type: int, min: 0, max: 80, default: 16, required: false}
+          - label: Largura do bloco (%)
+            name: largura
+            widget: number
+            value_type: int
+            min: 15
+            max: 95
+            default: 52
+            required: false
+            hint: 'E isto que decide onde o texto muda de linha'
+          - label: Tamanho da letra
+            name: tamanho
+            widget: number
+            value_type: float
+            min: 2
+            max: 14
+            step: 0.2
+            default: 6
+            required: false
+            hint: 'Percentagem da largura da imagem. 6 e o normal'
+          - label: Alinhamento
+            name: alinhar
+            widget: select
+            default: esquerda
+            options: [esquerda, centro, direita]
+          - label: Peso
+            name: peso
+            widget: select
+            default: '900'
+            options:
+              - {label: Normal, value: '400'}
+              - {label: Negrito, value: '700'}
+              - {label: Muito negrito, value: '900'}
+          - label: Entrelinha
+            name: entrelinha
+            widget: select
+            default: apertada
+            options: [apertada, normal, solta]
+          - label: Espacamento das letras
+            name: espacamento
+            widget: select
+            default: normal
+            options: [apertado, normal, solto]
+          - {label: Maiusculas, name: maiusculas, widget: boolean, default: false, required: false}
+          - label: Cor
+            name: cor
+            widget: select
+            default: branco
+            options: [branco, preto, laranja]
+          - label: Sombra
+            name: sombra
+            widget: boolean
+            default: true
+            required: false
+            hint: 'Deixa ligada sobre arte carregada, e o que salva a leitura'
+          - label: No telemovel, tirar o titulo de cima da imagem
+            name: saiNoTelemovel
+            widget: boolean
+            default: false
+            required: false
+            hint: 'Liga so se o enquadramento que escolheste nao servir no ecra estreito'
       - label: Subtitulo
         name: subtitulo
         widget: object

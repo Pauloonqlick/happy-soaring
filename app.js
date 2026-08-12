@@ -1784,6 +1784,32 @@ function faixaAviso(a, num) {
   return faixa;
 }
 
+/* Enquadra o título sobre a arte. Tudo o que é medida vai em percentagem da
+   LARGURA DA IMAGEM e não em pixels: um "48px" fica bem no ecrã de quem o
+   escreveu e enorme ou minúsculo em todos os outros. Assim o texto acompanha a
+   imagem em qualquer tamanho, que é a única forma de isto ser fiável. */
+const TIT_ENTRELINHA = { apertada: '.95', normal: '1.15', solta: '1.4' };
+const TIT_ESPACAMENTO = { apertado: '-.03em', normal: '0', solto: '.08em' };
+
+function aplicaFormatoTitulo(no, f) {
+  const anc = String(f.ancora || 'cima-esquerda').split('-');
+  no.classList.add('v-' + (anc[0] || 'cima'), 'h-' + (anc[1] || 'esquerda'));
+  if (f.alinhar) no.classList.add('al-' + f.alinhar);
+  if (f.cor) no.classList.add('cor-' + f.cor);
+  if (f.maiusculas) no.classList.add('maius');
+  if (f.sombra === false) no.classList.add('sem-sombra');
+  if (f.saiNoTelemovel) no.classList.add('sai-tele');
+
+  const n = (v, omissao) => (typeof v === 'number' ? v : omissao);
+  no.style.setProperty('--x', n(f.x, 5) + '%');
+  no.style.setProperty('--y', n(f.y, 16) + '%');
+  no.style.setProperty('--w', n(f.largura, 52) + '%');
+  no.style.setProperty('--fs', n(f.tamanho, 6) + 'cqw');
+  no.style.setProperty('--lh', TIT_ENTRELINHA[f.entrelinha] || TIT_ENTRELINHA.apertada);
+  no.style.setProperty('--ls', TIT_ESPACAMENTO[f.espacamento] || '-.02em');
+  no.style.setProperty('--peso', n(f.peso, 900));
+}
+
 function janelaAviso(a, num) {
   const fundo = el('div', 'av-fundo');
   const cx = el('div', 'av-janela');
@@ -1819,17 +1845,34 @@ function janelaAviso(a, num) {
     im.alt = t(a.alt) || '';
     pic.appendChild(im);
     arte.appendChild(pic);
+    /* a etiqueta fica fixa no canto da arte — não se move com o título, para
+       não haver duas coisas soltas a alinhar uma com a outra */
+    const etq = t(a.etiqueta);
+    if (etq) {
+      const s = el('span', 'av-etiqueta t-' + (a.tipo || 'aviso'));
+      s.textContent = etq;
+      arte.appendChild(s);
+    }
     /* o título assenta no vazio da arte e mede-se em cqw, por isso encolhe com a
        janela em vez de sair de cima da imagem */
     const tit = t(a.titulo);
-    if (tit) { const h = el('h2', 'av-titulo'); h.textContent = tit; arte.appendChild(h); }
+    if (tit) {
+      const h = el('h2', 'av-titulo');
+      h.textContent = tit;
+      aplicaFormatoTitulo(h, a.tituloFormato || {});
+      arte.appendChild(h);
+    }
     cx.appendChild(arte);
   }
 
   const corpo = el('div', 'av-corpo');
-  const etiqueta = t(a.etiqueta);
-  if (etiqueta) { const s = el('span', 'av-etiqueta'); s.textContent = etiqueta; corpo.appendChild(s); }
-  if (!a.imagem) { const h = el('h2', 'av-titulo-so'); h.textContent = t(a.titulo); corpo.appendChild(h); }
+  /* sem imagem não há onde assentar: etiqueta e título vão para o corpo */
+  if (!a.imagem) {
+    const etq = t(a.etiqueta);
+    if (etq) { const s = el('span', 'av-etiqueta t-' + (a.tipo || 'aviso')); s.textContent = etq; corpo.appendChild(s); }
+    const tit = t(a.titulo);
+    if (tit) { const h = el('h2', 'av-titulo-so'); h.textContent = tit; corpo.appendChild(h); }
+  }
 
   const sub = t(a.subtitulo);
   if (sub) { const p = el('p', 'av-sub'); p.textContent = sub; corpo.appendChild(p); }
