@@ -1008,3 +1008,93 @@ footer small{opacity:.7}
   .bio-abre{font-size:15px}
   .bio-remate p{font-size:15.5px}
 }
+
+/* ================= Avisos e promoções =================
+   Um tipo de conteúdo, duas apresentações. A faixa não interrompe e pode ficar
+   dias; a janela interrompe e usa-se pouco. */
+
+/* ---- faixa ---- */
+.av-faixa{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:14px;
+  padding:11px 18px;font-size:14px;line-height:1.4;
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+.av-faixa .av-tag{flex:none;font-size:10px;font-weight:800;letter-spacing:1.4px;
+  text-transform:uppercase;padding:4px 9px;border-radius:100px;background:rgba(0,0,0,.28)}
+.av-faixa .av-txt{flex:1;min-width:0}
+.av-faixa .av-btn{flex:none;font:inherit;font-size:12.5px;font-weight:800;text-decoration:none;
+  padding:7px 15px;border-radius:100px;border:1.5px solid currentColor;background:none;
+  color:inherit;cursor:pointer;white-space:nowrap}
+.av-faixa .av-btn:hover{background:rgba(0,0,0,.15)}
+.av-faixa .av-x{flex:none;background:none;border:none;color:inherit;opacity:.65;
+  cursor:pointer;font-size:19px;line-height:1;padding:2px 4px}
+.av-faixa .av-x:hover{opacity:1}
+/* a cor vem do tipo e não da mão: assim os avisos não ficam cada um de sua cor */
+.av-faixa.t-promocao{background:var(--orange);color:#2a1002}
+.av-faixa.t-aviso{background:#f5c518;color:#3a2c00}
+.av-faixa.t-novidade{background:#127b6b;color:#eafffb}
+/* o botão do menu é fixo: desce o que a faixa ocupa, senão ficava por baixo */
+body.tem-faixa .burger{top:76px}
+
+@media(max-width:640px){
+  .av-faixa{flex-wrap:wrap;gap:9px 12px;padding:12px 14px;font-size:13.5px}
+  .av-faixa .av-txt{flex:1 1 100%;order:2}
+  .av-faixa .av-btn{order:3}
+  .av-faixa .av-x{order:1;margin-left:auto}
+}
+
+/* ---- janela ---- */
+.av-fundo{position:fixed;inset:0;z-index:90;background:rgba(6,10,16,.72);
+  display:flex;align-items:center;justify-content:center;padding:26px 18px;overflow-y:auto}
+.av-janela{container-type:inline-size;position:relative;width:100%;max-width:560px;
+  background:#12161c;border:1px solid #2b323c;border-radius:20px;overflow:hidden;
+  box-shadow:0 30px 70px rgba(0,0,0,.55);
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+
+.av-arte{position:relative;display:block}
+.av-arte img{width:100%;display:block}
+/* cqw = percentagem da largura da JANELA. É o que faz o título encolher com ela
+   em vez de aterrar em cima da arte quando o ecrã é pequeno. */
+.av-arte .av-titulo{position:absolute;left:5%;top:6%;width:52%;
+  font-size:6cqw;line-height:1.02;font-weight:900;letter-spacing:-1.5px;color:#fff;
+  text-shadow:0 3px 16px rgba(0,0,0,.55)}
+.av-titulo-so{font-size:24px;font-weight:800;color:#fff;letter-spacing:-.5px;margin-bottom:10px}
+
+.av-fechar{position:absolute;top:14px;right:14px;z-index:3;width:36px;height:36px;
+  border-radius:50%;border:none;background:rgba(8,10,14,.55);backdrop-filter:blur(5px);
+  color:#fff;font-size:19px;line-height:1;cursor:pointer}
+.av-fechar:hover{background:rgba(8,10,14,.85)}
+.av-fechar:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+
+.av-corpo{padding:22px 24px 24px}
+.av-etiqueta{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:1.8px;
+  text-transform:uppercase;color:var(--orange);border:1px solid #4a2a0d;background:#241304;
+  padding:4px 11px;border-radius:100px;margin-bottom:16px}
+.av-sub{font-size:13px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
+  color:#c9d2dc;margin:0 0 16px}
+.av-texto p{font-size:14.5px;line-height:1.65;color:#c2cad4;margin-bottom:12px}
+
+.av-pontos{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.av-ponto{display:flex;align-items:center;gap:12px;background:#171c23;border:1px solid #262d36;
+  border-radius:13px;padding:12px 13px}
+.av-ponto img{width:40px;height:40px;flex:none}
+.av-ponto b{display:block;font-size:13.5px;font-weight:800;color:#fff;line-height:1.25}
+.av-ponto span{display:block;font-size:12.5px;color:#7fe3d4;font-weight:700;margin-top:2px}
+
+.av-acoes{display:flex;gap:11px;margin-top:20px}
+.av-acoes > *{flex:1;text-align:center;text-decoration:none;font:inherit;font-size:14.5px;
+  font-weight:800;padding:14px 16px;border-radius:100px;cursor:pointer;
+  transition:transform .18s}
+.av-acoes > *:hover{transform:translateY(-2px)}
+.av-p{background:#25D366;color:#08351a;border:none}
+.av-s{background:transparent;color:#dfe6ef;border:1.5px solid #39424e}
+.av-mini{margin-top:15px;font-size:11.5px;line-height:1.55;color:#7d848d}
+
+@media(max-width:640px){
+  /* no telemóvel deixa de ser uma caixa ao centro e sobe de baixo */
+  .av-fundo{padding:0;align-items:flex-end}
+  .av-janela{max-width:none;border-radius:18px 18px 0 0;border-bottom:none;
+    max-height:94vh;overflow-y:auto}
+  .av-arte .av-titulo{font-size:7.6cqw;width:60%}
+  .av-pontos{grid-template-columns:1fr;gap:10px}
+  .av-acoes{flex-direction:column}
+  .av-corpo{padding:18px 18px 20px}
+}

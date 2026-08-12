@@ -202,6 +202,22 @@ collections:
                 - id
               display_fields:
                 - id
+          - label: Avisos (por ordem de prioridade)
+            name: avisos
+            widget: list
+            required: false
+            hint: 'So os avisos nesta lista sao carregados. So aparece um de cada vez - o primeiro que estiver dentro das datas'
+            field:
+              label: Aviso
+              name: aviso
+              widget: relation
+              collection: avisos
+              value_field: id
+              search_fields:
+                - id
+                - nome
+              display_fields:
+                - nome
   - name: slides
     label: Slides
     editor:
@@ -2229,3 +2245,281 @@ collections:
                 widget: image
                 required: false
                 hint: Se vazio, usa a miniatura do YouTube
+  - name: avisos
+    label: Avisos e promocoes
+    label_singular: Aviso
+    editor:
+      preview: false
+    folder: content/avisos
+    format: json
+    identifier_field: id
+    slug: '{{fields.id}}'
+    create: true
+    summary: '{{fields.nome}}'
+    description: 'Faixas e janelas. Depois de criares um, junta-o a lista em Definicoes gerais - so os que estao la sao carregados.'
+    fields:
+      - label: Identificador
+        name: id
+        widget: string
+        hint: 'Ex: promo-mullet2-2026. E a chave do "ja vi este". Muda-o quando for outra mensagem, mantem-no quando for so uma correccao'
+      - label: Nome (para te orientares)
+        name: nome
+        widget: string
+        required: false
+      - label: Ativo
+        name: ativo
+        widget: boolean
+        default: false
+        hint: 'O interruptor. Desliga e desaparece do site'
+      - label: Comeca em
+        name: inicio
+        widget: string
+        required: false
+        hint: 'AAAA-MM-DD. Vazio = comeca ja'
+      - label: Acaba em
+        name: fim
+        widget: string
+        required: false
+        hint: 'AAAA-MM-DD. Vazio = nao acaba. Preenche sempre numa promocao'
+      - label: Tipo
+        name: tipo
+        widget: select
+        default: aviso
+        options:
+          - {label: Promocao (laranja), value: promocao}
+          - {label: Aviso (amarelo), value: aviso}
+          - {label: Novidade (verde), value: novidade}
+      - label: Como aparece
+        name: forma
+        widget: select
+        default: faixa
+        options:
+          - {label: Faixa no topo, value: faixa}
+          - {label: Janela, value: janela}
+      - label: Espera (segundos)
+        name: esperaSegundos
+        widget: number
+        value_type: int
+        min: 0
+        default: 20
+        required: false
+        hint: 'So para a janela. Quanto tempo espera antes de aparecer'
+      - label: Voltar a mostrar ao fim de (dias)
+        name: repetirDias
+        widget: number
+        value_type: int
+        min: 0
+        default: 0
+        required: false
+        hint: '0 = se a pessoa fechar, nao volta'
+      - label: Etiqueta
+        name: etiqueta
+        widget: object
+        collapsed: true
+        required: false
+        summary: '{{fields.pt}}'
+        hint: 'A palavra pequena. Ex: Promocao, Aviso'
+        fields:
+          - {label: Portugues, name: pt, widget: string, required: false}
+          - {label: English, name: en, widget: string, required: false}
+          - {label: Espanol, name: es, widget: string, required: false}
+          - {label: Francais, name: fr, widget: string, required: false}
+          - {label: Deutsch, name: de, widget: string, required: false}
+      - label: Titulo
+        name: titulo
+        widget: object
+        collapsed: true
+        required: false
+        summary: '{{fields.pt}}'
+        hint: 'Na janela assenta no canto da imagem'
+        fields:
+          - {label: Portugues, name: pt, widget: string, required: false}
+          - {label: English, name: en, widget: string, required: false}
+          - {label: Espanol, name: es, widget: string, required: false}
+          - {label: Francais, name: fr, widget: string, required: false}
+          - {label: Deutsch, name: de, widget: string, required: false}
+      - label: Subtitulo
+        name: subtitulo
+        widget: object
+        collapsed: true
+        required: false
+        summary: '{{fields.pt}}'
+        fields:
+          - {label: Portugues, name: pt, widget: string, required: false}
+          - {label: English, name: en, widget: string, required: false}
+          - {label: Espanol, name: es, widget: string, required: false}
+          - {label: Francais, name: fr, widget: string, required: false}
+          - {label: Deutsch, name: de, widget: string, required: false}
+      - label: Texto
+        name: texto
+        widget: object
+        collapsed: true
+        required: false
+        summary: '{{fields.pt}}'
+        hint: 'Na faixa e o texto todo. Na janela e opcional'
+        fields:
+          - {label: Portugues, name: pt, widget: text, required: false}
+          - {label: English, name: en, widget: text, required: false}
+          - {label: Espanol, name: es, widget: text, required: false}
+          - {label: Francais, name: fr, widget: text, required: false}
+          - {label: Deutsch, name: de, widget: text, required: false}
+      - label: Imagem
+        name: imagem
+        widget: image
+        required: false
+        hint: 'So para a janela. Sem texto la dentro - o texto e escrito aqui, para poder ser traduzido'
+      - label: Imagem (telemovel)
+        name: imagemMobile
+        widget: image
+        required: false
+        hint: 'Opcional. Um recorte mais fechado, se a larga cortar mal'
+      - label: Texto alternativo da imagem
+        name: alt
+        widget: object
+        collapsed: true
+        required: false
+        summary: '{{fields.pt}}'
+        fields:
+          - {label: Portugues, name: pt, widget: string, required: false}
+          - {label: English, name: en, widget: string, required: false}
+          - {label: Espanol, name: es, widget: string, required: false}
+          - {label: Francais, name: fr, widget: string, required: false}
+          - {label: Deutsch, name: de, widget: string, required: false}
+      - label: Pontos
+        name: pontos
+        widget: list
+        label_singular: Ponto
+        required: false
+        hint: 'As caixas com icone. So para a janela'
+        fields:
+          - label: Icone
+            name: icone
+            widget: image
+            required: false
+          - label: Titulo
+            name: titulo
+            widget: object
+            collapsed: true
+            required: false
+            summary: '{{fields.pt}}'
+            fields:
+              - {label: Portugues, name: pt, widget: string, required: false}
+              - {label: English, name: en, widget: string, required: false}
+              - {label: Espanol, name: es, widget: string, required: false}
+              - {label: Francais, name: fr, widget: string, required: false}
+              - {label: Deutsch, name: de, widget: string, required: false}
+          - label: Nota
+            name: nota
+            widget: object
+            collapsed: true
+            required: false
+            summary: '{{fields.pt}}'
+            fields:
+              - {label: Portugues, name: pt, widget: string, required: false}
+              - {label: English, name: en, widget: string, required: false}
+              - {label: Espanol, name: es, widget: string, required: false}
+              - {label: Francais, name: fr, widget: string, required: false}
+              - {label: Deutsch, name: de, widget: string, required: false}
+      - label: Botao principal
+        name: botao1
+        widget: object
+        collapsed: true
+        required: false
+        fields:
+          - label: Texto do botao
+            name: texto
+            widget: object
+            collapsed: true
+            required: false
+            summary: '{{fields.pt}}'
+            fields:
+              - {label: Portugues, name: pt, widget: string, required: false}
+              - {label: English, name: en, widget: string, required: false}
+              - {label: Espanol, name: es, widget: string, required: false}
+              - {label: Francais, name: fr, widget: string, required: false}
+              - {label: Deutsch, name: de, widget: string, required: false}
+          - label: O que faz
+            name: acao
+            widget: select
+            default: fechar
+            options:
+              - {label: So fechar, value: fechar}
+              - {label: Ir para uma seccao, value: seccao}
+              - {label: Abrir o WhatsApp, value: whatsapp}
+              - {label: Abrir um link, value: url}
+          - label: Destino
+            name: alvo
+            widget: string
+            required: false
+            hint: 'Seccao: o id (produtos, music). Link: o endereco completo. Nos outros deixa vazio'
+          - label: Mensagem do WhatsApp
+            name: mensagem
+            widget: object
+            collapsed: true
+            required: false
+            summary: '{{fields.pt}}'
+            hint: 'A referencia do aviso vai junto, para saberes de onde veio o contacto'
+            fields:
+              - {label: Portugues, name: pt, widget: text, required: false}
+              - {label: English, name: en, widget: text, required: false}
+              - {label: Espanol, name: es, widget: text, required: false}
+              - {label: Francais, name: fr, widget: text, required: false}
+              - {label: Deutsch, name: de, widget: text, required: false}
+      - label: Botao secundario
+        name: botao2
+        widget: object
+        collapsed: true
+        required: false
+        fields:
+          - label: Texto do botao
+            name: texto
+            widget: object
+            collapsed: true
+            required: false
+            summary: '{{fields.pt}}'
+            fields:
+              - {label: Portugues, name: pt, widget: string, required: false}
+              - {label: English, name: en, widget: string, required: false}
+              - {label: Espanol, name: es, widget: string, required: false}
+              - {label: Francais, name: fr, widget: string, required: false}
+              - {label: Deutsch, name: de, widget: string, required: false}
+          - label: O que faz
+            name: acao
+            widget: select
+            default: fechar
+            options:
+              - {label: So fechar, value: fechar}
+              - {label: Ir para uma seccao, value: seccao}
+              - {label: Abrir o WhatsApp, value: whatsapp}
+              - {label: Abrir um link, value: url}
+          - label: Destino
+            name: alvo
+            widget: string
+            required: false
+            hint: 'Seccao: o id (produtos, music). Link: o endereco completo. Nos outros deixa vazio'
+          - label: Mensagem do WhatsApp
+            name: mensagem
+            widget: object
+            collapsed: true
+            required: false
+            summary: '{{fields.pt}}'
+            hint: 'A referencia do aviso vai junto, para saberes de onde veio o contacto'
+            fields:
+              - {label: Portugues, name: pt, widget: text, required: false}
+              - {label: English, name: en, widget: text, required: false}
+              - {label: Espanol, name: es, widget: text, required: false}
+              - {label: Francais, name: fr, widget: text, required: false}
+              - {label: Deutsch, name: de, widget: text, required: false}
+      - label: Letra pequena
+        name: letraPequena
+        widget: object
+        collapsed: true
+        required: false
+        summary: '{{fields.pt}}'
+        hint: 'As condicoes da promocao: ate quando, para que asas, quem faz o que'
+        fields:
+          - {label: Portugues, name: pt, widget: text, required: false}
+          - {label: English, name: en, widget: text, required: false}
+          - {label: Espanol, name: es, widget: text, required: false}
+          - {label: Francais, name: fr, widget: text, required: false}
+          - {label: Deutsch, name: de, widget: text, required: false}

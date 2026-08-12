@@ -1,0 +1,75 @@
+{
+ "id": "exemplo-faixa",
+ "nome": "Exemplo — faixa de novidade",
+ "ativo": false,
+ "inicio": "",
+ "fim": "",
+ "tipo": "novidade",
+ "forma": "faixa",
+ "esperaSegundos": 0,
+ "repetirDias": 0,
+ "etiqueta": {
+  "pt": "Novidade",
+  "en": "News",
+  "es": "Novedad",
+  "fr": "Nouveau",
+  "de": "Neu"
+ },
+ "texto": {
+  "pt": "Novos cursos de parakite em Setembro. Inscrições abertas.",
+  "en": "New parakite courses in September. Enrolment open.",
+  "es": "Nuevos cursos de parakite en septiembre. Inscripciones abiertas.",
+  "fr": "Nouveaux cours de parakite en septembre. Inscriptions ouvertes.",
+  "de": "Neue Parakite-Kurse im September. Anmeldung offen."
+ },
+ "titulo": {
+  "pt": "",
+  "en": "",
+  "es": "",
+  "fr": "",
+  "de": ""
+ },
+ "subtitulo": {
+  "pt": "",
+  "en": "",
+  "es": "",
+  "fr": "",
+  "de": ""
+ },
+ "imagem": "",
+ "imagemMobile": "",
+ "alt": {
+  "pt": "",
+  "en": "",
+  "es": "",
+  "fr": "",
+  "de": ""
+ },
+ "pontos": [],
+ "botao1": {
+  "texto": {
+   "pt": "Falar connosco",
+   "en": "Talk to us",
+   "es": "Hablar con nosotros",
+   "fr": "Nous contacter",
+   "de": "Kontakt aufnehmen"
+  },
+  "acao": "whatsapp",
+  "alvo": "",
+  "mensagem": {
+   "pt": "Olá! Queria saber mais sobre os cursos de Setembro.",
+   "en": "Hi! I would like to know more about the September courses.",
+   "es": "¡Hola! Quería saber más sobre los cursos de septiembre.",
+   "fr": "Bonjour ! Je voudrais en savoir plus sur les cours de septembre.",
+   "de": "Hallo! Ich möchte mehr über die Kurse im September erfahren."
+  }
+ },
+ "botao2": null,
+ "letraPequena": {
+  "pt": "",
+  "en": "",
+  "es": "",
+  "fr": "",
+  "de": ""
+ }
+}

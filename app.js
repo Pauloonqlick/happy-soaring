@@ -1686,6 +1686,214 @@ function buildBio(item) {
   return caixa;
 }
 
+/* ================= Avisos e promoções =================
+   Um tipo de conteúdo só, com duas apresentações: faixa no topo (não interrompe,
+   fica dias) e janela (interrompe, usa-se pouco). Tudo o resto é partilhado —
+   datas, idiomas, memória do que já foi fechado e a regra de um de cada vez. */
+
+const AVISO_MEM = 'hs-avisos';
+
+function avisosFechados() {
+  try { return JSON.parse(localStorage.getItem(AVISO_MEM)) || {}; } catch (e) { return {}; }
+}
+function marcaFechado(id) {
+  const m = avisosFechados();
+  m[id] = Date.now();
+  try { localStorage.setItem(AVISO_MEM, JSON.stringify(m)); } catch (e) {}
+}
+
+/* Datas em AAAA-MM-DD. Comparadas como texto para não haver surpresas de fuso:
+   o dia do visitante é o dia dele, e é isso que interessa numa promoção. */
+function hojeISO() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') +
+         '-' + String(d.getDate()).padStart(2, '0');
+}
+
+function avisoElegivel(a, fechados) {
+  if (!a || a.ativo === false) return false;
+  const hoje = hojeISO();
+  if (a.inicio && hoje < String(a.inicio).slice(0, 10)) return false;
+  if (a.fim && hoje > String(a.fim).slice(0, 10)) return false;
+
+  const quando = fechados[a.id];
+  if (quando) {
+    /* repetir: "nunca" não volta; um número é o nº de dias até poder voltar */
+    if (!a.repetirDias) return false;
+    if (Date.now() - quando < a.repetirDias * 86400000) return false;
+  }
+  return true;
+}
+
+/* O botão faz uma de quatro coisas. Nada de endereços à mão: o que existe está
+   aqui, e o que não existe não se pode escolher no CMS. */
+function acaoAviso(botao, aviso, num, fecha) {
+  const alvo = String(botao.alvo || '');
+  switch (botao.acao) {
+    case 'seccao': {
+      const a = el('a'); a.href = '#' + alvo.replace(/^#/, '');
+      a.addEventListener('click', fecha);
+      return a;
+    }
+    case 'whatsapp': {
+      const a = el('a');
+      /* a referência viaja na mensagem: é assim que sabes de onde veio o contacto */
+      const msg = (t(botao.mensagem) || '') + (aviso.id ? '\n\n[' + aviso.id + ']' : '');
+      a.href = waLink(num, msg);
+      a.target = '_blank'; a.rel = 'noopener';
+      a.addEventListener('click', fecha);
+      return a;
+    }
+    case 'url': {
+      const a = el('a'); a.href = alvo;
+      a.target = '_blank'; a.rel = 'noopener';
+      return a;
+    }
+    default: {
+      const b = el('button'); b.type = 'button';
+      b.addEventListener('click', fecha);
+      return b;
+    }
+  }
+}
+
+function faixaAviso(a, num) {
+  const faixa = el('div', 'av-faixa t-' + (a.tipo || 'aviso'));
+  faixa.setAttribute('role', 'status');
+  const fecha = () => { faixa.remove(); marcaFechado(a.id); };
+
+  const etiqueta = t(a.etiqueta);
+  if (etiqueta) { const s = el('span', 'av-tag'); s.textContent = etiqueta; faixa.appendChild(s); }
+
+  const txt = el('span', 'av-txt'); txt.textContent = t(a.texto) || t(a.titulo);
+  faixa.appendChild(txt);
+
+  const b1 = a.botao1;
+  if (b1 && t(b1.texto)) {
+    const n = acaoAviso(b1, a, num, fecha);
+    n.className = 'av-btn';
+    n.textContent = t(b1.texto);
+    faixa.appendChild(n);
+  }
+
+  const x = el('button', 'av-x'); x.type = 'button';
+  x.setAttribute('aria-label', ui('flowFechar'));
+  x.innerHTML = '&times;';
+  x.addEventListener('click', fecha);
+  faixa.appendChild(x);
+  return faixa;
+}
+
+function janelaAviso(a, num) {
+  const fundo = el('div', 'av-fundo');
+  const cx = el('div', 'av-janela');
+  cx.setAttribute('role', 'dialog');
+  cx.setAttribute('aria-modal', 'true');
+
+  const tecla = ev => { if (ev.key === 'Escape') fecha(); };
+  const fecha = () => {
+    document.removeEventListener('keydown', tecla);
+    fundo.remove();
+    marcaFechado(a.id);
+  };
+  document.addEventListener('keydown', tecla);
+  fundo.addEventListener('click', ev => { if (ev.target === fundo) fecha(); });
+
+  const x = el('button', 'av-fechar'); x.type = 'button';
+  x.setAttribute('aria-label', ui('flowFechar'));
+  x.innerHTML = '&times;';
+  x.addEventListener('click', fecha);
+  cx.appendChild(x);
+
+  if (a.imagem) {
+    const arte = el('div', 'av-arte');
+    const pic = el('picture');
+    if (a.imagemMobile) {
+      const s = el('source');
+      s.media = '(max-width:640px)';
+      s.srcset = a.imagemMobile;
+      pic.appendChild(s);
+    }
+    const im = el('img');
+    im.src = a.imagem;
+    im.alt = t(a.alt) || '';
+    pic.appendChild(im);
+    arte.appendChild(pic);
+    /* o título assenta no vazio da arte e mede-se em cqw, por isso encolhe com a
+       janela em vez de sair de cima da imagem */
+    const tit = t(a.titulo);
+    if (tit) { const h = el('h2', 'av-titulo'); h.textContent = tit; arte.appendChild(h); }
+    cx.appendChild(arte);
+  }
+
+  const corpo = el('div', 'av-corpo');
+  const etiqueta = t(a.etiqueta);
+  if (etiqueta) { const s = el('span', 'av-etiqueta'); s.textContent = etiqueta; corpo.appendChild(s); }
+  if (!a.imagem) { const h = el('h2', 'av-titulo-so'); h.textContent = t(a.titulo); corpo.appendChild(h); }
+
+  const sub = t(a.subtitulo);
+  if (sub) { const p = el('p', 'av-sub'); p.textContent = sub; corpo.appendChild(p); }
+
+  const texto = t(a.texto);
+  if (texto) { const d = el('div', 'av-texto'); paragrafos(texto).forEach(n => d.appendChild(n)); corpo.appendChild(d); }
+
+  if ((a.pontos || []).length) {
+    const g = el('div', 'av-pontos');
+    a.pontos.forEach(p => {
+      const c = el('div', 'av-ponto');
+      if (p.icone) { const im = el('img'); im.src = p.icone; im.alt = ''; c.appendChild(im); }
+      const d = el('div');
+      const b = el('b'); b.textContent = t(p.titulo); d.appendChild(b);
+      const nota = t(p.nota);
+      if (nota) { const s = el('span'); s.textContent = nota; d.appendChild(s); }
+      c.appendChild(d);
+      g.appendChild(c);
+    });
+    corpo.appendChild(g);
+  }
+
+  const acoes = el('div', 'av-acoes');
+  [[a.botao1, 'av-p'], [a.botao2, 'av-s']].forEach(([b, cls]) => {
+    if (!b || !t(b.texto)) return;
+    const n = acaoAviso(b, a, num, fecha);
+    n.className = cls;
+    n.textContent = t(b.texto);
+    acoes.appendChild(n);
+  });
+  if (acoes.children.length) corpo.appendChild(acoes);
+
+  const mini = t(a.letraPequena);
+  if (mini) { const p = el('p', 'av-mini'); p.textContent = mini; corpo.appendChild(p); }
+
+  cx.appendChild(corpo);
+  fundo.appendChild(cx);
+  return { fundo: fundo, foco: x };
+}
+
+function iniciaAvisos(lista, num) {
+  if (!Array.isArray(lista) || !lista.length) return;
+  const fechados = avisosFechados();
+  /* um de cada vez: a ordem da lista é a prioridade */
+  const a = lista.find(x => avisoElegivel(x, fechados));
+  if (!a) return;
+
+  if (a.forma === 'janela') {
+    const espera = Math.max(0, Number(a.esperaSegundos) || 0) * 1000;
+    setTimeout(() => {
+      /* cala-se se o visitante já estiver a meio de outra coisa — pedir preço,
+         ou qualquer janela que esteja aberta */
+      if (document.querySelector('.flow-modal-fundo, .av-fundo')) return;
+      const { fundo, foco } = janelaAviso(a, num);
+      document.body.appendChild(fundo);
+      foco.focus();
+    }, espera);
+    return;
+  }
+
+  document.body.insertBefore(faixaAviso(a, num), document.body.firstChild);
+  document.body.classList.add('tem-faixa');
+}
+
 function buildElement(item) {
   switch (item.role) {
     case 'video': return buildVideo(item);
@@ -1777,6 +1985,12 @@ function render(data) {
   }
 
   if (data.menu && data.menu.length) buildMenu(data.menu);
+
+  /* avisos: o número do WhatsApp é o que já está no conteúdo, para não haver
+     dois sítios a dizer o mesmo número e um deles ficar desactualizado */
+  const numWa = (data.sections || []).reduce((n, s) =>
+    n || ((s.elements || []).find(e => e.whatsapp) || {}).whatsapp, null);
+  iniciaAvisos(data.listaAvisos, numWa);
 
   const locales = (data.locales && data.locales.length) ? data.locales : [DEFAULT_LOCALE];
   if (locales.length > 1) buildLangSwitcher(locales);
@@ -2000,7 +2214,14 @@ async function loadSite() {
   const slides = await Promise.all(ids.map(id =>
     fetch('content/slides/' + id + '.json').then(r => (r.ok ? r.json() : null)).catch(() => null)
   ));
-  return Object.assign({}, settings, { sections: slides.filter(Boolean) });
+  const avisosIds = Array.isArray(settings.avisos) ? settings.avisos : [];
+  const avisos = await Promise.all(avisosIds.map(id =>
+    fetch('content/avisos/' + id + '.json').then(r => (r.ok ? r.json() : null)).catch(() => null)
+  ));
+  return Object.assign({}, settings, {
+    sections: slides.filter(Boolean),
+    listaAvisos: avisos.filter(Boolean)
+  });
 }
 
 loadSite()
