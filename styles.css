@@ -1031,8 +1031,11 @@ footer small{opacity:.7}
 .av-faixa.t-promocao{background:var(--orange);color:#2a1002}
 .av-faixa.t-aviso{background:#f5c518;color:#3a2c00}
 .av-faixa.t-novidade{background:#127b6b;color:#eafffb}
-/* o botão do menu é fixo: desce o que a faixa ocupa, senão ficava por baixo */
-body.tem-faixa .burger{top:76px}
+/* tudo o que é fixo no topo desce o que a faixa ocupa. A altura vem medida da
+   própria faixa, não de um número escrito à mão: no telemóvel ela parte em
+   linhas e passa dos 130px. */
+body.tem-faixa .burger{top:calc(20px + var(--faixa-h,56px))}
+body.tem-faixa .lang-switcher{top:calc(24px + var(--faixa-h,56px))}
 
 @media(max-width:640px){
   .av-faixa{flex-wrap:wrap;gap:9px 12px;padding:12px 14px;font-size:13.5px}

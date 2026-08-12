@@ -1976,6 +1976,27 @@ function janelaAviso(a, num) {
   return { fundo: fundo, foco: x };
 }
 
+/* A faixa empurra o que está fixo no topo — o botão do menu e o selector de
+   idioma. A altura não pode ser um número escrito à mão: no telemóvel a faixa
+   parte em três linhas e passa dos 130px. Mede-se e publica-se, e o CSS conta a
+   partir daí. */
+function poeFaixa(a, num) {
+  const faixa = faixaAviso(a, num);
+  document.body.insertBefore(faixa, document.body.firstChild);
+  document.body.classList.add('tem-faixa');
+
+  const mede = () => {
+    const h = faixa.isConnected ? Math.round(faixa.getBoundingClientRect().height) : 0;
+    document.documentElement.style.setProperty('--faixa-h', h + 'px');
+    if (!h) document.body.classList.remove('tem-faixa');
+  };
+  mede();
+  addEventListener('resize', mede);
+  /* ao fechar, o que estava empurrado volta ao lugar */
+  new MutationObserver(mede).observe(document.body, { childList: true });
+  return faixa;
+}
+
 function iniciaAvisos(lista, num) {
   if (!Array.isArray(lista) || !lista.length) return;
   const fechados = avisosFechados();
@@ -1986,8 +2007,7 @@ function iniciaAvisos(lista, num) {
   /* "faixa-janela": a janela aparece uma vez, a faixa fica. É o que uma
      campanha quer — impressão à chegada, lembrete depois. */
   if (a.forma === 'faixa-janela') {
-    document.body.insertBefore(faixaAviso(a, num), document.body.firstChild);
-    document.body.classList.add('tem-faixa');
+    poeFaixa(a, num);
     const jaViu = avisosFechados()[a.id];
     if (!jaViu) {
       setTimeout(() => {
@@ -2013,8 +2033,7 @@ function iniciaAvisos(lista, num) {
     return;
   }
 
-  document.body.insertBefore(faixaAviso(a, num), document.body.firstChild);
-  document.body.classList.add('tem-faixa');
+  poeFaixa(a, num);
 }
 
 function buildElement(item) {
