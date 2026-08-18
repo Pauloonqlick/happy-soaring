@@ -22,16 +22,7 @@
  "elements": [
   {
    "role": "flow",
-   "title": {
-    "pt": "Flow Paragliders",
-    "en": "Flow Paragliders",
-    "es": "Flow Paragliders",
-    "fr": "Flow Paragliders",
-    "de": "Flow Paragliders"
-   },
-   "showDesktop": true,
-   "showMobile": true,
-   "whatsapp": "351927187912",
+   "logoImage": "images/flow-logo.png",
    "dealerLabel": {
     "pt": "Dealer oficial em Portugal",
     "en": "Official dealer in Portugal",
@@ -39,7 +30,14 @@
     "fr": "",
     "de": ""
    },
-   "logoImage": "",
+   "title": {
+    "pt": "Flow Paragliders",
+    "en": "Flow Paragliders",
+    "es": "Flow Paragliders",
+    "fr": "Flow Paragliders",
+    "de": "Flow Paragliders"
+   },
+   "titleVisible": false,
    "description": {
     "pt": "Represento a gama completa da Flow. Escolhe a família, filtra pelo teu nível e vê a asa na cor que quiseres.",
     "en": "I represent the complete Flow range. Choose the family, filter by your level and see each wing in the colour you want.",
@@ -47,6 +45,10 @@
     "fr": "Je représente toute la gamme Flow. Choisis la famille, filtre selon ton niveau et regarde l'aile dans la couleur que tu veux.",
     "de": "Ich vertrete das komplette Flow-Programm. Wähle die Familie, filtere nach deinem Niveau und sieh dir den Schirm in der gewünschten Farbe an."
    },
+   "descriptionVisible": false,
+   "showDesktop": true,
+   "showMobile": true,
+   "whatsapp": "351927187912",
    "customColourNote": {
     "pt": "Cores à medida: +200€ e 4+ semanas de prazo (condições da Flow).",
     "en": "Custom colours: +€200 and 4+ weeks lead time (Flow's terms).",

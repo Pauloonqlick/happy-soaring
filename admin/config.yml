@@ -1708,6 +1708,12 @@ collections:
                     name: de
                     widget: string
                     required: false
+              - label: Mostrar o titulo
+                name: titleVisible
+                widget: boolean
+                default: true
+                required: false
+                hint: 'Desliga para esconder sem perder o texto'
               - label: Descrição
                 name: description
                 widget: object
@@ -1735,6 +1741,12 @@ collections:
                     name: de
                     widget: text
                     required: false
+              - label: Mostrar a descricao
+                name: descriptionVisible
+                widget: boolean
+                default: true
+                required: false
+                hint: 'Desliga para esconder sem perder o texto'
               - label: Número de WhatsApp
                 name: whatsapp
                 widget: string

@@ -874,13 +874,16 @@ function buildFlow(item) {
 
   /* cabeçalho */
   const head = el('div', 'flow-head');
+  /* o logótipo vem primeiro: é a marca que se anuncia, e o texto por baixo é
+     que a explica. O nome escrito continua no alt, por isso não se perde para
+     leitores de ecrã nem para pesquisa, mesmo com o título desligado. */
+  if (item.logoImage) { const img = el('img', 'flow-logo'); img.src = item.logoImage; img.alt = t(item.title) || 'Flow Paragliders'; head.appendChild(img); }
   const dl = t(item.dealerLabel);
   if (dl) { const d = el('div', 'flow-dealer'); d.textContent = dl; head.appendChild(d); }
-  if (item.logoImage) { const img = el('img', 'flow-logo'); img.src = item.logoImage; img.alt = 'Flow Paragliders'; head.appendChild(img); }
   const titulo = t(item.title);
-  if (titulo) { const h = el('h2', 'flow-title'); h.textContent = titulo; head.appendChild(h); }
+  if (titulo && item.titleVisible !== false) { const h = el('h2', 'flow-title'); h.textContent = titulo; head.appendChild(h); }
   const desc = t(item.description);
-  if (desc) { const p = el('p', 'flow-desc'); p.textContent = desc; head.appendChild(p); }
+  if (desc && item.descriptionVisible !== false) { const p = el('p', 'flow-desc'); p.textContent = desc; head.appendChild(p); }
   wrap.appendChild(head);
 
   if (!produtos.length) return wrap;
