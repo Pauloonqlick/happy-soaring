@@ -1,7 +1,7 @@
 {
  "id": "oferta-parakites-2026",
  "nome": "Oferta parakites — cor + inspeção",
- "ativo": true,
+ "ativo": false,
  "inicio": "",
  "fim": "2026-12-31",
  "tipo": "oferta",
@@ -9,7 +9,7 @@
  "repetir": "sessao",
  "prazo": "contagem",
  "ofertasNaFaixa": false,
- "esperaSegundos": 1,
+ "esperaSegundos": 20,
  "etiqueta": {
   "pt": "Oferta",
   "en": "Offer",
