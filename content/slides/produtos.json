@@ -26,9 +26,9 @@
    "dealerLabel": {
     "pt": "Dealer oficial em Portugal",
     "en": "Official dealer in Portugal",
-    "es": "",
-    "fr": "",
-    "de": ""
+    "es": "Distribuidor oficial en Portugal",
+    "fr": "Revendeur officiel au Portugal",
+    "de": "Offizieller Händler in Portugal"
    },
    "title": {
     "pt": "Flow Paragliders",
@@ -3344,11 +3344,11 @@
      ],
      "incluido": null,
      "aviso": {
-      "pt": "A página é da Panorama (1a versão), mas os tamanhos coincidem com a Panorama 2 da lista de preços 2026. CONFIRMAR com a Flow.",
-      "en": "",
-      "es": "",
-      "fr": "",
-      "de": ""
+      "pt": "Esta página descreve a 1.ª versão da Panorama. A lista de preços de 2026 tem a Panorama 2 — confirma connosco os tamanhos antes de encomendares.",
+      "en": "This page describes the first Panorama. The 2026 price list carries the Panorama 2 — check the sizes with us before ordering.",
+      "es": "Esta página describe la 1.ª versión de la Panorama. La lista de precios de 2026 incluye la Panorama 2 — confirma las tallas con nosotros antes de pedir.",
+      "fr": "Cette page décrit la 1re version du Panorama. Le tarif 2026 propose le Panorama 2 — confirme les tailles avec nous avant de commander.",
+      "de": "Diese Seite beschreibt die erste Panorama. Die Preisliste 2026 führt die Panorama 2 — kläre die Größen vor der Bestellung mit uns ab."
      },
      "tamanhos": [
       "32",
@@ -3482,11 +3482,11 @@
      ],
      "incluido": null,
      "aviso": {
-      "pt": "A página é da Future Power (1a versão). A lista de preços 2026 tem Future Power 2, com faixas de peso diferentes. CONFIRMAR.",
-      "en": "",
-      "es": "",
-      "fr": "",
-      "de": ""
+      "pt": "Esta página descreve a 1.ª versão da Future Power. A lista de preços de 2026 tem a Future Power 2, com faixas de peso diferentes — confirma connosco antes de encomendares.",
+      "en": "This page describes the first Future Power. The 2026 price list carries the Future Power 2, with different weight ranges — check with us before ordering.",
+      "es": "Esta página describe la 1.ª versión de la Future Power. La lista de precios de 2026 incluye la Future Power 2, con rangos de peso distintos — consúltanos antes de pedir.",
+      "fr": "Cette page décrit la 1re version de la Future Power. Le tarif 2026 propose la Future Power 2, avec des plages de poids différentes — consulte-nous avant de commander.",
+      "de": "Diese Seite beschreibt die erste Future Power. Die Preisliste 2026 führt die Future Power 2 mit anderen Gewichtsbereichen — sprich uns vor der Bestellung an."
      },
      "tamanhos": [
       "XS",

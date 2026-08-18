@@ -203,6 +203,9 @@ Máximo 1400 px de largura, WebP a 84.
 - 19 asas ainda no formato antigo — falta o tratamento completo
 - Traduzir para es/fr/de o texto trazido do fabricante nessas asas
 - Confirmar a gama de vento da Mullet 2, lida de uma imagem a olho
-- Dois avisos internos visíveis ao cliente, na Panorama e na Future Power
+- **Confirmar com a Flow** os tamanhos da Panorama e as faixas de peso da
+  Future Power. As páginas descrevem as 1.ªs versões; a lista de preços de
+  2026 tem a Panorama 2 e a Future Power 2. O aviso ao cliente já não pede
+  a confirmação a ti — pede-lhe a ele que fale connosco antes de encomendar
 - Cinco modelos sem página no site do fabricante: Cosmos 2, Mystic +,
   Spectra 3, Vortex, Protégé

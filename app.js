@@ -867,6 +867,35 @@ function asaPlaceholder(i) {
     '<path d="M64 120 Q150 66 236 120 Q150 98 64 120Z" fill="' + c(2) + '" opacity=".9"/></svg>';
 }
 
+/* ---- nomes de famílias e de tipos ----
+   Ficam aqui e não nos dados de propósito: a família é a CHAVE por que os
+   produtos se agrupam e por que o botão de um aviso a escolhe. Se o nome fosse
+   traduzido no ficheiro, mudar de idioma partia o agrupamento. Traduz-se só o
+   que se lê; a chave nunca muda.
+   O que não está na tabela mostra-se tal e qual — uma família nova criada no
+   CMS aparece, por traduzir, em vez de desaparecer. */
+const FAMILIA_ROTULOS = {
+  'Parapentes': { pt:'Parapentes', en:'Paragliders', es:'Parapentes', fr:'Parapentes', de:'Gleitschirme' },
+  'Paramotor':  { pt:'Paramotor', en:'Paramotor', es:'Paramotor', fr:'Paramoteur', de:'Motorschirm' },
+  'Tandem':     { pt:'Tandem', en:'Tandem', es:'Biplaza', fr:'Biplace', de:'Tandem' },
+  'Arneses':    { pt:'Arneses', en:'Harnesses', es:'Arneses', fr:'Sellettes', de:'Gurtzeuge' },
+  'Reservas':   { pt:'Reservas', en:'Reserves', es:'Reservas', fr:'Secours', de:'Rettungsschirme' }
+  /* Parakites, Mini-wings, Parawing e Speed flying são termos internacionais:
+     escrevem-se igual nos cinco idiomas e não entram aqui. */
+};
+
+const CLASSE_ROTULOS = {
+  'Arnês aberto':          { pt:'Arnês aberto', en:'Open harness', es:'Arnés abierto', fr:'Sellette ouverte', de:'Offenes Gurtzeug' },
+  'Arnês pod':             { pt:'Arnês pod', en:'Pod harness', es:'Arnés pod', fr:'Sellette cocon', de:'Pod-Gurtzeug' },
+  'Reserva quadrada':      { pt:'Reserva quadrada', en:'Square reserve', es:'Reserva cuadrada', fr:'Secours carré', de:'Quadratischer Rettungsschirm' },
+  'Paraquedas de arrasto': { pt:'Paraquedas de arrasto', en:'Drogue chute', es:'Paracaídas de arrastre', fr:'Parachute de traînée', de:'Bremsschirm' }
+  /* As normas (EN-A, EN 926-1) e os termos técnicos (Full reflex, Semi-reflex,
+     Parakite, Speed flying) são iguais em toda a parte e ficam como estão. */
+};
+
+const rotuloFamilia = f => t(FAMILIA_ROTULOS[f]) || f;
+const rotuloClasse = c => t(CLASSE_ROTULOS[c]) || c;
+
 function buildFlow(item) {
   const wrap = el('div', 'flow' + visibilityClass(item));
   const num = item.whatsapp;
@@ -921,7 +950,8 @@ function buildFlow(item) {
     barraFam.innerHTML = '';
     familias.forEach(f => {
       const b = el('button', 'flow-fam' + (f === famAtiva ? ' on' : '')); b.type = 'button';
-      b.appendChild(document.createTextNode(f + ' '));
+      b.dataset.familia = f;                     /* a chave, para quem precise dela */
+      b.appendChild(document.createTextNode(rotuloFamilia(f) + ' '));
       const n = el('span', 'flow-fam-n'); n.textContent = produtos.filter(p => p.familia === f).length;
       b.appendChild(n);
       b.addEventListener('click', () => {
@@ -940,7 +970,7 @@ function buildFlow(item) {
     const lab = el('span', 'flow-filters-label');
     lab.textContent = famAtiva === 'Parapentes' ? ui('flowHomologacao') : ui('flowTipo');
     barraFiltros.appendChild(lab);
-    [[null, ui('fAll')]].concat(cls.map(c => [c, c])).forEach(([v, txt]) => {
+    [[null, ui('fAll')]].concat(cls.map(c => [c, rotuloClasse(c)])).forEach(([v, txt]) => {
       const b = el('button', 'flow-chip' + (filtro === v ? ' on' : '')); b.type = 'button';
       b.textContent = txt;
       b.addEventListener('click', () => { filtro = v; aberto = null; limparHash(); render(); });
@@ -1088,7 +1118,7 @@ function buildFlow(item) {
       nome.textContent = p.nome;
     }
     body.appendChild(nome);
-    if (p.classificacao) { const cl = el('div', 'flow-clas'); cl.textContent = p.classificacao; body.appendChild(cl); }
+    if (p.classificacao) { const cl = el('div', 'flow-clas'); cl.textContent = rotuloClasse(p.classificacao); body.appendChild(cl); }
     const tag = t(p.tagline);
     if (tag) { const tl = el('div', 'flow-tagline'); tl.textContent = tag; body.appendChild(tl); }
 
@@ -1176,7 +1206,7 @@ function buildFlow(item) {
     } else {
       n.textContent = p.nome;
     }
-    const s = el('div', 'flow-det-sub'); s.textContent = p.familia + (p.classificacao ? ' · ' + p.classificacao : '');
+    const s = el('div', 'flow-det-sub'); s.textContent = rotuloFamilia(p.familia) + (p.classificacao ? ' · ' + rotuloClasse(p.classificacao) : '');
     tit.appendChild(n); tit.appendChild(s);
     const x = el('button', 'flow-det-x'); x.type = 'button'; x.innerHTML = '&#10005;';
     x.setAttribute('aria-label', ui('flowFechar'));
@@ -1785,9 +1815,11 @@ function acaoAviso(botao, aviso, num, fecha) {
         fecha();
         const sec = document.getElementById('produtos');
         if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        /* compara com a CHAVE e não com o que se lê: em alemão o separador diz
+           "Gleitschirme" e a comparação por texto deixaria de encontrar nada */
         const alvoNorm = alvo.trim().toLowerCase();
         const tab = [...document.querySelectorAll('.flow-fam')]
-          .find(x => x.textContent.trim().toLowerCase().startsWith(alvoNorm));
+          .find(x => String(x.dataset.familia || '').toLowerCase() === alvoNorm);
         if (tab) tab.click();
       });
       return b;
