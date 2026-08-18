@@ -427,10 +427,14 @@ footer small{opacity:.7}
 #produtos .flow{width:100%;max-width:1240px}
 
 /* ---- famílias e filtros ---- */
-.flow-fams{display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid rgba(255,255,255,.28);margin:18px 0 0}
+/* oito famílias não cabem numa linha em ecrãs estreitos. A rolar, as últimas
+   ficavam escondidas atrás de um gesto que ninguém adivinha; a partir em
+   linhas, estão todas à vista de uma vez. */
+.flow-fams{display:flex;flex-wrap:wrap;gap:0 4px;
+  border-bottom:1px solid rgba(255,255,255,.28);margin:18px 0 0}
 .flow-fam{
   background:none;border:none;font-family:inherit;font-size:14.5px;font-weight:700;
-  color:rgba(255,255,255,.72);padding:14px 15px;cursor:pointer;white-space:nowrap;
+  color:rgba(255,255,255,.72);padding:12px 14px;cursor:pointer;white-space:nowrap;
   border-bottom:3px solid transparent;
 }
 .flow-fam:hover{color:#fff}
