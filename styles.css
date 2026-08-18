@@ -434,7 +434,10 @@ footer small{opacity:.7}
   border-bottom:1px solid rgba(255,255,255,.28);margin:18px 0 0}
 .flow-fam{
   background:none;border:none;font-family:inherit;font-size:14.5px;font-weight:700;
-  color:rgba(255,255,255,.72);padding:12px 14px;cursor:pointer;white-space:nowrap;
+  color:rgba(255,255,255,.72);padding:12px 13px;cursor:pointer;white-space:nowrap;
+  /* maiúsculas: em caixa alta as palavras ficam mais compridas, por isso a
+     letra desce um pouco e ganha espaçamento, senão colavam-se umas às outras */
+  text-transform:uppercase;font-size:13px;letter-spacing:.9px;
   border-bottom:3px solid transparent;
 }
 .flow-fam:hover{color:#fff}
