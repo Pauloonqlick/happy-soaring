@@ -60,6 +60,9 @@
 <div class="sky"></div>
 <canvas id="wind"></canvas>
 <main id="app"></main>
-<script src="app.js"></script>
+<!-- módulo, para poder partilhar as regras dos avisos com o gerador
+     das páginas das asas. O app.js não escreve nenhuma variável global e não
+     há handlers inline no HTML, por isso a mudança de âmbito não parte nada. -->
+<script type="module" src="app.js"></script>
 </body>
 </html>

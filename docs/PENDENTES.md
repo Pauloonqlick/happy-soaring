@@ -15,7 +15,7 @@ Nada disto avança sem ti. Não são tarefas, são escolhas.
 | | O que está em causa |
 |---|---|
 | **Ligações à ficha da Flow** | Em Agosto decidiste não ter links para o site do fabricante. O briefing do catálogo pede o contrário. As duas coisas não podem estar certas |
-| **Cor à medida: preço ou oferta** | Tens o campo no CMS a dizer "+200€ e 4+ semanas". A oferta a decorrer dá a cor incluída. São mensagens opostas |
+| **Janela da oferta** | A arte diz MULLET 2 e agora o texto também. Falta o design novo antes de a ligares |
 | **Rodapé** | Ficou só "HAPPY × FLOW" desde que tirei a frase de demonstração |
 | **Nível de piloto por asa** | É matéria de segurança. Posso propor, mas tens de rever antes de ir para o ar |
 | **Botão da janela da oferta** | Para onde leva |
@@ -46,16 +46,46 @@ Coisas que eu não posso inventar.
 - **19 asas no formato antigo** — falta o tratamento completo que a Future 2, a
   Freedom 2 e a F2 Light já têm
 - **Traduzir** para es/fr/de o texto do fabricante nessas 19
-- **Cor à medida** só existe na Mullet 2. Decidir se se estende aos outros três
-  parakites — cada um precisa de ser visto, não é só correr o script
-- **Modo descoberta** está construído e desligado. Liga-se quando o nível, o
-  terreno e o "porquê" estiverem preenchidos
+- **Cor à medida** só existe na Mullet 2, na página inicial e na página da asa.
+  A oferta da cor à medida é **só para a Mullet 2** (decidido 24/08/2026) e o
+  texto da oferta já foi corrigido nos 5 idiomas. Estender aos outros três
+  parakites continua em aberto — cada um precisa de ser visto, não é só correr
+  o script
+- **Preços e prazos fora do site** (24/08/2026). O `customColourNote` está
+  vazio nos 5 idiomas. O campo continua no CMS: se voltares a escrever lá
+  alguma coisa, volta a aparecer na página da asa
+- **Paramotor mistura dois eixos** na `classificacao`: `Full reflex` e
+  `Semi-reflex` são o perfil da asa, `EN-A` é uma homologação. Na fila de
+  chips lêem-se como três alternativas do mesmo tipo, e não são — uma asa
+  full reflex também tem (ou não) homologação. Ou se escolhe um eixo só para
+  o paramotor, ou se separa em dois campos
+- **Modo descoberta** está ligado. Os separadores de família (24/08/2026)
+  resolveram o problema de só se poder chegar a 4 das 22 asas — o carril era
+  só da família em palco e não havia forma de sair dela sem responder às
+  perguntas. Agora os separadores contam quantas correspondem por família,
+  esbatem as que dão zero (mas continuam a abrir), e há um botão **Apagar
+  respostas**. A fila de **homologação / tipo** dentro da família veio a
+  seguir, com as mesmas regras. O filtro limpa-se sempre que se muda de
+  família, se responde de novo ou se apagam as respostas
+- **Rótulos das famílias e das classes** passaram para `regras/taxonomia.js`,
+  partilhado com o gerador (24/08/2026). Antes as 110 páginas mostravam a
+  chave em bruto — uma página alemã dizia "Parapentes" nas migalhas.
+  `Mini-wings` ficou **Mini-voiles** em francês e **Miniwings** em alemão;
+  `Parakites` e `Parawing` ficam iguais nos cinco idiomas, por serem os nomes
+  que a Flow usa em toda a parte. Diz se preferes outra coisa
 
 ## Oferta
 
-- **Novo design da janela** — a arte diz MULLET 2 e o texto fala da gama toda
-- **Ligar a oferta** quando o design estiver feito. Está pronta e desligada
+Resolvido em 24/08/2026: o texto passou a falar só da **Mullet 2** nos 5
+idiomas, o campo **`abrange`** diz que asas levam o selo, e o selo aparece na
+grelha, no carril, no palco e na página da asa. O botão continua a levar à
+gama toda dos parakites — foi decidido assim.
+
+- **Ligar a oferta** quando o design da janela estiver feito. Está pronta,
+  testada e **desligada**
 - Falta a **data de fim** ser confirmada (pus 31/12/2026)
+- A palavra é **Oferta**, não promoção. O tipo `promocao` (framboesa) continua
+  a existir no CMS como categoria à parte — diz se o queres fora
 
 ## Música
 
@@ -66,13 +96,16 @@ Coisas que eu não posso inventar.
 
 ## SEO
 
-Feito: robots.txt, sitemap, canonical, Open Graph, JSON-LD, 404 a sério.
+Feito: robots.txt, canonical, Open Graph, JSON-LD, 404 a sério, **endereços
+próprios para as 22 asas** (110 páginas, 5 idiomas), **sitemap gerado** com as
+112 URLs e **hreflang** entre as cinco versões de cada asa.
 
-Por fazer, e por esta ordem:
+Por fazer:
 
-1. ~~URLs próprias~~ — **decidido**, ver docs/URLS.md. Gerador escrito, falta
-   ligar os cartões às páginas e juntar ao sitemap
-2. **HTML gerado na publicação** — um crawler recebe hoje uma div vazia
-3. **hreflang** — só é possível depois de 1
-4. **Conteúdo** — as páginas que querias (/parakite/, /smartground/,
+1. **Conteúdo** — as páginas que querias (/parakite/, /smartground/,
    comparações) não existem. SEO num site sem conteúdo não optimiza nada
+2. **Páginas de família** (/asas/parakites/) — ficaram de fora de propósito:
+   uma lista de asas sem texto próprio é conteúdo fraco. Entram quando houver
+   um parágrafo a sério sobre cada família
+3. **Search Console** — submeter o sitemap depois da primeira publicação com
+   as páginas

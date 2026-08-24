@@ -48,5 +48,12 @@ __pycache__/
 # ficheiro de trabalho do canvas de design — nao faz parte do site
 _design.html
 
-# paginas geradas na publicacao — nao se versionam, geram-se
-_paginas/
+
+# paginas das asas: geram-se na publicacao, nao se versionam
+/asas/
+/en/
+/es/
+/fr/
+/de/
+/_urls.txt
+/_publicar/

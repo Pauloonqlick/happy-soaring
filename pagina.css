@@ -36,7 +36,11 @@ body.pg{
   color:var(--orange);margin-bottom:6px}
 .pg h1{font-size:clamp(34px,6vw,52px);font-weight:800;letter-spacing:-1.6px;line-height:1.02}
 .pg-tagline{font-size:18px;color:var(--tinta-fraca);margin-top:12px;max-width:34ch}
-.pg-foto{flex:1 1 300px;max-width:100%;height:auto;object-fit:contain}
+/* min-width:0 é obrigatório: num item flex, uma <img> assume por omissão
+   a largura intrínseca (1200px) como mínimo, o que partia o cabeçalho em
+   duas linhas e empurrava o selector de cor para fora do primeiro ecrã. */
+.pg-foto{flex:1 1 300px;min-width:0;max-width:100%;max-height:340px;
+  height:auto;object-fit:contain}
 
 .pg-wa{display:inline-block;margin-top:20px;background:#25d366;color:#08351a;
   font-weight:800;font-size:14.5px;padding:13px 24px;border-radius:100px;text-decoration:none}
@@ -89,3 +93,187 @@ body.pg{
   .pg-cab{gap:18px}
   .pg h1{letter-spacing:-1px}
 }
+
+/* ---- aviso -----------------------------------------------------------
+   Amarelo com tinta escura: em fundo claro, texto branco sobre amarelo não
+   chega ao contraste mínimo. A cor chama a atenção, o texto lê-se. */
+.pg-aviso{
+  background:#fff8e1;border-left:4px solid #f5c518;border-radius:0 10px 10px 0;
+  padding:13px 16px;margin:0 0 22px;font-size:14.5px;color:#4a3800;max-width:68ch;
+}
+.pg-aviso::before{content:"⚠ ";font-weight:800}
+
+/* ---- vídeo -----------------------------------------------------------
+   A miniatura é uma ligação até alguém carregar; o guião troca-a pelo
+   leitor. As duas ocupam a mesma caixa 16:9, por isso nada salta. */
+.pg-video{
+  display:block;position:relative;width:100%;aspect-ratio:16/9;
+  border:0;border-radius:14px;overflow:hidden;background:#0a2c53;
+}
+a.pg-video{cursor:pointer}
+.pg-video img{width:100%;height:100%;object-fit:cover;display:block}
+.pg-video-play{
+  position:absolute;inset:0;margin:auto;width:70px;height:70px;border-radius:50%;
+  background:rgba(255,106,19,.94);box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+.pg-video-play::after{
+  content:"";position:absolute;inset:0;margin:auto;width:0;height:0;
+  border-left:22px solid #fff;border-top:14px solid transparent;
+  border-bottom:14px solid transparent;transform:translateX(4px);
+}
+a.pg-video:hover .pg-video-play{background:#ff7c31}
+
+/* ---- gama de vento ---------------------------------------------------
+   Tabela a sério, não divs: cada linha é um tamanho e um intervalo, o que
+   é exactamente o que uma tabela diz. A barra é decoração por cima; quem
+   usa leitor de ecrã ouve os números, que é o que interessa. */
+.pg-vento-g{margin-bottom:26px}
+.pg-vento-g h3{font-size:14px;font-weight:800;letter-spacing:.3px;margin-bottom:8px;
+  color:var(--tinta-fraca);text-transform:uppercase}
+.pg-vento-t{border-collapse:collapse;width:100%}
+.pg-vento-t th[scope=row]{
+  width:52px;text-align:left;font-size:13px;font-weight:800;padding:5px 8px 5px 0;
+}
+.pg-vento-barra{padding:5px 10px 5px 0;width:100%}
+.pg-vento-trilho{
+  display:block;position:relative;height:14px;border-radius:7px;background:#eef3f9;
+}
+.pg-vento-b{
+  position:absolute;top:0;bottom:0;border-radius:7px;
+  /* as pontas esbatidas são de propósito: não há limites bruscos de vento,
+     e uma barra de extremos duros dizia uma coisa que não é verdade */
+  background:linear-gradient(90deg,rgba(255,106,19,.35),var(--orange) 22%,
+    var(--orange) 78%,rgba(255,106,19,.35));
+}
+.pg-vento-val{
+  white-space:nowrap;text-align:right;font-size:13px;font-weight:700;
+  padding:5px 0;line-height:1.25;
+}
+.pg-vento-val small{font-weight:600;color:var(--tinta-fraca);font-size:11.5px}
+.pg-vento-eixo td{border:0;padding:0}
+/* o padding vive na CELULA e a regua no interior: um `left:%` resolve-se
+   contra a caixa de PADDING, por isso as marcas colocadas na celula caíam
+   10px à direita do fim do trilho. A régua interior não tem padding. */
+.pg-vento-marcas{padding:0 10px 0 0 !important}
+.pg-vento-reg{position:relative;display:block;height:17px}
+.pg-vento-reg span{
+  position:absolute;top:1px;transform:translateX(-50%);
+  font-size:10.5px;color:var(--tinta-fraca);font-variant-numeric:tabular-nums;
+}
+/* a primeira e a última marca encostam-se em vez de saírem do trilho */
+.pg-vento-reg span:first-child{transform:none}
+.pg-vento-reg span:last-child{transform:translateX(-100%)}
+.pg-vento-un{
+  text-align:right;font-size:10.5px;color:var(--tinta-fraca);
+  text-transform:uppercase;letter-spacing:.6px;vertical-align:top;padding-top:1px
+}
+
+@media(max-width:600px){
+  .pg-vento-val small{display:none}
+  .pg-video-play{width:56px;height:56px}
+  .pg-video-play::after{border-left-width:18px;border-top-width:11px;border-bottom-width:11px}
+}
+
+/* ---- escolher e pedir preço ------------------------------------------
+   A secção que faz da página uma montra e não só um folheto. Fica logo a
+   seguir à foto porque é ela que comanda a foto. */
+.pg-pedir{
+  background:#f7fafd;border:1px solid var(--linha);border-radius:16px;
+  padding:22px 22px 24px;margin-bottom:34px;
+}
+.pg-pedir h2{margin-top:0}
+.pg-pedir h3{
+  font-size:12px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--tinta-fraca);margin:20px 0 9px;
+}
+.pg-pedir h3:first-of-type{margin-top:4px}
+
+/* esquemas standard: a foto é o rótulo, o nome vai por baixo */
+.pg-esq{display:flex;flex-wrap:wrap;gap:10px}
+.pg-esq-b{
+  flex:0 0 auto;width:132px;padding:6px;border-radius:12px;cursor:pointer;
+  background:#fff;border:2px solid var(--linha);font-family:inherit;
+}
+.pg-esq-b img{width:100%;height:auto;display:block;border-radius:7px}
+.pg-esq-b span{
+  display:block;margin-top:5px;font-size:11.5px;font-weight:700;
+  text-transform:capitalize;color:var(--tinta-fraca);
+}
+.pg-esq-b:hover{border-color:#b9c9dc}
+.pg-esq-b.on{border-color:var(--orange);background:#fff6f0}
+.pg-esq-b.on span{color:var(--tinta)}
+
+/* cor à medida */
+.pg-cust{display:flex;flex-wrap:wrap;gap:9px}
+.pg-cust-b{
+  width:34px;height:34px;border-radius:50%;cursor:pointer;
+  border:2px solid rgba(0,0,0,.16);box-shadow:0 1px 3px rgba(0,0,0,.14);
+}
+.pg-cust-b:hover{transform:scale(1.09)}
+/* o anel de seleção é desenhado FORA do círculo, para não tapar a cor —
+   que é justamente o que a pessoa está a tentar ver */
+.pg-cust-b.on{border-color:#fff;box-shadow:0 0 0 3px var(--orange)}
+.pg-cor-nome{
+  min-height:19px;margin:9px 0 0;font-size:13.5px;font-weight:700;color:var(--orange);
+}
+.pg-nota{font-size:12.5px;color:var(--tinta-fraca);margin:6px 0 0;max-width:62ch;line-height:1.5}
+
+/* tamanhos */
+.pg-tsel{display:flex;flex-wrap:wrap;gap:8px}
+.pg-tsel-b{
+  min-width:52px;padding:9px 14px;border-radius:10px;cursor:pointer;
+  background:#fff;border:2px solid var(--linha);
+  font-family:inherit;font-size:14px;font-weight:800;color:var(--tinta);
+}
+.pg-tsel-b:hover{border-color:#b9c9dc}
+.pg-tsel-b.on{background:var(--orange);border-color:var(--orange);color:#fff}
+
+/* país */
+.pg-pais{margin-top:20px}
+.pg-pais label{
+  display:block;font-size:12px;font-weight:800;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--tinta-fraca);margin-bottom:8px;
+}
+.pg-pais input{
+  width:100%;max-width:340px;padding:11px 14px;border-radius:10px;
+  border:2px solid var(--linha);background:#fff;
+  font-family:inherit;font-size:15px;color:var(--tinta);
+}
+.pg-pais input:focus{outline:none;border-color:var(--orange)}
+.pg-dica{font-size:12.5px;color:var(--tinta-fraca);margin:7px 0 0}
+
+/* enviar: sem href enquanto faltar alguma coisa, por isso não é clicável nem
+   focável. O aspecto acompanha o estado — não há botão morto a fingir. */
+.pg-enviar{margin-top:20px}
+.pg-wa.desativado{
+  background:#dfe6ef;color:#8d9aab;cursor:not-allowed;pointer-events:none;
+}
+
+@media(max-width:600px){
+  .pg-pedir{padding:18px 16px 20px;border-radius:14px}
+  .pg-esq-b{width:calc(50% - 5px)}
+  .pg-cust-b{width:38px;height:38px}
+  .pg-enviar{display:block;text-align:center}
+}
+
+/* ---- selo de oferta --------------------------------------------------
+   Faixa discreta por baixo da tagline, não a faixa larga da página inicial:
+   lá ela grita porque abrange o site todo; aqui é sobre esta asa e não deve
+   falar mais alto do que o produto. */
+.pg-oferta{
+  display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;
+  margin:16px 0 0;padding:10px 14px;border-radius:10px;
+  background:#fff1e9;border-left:4px solid #c2410c;
+  font-size:14px;color:#5c2a10;max-width:52ch;
+}
+.pg-oferta-et{
+  background:#c2410c;color:#fff;   /* 5.18:1 */
+  padding:3px 9px;border-radius:100px;
+  font-size:10.5px;font-weight:900;letter-spacing:1.1px;text-transform:uppercase;
+}
+.pg-oferta-fim{font-size:12.5px;font-weight:700;color:#8a4a25;white-space:nowrap}
+.pg-oferta.t-promocao{background:#fff0f4;border-left-color:#b3123f;color:#5e0b22}
+.pg-oferta.t-promocao .pg-oferta-et{background:#b3123f}
+/* o amarelo guarda a tinta escura: branco sobre amarelo não passa contraste */
+.pg-oferta.t-aviso{background:#fff8e1;border-left-color:#f5c518;color:#4a3800}
+.pg-oferta.t-aviso .pg-oferta-et{background:#f5c518;color:#3a2c00}

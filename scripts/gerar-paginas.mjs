@@ -22,6 +22,8 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { ofertasDaAsa } from '../regras/avisos.js';
+import { rotuloFamilia, rotuloClasse } from '../regras/taxonomia.js';
 
 const RAIZ = process.cwd();   /* corre-se a partir da raiz do projecto */
 const DOMINIO = 'https://happysoaring.com';
@@ -53,6 +55,48 @@ const T = {
                fr:'Revendeur officiel Flow Paragliders au Portugal',
                de:'Offizieller Flow-Paragliders-Händler in Portugal' },
   inicio:    { pt:'Início', en:'Home', es:'Inicio', fr:'Accueil', de:'Start' },
+  /* Estas frases são copiadas à letra do dicionário do app.js. Se as
+     reescrevesse por minhas palavras, a mesma pergunta apareceria de duas
+     maneiras conforme a pessoa entrasse pelo palco ou pela página. */
+  ate:       { pt:'até', en:'until', es:'hasta', fr:'jusqu’au', de:'bis' },
+  pedirTit:  { pt:'Escolhe e pede preço', en:'Choose and ask for a price',
+               es:'Elige y pide precio', fr:'Choisis et demande le prix',
+               de:'Wählen und Preis anfragen' },
+  corMedida: { pt:'Escolhe a tua cor', en:'Choose your colour', es:'Elige tu color',
+               fr:'Choisis ta couleur', de:'Wähl deine Farbe' },
+  corIndic:  { pt:'As cores no ecrã são indicativas. O tecido pode ser diferente do que vês — confirma connosco antes de encomendares.',
+               en:'On-screen colours are indicative. The fabric may differ from what you see — check with us before ordering.',
+               es:'Los colores en pantalla son indicativos. El tejido puede diferir de lo que ves — confírmalo con nosotros antes de pedir.',
+               fr:'Les couleurs à l’écran sont indicatives. Le tissu peut différer de ce que tu vois — confirme avec nous avant de commander.',
+               de:'Die Farben am Bildschirm sind Richtwerte. Der Stoff kann abweichen — kläre das vor der Bestellung mit uns ab.' },
+  escolheTams:{ pt:'Que tamanhos queres?', en:'Which sizes?', es:'¿Qué tallas quieres?',
+               fr:'Quelles tailles veux-tu ?', de:'Welche Größen möchtest du?' },
+  pais:      { pt:'De que país és?', en:'Which country are you in?', es:'¿De qué país eres?',
+               fr:'De quel pays es-tu ?', de:'Aus welchem Land kommst du?' },
+  paisDica:  { pt:'Obrigatório — é o que me diz em que idioma te devo responder.',
+               en:'Required — it tells me which language to reply in.',
+               es:'Obligatorio: me dice en qué idioma debo responderte.',
+               fr:'Obligatoire — cela me dit dans quelle langue te répondre.',
+               de:'Pflichtfeld — daran sehe ich, in welcher Sprache ich antworten soll.' },
+  enviarWa:  { pt:'Enviar no WhatsApp', en:'Send on WhatsApp', es:'Enviar por WhatsApp',
+               fr:'Envoyer sur WhatsApp', de:'Über WhatsApp senden' },
+  msgAbre:   { pt:'Olá! Queria pedir preço para a {n}.', en:'Hi! I would like a price for the {n}.',
+               es:'¡Hola! Quería pedir precio para la {n}.', fr:'Bonjour ! Je voudrais le prix de la {n}.',
+               de:'Hallo! Ich hätte gern den Preis der {n}.' },
+  msgTam:    { pt:'Tamanho: {t}', en:'Size: {t}', es:'Talla: {t}', fr:'Taille : {t}', de:'Größe: {t}' },
+  msgTams:   { pt:'Tamanhos: {t}', en:'Sizes: {t}', es:'Tallas: {t}', fr:'Tailles : {t}', de:'Größen: {t}' },
+  msgCor:    { pt:'Cor: {c}', en:'Colour: {c}', es:'Color: {c}', fr:'Couleur : {c}', de:'Farbe: {c}' },
+  msgPais:   { pt:'Estou em {p}.', en:'I am in {p}.', es:'Estoy en {p}.',
+               fr:'Je suis en {p}.', de:'Ich bin in {p}.' },
+  incluido:  { pt:'O que vem na caixa', en:'What’s in the box', es:'Qué incluye',
+               fr:'Ce qui est inclus', de:'Lieferumfang' },
+  video:     { pt:'Vídeo', en:'Video', es:'Vídeo', fr:'Vidéo', de:'Video' },
+  verNoYt:   { pt:'Ver no YouTube', en:'Watch on YouTube', es:'Ver en YouTube',
+               fr:'Voir sur YouTube', de:'Auf YouTube ansehen' },
+  vento:     { pt:'Gama de vento', en:'Wind range', es:'Rango de viento',
+               fr:'Plage de vent', de:'Windbereich' },
+  kn:        { pt:'nós', en:'kn', es:'nudos', fr:'nœuds', de:'kn' },
+  kmh:       { pt:'km/h', en:'km/h', es:'km/h', fr:'km/h', de:'km/h' },
   msg:       { pt:'Olá! Queria pedir preço para a {n}.', en:'Hi! I would like a price for the {n}.',
                es:'¡Hola! Quería pedir precio para la {n}.', fr:'Bonjour ! Je voudrais le prix de la {n}.',
                de:'Hallo! Ich hätte gern den Preis der {n}.' }
@@ -118,7 +162,7 @@ function jsonld(p, l, url, foto) {
        exactamente o que não se deve fazer */
     { '@type': 'Product', name: p.nome, url,
       description: t(p.tagline, l) || t(p.descricao, l),
-      category: p.familia, image: foto,
+      category: rotuloFamilia(p.familia, l), image: foto,
       brand: { '@type': 'Brand', name: 'Flow Paragliders' },
       ...(p.classificacao ? { additionalProperty: {
         '@type': 'PropertyValue', name: 'Classificação', value: p.classificacao } } : {}),
@@ -127,11 +171,337 @@ function jsonld(p, l, url, foto) {
   return JSON.stringify({ '@context': 'https://schema.org', '@graph': g }, (k, v) => v === undefined ? undefined : v);
 }
 
+/* ---- selo de oferta ---------------------------------------------------
+   Leva a data de fim consigo e apaga-se sozinho quando ela passar: é a única
+   coisa nesta página que muda sem alguém publicar de novo. */
+function blocoOferta(p, l) {
+  const a = ofertasDaAsa(AVISOS, p)[0];
+  if (!a) return '';
+  const rot = t(a.etiqueta, l) || 'Oferta';
+  const txt = t(a.texto, l);
+  const fim = a.fim ? String(a.fim).slice(0, 10) : '';
+  return `<p class="pg-oferta t-${esc(a.tipo || 'oferta')}"${fim ? ` data-fim="${esc(fim)}"` : ''}>
+    <span class="pg-oferta-et">${esc(rot)}</span>${txt ? ' ' + esc(txt) : ''}${
+      fim ? ` <span class="pg-oferta-fim">${esc(t(T.ate, l))} ${esc(dataCurta(fim, l))}</span>` : ''}</p>
+${fim ? `<script>
+(function(){
+  var o = document.querySelector('.pg-oferta[data-fim]'); if (!o) return;
+  var h = new Date(), d = h.getFullYear() + '-' +
+    String(h.getMonth() + 1).padStart(2, '0') + '-' + String(h.getDate()).padStart(2, '0');
+  if (d > o.dataset.fim) o.remove();
+})();
+<` + `/script>` : ''}`;
+}
+
+const dataCurta = (iso, l) => {
+  try { return new Date(iso + 'T12:00:00').toLocaleDateString(l, { day: 'numeric', month: 'long', year: 'numeric' }); }
+  catch (e) { return iso; }
+};
+
+/* ---- escolher e pedir preço ------------------------------------------
+   O PORQUE DE ISTO EXISTIR AQUI
+     Enquanto a asa só se via dentro da página inicial, esta secção não fazia
+     falta: quem chegava já tinha passado pelo palco. Agora quem vem do Google
+     ou de um link partilhado aterra nesta página e nunca vê o palco. Se a
+     página não deixar escolher a cor e o tamanho, essa pessoa vê uma versão
+     pior do produto — e é justamente quem ainda não nos conhece.
+
+   O QUE E COPIADO DO PALCO, DE PROPOSITO
+     As mesmas perguntas, pela mesma ordem, com as mesmas palavras, e a
+     mensagem de WhatsApp montada com as mesmas peças. A mensagem que chega
+     ao Paulo tem de ser igual, venha de onde vier.
+
+   REGRA DO PAIS
+     Igual à do palco: sem país (e sem tamanho, quando a asa os tem) o <a>
+     fica SEM href — não é clicável nem focável. Um botão morto que finge
+     funcionar é pior do que um que se vê que ainda não está pronto. */
+function blocoPedido(p, l, num) {
+  const k = chave(p.nome);
+  const esquemas = (p.cores || []).map(String);
+  const tams = (p.tamanhos || []).map(String);
+  const custom = p.coresCustom ? TECIDOS : [];
+  if (!esquemas.length && !tams.length) return '';
+
+  const notaCust = p.coresCustom ? t(NOTA_CUSTOM, l) : '';
+
+  const std = esquemas.length ? `
+    <h3>${esc(t(T.cores, l))}</h3>
+    <div class="pg-esq" role="group" aria-label="${esc(t(T.cores, l))}">${esquemas.map((c, i) =>
+      `<button type="button" class="pg-esq-b${i === 0 ? ' on' : ''}" data-esq="${esc(c)}">
+        <img src="/images/asas/${k}__${esc(c)}-card.webp" alt="" loading="lazy" width="600" height="397" />
+        <span>${esc(String(c).replace(/-/g, ' '))}</span></button>`).join('')}</div>` : '';
+
+  const cust = custom.length ? `
+    <h3>${esc(t(T.corMedida, l))}</h3>
+    <div class="pg-cust" role="group" aria-label="${esc(t(T.corMedida, l))}">${custom.map(c =>
+      `<button type="button" class="pg-cust-b" data-ref="${esc(c.ref)}" data-nome="${esc(c.nome)}"
+        style="background:${esc(c.hex)}" title="${esc(c.nome)}" aria-label="${esc(c.nome)}"></button>`).join('')}</div>
+    <p class="pg-cor-nome" aria-live="polite"></p>
+    <p class="pg-nota">${esc(t(T.corIndic, l))}${notaCust ? ' ' + esc(notaCust) : ''}</p>` : '';
+
+  const cxTams = tams.length ? `
+    <h3>${esc(t(T.escolheTams, l))}</h3>
+    <div class="pg-tsel" role="group" aria-label="${esc(t(T.escolheTams, l))}">${tams.map(x =>
+      `<button type="button" class="pg-tsel-b" data-tam="${esc(x)}" aria-pressed="false">${esc(x)}</button>`).join('')}</div>` : '';
+
+  const dados = {
+    k, esquemas, tams, wa: String(num).replace(/[^0-9]/g, ''), nome: p.nome,
+    msg: {
+      abre: t(T.msgAbre, l), tam: t(T.msgTam, l), tams: t(T.msgTams, l),
+      cor: t(T.msgCor, l), pais: t(T.msgPais, l)
+    }
+  };
+
+  return `<section class="pg-sec pg-pedir" id="pedir">
+  <h2>${esc(t(T.pedirTit, l))}</h2>
+  ${std}
+  ${cust}
+  ${cxTams}
+  <div class="pg-pais">
+    <label for="pg-pais-c">${esc(t(T.pais, l))}</label>
+    <input id="pg-pais-c" type="text" autocomplete="country-name" required />
+    <p class="pg-dica">${esc(t(T.paisDica, l))}</p>
+  </div>
+  <a class="pg-wa pg-enviar desativado" aria-disabled="true" rel="noopener"
+     target="_blank">${esc(t(T.enviarWa, l))}</a>
+</section>
+<script type="application/json" id="pg-dados">${JSON.stringify(dados).replace(/</g, '\\u003c')}<` + `/script>
+<script>
+(function(){
+  var no = document.getElementById('pg-dados'); if (!no) return;
+  var D = JSON.parse(no.textContent);
+  var foto = document.getElementById('pg-foto');
+  var enviar = document.querySelector('.pg-enviar');
+  var nomeCor = document.querySelector('.pg-cor-nome');
+  var campo = document.getElementById('pg-pais-c');
+  var esq = D.esquemas[0] || '', ref = null, corNome = null, sel = [];
+
+  function url(){
+    return ref ? '/images/asas-cores/' + D.k + '__' + esq + '__' + ref + '.webp'
+               : '/images/asas/' + D.k + '__' + esq + '.webp';
+  }
+  function pinta(){
+    if (foto) foto.src = url();
+    if (nomeCor) nomeCor.textContent = corNome || '';
+  }
+  /* se faltar a imagem daquela combinação, mostra-se o esquema standard em
+     vez do ícone de imagem partida */
+  if (foto) foto.addEventListener('error', function(){
+    var base = '/images/asas/' + D.k + '__' + esq + '.webp';
+    if (foto.getAttribute('src') !== base) foto.src = base;
+  });
+
+  function marca(lista, alvo){
+    [].forEach.call(lista, function(b){ b.classList.toggle('on', b === alvo); });
+  }
+  /* Clicar numa cor standard mostra ESSA cor, não a standard com a custom por
+     cima: são duas escolhas diferentes e herdar uma na outra confunde. */
+  var bEsq = document.querySelectorAll('.pg-esq-b');
+  var bCust = document.querySelectorAll('.pg-cust-b');
+  [].forEach.call(bEsq, function(b){
+    b.addEventListener('click', function(){
+      esq = b.dataset.esq; ref = null; corNome = null;
+      marca(bEsq, b);
+      [].forEach.call(bCust, function(o){ o.classList.remove('on'); });
+      pinta(); refresca();
+    });
+  });
+  [].forEach.call(bCust, function(b){
+    b.addEventListener('click', function(){
+      ref = b.dataset.ref; corNome = b.dataset.nome;
+      marca(bCust, b); pinta(); refresca();
+    });
+  });
+  /* vários tamanhos de uma vez: quem hesita entre dois pergunta pelos dois em
+     vez de mandar duas mensagens */
+  [].forEach.call(document.querySelectorAll('.pg-tsel-b'), function(b){
+    b.addEventListener('click', function(){
+      var i = sel.indexOf(b.dataset.tam);
+      if (i >= 0) sel.splice(i, 1); else sel.push(b.dataset.tam);
+      b.classList.toggle('on', i < 0);
+      b.setAttribute('aria-pressed', i < 0 ? 'true' : 'false');
+      refresca();
+    });
+  });
+
+  function refresca(){
+    var pais = (campo.value || '').trim();
+    var ok = pais.length >= 2 && (!D.tams.length || sel.length > 0);
+    enviar.classList.toggle('desativado', !ok);
+    enviar.setAttribute('aria-disabled', ok ? 'false' : 'true');
+    if (!ok) { enviar.removeAttribute('href'); return; }
+    var ordem = D.tams.filter(function(x){ return sel.indexOf(x) >= 0; });
+    var linhas = [D.msg.abre.replace('{n}', D.nome)];
+    if (ordem.length === 1) linhas.push(D.msg.tam.replace('{t}', ordem[0]));
+    else if (ordem.length > 1) linhas.push(D.msg.tams.replace('{t}', ordem.join(', ')));
+    var cor = corNome || (esq ? esq.replace(/-/g, ' ') : '');
+    if (cor) linhas.push(D.msg.cor.replace('{c}', cor));
+    linhas.push(D.msg.pais.replace('{p}', pais));
+    enviar.href = 'https://wa.me/' + D.wa + '?text=' + encodeURIComponent(linhas.join('\\n'));
+  }
+  /* HERDA O QUE VEM DO SITE
+     Quem esteve a experimentar cores no palco e carregou em Detalhes não pode
+     aterrar aqui numa página em branco, a começar de novo. O fragmento traz
+     o esquema, a cor à medida e os tamanhos. Só se aceita o que existe mesmo
+     nesta asa — um fragmento escrito à mão não pode pôr a página a pedir uma
+     cor que não há. */
+  function herda(){
+    var h = (location.hash || '').replace(/^#/, '');
+    if (!h) return false;
+    var q = {};
+    h.split('&').forEach(function(par){
+      var i = par.indexOf('=');
+      if (i > 0) q[par.slice(0, i)] = decodeURIComponent(par.slice(i + 1));
+    });
+    var mexeu = false;
+
+    if (q.esq && D.esquemas.indexOf(q.esq) >= 0) {
+      var be = document.querySelector('.pg-esq-b[data-esq="' + q.esq + '"]');
+      if (be) { esq = q.esq; marca(bEsq, be); mexeu = true; }
+    }
+    if (q.cor) {
+      var bc = document.querySelector('.pg-cust-b[data-ref="' + q.cor + '"]');
+      if (bc) { ref = q.cor; corNome = bc.dataset.nome; marca(bCust, bc); mexeu = true; }
+    }
+    if (q.tam) q.tam.split(',').forEach(function(x){
+      var bt = document.querySelector('.pg-tsel-b[data-tam="' + x + '"]');
+      if (bt && sel.indexOf(x) < 0) {
+        sel.push(x); bt.classList.add('on'); bt.setAttribute('aria-pressed', 'true'); mexeu = true;
+      }
+    });
+    if (mexeu) pinta();
+    return mexeu;
+  }
+  function aplicaFragmento(rola){
+    if (!herda()) return;
+    if (!rola) return;
+    /* 'nearest' e não 'start': se o bloco já se vê, não se mexe nada. Encostar
+       o bloco ao topo escondia a foto da asa que a pessoa acabou de colorir —
+       que é justamente o que ela veio ver. */
+    var a = document.getElementById('pedir');
+    if (a) a.scrollIntoView({ block: 'nearest' });
+  }
+  aplicaFragmento(true);
+  /* voltar atrás no browser traz outro fragmento sem recarregar a página:
+     sem isto, a pessoa via a escolha errada e não percebia porquê */
+  window.addEventListener('hashchange', function(){ aplicaFragmento(false); });
+
+  campo.addEventListener('input', refresca);
+  campo.addEventListener('keydown', function(ev){
+    if (ev.key === 'Enter' && enviar.hasAttribute('href')) enviar.click();
+  });
+  refresca();
+})();
+<` + `/script>`;
+}
+
+/* ---- o que vem na caixa ---------------------------------------------- */
+function blocoIncluido(p, l) {
+  const x = t(p.incluido, l);
+  return x ? '<section class="pg-sec"><h2>' + esc(t(T.incluido, l)) + '</h2>' + corpo(x) + '</section>' : '';
+}
+
+/* ---- aviso ------------------------------------------------------------
+   Vem do painel, onde já existia. É matéria de segurança — uma asa que
+   avisa alguma coisa tem de avisar em todo o lado onde apareça, e não só
+   no sítio de onde já ninguém entra. */
+function blocoAviso(p, l) {
+  const x = t(p.aviso, l);
+  return x ? '<p class="pg-aviso" role="note">' + esc(x) + '</p>' : '';
+}
+
+/* ---- vídeo ------------------------------------------------------------
+   Miniatura com uma LIGAÇÃO ao YouTube, não um <iframe>. Assim a página não
+   arrasta o leitor do YouTube (e os cookies dele) para quem nem carrega no
+   play, e continua a funcionar sem JavaScript. O guião abaixo, se correr,
+   troca a miniatura pelo leitor ali mesmo — como no site. */
+function blocoVideo(p, l) {
+  const id = String(p.videoId || '').trim();
+  if (!id) return '';
+  const t0 = parseInt(p.videoStartAt, 10) > 0 ? '&start=' + parseInt(p.videoStartAt, 10) : '';
+  const capa = p.videoThumbnail || ('https://img.youtube.com/vi/' + encodeURIComponent(id) + '/maxresdefault.jpg');
+  return `<section class="pg-sec"><h2>${esc(t(T.video, l))}</h2>
+    <a class="pg-video" href="https://www.youtube.com/watch?v=${encodeURIComponent(id)}"
+       rel="noopener" target="_blank"
+       data-id="${esc(id)}" data-extra="${esc(t0)}"
+       aria-label="${esc(t(T.verNoYt, l) + ' — ' + p.nome)}">
+      <img src="${esc(capa)}" alt="" loading="lazy" width="1280" height="720"
+           onerror="this.onerror=null;this.src='https://img.youtube.com/vi/${encodeURIComponent(id)}/hqdefault.jpg'" />
+      <span class="pg-video-play" aria-hidden="true"></span>
+    </a></section>
+<script>
+(function(){
+  var a = document.querySelector('.pg-video'); if (!a) return;
+  a.addEventListener('click', function(ev){
+    ev.preventDefault();
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + a.dataset.id + '?autoplay=1&rel=0' + a.dataset.extra;
+    f.title = ${JSON.stringify(String(p.nome))};
+    f.allow = 'accelerometer; autoplay; encrypted-media; picture-in-picture';
+    f.allowFullscreen = true;
+    f.className = 'pg-video';
+    a.replaceWith(f);
+  });
+})();
+<\/script>`;
+}
+
+/* ---- gama de vento ----------------------------------------------------
+   Os valores guardados são em nós, como o fabricante os publica. Aqui
+   mostram-se os DOIS — nós e km/h — em vez do alternador que o site tem:
+   num documento não há razão para esconder metade da informação atrás de
+   um clique, e assim também aparece nos resultados de pesquisa. */
+const KN_PARA_KMH = 1.852;
+function blocoVento(p, l) {
+  const wr = p.windRange;
+  if (!wr || !(wr.groups || []).length) return '';
+
+  /* mesma escala do site, para os dois gráficos serem comparáveis */
+  let maxKn = 0;
+  wr.groups.forEach(g => (g.rows || []).forEach(r => { maxKn = Math.max(maxKn, +r.max || 0); }));
+  maxKn = Math.ceil((maxKn + 2) / 5) * 5;
+  if (!maxKn) return '';
+
+  const marcas = [];
+  for (let v = 0; v <= maxKn; v += 5) marcas.push(v);
+
+  const grupos = wr.groups.map(g => {
+    const rot = t(g.label, l);
+    const linhas = (g.rows || []).map(r => {
+      const min = +r.min, max = +r.max;
+      const ini = (min / maxKn) * 100, fim = (max / maxKn) * 100;
+      const kmh = Math.round(min * KN_PARA_KMH) + '–' + Math.round(max * KN_PARA_KMH);
+      return `<tr>
+        <th scope="row">${esc(r.tamanho)}</th>
+        <td class="pg-vento-barra"><span class="pg-vento-trilho"><span class="pg-vento-b"
+          style="left:${ini.toFixed(1)}%;width:${Math.max(0, fim - ini).toFixed(1)}%"></span></span></td>
+        <td class="pg-vento-val">${min}–${max}&nbsp;${esc(t(T.kn, l))}<br><small>${kmh}&nbsp;km/h</small></td>
+      </tr>`;
+    }).join('');
+    /* O eixo e uma LINHA DA TABELA, nao um div por baixo: so assim as marcas
+       caem na mesma coluna que as barras. Fora da tabela, a largura da coluna
+       dos valores muda com o idioma e o eixo deixa de bater certo. */
+    const eixo = `<tr class="pg-vento-eixo"><td></td><td class="pg-vento-marcas"><span class="pg-vento-reg">${
+      marcas.map(v => '<span style="left:' + ((v / maxKn) * 100).toFixed(1) + '%">' + v +
+        '</span>').join('')}</span></td><td class="pg-vento-un">${esc(t(T.kn, l))}</td></tr>`;
+    return `<div class="pg-vento-g">
+      ${rot ? '<h3>' + esc(rot) + '</h3>' : ''}
+      <table class="pg-vento-t"><tbody>${linhas}${eixo}</tbody></table>
+    </div>`;
+  }).join('');
+
+  const nota = t(wr.note, l);
+  return `<section class="pg-sec"><h2>${esc(t(T.vento, l))}</h2>
+    ${grupos}
+    ${nota ? '<p class="pg-nota">' + esc(nota) + '</p>' : ''}</section>`;
+}
+
 function pagina(p, l, num) {
   const url = DOMINIO + caminho(l, p);
   const cor = (p.cores || [])[0];
   const foto = cor ? DOMINIO + '/images/asas/' + chave(p.nome) + '__' + cor + '.webp' : DOMINIO + '/images/og-happysoaring.jpg';
-  const titulo = p.nome + ' — ' + (p.classificacao || p.familia) + ' Flow Paragliders | Happy Soaring';
+  const titulo = p.nome + ' — ' + (rotuloClasse(p.classificacao, l) || rotuloFamilia(p.familia, l)) +
+    ' Flow Paragliders | Happy Soaring';
   const desc = (t(p.tagline, l) || t(p.descricao, l) || '').slice(0, 155);
 
   const alt = IDIOMAS.map(x =>
@@ -179,19 +549,22 @@ ${alt}
 <main class="pg-cx">
   <nav class="pg-migalhas" aria-label="breadcrumb">
     <a href="${l === OMISSAO ? '/' : '/' + l + '/'}">${esc(t(T.inicio, l))}</a> ›
-    <span>${esc(p.familia)}</span> › <span aria-current="page">${esc(p.nome)}</span>
+    <span>${esc(rotuloFamilia(p.familia, l))}</span> › <span aria-current="page">${esc(p.nome)}</span>
   </nav>
 
   <div class="pg-cab">
     <div class="pg-cab-txt">
-      <p class="pg-eyebrow">${esc(p.classificacao || p.familia)}</p>
+      <p class="pg-eyebrow">${esc(rotuloClasse(p.classificacao, l) || rotuloFamilia(p.familia, l))}</p>
       <h1>${esc(p.nome)}</h1>
       ${t(p.tagline, l) ? '<p class="pg-tagline">' + esc(t(p.tagline, l)) + '</p>' : ''}
-      <a class="pg-wa" href="${wa}" rel="noopener" target="_blank">${esc(t(T.pedir, l))}</a>
+      ${blocoOferta(p, l)}
+      <a class="pg-wa" href="#pedir">${esc(t(T.pedir, l))}</a>
     </div>
-    ${cor ? `<img class="pg-foto" src="/images/asas/${chave(p.nome)}__${cor}.webp"
+    ${cor ? `<img class="pg-foto" id="pg-foto" src="/images/asas/${chave(p.nome)}__${cor}.webp"
       alt="${esc(p.nome + ' — Flow Paragliders')}" width="1200" height="794" />` : ''}
   </div>
+
+  ${blocoPedido(p, l, num)}
 
   ${t(p.descricao, l) ? '<section class="pg-sec">' + corpo(t(p.descricao, l)) + '</section>' : ''}
 
@@ -200,13 +573,15 @@ ${alt}
   ${fortes.length ? `<section class="pg-sec"><h2>${esc(t(T.fortes, l))}</h2><ul>${
     fortes.map(x => '<li>' + esc(x) + '</li>').join('')}</ul></section>` : ''}
 
-  ${(p.cores || []).length ? `<section class="pg-sec"><h2>${esc(t(T.cores, l))}</h2>
-    <div class="pg-cores">${p.cores.map(c => `<figure><img loading="lazy" src="/images/asas/${chave(p.nome)}__${c}-card.webp"
-      alt="${esc(p.nome + ' — ' + String(c).replace(/-/g, ' '))}" width="600" height="397" />
-      <figcaption>${esc(String(c).replace(/-/g, ' '))}</figcaption></figure>`).join('')}</div></section>` : ''}
+  ${blocoIncluido(p, l)}
 
-  ${(p.tamanhos || []).length ? `<section class="pg-sec"><h2>${esc(t(T.tamanhos, l))}</h2>
-    <p class="pg-tams">${p.tamanhos.map(x => '<span>' + esc(x) + '</span>').join('')}</p>
+  ${blocoAviso(p, l)}
+
+  ${blocoVideo(p, l)}
+
+  ${blocoVento(p, l)}
+
+  ${(p.specs || []).length ? `<section class="pg-sec"><h2>${esc(t(T.specs, l))}</h2>
     ${tabelaSpecs(p, l)}</section>` : ''}
 
   ${t(p.descricaoLonga, l) ? '<section class="pg-sec">' + corpo(t(p.descricaoLonga, l)) + '</section>' : ''}
@@ -223,6 +598,32 @@ ${alt}
 }
 
 /* ---------------------------------------------------------------- */
+/* Os avisos entram na página ESCRITOS, não buscados por JavaScript. O site
+   está em upload directo — nada do CMS chega ao ar sem publicar — por isso
+   uma oferta escrita aqui é tão fresca como o resto do site, e ainda por
+   cima o Google vê-a e a partilha no WhatsApp mostra-a. */
+const AVISOS = (() => {
+  try {
+    const st = JSON.parse(fs.readFileSync(path.join(RAIZ, 'content/settings.json'), 'utf8'));
+    return (st.avisos || []).map(id => {
+      try { return JSON.parse(fs.readFileSync(path.join(RAIZ, 'content/avisos/' + id + '.json'), 'utf8')); }
+      catch (e) { return null; }
+    }).filter(Boolean);
+  } catch (e) { return []; }
+})();
+
+const TECIDOS = (() => {
+  try { return JSON.parse(fs.readFileSync(path.join(RAIZ, 'content/cores/flow-tecidos.json'), 'utf8')).cores || []; }
+  catch (e) { return []; }
+})();
+
+const NOTA_CUSTOM = (() => {
+  try {
+    const d = JSON.parse(fs.readFileSync(path.join(RAIZ, 'content/slides/produtos.json'), 'utf8'));
+    return (d.elements || []).filter(e => e.role === 'flow')[0].customColourNote || {};
+  } catch (e) { return {}; }
+})();
+
 const doc = JSON.parse(fs.readFileSync(path.join(RAIZ, 'content/slides/produtos.json'), 'utf8'));
 const flow = doc.elements.find(e => e.role === 'flow');
 const num = flow.whatsapp;
@@ -230,7 +631,10 @@ const produtos = (flow.produtos || []).filter(p => p && p.nome && p.visible !== 
 
 const so = process.argv[2];
 const soIdioma = process.argv[3];
-const destino = path.join(RAIZ, '_paginas');
+/* gera para a raiz do projecto: assim o endereco local e o mesmo que o de
+   producao (/asas/mullet-2/), e nao ha surpresas ao publicar. As pastas
+   geradas estao no .gitignore — geram-se, nao se versionam. */
+const destino = RAIZ;
 
 let n = 0;
 const urls = [];
@@ -247,5 +651,36 @@ for (const p of produtos) {
   }
 }
 fs.writeFileSync(path.join(destino, '_urls.txt'), urls.join('\n') + '\n');
-console.log('  ' + n + ' páginas em _paginas/');
+/* O SITEMAP GERA-SE AQUI, junto com as páginas, para não poder ficar
+   desactualizado: um sitemap escrito à mão passa a mentir na primeira asa
+   que se acrescente. Só se escreve numa corrida completa — gerar uma asa
+   só, para experimentar, não pode apagar as outras 109 do ficheiro. */
+if (!so && !soIdioma) {
+  const hoje = new Date().toISOString().slice(0, 10);
+  const fixas = [
+    { loc: DOMINIO + '/', freq: 'weekly', pri: '1.0' },
+    { loc: DOMINIO + '/reflex-lab/', freq: 'monthly', pri: '0.5' }
+  ];
+  const entrada = (loc, freq, pri) => [
+    '  <url>',
+    '    <loc>' + loc + '</loc>',
+    '    <lastmod>' + hoje + '</lastmod>',
+    '    <changefreq>' + freq + '</changefreq>',
+    '    <priority>' + pri + '</priority>',
+    '  </url>'
+  ].join('\n');
+  const corpoMapa = fixas.map(u => entrada(u.loc, u.freq, u.pri))
+    .concat(urls.map(u => entrada(u, 'monthly', '0.8')));
+  fs.writeFileSync(path.join(RAIZ, 'sitemap.xml'), [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<!-- Gerado por scripts/gerar-paginas.mjs. Não editar à mão: -->',
+    '<!-- qualquer alteração aqui perde-se na publicação seguinte. -->',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    corpoMapa.join('\n'),
+    '</urlset>',
+    ''
+  ].join('\n'));
+  console.log('  sitemap.xml com ' + (urls.length + fixas.length) + ' URLs');
+}
+console.log('  ' + n + ' páginas geradas');
 if (n <= 6) urls.forEach(u => console.log('    ' + u));

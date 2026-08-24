@@ -1,3 +1,8 @@
+import { dentroDoPrazo, abrangeProduto, ofertasDaAsa, hojeISO }
+  from './regras/avisos.js';
+import { rotuloFamilia as rotFamilia, rotuloClasse as rotClasse }
+  from './regras/taxonomia.js';
+
 /* Motor do site orientado por content.json.
    Nada de conteúdo escrito à mão aqui — tudo vem do ficheiro de dados,
    que é o que o CMS (Sveltia) vai editar. */
@@ -146,6 +151,8 @@ const UI = {
   descAlterar:   { pt:'alterar', en:'change', es:'cambiar', fr:'modifier', de:'ändern' },
   descVerTudo:   { pt:'ver a gama toda', en:'see the whole range', es:'ver toda la gama',
                    fr:'voir toute la gamme', de:'die ganze Reihe ansehen' },
+  descApagar:    { pt:'Apagar respostas', en:'Clear answers', es:'Borrar respuestas',
+                   fr:'Effacer les réponses', de:'Antworten löschen' },
   descMelhor:    { pt:'A melhor para ti', en:'Your best match', es:'La mejor para ti',
                    fr:'La meilleure pour toi', de:'Die beste für dich' },
   descPorque:    { pt:'Porquê esta para ti:', en:'Why this one for you:', es:'Por qué esta para ti:',
@@ -213,11 +220,11 @@ const UI = {
                     de:'Hallo! Ich hätte gerne einen Preis für die {n}, Größe {t}. Ich bin in {p}.' },
   flowPais:       { pt:'De que país és?', en:'Which country are you in?', es:'¿De qué país eres?',
                     fr:'De quel pays es-tu ?', de:'Aus welchem Land kommst du?' },
-  flowPaisDica:   { pt:'Obrigatório — é o que me diz os portes e o prazo.',
-                    en:'Required — it tells me shipping and lead time.',
-                    es:'Obligatorio: me dice los portes y el plazo.',
-                    fr:'Obligatoire — cela me donne les frais de port et le délai.',
-                    de:'Pflichtfeld — daraus ergeben sich Versand und Lieferzeit.' },
+  flowPaisDica:   { pt:'Obrigatório — é o que me diz em que idioma te devo responder.',
+                    en:'Required — it tells me which language to reply in.',
+                    es:'Obligatorio: me dice en qué idioma debo responderte.',
+                    fr:'Obligatoire — cela me dit dans quelle langue te répondre.',
+                    de:'Pflichtfeld — daran sehe ich, in welcher Sprache ich antworten soll.' },
   flowEscolheTam: { pt:'Que tamanho queres?', en:'Which size do you want?', es:'¿Qué talla quieres?',
                     fr:'Quelle taille veux-tu ?', de:'Welche Größe möchtest du?' },
   flowEnviarWa:   { pt:'Enviar no WhatsApp', en:'Send on WhatsApp', es:'Enviar por WhatsApp',
@@ -942,6 +949,45 @@ function pintaAmostra(botao, cor) {
 }
 const slugProd = n => String(n).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
   .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+/* O endereço da página da asa. Tem de dar exactamente o mesmo que o
+   `caminho()` do scripts/gerar-paginas.mjs — se os dois discordarem, os
+   cartões apontam para páginas que não existem. O slug é o mesmo `slugProd`
+   que já se usava no #produtos/<slug>, por isso só falta o segmento. */
+const SEGMENTO_ASA = { pt:'asas', en:'wings', es:'alas', fr:'ailes', de:'schirme' };
+const caminhoAsa = p =>
+  (LOCALE === DEFAULT_LOCALE ? '' : '/' + LOCALE) +
+  '/' + (SEGMENTO_ASA[LOCALE] || SEGMENTO_ASA[DEFAULT_LOCALE]) +
+  '/' + slugProd(p.nome) + '/';
+
+/* A escolha viaja para a página da asa no FRAGMENTO, não em query string:
+   um `?cor=744` cria endereços novos que o Google indexa como páginas à parte,
+   e a seguir há que os desdizer com canonical. O fragmento nunca chega ao
+   servidor nem aos motores de busca — e é exactamente o que queremos, porque
+   isto é estado da pessoa, não conteúdo. */
+function fragmentoEscolha(e) {
+  const ps = [];
+  if (e.esq)  ps.push('esq=' + encodeURIComponent(e.esq));
+  if (e.cor)  ps.push('cor=' + encodeURIComponent(e.cor));
+  if (e.tams && e.tams.length) ps.push('tam=' + e.tams.map(encodeURIComponent).join(','));
+  return ps.length ? '#' + ps.join('&') : '';
+}
+
+/* Selo de oferta.
+   O botão da oferta leva à gama toda dos parakites, mas a oferta pode ser só
+   de uma asa — foi o caso em Agosto de 2026. Sem o selo, quem chega à lista
+   não tem como saber qual delas é. Quem decide é o campo `abrange` do aviso,
+   lido pela regra partilhada com o gerador das páginas. */
+function ofertasDe(p) { return ofertasDaAsa(AVISOS, p); }
+function seloOferta(p, classe) {
+  const oferta = ofertasDe(p)[0];
+  if (!oferta) return null;
+  const rot = t(oferta.etiqueta);
+  if (!rot) return null;
+  const sp = el('span', 'selo-oferta t-' + (oferta.tipo || 'oferta') + (classe ? ' ' + classe : ''));
+  sp.textContent = rot;
+  return sp;
+}
+
 const chaveFoto = n => String(n).toLowerCase().replace(/[^a-z0-9]/g, '');
 const fotoSrc = (nome, cor, card) =>
   'images/asas/' + chaveFoto(nome) + '__' + cor + (card ? '-card' : '') + '.webp';
@@ -962,27 +1008,10 @@ function asaPlaceholder(i) {
    que se lê; a chave nunca muda.
    O que não está na tabela mostra-se tal e qual — uma família nova criada no
    CMS aparece, por traduzir, em vez de desaparecer. */
-const FAMILIA_ROTULOS = {
-  'Parapentes': { pt:'Parapentes', en:'Paragliders', es:'Parapentes', fr:'Parapentes', de:'Gleitschirme' },
-  'Paramotor':  { pt:'Paramotor', en:'Paramotor', es:'Paramotor', fr:'Paramoteur', de:'Motorschirm' },
-  'Tandem':     { pt:'Tandem', en:'Tandem', es:'Biplaza', fr:'Biplace', de:'Tandem' },
-  'Arneses':    { pt:'Arneses', en:'Harnesses', es:'Arneses', fr:'Sellettes', de:'Gurtzeuge' },
-  'Reservas':   { pt:'Reservas', en:'Reserves', es:'Reservas', fr:'Secours', de:'Rettungsschirme' }
-  /* Parakites, Mini-wings, Parawing e Speed flying são termos internacionais:
-     escrevem-se igual nos cinco idiomas e não entram aqui. */
-};
-
-const CLASSE_ROTULOS = {
-  'Arnês aberto':          { pt:'Arnês aberto', en:'Open harness', es:'Arnés abierto', fr:'Sellette ouverte', de:'Offenes Gurtzeug' },
-  'Arnês pod':             { pt:'Arnês pod', en:'Pod harness', es:'Arnés pod', fr:'Sellette cocon', de:'Pod-Gurtzeug' },
-  'Reserva quadrada':      { pt:'Reserva quadrada', en:'Square reserve', es:'Reserva cuadrada', fr:'Secours carré', de:'Quadratischer Rettungsschirm' },
-  'Paraquedas de arrasto': { pt:'Paraquedas de arrasto', en:'Drogue chute', es:'Paracaídas de arrastre', fr:'Parachute de traînée', de:'Bremsschirm' }
-  /* As normas (EN-A, EN 926-1) e os termos técnicos (Full reflex, Semi-reflex,
-     Parakite, Speed flying) são iguais em toda a parte e ficam como estão. */
-};
-
-const rotuloFamilia = f => t(FAMILIA_ROTULOS[f]) || f;
-const rotuloClasse = c => t(CLASSE_ROTULOS[c]) || c;
+/* Os rótulos vivem em regras/taxonomia.js, partilhados com o gerador das
+   páginas: estando só aqui, as 110 páginas mostravam a chave em bruto. */
+const rotuloFamilia = f => rotFamilia(f, LOCALE);
+const rotuloClasse = c => rotClasse(c, LOCALE);
 
 function buildFlow(item) {
   const wrap = el('div', 'flow' + visibilityClass(item));
@@ -1039,35 +1068,73 @@ function buildFlow(item) {
     return produtos.filter(p => p.familia === famAtiva && (!filtro || p.classificacao === filtro));
   }
 
-  function renderFams() {
-    barraFam.innerHTML = '';
+  /* Separadores de família — os mesmos na grelha e na descoberta.
+     São a única forma de chegar às 8 famílias: sem eles, a descoberta prendia
+     quem entrasse na família da primeira asa e escondia as outras 18. */
+  function poeFamilias(caixa, cfg) {
+    caixa.innerHTML = '';
     familias.forEach(f => {
-      const b = el('button', 'flow-fam' + (f === famAtiva ? ' on' : '')); b.type = 'button';
+      const activa = cfg.activa(f);
+      const vazia = cfg.vazia ? cfg.vazia(f) : false;
+      const b = el('button', 'flow-fam' + (activa ? ' on' : '') + (vazia ? ' sem' : ''));
+      b.type = 'button';
       b.dataset.familia = f;                     /* a chave, para quem precise dela */
+      b.setAttribute('aria-pressed', activa ? 'true' : 'false');
       b.appendChild(document.createTextNode(rotuloFamilia(f) + ' '));
-      const n = el('span', 'flow-fam-n'); n.textContent = produtos.filter(p => p.familia === f).length;
+      const n = el('span', 'flow-fam-n'); n.textContent = cfg.conta(f);
       b.appendChild(n);
-      b.addEventListener('click', () => {
-        famAtiva = f; filtro = null; aberto = null; limparHash(); render();
-      });
-      barraFam.appendChild(b);
+      /* as esbatidas continuam a funcionar: esbatido diz "nenhuma destas
+         corresponde", não "não podes ver". Sem isso, responder às perguntas
+         voltava a prender a pessoa numa família só */
+      b.addEventListener('click', () => cfg.aoClicar(f));
+      caixa.appendChild(b);
     });
   }
-  function renderFiltros() {
-    barraFiltros.innerHTML = '';
-    const cls = eixoDe(famAtiva);
+  function renderFams() {
+    poeFamilias(barraFam, {
+      activa: f => f === famAtiva,
+      conta:  f => produtos.filter(p => p.familia === f).length,
+      aoClicar: f => { famAtiva = f; filtro = null; aberto = null; limparHash(); render(); }
+    });
+  }
+  /* Chips de classe — os mesmos na grelha e na descoberta.
+     O rótulo muda com a família porque o eixo muda: nos parapentes é a
+     homologação, nos arneses é o feitio. `eixoDe` devolve null quando a
+     família só tem um valor, e então não há fila nenhuma — um filtro com um
+     chip só não é um filtro. */
+  function poeFiltros(caixa, fam, cfg) {
+    caixa.innerHTML = '';
+    const cls = eixoDe(fam);
     if (!cls) {
-      const s = el('span', 'flow-filters-none'); s.textContent = ui('flowListaSimples');
-      barraFiltros.appendChild(s); return;
+      if (cfg.semEixo) {
+        const s = el('span', 'flow-filters-none'); s.textContent = ui('flowListaSimples');
+        caixa.appendChild(s);
+      }
+      return false;
     }
     const lab = el('span', 'flow-filters-label');
-    lab.textContent = famAtiva === 'Parapentes' ? ui('flowHomologacao') : ui('flowTipo');
-    barraFiltros.appendChild(lab);
+    lab.textContent = fam === 'Parapentes' ? ui('flowHomologacao') : ui('flowTipo');
+    caixa.appendChild(lab);
     [[null, ui('fAll')]].concat(cls.map(c => [c, rotuloClasse(c)])).forEach(([v, txt]) => {
-      const b = el('button', 'flow-chip' + (filtro === v ? ' on' : '')); b.type = 'button';
-      b.textContent = txt;
-      b.addEventListener('click', () => { filtro = v; aberto = null; limparHash(); render(); });
-      barraFiltros.appendChild(b);
+      const activo = cfg.activo(v);
+      const vazio = cfg.vazio ? cfg.vazio(v) : false;
+      const b = el('button', 'flow-chip' + (activo ? ' on' : '') + (vazio ? ' sem' : ''));
+      b.type = 'button';
+      b.setAttribute('aria-pressed', activo ? 'true' : 'false');
+      b.appendChild(document.createTextNode(txt));
+      if (cfg.conta) {
+        const n = el('span', 'flow-chip-n'); n.textContent = cfg.conta(v); b.appendChild(n);
+      }
+      b.addEventListener('click', () => cfg.aoClicar(v));
+      caixa.appendChild(b);
+    });
+    return true;
+  }
+  function renderFiltros() {
+    poeFiltros(barraFiltros, famAtiva, {
+      semEixo: true,
+      activo: v => filtro === v,
+      aoClicar: v => { filtro = v; aberto = null; limparHash(); render(); }
     });
   }
 
@@ -1331,10 +1398,13 @@ function buildFlow(item) {
       nome.textContent = p.nome;
     }
     body.appendChild(nome);
+    const seloC = seloOferta(p); if (seloC) body.appendChild(seloC);
     if (p.classificacao) { const cl = el('div', 'flow-clas'); cl.textContent = rotuloClasse(p.classificacao); body.appendChild(cl); }
     const tag = t(p.tagline);
     if (tag) { const tl = el('div', 'flow-tagline'); tl.textContent = tag; body.appendChild(tl); }
 
+    let corCartao = null;
+    let sincronizaCartao = () => {};
     if (p.cores && p.cores.length) {
       const box = el('div');
       const l = el('div', 'flow-lbl'); l.textContent = ui('flowCores'); box.appendChild(l);
@@ -1348,6 +1418,8 @@ function buildFlow(item) {
           sws.querySelectorAll('.flow-sw').forEach(x => x.classList.remove('on'));
           b.classList.add('on');
           img.innerHTML = imgTag(p, cor, true);
+          /* a cor escolhida no cartão viaja para a página, tal como no palco */
+          corCartao = cor; sincronizaCartao();
         });
         sws.appendChild(b);
       });
@@ -1362,12 +1434,23 @@ function buildFlow(item) {
     }
 
     const acoes = el('div', 'flow-actions');
-    const ver = el('button', 'flow-btn'); ver.type = 'button';
+    /* Detalhes é uma LIGAÇÃO para a página da asa, não um botão que abre um
+       painel aqui. Assim há um sítio só para cada asa — que se pode enviar a
+       alguém, partilhar com foto própria, e que o Google encontra.
+       Excepção: se o painel já estiver aberto (só acontece por #produtos/<slug>,
+       que se mantém para os links antigos não partirem), o botão fecha-o. */
+    const ver = p === aberto ? el('button', 'flow-btn') : el('a', 'flow-btn');
+    if (p === aberto) { ver.type = 'button'; }
+    else {
+      sincronizaCartao = () => { ver.href = caminhoAsa(p) + fragmentoEscolha({ esq: corCartao }); };
+      sincronizaCartao();
+    }
     /* o verbo vive no ícone; a palavra fica só com o substantivo, para o botão
        não partir em duas linhas nos idiomas mais compridos */
     ver.innerHTML = p === aberto ? ICON_X : ICON_OLHO;
     const vl = el('span'); vl.textContent = p === aberto ? ui('flowFechar') : ui('flowVerDetalhes');
     ver.appendChild(vl);
+    if (p !== aberto) ver.addEventListener('click', ev => ev.stopPropagation());
     /* abre sempre a escolha: o país é obrigatório, por isso nunca há caminho
        que vá direto ao WhatsApp. Se a asa não tiver tamanhos, a janela pede
        só o país. */
@@ -1380,10 +1463,9 @@ function buildFlow(item) {
     c.appendChild(body);
 
     c.addEventListener('click', () => {
-      const abriuAgora = p !== aberto;
-      aberto = abriuAgora ? p : null;
-      sincronizaHash(); render();
-      if (abriuAgora) irParaDetalhe();
+      /* clicar no cartão faz o mesmo que o botão: leva à página da asa */
+      if (p === aberto) { aberto = null; sincronizaHash(); render(); return; }
+      location.href = caminhoAsa(p) + fragmentoEscolha({ esq: corCartao });
     });
     return c;
   }
@@ -1733,6 +1815,7 @@ function buildFlow(item) {
     let corCustom = null;            /* {ref, nome, hex} escolhida no palco */
     let corStd = null;               /* cor standard escolhida (nome no catalogo) */
     let tamsSel = [];                /* tamanhos escolhidos, viajam para o WhatsApp */
+    let filtroCls = null;            /* homologação / tipo, dentro da família */
 
     const zona = el('div', 'desc');
     wrap.appendChild(zona);
@@ -1897,6 +1980,11 @@ function buildFlow(item) {
       ok.textContent = ui('descMostra');
       ok.addEventListener('click', () => {
         resp = r; aPerguntar = false;
+        /* respostas novas, contexto novo: o filtro de classe da família
+           anterior não sobrevive. Se sobrevivesse, alguém que tinha "EN-D"
+           escolhido e respondesse "sou principiante" via uma lista vazia e
+           não percebia porquê. */
+        filtroCls = null;
         const lista = correspondem();
         if (lista.length) emPalco = lista[0];
         corCustom = null;
@@ -1924,12 +2012,18 @@ function buildFlow(item) {
       l.appendChild(alt);
       const fim = el('span', 'desc-resps-fim');
       const n = correspondem().length;
-      fim.appendChild(document.createTextNode(n + ' / ' + produtos.length + ' · '));
-      const tudo = el('button', 'desc-lig'); tudo.type = 'button';
-      tudo.textContent = ui('descVerTudo');
-      tudo.addEventListener('click', () => { resp = null; corCustom = null; pinta(); });
-      fim.appendChild(tudo);
+      fim.appendChild(document.createTextNode(n + ' / ' + produtos.length));
       l.appendChild(fim);
+      /* apagar as respostas era uma ligação em texto miudinho no fim da linha,
+         a dizer "ver a gama toda" — que descreve o efeito e não a acção.
+         Agora é um botão com um × e diz o que faz. */
+      const limpa = el('button', 'desc-limpar'); limpa.type = 'button';
+      limpa.setAttribute('aria-label', ui('descApagar'));
+      const lt = el('span'); lt.textContent = ui('descApagar');
+      limpa.appendChild(lt);
+      limpa.appendChild(el('span', 'desc-limpar-x')).textContent = '×';
+      limpa.addEventListener('click', () => { resp = null; filtroCls = null; corCustom = null; pinta(); });
+      l.appendChild(limpa);
       return l;
     }
 
@@ -1970,7 +2064,11 @@ function buildFlow(item) {
       }
       const eb = el('div', 'desc-eyebrow');
       eb.textContent = rotuloClasse(p.classificacao || '') || rotuloFamilia(p.familia);
-      esq.appendChild(eb);
+      /* o selo entra na mesma linha da categoria: é a linha que se lê logo a
+         seguir ao nome, e é ali que a informação vale alguma coisa */
+      const seloP = seloOferta(p);
+      if (seloP) { const lin = el('div', 'desc-linha-cat'); lin.appendChild(eb); lin.appendChild(seloP); esq.appendChild(lin); }
+      else esq.appendChild(eb);
 
       const tl = t(p.tagline);
       if (tl) { const d = el('p', 'desc-tagline'); d.textContent = tl; esq.appendChild(d); }
@@ -1990,6 +2088,9 @@ function buildFlow(item) {
       img.alt = p.nome;
       const nomeCor = el('div', 'desc-custom-nome');
 
+      /* atribuída mais abaixo, quando o botão existir; os handlers das
+         amostras são construídos antes dele e fecham sobre a variável */
+      let sincronizaVer = () => {};
       const dados = el('div', 'desc-dados');
       if ((p.tamanhos || []).length) {
         const g = el('div');
@@ -2015,6 +2116,7 @@ function buildFlow(item) {
             const on = tamsSel.indexOf(String(tm)) >= 0;
             c.classList.toggle('on', on);
             c.setAttribute('aria-pressed', on ? 'true' : 'false');
+            sincronizaVer();
           });
           f.appendChild(c);
         });
@@ -2045,6 +2147,7 @@ function buildFlow(item) {
               o.classList.remove('on'); o.setAttribute('aria-pressed', 'false');
             });
             b.classList.add('on'); b.setAttribute('aria-pressed', 'true');
+            sincronizaVer();
           });
           f.appendChild(b);
         });
@@ -2054,9 +2157,17 @@ function buildFlow(item) {
 
       /* acções */
       const acoes = el('div', 'desc-acoes');
-      const ver = el('button', 'flow-btn primary'); ver.type = 'button';
+      /* também aqui: a página da asa em vez do painel */
+      const ver = el('a', 'flow-btn primary');
       ver.textContent = ui('flowVerDetalhes');
-      ver.addEventListener('click', () => { aberto = p; pinta(); irParaDetalhe(); });
+      /* o link acompanha o que a pessoa já escolheu aqui: quem passou dez
+         segundos a experimentar cores não pode aterrar numa página em branco */
+      sincronizaVer = () => {
+        ver.href = caminhoAsa(p) + fragmentoEscolha({
+          esq: corStd, cor: corCustom ? corCustom.ref : '', tams: tamsSel
+        });
+      };
+      sincronizaVer();
       const wa = el('button', 'flow-btn wa'); wa.type = 'button';
       wa.innerHTML = ICON_WA;
       const wl = el('span'); wl.textContent = ui('flowPedirPreco'); wa.appendChild(wl);
@@ -2115,6 +2226,7 @@ function buildFlow(item) {
               o.classList.remove('on'); o.setAttribute('aria-checked', 'false');
             });
             b.classList.add('on'); b.setAttribute('aria-checked', 'true');
+            sincronizaVer();
           });
           fila.appendChild(b);
         });
@@ -2133,26 +2245,31 @@ function buildFlow(item) {
     /* --- 5 · o carril ----------------------------------------------------- */
     function carril() {
       const lista = correspondem();
-      const naFam = produtos.filter(p => p.familia === emPalco.familia);
-      const ordem = resp && lista.length
-        ? lista.concat(naFam.filter(p => lista.indexOf(p) < 0))
-        : naFam;
+      const naFam = daFamilia();   /* família + filtro de classe */
+      /* O carril é da FAMÍLIA que está escolhida em cima, sempre.
+         Antes juntava as correspondências de todas as famílias — fazia sentido
+         quando responder às perguntas era a única forma de sair de uma família.
+         Com os separadores, dava isto: escolher Tandem punha um tandem em palco
+         e oito parapentes no carril. Agora quem diz onde estão as
+         correspondências são os números dos separadores. */
+      const boas = lista.filter(p => naFam.indexOf(p) >= 0);
+      const ordem = boas.length ? boas.concat(naFam.filter(p => boas.indexOf(p) < 0)) : naFam;
 
       const cx = el('div', 'desc-carril');
       const cab = el('div', 'desc-carril-cab');
       const a = el('div', 'desc-lbl desc-lbl-forte');
-      a.textContent = !resp || !lista.length ? rotuloFamilia(emPalco.familia)
-        : lista.length === 1 ? ui('descATua') : ui('descAsTuas', { n: lista.length });
+      a.textContent = !resp || !boas.length ? rotuloFamilia(emPalco.familia)
+        : boas.length === 1 ? ui('descATua') : ui('descAsTuas', { n: boas.length });
       cab.appendChild(a);
       cab.appendChild(el('div', 'desc-carril-risco'));
-      if (resp && lista.length) {
+      if (resp && boas.length && boas.length < naFam.length) {
         const b = el('div', 'desc-lbl'); b.textContent = ui('descRestoFam'); cab.appendChild(b);
       }
       cx.appendChild(cab);
 
       const fila = el('div', 'desc-carril-fila');
       ordem.forEach(p => {
-        const eDelas = resp && lista.indexOf(p) >= 0;
+        const eDelas = resp && boas.indexOf(p) >= 0;
         const b = el('button', 'desc-mini' + (p === emPalco ? ' on' : '') + (resp && !eDelas ? ' fora' : ''));
         b.type = 'button';
         const im = el('img');
@@ -2164,6 +2281,7 @@ function buildFlow(item) {
         const c = el('div', 'desc-mini-cls');
         c.textContent = p === emPalco ? ui('descAVer') : (rotuloClasse(p.classificacao || '') || '');
         tx.appendChild(n); tx.appendChild(c);
+        const seloM = seloOferta(p, 'selo-mini'); if (seloM) tx.appendChild(seloM);
         b.appendChild(im); b.appendChild(tx);
         b.addEventListener('click', () => {
           /* limpa tudo: os nomes das cores sao proprios de cada asa (a Mullet 2
@@ -2179,10 +2297,78 @@ function buildFlow(item) {
     }
 
     /* --- desenha tudo ----------------------------------------------------- */
+    /* quantas das melhores correspondências caem em cada família. Com a
+       pergunta da categoria a valer 4 pontos, responder "parakites" põe as
+       outras sete a zero — e é verdade: se ela disse que quer um parakite,
+       um parapente não corresponde. Esbatem-se, mas continuam a abrir. */
+    function contaFamilia(f) {
+      if (!resp) return produtos.filter(p => p.familia === f).length;
+      return correspondem().filter(p => p.familia === f).length;
+    }
+    /* as asas da família em palco que passam o filtro de classe */
+    function daFamilia(f) {
+      const todas = produtos.filter(p => p.familia === (f || emPalco.familia));
+      return filtroCls ? todas.filter(p => p.classificacao === filtroCls) : todas;
+    }
+    function barraFamilias() {
+      const cx = el('div', 'flow-fams desc-fams');
+      poeFamilias(cx, {
+        activa: f => f === emPalco.familia,
+        vazia:  f => !!resp && contaFamilia(f) === 0,
+        conta:  contaFamilia,
+        aoClicar: f => {
+          /* mantém as respostas: entra na família pela asa que melhor
+             corresponde, ou pela primeira se nenhuma corresponder */
+          const boas = correspondem().filter(p => p.familia === f);
+          const naFam = produtos.filter(p => p.familia === f);
+          const destino = boas[0] || naFam[0];
+          if (!destino) return;
+          /* limpa a cor e os tamanhos: os nomes das cores são próprios de
+             cada asa e arrastá-los pedia ficheiros que não existem.
+             E limpa o FILTRO: um "EN-B" pendurado ao saltar para os arneses
+             não quer dizer nada. */
+          emPalco = destino; filtroCls = null;
+          corStd = null; corCustom = null; tamsSel = []; aberto = null;
+          pinta();
+        }
+      });
+      return cx;
+    }
+
+    function contaClasse(v) {
+      const naFam = produtos.filter(p => p.familia === emPalco.familia);
+      const base = resp ? naFam.filter(p => correspondem().indexOf(p) >= 0) : naFam;
+      return v ? base.filter(p => p.classificacao === v).length : base.length;
+    }
+    function barraFiltros() {
+      const cx = el('div', 'flow-filters desc-filtros');
+      const houve = poeFiltros(cx, emPalco.familia, {
+        activo: v => filtroCls === v,
+        vazio:  v => !!resp && contaClasse(v) === 0,
+        conta:  contaClasse,
+        aoClicar: v => {
+          filtroCls = v;
+          /* se a asa em palco não passa o novo filtro, entra a melhor que passe */
+          const dentro = daFamilia();
+          if (dentro.indexOf(emPalco) < 0) {
+            const boas = correspondem().filter(p => dentro.indexOf(p) >= 0);
+            const destino = boas[0] || dentro[0];
+            if (destino) {
+              emPalco = destino; corStd = null; corCustom = null; tamsSel = []; aberto = null;
+            }
+          }
+          pinta();
+        }
+      });
+      return houve ? cx : null;
+    }
+
     function pinta() {
       zona.innerHTML = '';
       zona.appendChild(aPerguntar ? perguntas() : (resp ? linhaRespostas() : tira()));
       const p = el('div', 'desc-corpo' + (aPerguntar ? ' esbatido' : ''));
+      p.appendChild(barraFamilias());
+      const bf = barraFiltros(); if (bf) p.appendChild(bf);
       if (resp && !correspondem().length) {
         const av = el('p', 'desc-nenhuma'); av.textContent = ui('descNenhuma');
         p.appendChild(av);
@@ -2344,6 +2530,7 @@ function paragrafos(txt) {
    não se traduzem, e t() devolve as strings tal e qual. */
 let bioSeq = 0;
 let TECIDOS = [];   /* carta de cores da Flow, carregada com o conteúdo */
+let AVISOS = [];    /* avisos e ofertas, para saber que asas trazem selo */
 
 function buildBio(item) {
   const caixa = el('div', 'bio-caixa' + visibilityClass(item));
@@ -2439,7 +2626,7 @@ function buildBio(item) {
   return caixa;
 }
 
-/* ================= Avisos e promoções =================
+/* ================= Avisos e ofertas =================
    Um tipo de conteúdo só, com duas apresentações: faixa no topo (não interrompe,
    fica dias) e janela (interrompe, usa-se pouco). Tudo o resto é partilhado —
    datas, idiomas, memória do que já foi fechado e a regra de um de cada vez. */
@@ -2463,20 +2650,14 @@ function marcaFechado(id) {
   });
 }
 
-/* Datas em AAAA-MM-DD. Comparadas como texto para não haver surpresas de fuso:
-   o dia do visitante é o dia dele, e é isso que interessa numa promoção. */
-function hojeISO() {
-  const d = new Date();
-  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') +
-         '-' + String(d.getDate()).padStart(2, '0');
-}
 
 function avisoElegivel(a, fechados) {
-  if (!a || a.ativo === false) return false;
-  const hoje = hojeISO();
-  if (a.inicio && hoje < String(a.inicio).slice(0, 10)) return false;
-  if (a.fim && hoje > String(a.fim).slice(0, 10)) return false;
+  /* datas e "está ligado" vêm de regras/avisos.mjs, partilhado com o gerador
+     das páginas das asas: se cada um tivesse a sua cópia, mais tarde ou mais
+     cedo mostravam ofertas diferentes */
+  if (!dentroDoPrazo(a)) return false;
 
+  /* daqui para baixo é memória deste browser, que só existe aqui */
   /* três políticas:
        sessao — volta em cada visita nova, mas fica fechado nesta
        nunca  — fechou uma vez, não volta mais
@@ -2495,7 +2676,7 @@ function avisoElegivel(a, fechados) {
 }
 
 /* O prazo é escrito a partir da data de fim, para a data existir num sítio só:
-   estica-se a promoção uma semana e não há cinco textos para corrigir. */
+   estica-se a oferta uma semana e não há cinco textos para corrigir. */
 function prazoAviso(a) {
   if (!a.fim || a.prazo === 'nenhum') return '';
   const fim = new Date(String(a.fim).slice(0, 10) + 'T23:59:59');
@@ -2824,6 +3005,7 @@ function render(data) {
      isto viesse depois o configurador não aparecia. Ao clicar à mão o render já
      tinha acabado, por isso o erro só se via pelo link. */
   TECIDOS = data.tecidos || [];
+  AVISOS = data.listaAvisos || [];
   posSeq = 0;
   responsiveRules = [];
 

@@ -4,6 +4,12 @@
  "ativo": false,
  "inicio": "",
  "fim": "2026-12-31",
+ "abrange": {
+  "familias": [],
+  "produtos": [
+   "Mullet 2"
+  ]
+ },
  "tipo": "oferta",
  "forma": "faixa-janela",
  "repetir": "sessao",
@@ -47,11 +53,11 @@
   "de": "Leistung. Präzision. Freiheit."
  },
  "texto": {
-  "pt": "Toda a gama de parakites com cor à escolha e primeira inspeção de segurança incluídas.",
-  "en": "The whole parakite range with custom colour and first safety inspection included.",
-  "es": "Toda la gama de parakites con color a elegir y primera inspección de seguridad incluidas.",
-  "fr": "Toute la gamme de parakites avec couleur au choix et première inspection de sécurité incluses.",
-  "de": "Die gesamte Parakite-Reihe mit Wunschfarbe und erster Sicherheitsüberprüfung inklusive."
+  "pt": "Mullet 2 com cor à escolha e primeira inspeção de segurança incluídas.",
+  "en": "Mullet 2 with custom colour and first safety inspection included.",
+  "es": "Mullet 2 con color a elegir y primera inspección de seguridad incluidas.",
+  "fr": "Mullet 2 avec couleur au choix et première inspection de sécurité incluses.",
+  "de": "Mullet 2 mit Wunschfarbe und erster Sicherheitsüberprüfung inklusive."
  },
  "imagem": "images/avisos/promo.webp",
  "imagemMobile": "",
@@ -147,9 +153,9 @@
   "acao": "whatsapp",
   "alvo": "",
   "mensagem": {
-   "pt": "Olá! Queria saber o preço da Mullet 2 com a promoção de cor à escolha e inspeção incluídas.",
+   "pt": "Olá! Queria saber o preço da Mullet 2 com a oferta de cor à escolha e inspeção incluídas.",
    "en": "Hi! I would like the price of the Mullet 2 with the custom colour and inspection offer.",
-   "es": "¡Hola! Quería saber el precio de la Mullet 2 con la promoción de color a elegir e inspección incluidas.",
+   "es": "¡Hola! Quería saber el precio de la Mullet 2 con la oferta de color a elegir e inspección incluidas.",
    "fr": "Bonjour ! Je voudrais le prix de la Mullet 2 avec l’offre couleur au choix et inspection incluses.",
    "de": "Hallo! Ich hätte gern den Preis der Mullet 2 mit der Aktion Wunschfarbe und Inspektion inklusive."
   },

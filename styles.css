@@ -1354,3 +1354,54 @@ body.tem-faixa .lang-switcher{top:calc(24px + var(--faixa-h,56px))}
 .flow-custom-esq .flow-lbl{margin-bottom:0;color:#6d7784}
 .flow-custom-esq .flow-sw{width:24px;height:24px;box-shadow:0 0 0 1px rgba(0,0,0,.22)}
 .flow-custom-esq .flow-sw.on{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--orange)}
+
+/* ---- selo de oferta --------------------------------------------------
+   O botão da oferta leva à gama toda dos parakites, mas a oferta pode ser
+   só de uma asa. Sem selo, quem chega à lista não sabe qual delas é. */
+.selo-oferta{
+  display:inline-block;align-self:flex-start;
+  padding:3px 9px;border-radius:100px;
+  font-size:10.5px;font-weight:900;letter-spacing:1.1px;text-transform:uppercase;
+  background:#c2410c;color:#fff;   /* 5.18:1 sobre branco e sobre o azul */
+}
+.selo-oferta.t-promocao{background:#b3123f}
+/* o amarelo guarda a tinta escura: branco sobre amarelo não passa contraste */
+.selo-oferta.t-aviso{background:#f5c518;color:#3a2c00}
+.flow-card .selo-oferta{margin:6px 0 2px}
+.selo-mini{margin-top:4px;padding:2px 7px;font-size:9.5px;letter-spacing:.9px}
+.desc-linha-cat{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+/* ---- separadores de família na descoberta ----------------------------
+   Os mesmos da grelha. Aqui são a única forma de chegar às 8 famílias. */
+.desc-fams{margin:0 0 18px}
+/* esbatido = "nenhuma destas corresponde às tuas respostas", não
+   "não podes ver": continuam a abrir, senão responder às perguntas voltava
+   a prender a pessoa numa família só */
+.flow-fam.sem{opacity:.42}
+/* onde a pessoa está nunca fica esbatido, mesmo que ali não corresponda nada:
+   o zero já o diz, e apagar o sítio onde ela está é desorientador */
+.flow-fam.sem.on{opacity:1}
+.flow-fam.sem:hover{opacity:.72}
+.flow-fam.sem .flow-fam-n{opacity:.7}
+
+/* ---- apagar respostas ------------------------------------------------ */
+.desc-limpar{
+  display:inline-flex;align-items:center;gap:7px;
+  margin-left:10px;padding:5px 10px 5px 12px;border-radius:100px;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.34);
+  color:#fff;font-family:inherit;font-size:12px;font-weight:800;cursor:pointer;
+}
+.desc-limpar:hover{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.6)}
+.desc-limpar-x{font-size:16px;line-height:1;opacity:.8}
+
+/* ---- filtro de classe na descoberta ---------------------------------- */
+.desc-filtros{margin:-6px 0 20px}
+.flow-chip-n{
+  margin-left:6px;font-size:11px;font-weight:800;opacity:.62;
+  font-variant-numeric:tabular-nums;
+}
+/* mesma gramática dos separadores: esbatido = "nenhuma corresponde",
+   não "não podes ver" */
+.flow-chip.sem{opacity:.44}
+.flow-chip.sem:hover{opacity:.74}
+.flow-chip.sem.on{opacity:1}

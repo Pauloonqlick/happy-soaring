@@ -2266,7 +2266,7 @@ collections:
                 required: false
                 hint: Se vazio, usa a miniatura do YouTube
   - name: avisos
-    label: Avisos e promoções
+    label: Avisos e ofertas
     label_singular: Aviso
     editor:
       preview: false
@@ -2300,7 +2300,26 @@ collections:
         name: fim
         widget: string
         required: false
-        hint: 'AAAA-MM-DD. Vazio = não acaba. Preenche sempre numa promoção'
+        hint: 'AAAA-MM-DD. Vazio = não acaba. Preenche sempre numa oferta'
+      - label: Que asas abrange
+        name: abrange
+        widget: object
+        required: false
+        collapsed: false
+        hint: 'Quais as asas que levam o selo "Oferta". É coisa diferente do destino dos botões: o botão pode levar à gama toda enquanto a oferta é só de uma asa. Deixar os dois vazios = campanha geral, só a faixa, sem selo em asa nenhuma'
+        fields:
+          - label: Famílias
+            name: familias
+            widget: list
+            required: false
+            field: {label: Família, name: familia, widget: string}
+            hint: 'Escreve o nome exacto da família: Parakites, Parapentes, Paramotor, Tandem, Arneses, Reservas'
+          - label: Asas
+            name: produtos
+            widget: list
+            required: false
+            field: {label: Asa, name: produto, widget: string}
+            hint: 'O nome exacto da asa, como está no catálogo. Ex: Mullet 2'
       - label: Tipo
         name: tipo
         widget: select
@@ -2357,7 +2376,7 @@ collections:
         collapsed: true
         required: false
         summary: '{{fields.pt}}'
-        hint: 'A palavra pequena. Ex: Promoção, Aviso'
+        hint: 'A palavra pequena que aparece no selo. Ex: Oferta, Aviso'
         fields:
           - {label: Português, name: pt, widget: string, required: false}
           - {label: English, name: en, widget: string, required: false}
@@ -2708,7 +2727,7 @@ collections:
         collapsed: true
         required: false
         summary: '{{fields.pt}}'
-        hint: 'As condições da promoção: até quando, para que asas, quem faz o quê'
+        hint: 'As condições da oferta: até quando, para que asas, quem faz o quê'
         fields:
           - {label: Português, name: pt, widget: text, required: false}
           - {label: English, name: en, widget: text, required: false}
