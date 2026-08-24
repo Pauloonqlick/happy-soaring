@@ -903,7 +903,9 @@ const FLOW_COLORS = ['#2b6cff', '#ff7a1a', '#22c55e', '#c026d3', '#eab308', '#0e
 const FOTO_CORES = {
   azul: '#1f6fc0', laranja: '#ff7a1a', vermelho: '#e03131', lima: '#a3e635', roxo: '#7c3aed',
   teal: '#17a2a2', preto: '#22262b', branco: '#e8eef5', amarelo: '#facc15', rosa: '#ec4899',
-  lilac: '#7c3aed', lime: '#a3e635', yellow: '#facc15', maui: '#17a2a2', sunrise: '#ff7a1a',
+  lilac: '#7c3aed', lime: '#a3e635', yellow: '#facc15', /* amostradas das proprias fotos: a maui e magenta e a sunrise turquesa —
+     estavam ambas erradas, e a laranja da sunrise e so um pormenor */
+  maui: '#a61a87', sunrise: '#1b988c',
   blue: '#1f6fc0', red: '#e03131', white: '#e8eef5', pink: '#ec4899', orange: '#ff7a1a',
   black: '#22262b', green: '#22c55e', purple: '#7c3aed', grey: '#c9d1d9', gray: '#c9d1d9',
   ice: '#dbeafe', sand: '#e8d5a8', navy: '#0a3d7a', turquoise: '#17a2a2',
@@ -1157,7 +1159,7 @@ function buildFlow(item) {
      Sem isto chegava-te uma mensagem sem tamanho e tinhas de perguntar sempre.
      O envio é um <a>, não um window.open: os bloqueadores de popups deixam
      passar a ligação e o WhatsApp abre à primeira. */
-  function pedirPreco(p, num) {
+  function pedirPreco(p, num, tamPre) {
     const fecha = () => { document.removeEventListener('keydown', tecla); fundo.remove(); };
     const tecla = ev => { if (ev.key === 'Escape') fecha(); };
 
@@ -1174,7 +1176,7 @@ function buildFlow(item) {
       cx.appendChild(sub);
     }
 
-    let escolhido = '';
+    let escolhido = tamPre && (p.tamanhos || []).map(String).indexOf(String(tamPre)) >= 0 ? String(tamPre) : '';
     const enviar = el('a', 'flow-btn wa flow-modal-enviar');
     enviar.target = '_blank'; enviar.rel = 'noopener';
     enviar.innerHTML = ICON_WA;
@@ -1197,7 +1199,8 @@ function buildFlow(item) {
 
     const lista = el('div', 'flow-modal-tams');
     (p.tamanhos || []).forEach(tam => {
-      const b = el('button', 'flow-modal-tam'); b.type = 'button';
+      const b = el('button', 'flow-modal-tam'
+        + (String(tam) === escolhido ? ' on' : '')); b.type = 'button';
       b.textContent = tam;
       b.addEventListener('click', () => {
         lista.querySelectorAll('.flow-modal-tam').forEach(x => x.classList.remove('on'));
@@ -1359,7 +1362,7 @@ function buildFlow(item) {
     tit.appendChild(n); tit.appendChild(s);
     const x = el('button', 'flow-det-x'); x.type = 'button'; x.innerHTML = '&#10005;';
     x.setAttribute('aria-label', ui('flowFechar'));
-    x.addEventListener('click', ev => { ev.stopPropagation(); aberto = null; sincronizaHash(); render(); });
+    x.addEventListener('click', ev => { ev.stopPropagation(); aberto = null; sincronizaHash(); redesenha(); });
     top.appendChild(tit); top.appendChild(x); d.appendChild(top);
 
     /* Sem foto nem seletor de cor: a foto repetia o cartão que se acabou de
@@ -1387,10 +1390,8 @@ function buildFlow(item) {
 
     /* cores: montadas a partir das cores da asa, sem precisar de secção à mão */
     if (p.cores && p.cores.length) d.appendChild(blocoCores(p, faixaTitulo));
-    if (p.coresCustom) {
-      const cc = blocoCorCustom(p, faixaTitulo);
-      if (cc) d.appendChild(cc);
-    }
+    /* o configurador de cor vive no palco da descoberta, nao aqui: no painel
+       ficava a repetir o bloco das cores standard logo acima */
 
     /* vídeo a toda a largura do painel, por baixo das duas colunas:
        numa coluna ficava com metade do tamanho */
@@ -1661,6 +1662,8 @@ function buildFlow(item) {
     let aPerguntar = false;
     let emPalco = produtos[0];
     let corCustom = null;            /* {ref, nome, hex} escolhida no palco */
+    let corStd = null;               /* cor standard escolhida (nome no catalogo) */
+    let tamSel = null;               /* tamanho escolhido, viaja para o WhatsApp */
 
     const zona = el('div', 'desc');
     wrap.appendChild(zona);
@@ -1899,6 +1902,11 @@ function buildFlow(item) {
       }
 
       /* tamanhos + cores standard */
+      /* declarados antes dos botoes que lhes mexem */
+      const img = el('img', 'desc-img');
+      img.alt = p.nome;
+      const nomeCor = el('div', 'desc-custom-nome');
+
       const dados = el('div', 'desc-dados');
       if ((p.tamanhos || []).length) {
         const g = el('div');
@@ -1908,8 +1916,22 @@ function buildFlow(item) {
         if (certo) { const s3 = el('span', 'desc-lbl-hi'); s3.textContent = ui('descTeuTam', { t: certo }); lb.appendChild(s3); }
         const f = el('div', 'flow-sizes');
         p.tamanhos.forEach(tm => {
-          const c = el('span', 'flow-size' + (certo && String(tm) === certo ? ' desc-size-hi' : ''));
-          c.textContent = tm; f.appendChild(c);
+          /* botao, nao span: aqui o tamanho escolhe-se, e a escolha viaja para
+             a mensagem de WhatsApp */
+          const c = el('button', 'flow-size desc-size'
+            + (certo && String(tm) === certo ? ' desc-size-hi' : '')
+            + (String(tm) === tamSel ? ' on' : ''));
+          c.type = 'button';
+          c.setAttribute('aria-pressed', String(tm) === tamSel ? 'true' : 'false');
+          c.textContent = tm;
+          c.addEventListener('click', () => {
+            tamSel = tamSel === String(tm) ? null : String(tm);
+            f.querySelectorAll('.desc-size').forEach(o => {
+              o.classList.remove('on'); o.setAttribute('aria-pressed', 'false');
+            });
+            if (tamSel) { c.classList.add('on'); c.setAttribute('aria-pressed', 'true'); }
+          });
+          f.appendChild(c);
         });
         g.appendChild(lb); g.appendChild(f); dados.appendChild(g);
       }
@@ -1918,9 +1940,26 @@ function buildFlow(item) {
         const lb = el('div', 'desc-lbl'); lb.textContent = ui('flowCores');
         const f = el('div', 'flow-swatches');
         p.cores.forEach(cor => {
-          const b = el('span', 'flow-sw');
+          const b = el('button', 'flow-sw' + (corStd === cor ? ' on' : ''));
+          b.type = 'button';
           b.style.background = corAmostra(cor);
-          b.title = String(cor).replace(/-/g, ' ');
+          const rot = String(cor).replace(/-/g, ' ');
+          b.title = rot;
+          b.setAttribute('aria-label', rot);
+          b.setAttribute('aria-pressed', corStd === cor ? 'true' : 'false');
+          b.addEventListener('click', () => {
+            corStd = cor; corCustom = null;
+            img.src = fotoSrc(p.nome, cor, false);
+            nomeCor.textContent = rot;
+            f.querySelectorAll('.flow-sw').forEach(o => {
+              o.classList.remove('on'); o.setAttribute('aria-pressed', 'false');
+            });
+            b.classList.add('on'); b.setAttribute('aria-pressed', 'true');
+            const fl = esq.querySelector('.desc-custom-fila');
+            if (fl) fl.querySelectorAll('.flow-custom-sw').forEach(o => {
+              o.classList.remove('on'); o.setAttribute('aria-checked', 'false');
+            });
+          });
           f.appendChild(b);
         });
         g.appendChild(lb); g.appendChild(f); dados.appendChild(g);
@@ -1937,15 +1976,13 @@ function buildFlow(item) {
       const wl = el('span'); wl.textContent = ui('flowPedirPreco'); wa.appendChild(wl);
       wa.addEventListener('click', () => {
         p.corEscolhida = corCustom ? corCustom.nome : null;
-        pedirPreco(p, num);
+        pedirPreco(p, num, tamSel);
       });
       acoes.appendChild(ver); acoes.appendChild(wa);
       esq.appendChild(acoes);
 
       /* cor à medida, por baixo dos botões */
-      const img = el('img', 'desc-img');
-      img.alt = p.nome;
-      const fotoBase = () => (p.cores || []).length ? fotoSrc(p.nome, p.cores[0], false) : '';
+      const fotoBase = () => (p.cores || []).length ? fotoSrc(p.nome, corStd || p.cores[0], false) : '';
       img.src = corCustom
         ? 'images/asas-cores/' + chaveFoto(p.nome) + '__' + corCustom.ref + '.webp'
         : fotoBase();
@@ -1956,9 +1993,8 @@ function buildFlow(item) {
         const bl = el('div', 'desc-custom');
         const cab = el('div', 'desc-custom-cab');
         const lb = el('div', 'desc-lbl'); lb.textContent = ui('corMedida');
-        const nm = el('div', 'desc-custom-nome');
-        nm.textContent = corCustom ? corCustom.nome : '';
-        cab.appendChild(lb); cab.appendChild(nm);
+        nomeCor.textContent = corCustom ? corCustom.nome : (corStd ? String(corStd).replace(/-/g,' ') : '');
+        cab.appendChild(lb); cab.appendChild(nomeCor);
         const fila = el('div', 'desc-custom-fila');
         fila.setAttribute('role', 'radiogroup');
         fila.setAttribute('aria-label', ui('corMedida'));
@@ -1969,9 +2005,12 @@ function buildFlow(item) {
           b.setAttribute('aria-checked', corCustom && corCustom.ref === c.ref ? 'true' : 'false');
           b.setAttribute('aria-label', c.nome);
           b.addEventListener('click', () => {
-            corCustom = c;
+            corCustom = c; corStd = null;
             img.src = 'images/asas-cores/' + chaveFoto(p.nome) + '__' + c.ref + '.webp';
-            nm.textContent = c.nome;
+            nomeCor.textContent = c.nome;
+            esq.querySelectorAll('.flow-sw').forEach(o => {
+              o.classList.remove('on'); o.setAttribute('aria-pressed', 'false');
+            });
             fila.querySelectorAll('.flow-custom-sw').forEach(o => {
               o.classList.remove('on'); o.setAttribute('aria-checked', 'false');
             });
@@ -2047,10 +2086,15 @@ function buildFlow(item) {
       if (aberto) zona.appendChild(detalhe(aberto));
     }
 
+    redesenha = pinta;
     pinta();
   }
 
   function render() { renderFams(); renderFiltros(); renderGrelha(); }
+  /* o painel de detalhe e partilhado pelos dois modos, mas cada um redesenha-se
+     de maneira diferente. Sem este desvio o X do detalhe nao fazia nada no modo
+     descoberta: chamava o render da grelha, que ali nao existe. */
+  let redesenha = render;
 
   /* leva o ecrã ao topo do detalhe: sem isto, ao abrir uma asa de uma linha
      de baixo o painel abre fora do campo de visão */
@@ -2082,7 +2126,7 @@ function buildFlow(item) {
     clearTimeout(tr); tr = setTimeout(renderGrelha, 150);
   });
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && aberto) { aberto = null; sincronizaHash(); render(); }
+    if (e.key === 'Escape' && aberto) { aberto = null; sincronizaHash(); redesenha(); }
   });
 
   if (descoberta) buildDescoberta(); else render();

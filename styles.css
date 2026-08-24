@@ -1324,3 +1324,11 @@ body.tem-faixa .lang-switcher{top:calc(24px + var(--faixa-h,56px))}
   .desc-resps-fim{margin-left:0;flex:1 1 100%}
   .desc-carril-fila{grid-template-columns:1fr}
 }
+
+/* tamanhos e cores standard no palco: são escolhas, não etiquetas */
+.desc-size{font:inherit;font-size:11.5px;cursor:pointer;background:none;transition:background .15s,border-color .15s}
+.desc-size:hover{border-color:rgba(255,255,255,.75)}
+.desc-size.on{background:#fff;border-color:#fff;color:#0a2c53;font-weight:800}
+.desc-esq .flow-sw{cursor:pointer;transition:box-shadow .15s,transform .15s}
+.desc-esq .flow-sw:hover{transform:scale(1.08)}
+.desc-esq .flow-sw.on{box-shadow:0 0 0 2px #fff,0 0 0 5px var(--orange)}
