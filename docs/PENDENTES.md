@@ -70,8 +70,8 @@ Feito: robots.txt, sitemap, canonical, Open Graph, JSON-LD, 404 a sério.
 
 Por fazer, e por esta ordem:
 
-1. **URLs próprias** — hoje o site inteiro vive numa só. É o que trava tudo o
-   resto
+1. ~~URLs próprias~~ — **decidido**, ver docs/URLS.md. Gerador escrito, falta
+   ligar os cartões às páginas e juntar ao sitemap
 2. **HTML gerado na publicação** — um crawler recebe hoje uma div vazia
 3. **hreflang** — só é possível depois de 1
 4. **Conteúdo** — as páginas que querias (/parakite/, /smartground/,

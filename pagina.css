@@ -1,0 +1,91 @@
+/* Páginas das asas — Happy Soaring
+   Isto é um documento, não a interface do site: é feito para se ler de cima a
+   baixo e para ser encontrado. Mantém a identidade (o azul, o laranja, a
+   tipografia) mas com medida de leitura e hierarquia de títulos a sério. */
+:root{
+  --azul:#0e3b6d; --azul-esc:#0a2c53; --orange:#ff6a13;
+  --tinta:#16202c; --tinta-fraca:#5b6878; --linha:#dfe6ef; --papel:#fff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body.pg{
+  background:var(--papel);color:var(--tinta);
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  -webkit-font-smoothing:antialiased;line-height:1.6;
+}
+
+.pg-topo{
+  display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
+  background:linear-gradient(160deg,var(--azul),var(--azul-esc));color:#fff;
+  padding:16px 28px;
+}
+.pg-marca{font-size:19px;font-weight:900;letter-spacing:-.6px;color:#fff;text-decoration:none}
+.pg-marca span{color:var(--orange)}
+.pg-dealer{font-size:11.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;
+  color:rgba(255,255,255,.82)}
+
+.pg-cx{max-width:820px;margin:0 auto;padding:26px 22px 60px}
+
+.pg-migalhas{font-size:12.5px;color:var(--tinta-fraca);margin-bottom:26px}
+.pg-migalhas a{color:var(--tinta-fraca)}
+.pg-migalhas a:hover{color:var(--orange)}
+
+.pg-cab{display:flex;gap:28px;align-items:center;flex-wrap:wrap;margin-bottom:34px}
+.pg-cab-txt{flex:1 1 300px;min-width:0}
+.pg-eyebrow{font-size:11.5px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
+  color:var(--orange);margin-bottom:6px}
+.pg h1{font-size:clamp(34px,6vw,52px);font-weight:800;letter-spacing:-1.6px;line-height:1.02}
+.pg-tagline{font-size:18px;color:var(--tinta-fraca);margin-top:12px;max-width:34ch}
+.pg-foto{flex:1 1 300px;max-width:100%;height:auto;object-fit:contain}
+
+.pg-wa{display:inline-block;margin-top:20px;background:#25d366;color:#08351a;
+  font-weight:800;font-size:14.5px;padding:13px 24px;border-radius:100px;text-decoration:none}
+.pg-wa:hover{background:#1fbe5b}
+
+.pg-sec{margin:0 0 30px}
+.pg h2{font-size:21px;font-weight:800;letter-spacing:-.4px;margin:34px 0 12px;
+  padding-bottom:8px;border-bottom:2px solid var(--linha)}
+.pg-sec:first-of-type h2{margin-top:0}
+.pg p{margin-bottom:14px;max-width:68ch}
+.pg ul{margin:0 0 14px 20px}
+.pg li{margin-bottom:6px}
+.pg a{color:#0b5fb0}
+.pg a:hover{color:var(--orange)}
+.pg strong{color:#0b1520}
+
+.pg-tams{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
+.pg-tams span{border:1px solid var(--linha);border-radius:8px;padding:5px 13px;
+  font-size:13.5px;font-weight:700;background:#f7fafd}
+
+/* a tabela rola dentro da sua caixa: numa asa com nove colunas, o telemóvel
+   não tem largura e a página inteira não pode passar a rolar de lado */
+.pg-tabela{overflow-x:auto;margin-bottom:8px;border:1px solid var(--linha);border-radius:12px}
+.pg-tabela table{border-collapse:collapse;width:100%;min-width:520px;font-size:13.5px}
+.pg-tabela caption{text-align:left;padding:12px 14px;font-size:12px;font-weight:700;
+  letter-spacing:1.1px;text-transform:uppercase;color:var(--tinta-fraca)}
+.pg-tabela th,.pg-tabela td{padding:9px 14px;text-align:left;border-top:1px solid var(--linha)}
+.pg-tabela thead th{background:#f4f8fc;font-size:11.5px;letter-spacing:.7px;
+  text-transform:uppercase;color:var(--tinta-fraca);border-top:none}
+.pg-tabela tbody th{font-weight:800}
+
+.pg-cores{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+.pg-cores figure{margin:0}
+.pg-cores img{width:100%;height:auto;background:#f4f8fc;border:1px solid var(--linha);
+  border-radius:12px;display:block}
+.pg-cores figcaption{font-size:12.5px;color:var(--tinta-fraca);margin-top:6px;text-transform:capitalize}
+
+.pg-fich{list-style:none;margin-left:0}
+.pg-fich li{margin-bottom:8px}
+
+.pg-voltar{margin-top:38px;padding-top:22px;border-top:1px solid var(--linha)}
+.pg-voltar a{font-weight:700}
+
+.pg-rodape{background:var(--azul-esc);color:rgba(255,255,255,.75);
+  font-size:12.5px;text-align:center;padding:22px}
+
+@media(max-width:600px){
+  .pg-topo{padding:14px 18px}
+  .pg-cx{padding:20px 18px 44px}
+  .pg-cab{gap:18px}
+  .pg h1{letter-spacing:-1px}
+}
