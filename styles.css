@@ -1332,3 +1332,13 @@ body.tem-faixa .lang-switcher{top:calc(24px + var(--faixa-h,56px))}
 .desc-esq .flow-sw{cursor:pointer;transition:box-shadow .15s,transform .15s}
 .desc-esq .flow-sw:hover{transform:scale(1.08)}
 .desc-esq .flow-sw.on{box-shadow:0 0 0 2px #fff,0 0 0 5px var(--orange)}
+
+/* logotipo da asa no palco, no lugar do nome escrito */
+.desc-nome-logo{margin:0;display:block}
+.desc-nome-logo img{height:clamp(46px,6vw,86px);width:auto;max-width:100%;display:block;object-fit:contain}
+
+/* a foto na janela de pedir preco: confirma sem palavras o que vai ser pedido */
+.flow-modal-foto{background:#eef3f9;border:1px solid #dde5ef;border-radius:12px;
+  padding:10px;margin:12px 0 8px;display:flex;align-items:center;justify-content:center}
+.flow-modal-foto img{max-width:100%;max-height:150px;width:auto;object-fit:contain}
+.flow-modal-cor{font-size:13px;font-weight:800;color:#b45309;margin-bottom:4px}

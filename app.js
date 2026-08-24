@@ -177,11 +177,18 @@ const UI = {
                     es:'Los colores en pantalla son indicativos. El tejido puede diferir de lo que ves — confírmalo con nosotros antes de pedir.',
                     fr:'Les couleurs à l’écran sont indicatives. Le tissu peut différer de ce que tu vois — confirme avec nous avant de commander.',
                     de:'Die Farben am Bildschirm sind Richtwerte. Der Stoff kann abweichen — kläre das vor der Bestellung mit uns ab.' },
-  flowMsgPrecoCor:{ pt:'Olá! Queria pedir preço para a {n}, tamanho {t}, na cor {c}. Estou em {p}.',
-                    en:'Hi! I would like a price for the {n}, size {t}, in {c}. I am in {p}.',
-                    es:'¡Hola! Quería pedir precio para la {n}, talla {t}, en color {c}. Estoy en {p}.',
-                    fr:'Bonjour ! Je voudrais le prix de la {n}, taille {t}, en {c}. Je suis en {p}.',
-                    de:'Hallo! Ich hätte gern den Preis der {n}, Größe {t}, in {c}. Ich bin in {p}.' },
+  /* a mensagem monta-se por pecas: com varios tamanhos, cor opcional e foto
+     opcional, um so molde por idioma dava dezenas de combinacoes */
+  msgAbre:   { pt:'Olá! Queria pedir preço para a {n}.', en:'Hi! I would like a price for the {n}.',
+               es:'¡Hola! Quería pedir precio para la {n}.', fr:'Bonjour ! Je voudrais le prix de la {n}.',
+               de:'Hallo! Ich hätte gern den Preis der {n}.' },
+  msgTam:    { pt:'Tamanho: {t}', en:'Size: {t}', es:'Talla: {t}', fr:'Taille : {t}', de:'Größe: {t}' },
+  msgTams:   { pt:'Tamanhos: {t}', en:'Sizes: {t}', es:'Tallas: {t}', fr:'Tailles : {t}', de:'Größen: {t}' },
+  msgCor:    { pt:'Cor: {c}', en:'Colour: {c}', es:'Color: {c}', fr:'Couleur : {c}', de:'Farbe: {c}' },
+  msgPais:   { pt:'Estou em {p}.', en:'I am in {p}.', es:'Estoy en {p}.',
+               fr:'Je suis en {p}.', de:'Ich bin in {p}.' },
+  flowEscolheTams:{ pt:'Que tamanhos queres?', en:'Which sizes?', es:'¿Qué tallas quieres?',
+                    fr:'Quelles tailles ?', de:'Welche Größen?' },
   /* prazo dos avisos — escrito a partir da data de fim, nunca à mão */
   avisoAte:       { pt:'Até {d}', en:'Until {d}', es:'Hasta el {d}', fr:'Jusqu’au {d}', de:'Bis {d}' },
   avisoFaltam:    { pt:'Faltam {n} dias', en:'{n} days left', es:'Quedan {n} días',
@@ -1159,7 +1166,7 @@ function buildFlow(item) {
      Sem isto chegava-te uma mensagem sem tamanho e tinhas de perguntar sempre.
      O envio é um <a>, não um window.open: os bloqueadores de popups deixam
      passar a ligação e o WhatsApp abre à primeira. */
-  function pedirPreco(p, num, tamPre) {
+  function pedirPreco(p, num, tamsPre, fotoUrl) {
     const fecha = () => { document.removeEventListener('keydown', tecla); fundo.remove(); };
     const tecla = ev => { if (ev.key === 'Escape') fecha(); };
 
@@ -1171,12 +1178,26 @@ function buildFlow(item) {
 
     const tit = el('div', 'flow-modal-tit'); tit.textContent = p.nome;
     cx.appendChild(tit);
+
+    /* a foto com a cor escolhida: confirma sem palavras o que vai ser pedido */
+    if (fotoUrl) {
+      const fig = el('div', 'flow-modal-foto');
+      const im = el('img'); im.src = fotoUrl; im.alt = p.nome;
+      im.addEventListener('error', () => fig.remove());
+      fig.appendChild(im);
+      cx.appendChild(fig);
+    }
+    if (p.corEscolhida) {
+      const c = el('div', 'flow-modal-cor'); c.textContent = p.corEscolhida;
+      cx.appendChild(c);
+    }
     if ((p.tamanhos || []).length) {
-      const sub = el('div', 'flow-modal-sub'); sub.textContent = ui('flowEscolheTam');
+      const sub = el('div', 'flow-modal-sub'); sub.textContent = ui('flowEscolheTams');
       cx.appendChild(sub);
     }
 
-    let escolhido = tamPre && (p.tamanhos || []).map(String).indexOf(String(tamPre)) >= 0 ? String(tamPre) : '';
+    const disp = (p.tamanhos || []).map(String);
+    let escolhidos = (tamsPre || []).map(String).filter(t2 => disp.indexOf(t2) >= 0);
     const enviar = el('a', 'flow-btn wa flow-modal-enviar');
     enviar.target = '_blank'; enviar.rel = 'noopener';
     enviar.innerHTML = ICON_WA;
@@ -1186,26 +1207,32 @@ function buildFlow(item) {
     const refresca = () => {
       const pais = campoPais.value.trim();
       /* tamanho e país são ambos obrigatórios */
-      const valido = pais.length >= 2 && (!(p.tamanhos || []).length || !!escolhido);
+      const valido = pais.length >= 2 && (!disp.length || escolhidos.length > 0);
       enviar.classList.toggle('desativado', !valido);
       enviar.setAttribute('aria-disabled', valido ? 'false' : 'true');
       if (!valido) { enviar.removeAttribute('href'); return; }
-      enviar.href = waLink(num, escolhido && p.corEscolhida
-        ? ui('flowMsgPrecoCor', { n: p.nome, t: escolhido, c: p.corEscolhida, p: pais })
-        : escolhido
-        ? ui('flowMsgPrecoTam', { n: p.nome, t: escolhido, p: pais })
-        : ui('flowMsgPreco', { n: p.nome, p: pais }));
+      const linhas = [ui('msgAbre', { n: p.nome })];
+      if (escolhidos.length === 1) linhas.push(ui('msgTam', { t: escolhidos[0] }));
+      else if (escolhidos.length > 1) linhas.push(ui('msgTams', { t: escolhidos.join(', ') }));
+      if (p.corEscolhida) linhas.push(ui('msgCor', { c: p.corEscolhida }));
+      linhas.push(ui('msgPais', { p: pais }));
+      enviar.href = waLink(num, linhas.join('\n'));
     };
 
     const lista = el('div', 'flow-modal-tams');
     (p.tamanhos || []).forEach(tam => {
-      const b = el('button', 'flow-modal-tam'
-        + (String(tam) === escolhido ? ' on' : '')); b.type = 'button';
+      const dentro = escolhidos.indexOf(String(tam)) >= 0;
+      const b = el('button', 'flow-modal-tam' + (dentro ? ' on' : '')); b.type = 'button';
       b.textContent = tam;
+      b.setAttribute('aria-pressed', dentro ? 'true' : 'false');
+      /* varios tamanhos de uma vez: quem hesita entre dois pergunta pelos dois
+         em vez de mandar duas mensagens */
       b.addEventListener('click', () => {
-        lista.querySelectorAll('.flow-modal-tam').forEach(x => x.classList.remove('on'));
-        b.classList.add('on');
-        escolhido = tam;
+        const i = escolhidos.indexOf(String(tam));
+        if (i >= 0) escolhidos.splice(i, 1); else escolhidos.push(String(tam));
+        const on = escolhidos.indexOf(String(tam)) >= 0;
+        b.classList.toggle('on', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
         refresca();
       });
       lista.appendChild(b);
@@ -1663,7 +1690,7 @@ function buildFlow(item) {
     let emPalco = produtos[0];
     let corCustom = null;            /* {ref, nome, hex} escolhida no palco */
     let corStd = null;               /* cor standard escolhida (nome no catalogo) */
-    let tamSel = null;               /* tamanho escolhido, viaja para o WhatsApp */
+    let tamsSel = [];                /* tamanhos escolhidos, viajam para o WhatsApp */
 
     const zona = el('div', 'desc');
     wrap.appendChild(zona);
@@ -1884,7 +1911,21 @@ function buildFlow(item) {
         esq.appendChild(topo);
       }
 
-      const h = el('h3', 'desc-nome'); h.textContent = p.nome; esq.appendChild(h);
+      /* logotipo em vez do nome escrito. O nome fica no alt, por isso nao se
+         perde para leitores de ecra nem para pesquisa; sem logotipo, volta
+         sozinho ao nome escrito (a MulletX e a Vissta ainda nao o tem). */
+      if (p.logo) {
+        const cxl = el('h3', 'desc-nome-logo');
+        /* o campo guarda a chave, nao o caminho — como no cartao da grelha */
+        const li = el('img'); li.src = 'images/logos/' + p.logo + '.webp'; li.alt = p.nome;
+        li.addEventListener('error', () => {
+          const h2 = el('h3', 'desc-nome'); h2.textContent = p.nome;
+          cxl.replaceWith(h2);
+        });
+        cxl.appendChild(li); esq.appendChild(cxl);
+      } else {
+        const h = el('h3', 'desc-nome'); h.textContent = p.nome; esq.appendChild(h);
+      }
       const eb = el('div', 'desc-eyebrow');
       eb.textContent = rotuloClasse(p.classificacao || '') || rotuloFamilia(p.familia);
       esq.appendChild(eb);
@@ -1918,18 +1959,20 @@ function buildFlow(item) {
         p.tamanhos.forEach(tm => {
           /* botao, nao span: aqui o tamanho escolhe-se, e a escolha viaja para
              a mensagem de WhatsApp */
+          const dentro = tamsSel.indexOf(String(tm)) >= 0;
           const c = el('button', 'flow-size desc-size'
             + (certo && String(tm) === certo ? ' desc-size-hi' : '')
-            + (String(tm) === tamSel ? ' on' : ''));
+            + (dentro ? ' on' : ''));
           c.type = 'button';
-          c.setAttribute('aria-pressed', String(tm) === tamSel ? 'true' : 'false');
+          c.setAttribute('aria-pressed', dentro ? 'true' : 'false');
           c.textContent = tm;
+          /* varios de uma vez: quem hesita entre dois pergunta pelos dois */
           c.addEventListener('click', () => {
-            tamSel = tamSel === String(tm) ? null : String(tm);
-            f.querySelectorAll('.desc-size').forEach(o => {
-              o.classList.remove('on'); o.setAttribute('aria-pressed', 'false');
-            });
-            if (tamSel) { c.classList.add('on'); c.setAttribute('aria-pressed', 'true'); }
+            const i = tamsSel.indexOf(String(tm));
+            if (i >= 0) tamsSel.splice(i, 1); else tamsSel.push(String(tm));
+            const on = tamsSel.indexOf(String(tm)) >= 0;
+            c.classList.toggle('on', on);
+            c.setAttribute('aria-pressed', on ? 'true' : 'false');
           });
           f.appendChild(c);
         });
@@ -1948,10 +1991,14 @@ function buildFlow(item) {
           b.setAttribute('aria-label', rot);
           b.setAttribute('aria-pressed', corStd === cor ? 'true' : 'false');
           b.addEventListener('click', () => {
-            corStd = cor;
-            /* mantem a cor custom, mas passa a aplica-la sobre este esquema */
-            img.src = corCustom ? fotoCustom(corCustom) : fotoSrc(p.nome, cor, false);
-            nomeCor.textContent = corCustom ? corCustom.nome : rot;
+            /* escolher uma cor standard mostra ESSA cor, tal como e de fabrica.
+               Herdar a custom escolhida antes escondia o que se pediu para ver. */
+            corStd = cor; corCustom = null;
+            img.src = fotoSrc(p.nome, cor, false);
+            nomeCor.textContent = rot;
+            esq.querySelectorAll('.desc-custom .flow-custom-sw').forEach(o => {
+              o.classList.remove('on'); o.setAttribute('aria-checked', 'false');
+            });
             f.querySelectorAll('.flow-sw').forEach(o => {
               o.classList.remove('on'); o.setAttribute('aria-pressed', 'false');
             });
@@ -1972,8 +2019,9 @@ function buildFlow(item) {
       wa.innerHTML = ICON_WA;
       const wl = el('span'); wl.textContent = ui('flowPedirPreco'); wa.appendChild(wl);
       wa.addEventListener('click', () => {
-        p.corEscolhida = corCustom ? corCustom.nome : null;
-        pedirPreco(p, num, tamSel);
+        p.corEscolhida = corCustom ? corCustom.nome
+          : (corStd ? String(corStd).replace(/-/g, ' ') : null);
+        pedirPreco(p, num, tamsSel, img.getAttribute('src'));
       });
       acoes.appendChild(ver); acoes.appendChild(wa);
       esq.appendChild(acoes);
@@ -2008,6 +2056,10 @@ function buildFlow(item) {
           b.addEventListener('click', () => {
             corCustom = c;
             img.src = fotoCustom(c);
+            esq.querySelectorAll('.desc-esq .flow-sw, .flow-sw').forEach(o => {
+              if (o.closest('.desc-custom')) return;
+              o.classList.remove('on'); o.setAttribute('aria-pressed', 'false');
+            });
             nomeCor.textContent = c.nome;
             fila.querySelectorAll('.flow-custom-sw').forEach(o => {
               o.classList.remove('on'); o.setAttribute('aria-checked', 'false');
