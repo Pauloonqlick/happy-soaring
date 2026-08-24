@@ -1650,6 +1650,14 @@ collections:
             widget: object
             summary: Flow Paragliders
             fields:
+              - label: Como se apresenta a gama
+                name: apresentacao
+                widget: select
+                default: grelha
+                options:
+                  - {label: Grelha de cartoes, value: grelha}
+                  - {label: Descoberta (uma asa em palco, com perguntas), value: descoberta}
+                hint: 'A descoberta poe uma asa de cada vez em palco e faz quatro perguntas. A grelha e a lista de sempre'
               - label: 'Etiqueta de topo (ex: OFFICIAL DEALER IN PORTUGAL)'
                 name: dealerLabel
                 widget: object

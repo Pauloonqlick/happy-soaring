@@ -106,6 +106,69 @@ const UI = {
   flowTamanhos:   { pt:'Tamanhos', en:'Sizes', es:'Tallas', fr:'Tailles', de:'Größen' },
   flowVerDetalhes:{ pt:'Detalhes', en:'Details', es:'Detalles', fr:'Détails', de:'Details' },
   flowFechar:     { pt:'Fechar', en:'Close', es:'Cerrar', fr:'Fermer', de:'Schließen' },
+  /* ---- descoberta ---- */
+  descTitulo:    { pt:'Não sabes qual escolher?', en:'Not sure which one?', es:'¿No sabes cuál elegir?',
+                   fr:'Tu ne sais pas laquelle choisir ?', de:'Unsicher, welcher passt?' },
+  descSub:       { pt:'{n} perguntas e digo-te quais das {t} são para ti.',
+                   en:'{n} questions and I tell you which of the {t} are for you.',
+                   es:'{n} preguntas y te digo cuáles de las {t} son para ti.',
+                   fr:'{n} questions et je te dis lesquelles des {t} sont pour toi.',
+                   de:'{n} Fragen, und ich sage dir, welche der {t} zu dir passen.' },
+  descResponder: { pt:'Responder', en:'Answer', es:'Responder', fr:'Répondre', de:'Antworten' },
+  descPergTit:   { pt:'Quatro coisas, e digo-te quais são para ti',
+                   en:'Four things, and I tell you which are for you',
+                   es:'Cuatro cosas, y te digo cuáles son para ti',
+                   fr:'Quatre choses, et je te dis lesquelles sont pour toi',
+                   de:'Vier Dinge, und ich sage dir, welche passen' },
+  descPergSub:   { pt:'Podes saltar qualquer uma — quanto mais responderes, mais afino.',
+                   en:'Skip any of them — the more you answer, the finer I get.',
+                   es:'Puedes saltar cualquiera — cuanto más respondas, más afino.',
+                   fr:'Tu peux en sauter — plus tu réponds, plus j’affine.',
+                   de:'Du kannst jede überspringen — je mehr du beantwortest, desto genauer.' },
+  descQ1:        { pt:'1 · Que tipo de asa procuras', en:'1 · What kind of wing', es:'1 · Qué tipo de vela buscas',
+                   fr:'1 · Quel type d’aile', de:'1 · Welche Art Schirm' },
+  descQ2:        { pt:'2 · Nível de experiência', en:'2 · Experience level', es:'2 · Nivel de experiencia',
+                   fr:'2 · Niveau d’expérience', de:'2 · Erfahrungsstufe' },
+  descQ3:        { pt:'3 · Onde voas', en:'3 · Where you fly', es:'3 · Dónde vuelas',
+                   fr:'3 · Où tu voles', de:'3 · Wo du fliegst' },
+  descQ4:        { pt:'4 · Peso total em voo', en:'4 · All-up weight', es:'4 · Peso total en vuelo',
+                   fr:'4 · Poids total en vol', de:'4 · Startgewicht' },
+  descNaoSei:    { pt:'Não sei — mostra-me tudo', en:'Not sure — show me everything',
+                   es:'No sé — muéstrame todo', fr:'Je ne sais pas — montre-moi tout',
+                   de:'Weiß nicht — zeig mir alles' },
+  descMostra:    { pt:'Mostra-me as asas', en:'Show me the wings', es:'Muéstrame las velas',
+                   fr:'Montre-moi les ailes', de:'Zeig mir die Schirme' },
+  descContam:    { pt:'{n} de {t} correspondem ao que disseste',
+                   en:'{n} of {t} match what you said', es:'{n} de {t} coinciden con lo que dijiste',
+                   fr:'{n} sur {t} correspondent', de:'{n} von {t} passen zu deinen Angaben' },
+  descFiltrado:  { pt:'Filtrado para ti:', en:'Filtered for you:', es:'Filtrado para ti:',
+                   fr:'Filtré pour toi :', de:'Für dich gefiltert:' },
+  descAlterar:   { pt:'alterar', en:'change', es:'cambiar', fr:'modifier', de:'ändern' },
+  descVerTudo:   { pt:'ver a gama toda', en:'see the whole range', es:'ver toda la gama',
+                   fr:'voir toute la gamme', de:'die ganze Reihe ansehen' },
+  descMelhor:    { pt:'A melhor para ti', en:'Your best match', es:'La mejor para ti',
+                   fr:'La meilleure pour toi', de:'Die beste für dich' },
+  descPorque:    { pt:'Porquê esta para ti:', en:'Why this one for you:', es:'Por qué esta para ti:',
+                   fr:'Pourquoi celle-ci :', de:'Warum diese für dich:' },
+  descTeuTam:    { pt:'· o teu é o {t}', en:'· yours is the {t}', es:'· el tuyo es el {t}',
+                   fr:'· la tienne est la {t}', de:'· deiner ist der {t}' },
+  descAsTuas:    { pt:'As tuas {n} asas', en:'Your {n} wings', es:'Tus {n} velas',
+                   fr:'Tes {n} ailes', de:'Deine {n} Schirme' },
+  descRestoFam:  { pt:'O resto da família', en:'The rest of the family', es:'El resto de la familia',
+                   fr:'Le reste de la famille', de:'Der Rest der Familie' },
+  descAVer:      { pt:'A ver agora', en:'Now showing', es:'Viendo ahora', fr:'En cours', de:'Gerade offen' },
+  descNivel1:    { pt:'Iniciado', en:'Beginner', es:'Iniciado', fr:'Débutant', de:'Einsteiger' },
+  descNivel2:    { pt:'Avançado', en:'Advanced', es:'Avanzado', fr:'Confirmé', de:'Fortgeschritten' },
+  descNivel3:    { pt:'Experiente', en:'Experienced', es:'Experto', fr:'Expérimenté', de:'Erfahren' },
+  descTerr1:     { pt:'Praia / dunas', en:'Beach / dunes', es:'Playa / dunas',
+                   fr:'Plage / dunes', de:'Strand / Dünen' },
+  descTerr2:     { pt:'Montanha', en:'Mountain', es:'Montaña', fr:'Montagne', de:'Berg' },
+  descTerr3:     { pt:'Térmica', en:'Thermals', es:'Térmica', fr:'Thermique', de:'Thermik' },
+  descNenhuma:   { pt:'Nenhuma asa corresponde a tudo o que pediste. Estas são as mais próximas.',
+                   en:'No wing matches everything you asked for. These are the closest.',
+                   es:'Ninguna vela cumple todo lo que pediste. Estas son las más cercanas.',
+                   fr:'Aucune aile ne coche tout. Voici les plus proches.',
+                   de:'Kein Schirm passt auf alles. Diese kommen am nächsten.' },
   /* cor à medida */
   corMedida:      { pt:'Escolhe a tua cor', en:'Choose your colour', es:'Elige tu color',
                     fr:'Choisis ta couleur', de:'Wähl deine Farbe' },
@@ -946,7 +1009,12 @@ function buildFlow(item) {
   const barraFam = el('div', 'flow-fams');
   const barraFiltros = el('div', 'flow-filters');
   const grelha = el('div', 'flow-grid');
-  wrap.appendChild(barraFam); wrap.appendChild(barraFiltros); wrap.appendChild(grelha);
+  /* modo DESCOBERTA: uma asa em palco, com perguntas. A grelha fica de fora e o
+     interruptor está no CMS, para se poder voltar atrás sem mexer no código. */
+  const descoberta = item.apresentacao === 'descoberta';
+  if (!descoberta) {
+    wrap.appendChild(barraFam); wrap.appendChild(barraFiltros); wrap.appendChild(grelha);
+  }
 
   /* link partilhável: #produtos/<asa> abre já nessa asa */
   const m = (location.hash || '').match(/^#produtos\/(.+)$/);
@@ -1575,6 +1643,413 @@ function buildFlow(item) {
       grelha.children[fim].insertAdjacentElement('afterend', detalhe(aberto));
     }
   }
+  /* ================= modo DESCOBERTA =================
+     Uma asa em palco de cada vez, em vez de uma grelha de cartões. As perguntas
+     não roubam o palco: são uma tira fina antes, uma janela enquanto se
+     responde, e uma linha de respostas depois. A asa nunca deixa de ser a coisa
+     maior no ecrã — foi essa a regra que decidiu o desenho todo.
+
+     Vive dentro de buildFlow de propósito, para reaproveitar detalhe(),
+     pedirPreco() e o resto sem duplicar nada. */
+  function buildDescoberta() {
+    const TERRENOS = ['praia', 'montanha', 'termica'];
+    const NIVEIS = ['iniciado', 'avancado', 'experiente'];
+    const rotNivel = n => ui('descNivel' + (NIVEIS.indexOf(n) + 1));
+    const rotTerreno = t2 => ui('descTerr' + (TERRENOS.indexOf(t2) + 1));
+
+    let resp = null;                 /* null = ainda não respondeu */
+    let aPerguntar = false;
+    let emPalco = produtos[0];
+    let corCustom = null;            /* {ref, nome, hex} escolhida no palco */
+
+    const zona = el('div', 'desc');
+    wrap.appendChild(zona);
+
+    /* --- quem corresponde ao que foi respondido --------------------------- */
+    function pontua(p) {
+      if (!resp) return 0;
+      let n = 0;
+      if (resp.categoria && p.familia === resp.categoria) n += 4;
+      if (resp.nivel && (p.nivel || []).indexOf(resp.nivel) >= 0) n += 3;
+      if (resp.terreno && (p.terreno || []).indexOf(resp.terreno) >= 0) n += 2;
+      if (resp.peso && tamanhoParaPeso(p, resp.peso)) n += 1;
+      return n;
+    }
+    function correspondem() {
+      if (!resp) return [];
+      const max = Math.max.apply(null, produtos.map(pontua));
+      if (max <= 0) return [];
+      return produtos.filter(p => pontua(p) === max);
+    }
+
+    /* O tamanho certo sai do PTV que já está nas especificações — não é preciso
+       campo novo nenhum.
+       Duas armadilhas que os dados reais revelaram:
+       - As faixas SOBREPÕEM-SE. Devolver a primeira que serve dava a mais
+         pequena de todas: 88 kg na Mullet 2 acendia o 13.
+       - Em muitas asas TODAS as faixas são iguais (a Mullet 2 e a Yoti 3 dizem
+         o mesmo em todos os tamanhos, porque ali o tamanho escolhe-se pelo
+         vento e pela perícia, não pelo peso).
+       Por isso: escolhe-se o tamanho que põe o piloto mais perto do MEIO da
+       faixa, e só se afirma quando há um vencedor único. Havendo empate, não
+       se diz nada — é melhor calar do que apontar o tamanho errado. */
+    function tamanhoParaPeso(p, kg) {
+      const cand = [];
+      (p.specs || []).forEach(x => {
+        if (!x || !x.ptv || x.tamanho == null) return;
+        const m = String(x.ptv).match(/(\d+)\s*[–—-]\s*(\d+)/);
+        if (!m) return;
+        const lo = +m[1], hi = +m[2];
+        if (kg < lo || kg > hi) return;
+        cand.push({ tam: String(x.tamanho), dist: Math.abs(kg - (lo + hi) / 2) });
+      });
+      if (!cand.length) return null;
+      const min = Math.min.apply(null, cand.map(c => c.dist));
+      const vencedores = cand.filter(c => c.dist === min);
+      return vencedores.length === 1 ? vencedores[0].tam : null;
+    }
+
+    /* --- 1 · a tira do convite ------------------------------------------- */
+    function tira() {
+      const t2 = el('div', 'desc-tira');
+      const ic = el('div', 'desc-tira-ic');
+      ic.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+        '<path d="M9.1 9a3 3 0 1 1 4.2 2.8c-.8.4-1.3 1.1-1.3 2v.7" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>' +
+        '<circle cx="12" cy="18.5" r="1.3" fill="#fff"/></svg>';
+      const txt = el('div', 'desc-tira-txt');
+      const h = el('div', 'desc-tira-h'); h.textContent = ui('descTitulo');
+      const sub = el('div', 'desc-tira-sub');
+      sub.textContent = ui('descSub', { n: 4, t: produtos.length });
+      txt.appendChild(h); txt.appendChild(sub);
+      const b = el('button', 'flow-btn primary desc-tira-btn'); b.type = 'button';
+      b.textContent = ui('descResponder');
+      b.addEventListener('click', () => { aPerguntar = true; pinta(); });
+      t2.appendChild(ic); t2.appendChild(txt); t2.appendChild(b);
+      return t2;
+    }
+
+    /* --- 2 · as perguntas ------------------------------------------------- */
+    function perguntas() {
+      const r = Object.assign({ categoria: null, nivel: null, terreno: null, peso: 85 }, resp || {});
+      const cx = el('div', 'desc-perg');
+
+      const topo = el('div', 'desc-perg-topo');
+      const tt = el('div');
+      const h = el('div', 'desc-perg-h'); h.textContent = ui('descPergTit');
+      const sub = el('div', 'desc-perg-sub'); sub.textContent = ui('descPergSub');
+      tt.appendChild(h); tt.appendChild(sub);
+      const x = el('button', 'desc-perg-x'); x.type = 'button';
+      x.setAttribute('aria-label', ui('flowFechar')); x.innerHTML = '&times;';
+      x.addEventListener('click', () => { aPerguntar = false; pinta(); });
+      topo.appendChild(tt); topo.appendChild(x);
+      cx.appendChild(topo);
+
+      const conta = el('span', 'desc-perg-conta');
+      const refresca = () => {
+        const antes = resp; resp = r;
+        conta.textContent = ui('descContam', { n: correspondem().length, t: produtos.length });
+        resp = antes;
+      };
+
+      /* 1 · categoria — a linha toda, porque é o corte maior */
+      const g1 = el('div', 'desc-grupo');
+      const l1 = el('div', 'desc-lbl'); l1.textContent = ui('descQ1');
+      const f1 = el('div', 'desc-cats');
+      familias.forEach(fam => {
+        const b = el('button', 'desc-cat'); b.type = 'button';
+        b.appendChild(document.createTextNode(rotuloFamilia(fam) + ' '));
+        const n = el('span'); n.textContent = produtos.filter(p => p.familia === fam).length;
+        b.appendChild(n);
+        if (r.categoria === fam) b.classList.add('on');
+        b.addEventListener('click', () => {
+          r.categoria = r.categoria === fam ? null : fam;
+          f1.querySelectorAll('.desc-cat').forEach(o => o.classList.remove('on'));
+          if (r.categoria) b.classList.add('on');
+          livre.classList.toggle('on', !r.categoria);
+          refresca();
+        });
+        f1.appendChild(b);
+      });
+      const livre = el('button', 'desc-cat livre' + (r.categoria ? '' : ' on')); livre.type = 'button';
+      livre.textContent = ui('descNaoSei');
+      livre.addEventListener('click', () => {
+        r.categoria = null;
+        f1.querySelectorAll('.desc-cat').forEach(o => o.classList.remove('on'));
+        livre.classList.add('on'); refresca();
+      });
+      f1.appendChild(livre);
+      g1.appendChild(l1); g1.appendChild(f1); cx.appendChild(g1);
+
+      cx.appendChild(el('div', 'desc-risco'));
+
+      /* 2, 3, 4 — em três colunas */
+      const tres = el('div', 'desc-tres');
+
+      const chips = (rot, lista, valor, rotulo, ao) => {
+        const g = el('div', 'desc-grupo');
+        const l = el('div', 'desc-lbl'); l.textContent = rot;
+        const f = el('div', 'desc-chips');
+        lista.forEach(v => {
+          const b = el('button', 'desc-chip' + (valor() === v ? ' on' : '')); b.type = 'button';
+          b.textContent = rotulo(v);
+          b.addEventListener('click', () => {
+            ao(valor() === v ? null : v);
+            f.querySelectorAll('.desc-chip').forEach(o => o.classList.remove('on'));
+            if (valor() === v) b.classList.add('on');
+            refresca();
+          });
+          f.appendChild(b);
+        });
+        g.appendChild(l); g.appendChild(f);
+        return g;
+      };
+
+      tres.appendChild(chips(ui('descQ2'), NIVEIS, () => r.nivel, rotNivel, v => { r.nivel = v; }));
+      tres.appendChild(chips(ui('descQ3'), TERRENOS, () => r.terreno, rotTerreno, v => { r.terreno = v; }));
+
+      const g4 = el('div', 'desc-grupo');
+      const l4 = el('div', 'desc-lbl'); l4.textContent = ui('descQ4');
+      const linha = el('div', 'desc-peso');
+      const sl = el('input', 'desc-peso-sl');
+      sl.type = 'range'; sl.min = '45'; sl.max = '135'; sl.step = '1'; sl.value = String(r.peso);
+      sl.setAttribute('aria-label', ui('descQ4'));
+      const kg = el('div', 'desc-peso-kg'); kg.textContent = r.peso + ' kg';
+      sl.addEventListener('input', () => { r.peso = +sl.value; kg.textContent = r.peso + ' kg'; refresca(); });
+      linha.appendChild(sl); linha.appendChild(kg);
+      g4.appendChild(l4); g4.appendChild(linha);
+      tres.appendChild(g4);
+      cx.appendChild(tres);
+
+      const rodape = el('div', 'desc-perg-rodape');
+      const ok = el('button', 'flow-btn primary'); ok.type = 'button';
+      ok.textContent = ui('descMostra');
+      ok.addEventListener('click', () => {
+        resp = r; aPerguntar = false;
+        const lista = correspondem();
+        if (lista.length) emPalco = lista[0];
+        corCustom = null;
+        pinta();
+      });
+      rodape.appendChild(ok); rodape.appendChild(conta);
+      cx.appendChild(rodape);
+      refresca();
+      return cx;
+    }
+
+    /* --- 3 · a linha das respostas --------------------------------------- */
+    function linhaRespostas() {
+      const l = el('div', 'desc-resps');
+      const et = el('span', 'desc-resps-lbl'); et.textContent = ui('descFiltrado');
+      l.appendChild(et);
+      const poe = txt => { const c = el('span', 'desc-resp'); c.textContent = txt; l.appendChild(c); };
+      if (resp.categoria) poe(rotuloFamilia(resp.categoria));
+      if (resp.nivel) poe(rotNivel(resp.nivel));
+      if (resp.terreno) poe(rotTerreno(resp.terreno));
+      if (resp.peso) poe(resp.peso + ' kg');
+      const alt = el('button', 'desc-lig'); alt.type = 'button';
+      alt.textContent = ui('descAlterar');
+      alt.addEventListener('click', () => { aPerguntar = true; pinta(); });
+      l.appendChild(alt);
+      const fim = el('span', 'desc-resps-fim');
+      const n = correspondem().length;
+      fim.appendChild(document.createTextNode(n + ' / ' + produtos.length + ' · '));
+      const tudo = el('button', 'desc-lig'); tudo.type = 'button';
+      tudo.textContent = ui('descVerTudo');
+      tudo.addEventListener('click', () => { resp = null; corCustom = null; pinta(); });
+      fim.appendChild(tudo);
+      l.appendChild(fim);
+      return l;
+    }
+
+    /* --- 4 · o palco ------------------------------------------------------ */
+    function palco() {
+      const p = emPalco;
+      const cx = el('div', 'desc-palco');
+      const esq = el('div', 'desc-esq');
+
+      const lista = correspondem();
+      const eMelhor = resp && lista.length && lista[0] === p;
+      if (eMelhor) {
+        const topo = el('div', 'desc-selo-linha');
+        const selo = el('span', 'desc-selo'); selo.textContent = ui('descMelhor');
+        topo.appendChild(selo);
+        if (lista.length > 1) {
+          const q = el('span', 'desc-quantas');
+          q.textContent = '1 / ' + lista.length;
+          topo.appendChild(q);
+        }
+        esq.appendChild(topo);
+      }
+
+      const h = el('h3', 'desc-nome'); h.textContent = p.nome; esq.appendChild(h);
+      const eb = el('div', 'desc-eyebrow');
+      eb.textContent = rotuloClasse(p.classificacao || '') || rotuloFamilia(p.familia);
+      esq.appendChild(eb);
+
+      const tl = t(p.tagline);
+      if (tl) { const d = el('p', 'desc-tagline'); d.textContent = tl; esq.appendChild(d); }
+
+      /* a voz do revendedor: só aparece se houver respostas e texto escrito */
+      const porque = t(p.porque);
+      if (resp && porque) {
+        const b = el('div', 'desc-porque');
+        const s2 = el('b'); s2.textContent = ui('descPorque');
+        b.appendChild(s2); b.appendChild(document.createTextNode(' ' + porque));
+        esq.appendChild(b);
+      }
+
+      /* tamanhos + cores standard */
+      const dados = el('div', 'desc-dados');
+      if ((p.tamanhos || []).length) {
+        const g = el('div');
+        const lb = el('div', 'desc-lbl');
+        const certo = resp && resp.peso ? tamanhoParaPeso(p, resp.peso) : null;
+        lb.appendChild(document.createTextNode(ui('flowTamanhos') + ' '));
+        if (certo) { const s3 = el('span', 'desc-lbl-hi'); s3.textContent = ui('descTeuTam', { t: certo }); lb.appendChild(s3); }
+        const f = el('div', 'flow-sizes');
+        p.tamanhos.forEach(tm => {
+          const c = el('span', 'flow-size' + (certo && String(tm) === certo ? ' desc-size-hi' : ''));
+          c.textContent = tm; f.appendChild(c);
+        });
+        g.appendChild(lb); g.appendChild(f); dados.appendChild(g);
+      }
+      if ((p.cores || []).length) {
+        const g = el('div');
+        const lb = el('div', 'desc-lbl'); lb.textContent = ui('flowCores');
+        const f = el('div', 'flow-swatches');
+        p.cores.forEach(cor => {
+          const b = el('span', 'flow-sw');
+          b.style.background = corAmostra(cor);
+          b.title = String(cor).replace(/-/g, ' ');
+          f.appendChild(b);
+        });
+        g.appendChild(lb); g.appendChild(f); dados.appendChild(g);
+      }
+      esq.appendChild(dados);
+
+      /* acções */
+      const acoes = el('div', 'desc-acoes');
+      const ver = el('button', 'flow-btn primary'); ver.type = 'button';
+      ver.textContent = ui('flowVerDetalhes');
+      ver.addEventListener('click', () => { aberto = p; pinta(); irParaDetalhe(); });
+      const wa = el('button', 'flow-btn wa'); wa.type = 'button';
+      wa.innerHTML = ICON_WA;
+      const wl = el('span'); wl.textContent = ui('flowPedirPreco'); wa.appendChild(wl);
+      wa.addEventListener('click', () => {
+        p.corEscolhida = corCustom ? corCustom.nome : null;
+        pedirPreco(p, num);
+      });
+      acoes.appendChild(ver); acoes.appendChild(wa);
+      esq.appendChild(acoes);
+
+      /* cor à medida, por baixo dos botões */
+      const img = el('img', 'desc-img');
+      img.alt = p.nome;
+      const fotoBase = () => (p.cores || []).length ? fotoSrc(p.nome, p.cores[0], false) : '';
+      img.src = corCustom
+        ? 'images/asas-cores/' + chaveFoto(p.nome) + '__' + corCustom.ref + '.webp'
+        : fotoBase();
+
+      if (p.coresCustom && TECIDOS.length) {
+        const cores = Array.isArray(p.coresCustom)
+          ? TECIDOS.filter(c => p.coresCustom.indexOf(c.ref) >= 0) : TECIDOS;
+        const bl = el('div', 'desc-custom');
+        const cab = el('div', 'desc-custom-cab');
+        const lb = el('div', 'desc-lbl'); lb.textContent = ui('corMedida');
+        const nm = el('div', 'desc-custom-nome');
+        nm.textContent = corCustom ? corCustom.nome : '';
+        cab.appendChild(lb); cab.appendChild(nm);
+        const fila = el('div', 'desc-custom-fila');
+        fila.setAttribute('role', 'radiogroup');
+        fila.setAttribute('aria-label', ui('corMedida'));
+        cores.forEach(c => {
+          const b = el('button', 'flow-custom-sw' + (corCustom && corCustom.ref === c.ref ? ' on' : ''));
+          b.type = 'button'; b.style.background = c.hex; b.title = c.nome;
+          b.setAttribute('role', 'radio');
+          b.setAttribute('aria-checked', corCustom && corCustom.ref === c.ref ? 'true' : 'false');
+          b.setAttribute('aria-label', c.nome);
+          b.addEventListener('click', () => {
+            corCustom = c;
+            img.src = 'images/asas-cores/' + chaveFoto(p.nome) + '__' + c.ref + '.webp';
+            nm.textContent = c.nome;
+            fila.querySelectorAll('.flow-custom-sw').forEach(o => {
+              o.classList.remove('on'); o.setAttribute('aria-checked', 'false');
+            });
+            b.classList.add('on'); b.setAttribute('aria-checked', 'true');
+          });
+          fila.appendChild(b);
+        });
+        const nota = el('p', 'desc-custom-nota'); nota.textContent = ui('corIndicativa');
+        bl.appendChild(cab); bl.appendChild(fila); bl.appendChild(nota);
+        esq.appendChild(bl);
+      }
+
+      const dir = el('div', 'desc-dir');
+      dir.appendChild(img);
+
+      cx.appendChild(esq); cx.appendChild(dir);
+      return cx;
+    }
+
+    /* --- 5 · o carril ----------------------------------------------------- */
+    function carril() {
+      const lista = correspondem();
+      const naFam = produtos.filter(p => p.familia === emPalco.familia);
+      const ordem = resp && lista.length
+        ? lista.concat(naFam.filter(p => lista.indexOf(p) < 0))
+        : naFam;
+
+      const cx = el('div', 'desc-carril');
+      const cab = el('div', 'desc-carril-cab');
+      const a = el('div', 'desc-lbl desc-lbl-forte');
+      a.textContent = resp && lista.length ? ui('descAsTuas', { n: lista.length }) : rotuloFamilia(emPalco.familia);
+      cab.appendChild(a);
+      cab.appendChild(el('div', 'desc-carril-risco'));
+      if (resp && lista.length) {
+        const b = el('div', 'desc-lbl'); b.textContent = ui('descRestoFam'); cab.appendChild(b);
+      }
+      cx.appendChild(cab);
+
+      const fila = el('div', 'desc-carril-fila');
+      ordem.forEach(p => {
+        const eDelas = resp && lista.indexOf(p) >= 0;
+        const b = el('button', 'desc-mini' + (p === emPalco ? ' on' : '') + (resp && !eDelas ? ' fora' : ''));
+        b.type = 'button';
+        const im = el('img');
+        im.src = (p.cores || []).length ? fotoSrc(p.nome, p.cores[0], true) : '';
+        im.alt = ''; im.loading = 'lazy';
+        im.addEventListener('error', () => { im.style.visibility = 'hidden'; });
+        const tx = el('div');
+        const n = el('div', 'desc-mini-nome'); n.textContent = p.nome;
+        const c = el('div', 'desc-mini-cls');
+        c.textContent = p === emPalco ? ui('descAVer') : (rotuloClasse(p.classificacao || '') || '');
+        tx.appendChild(n); tx.appendChild(c);
+        b.appendChild(im); b.appendChild(tx);
+        b.addEventListener('click', () => { emPalco = p; corCustom = null; aberto = null; pinta(); });
+        fila.appendChild(b);
+      });
+      cx.appendChild(fila);
+      return cx;
+    }
+
+    /* --- desenha tudo ----------------------------------------------------- */
+    function pinta() {
+      zona.innerHTML = '';
+      zona.appendChild(aPerguntar ? perguntas() : (resp ? linhaRespostas() : tira()));
+      const p = el('div', 'desc-corpo' + (aPerguntar ? ' esbatido' : ''));
+      if (resp && !correspondem().length) {
+        const av = el('p', 'desc-nenhuma'); av.textContent = ui('descNenhuma');
+        p.appendChild(av);
+      }
+      p.appendChild(palco());
+      p.appendChild(carril());
+      zona.appendChild(p);
+      if (aberto) zona.appendChild(detalhe(aberto));
+    }
+
+    pinta();
+  }
+
   function render() { renderFams(); renderFiltros(); renderGrelha(); }
 
   /* leva o ecrã ao topo do detalhe: sem isto, ao abrir uma asa de uma linha
@@ -1610,7 +2085,7 @@ function buildFlow(item) {
     if (e.key === 'Escape' && aberto) { aberto = null; sincronizaHash(); render(); }
   });
 
-  render();
+  if (descoberta) buildDescoberta(); else render();
   /* veio de um link partilhado: só dá para rolar depois de a secção estar
      no documento e as fotos terem chegado */
   if (aberto) {
