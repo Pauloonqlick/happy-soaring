@@ -122,6 +122,10 @@ def main():
         print(__doc__)
         sys.exit(1)
     foto, chave = args[0], args[1]
+    # o esquema sai do proprio nome da foto (mullet2__maui.webp -> maui): cada
+    # esquema tem as suas riscas, e uma cor custom so troca a BASE de cada um
+    base = os.path.basename(foto)
+    esquema = base.split('__')[1].split('.')[0] if '__' in base else 'base'
     so = args[args.index('--so') + 1] if '--so' in args else None
     sat = float(args[args.index('--sat') + 1]) if '--sat' in args else 12.0
 
@@ -131,14 +135,14 @@ def main():
     if not cores:
         sys.exit('ERRO: referencia "%s" nao existe na carta.' % so)
 
-    print('%s  %dx%d  ->  %d cor(es)' % (foto, im.width, im.height, len(cores)))
+    print('%s  esquema "%s"  %dx%d  ->  %d cor(es)' % (foto, esquema, im.width, im.height, len(cores)))
     for c in cores:
         out = recolore(im, c['hex'], sat_min=sat)
         for suf, larg in [('', 1200), ('-card', 600)]:
             r = out.resize((larg, round(out.height * larg / out.width)), Image.LANCZOS)
-            nome = '%s__%s%s.webp' % (chave, c['ref'], suf)
+            nome = '%s__%s__%s%s.webp' % (chave, esquema, c['ref'], suf)
             r.save(os.path.join(SAIDA, nome), 'WEBP', quality=84, method=6)
-        kb = os.path.getsize(os.path.join(SAIDA, '%s__%s.webp' % (chave, c['ref']))) / 1024
+        kb = os.path.getsize(os.path.join(SAIDA, '%s__%s__%s.webp' % (chave, esquema, c['ref']))) / 1024
         print('  %-22s %-8s %5.1f KB' % (c['nome'], c['hex'], kb))
 
 

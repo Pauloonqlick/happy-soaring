@@ -1948,17 +1948,14 @@ function buildFlow(item) {
           b.setAttribute('aria-label', rot);
           b.setAttribute('aria-pressed', corStd === cor ? 'true' : 'false');
           b.addEventListener('click', () => {
-            corStd = cor; corCustom = null;
-            img.src = fotoSrc(p.nome, cor, false);
-            nomeCor.textContent = rot;
+            corStd = cor;
+            /* mantem a cor custom, mas passa a aplica-la sobre este esquema */
+            img.src = corCustom ? fotoCustom(corCustom) : fotoSrc(p.nome, cor, false);
+            nomeCor.textContent = corCustom ? corCustom.nome : rot;
             f.querySelectorAll('.flow-sw').forEach(o => {
               o.classList.remove('on'); o.setAttribute('aria-pressed', 'false');
             });
             b.classList.add('on'); b.setAttribute('aria-pressed', 'true');
-            const fl = esq.querySelector('.desc-custom-fila');
-            if (fl) fl.querySelectorAll('.flow-custom-sw').forEach(o => {
-              o.classList.remove('on'); o.setAttribute('aria-checked', 'false');
-            });
           });
           f.appendChild(b);
         });
@@ -1982,10 +1979,14 @@ function buildFlow(item) {
       esq.appendChild(acoes);
 
       /* cor à medida, por baixo dos botões */
-      const fotoBase = () => (p.cores || []).length ? fotoSrc(p.nome, corStd || p.cores[0], false) : '';
-      img.src = corCustom
-        ? 'images/asas-cores/' + chaveFoto(p.nome) + '__' + corCustom.ref + '.webp'
-        : fotoBase();
+      const esquema = () => corStd || (p.cores || [])[0] || 'base';
+      /* cada esquema standard tem o seu conjunto de custom: a cor custom troca
+         so a BASE, e as riscas de cada esquema mantem-se. Sem isto, escolher a
+         sunrise e depois uma cor devolvia a asa maui recolorida — perdia-se-lhe
+         o laranja e o amarelo. */
+      const fotoCustom = c => 'images/asas-cores/' + chaveFoto(p.nome) + '__' + esquema() + '__' + c.ref + '.webp';
+      const fotoBase = () => (p.cores || []).length ? fotoSrc(p.nome, esquema(), false) : '';
+      img.src = corCustom ? fotoCustom(corCustom) : fotoBase();
 
       if (p.coresCustom && TECIDOS.length) {
         const cores = Array.isArray(p.coresCustom)
@@ -2005,12 +2006,9 @@ function buildFlow(item) {
           b.setAttribute('aria-checked', corCustom && corCustom.ref === c.ref ? 'true' : 'false');
           b.setAttribute('aria-label', c.nome);
           b.addEventListener('click', () => {
-            corCustom = c; corStd = null;
-            img.src = 'images/asas-cores/' + chaveFoto(p.nome) + '__' + c.ref + '.webp';
+            corCustom = c;
+            img.src = fotoCustom(c);
             nomeCor.textContent = c.nome;
-            esq.querySelectorAll('.flow-sw').forEach(o => {
-              o.classList.remove('on'); o.setAttribute('aria-pressed', 'false');
-            });
             fila.querySelectorAll('.flow-custom-sw').forEach(o => {
               o.classList.remove('on'); o.setAttribute('aria-checked', 'false');
             });
