@@ -106,20 +106,40 @@ def recolore(im, alvo_hex, sat_min=12.0, folga=26.0):
     #       brilhos: saturam todos a 255 e a asa fica chapada, sem volume. O
     #       mesmo ao contrario no Black 102, que engolia os grafismos pretos.
     #       Por isso o alvo entra numa banda de trabalho.
-    vt_ef = float(np.clip(vt, 46.0, 216.0))
-
-    #    b) Mesmo dentro da banda, ninguem pode saturar: se o percentil 99 da
-    #       zona passasse dos 250, encolhe-se a escala ate nao passar.
+    #       O tecto depende da SATURACAO da cor de destino, e nao e detalhe:
+    #       um tecto fixo de 216 salvava o White 001 e estragava o Sunflower
+    #       Yellow 921, que precisa de 253 e saia mostarda. A diferenca entre os
+    #       dois e que numa cor saturada o MATIZ ainda distingue as zonas quando
+    #       o brilho sobe; num branco nao ha matiz nenhum, e sem margem de
+    #       brilho a asa fica chapada.
+    teto = 216.0 + 38.0 * (st / 255.0)      # branco 216 · amarelo 254
+    vt_ef = float(np.clip(vt, 46.0, teto))
     escala = vt_ef / max(v_base, 1.0)
-    v99 = float(np.percentile(V[forte], 99)) if forte.sum() else 255.0
-    if v99 * escala > 250.0:
-        escala = 250.0 / max(v99, 1.0)
 
     novo = hsv.copy()
     novo[:, :, 0] = ht
-    # variacao relativa preservada em ambos os canais
-    novo[:, :, 1] = np.clip(S * (st / max(s_base, 1.0)), 0, 255)
-    novo[:, :, 2] = np.clip(V * escala, 0, 255)
+
+    # 4) SATURACAO — comprimida, nao copiada.
+    #    Guardar a variacao relativa da saturacao parecia certo e nao era: os
+    #    pixeis da fronteira entre a base e uma risca sao mistura das duas, por
+    #    isso tem menos saturacao (134 contra 210 no miolo). No original isso
+    #    nao se via, porque os dois lados tinham matizes diferentes. Depois de
+    #    recolorir passam a ter o MESMO matiz, e a unica coisa que sobra a
+    #    distingui-los e essa falta de saturacao — que se le como uma linha
+    #    palida a contornar cada risca.
+    #    Na foto de um tecido a saturacao quase nao carrega informacao: quem
+    #    carrega a forma e o volume e o BRILHO. Por isso comprime-se a variacao
+    #    da saturacao para um quarto e deixa-se o brilho intacto.
+    rel = np.clip(S / max(s_base, 1.0), 0.0, 1.6)
+    novo[:, :, 1] = np.clip(st * (0.75 + 0.25 * rel), 0, 255)
+    #    c) JOELHO nos brilhos, em vez de corte seco. Multiplicar e cortar aos
+    #       255 achatava tudo o que passasse; assim os brilhos comprimem-se para
+    #       o topo mas mantem a ordem, e nao se perde o volume.
+    v = V * escala
+    joelho = 210.0
+    acima = v > joelho
+    v[acima] = joelho + (255.0 - joelho) * (1.0 - np.exp(-(v[acima] - joelho) / (255.0 - joelho)))
+    novo[:, :, 2] = np.clip(v, 0, 255)
 
     rec = np.array(Image.fromarray(novo.astype(np.uint8), 'HSV').convert('RGB')).astype(np.float32)
 
