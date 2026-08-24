@@ -106,6 +106,19 @@ const UI = {
   flowTamanhos:   { pt:'Tamanhos', en:'Sizes', es:'Tallas', fr:'Tailles', de:'Größen' },
   flowVerDetalhes:{ pt:'Detalhes', en:'Details', es:'Detalles', fr:'Détails', de:'Details' },
   flowFechar:     { pt:'Fechar', en:'Close', es:'Cerrar', fr:'Fermer', de:'Schließen' },
+  /* cor à medida */
+  corMedida:      { pt:'Escolhe a tua cor', en:'Choose your colour', es:'Elige tu color',
+                    fr:'Choisis ta couleur', de:'Wähl deine Farbe' },
+  corIndicativa:  { pt:'As cores no ecrã são indicativas. O tecido pode ser diferente do que vês — confirma connosco antes de encomendares.',
+                    en:'On-screen colours are indicative. The fabric may differ from what you see — check with us before ordering.',
+                    es:'Los colores en pantalla son indicativos. El tejido puede diferir de lo que ves — confírmalo con nosotros antes de pedir.',
+                    fr:'Les couleurs à l’écran sont indicatives. Le tissu peut différer de ce que tu vois — confirme avec nous avant de commander.',
+                    de:'Die Farben am Bildschirm sind Richtwerte. Der Stoff kann abweichen — kläre das vor der Bestellung mit uns ab.' },
+  flowMsgPrecoCor:{ pt:'Olá! Queria pedir preço para a {n}, tamanho {t}, na cor {c}. Estou em {p}.',
+                    en:'Hi! I would like a price for the {n}, size {t}, in {c}. I am in {p}.',
+                    es:'¡Hola! Quería pedir precio para la {n}, talla {t}, en color {c}. Estoy en {p}.',
+                    fr:'Bonjour ! Je voudrais le prix de la {n}, taille {t}, en {c}. Je suis en {p}.',
+                    de:'Hallo! Ich hätte gern den Preis der {n}, Größe {t}, in {c}. Ich bin in {p}.' },
   /* prazo dos avisos — escrito a partir da data de fim, nunca à mão */
   avisoAte:       { pt:'Até {d}', en:'Until {d}', es:'Hasta el {d}', fr:'Jusqu’au {d}', de:'Bis {d}' },
   avisoFaltam:    { pt:'Faltam {n} dias', en:'{n} days left', es:'Quedan {n} días',
@@ -1006,6 +1019,72 @@ function buildFlow(item) {
     return bloco;
   }
 
+  /* ---- configurador de cor ----
+     As imagens são geradas antes (scripts/recolorir-asa.py), uma por cor: as
+     cores são 18, não infinitas, por isso não há nada a calcular no browser.
+     Trocar de cor é trocar o src — instantâneo em qualquer telemóvel.
+
+     A cor escolhida fica guardada no produto e viaja na mensagem de WhatsApp:
+     um configurador que não chega ao pedido é um brinquedo. */
+  function blocoCorCustom(p, faixaTitulo) {
+    const refs = Array.isArray(p.coresCustom) && p.coresCustom.length
+      ? TECIDOS.filter(c => p.coresCustom.indexOf(c.ref) >= 0)
+      : TECIDOS;
+    if (!refs.length) return null;
+
+    const bloco = el('div', 'flow-det-custom');
+    bloco.appendChild(faixaTitulo(ui('corMedida')));
+    const corpo = el('div', 'flow-bloco-corpo');
+
+    const palco = el('div', 'flow-custom-palco');
+    const im = el('img', 'flow-custom-img');
+    im.alt = p.nome;
+    im.loading = 'lazy';
+    palco.appendChild(im);
+    corpo.appendChild(palco);
+
+    const nome = el('div', 'flow-custom-nome');
+    corpo.appendChild(nome);
+
+    const fila = el('div', 'flow-custom-fila');
+    fila.setAttribute('role', 'radiogroup');
+    fila.setAttribute('aria-label', ui('corMedida'));
+
+    const escolhe = (c, botao) => {
+      im.src = 'images/asas-cores/' + chaveFoto(p.nome) + '__' + c.ref + '.webp';
+      nome.textContent = c.nome;
+      p.corEscolhida = c.nome;
+      fila.querySelectorAll('.flow-custom-sw').forEach(b => {
+        b.classList.remove('on');
+        b.setAttribute('aria-checked', 'false');
+      });
+      botao.classList.add('on');
+      botao.setAttribute('aria-checked', 'true');
+    };
+
+    refs.forEach((c, i) => {
+      const b = el('button', 'flow-custom-sw');
+      b.type = 'button';
+      b.style.background = c.hex;
+      b.title = c.nome;
+      b.setAttribute('role', 'radio');
+      b.setAttribute('aria-label', c.nome);
+      b.addEventListener('click', () => escolhe(c, b));
+      fila.appendChild(b);
+      if (i === 0) escolhe(c, b);
+    });
+    corpo.appendChild(fila);
+
+    /* o aviso não é decorativo: a cor à medida custa dinheiro e o tecido real
+       nunca é exactamente o que se vê num ecrã */
+    const nota = el('p', 'flow-custom-nota');
+    nota.textContent = ui('corIndicativa');
+    corpo.appendChild(nota);
+
+    bloco.appendChild(corpo);
+    return bloco;
+  }
+
   /* ---- escolha do tamanho antes de pedir preço ----
      Sem isto chegava-te uma mensagem sem tamanho e tinhas de perguntar sempre.
      O envio é um <a>, não um window.open: os bloqueadores de popups deixam
@@ -1041,7 +1120,9 @@ function buildFlow(item) {
       enviar.classList.toggle('desativado', !valido);
       enviar.setAttribute('aria-disabled', valido ? 'false' : 'true');
       if (!valido) { enviar.removeAttribute('href'); return; }
-      enviar.href = waLink(num, escolhido
+      enviar.href = waLink(num, escolhido && p.corEscolhida
+        ? ui('flowMsgPrecoCor', { n: p.nome, t: escolhido, c: p.corEscolhida, p: pais })
+        : escolhido
         ? ui('flowMsgPrecoTam', { n: p.nome, t: escolhido, p: pais })
         : ui('flowMsgPreco', { n: p.nome, p: pais }));
     };
@@ -1238,6 +1319,10 @@ function buildFlow(item) {
 
     /* cores: montadas a partir das cores da asa, sem precisar de secção à mão */
     if (p.cores && p.cores.length) d.appendChild(blocoCores(p, faixaTitulo));
+    if (p.coresCustom) {
+      const cc = blocoCorCustom(p, faixaTitulo);
+      if (cc) d.appendChild(cc);
+    }
 
     /* vídeo a toda a largura do painel, por baixo das duas colunas:
        numa coluna ficava com metade do tamanho */
@@ -1632,6 +1717,7 @@ function paragrafos(txt) {
    Nomes de bandas, discos, músicas e locais são texto simples de propósito:
    não se traduzem, e t() devolve as strings tal e qual. */
 let bioSeq = 0;
+let TECIDOS = [];   /* carta de cores da Flow, carregada com o conteúdo */
 
 function buildBio(item) {
   const caixa = el('div', 'bio-caixa' + visibilityClass(item));
@@ -2185,6 +2271,7 @@ function render(data) {
 
   /* avisos: o número do WhatsApp é o que já está no conteúdo, para não haver
      dois sítios a dizer o mesmo número e um deles ficar desactualizado */
+  TECIDOS = data.tecidos || [];
   const numWa = (data.sections || []).reduce((n, s) =>
     n || ((s.elements || []).find(e => e.whatsapp) || {}).whatsapp, null);
   iniciaAvisos(data.listaAvisos, numWa);
@@ -2411,13 +2498,18 @@ async function loadSite() {
   const slides = await Promise.all(ids.map(id =>
     fetch('content/slides/' + id + '.json').then(r => (r.ok ? r.json() : null)).catch(() => null)
   ));
+  /* carta de tecidos da Flow — usada pelo configurador de cor */
+  const tecidos = await fetch('content/cores/flow-tecidos.json')
+    .then(r => (r.ok ? r.json() : null)).catch(() => null);
+
   const avisosIds = Array.isArray(settings.avisos) ? settings.avisos : [];
   const avisos = await Promise.all(avisosIds.map(id =>
     fetch('content/avisos/' + id + '.json').then(r => (r.ok ? r.json() : null)).catch(() => null)
   ));
   return Object.assign({}, settings, {
     sections: slides.filter(Boolean),
-    listaAvisos: avisos.filter(Boolean)
+    listaAvisos: avisos.filter(Boolean),
+    tecidos: (tecidos && tecidos.cores) || []
   });
 }
 

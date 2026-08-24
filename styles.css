@@ -1166,3 +1166,31 @@ body.tem-faixa .lang-switcher{top:calc(24px + var(--faixa-h,56px))}
   /* o que fica sempre é o texto e o prazo; as ofertas são as primeiras a sair */
   .av-ofertas{display:none}
 }
+
+/* ---- configurador de cor à medida ----
+   As imagens são geradas antes, uma por cor; trocar de cor é trocar o src.
+   O palco é grande de propósito: só vale a pena mudar a cor de uma asa que se
+   veja bem. */
+.flow-det-custom .flow-custom-palco{
+  background:rgba(255,255,255,.06);border:1px solid rgba(0,0,0,.06);
+  border-radius:14px;padding:18px;display:flex;align-items:center;justify-content:center;
+  min-height:230px;
+}
+.flow-custom-img{max-width:100%;max-height:300px;width:auto;height:auto;object-fit:contain;
+  transition:opacity .2s}
+.flow-custom-nome{margin-top:14px;font-size:15px;font-weight:800;color:#12161c;letter-spacing:-.2px}
+.flow-custom-fila{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.flow-custom-sw{
+  width:32px;height:32px;border-radius:50%;border:2px solid #fff;padding:0;cursor:pointer;
+  box-shadow:0 0 0 1px rgba(0,0,0,.22);transition:box-shadow .18s,transform .18s;
+}
+.flow-custom-sw:hover{transform:scale(1.08)}
+.flow-custom-sw.on{box-shadow:0 0 0 2px #fff,0 0 0 5px var(--orange)}
+.flow-custom-sw:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+.flow-custom-nota{margin-top:14px;font-size:12px;line-height:1.55;color:#6d7784;max-width:62ch}
+
+@media(max-width:600px){
+  .flow-det-custom .flow-custom-palco{min-height:170px;padding:12px}
+  .flow-custom-img{max-height:200px}
+  .flow-custom-sw{width:30px;height:30px}
+}

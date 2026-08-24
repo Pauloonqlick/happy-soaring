@@ -357,7 +357,8 @@
        }
       }
      ],
-     "logo": "mullet2"
+     "logo": "mullet2",
+     "coresCustom": true
     },
     {
      "visible": true,

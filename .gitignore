@@ -44,3 +44,6 @@ catalogo-flow/
 # cache do Python
 __pycache__/
 *.pyc
+
+# ficheiro de trabalho do canvas de design — nao faz parte do site
+_design.html

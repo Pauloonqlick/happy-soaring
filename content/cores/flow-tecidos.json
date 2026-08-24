@@ -1,0 +1,96 @@
+{
+ "_nota": "Amostrado da carta de cores da Flow que o Paulo enviou. As cores no ecra sao indicativas: o tecido real pode diferir.",
+ "origem": "carta Flow, 2026",
+ "cores": [
+  {
+   "ref": "001",
+   "nome": "White 001",
+   "hex": "#fefefe"
+  },
+  {
+   "ref": "317",
+   "nome": "Royal Blue 317",
+   "hex": "#0049c5"
+  },
+  {
+   "ref": "316",
+   "nome": "Diva Blue 316",
+   "hex": "#0179ce"
+  },
+  {
+   "ref": "354",
+   "nome": "Deep Blue 354",
+   "hex": "#0136a8"
+  },
+  {
+   "ref": "322",
+   "nome": "Petrol Blue 322",
+   "hex": "#015276"
+  },
+  {
+   "ref": "240",
+   "nome": "Purple 240",
+   "hex": "#872f6f"
+  },
+  {
+   "ref": "500",
+   "nome": "Lime Green 500",
+   "hex": "#b2d317"
+  },
+  {
+   "ref": "530",
+   "nome": "Lime Green 530",
+   "hex": "#92a901"
+  },
+  {
+   "ref": "551",
+   "nome": "Green 551",
+   "hex": "#02853e"
+  },
+  {
+   "ref": "549",
+   "nome": "Spectra Green 549",
+   "hex": "#038e6b"
+  },
+  {
+   "ref": "921",
+   "nome": "Sunflower Yellow 921",
+   "hex": "#fdc302"
+  },
+  {
+   "ref": "939",
+   "nome": "Gold 939",
+   "hex": "#f8af02"
+  },
+  {
+   "ref": "744",
+   "nome": "Orange 744",
+   "hex": "#f95a01"
+  },
+  {
+   "ref": "657",
+   "nome": "Sangria 657",
+   "hex": "#9c012d"
+  },
+  {
+   "ref": "604",
+   "nome": "Dark Red 604",
+   "hex": "#76041b"
+  },
+  {
+   "ref": "636",
+   "nome": "Dragon Red 636",
+   "hex": "#c2051a"
+  },
+  {
+   "ref": "121",
+   "nome": "Dark Grey 121",
+   "hex": "#4d4e4f"
+  },
+  {
+   "ref": "102",
+   "nome": "Black 102",
+   "hex": "#1c1c1b"
+  }
+ ]
+}
