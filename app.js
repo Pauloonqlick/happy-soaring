@@ -1103,6 +1103,9 @@ function buildFlow(item) {
 
      A cor escolhida fica guardada no produto e viaja na mensagem de WhatsApp:
      um configurador que não chega ao pedido é um brinquedo. */
+  const fotoCustomDe = (p, esquema, c) =>
+    'images/asas-cores/' + chaveFoto(p.nome) + '__' + esquema + '__' + c.ref + '.webp';
+
   function blocoCorCustom(p, faixaTitulo) {
     const refs = Array.isArray(p.coresCustom) && p.coresCustom.length
       ? TECIDOS.filter(c => p.coresCustom.indexOf(c.ref) >= 0)
@@ -1117,18 +1120,46 @@ function buildFlow(item) {
     const im = el('img', 'flow-custom-img');
     im.alt = p.nome;
     im.loading = 'lazy';
+    im.addEventListener('error', () => { im.style.visibility = 'hidden'; });
+    im.addEventListener('load', () => { im.style.visibility = 'visible'; });
     palco.appendChild(im);
     corpo.appendChild(palco);
 
     const nome = el('div', 'flow-custom-nome');
     corpo.appendChild(nome);
 
+    /* cada esquema standard tem o seu conjunto de custom: a cor troca so a BASE
+       e as riscas do esquema mantem-se. Sem escolher, parte-se do primeiro. */
+    let esquema = (p.cores || [])[0] || 'base';
+    let ultima = null;
+
+    if ((p.cores || []).length > 1) {
+      const linha = el('div', 'flow-custom-esq');
+      const lb = el('span', 'flow-lbl'); lb.textContent = ui('flowCores');
+      linha.appendChild(lb);
+      p.cores.forEach((cor, i) => {
+        const b = el('button', 'flow-sw' + (i === 0 ? ' on' : '')); b.type = 'button';
+        b.style.background = corAmostra(cor);
+        const rot = String(cor).replace(/-/g, ' ');
+        b.title = rot; b.setAttribute('aria-label', rot);
+        b.addEventListener('click', () => {
+          esquema = cor;
+          linha.querySelectorAll('.flow-sw').forEach(o => o.classList.remove('on'));
+          b.classList.add('on');
+          if (ultima) im.src = fotoCustomDe(p, esquema, ultima);
+        });
+        linha.appendChild(b);
+      });
+      corpo.appendChild(linha);
+    }
+
     const fila = el('div', 'flow-custom-fila');
     fila.setAttribute('role', 'radiogroup');
     fila.setAttribute('aria-label', ui('corMedida'));
 
     const escolhe = (c, botao) => {
-      im.src = 'images/asas-cores/' + chaveFoto(p.nome) + '__' + c.ref + '.webp';
+      ultima = c;
+      im.src = fotoCustomDe(p, esquema, c);
       nome.textContent = c.nome;
       p.corEscolhida = c.nome;
       fila.querySelectorAll('.flow-custom-sw').forEach(b => {
@@ -1417,8 +1448,16 @@ function buildFlow(item) {
 
     /* cores: montadas a partir das cores da asa, sem precisar de secção à mão */
     if (p.cores && p.cores.length) d.appendChild(blocoCores(p, faixaTitulo));
-    /* o configurador de cor vive no palco da descoberta, nao aqui: no painel
-       ficava a repetir o bloco das cores standard logo acima */
+    /* O configurador de cor aparece num sitio SO — onde a asa se ve grande o
+       suficiente para valer a pena muda-la:
+         modo grelha      -> aqui, no painel, que e o unico sitio que ha
+         modo descoberta  -> no palco, e aqui ficaria a repetir-se
+       Tirei-o daqui quando o levei para o palco, e com a grelha ligada ficou
+       sem casa nenhuma. */
+    if (p.coresCustom && !descoberta) {
+      const cc = blocoCorCustom(p, faixaTitulo);
+      if (cc) d.appendChild(cc);
+    }
 
     /* vídeo a toda a largura do painel, por baixo das duas colunas:
        numa coluna ficava com metade do tamanho */

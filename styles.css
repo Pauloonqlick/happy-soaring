@@ -1348,3 +1348,9 @@ body.tem-faixa .lang-switcher{top:calc(24px + var(--faixa-h,56px))}
 .flow-modal-cor{font-size:13px;font-weight:800;color:#b45309;margin-bottom:4px}
 
 @media(max-width:600px){ .desc-nome-logo img{max-height:44px;max-width:min(230px,100%)} }
+
+/* escolher o esquema standard dentro do configurador do painel */
+.flow-custom-esq{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.flow-custom-esq .flow-lbl{margin-bottom:0;color:#6d7784}
+.flow-custom-esq .flow-sw{width:24px;height:24px;box-shadow:0 0 0 1px rgba(0,0,0,.22)}
+.flow-custom-esq .flow-sw.on{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--orange)}
