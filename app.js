@@ -2035,6 +2035,14 @@ function buildFlow(item) {
       const fotoCustom = c => 'images/asas-cores/' + chaveFoto(p.nome) + '__' + esquema() + '__' + c.ref + '.webp';
       const fotoBase = () => (p.cores || []).length ? fotoSrc(p.nome, esquema(), false) : '';
       img.src = corCustom ? fotoCustom(corCustom) : fotoBase();
+      /* nunca mostrar o icone de imagem partida: se faltar o ficheiro, volta a
+         primeira cor da asa; se essa tambem faltar, esconde-se */
+      img.addEventListener('error', () => {
+        const primeira = (p.cores || [])[0];
+        const recurso = primeira ? fotoSrc(p.nome, primeira, false) : '';
+        if (recurso && img.getAttribute('src') !== recurso) { img.src = recurso; return; }
+        img.style.visibility = 'hidden';
+      });
 
       if (p.coresCustom && TECIDOS.length) {
         const cores = Array.isArray(p.coresCustom)
@@ -2114,7 +2122,13 @@ function buildFlow(item) {
         c.textContent = p === emPalco ? ui('descAVer') : (rotuloClasse(p.classificacao || '') || '');
         tx.appendChild(n); tx.appendChild(c);
         b.appendChild(im); b.appendChild(tx);
-        b.addEventListener('click', () => { emPalco = p; corCustom = null; aberto = null; pinta(); });
+        b.addEventListener('click', () => {
+          /* limpa tudo: os nomes das cores sao proprios de cada asa (a Mullet 2
+             tem maui/sunrise, a AlbatroXX lilac/lime/yellow), e arrastar a
+             escolha da anterior pedia um ficheiro que nao existe */
+          emPalco = p; corStd = null; corCustom = null; tamsSel = []; aberto = null;
+          pinta();
+        });
         fila.appendChild(b);
       });
       cx.appendChild(fila);
