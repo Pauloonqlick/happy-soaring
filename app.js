@@ -2193,6 +2193,11 @@ function buildElement(item) {
 
 function render(data) {
   const root = document.getElementById('app');
+  /* a carta de cores tem de estar pronta ANTES das secções: com o link directo
+     (#produtos/<asa>) o painel de detalhe é construído durante o render, e se
+     isto viesse depois o configurador não aparecia. Ao clicar à mão o render já
+     tinha acabado, por isso o erro só se via pelo link. */
+  TECIDOS = data.tecidos || [];
   posSeq = 0;
   responsiveRules = [];
 
@@ -2271,7 +2276,6 @@ function render(data) {
 
   /* avisos: o número do WhatsApp é o que já está no conteúdo, para não haver
      dois sítios a dizer o mesmo número e um deles ficar desactualizado */
-  TECIDOS = data.tecidos || [];
   const numWa = (data.sections || []).reduce((n, s) =>
     n || ((s.elements || []).find(e => e.whatsapp) || {}).whatsapp, null);
   iniciaAvisos(data.listaAvisos, numWa);
