@@ -1,0 +1,13 @@
+# Redireccionamentos do Cloudflare Pages
+# ======================================
+# A página "site em construção" viveu em /coming-soon/ e continua a ser
+# servida a partir do arquivo da Cloudflare (Always Online), porque a origem
+# passou a devolver 404 e o Always Online substitui respostas falhadas por
+# cópias guardadas. Uma purga da cache não limpa esse arquivo.
+#
+# A saída é tirar-lhe o motivo: se a origem devolver 301 em vez de 404, deixa
+# de haver falha para substituir. E é o sinal certo para o Google — "isto
+# mudou para aqui" transfere o histórico do endereço antigo em vez de o
+# deitar fora, que é o que um 404 faz.
+/coming-soon/    /    301
+/coming-soon     /    301

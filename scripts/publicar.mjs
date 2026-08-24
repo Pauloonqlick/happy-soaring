@@ -41,7 +41,8 @@ const FICHEIROS = [
   'styles.css',
   'pagina.css',      /* folha das páginas das asas */
   'robots.txt',
-  'sitemap.xml'      /* escrito pelo gerador, logo abaixo */
+  'sitemap.xml',     /* escrito pelo gerador, logo abaixo */
+  '_redirects'       /* redireccionamentos do Pages (ver comentários lá dentro) */
 ];
 
 const PASTAS = [
