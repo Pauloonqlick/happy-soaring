@@ -30,7 +30,7 @@ Ex.:
 """
 import sys, os, json, colorsys
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageFilter
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CORES = os.path.join(RAIZ, 'content', 'cores', 'flow-tecidos.json')
@@ -75,6 +75,19 @@ def recolore(im, alvo_hex, sat_min=12.0, folga=26.0):
     d = np.abs(H - h_base)
     d = np.minimum(d, 256 - d)                       # o matiz da a volta
     f_matiz = np.clip((50.0 - d) / 20.0, 0.0, 1.0)   # cheio ate 30, zero aos 50
+
+    #    Onde a base encosta a OUTRA COR saturada (o laranja e o amarelo da
+    #    sunrise), os pixeis de mistura tem um matiz intermedio — 49, entre o
+    #    turquesa 123 e o laranja 15 — que cai fora da janela e ficava por
+    #    trocar: uma auréola turquesa a contornar cada risca, 3% da asa.
+    #    Cresce-se a janela do matiz uns 2px para a engolir. Entrar 2px numa
+    #    risca de 20 nao se ve; a auréola via-se toda.
+    mi = Image.fromarray((f_matiz * 255).astype(np.uint8), 'L')
+    mi = mi.filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.GaussianBlur(0.8))
+    f_matiz = np.asarray(mi).astype(np.float32) / 255.0
+
+    #    A rampa da saturacao NAO cresce: e ela que protege os pretos, brancos e
+    #    cinzentos, e crescida deixaria a tinta entrar-lhes pelas bordas.
     f_sat = np.clip((S - sat_min) / folga, 0.0, 1.0)
     m = f_matiz * f_sat
     m[alfa < 8] = 0.0
