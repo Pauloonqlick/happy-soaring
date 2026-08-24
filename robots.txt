@@ -1,0 +1,14 @@
+# happysoaring.com
+
+User-agent: *
+Allow: /
+
+# Gestao de conteudos: nao ha nada aqui para indexar, e cada visita de um
+# crawler e orcamento de rastreio gasto a nada.
+Disallow: /admin/
+
+# Ferramentas e ficheiros de trabalho
+Disallow: /editor/
+Disallow: /_design.html
+
+Sitemap: https://happysoaring.com/sitemap.xml
