@@ -154,6 +154,9 @@ const UI = {
                    fr:'· la tienne est la {t}', de:'· deiner ist der {t}' },
   descAsTuas:    { pt:'As tuas {n} asas', en:'Your {n} wings', es:'Tus {n} velas',
                    fr:'Tes {n} ailes', de:'Deine {n} Schirme' },
+  /* uma so asa nao e "as tuas 1 asas" */
+  descATua:      { pt:'A tua asa', en:'Your wing', es:'Tu vela',
+                   fr:'Ton aile', de:'Dein Schirm' },
   descRestoFam:  { pt:'O resto da família', en:'The rest of the family', es:'El resto de la familia',
                    fr:'Le reste de la famille', de:'Der Rest der Familie' },
   descAVer:      { pt:'A ver agora', en:'Now showing', es:'Viendo ahora', fr:'En cours', de:'Gerade offen' },
@@ -2138,7 +2141,8 @@ function buildFlow(item) {
       const cx = el('div', 'desc-carril');
       const cab = el('div', 'desc-carril-cab');
       const a = el('div', 'desc-lbl desc-lbl-forte');
-      a.textContent = resp && lista.length ? ui('descAsTuas', { n: lista.length }) : rotuloFamilia(emPalco.familia);
+      a.textContent = !resp || !lista.length ? rotuloFamilia(emPalco.familia)
+        : lista.length === 1 ? ui('descATua') : ui('descAsTuas', { n: lista.length });
       cab.appendChild(a);
       cab.appendChild(el('div', 'desc-carril-risco'));
       if (resp && lista.length) {
