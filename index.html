@@ -92,5 +92,22 @@
      das páginas das asas. O app.js não escreve nenhuma variável global e não
      há handlers inline no HTML, por isso a mudança de âmbito não parte nada. -->
 <script type="module" src="app.js"></script>
+<script>
+/* Rede de segurança para a janela de cache.
+   O index.html é servido sempre fresco (max-age=0), mas o app.js tem 4
+   horas de cache no browser. Durante essa janela, quem já visitou o site
+   recebe o HTML novo — com o bloco estático — e o app.js ANTIGO, que não
+   sabe limpá-lo. Resultado: o bloco fica visível por cima do site.
+
+   Isto resolve-o de fora: no load, se o bloco ainda lá estiver E houver
+   mais alguma coisa montada, é porque o renderizador correu e não o
+   limpou. Se o #app só tiver o bloco, o JavaScript falhou e o bloco é a
+   única coisa que a pessoa tem — nesse caso fica. */
+addEventListener('load', function () {
+  var b = document.querySelector('.hs-estatico');
+  var app = document.getElementById('app');
+  if (b && app && app.children.length > 1) b.remove();
+});
+</script>
 </body>
 </html>

@@ -26,6 +26,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import crypto from 'node:crypto';
 
 const RAIZ = process.cwd();
 const SAIDA = path.join(RAIZ, '_publicar');
@@ -93,6 +94,76 @@ function conta(dir) {
   return { n, bytes };
 }
 
+
+/* ------------------------------------------------------------------ */
+/* Carimbo de versão                                                    */
+/*                                                                      */
+/* O PROBLEMA                                                           */
+/*   O Cloudflare Pages serve o JavaScript e o CSS com max-age=14400 —  */
+/*   quatro horas. Quem já visitou o site continua com a versão antiga  */
+/*   durante esse tempo, mesmo depois de publicarmos. Já mordeu duas    */
+/*   vezes: uma a esconder trabalho que estava no ar, outra a mostrar   */
+/*   o bloco estático por cima do site.                                 */
+/*                                                                      */
+/*   O HTML e o conteúdo do CMS não têm este problema: vêm com          */
+/*   max-age=0. É só o JS e o CSS.                                      */
+/*                                                                      */
+/* A SOLUCAO                                                            */
+/*   Acrescentar ?v=<resumo do ficheiro> a cada referência. O endereço  */
+/*   muda quando o ficheiro muda, e um endereço novo nunca está em      */
+/*   cache. Ficheiros que não mudaram continuam a ser aproveitados.     */
+/*                                                                      */
+/*   Faz-se AQUI e não no código-fonte: assim o repositório fica limpo  */
+/*   de resumos, e o carimbo é sempre o do que está mesmo a ser         */
+/*   publicado.                                                         */
+/* ------------------------------------------------------------------ */
+function carimbar() {
+  const resumo = f => crypto.createHash('md5')
+    .update(fs.readFileSync(path.join(SAIDA, f))).digest('hex').slice(0, 8);
+
+  /* Os módulos partilhados primeiro: o app.js importa-os, por isso o
+     conteúdo dele muda quando as referências forem reescritas — e o
+     resumo dele só pode ser calculado depois disso. */
+  const mods = ['regras/avisos.js', 'regras/taxonomia.js'];
+  const vMods = {};
+  for (const m of mods) if (fs.existsSync(path.join(SAIDA, m))) vMods[m] = resumo(m);
+
+  const fApp = path.join(SAIDA, 'app.js');
+  if (fs.existsSync(fApp)) {
+    let js = fs.readFileSync(fApp, 'utf8');
+    for (const m of Object.keys(vMods)) {
+      const nome = m.replace('regras/', '');
+      js = js.replace(new RegExp("(['\"])\\./regras/" + nome + "\\1", 'g'),
+        "'./regras/" + nome + "?v=" + vMods[m] + "'");
+    }
+    fs.writeFileSync(fApp, js);
+  }
+
+  const v = {};
+  for (const f of ['app.js', 'styles.css', 'pagina.css'])
+    if (fs.existsSync(path.join(SAIDA, f))) v[f] = resumo(f);
+
+  /* reescrever as referências em todo o HTML publicado */
+  let n = 0;
+  (function varre(dir) {
+    for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+      const f = path.join(dir, e.name);
+      if (e.isDirectory()) { varre(f); continue; }
+      if (!/\.html$/i.test(e.name)) continue;
+      let h = fs.readFileSync(f, 'utf8'), antes = h;
+      for (const nome of Object.keys(v)) {
+        /* apanha "app.js" e "/pagina.css", com ou sem barra inicial */
+        h = h.replace(new RegExp('((?:src|href)="/?)' + nome.replace('.', '\\.') + '(")', 'g'),
+          '$1' + nome + '?v=' + v[nome] + '$2');
+      }
+      if (h !== antes) { fs.writeFileSync(f, h); n++; }
+    }
+  })(SAIDA);
+
+  console.log('  carimbado: ' + Object.entries(v).map(([f, x]) => f + '?v=' + x).join(', '));
+  console.log('  ' + n + ' páginas HTML actualizadas');
+}
+
 /* ------------------------------------------------------------------ */
 passo('Gerar as páginas das asas e o sitemap');
 execFileSync(process.execPath, [path.join('scripts', 'gerar-paginas.mjs')],
@@ -115,6 +186,9 @@ for (const d of PASTAS.concat(PASTAS_GERADAS)) {
   }
   copiaPasta(o, path.join(SAIDA, d));
 }
+
+passo('Carimbar a versão no JavaScript e no CSS');
+carimbar();
 
 passo('Verificar que não vai nada privado');
 for (const d of PROIBIDAS) {
