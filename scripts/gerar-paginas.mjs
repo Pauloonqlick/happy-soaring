@@ -58,6 +58,8 @@ const T = {
   /* Estas frases são copiadas à letra do dicionário do app.js. Se as
      reescrevesse por minhas palavras, a mesma pergunta apareceria de duas
      maneiras conforme a pessoa entrasse pelo palco ou pela página. */
+  outras:    { pt:'Outras {f}', en:'Other {f}', es:'Otras {f}',
+               fr:'Autres {f}', de:'Weitere {f}' },
   ate:       { pt:'até', en:'until', es:'hasta', fr:'jusqu’au', de:'bis' },
   pedirTit:  { pt:'Escolhe e pede preço', en:'Choose and ask for a price',
                es:'Elige y pide precio', fr:'Choisis et demande le prix',
@@ -169,6 +171,96 @@ function jsonld(p, l, url, foto) {
       offers: undefined }
   ];
   return JSON.stringify({ '@context': 'https://schema.org', '@graph': g }, (k, v) => v === undefined ? undefined : v);
+}
+
+/* ---- outras asas da mesma família -------------------------------------
+   As 110 páginas eram becos sem saída: só ligavam de volta à raiz, e mais
+   nada. Quem lá chegasse — pessoa ou crawler — via uma asa e acabava.
+
+   Sem ligações internas o Google não tem sinal nenhum sobre o que é
+   importante, e um crawler que não execute JavaScript vê uma ilha. Estas
+   ligações custam nada e ligam o que já existe. */
+function blocoIrmas(p, l) {
+  const irmas = produtos.filter(x => x.familia === p.familia && x !== p);
+  if (!irmas.length) return '';
+  const fam = rotuloFamilia(p.familia, l);
+  return `<section class="pg-sec pg-irmas">
+  <h2>${esc(t(T.outras, l).replace('{f}', fam.toLowerCase()))}</h2>
+  <ul class="pg-irmas-l">${irmas.map(x => {
+    const cls = rotuloClasse(x.classificacao, l);
+    /* a classe vai DENTRO da ligação: assim a caixa toda é clicável, em vez
+       de só o nome, e o rótulo não fica órfão por baixo */
+    return `<li><a href="${esc(caminho(l, x))}">${esc(x.nome)}${
+      cls ? `<span>${esc(cls)}</span>` : ''}</a></li>`;
+  }).join('')}</ul>
+</section>`;
+}
+
+/* ---- corpo estático da página inicial ---------------------------------
+   O PROBLEMA
+     O index.html tinha <main id="app"></main> e mais nada. Um crawler
+     recebia zero caracteres de texto. O Google acaba por executar o
+     JavaScript e ver o site montado, mas os crawlers de IA — que são a
+     aposta da Happy Soaring — na maioria não executam nada.
+
+   O QUE ISTO RESOLVE, E O QUE NAO RESOLVE
+     Resolve a ENTREGA: a identidade e o catálogo passam a estar no HTML.
+     Não resolve a FALTA: a página inicial tem meia dúzia de frases, e
+     escrevê-las é trabalho de quem sabe voar, não meu.
+
+   PORQUE E SUBSTITUIDO PELO app.js
+     É hidratação, não é conteúdo escondido: o mesmo material aparece a
+     seguir montado pelo renderizador. Se um dia isto disser uma coisa e o
+     site mostrar outra, passa a ser cloaking — por isso sai tudo do mesmo
+     JSON que o site lê. */
+function corpoInicial() {
+  const l = OMISSAO;
+  const porFamilia = new Map();
+  for (const p of produtos) {
+    if (!porFamilia.has(p.familia)) porFamilia.set(p.familia, []);
+    porFamilia.get(p.familia).push(p);
+  }
+
+  const listas = [...porFamilia.entries()].map(([fam, asas]) =>
+    `    <h3>${esc(rotuloFamilia(fam, l))}</h3>
+    <ul>${asas.map(p => {
+      const cls = rotuloClasse(p.classificacao, l);
+      return `<li><a href="${esc(caminho(l, p))}">${esc(p.nome)}</a>${
+        cls ? ' — ' + esc(cls) : ''}</li>`;
+    }).join('')}</ul>`).join('\n');
+
+  return `<div class="hs-estatico">
+    <h1>Happy Soaring — Parakite e Parapente em Portugal</h1>
+    <p>Cursos de parakite em Portugal e revendedor oficial da
+    <strong>Flow Paragliders</strong>. Aconselhamento a sério, primeira
+    inspeção de segurança incluída e cor à tua escolha.</p>
+
+    <h2>Catálogo Flow Paragliders</h2>
+    <p>${produtos.length} asas, arneses e reservas, cada uma com a sua página:</p>
+${listas}
+  </div>`;
+}
+
+/* Escreve o corpo estático dentro do index.html, entre marcas, para poder
+   ser reescrito em cada publicação sem tocar no resto do ficheiro. */
+function escreveInicial() {
+  const f = path.join(RAIZ, 'index.html');
+  const abre = '<!-- INICIO CONTEUDO ESTATICO (gerado) -->';
+  const fecha = '<!-- FIM CONTEUDO ESTATICO -->';
+  let h = fs.readFileSync(f, 'utf8');
+  const bloco = abre + '\n' + corpoInicial() + '\n' + fecha;
+
+  if (h.includes(abre) && h.includes(fecha)) {
+    h = h.slice(0, h.indexOf(abre)) + bloco + h.slice(h.indexOf(fecha) + fecha.length);
+  } else {
+    const alvo = '<main id="app"></main>';
+    if (!h.includes(alvo)) { console.log('  ! index.html sem <main id="app"></main>'); return; }
+    h = h.replace(alvo, '<main id="app">\n' + bloco + '\n</main>');
+  }
+  fs.writeFileSync(f, h);
+  const txt = corpoInicial().replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  console.log('  index.html: ' + txt.length + ' caracteres de texto, ' +
+    produtos.length + ' ligações para as asas');
 }
 
 /* ---- selo de oferta ---------------------------------------------------
@@ -588,6 +680,8 @@ ${alt}
 
   ${secs}
 
+  ${blocoIrmas(p, l)}
+
   <p class="pg-voltar"><a href="${l === OMISSAO ? '/' : '/' + l + '/'}#produtos">${esc(t(T.voltar, l))}</a></p>
 </main>
 
@@ -655,6 +749,8 @@ fs.writeFileSync(path.join(destino, '_urls.txt'), urls.join('\n') + '\n');
    desactualizado: um sitemap escrito à mão passa a mentir na primeira asa
    que se acrescente. Só se escreve numa corrida completa — gerar uma asa
    só, para experimentar, não pode apagar as outras 109 do ficheiro. */
+if (!so && !soIdioma) escreveInicial();
+
 if (!so && !soIdioma) {
   const hoje = new Date().toISOString().slice(0, 10);
   const fixas = [

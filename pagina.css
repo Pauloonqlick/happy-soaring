@@ -277,3 +277,13 @@ a.pg-video:hover .pg-video-play{background:#ff7c31}
 /* o amarelo guarda a tinta escura: branco sobre amarelo não passa contraste */
 .pg-oferta.t-aviso{background:#fff8e1;border-left-color:#f5c518;color:#4a3800}
 .pg-oferta.t-aviso .pg-oferta-et{background:#f5c518;color:#3a2c00}
+
+/* ---- outras asas da família ------------------------------------------
+   As páginas eram becos sem saída: só ligavam de volta à raiz. */
+.pg-irmas-l{list-style:none;margin-left:0;display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px}
+.pg-irmas-l li{margin:0}
+.pg-irmas-l a{display:block;font-weight:800;font-size:15px;text-decoration:none;
+  border:1px solid var(--linha);border-radius:10px;padding:11px 14px;background:#f7fafd}
+.pg-irmas-l a:hover{border-color:var(--orange);background:#fff6f0}
+.pg-irmas-l span{display:block;font-size:12px;font-weight:600;color:var(--tinta-fraca);margin-top:2px}

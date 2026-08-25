@@ -3000,6 +3000,10 @@ function buildElement(item) {
 
 function render(data) {
   const root = document.getElementById('app');
+  /* o corpo estático que o gerador escreveu sai daqui: é o mesmo material,
+     e a partir de agora quem o monta é este renderizador. Sem isto, ficava
+     duplicado por baixo do site. */
+  root.innerHTML = '';
   /* a carta de cores tem de estar pronta ANTES das secções: com o link directo
      (#produtos/<asa>) o painel de detalhe é construído durante o render, e se
      isto viesse depois o configurador não aparecia. Ao clicar à mão o render já
