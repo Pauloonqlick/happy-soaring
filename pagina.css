@@ -74,8 +74,10 @@ body.pg{
    problema que a coluna veio resolver. Esses correm a largura toda.
    Nao ate ao fim do cartao: ai eram ~120 caracteres por linha, e
    acima de 75 o olho perde o regresso a linha seguinte. */
-.pg-papel .pg-sec.sem-titulo{display:block}
-.pg .pg-papel .sem-titulo p,.pg .pg-papel .sem-titulo li{max-width:92ch}
+/* o bloco inteiro centrado no cartao: a 92ch encostado a esquerda
+   sobrava o branco todo de um lado so. Centrado fica margem simetrica. */
+.pg-papel .pg-sec.sem-titulo{display:block;max-width:92ch;margin-left:auto;margin-right:auto}
+.pg .pg-papel .sem-titulo p,.pg .pg-papel .sem-titulo li{max-width:none}
 .pg-papel .pg-sec > *:last-child{margin-bottom:0}
 /* separador entre seccoes, ja que os titulos perderam o sublinhado */
 .pg-papel .pg-sec + .pg-sec{border-top:1px solid var(--painel-linha);padding-top:26px}
