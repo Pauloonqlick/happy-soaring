@@ -54,14 +54,32 @@ body.pg{
   padding:34px 40px 12px;margin:0 0 24px;
 }
 .pg-papel:empty{display:none}
-.pg-papel .pg-sec{margin-bottom:26px;max-width:none}
+/* TITULO A ESQUERDA, TEXTO A DIREITA.
+   Com o texto a 72ch encostado a esquerda sobravam 240px de branco de
+   um lado so; centrado, sobravam 240 de cada lado. Nenhuma das duas usa
+   o cartao — enchem-no de margem.
+   Assim a largura e preenchida com CONTEUDO: os titulos formam uma
+   coluna que se percorre com os olhos, e o texto mantem uma coluna de
+   leitura so. E o que a documentacao tecnica faz, e faz por isto. */
+.pg-papel .pg-sec{
+  display:grid;grid-template-columns:230px minmax(0,1fr);
+  column-gap:48px;max-width:none;margin:0 0 30px;
+}
+.pg-papel .pg-sec > h2{grid-column:1;grid-row:1;margin:0;font-size:19px;
+  letter-spacing:-.3px;border-bottom:0;padding:0;line-height:1.25}
+.pg-papel .pg-sec > *:not(h2){grid-column:2}
+.pg-papel .pg-sec > *:last-child{margin-bottom:0}
+/* separador entre seccoes, ja que os titulos perderam o sublinhado */
+.pg-papel .pg-sec + .pg-sec{border-top:1px solid var(--painel-linha);padding-top:30px}
 .pg-papel .pg-sec:first-child h2{margin-top:0}
-.pg-papel h2{color:var(--painel-tinta);border-bottom-color:var(--painel-linha)}
-.pg-papel h3{color:var(--painel-tinta)}
-.pg-papel p,.pg-papel li{color:var(--painel-tinta);max-width:68ch}
-.pg-papel strong{color:#0b1520}
-.pg-papel a{color:#0b5fb0}
-.pg-papel a:hover{color:var(--orange)}
+.pg .pg-papel h2{color:var(--painel-tinta);border-bottom-color:var(--painel-linha)}
+.pg .pg-papel h3{color:var(--painel-tinta)}
+/* 74ch: dentro da faixa legivel (45-75) e enche a coluna da direita.
+   A 68 sobravam ainda 200px de branco no fim de cada linha. */
+.pg .pg-papel p,.pg .pg-papel li{color:var(--painel-tinta);max-width:74ch}
+.pg .pg-papel strong{color:#0b1520}
+.pg .pg-papel a{color:#0b5fb0}
+.pg .pg-papel a:hover{color:var(--orange)}
 .pg-papel .pg-fich a{font-weight:700}
 
 /* Listas curtas em duas colunas, so no desktop. Em prosa isto seria uma
