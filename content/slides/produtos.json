@@ -23,7 +23,8 @@
   {
    "role": "flow",
    "logoImage": "images/flow-marca.webp",
-   "dealerLabel": {
+   "dealerHref": "/flow-paragliders-portugal/",
+  "dealerLabel": {
     "pt": "Dealer oficial em Portugal",
     "en": "Official dealer in Portugal",
     "es": "Distribuidor oficial en Portugal",

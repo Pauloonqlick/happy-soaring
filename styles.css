@@ -1422,3 +1422,7 @@ body.tem-faixa .lang-switcher{top:calc(24px + var(--faixa-h,56px))}
 .hs-estatico ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px 18px}
 .hs-estatico li{font-size:14.5px;color:rgba(255,255,255,.6)}
 .hs-estatico a{color:#fff;font-weight:700}
+
+/* a etiqueta de revendedor é uma ligação para a página que o explica */
+a.flow-dealer{text-decoration:none;transition:color .15s}
+a.flow-dealer:hover{color:var(--orange)}

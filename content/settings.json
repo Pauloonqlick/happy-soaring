@@ -61,6 +61,16 @@
     },
     {
       "label": {
+        "pt": "Flow Paragliders",
+        "en": "Flow Paragliders",
+        "es": "Flow Paragliders",
+        "fr": "Flow Paragliders",
+        "de": "Flow Paragliders"
+      },
+      "target": "/flow-paragliders-portugal/"
+    },
+    {
+      "label": {
         "pt": "SmartGround",
         "en": "SmartGround",
         "es": "SmartGround",

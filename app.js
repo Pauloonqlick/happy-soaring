@@ -1025,7 +1025,15 @@ function buildFlow(item) {
      leitores de ecrã nem para pesquisa, mesmo com o título desligado. */
   if (item.logoImage) { const img = el('img', 'flow-logo'); img.src = item.logoImage; img.alt = t(item.title) || 'Flow Paragliders'; head.appendChild(img); }
   const dl = t(item.dealerLabel);
-  if (dl) { const d = el('div', 'flow-dealer'); d.textContent = dl; head.appendChild(d); }
+  if (dl) {
+    /* a etiqueta de revendedor leva à página que o explica: são as palavras
+       certas no sítio certo, e evita mais uma entrada no menu */
+    const alvo = item.dealerHref;
+    const d = el(alvo ? 'a' : 'div', 'flow-dealer');
+    if (alvo) d.href = alvo;
+    d.textContent = dl;
+    head.appendChild(d);
+  }
   const titulo = t(item.title);
   if (titulo && item.titleVisible !== false) { const h = el('h2', 'flow-title'); h.textContent = titulo; head.appendChild(h); }
   const desc = t(item.description);
