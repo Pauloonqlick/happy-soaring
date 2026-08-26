@@ -1042,6 +1042,7 @@ ${alt}
 
   ${blocoPedido(p, l, num)}
 
+  <div class="pg-papel">
   ${t(p.descricao, l) ? '<section class="pg-sec">' + corpo(t(p.descricao, l)) + '</section>' : ''}
 
   ${t(p.paraQuem, l) ? `<section class="pg-sec"><h2>${esc(t(T.paraQuem, l))}</h2>${corpo(t(p.paraQuem, l))}</section>` : ''}
@@ -1052,6 +1053,7 @@ ${alt}
   ${blocoIncluido(p, l)}
 
   ${blocoAviso(p, l)}
+  </div>
 
   ${blocoVideo(p, l)}
 
@@ -1060,9 +1062,11 @@ ${alt}
   ${(p.specs || []).length ? `<section class="pg-sec pg-largo"><h2>${esc(t(T.specs, l))}</h2>
     ${tabelaSpecs(p, l)}</section>` : ''}
 
+  <div class="pg-papel">
   ${t(p.descricaoLonga, l) ? '<section class="pg-sec">' + corpo(t(p.descricaoLonga, l)) + '</section>' : ''}
 
   ${secs}
+  </div>
 
   ${blocoDealer(p, l)}
 

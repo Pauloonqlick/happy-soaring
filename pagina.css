@@ -36,7 +36,41 @@ body.pg{
    do fabricante fica com medida de leitura e centrada, senão era uma
    coluna estreita encostada à esquerda num ecrã vazio.
    Largura de página não é largura de linha. */
-.pg-sec{max-width:860px;margin-left:auto;margin-right:auto}
+/* REGRA DA SUPERFICIE
+   O que se LE e papel; o que se USA e azul. A tabela e o texto do
+   fabricante ganham painel claro; o selector, os cartoes e as faixas ficam
+   sobre o azul.
+
+   E o papel vem em DUAS ilhas, nao numa por seccao: o texto do fabricante
+   e um documento continuo, e parti-lo em catorze cartoes lia-se como
+   catorze coisas diferentes.
+
+   O painel ocupa a largura toda e a prosa fica com medida de leitura la
+   dentro. Assim o lado direito deixa de ser vazio e passa a ser margem —
+   que era o problema, e nao a falta de colunas. */
+.pg-papel{
+  background:var(--painel);color:var(--painel-tinta);
+  border:1px solid var(--painel-linha);border-radius:16px;
+  padding:34px 40px 12px;margin:0 0 24px;
+}
+.pg-papel:empty{display:none}
+.pg-papel .pg-sec{margin-bottom:26px;max-width:none}
+.pg-papel .pg-sec:first-child h2{margin-top:0}
+.pg-papel h2{color:var(--painel-tinta);border-bottom-color:var(--painel-linha)}
+.pg-papel h3{color:var(--painel-tinta)}
+.pg-papel p,.pg-papel li{color:var(--painel-tinta);max-width:68ch}
+.pg-papel strong{color:#0b1520}
+.pg-papel a{color:#0b5fb0}
+.pg-papel a:hover{color:var(--orange)}
+.pg-papel .pg-fich a{font-weight:700}
+
+/* Listas curtas em duas colunas, so no desktop. Em prosa isto seria uma
+   armadilha — encher a coluna 1 obriga a descer e voltar a subir para
+   comecar a 2 — mas os pontos fortes sao itens de uma linha. */
+@media(min-width:900px){
+  .pg-papel ul{columns:2;column-gap:44px}
+  .pg-papel li{break-inside:avoid;max-width:none}
+}
 .pg-sec.pg-largo,.pg-pedir,.pg-irmas,.pg-metodo{max-width:none}
 .pg-cab,.pg-oferta,.pg-aviso,.pg-dealer-nota,.pg-voltar{max-width:none}
 
