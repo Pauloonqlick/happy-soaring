@@ -4,7 +4,12 @@
    tipografia) mas com medida de leitura e hierarquia de títulos a sério. */
 :root{
   --azul:#0e3b6d; --azul-esc:#0a2c53; --orange:#ff6a13;
-  --tinta:#16202c; --tinta-fraca:#5b6878; --linha:#dfe6ef; --papel:#fff;
+  /* A superficie e azul, como o catalogo e o SmartGround. As fotos das asas
+     sao recortes: foram feitas para fundo escuro e e ai que assentam.
+     O que precisa de contraste de leitura ganha painel claro proprio. */
+  --papel:#071d3a; --tinta:#fff; --tinta-fraca:rgba(255,255,255,.68);
+  --linha:rgba(255,255,255,.16);
+  --painel:#fff; --painel-tinta:#16202c; --painel-fraca:#5b6878; --painel-linha:#dfe6ef;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -16,8 +21,8 @@ body.pg{
 
 .pg-topo{
   display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
-  background:linear-gradient(160deg,var(--azul),var(--azul-esc));color:#fff;
-  padding:16px 28px;
+  background:rgba(0,0,0,.22);color:#fff;
+  border-bottom:1px solid rgba(255,255,255,.09);padding:16px 28px;
 }
 .pg-marca{font-size:19px;font-weight:900;letter-spacing:-.6px;color:#fff;text-decoration:none}
 .pg-marca span{color:var(--orange)}
@@ -53,9 +58,12 @@ body.pg{
 .pg-foto{flex:1 1 440px;min-width:0;max-width:100%;max-height:420px;
   height:auto;object-fit:contain}
 
-.pg-wa{display:inline-block;margin-top:20px;background:#25d366;color:#08351a;
+/* .pg a.pg-wa e nao .pg-wa: com a superficie escura, ".pg a{color:laranja}"
+   ganha o desempate por vir depois no ficheiro, e punha texto laranja
+   sobre verde. Duas classes resolvem sem depender da ordem. */
+.pg a.pg-wa{display:inline-block;margin-top:20px;background:#25d366;color:#08351a;
   font-weight:800;font-size:14.5px;padding:13px 24px;border-radius:100px;text-decoration:none}
-.pg-wa:hover{background:#1fbe5b}
+.pg a.pg-wa:hover{background:#1fbe5b;color:#08351a}
 
 .pg-sec{margin:0 0 30px}
 .pg h2{font-size:21px;font-weight:800;letter-spacing:-.4px;margin:34px 0 12px;
@@ -64,28 +72,31 @@ body.pg{
 .pg p{margin-bottom:14px;max-width:68ch}
 .pg ul{margin:0 0 14px 20px}
 .pg li{margin-bottom:6px}
-.pg a{color:#0b5fb0}
-.pg a:hover{color:var(--orange)}
-.pg strong{color:#0b1520}
+.pg a{color:var(--orange)}
+.pg a:hover{color:#ff8a45}
+.pg strong{color:#fff}
 
 .pg-tams{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
 .pg-tams span{border:1px solid var(--linha);border-radius:8px;padding:5px 13px;
-  font-size:13.5px;font-weight:700;background:#f7fafd}
+  font-size:13.5px;font-weight:700;background:rgba(255,255,255,.06)}
 
-/* a tabela rola dentro da sua caixa: numa asa com nove colunas, o telemóvel
-   não tem largura e a página inteira não pode passar a rolar de lado */
-.pg-tabela{overflow-x:auto;margin-bottom:8px;border:1px solid var(--linha);border-radius:12px}
+/* A TABELA E A ILHA CLARA DA PAGINA.
+   Tudo o resto e azul, mas isto le-se a serio — nove colunas de numeros
+   comparam-se melhor sobre papel. E rola dentro da sua caixa: num telemovel
+   nao ha largura, e a pagina inteira nao pode passar a rolar de lado. */
+.pg-tabela{overflow-x:auto;margin-bottom:8px;background:var(--painel);
+  border:1px solid var(--painel-linha);border-radius:12px;color:var(--painel-tinta)}
 .pg-tabela table{border-collapse:collapse;width:100%;min-width:520px;font-size:13.5px}
-.pg-tabela caption{text-align:left;padding:12px 14px;font-size:12px;font-weight:700;
-  letter-spacing:1.1px;text-transform:uppercase;color:var(--tinta-fraca)}
-.pg-tabela th,.pg-tabela td{padding:9px 14px;text-align:left;border-top:1px solid var(--linha)}
+.pg-tabela caption{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.pg-tabela th,.pg-tabela td{padding:9px 14px;text-align:left;
+  border-top:1px solid var(--painel-linha);color:var(--painel-tinta)}
 .pg-tabela thead th{background:#f4f8fc;font-size:11.5px;letter-spacing:.7px;
-  text-transform:uppercase;color:var(--tinta-fraca);border-top:none}
+  text-transform:uppercase;color:var(--painel-fraca);border-top:none}
 .pg-tabela tbody th{font-weight:800}
 
 .pg-cores{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
 .pg-cores figure{margin:0}
-.pg-cores img{width:100%;height:auto;background:#f4f8fc;border:1px solid var(--linha);
+.pg-cores img{width:100%;height:auto;background:rgba(255,255,255,.05);border:1px solid var(--linha);
   border-radius:12px;display:block}
 .pg-cores figcaption{font-size:12.5px;color:var(--tinta-fraca);margin-top:6px;text-transform:capitalize}
 
@@ -147,7 +158,7 @@ a.pg-video:hover .pg-video-play{background:#ff7c31}
 }
 .pg-vento-barra{padding:5px 10px 5px 0;width:100%}
 .pg-vento-trilho{
-  display:block;position:relative;height:14px;border-radius:7px;background:#eef3f9;
+  display:block;position:relative;height:14px;border-radius:7px;background:rgba(255,255,255,.1);
 }
 .pg-vento-b{
   position:absolute;top:0;bottom:0;border-radius:7px;
@@ -189,7 +200,7 @@ a.pg-video:hover .pg-video-play{background:#ff7c31}
    A secção que faz da página uma montra e não só um folheto. Fica logo a
    seguir à foto porque é ela que comanda a foto. */
 .pg-pedir{
-  background:#f7fafd;border:1px solid var(--linha);border-radius:16px;
+  background:rgba(255,255,255,.05);border:1px solid var(--linha);border-radius:16px;
   padding:22px 22px 24px;margin-bottom:34px;
 }
 .pg-pedir h2{margin-top:0}
@@ -203,15 +214,15 @@ a.pg-video:hover .pg-video-play{background:#ff7c31}
 .pg-esq{display:flex;flex-wrap:wrap;gap:10px}
 .pg-esq-b{
   flex:0 0 auto;width:150px;padding:6px;border-radius:12px;cursor:pointer;
-  background:#fff;border:2px solid var(--linha);font-family:inherit;
+  background:rgba(255,255,255,.06);border:2px solid var(--linha);font-family:inherit;
 }
 .pg-esq-b img{width:100%;height:auto;display:block;border-radius:7px}
 .pg-esq-b span{
   display:block;margin-top:5px;font-size:11.5px;font-weight:700;
   text-transform:capitalize;color:var(--tinta-fraca);
 }
-.pg-esq-b:hover{border-color:#b9c9dc}
-.pg-esq-b.on{border-color:var(--orange);background:#fff6f0}
+.pg-esq-b:hover{border-color:rgba(255,255,255,.42)}
+.pg-esq-b.on{border-color:var(--orange);background:rgba(255,106,19,.16)}
 .pg-esq-b.on span{color:var(--tinta)}
 
 /* cor à medida */
@@ -233,10 +244,10 @@ a.pg-video:hover .pg-video-play{background:#ff7c31}
 .pg-tsel{display:flex;flex-wrap:wrap;gap:8px}
 .pg-tsel-b{
   min-width:52px;padding:9px 14px;border-radius:10px;cursor:pointer;
-  background:#fff;border:2px solid var(--linha);
+  background:rgba(255,255,255,.06);border:2px solid var(--linha);
   font-family:inherit;font-size:14px;font-weight:800;color:var(--tinta);
 }
-.pg-tsel-b:hover{border-color:#b9c9dc}
+.pg-tsel-b:hover{border-color:rgba(255,255,255,.42)}
 .pg-tsel-b.on{background:var(--orange);border-color:var(--orange);color:#fff}
 
 /* país */
@@ -247,7 +258,7 @@ a.pg-video:hover .pg-video-play{background:#ff7c31}
 }
 .pg-pais input{
   width:100%;max-width:340px;padding:11px 14px;border-radius:10px;
-  border:2px solid var(--linha);background:#fff;
+  border:2px solid var(--linha);background:rgba(255,255,255,.06);
   font-family:inherit;font-size:15px;color:var(--tinta);
 }
 .pg-pais input:focus{outline:none;border-color:var(--orange)}
@@ -289,15 +300,23 @@ a.pg-video:hover .pg-video-play{background:#ff7c31}
 .pg-oferta.t-aviso{background:#fff8e1;border-left-color:#f5c518;color:#4a3800}
 .pg-oferta.t-aviso .pg-oferta-et{background:#f5c518;color:#3a2c00}
 
-/* ---- outras asas da família ------------------------------------------
-   As páginas eram becos sem saída: só ligavam de volta à raiz. */
+/* ---- outras asas da família ----
+   Mesmo cartão do carril do catálogo: foto à esquerda, nome e classe à
+   direita. Quem percorre a lista reconhece a forma antes de ler o nome. */
 .pg-irmas-l{list-style:none;margin-left:0;display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
 .pg-irmas-l li{margin:0}
-.pg-irmas-l a{display:block;font-weight:800;font-size:15px;text-decoration:none;
-  border:1px solid var(--linha);border-radius:10px;padding:11px 14px;background:#f7fafd}
-.pg-irmas-l a:hover{border-color:var(--orange);background:#fff6f0}
-.pg-irmas-l span{display:block;font-size:12px;font-weight:600;color:var(--tinta-fraca);margin-top:2px}
+.pg-irmas-l a{
+  display:flex;align-items:center;gap:13px;text-decoration:none;color:#fff;
+  border:1px solid var(--linha);border-radius:13px;padding:11px 14px;
+  background:rgba(255,255,255,.05);transition:border-color .18s,background .18s;
+}
+.pg-irmas-l a:hover{border-color:var(--orange);background:rgba(255,106,19,.14);color:#fff}
+.pg-irmas-l img{width:64px;height:42px;object-fit:contain;flex:none}
+.pg-irmas-tx{min-width:0}
+.pg-irmas-l b{display:block;font-size:14.5px;font-weight:800}
+.pg-irmas-l span span{display:block;font-size:11.5px;font-weight:600;
+  color:var(--tinta-fraca);margin-top:2px}
 
 /* ======================================================================
    /smartground/ — o método
@@ -478,7 +497,8 @@ body.sg .pg-voltar{max-width:1440px;margin:0 auto;padding:26px 72px 60px;
 }
 
 /* ---- a asa do curso (só na Mullet 2) ---- */
-.pg-metodo{background:#0a2c53;border-radius:16px;padding:28px 32px;color:#fff}
+.pg-metodo{background:rgba(255,106,19,.1);border:1px solid rgba(255,106,19,.3);
+  border-radius:16px;padding:28px 32px;color:#fff}
 .pg-metodo-et{font-size:11.5px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
   color:#ff6a13;margin:0 0 10px}
 .pg-metodo-tx{font-size:17px;color:rgba(255,255,255,.86);margin:0 0 16px;max-width:62ch}
@@ -524,32 +544,33 @@ body.sg .pg-voltar{max-width:1440px;margin:0 auto;padding:26px 72px 60px;
   font-size:12px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;
   color:var(--tinta-fraca);margin:0 0 10px;display:flex;align-items:baseline;gap:10px;
 }
-.fl-fam h3 span{font-size:11px;font-weight:700;color:#a9b6c6;letter-spacing:.4px;
+.fl-fam h3 span{font-size:11px;font-weight:700;color:rgba(255,255,255,.42);letter-spacing:.4px;
   text-transform:none}
 .fl-lista{list-style:none;margin:0;display:grid;
   grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
 .fl-lista li{margin:0}
 .fl-lista a{
   display:block;font-weight:800;font-size:15px;text-decoration:none;color:var(--tinta);
-  border:1px solid var(--linha);border-radius:10px;padding:12px 15px;background:#f7fafd;
+  border:1px solid var(--linha);border-radius:10px;padding:12px 15px;background:rgba(255,255,255,.05);
 }
-.fl-lista a:hover{border-color:var(--orange);background:#fff6f0;color:var(--tinta)}
+.fl-lista a:hover{border-color:var(--orange);background:rgba(255,106,19,.14);color:var(--tinta)}
 .fl-lista a span{display:block;font-size:12px;font-weight:600;color:var(--tinta-fraca);
   margin-top:2px}
 
 /* ---- três colunas: escolher, experimentar, apoio ---- */
 .fl-tres{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin:44px 0}
-.fl-cartao{border:1px solid var(--linha);border-radius:16px;padding:28px 30px;background:#fbfcfe}
+.fl-cartao{border:1px solid var(--linha);border-radius:16px;padding:28px 30px;
+  background:rgba(255,255,255,.04)}
 .fl-cartao h2{font-size:19px;margin:0 0 12px;padding:0;border:0;letter-spacing:-.3px}
 .fl-cartao p{font-size:15.5px;color:var(--tinta-fraca);margin:0;max-width:none}
 
 /* ---- cor à medida ---- */
 .fl-cor{
   display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:center;
-  background:#fff6f0;border:1px solid #ffd7bd;border-radius:20px;
+  background:rgba(255,106,19,.09);border:1px solid rgba(255,106,19,.32);border-radius:20px;
   padding:40px 44px;margin-bottom:44px;
 }
-.fl-cor-tx{font-size:17px;color:#5c2a10;margin:10px 0 22px;max-width:52ch}
+.fl-cor-tx{font-size:17px;color:rgba(255,255,255,.82);margin:10px 0 22px;max-width:52ch}
 .fl-cor img{width:100%;height:auto}
 a.fl-cor-a{
   display:inline-block;background:var(--orange);color:#fff;font-weight:800;
@@ -586,7 +607,7 @@ a.fl-cor-a:hover{background:#ff7c31;color:#fff}
    Contextual e no corpo, não escondida no rodapé: quem está a olhar para
    uma asa é quem quer saber de onde ela vem. */
 .pg-dealer-nota{
-  background:#f7fafd;border-left:4px solid var(--orange);border-radius:0 10px 10px 0;
+  background:rgba(255,255,255,.05);border-left:4px solid var(--orange);border-radius:0 10px 10px 0;
   padding:13px 16px;margin:0 0 22px;font-size:14.5px;color:var(--tinta-fraca);max-width:68ch;
 }
 .pg-dealer-nota a{font-weight:800}

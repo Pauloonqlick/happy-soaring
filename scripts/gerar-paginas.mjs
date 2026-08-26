@@ -204,10 +204,14 @@ function blocoIrmas(p, l) {
   <h2>${esc(t(T.outras, l).replace('{f}', fam.toLowerCase()))}</h2>
   <ul class="pg-irmas-l">${irmas.map(x => {
     const cls = rotuloClasse(x.classificacao, l);
-    /* a classe vai DENTRO da ligação: assim a caixa toda é clicável, em vez
-       de só o nome, e o rótulo não fica órfão por baixo */
-    return `<li><a href="${esc(caminho(l, x))}">${esc(x.nome)}${
-      cls ? `<span>${esc(cls)}</span>` : ''}</a></li>`;
+    /* com a foto, como no catálogo: quem percorre a lista reconhece a forma
+       da asa antes de ler o nome. A imagem de cartão já existe e é a mesma
+       que o catálogo usa — nenhum ficheiro novo. */
+    const cor = (x.cores || [])[0];
+    const foto = cor ? `<img src="/images/asas/${chave(x.nome)}__${esc(cor)}-card.webp"
+      alt="" loading="lazy" width="600" height="397" />` : '';
+    return `<li><a href="${esc(caminho(l, x))}">${foto}<span class="pg-irmas-tx">
+      <b>${esc(x.nome)}</b>${cls ? `<span>${esc(cls)}</span>` : ''}</span></a></li>`;
   }).join('')}</ul>
 </section>`;
 }
