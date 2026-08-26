@@ -25,6 +25,7 @@ import path from 'node:path';
 import { ofertasDaAsa } from '../regras/avisos.js';
 import { rotuloFamilia, rotuloClasse } from '../regras/taxonomia.js';
 import { SG } from './conteudo-smartground.mjs';
+import { FL } from './conteudo-flow.mjs';
 
 const RAIZ = process.cwd();   /* corre-se a partir da raiz do projecto */
 const DOMINIO = 'https://happysoaring.com';
@@ -255,7 +256,8 @@ function corpoInicial() {
     <a href="/smartground/">${esc(t(SG.conhecer, l))}</a></p>
 
     <h2>Catálogo Flow Paragliders</h2>
-    <p>${produtos.length} asas, arneses e reservas, cada uma com a sua página:</p>
+    <p>${produtos.length} asas, arneses e reservas, cada uma com a sua página.
+    <a href="/flow-paragliders-portugal/">${esc(t(FL.ancoraLink, l))}</a></p>
 ${listas}
   </div>`;
 }
@@ -607,6 +609,164 @@ function blocoVento(p, l) {
     ${nota ? '<p class="pg-nota">' + esc(nota) + '</p>' : ''}</section>`;
 }
 
+/* ---- a página /flow-paragliders-portugal/ -----------------------------
+   O centro da relação Happy Soaring ↔ Flow Paragliders ↔ Portugal. As 22
+   páginas de produto ligam-lhe e ela liga-lhes de volta, sempre dentro da
+   mesma língua — um cluster fechado por idioma, não um funil que despeja
+   tudo na versão portuguesa.
+
+   O slug é igual nas cinco: "Flow Paragliders" é um nome próprio e
+   "Portugal" também. É a mesma regra que já se aplica aos nomes das asas —
+   traduz-se a categoria, não o nome. */
+const caminhoFlow = l => (l === OMISSAO ? '' : '/' + l) + '/flow-paragliders-portugal/';
+
+function paginaFlow(l, num) {
+  const url = DOMINIO + caminhoFlow(l);
+  const foto = DOMINIO + '/images/og-happysoaring.jpg';
+  const alt = IDIOMAS.map(x =>
+    '<link rel="alternate" hreflang="' + x + '" href="' + DOMINIO + caminhoFlow(x) + '" />').join('\n');
+  const wa = 'https://wa.me/' + num + '?text=' + encodeURIComponent(t(FL.ctaMsg, l));
+  const inicio = (l === OMISSAO ? '/' : '/' + l + '/');
+
+  /* o catálogo sai dos mesmos dados que o site usa; agrupado pelas famílias
+     que já existem, sem inventar categorias */
+  const porFam = new Map();
+  for (const p of produtos) {
+    if (!porFam.has(p.familia)) porFam.set(p.familia, []);
+    porFam.get(p.familia).push(p);
+  }
+  const catalogo = [...porFam.entries()].map(([fam, asas]) => `
+    <div class="fl-fam">
+      <h3>${esc(rotuloFamilia(fam, l))} <span>${asas.length} ${esc(t(FL.modelos, l))}</span></h3>
+      <ul class="fl-lista">${asas.map(p => {
+        const cls = rotuloClasse(p.classificacao, l);
+        return `<li><a href="${esc(caminho(l, p))}">${esc(p.nome)}${
+          cls ? `<span>${esc(cls)}</span>` : ''}</a></li>`;
+      }).join('')}</ul>
+    </div>`).join('');
+
+  /* ItemList com as 22 asas: diz ao Google e ao Gemini que esta página é o
+     centro de um conjunto real de produtos, cada um com endereço próprio.
+     Sem offers, sem preços, sem stock — não existem. */
+  const ld = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      { '@type': 'BreadcrumbList', itemListElement: [
+        { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + inicio },
+        { '@type': 'ListItem', position: 2, name: 'Flow Paragliders Portugal', item: url }
+      ]},
+      { '@type': 'WebPage',
+        '@id': url,
+        url,
+        name: t(FL.h1, l),
+        description: t(FL.descricao, l),
+        inLanguage: l,
+        about: { '@type': 'Brand', name: 'Flow Paragliders' },
+        publisher: {
+          '@type': 'Organization',
+          name: 'Happy Soaring',
+          url: DOMINIO + '/',
+          areaServed: { '@type': 'Country', name: 'Portugal' }
+        }
+      },
+      { '@type': 'ItemList',
+        name: t(FL.gamaTit, l),
+        numberOfItems: produtos.length,
+        itemListElement: produtos.map((p, i) => ({
+          '@type': 'ListItem', position: i + 1, name: p.nome, url: DOMINIO + caminho(l, p)
+        }))
+      }
+    ]
+  });
+
+  return `<!DOCTYPE html>
+<html lang="${l}">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>${esc(t(FL.titulo, l))}</title>
+<meta name="description" content="${esc(t(FL.descricao, l))}" />
+<link rel="canonical" href="${url}" />
+${alt}
+<link rel="alternate" hreflang="x-default" href="${DOMINIO + caminhoFlow(OMISSAO)}" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Happy Soaring" />
+<meta property="og:url" content="${url}" />
+<meta property="og:title" content="${esc(t(FL.h1, l))}" />
+<meta property="og:description" content="${esc(t(FL.descricao, l))}" />
+<meta property="og:image" content="${foto}" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="stylesheet" href="/pagina.css" />
+<script type="application/ld+json">${ld}</script>
+</head>
+<body class="pg">
+
+<header class="pg-topo">
+  <a class="pg-marca" href="${inicio}">HAPPY <span>SOARING</span></a>
+  <span class="pg-dealer">${esc(t(T.dealer, l))}</span>
+</header>
+
+<div class="pg-cx fl-cx">
+
+  <nav class="pg-migalhas"><a href="${inicio}">${esc(t(T.inicio, l))}</a> &rsaquo;
+    <span aria-current="page">Flow Paragliders Portugal</span></nav>
+
+  <header class="fl-cab">
+    <p class="pg-eyebrow">${esc(t(FL.kicker, l))}</p>
+    <h1>${esc(t(FL.h1, l))}</h1>
+    <p class="pg-tagline fl-entrada">${esc(t(FL.entrada, l))}</p>
+    <p><a class="pg-wa" href="${wa}" rel="noopener" target="_blank">${esc(t(FL.cta, l))}</a></p>
+  </header>
+
+  <section class="pg-sec">
+    <h2>${esc(t(FL.dealerTit, l))}</h2>
+    <p>${esc(t(FL.dealerTxt, l))}</p>
+  </section>
+
+  <section class="pg-sec">
+    <h2>${esc(t(FL.gamaTit, l))}</h2>
+    <p>${esc(t(FL.gamaSub, l))}</p>
+    <div class="fl-catalogo">${catalogo}</div>
+  </section>
+
+  <section class="pg-sec">
+    <h2>${esc(t(FL.escolhaTit, l))}</h2>
+    <p>${esc(t(FL.escolhaTxt, l))}</p>
+  </section>
+
+  <section class="pg-sec">
+    <h2>${esc(t(FL.testeTit, l))}</h2>
+    <p>${esc(t(FL.testeTxt, l))}</p>
+  </section>
+
+  <section class="pg-sec fl-cor">
+    <h2>${esc(t(FL.corTit, l))}</h2>
+    <p>${esc(t(FL.corTxt, l))}</p>
+    <p><a class="fl-cor-a" href="${esc(caminho(l, { nome: 'Mullet 2' }))}">${esc(t(FL.verMullet, l))}</a></p>
+  </section>
+
+  <section class="pg-sec">
+    <h2>${esc(t(FL.apoioTit, l))}</h2>
+    <p>${esc(t(FL.apoioTxt, l))}</p>
+    <p><a class="pg-wa" href="${wa}" rel="noopener" target="_blank">${esc(t(FL.cta, l))}</a></p>
+  </section>
+
+  <p class="pg-voltar"><a href="${inicio}">${esc(t(FL.voltar, l))}</a></p>
+
+</div>
+
+<footer class="pg-rodape">Happy Soaring &middot; ${esc(t(T.dealer, l))}</footer>
+</body>
+</html>`;
+}
+
+/* a ligação contextual das 22 páginas de produto para o hub, sempre na
+   língua da própria página */
+function blocoDealer(p, l) {
+  return `<p class="pg-dealer-nota">${esc(t(FL.ancora, l))}
+    <a href="${esc(caminhoFlow(l))}">${esc(t(FL.ancoraLink, l))}</a></p>`;
+}
+
 /* ---- a página /smartground/ -------------------------------------------
    O SmartGround é o método com que o Curso de Parakite é dado. Tem página
    própria e não uma secção dentro do curso por uma razão prática: é um
@@ -885,6 +1045,8 @@ ${alt}
 
   ${secs}
 
+  ${blocoDealer(p, l)}
+
   ${blocoMetodo(p, l)}
 
   ${blocoIrmas(p, l)}
@@ -966,6 +1128,14 @@ if (!so && !soIdioma) {
     urls.push(DOMINIO + rel);
   }
   console.log('  SmartGround: ' + IDIOMAS.length + ' páginas');
+  for (const l of IDIOMAS) {
+    const rel = caminhoFlow(l);
+    const dir = path.join(destino, rel);
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, 'index.html'), paginaFlow(l, num));
+    urls.push(DOMINIO + rel);
+  }
+  console.log('  Flow Paragliders Portugal: ' + IDIOMAS.length + ' páginas');
 }
 
 

@@ -474,3 +474,53 @@ body.sg .pg-voltar{max-width:1440px;margin:0 auto;padding:26px 72px 60px;
 .pg-metodo a.pg-metodo-a{display:inline-block;background:#ff6a13;color:#fff;font-weight:800;
   font-size:14.5px;padding:12px 24px;border-radius:100px;text-decoration:none}
 .pg-metodo a.pg-metodo-a:hover{background:#ff7c31;color:#fff}
+
+/* ======================================================================
+   /flow-paragliders-portugal/ — o centro da gama
+   Usa a mesma linguagem das páginas das asas: papel branco, 820px, mesma
+   tipografia. É deliberado — o hub e os produtos são o mesmo tipo de peça.
+   ====================================================================== */
+.fl-cab{margin-bottom:34px}
+.fl-cab h1{margin-bottom:12px}
+.fl-entrada{max-width:56ch;margin-bottom:6px}
+
+.fl-catalogo{display:flex;flex-direction:column;gap:26px;margin-top:18px}
+.fl-fam h3{
+  font-size:12px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;
+  color:var(--tinta-fraca);margin:0 0 10px;display:flex;align-items:baseline;gap:10px;
+}
+.fl-fam h3 span{font-size:11px;font-weight:700;color:#a9b6c6;letter-spacing:.4px;
+  text-transform:none}
+.fl-lista{list-style:none;margin:0;display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px}
+.fl-lista li{margin:0}
+.fl-lista a{
+  display:block;font-weight:800;font-size:15px;text-decoration:none;color:var(--tinta);
+  border:1px solid var(--linha);border-radius:10px;padding:11px 14px;background:#f7fafd;
+}
+.fl-lista a:hover{border-color:var(--orange);background:#fff6f0;color:var(--tinta)}
+.fl-lista a span{display:block;font-size:12px;font-weight:600;color:var(--tinta-fraca);
+  margin-top:2px}
+
+.fl-cor{background:#fff6f0;border:1px solid #ffd7bd;border-radius:14px;
+  padding:24px 26px;margin-bottom:30px}
+.fl-cor h2{margin-top:0;border-bottom-color:#ffd7bd}
+.fl-cor a.fl-cor-a{
+  display:inline-block;background:var(--orange);color:#fff;font-weight:800;
+  font-size:14.5px;padding:12px 24px;border-radius:100px;text-decoration:none;
+}
+.fl-cor a.fl-cor-a:hover{background:#ff7c31;color:#fff}
+
+/* ---- a nota de revendedor nas páginas de produto ----
+   Contextual e no corpo, não escondida no rodapé: quem está a olhar para
+   uma asa é quem quer saber de onde ela vem. */
+.pg-dealer-nota{
+  background:#f7fafd;border-left:4px solid var(--orange);border-radius:0 10px 10px 0;
+  padding:13px 16px;margin:0 0 22px;font-size:14.5px;color:var(--tinta-fraca);max-width:68ch;
+}
+.pg-dealer-nota a{font-weight:800}
+
+@media(max-width:600px){
+  .fl-lista{grid-template-columns:1fr}
+  .fl-cor{padding:20px}
+}

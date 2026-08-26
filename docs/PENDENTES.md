@@ -20,6 +20,15 @@ Nada disto avança sem ti. Não são tarefas, são escolhas.
 | **Nível de piloto por asa** | É matéria de segurança. Posso propor, mas tens de rever antes de ir para o ar |
 | **Botão da janela da oferta** | Para onde leva |
 
+## Guardado para a página do curso
+
+Locais onde a formação decorre, conforme as condições (25/08/2026). **Não há
+sede nem local fixo** — não inventar uma, e não usar estes nomes noutras
+páginas só para SEO local.
+
+Lagoa de Albufeira · Praia do Meco · Fonte da Telha · Praia de Alfarim ·
+Peniche · Praia da Gralha
+
 ## Precisa de dados teus
 
 Coisas que eu não posso inventar.

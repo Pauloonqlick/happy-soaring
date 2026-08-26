@@ -58,7 +58,8 @@ const PASTAS = [
 /* as páginas das asas, geradas: /asas/… em pt e /en|es|fr|de/… nas outras */
 /* as páginas geradas: as asas em /asas/, o método em /smartground/, e as
    quatro traduções de ambos dentro do prefixo de cada língua */
-const PASTAS_GERADAS = ['asas', 'smartground', 'en', 'es', 'fr', 'de'];
+const PASTAS_GERADAS = ['asas', 'smartground', 'flow-paragliders-portugal',
+  'en', 'es', 'fr', 'de'];
 
 /* Nunca, em circunstância nenhuma. É a rede de segurança: mesmo que uma
    destas apareça por engano numa lista acima, a verificação pára tudo. */
