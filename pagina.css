@@ -77,6 +77,14 @@ body.pg{
 /* 74ch: dentro da faixa legivel (45-75) e enche a coluna da direita.
    A 68 sobravam ainda 200px de branco no fim de cada linha. */
 .pg .pg-papel p,.pg .pg-papel li{color:var(--painel-tinta);max-width:74ch}
+/* Texto justificado, mas so com hifenizacao: sem ela o justificado abre
+   rios de branco no meio do paragrafo, e o portugues tem palavras
+   compridas que agravam isso. O lang="pt" do <html> e que diz ao
+   browser onde pode cortar. */
+.pg .pg-papel p{text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+/* nos ecras estreitos a medida e curta de mais para justificar sem
+   estragar: volta a alinhado a esquerda */
+@media(max-width:680px){.pg .pg-papel p{text-align:left;hyphens:manual}}
 .pg .pg-papel strong{color:#0b1520}
 .pg .pg-papel a{color:#0b5fb0}
 .pg .pg-papel a:hover{color:var(--orange)}
