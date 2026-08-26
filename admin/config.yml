@@ -4,7 +4,9 @@ backend:
   branch: master
 local_backend: true
 media_folder: images
-public_folder: images
+# absoluto de propósito: é o caminho que fica escrito no JSON, e um caminho
+# relativo deixa de funcionar assim que a página que o lê não estiver na raiz
+public_folder: /images
 locale: pt
 collections:
   - name: settings

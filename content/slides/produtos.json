@@ -5,8 +5,8 @@
  "wind": false,
  "heightScreens": null,
  "heroScrim": true,
- "bgImage": "images/course.jpg",
- "bgImageMobile": "images/course-mobile.jpg",
+ "bgImage": "/images/course.jpg",
+ "bgImageMobile": "/images/course-mobile.jpg",
  "bgImageVisible": false,
  "bgDarken": 45,
  "topTint": "",
@@ -22,7 +22,7 @@
  "elements": [
   {
    "role": "flow",
-   "logoImage": "images/flow-marca.webp",
+   "logoImage": "/images/flow-marca.webp",
    "dealerHref": "/flow-paragliders-portugal/",
   "dealerLabel": {
     "pt": "Dealer oficial em Portugal",

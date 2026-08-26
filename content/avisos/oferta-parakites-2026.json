@@ -59,7 +59,7 @@
   "fr": "Mullet 2 avec couleur au choix et première inspection de sécurité incluses.",
   "de": "Mullet 2 mit Wunschfarbe und erster Sicherheitsüberprüfung inklusive."
  },
- "imagem": "images/avisos/promo.webp",
+ "imagem": "/images/avisos/promo.webp",
  "imagemMobile": "",
  "alt": {
   "pt": "Mullet 2 — Happy Soaring e FelloFly",
@@ -70,7 +70,7 @@
  },
  "pontos": [
   {
-   "icone": "images/avisos/ic-cor.webp",
+   "icone": "/images/avisos/ic-cor.webp",
    "titulo": {
     "pt": "Cor à escolha",
     "en": "Custom colour",
@@ -88,7 +88,7 @@
    "naFaixa": true
   },
   {
-   "icone": "images/avisos/ic-inspecao.webp",
+   "icone": "/images/avisos/ic-inspecao.webp",
    "titulo": {
     "pt": "Primeira inspeção de segurança",
     "en": "First safety inspection",
@@ -106,7 +106,7 @@
    "naFaixa": true
   },
   {
-   "icone": "images/avisos/ic-qualidade.webp",
+   "icone": "/images/avisos/ic-qualidade.webp",
    "titulo": {
     "pt": "Qualidade em que podes confiar.",
     "en": "Quality you can trust.",
@@ -124,7 +124,7 @@
    "naFaixa": false
   },
   {
-   "icone": "images/avisos/ic-paixao.webp",
+   "icone": "/images/avisos/ic-paixao.webp",
    "titulo": {
     "pt": "Feita com paixão.",
     "en": "Designed for passion.",

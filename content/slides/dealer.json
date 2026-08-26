@@ -45,7 +45,7 @@
       "role": "groundImage",
       "showDesktop": true,
       "showMobile": true,
-      "src": "images/pilot-lines.png",
+      "src": "/images/pilot-lines.png",
       "alt": "Piloto Flow",
       "opacity": 100,
       "shadow": true,

@@ -1012,7 +1012,7 @@ function seloOferta(p, classe) {
 
 const chaveFoto = n => String(n).toLowerCase().replace(/[^a-z0-9]/g, '');
 const fotoSrc = (nome, cor, card) =>
-  'images/asas/' + chaveFoto(nome) + '__' + cor + (card ? '-card' : '') + '.webp';
+  '/images/asas/' + chaveFoto(nome) + '__' + cor + (card ? '-card' : '') + '.webp';
 
 /* desenho de recurso para quem ainda não tem foto */
 function asaPlaceholder(i) {
@@ -1204,7 +1204,7 @@ function buildFlow(item) {
      A cor escolhida fica guardada no produto e viaja na mensagem de WhatsApp:
      um configurador que não chega ao pedido é um brinquedo. */
   const fotoCustomDe = (p, esquema, c) =>
-    'images/asas-cores/' + chaveFoto(p.nome) + '__' + esquema + '__' + c.ref + '.webp';
+    '/images/asas-cores/' + chaveFoto(p.nome) + '__' + esquema + '__' + c.ref + '.webp';
 
   function blocoCorCustom(p, faixaTitulo) {
     const refs = Array.isArray(p.coresCustom) && p.coresCustom.length
@@ -1418,7 +1418,7 @@ function buildFlow(item) {
     const nome = el('div', 'flow-name' + (p.logo ? ' com-logo' : ''));
     if (p.logo) {
       const lg = el('img', 'flow-name-logo');
-      lg.src = 'images/logos/' + p.logo + '.webp';
+      lg.src = '/images/logos/' + p.logo + '.webp';
       lg.alt = p.nome;
       lg.loading = 'lazy';
       /* se o ficheiro faltar, volta ao nome escrito em vez de deixar buraco */
@@ -1523,7 +1523,7 @@ function buildFlow(item) {
     if (p.logo) {
       const lg = el('img', 'flow-det-logo');
       /* o cabeçalho do painel é azul, por isso o logótipo vai na versão branca */
-      lg.src = 'images/logos/' + p.logo + '.webp';
+      lg.src = '/images/logos/' + p.logo + '.webp';
       lg.alt = p.nome;
       lg.addEventListener('error', () => { n.classList.remove('com-logo'); n.textContent = p.nome; });
       n.classList.add('com-logo');
@@ -1630,7 +1630,7 @@ function buildFlow(item) {
         p.imagensLonga.forEach(nome => {
           if (!nome) return;
           const im = el('img');
-          im.src = 'images/flow/' + nome + '.webp';
+          im.src = '/images/flow/' + nome + '.webp';
           im.alt = p.nome;
           im.loading = 'lazy';
           im.addEventListener('error', () => im.remove());
@@ -1682,7 +1682,7 @@ function buildFlow(item) {
         sx.imagens.forEach(nome => {
           if (!nome) return;
           const im = el('img');
-          im.src = 'images/flow/' + nome + '.webp';
+          im.src = '/images/flow/' + nome + '.webp';
           im.alt = (t(sx.titulo) || p.nome) + ' — ' + p.nome;
           im.loading = 'lazy';
           im.addEventListener('error', () => im.remove());
@@ -2105,7 +2105,7 @@ function buildFlow(item) {
       if (p.logo) {
         const cxl = el('h3', 'desc-nome-logo');
         /* o campo guarda a chave, nao o caminho — como no cartao da grelha */
-        const li = el('img'); li.src = 'images/logos/' + p.logo + '.webp'; li.alt = p.nome;
+        const li = el('img'); li.src = '/images/logos/' + p.logo + '.webp'; li.alt = p.nome;
         li.addEventListener('error', () => {
           const h2 = el('h3', 'desc-nome'); h2.textContent = p.nome;
           cxl.replaceWith(h2);
@@ -2237,7 +2237,7 @@ function buildFlow(item) {
          so a BASE, e as riscas de cada esquema mantem-se. Sem isto, escolher a
          sunrise e depois uma cor devolvia a asa maui recolorida — perdia-se-lhe
          o laranja e o amarelo. */
-      const fotoCustom = c => 'images/asas-cores/' + chaveFoto(p.nome) + '__' + esquema() + '__' + c.ref + '.webp';
+      const fotoCustom = c => '/images/asas-cores/' + chaveFoto(p.nome) + '__' + esquema() + '__' + c.ref + '.webp';
       const fotoBase = () => (p.cores || []).length ? fotoSrc(p.nome, esquema(), false) : '';
       img.src = corCustom ? fotoCustom(corCustom) : fotoBase();
       /* nunca mostrar o icone de imagem partida: se faltar o ficheiro, volta a
@@ -3389,18 +3389,18 @@ function initMotion(data) {
    individual (content/slides/<id>.json), juntando tudo na estrutura que o
    render() espera. Assim cada slide é um ficheiro/entrada própria no CMS. */
 async function loadSite() {
-  const settings = await fetch('content/settings.json').then(r => r.json());
+  const settings = await fetch('/content/settings.json').then(r => r.json());
   const ids = Array.isArray(settings.slides) ? settings.slides : [];
   const slides = await Promise.all(ids.map(id =>
-    fetch('content/slides/' + id + '.json').then(r => (r.ok ? r.json() : null)).catch(() => null)
+    fetch('/content/slides/' + id + '.json').then(r => (r.ok ? r.json() : null)).catch(() => null)
   ));
   /* carta de tecidos da Flow — usada pelo configurador de cor */
-  const tecidos = await fetch('content/cores/flow-tecidos.json')
+  const tecidos = await fetch('/content/cores/flow-tecidos.json')
     .then(r => (r.ok ? r.json() : null)).catch(() => null);
 
   const avisosIds = Array.isArray(settings.avisos) ? settings.avisos : [];
   const avisos = await Promise.all(avisosIds.map(id =>
-    fetch('content/avisos/' + id + '.json').then(r => (r.ok ? r.json() : null)).catch(() => null)
+    fetch('/content/avisos/' + id + '.json').then(r => (r.ok ? r.json() : null)).catch(() => null)
   ));
   return Object.assign({}, settings, {
     sections: slides.filter(Boolean),

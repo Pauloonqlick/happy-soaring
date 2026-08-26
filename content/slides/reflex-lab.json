@@ -50,7 +50,7 @@
       "role": "floatImage",
       "showDesktop": true,
       "showMobile": false,
-      "src": "images/reflex-profile.svg",
+      "src": "/images/reflex-profile.svg",
       "opacity": 100,
       "shadow": false,
       "floatSpeed": 9,

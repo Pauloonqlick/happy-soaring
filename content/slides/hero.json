@@ -5,8 +5,8 @@
   "wind": false,
   "heightScreens": null,
   "heroScrim": true,
-  "bgImage": "images/hero-bg.jpg",
-  "bgImageMobile": "images/hero-bg-mobile.jpg",
+  "bgImage": "/images/hero-bg.jpg",
+  "bgImageMobile": "/images/hero-bg-mobile.jpg",
   "bgImageVisible": true,
   "bgDarken": null,
   "topTint": "",
@@ -29,7 +29,7 @@
       "role": "heroImage",
       "showDesktop": true,
       "showMobile": true,
-      "src": "images/hero-pilot.png",
+      "src": "/images/hero-pilot.png",
       "alt": "Piloto Happy Soaring com a Mullet 2",
       "heightPct": 100,
       "heightPctMobile": 100,
@@ -83,7 +83,7 @@
         "fr": "Revendeur Officiel",
         "de": "Offizieller Händler"
       },
-      "badgeImage": "images/flow-logo.png",
+      "badgeImage": "/images/flow-logo.png",
       "trustHref": "",
       "buttons": [
         {
