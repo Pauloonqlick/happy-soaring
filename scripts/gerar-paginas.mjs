@@ -989,7 +989,8 @@ function pagina(p, l, num) {
       '<li><a href="' + esc(f.url) + '" rel="noopener nofollow" target="_blank">'
       + esc(typeof f.nome === 'object' ? t(f.nome, l) : f.nome || f.url) + '</a></li>').join('');
     if (!tt && !tx && !fich) return '';
-    return '<section class="pg-sec"><h2>' + esc(tt) + '</h2>' + corpo(tx)
+    return '<section class="pg-sec' + (tt ? '' : ' sem-titulo') + '">'
+      + (tt ? '<h2>' + esc(tt) + '</h2>' : '') + corpo(tx)
       + (fich ? '<ul class="pg-fich">' + fich + '</ul>' : '') + '</section>';
   }).join('\n');
 
@@ -1043,7 +1044,7 @@ ${alt}
   ${blocoPedido(p, l, num)}
 
   <div class="pg-papel">
-  ${t(p.descricao, l) ? '<section class="pg-sec">' + corpo(t(p.descricao, l)) + '</section>' : ''}
+  ${t(p.descricao, l) ? '<section class="pg-sec sem-titulo">' + corpo(t(p.descricao, l)) + '</section>' : ''}
 
   ${t(p.paraQuem, l) ? `<section class="pg-sec"><h2>${esc(t(T.paraQuem, l))}</h2>${corpo(t(p.paraQuem, l))}</section>` : ''}
 
@@ -1063,7 +1064,7 @@ ${alt}
     ${tabelaSpecs(p, l)}</section>` : ''}
 
   <div class="pg-papel">
-  ${t(p.descricaoLonga, l) ? '<section class="pg-sec">' + corpo(t(p.descricaoLonga, l)) + '</section>' : ''}
+  ${t(p.descricaoLonga, l) ? '<section class="pg-sec sem-titulo">' + corpo(t(p.descricaoLonga, l)) + '</section>' : ''}
 
   ${secs}
   </div>

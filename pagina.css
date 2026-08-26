@@ -63,14 +63,22 @@ body.pg{
    leitura so. E o que a documentacao tecnica faz, e faz por isto. */
 .pg-papel .pg-sec{
   display:grid;grid-template-columns:230px minmax(0,1fr);
-  column-gap:48px;max-width:none;margin:0 0 30px;
+  column-gap:48px;max-width:none;margin:0 0 26px;
 }
 .pg-papel .pg-sec > h2{grid-column:1;grid-row:1;margin:0;font-size:19px;
   letter-spacing:-.3px;border-bottom:0;padding:0;line-height:1.25}
 .pg-papel .pg-sec > *:not(h2){grid-column:2}
+/* SEM TITULO, SEM COLUNA.
+   A coluna da esquerda existe para os titulos. Num bloco que nao tem
+   titulo ficava simplesmente meia carta vazia — pior do que o
+   problema que a coluna veio resolver. Esses correm a largura toda.
+   Nao ate ao fim do cartao: ai eram ~120 caracteres por linha, e
+   acima de 75 o olho perde o regresso a linha seguinte. */
+.pg-papel .pg-sec.sem-titulo{display:block}
+.pg .pg-papel .sem-titulo p,.pg .pg-papel .sem-titulo li{max-width:92ch}
 .pg-papel .pg-sec > *:last-child{margin-bottom:0}
 /* separador entre seccoes, ja que os titulos perderam o sublinhado */
-.pg-papel .pg-sec + .pg-sec{border-top:1px solid var(--painel-linha);padding-top:30px}
+.pg-papel .pg-sec + .pg-sec{border-top:1px solid var(--painel-linha);padding-top:26px}
 .pg-papel .pg-sec:first-child h2{margin-top:0}
 .pg .pg-papel h2{color:var(--painel-tinta);border-bottom-color:var(--painel-linha)}
 .pg .pg-papel h3{color:var(--painel-tinta)}
