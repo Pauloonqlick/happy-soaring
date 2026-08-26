@@ -712,43 +712,58 @@ ${alt}
     <span aria-current="page">Flow Paragliders Portugal</span></nav>
 
   <header class="fl-cab">
-    <p class="pg-eyebrow">${esc(t(FL.kicker, l))}</p>
-    <h1>${esc(t(FL.h1, l))}</h1>
-    <p class="pg-tagline fl-entrada">${esc(t(FL.entrada, l))}</p>
-    <p><a class="pg-wa" href="${wa}" rel="noopener" target="_blank">${esc(t(FL.cta, l))}</a></p>
+    <div class="fl-cab-txt">
+      <p class="pg-eyebrow">${esc(t(FL.kicker, l))}</p>
+      <h1>${esc(t(FL.h1, l))}</h1>
+      <p class="fl-entrada">${esc(t(FL.entrada, l))}</p>
+      <p><a class="pg-wa" href="${wa}" rel="noopener" target="_blank">${esc(t(FL.cta, l))}</a></p>
+    </div>
+    <div class="fl-cab-marca">
+      <img src="/images/flow-marca.webp" alt="Flow Paragliders" width="900" height="179" />
+      <span>${esc(t(FL.kicker, l))} &middot; Portugal</span>
+    </div>
   </header>
 
-  <section class="pg-sec">
+  <section class="pg-sec fl-oficial">
     <h2>${esc(t(FL.dealerTit, l))}</h2>
     <p>${esc(t(FL.dealerTxt, l))}</p>
   </section>
 
-  <section class="pg-sec">
-    <h2>${esc(t(FL.gamaTit, l))}</h2>
-    <p>${esc(t(FL.gamaSub, l))}</p>
+  <section class="pg-sec fl-gama">
+    <div class="fl-gama-cab">
+      <h2>${esc(t(FL.gamaTit, l))}</h2>
+      <p>${esc(t(FL.gamaSub, l))}</p>
+    </div>
     <div class="fl-catalogo">${catalogo}</div>
   </section>
 
-  <section class="pg-sec">
-    <h2>${esc(t(FL.escolhaTit, l))}</h2>
-    <p>${esc(t(FL.escolhaTxt, l))}</p>
+  <section class="fl-tres">
+    <div class="fl-cartao">
+      <h2>${esc(t(FL.escolhaTit, l))}</h2>
+      <p>${esc(t(FL.escolhaTxt, l))}</p>
+    </div>
+    <div class="fl-cartao">
+      <h2>${esc(t(FL.testeTit, l))}</h2>
+      <p>${esc(t(FL.testeTxt, l))}</p>
+    </div>
+    <div class="fl-cartao">
+      <h2>${esc(t(FL.apoioTit, l))}</h2>
+      <p>${esc(t(FL.apoioTxt, l))}</p>
+    </div>
   </section>
 
-  <section class="pg-sec">
-    <h2>${esc(t(FL.testeTit, l))}</h2>
-    <p>${esc(t(FL.testeTxt, l))}</p>
+  <section class="fl-cor">
+    <div class="fl-cor-txt">
+      <p class="pg-eyebrow">${esc(t(FL.corTit, l))}</p>
+      <p class="fl-cor-tx">${esc(t(FL.corTxt, l))}</p>
+      <p><a class="fl-cor-a" href="${esc(caminho(l, { nome: 'Mullet 2' }))}">${esc(t(FL.verMullet, l))}</a></p>
+    </div>
+    <img src="/images/asas/mullet2__maui.webp" alt="Mullet 2" width="1200" height="794" loading="lazy" />
   </section>
 
-  <section class="pg-sec fl-cor">
-    <h2>${esc(t(FL.corTit, l))}</h2>
-    <p>${esc(t(FL.corTxt, l))}</p>
-    <p><a class="fl-cor-a" href="${esc(caminho(l, { nome: 'Mullet 2' }))}">${esc(t(FL.verMullet, l))}</a></p>
-  </section>
-
-  <section class="pg-sec">
-    <h2>${esc(t(FL.apoioTit, l))}</h2>
-    <p>${esc(t(FL.apoioTxt, l))}</p>
-    <p><a class="pg-wa" href="${wa}" rel="noopener" target="_blank">${esc(t(FL.cta, l))}</a></p>
+  <section class="fl-fecho">
+    <p>${esc(t(FL.entrada, l))}</p>
+    <a class="pg-wa" href="${wa}" rel="noopener" target="_blank">${esc(t(FL.cta, l))}</a>
   </section>
 
   <p class="pg-voltar"><a href="${inicio}">${esc(t(FL.voltar, l))}</a></p>

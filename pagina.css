@@ -475,16 +475,40 @@ body.sg .pg-voltar{max-width:1440px;margin:0 auto;padding:26px 72px 60px;
   font-size:14.5px;padding:12px 24px;border-radius:100px;text-decoration:none}
 .pg-metodo a.pg-metodo-a:hover{background:#ff7c31;color:#fff}
 
-/* ======================================================================
-   /flow-paragliders-portugal/ — o centro da gama
-   Usa a mesma linguagem das páginas das asas: papel branco, 820px, mesma
-   tipografia. É deliberado — o hub e os produtos são o mesmo tipo de peça.
-   ====================================================================== */
-.fl-cab{margin-bottom:34px}
-.fl-cab h1{margin-bottom:12px}
-.fl-entrada{max-width:56ch;margin-bottom:6px}
 
-.fl-catalogo{display:flex;flex-direction:column;gap:26px;margin-top:18px}
+/* ======================================================================
+   /flow-paragliders-portugal/ — largura de desktop
+   As páginas das asas são 820px porque são para LER de cima a baixo. Esta
+   é um catálogo: usa a largura, e a prosa é que fica com medida legível.
+   ====================================================================== */
+.fl-cx{max-width:1320px;padding:26px 56px 0}
+
+/* ---- cabeçalho: texto à esquerda, a marca à direita ---- */
+.fl-cab{
+  display:grid;grid-template-columns:1.25fr .75fr;gap:70px;align-items:center;
+  margin:8px 0 54px;
+}
+.fl-cab-txt h1{margin-bottom:16px}
+.fl-entrada{font-size:19px;color:var(--tinta-fraca);max-width:46ch;margin:0 0 24px}
+.fl-cab-marca{
+  display:flex;flex-direction:column;align-items:center;gap:16px;
+  background:linear-gradient(160deg,var(--azul),var(--azul-esc));
+  border-radius:20px;padding:44px 40px;
+}
+.fl-cab-marca img{width:100%;max-width:300px;height:auto}
+.fl-cab-marca span{
+  font-size:11.5px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
+  color:rgba(255,255,255,.8);text-align:center;
+}
+
+/* a prosa mantém medida de leitura mesmo com o contentor largo */
+.fl-oficial p{max-width:68ch}
+
+/* ---- catálogo ---- */
+.fl-gama-cab{margin-bottom:22px}
+.fl-gama-cab h2{margin-top:0}
+.fl-gama-cab p{margin-bottom:0;color:var(--tinta-fraca)}
+.fl-catalogo{display:flex;flex-direction:column;gap:26px}
 .fl-fam h3{
   font-size:12px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;
   color:var(--tinta-fraca);margin:0 0 10px;display:flex;align-items:baseline;gap:10px;
@@ -492,24 +516,60 @@ body.sg .pg-voltar{max-width:1440px;margin:0 auto;padding:26px 72px 60px;
 .fl-fam h3 span{font-size:11px;font-weight:700;color:#a9b6c6;letter-spacing:.4px;
   text-transform:none}
 .fl-lista{list-style:none;margin:0;display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px}
+  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
 .fl-lista li{margin:0}
 .fl-lista a{
   display:block;font-weight:800;font-size:15px;text-decoration:none;color:var(--tinta);
-  border:1px solid var(--linha);border-radius:10px;padding:11px 14px;background:#f7fafd;
+  border:1px solid var(--linha);border-radius:10px;padding:12px 15px;background:#f7fafd;
 }
 .fl-lista a:hover{border-color:var(--orange);background:#fff6f0;color:var(--tinta)}
 .fl-lista a span{display:block;font-size:12px;font-weight:600;color:var(--tinta-fraca);
   margin-top:2px}
 
-.fl-cor{background:#fff6f0;border:1px solid #ffd7bd;border-radius:14px;
-  padding:24px 26px;margin-bottom:30px}
-.fl-cor h2{margin-top:0;border-bottom-color:#ffd7bd}
-.fl-cor a.fl-cor-a{
-  display:inline-block;background:var(--orange);color:#fff;font-weight:800;
-  font-size:14.5px;padding:12px 24px;border-radius:100px;text-decoration:none;
+/* ---- três colunas: escolher, experimentar, apoio ---- */
+.fl-tres{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin:44px 0}
+.fl-cartao{border:1px solid var(--linha);border-radius:16px;padding:28px 30px;background:#fbfcfe}
+.fl-cartao h2{font-size:19px;margin:0 0 12px;padding:0;border:0;letter-spacing:-.3px}
+.fl-cartao p{font-size:15.5px;color:var(--tinta-fraca);margin:0;max-width:none}
+
+/* ---- cor à medida ---- */
+.fl-cor{
+  display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:center;
+  background:#fff6f0;border:1px solid #ffd7bd;border-radius:20px;
+  padding:40px 44px;margin-bottom:44px;
 }
-.fl-cor a.fl-cor-a:hover{background:#ff7c31;color:#fff}
+.fl-cor-tx{font-size:17px;color:#5c2a10;margin:10px 0 22px;max-width:52ch}
+.fl-cor img{width:100%;height:auto}
+a.fl-cor-a{
+  display:inline-block;background:var(--orange);color:#fff;font-weight:800;
+  font-size:14.5px;padding:13px 26px;border-radius:100px;text-decoration:none;
+}
+a.fl-cor-a:hover{background:#ff7c31;color:#fff}
+
+/* ---- fecho ---- */
+.fl-fecho{
+  background:linear-gradient(160deg,var(--azul),var(--azul-esc));border-radius:20px;
+  padding:48px 56px;display:flex;gap:44px;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;margin-bottom:20px;
+}
+.fl-fecho p{font-size:21px;font-weight:700;letter-spacing:-.4px;color:#fff;
+  margin:0;max-width:52ch}
+.fl-fecho .pg-wa{margin-top:0;flex-shrink:0}
+
+.fl-cx .pg-voltar{margin-top:30px;padding-bottom:56px}
+
+@media(max-width:1000px){
+  .fl-cab,.fl-cor{grid-template-columns:1fr;gap:34px}
+  .fl-tres{grid-template-columns:1fr}
+  .fl-cab-marca{padding:32px}
+  .fl-cab-marca img{max-width:220px}
+}
+@media(max-width:600px){
+  .fl-cx{padding-left:20px;padding-right:20px}
+  .fl-lista{grid-template-columns:1fr}
+  .fl-cor,.fl-fecho{padding:26px 22px}
+  .fl-fecho p{font-size:18px}
+}
 
 /* ---- a nota de revendedor nas páginas de produto ----
    Contextual e no corpo, não escondida no rodapé: quem está a olhar para
@@ -519,8 +579,3 @@ body.sg .pg-voltar{max-width:1440px;margin:0 auto;padding:26px 72px 60px;
   padding:13px 16px;margin:0 0 22px;font-size:14.5px;color:var(--tinta-fraca);max-width:68ch;
 }
 .pg-dealer-nota a{font-weight:800}
-
-@media(max-width:600px){
-  .fl-lista{grid-template-columns:1fr}
-  .fl-cor{padding:20px}
-}
