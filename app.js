@@ -3213,6 +3213,15 @@ const SUGESTAO = {
 };
 
 function sugereIdioma(locales) {
+  /* SÓ EM /. Quem escreveu /de/, ou clicou num resultado alemão, ou seguiu
+     uma ligação alemã, já disse em que língua quer ler — perguntar-lhe outra
+     vez é não acreditar nele. A língua do browser só tem voto quando o
+     endereço não disse nada, e o único endereço que não diz nada é a raiz.
+
+     A regra fica assim numa frase, que é o que a torna testável: a sugestão
+     existe em / e mais em lado nenhum. */
+  if (location.pathname !== '/') return;
+
   let escolhido = null, dispensado = null;
   try {
     escolhido = localStorage.getItem(CHAVE_IDIOMA);

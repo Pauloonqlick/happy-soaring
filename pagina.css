@@ -702,3 +702,37 @@ a.fl-cor-a:hover{background:#ff7c31;color:#fff}
   padding:13px 16px;margin:0 0 22px;font-size:14.5px;color:var(--tinta-fraca);max-width:68ch;
 }
 .pg-dealer-nota a{font-weight:800}
+
+/* ---- seletor de idioma -------------------------------------------------
+   Códigos e não bandeiras: uma bandeira é um país, e o inglês não é dos
+   Estados Unidos. O que se vê é PT · EN · ES · FR · DE; o que um leitor de
+   ecrã ouve é o nome da língua na própria língua.
+
+   A língua actual não se distingue só pelo laranja — leva também o traço
+   por baixo, mais peso, e o aria-current. Quem não separa o laranja do
+   branco continua a ver onde está.
+
+   margin-left:auto encosta o seletor à direita nas duas situações: no fim
+   da barra quando tudo cabe numa linha, e no fim da segunda linha quando o
+   flex-wrap parte. Sem isto, ao partir ficava sozinho à esquerda por baixo
+   da marca, a parecer um item de navegação órfão. */
+.pg-idiomas{
+  display:flex;align-items:center;margin-left:auto;
+  font-size:11.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;
+}
+.pg .pg-idiomas a{
+  color:rgba(255,255,255,.72);text-decoration:none;
+  padding:2px 0 3px;border-bottom:2px solid transparent;
+}
+.pg .pg-idiomas a:hover{color:#fff}
+.pg .pg-idiomas a[aria-current]{
+  color:var(--orange);font-weight:800;border-bottom-color:var(--orange);
+}
+.pg .pg-idiomas a:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+.pg-idiomas i{font-style:normal;opacity:.32;padding:0 8px}
+
+/* o nome da língua existe para ser ouvido, não para ser visto */
+.pg-so-leitor{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;
+}

@@ -103,6 +103,7 @@ const T = {
                fr:'Plage de vent', de:'Windbereich' },
   kn:        { pt:'nós', en:'kn', es:'nudos', fr:'nœuds', de:'kn' },
   kmh:       { pt:'km/h', en:'km/h', es:'km/h', fr:'km/h', de:'km/h' },
+  idioma:    { pt:'Idioma', en:'Language', es:'Idioma', fr:'Langue', de:'Sprache' },
   unidade:   { pt:'Unidade de velocidade', en:'Speed unit', es:'Unidad de velocidad',
                fr:'Unité de vitesse', de:'Geschwindigkeitseinheit' },
   msg:       { pt:'Olá! Queria pedir preço para a {n}.', en:'Hi! I would like a price for the {n}.',
@@ -142,6 +143,92 @@ const caminho = (l, p) =>
    para o visitante, mas não criava página nenhuma para a pesquisa. */
 const inicioHref = l => (l === OMISSAO ? '/' : '/' + l + '/');
 const inicioSeccao = (l, id) => inicioHref(l) + '#' + id;
+
+/* ---- as cinco versões de uma página -----------------------------------
+   UMA ESTRUTURA, DUAS SAÍDAS.
+
+   O gerador já sabia calcular o endereço de cada língua — era o que fazia
+   para escrever os hreflang. Agora calcula-o uma vez e dá o mesmo conjunto
+   às duas coisas que precisam dele: as etiquetas que o Google lê e o
+   seletor que a pessoa carrega.
+
+   A alternativa era o seletor ler os hreflang no browser. Seria a mesma
+   fonte, mas obrigava a JavaScript um controlo que pode ser HTML, e ainda
+   tinha a armadilha das SEIS etiquetas: o x-default não é uma língua.
+
+   Isto importa porque as URLs não são um prefixo trocado —
+   /asas/mullet-2/ é /en/wings/mullet-2/, com o segmento da categoria
+   traduzido. Quem tivesse de refazer isso noutro sítio estava a duplicar a
+   caminho() e o SEGMENTO. */
+const alternativas = ondeFica => IDIOMAS.map(x => ({ lang: x, url: ondeFica(x) }));
+
+const etiquetasAlt = alts =>
+  alts.map(a => '<link rel="alternate" hreflang="' + a.lang + '" href="' + DOMINIO + a.url + '" />')
+    .concat('<link rel="alternate" hreflang="x-default" href="' +
+      DOMINIO + alts.find(a => a.lang === OMISSAO).url + '" />').join('\n');
+
+/* o nome de cada língua na própria língua: é o nome acessível de cada
+   ligação. "FR" não diz nada a quem ouve a página; "Français" diz. */
+const NOME_IDIOMA = {
+  pt: 'Português', en: 'English', es: 'Español', fr: 'Français', de: 'Deutsch'
+};
+
+/* O seletor sai em HTML: cinco <a> a sério, separados por pontos. Funciona
+   sem JavaScript — e como são ligações reais entre as versões, também
+   valem como ligação interna do cluster de cada idioma.
+
+   A língua actual não se distingue só pela cor. Leva aria-current para
+   quem ouve, e um traço por baixo mais o peso para quem não distingue o
+   laranja do branco. */
+const seletorIdiomas = (alts, l) =>
+  '<nav class="pg-idiomas" aria-label="' + esc(t(T.idioma, l)) + '">' +
+  alts.map(a =>
+    '<a href="' + esc(a.url) + '" lang="' + a.lang + '" hreflang="' + a.lang + '"' +
+    (a.lang === l ? ' aria-current="page"' : '') +
+    ' title="' + esc(NOME_IDIOMA[a.lang]) + '">' +
+    '<span class="pg-idiomas-cod" aria-hidden="true">' + a.lang.toUpperCase() + '</span>' +
+    '<span class="pg-so-leitor">' + esc(NOME_IDIOMA[a.lang]) + '</span></a>')
+    .join('<i aria-hidden="true">·</i>') +
+  '</nav>';
+
+/* guardar a preferência é a única coisa que precisa de JavaScript aqui, e
+   é acessória: sem ele as ligações continuam a levar a pessoa à página
+   certa. A língua vem do atributo hreflang da própria ligação, para não
+   haver uma segunda lista a dizer a mesma coisa.
+
+   Guarda a preferência e mais nada. Estas páginas nunca encaminham
+   ninguém: um endereço de produto é tão explícito como um de língua, e a
+   preferência só serve para quem, mais tarde, entrar em /. */
+const scriptIdiomas = () => `<script>
+(function () {
+  var n = document.querySelector('.pg-idiomas'); if (!n) return;
+  n.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[hreflang]') : null;
+    if (!a) return;
+    try { localStorage.setItem('hs-idioma', a.getAttribute('hreflang')); } catch (err) {}
+  });
+})();
+<\/script>`;
+
+/* ---- a verificação que impede a divergência ---------------------------
+   Compara, na página já escrita, os endereços que o Google vai ler com os
+   endereços que a pessoa vai carregar. Saem os dois da mesma estrutura, e
+   por isso isto nunca devia falhar — é exactamente por isso que vale a
+   pena: se um dia falhar, é porque alguém partiu a origem única, e é
+   melhor a publicação parar do que descobrir-se num browser. */
+function confereAlternativas(html, ondeEstou) {
+  const norm = u => (u.startsWith('http') ? u : DOMINIO + u);
+  const doHead = [...html.matchAll(/<link rel="alternate" hreflang="(?!x-default)[a-z]{2}" href="([^"]+)"/g)]
+    .map(m => m[1]).sort();
+  const doSeletor = [...html.matchAll(/<a href="([^"]+)" lang="[a-z]{2}" hreflang="[a-z]{2}"/g)]
+    .map(m => norm(m[1])).sort();
+  if (doHead.length !== IDIOMAS.length)
+    throw new Error(ondeEstou + ': esperava ' + IDIOMAS.length + ' hreflang, encontrei ' + doHead.length);
+  if (doHead.join('|') !== doSeletor.join('|'))
+    throw new Error('PARADO em ' + ondeEstou + ': o seletor e os hreflang não dizem o mesmo.\n' +
+      '  hreflang: ' + doHead.join('\n            ') + '\n' +
+      '  seletor:  ' + doSeletor.join('\n            '));
+}
 
 /* parágrafos e listas a partir do texto do CMS, com **negrito** */
 function corpo(txt) {
@@ -788,8 +875,8 @@ const caminhoFlow = l => (l === OMISSAO ? '' : '/' + l) + '/flow-paragliders-por
 function paginaFlow(l, num) {
   const url = DOMINIO + caminhoFlow(l);
   const foto = DOMINIO + '/images/og-happysoaring.jpg';
-  const alt = IDIOMAS.map(x =>
-    '<link rel="alternate" hreflang="' + x + '" href="' + DOMINIO + caminhoFlow(x) + '" />').join('\n');
+  const alts = alternativas(x => caminhoFlow(x));
+  const alt = etiquetasAlt(alts);
   const wa = 'https://wa.me/' + num + '?text=' + encodeURIComponent(t(FL.ctaMsg, l));
   const inicio = inicioHref(l);
 
@@ -853,7 +940,6 @@ function paginaFlow(l, num) {
 <meta name="description" content="${esc(t(FL.descricao, l))}" />
 <link rel="canonical" href="${url}" />
 ${alt}
-<link rel="alternate" hreflang="x-default" href="${DOMINIO + caminhoFlow(OMISSAO)}" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Happy Soaring" />
 <meta property="og:url" content="${url}" />
@@ -869,6 +955,7 @@ ${alt}
 <header class="pg-topo">
   <a class="pg-marca" href="${inicio}">HAPPY <span>SOARING</span></a>
   <span class="pg-dealer">${esc(t(T.dealer, l))}</span>
+  ${seletorIdiomas(alts, l)}
 </header>
 
 <div class="pg-cx fl-cx">
@@ -936,6 +1023,7 @@ ${alt}
 </div>
 
 <footer class="pg-rodape">Happy Soaring &middot; ${esc(t(T.dealer, l))}</footer>
+${scriptIdiomas()}
 </body>
 </html>`;
 }
@@ -961,8 +1049,8 @@ const caminhoSG = l => (l === OMISSAO ? '' : '/' + l) + '/smartground/';
 function paginaSmartGround(l, num) {
   const url = DOMINIO + caminhoSG(l);
   const foto = DOMINIO + '/images/og-happysoaring.jpg';
-  const alt = IDIOMAS.map(x =>
-    '<link rel="alternate" hreflang="' + x + '" href="' + DOMINIO + caminhoSG(x) + '" />').join('\n');
+  const alts = alternativas(x => caminhoSG(x));
+  const alt = etiquetasAlt(alts);
   const wa = 'https://wa.me/' + num + '?text=' + encodeURIComponent(t(SG.ctaMsg, l));
   const cad = SG.cadeia[l] || SG.cadeia[OMISSAO];
   const fases = SG.fases[l] || SG.fases[OMISSAO];
@@ -1013,7 +1101,6 @@ function paginaSmartGround(l, num) {
 <meta name="description" content="${esc(t(SG.descricao, l))}" />
 <link rel="canonical" href="${url}" />
 ${alt}
-<link rel="alternate" hreflang="x-default" href="${DOMINIO + caminhoSG(OMISSAO)}" />
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="Happy Soaring" />
 <meta property="og:url" content="${url}" />
@@ -1029,6 +1116,7 @@ ${alt}
 <header class="pg-topo">
   <a class="pg-marca" href="${inicio}">HAPPY <span>SOARING</span></a>
   <span class="pg-dealer">${esc(t(T.dealer, l))}</span>
+  ${seletorIdiomas(alts, l)}
 </header>
 
 <main>
@@ -1129,6 +1217,7 @@ ${alt}
 </main>
 
 <footer class="pg-rodape">Happy Soaring &middot; ${esc(t(T.dealer, l))}</footer>
+${scriptIdiomas()}
 </body>
 </html>`;
 }
@@ -1141,8 +1230,8 @@ function pagina(p, l, num) {
     ' Flow Paragliders | Happy Soaring';
   const desc = (t(p.tagline, l) || t(p.descricao, l) || '').slice(0, 155);
 
-  const alt = IDIOMAS.map(x =>
-    '<link rel="alternate" hreflang="' + x + '" href="' + DOMINIO + caminho(x, p) + '" />').join('\n');
+  const alts = alternativas(x => caminho(x, p));
+  const alt = etiquetasAlt(alts);
 
   const secs = (p.seccoes || []).map(s => {
     const tt = t(s.titulo, l), tx = t(s.texto, l);
@@ -1167,7 +1256,6 @@ function pagina(p, l, num) {
 <meta name="description" content="${esc(desc)}" />
 <link rel="canonical" href="${url}" />
 ${alt}
-<link rel="alternate" hreflang="x-default" href="${DOMINIO + caminho(OMISSAO, p)}" />
 <meta property="og:type" content="product" />
 <meta property="og:site_name" content="Happy Soaring" />
 <meta property="og:url" content="${url}" />
@@ -1182,6 +1270,7 @@ ${alt}
 <header class="pg-topo">
   <a class="pg-marca" href="${inicioHref(l)}">HAPPY <span>SOARING</span></a>
   <span class="pg-dealer">${esc(t(T.dealer, l))}</span>
+  ${seletorIdiomas(alts, l)}
 </header>
 
 <main class="pg-cx">
@@ -1240,6 +1329,7 @@ ${alt}
 </main>
 
 <footer class="pg-rodape">Happy Soaring · ${esc(t(T.dealer, l))}</footer>
+${scriptIdiomas()}
 </body>
 </html>
 `;
@@ -1302,7 +1392,9 @@ for (const p of produtos) {
     const rel = caminho(l, p);
     const dir = path.join(destino, rel);
     fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(path.join(dir, 'index.html'), pagina(p, l, num));
+    const html = pagina(p, l, num);
+    confereAlternativas(html, rel);
+    fs.writeFileSync(path.join(dir, 'index.html'), html);
     urls.push(DOMINIO + rel);
     n++;
   }
@@ -1318,7 +1410,9 @@ if (!so && !soIdioma) {
     const rel = caminhoSG(l);
     const dir = path.join(destino, rel);
     fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(path.join(dir, 'index.html'), paginaSmartGround(l, num));
+    const html = paginaSmartGround(l, num);
+    confereAlternativas(html, rel);
+    fs.writeFileSync(path.join(dir, 'index.html'), html);
     urls.push(DOMINIO + rel);
   }
   console.log('  SmartGround: ' + IDIOMAS.length + ' páginas');
@@ -1326,7 +1420,9 @@ if (!so && !soIdioma) {
     const rel = caminhoFlow(l);
     const dir = path.join(destino, rel);
     fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(path.join(dir, 'index.html'), paginaFlow(l, num));
+    const html = paginaFlow(l, num);
+    confereAlternativas(html, rel);
+    fs.writeFileSync(path.join(dir, 'index.html'), html);
     urls.push(DOMINIO + rel);
   }
   console.log('  Flow Paragliders Portugal: ' + IDIOMAS.length + ' páginas');
