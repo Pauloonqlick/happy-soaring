@@ -11,3 +11,16 @@
 # deitar fora, que é o que um 404 faz.
 /coming-soon/    /    301
 /coming-soon     /    301
+
+# As páginas geradas viveram algum tempo a ligar para /en/, /es/, /fr/ e /de/,
+# que nunca existiram: a página inicial é um endereço só e o idioma dela vive
+# no browser. As ligações já foram corrigidas para /#lang=xx; isto é para quem
+# tiver o endereço antigo guardado ou já indexado.
+/en/    /#lang=en    301
+/es/    /#lang=es    301
+/fr/    /#lang=fr    301
+/de/    /#lang=de    301
+/en     /#lang=en    301
+/es     /#lang=es    301
+/fr     /#lang=fr    301
+/de     /#lang=de    301

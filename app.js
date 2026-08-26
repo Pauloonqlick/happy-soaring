@@ -17,6 +17,26 @@ const px = v => (typeof v === 'number' ? v + 'px' : v);
    { pt: "...", en: "...", ... }. t() escolhe o idioma atual, com fallback. */
 const DEFAULT_LOCALE = 'pt';
 let LOCALE = (typeof localStorage !== 'undefined' && localStorage.getItem('lang')) || DEFAULT_LOCALE;
+
+/* As páginas das asas, o SmartGround e o hub da Flow existem nas cinco
+   línguas com endereço próprio; a página inicial é uma só e guarda o idioma
+   no browser. Para quem vem de lá em alemão não aterrar em português, essas
+   páginas mandam o idioma no fragmento — /#lang=de, ou /#lang=de&produtos
+   quando também querem uma secção.
+
+   Fica guardado como se tivesse sido escolhido na bandeira, e o fragmento é
+   limpo da barra para não ficar um endereço estranho no histórico nem nas
+   partilhas. A âncora, essa, mantém-se: quem pediu #produtos vai a produtos. */
+(function () {
+  const m = (location.hash || '').match(/[#&]lang=(pt|en|es|fr|de)(?![a-z])/);
+  if (!m) return;
+  LOCALE = m[1];
+  try { localStorage.setItem('lang', LOCALE); } catch (e) {}
+  const resto = location.hash.replace(/[#&]lang=[a-z]{2}/, '').replace(/^[#&]+/, '');
+  try {
+    history.replaceState(null, '', location.pathname + location.search + (resto ? '#' + resto : ''));
+  } catch (e) {}
+})();
 function t(v) {
   if (v == null) return '';
   if (typeof v === 'string') return v;
@@ -3134,7 +3154,9 @@ function render(data) {
   }
 
   initMotion(data);
-  reporPosicao();      /* volta à secção onde se estava, se veio de mudança de idioma */
+  /* a âncora manda: se o endereço pede uma secção, é para lá que se vai.
+     Só depois é que a reposição de posição tem palavra a dizer. */
+  if (!irParaAncora()) reporPosicao();
 }
 
 /* ---- seletor de idioma (bandeiras) ---- */
@@ -3163,6 +3185,27 @@ function guardaPosicao() {
     sessionStorage.setItem(POSKEY, JSON.stringify({ id: alvo.id, off: Math.round(window.scrollY - alvo.offsetTop) }));
   } catch (e) { }
 }
+/* ---- ir para a secção pedida no endereço ----
+   As secções da página inicial só existem depois de o app.js as desenhar, e
+   nessa altura o salto que o browser faz sozinho para a âncora já aconteceu
+   há muito — por isso `/#produtos` aterrava sempre no topo. Fazemos o salto
+   à mão quando há mesmo lá alguma coisa para onde saltar.
+
+   Repete-se como na reposição de posição: as imagens ainda estão a carregar
+   e continuam a mudar a altura da página por baixo dos pés. */
+function irParaAncora() {
+  const id = (location.hash || '').replace(/^#/, '');
+  if (!id || /\//.test(id)) return false;      /* #produtos/asa abre a ficha, não é âncora */
+  const alvo = document.getElementById(id);
+  if (!alvo) return false;
+  const ir = () => window.scrollTo({ top: Math.max(0, alvo.offsetTop), behavior: 'auto' });
+  ir();
+  requestAnimationFrame(ir);
+  window.addEventListener('load', ir, { once: true });
+  setTimeout(ir, 250);
+  return true;
+}
+
 function reporPosicao() {
   let p;
   try { p = JSON.parse(sessionStorage.getItem(POSKEY) || 'null'); sessionStorage.removeItem(POSKEY); } catch (e) { }

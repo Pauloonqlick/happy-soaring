@@ -131,6 +131,25 @@ const slug = n => String(n).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '
 const caminho = (l, p) =>
   (l === OMISSAO ? '' : '/' + l) + '/' + SEGMENTO[l] + '/' + slug(p.nome) + '/';
 
+/* ---- voltar à página inicial ------------------------------------------
+   A página inicial é UM endereço só: o idioma dela vive no browser, não na
+   URL — não existe /en/ nem /de/, e as ligações para lá davam 404.
+
+   As páginas geradas mandam o idioma no fragmento: /#lang=en. O fragmento
+   não chega ao servidor nem cria endereços novos para o Google indexar, e
+   o app.js lê-o, guarda-o e limpa-o da barra. Assim quem estava a ler em
+   alemão continua em alemão ao voltar ao início.
+
+   No JSON-LD vai o endereço limpo: os dados estruturados descrevem a
+   página, e a página é a mesma nas cinco línguas. */
+const INICIO = '/';
+const inicioHref = l => (l === OMISSAO ? INICIO : INICIO + '#lang=' + l);
+/* o mesmo, mas a cair numa secção da página inicial: o fragmento leva as
+   duas coisas separadas por &, e o app.js tira a parte do idioma e deixa
+   a âncora seguir o seu caminho */
+const inicioSeccao = (l, id) =>
+  l === OMISSAO ? INICIO + '#' + id : INICIO + '#lang=' + l + '&' + id;
+
 /* parágrafos e listas a partir do texto do CMS, com **negrito** */
 function corpo(txt) {
   if (!txt) return '';
@@ -162,7 +181,7 @@ function tabelaSpecs(p, l) {
 function jsonld(p, l, url, foto) {
   const g = [
     { '@type': 'BreadcrumbList', itemListElement: [
-      { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + (l === OMISSAO ? '/' : '/' + l + '/') },
+      { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + INICIO },
       { '@type': 'ListItem', position: 2, name: p.nome, item: url }
     ]},
     /* sem offers de propósito: não há preços no site, e inventá-los é
@@ -714,7 +733,7 @@ function paginaFlow(l, num) {
   const alt = IDIOMAS.map(x =>
     '<link rel="alternate" hreflang="' + x + '" href="' + DOMINIO + caminhoFlow(x) + '" />').join('\n');
   const wa = 'https://wa.me/' + num + '?text=' + encodeURIComponent(t(FL.ctaMsg, l));
-  const inicio = (l === OMISSAO ? '/' : '/' + l + '/');
+  const inicio = inicioHref(l);
 
   /* o catálogo sai dos mesmos dados que o site usa; agrupado pelas famílias
      que já existem, sem inventar categorias */
@@ -740,7 +759,7 @@ function paginaFlow(l, num) {
     '@context': 'https://schema.org',
     '@graph': [
       { '@type': 'BreadcrumbList', itemListElement: [
-        { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + inicio },
+        { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + INICIO },
         { '@type': 'ListItem', position: 2, name: 'Flow Paragliders Portugal', item: url }
       ]},
       { '@type': 'WebPage',
@@ -890,7 +909,7 @@ function paginaSmartGround(l, num) {
   const cad = SG.cadeia[l] || SG.cadeia[OMISSAO];
   const fases = SG.fases[l] || SG.fases[OMISSAO];
   const etapasCurso = SG.cursoEtapas[l] || SG.cursoEtapas[OMISSAO];
-  const inicio = (l === OMISSAO ? '/' : '/' + l + '/');
+  const inicio = inicioHref(l);
 
   /* HowTo descreve exactamente o que isto é: um método por etapas. Sem
      duração nem custo — não os temos, e inventá-los é o que não se faz. */
@@ -898,7 +917,7 @@ function paginaSmartGround(l, num) {
     '@context': 'https://schema.org',
     '@graph': [
       { '@type': 'BreadcrumbList', itemListElement: [
-        { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + inicio },
+        { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + INICIO },
         { '@type': 'ListItem', position: 2, name: 'SmartGround', item: url }
       ]},
       { '@type': 'HowTo',
@@ -1098,18 +1117,18 @@ ${alt}
 <meta property="og:description" content="${esc(desc)}" />
 <meta property="og:image" content="${foto}" />
 <meta name="twitter:card" content="summary_large_image" />
-<link rel="stylesheet" href="${l === OMISSAO ? '/' : '/'}pagina.css" />
+<link rel="stylesheet" href="/pagina.css" />
 <script type="application/ld+json">${jsonld(p, l, url, foto)}</script>
 </head>
 <body class="pg">
 <header class="pg-topo">
-  <a class="pg-marca" href="${l === OMISSAO ? '/' : '/' + l + '/'}">HAPPY <span>SOARING</span></a>
+  <a class="pg-marca" href="${inicioHref(l)}">HAPPY <span>SOARING</span></a>
   <span class="pg-dealer">${esc(t(T.dealer, l))}</span>
 </header>
 
 <main class="pg-cx">
   <nav class="pg-migalhas" aria-label="breadcrumb">
-    <a href="${l === OMISSAO ? '/' : '/' + l + '/'}">${esc(t(T.inicio, l))}</a> ›
+    <a href="${inicioHref(l)}">${esc(t(T.inicio, l))}</a> ›
     <span>${esc(rotuloFamilia(p.familia, l))}</span> › <span aria-current="page">${esc(p.nome)}</span>
   </nav>
 
@@ -1159,7 +1178,7 @@ ${alt}
 
   ${blocoIrmas(p, l)}
 
-  <p class="pg-voltar"><a href="${l === OMISSAO ? '/' : '/' + l + '/'}#produtos">${esc(t(T.voltar, l))}</a></p>
+  <p class="pg-voltar"><a href="${esc(inicioSeccao(l, 'produtos'))}">${esc(t(T.voltar, l))}</a></p>
 </main>
 
 <footer class="pg-rodape">Happy Soaring · ${esc(t(T.dealer, l))}</footer>
