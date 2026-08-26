@@ -3155,7 +3155,7 @@ function render(data) {
   iniciaAvisos(data.listaAvisos, numWa);
 
   const locales = (data.locales && data.locales.length) ? data.locales : [DEFAULT_LOCALE];
-  if (locales.length > 1) buildLangSwitcher(locales);
+  if (locales.length > 1) { buildLangSwitcher(locales); sugereIdioma(locales); }
 
   if (responsiveRules.length) {
     const st = el('style'); st.id = 'mobile-overrides';
@@ -3167,6 +3167,110 @@ function render(data) {
   /* a âncora manda: se o endereço pede uma secção, é para lá que se vai.
      Só depois é que a reposição de posição tem palavra a dizer. */
   if (!irParaAncora()) reporPosicao();
+}
+
+/* ---- preferência de idioma -------------------------------------------
+   A URL manda no que se serve; isto manda só no que se sugere.
+
+   hs-idioma          a língua que a pessoa ESCOLHEU — carregando numa
+                      bandeira ou aceitando a sugestão. É a única coisa que
+                      autoriza o encaminhamento a partir de /.
+   hs-idioma-nao      a sugestão que já foi dispensada, guardada pela língua
+                      sugerida. Fechar a caixa é dizer "não a esta", não é
+                      escolher a língua em que se está — se guardasse
+                      preferência, quem só quis fechar passava a ser
+                      encaminhado para sempre.
+
+   O encaminhamento vive no <head> do index.html, antes da pintura. Aqui só
+   se guarda a preferência e se faz a pergunta. */
+const CHAVE_IDIOMA = 'hs-idioma';
+const CHAVE_IDIOMA_NAO = 'hs-idioma-nao';
+
+function guardaIdioma(code) {
+  try { localStorage.setItem(CHAVE_IDIOMA, code); } catch (e) {}
+}
+
+/* o que o browser diz, reduzido às cinco línguas do site. Quem vier de
+   qualquer outra recebe inglês — não porque seja a língua dele, mas porque é
+   a que mais gente lê fora destas quatro. */
+function idiomaDoBrowser(locales) {
+  let bruto = [];
+  try { bruto = navigator.languages && navigator.languages.length
+    ? navigator.languages : [navigator.language || '']; } catch (e) { return null; }
+  for (const x of bruto) {
+    const base = String(x).toLowerCase().split('-')[0];
+    if (locales.indexOf(base) >= 0) return base;
+  }
+  return locales.indexOf('en') >= 0 ? 'en' : null;
+}
+
+const SUGESTAO = {
+  pt: { q: 'Ver a Happy Soaring em português?', sim: 'Mudar para português', nao: 'Não, obrigado' },
+  en: { q: 'View Happy Soaring in English?',    sim: 'Switch to English',    nao: 'No, thanks' },
+  es: { q: '¿Ver Happy Soaring en español?',    sim: 'Cambiar a español',    nao: 'No, gracias' },
+  fr: { q: 'Voir Happy Soaring en français ?',  sim: 'Passer au français',   nao: 'Non, merci' },
+  de: { q: 'Happy Soaring auf Deutsch ansehen?', sim: 'Auf Deutsch wechseln', nao: 'Nein, danke' }
+};
+
+function sugereIdioma(locales) {
+  let escolhido = null, dispensado = null;
+  try {
+    escolhido = localStorage.getItem(CHAVE_IDIOMA);
+    dispensado = localStorage.getItem(CHAVE_IDIOMA_NAO);
+  } catch (e) { return; }         /* sem armazenamento não se pergunta nada */
+
+  if (escolhido) return;                       /* já escolheu: não se insiste */
+  const alvo = idiomaDoBrowser(locales);
+  if (!alvo || alvo === LOCALE) return;        /* já está na língua dele */
+  if (dispensado === alvo) return;             /* já disse que não a esta */
+  const txt = SUGESTAO[alvo];
+  if (!txt) return;
+
+  const cx = el('div', 'sug');
+  /* data-nosnippet: isto é um controlo, não é texto da página. Sem ele o
+     Google pode ir buscar "View Happy Soaring in English?" para o resumo do
+     resultado, e o resumo passa a ser um botão. */
+  cx.setAttribute('data-nosnippet', '');
+  cx.setAttribute('role', 'dialog');
+  cx.setAttribute('aria-label', txt.q);
+  cx.lang = alvo;
+
+  const q = el('p', 'sug-q'); q.textContent = txt.q; cx.appendChild(q);
+  const bs = el('div', 'sug-b');
+  const sim = el('button', 'sug-sim'); sim.type = 'button'; sim.textContent = txt.sim;
+  const nao = el('button', 'sug-nao'); nao.type = 'button'; nao.textContent = txt.nao;
+  bs.appendChild(sim); bs.appendChild(nao); cx.appendChild(bs);
+  document.body.appendChild(cx);
+
+  function fecha() {
+    cx.classList.remove('on');
+    setTimeout(() => cx.remove(), 300);
+    document.removeEventListener('keydown', aoTeclado);
+    document.removeEventListener('click', aoClicarFora, true);
+  }
+  function aoTeclado(e) { if (e.key === 'Escape') fecha(); }
+  function aoClicarFora(e) { if (!cx.contains(e.target)) fecha(); }
+
+  sim.addEventListener('click', () => {
+    guardaIdioma(alvo);
+    location.href = (alvo === DEFAULT_LOCALE ? '/' : '/' + alvo + '/');
+  });
+  nao.addEventListener('click', () => {
+    /* guarda-se a sugestão recusada, não a língua atual */
+    try { localStorage.setItem(CHAVE_IDIOMA_NAO, alvo); } catch (e) {}
+    fecha();
+  });
+  /* Esc e clique fora fecham sem guardar nada: quem não respondeu não
+     respondeu, e a pergunta volta na visita seguinte. Os dois só passam a
+     valer quando a caixa aparece — senão um clique dado no primeiro segundo
+     fechava-a antes de alguém a ter visto.
+
+     900 ms: primeiro vê-se o hero, só depois é que se pergunta alguma coisa. */
+  setTimeout(() => {
+    cx.classList.add('on');
+    document.addEventListener('keydown', aoTeclado);
+    document.addEventListener('click', aoClicarFora, true);
+  }, 900);
 }
 
 /* ---- seletor de idioma (bandeiras) ---- */
@@ -3247,8 +3351,10 @@ function buildLangSwitcher(locales) {
     b.innerHTML = FLAGS[code] || code;
     b.addEventListener('click', () => {
       /* mudar de idioma é mudar de endereço: cada língua tem a sua página
-         inicial. A posição continua guardada, para aterrar na mesma secção. */
+         inicial. A posição continua guardada, para aterrar na mesma secção.
+         E carregar numa bandeira é uma escolha explícita — fica guardada. */
       guardaPosicao();
+      guardaIdioma(code);
       location.href = (code === DEFAULT_LOCALE ? '/' : '/' + code + '/');
     });
     list.appendChild(b);

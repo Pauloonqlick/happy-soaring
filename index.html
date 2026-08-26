@@ -4,6 +4,32 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+<!-- ENCAMINHAMENTO PELA PREFERÊNCIA GUARDADA
+     Corre antes de tudo o resto, de propósito: se corresse no app.js, quem
+     tem alemão guardado via a página portuguesa a pintar e a saltar logo a
+     seguir.
+
+     Três condições, todas obrigatórias: o endereço é exactamente /, existe
+     uma preferência que a pessoa escolheu (bandeira ou sugestão aceite), e
+     essa preferência não é português. Nunca se encaminha por causa da
+     língua do browser, e nunca se tira ninguém de /en/, /es/, /fr/ ou /de/ —
+     quem escreve um endereço de língua está a dizer o que quer.
+
+     replace() e não href: com href, o botão "voltar" trazia a pessoa a / e
+     era outra vez encaminhada, sem forma de sair.
+
+     O Googlebot não tem localStorage: nunca é encaminhado, e indexa
+     exactamente o que está em cada endereço. -->
+<script>
+(function () {
+  try {
+    if (location.pathname !== '/') return;
+    var p = localStorage.getItem('hs-idioma');
+    if (p && (p === 'en' || p === 'es' || p === 'fr' || p === 'de')) location.replace('/' + p + '/');
+  } catch (e) {}
+})();
+</script>
+
 <title>Happy Soaring — Parakite e Parapente em Portugal</title>
 <meta name="description" content="Parakite e parapente em Portugal com a Happy Soaring: aconselhamento, equipamento Flow Paragliders e formação com a escola parceira FelloFly." />
 <link rel="canonical" href="https://happysoaring.com/" />

@@ -1438,3 +1438,55 @@ body.tem-faixa .lang-switcher{top:calc(24px + var(--faixa-h,56px))}
 /* a etiqueta de revendedor é uma ligação para a página que o explica */
 a.flow-dealer{text-decoration:none;transition:color .15s}
 a.flow-dealer:hover{color:var(--orange)}
+
+/* ======================================================================
+   SUGESTÃO DE IDIOMA
+   Só pergunta, nunca decide. Quem entrou em /de/ fica em /de/; quem entrou
+   em / e nunca escolheu nada vê isto uma vez e não volta a ver.
+
+   No desktop pendura-se nas bandeiras — é para lá que a pessoa vai olhar
+   quando quiser mudar de língua outra vez, e assim a caixa ensina onde
+   fica o controlo em vez de só interromper. No telemóvel vai para baixo,
+   porque em cima a bandeira ocupa a esquerda e o menu a direita, e não há
+   como pôr lá uma caixa sem tapar o hero.
+
+   z-index 43 fica por baixo do véu do menu (44): se o menu abrir, isto
+   escurece com o resto da página, como deve ser.
+   ====================================================================== */
+.sug{
+  position:fixed;z-index:43;
+  background:#fff;color:#16202c;
+  border-radius:12px;box-shadow:0 14px 40px rgba(0,0,0,.34);
+  padding:14px 15px;
+  opacity:0;transition:opacity .28s ease,transform .28s ease;
+}
+.sug.on{opacity:1;transform:none}
+.sug-q{font-size:13.5px;font-weight:700;line-height:1.35;margin:0 0 11px;color:#16202c}
+.sug-b{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.sug-sim{
+  background:var(--orange);color:#fff;border:0;border-radius:100px;font-family:inherit;
+  font-size:12px;font-weight:800;padding:9px 16px;cursor:pointer;
+}
+.sug-sim:hover{background:#ff7c31}
+.sug-nao{
+  background:none;border:0;color:#5b6878;font-family:inherit;font-size:12.5px;font-weight:600;
+  text-decoration:underline;text-underline-offset:2px;cursor:pointer;padding:9px 2px;
+}
+.sug-nao:hover{color:#16202c}
+.sug button:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+
+@media(min-width:761px){
+  .sug{top:60px;left:20px;width:264px;transform:translateY(-6px)}
+  /* o bico aponta às bandeiras, que estão em top:24px left:20px */
+  .sug::before{
+    content:"";position:absolute;top:-5px;left:15px;width:12px;height:12px;
+    background:#fff;transform:rotate(45deg);border-radius:2px;
+  }
+}
+@media(max-width:760px){
+  .sug{left:12px;right:12px;bottom:12px;transform:translateY(8px)}
+  .sug-b{justify-content:flex-end}
+}
+@media(prefers-reduced-motion:reduce){
+  .sug{transition:none;transform:none}
+}
