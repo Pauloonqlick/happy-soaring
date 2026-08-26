@@ -106,6 +106,18 @@ h2.title{
   text-shadow:0 2px 10px rgba(0,0,0,.35);
   white-space:pre-line;
 }
+/* ---- o h1 do hero ----
+   O assunto da página, entre a marca e o convite. Mais pequeno do que o
+   wordmark de propósito — ali quem manda é a marca — e mais pesado do que o
+   lead, porque é a frase que diz de que trata isto. Foi para aqui que veio o
+   h1: duas palavras a dizer o nome não são o assunto de nada. */
+.hero-h1{
+  font-size:clamp(19px,2.4vw,28px);
+  font-weight:800;letter-spacing:-.5px;line-height:1.18;
+  margin:16px 0 0;max-width:24ch;text-wrap:balance;
+  text-shadow:0 3px 14px rgba(0,0,0,.35);
+}
+.hero-h1 + .lead{margin-top:10px}
 .content{max-width:560px;position:relative;z-index:3}
 .content.right{margin-left:auto;text-align:right}
 .content.right .lead{margin-left:auto}

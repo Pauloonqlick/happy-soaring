@@ -8,7 +8,8 @@
  *
  *     pt  asa        · revendedor oficial
  *     en  wing       · official dealer
- *     es  vela       · distribuidor oficial   (não "ala")
+ *     es  vela       · punto de venta oficial (não "ala", e não
+ *                      "distribuidor", que é quem distribui a marca num país)
  *     fr  voile      · revendeur officiel     (não "aile")
  *     de  Gleitschirm· offizieller Händler
  *
@@ -28,14 +29,14 @@ export const FL = {
   titulo: {
     pt: 'Flow Paragliders Portugal — Revendedor oficial | Happy Soaring',
     en: 'Flow Paragliders Portugal — Official Dealer | Happy Soaring',
-    es: 'Flow Paragliders Portugal — Distribuidor oficial | Happy Soaring',
+    es: 'Flow Paragliders Portugal — Punto de venta oficial | Happy Soaring',
     fr: 'Flow Paragliders Portugal — Revendeur officiel | Happy Soaring',
     de: 'Flow Paragliders Portugal — Offizieller Händler | Happy Soaring'
   },
   descricao: {
     pt: 'A Happy Soaring é revendedor oficial Flow Paragliders em Portugal: 22 asas, arneses e reservas, ajuda a escolher modelo e tamanho, e acompanhamento depois da compra.',
     en: 'Happy Soaring is an official Flow Paragliders dealer in Portugal: 22 wings, harnesses and reserves, help choosing model and size, and support after the sale.',
-    es: 'Happy Soaring es distribuidor oficial de Flow Paragliders en Portugal: 22 velas, arneses y paracaídas de emergencia, ayuda para elegir modelo y talla, y acompañamiento después de la compra.',
+    es: 'Happy Soaring es punto de venta oficial de Flow Paragliders en Portugal: 22 velas, arneses y paracaídas de emergencia, ayuda para elegir modelo y talla, y acompañamiento después de la compra.',
     fr: 'Happy Soaring est revendeur officiel Flow Paragliders au Portugal : 22 voiles, sellettes et parachutes de secours, aide au choix du modèle et de la taille, et suivi après l’achat.',
     de: 'Happy Soaring ist offizieller Flow-Paragliders-Händler in Portugal: 22 Schirme, Gurtzeuge und Rettungsschirme, Hilfe bei Modell- und Größenwahl und Betreuung nach dem Kauf.'
   },
@@ -46,7 +47,7 @@ export const FL = {
     de: 'Flow Paragliders in Portugal'
   },
   kicker: {
-    pt: 'Revendedor oficial', en: 'Official dealer', es: 'Distribuidor oficial',
+    pt: 'Revendedor oficial', en: 'Official dealer', es: 'Punto de venta oficial',
     fr: 'Revendeur officiel', de: 'Offizieller Händler'
   },
   entrada: {
@@ -60,7 +61,7 @@ export const FL = {
   dealerTit: {
     pt: 'O que significa sermos revendedor oficial',
     en: 'What being an official dealer means',
-    es: 'Qué significa ser distribuidor oficial',
+    es: 'Qué significa ser punto de venta oficial',
     fr: 'Ce que veut dire être revendeur officiel',
     de: 'Was offizieller Händler bedeutet'
   },
@@ -161,7 +162,7 @@ export const FL = {
   ancora: {
     pt: 'A Happy Soaring é revendedor oficial Flow Paragliders em Portugal.',
     en: 'Happy Soaring is an official Flow Paragliders dealer in Portugal.',
-    es: 'Happy Soaring es distribuidor oficial de Flow Paragliders en Portugal.',
+    es: 'Happy Soaring es punto de venta oficial de Flow Paragliders en Portugal.',
     fr: 'Happy Soaring est revendeur officiel Flow Paragliders au Portugal.',
     de: 'Happy Soaring ist offizieller Flow-Paragliders-Händler in Portugal.'
   },

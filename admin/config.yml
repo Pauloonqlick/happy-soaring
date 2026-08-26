@@ -480,9 +480,42 @@ collections:
                 name: titleTag
                 widget: select
                 options:
-                  - h1
+                  - marca
                   - h2
                 default: h2
+                hint: >-
+                  "marca" é o wordmark gigante do hero (HAPPY SOARING). Não é
+                  o h1 da página — o h1 é o campo a seguir.
+              - label: Título principal da página (h1)
+                name: h1
+                widget: object
+                collapsed: true
+                summary: '{{fields.pt}}'
+                required: false
+                hint: >-
+                  Só a página inicial tem h1, e só um. É a frase que diz do
+                  que trata a página, não o nome da marca.
+                fields:
+                  - label: Português
+                    name: pt
+                    widget: string
+                    required: false
+                  - label: English
+                    name: en
+                    widget: string
+                    required: false
+                  - label: Español
+                    name: es
+                    widget: string
+                    required: false
+                  - label: Français
+                    name: fr
+                    widget: string
+                    required: false
+                  - label: Deutsch
+                    name: de
+                    widget: string
+                    required: false
               - label: Subtítulo
                 name: subtitle
                 widget: object

@@ -27,6 +27,7 @@ import { rotuloFamilia, rotuloClasse } from '../regras/taxonomia.js';
 import { KN_PARA_KMH, PAISES_NOS, CHAVE_UNIDADE } from '../regras/unidades.js';
 import { SG } from './conteudo-smartground.mjs';
 import { FL } from './conteudo-flow.mjs';
+import { IN } from './conteudo-inicial.mjs';
 
 const RAIZ = process.cwd();   /* corre-se a partir da raiz do projecto */
 const DOMINIO = 'https://happysoaring.com';
@@ -54,7 +55,7 @@ const T = {
                fr:'Voir toute la gamme', de:'Die ganze Reihe ansehen' },
   dealer:    { pt:'Dealer oficial Flow Paragliders em Portugal',
                en:'Official Flow Paragliders dealer in Portugal',
-               es:'Distribuidor oficial Flow Paragliders en Portugal',
+               es:'Punto de venta oficial Flow Paragliders en Portugal',
                fr:'Revendeur officiel Flow Paragliders au Portugal',
                de:'Offizieller Flow-Paragliders-Händler in Portugal' },
   inicio:    { pt:'Início', en:'Home', es:'Inicio', fr:'Accueil', de:'Start' },
@@ -132,23 +133,15 @@ const caminho = (l, p) =>
   (l === OMISSAO ? '' : '/' + l) + '/' + SEGMENTO[l] + '/' + slug(p.nome) + '/';
 
 /* ---- voltar à página inicial ------------------------------------------
-   A página inicial é UM endereço só: o idioma dela vive no browser, não na
-   URL — não existe /en/ nem /de/, e as ligações para lá davam 404.
+   Cada língua tem a sua página inicial, com endereço próprio: / para
+   português, /en/, /es/, /fr/ e /de/ para as outras. Quem está a ler uma asa
+   em alemão volta a /de/ e continua em alemão — sem truques no fragmento,
+   sem depender de JavaScript, e com um endereço que o Google pode indexar.
 
-   As páginas geradas mandam o idioma no fragmento: /#lang=en. O fragmento
-   não chega ao servidor nem cria endereços novos para o Google indexar, e
-   o app.js lê-o, guarda-o e limpa-o da barra. Assim quem estava a ler em
-   alemão continua em alemão ao voltar ao início.
-
-   No JSON-LD vai o endereço limpo: os dados estruturados descrevem a
-   página, e a página é a mesma nas cinco línguas. */
-const INICIO = '/';
-const inicioHref = l => (l === OMISSAO ? INICIO : INICIO + '#lang=' + l);
-/* o mesmo, mas a cair numa secção da página inicial: o fragmento leva as
-   duas coisas separadas por &, e o app.js tira a parte do idioma e deixa
-   a âncora seguir o seu caminho */
-const inicioSeccao = (l, id) =>
-  l === OMISSAO ? INICIO + '#' + id : INICIO + '#lang=' + l + '&' + id;
+   Foi isto que substituiu o /#lang=de que aqui viveu pouco tempo: servia
+   para o visitante, mas não criava página nenhuma para a pesquisa. */
+const inicioHref = l => (l === OMISSAO ? '/' : '/' + l + '/');
+const inicioSeccao = (l, id) => inicioHref(l) + '#' + id;
 
 /* parágrafos e listas a partir do texto do CMS, com **negrito** */
 function corpo(txt) {
@@ -181,7 +174,7 @@ function tabelaSpecs(p, l) {
 function jsonld(p, l, url, foto) {
   const g = [
     { '@type': 'BreadcrumbList', itemListElement: [
-      { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + INICIO },
+      { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + inicioHref(l) },
       { '@type': 'ListItem', position: 2, name: p.nome, item: url }
     ]},
     /* sem offers de propósito: não há preços no site, e inventá-los é
@@ -255,8 +248,7 @@ function blocoIrmas(p, l) {
      seguir montado pelo renderizador. Se um dia isto disser uma coisa e o
      site mostrar outra, passa a ser cloaking — por isso sai tudo do mesmo
      JSON que o site lê. */
-function corpoInicial() {
-  const l = OMISSAO;
+function corpoInicial(l) {
   const porFamilia = new Map();
   for (const p of produtos) {
     if (!porFamilia.has(p.familia)) porFamilia.set(p.familia, []);
@@ -271,42 +263,108 @@ function corpoInicial() {
         cls ? ' — ' + esc(cls) : ''}</li>`;
     }).join('')}</ul>`).join('\n');
 
+  /* o h1 e o parágrafo saem do hero.json — os mesmos que o app.js desenha.
+     Se saíssem daqui, o bloco estático e a página montada podiam divergir, e
+     dizer uma coisa ao Google e outra a quem lê tem nome: cloaking. */
+  const h1 = t(HERO.h1, l);
+  const entrada = t(HERO.subtitle, l);
+
   return `<div class="hs-estatico">
-    <h1>Happy Soaring — Parakite e Parapente em Portugal</h1>
-    <p>Cursos de parakite em Portugal e revendedor oficial da
-    <strong>Flow Paragliders</strong>. Aconselhamento a sério, primeira
-    inspeção de segurança incluída e cor à tua escolha.</p>
+    <h1>${esc(h1)}</h1>
+    <p>${esc(entrada)}</p>
 
     <h2>${esc(t(SG.h1a, l))} ${esc(t(SG.h1b, l))}</h2>
     <p>${esc(t(SG.descricao, l))}
-    <a href="/smartground/">${esc(t(SG.conhecer, l))}</a></p>
+    <a href="${esc(caminhoSG(l))}">${esc(t(SG.conhecer, l))}</a></p>
 
-    <h2>Catálogo Flow Paragliders</h2>
-    <p>${produtos.length} asas, arneses e reservas, cada uma com a sua página.
-    <a href="/flow-paragliders-portugal/">${esc(t(FL.ancoraLink, l))}</a></p>
+    <h2>${esc(t(FL.gamaTit, l))}</h2>
+    <p>${esc(t(FL.gamaSub, l))}
+    <a href="${esc(caminhoFlow(l))}">${esc(t(FL.ancoraLink, l))}</a></p>
 ${listas}
   </div>`;
 }
 
-/* Escreve o corpo estático dentro do index.html, entre marcas, para poder
-   ser reescrito em cada publicação sem tocar no resto do ficheiro. */
-function escreveInicial() {
-  const f = path.join(RAIZ, 'index.html');
-  const abre = '<!-- INICIO CONTEUDO ESTATICO (gerado) -->';
-  const fecha = '<!-- FIM CONTEUDO ESTATICO -->';
-  let h = fs.readFileSync(f, 'utf8');
-  const bloco = abre + '\n' + corpoInicial() + '\n' + fecha;
+/* ---- as cinco páginas iniciais ----------------------------------------
+   O index.html é o molde E a página portuguesa. Para as outras quatro, o
+   gerador lê-o, troca as etiquetas do <head> e o bloco estático, e escreve
+   /en/index.html, /es/, /fr/, /de/.
 
-  if (h.includes(abre) && h.includes(fecha)) {
-    h = h.slice(0, h.indexOf(abre)) + bloco + h.slice(h.indexOf(fecha) + fecha.length);
-  } else {
-    const alvo = '<main id="app"></main>';
-    if (!h.includes(alvo)) { console.log('  ! index.html sem <main id="app"></main>'); return; }
-    h = h.replace(alvo, '<main id="app">\n' + bloco + '\n</main>');
+   PORQUE E TROCA DE LINHA INTEIRA E NAO DE PALAVRA
+     Uma troca de palavra solta acertaria também no JSON-LD, onde o url da
+     Organization tem de continuar a ser o mesmo nas cinco — é uma empresa
+     só, não cinco. Trocando a etiqueta inteira, o que não é etiqueta fica
+     onde está.
+
+   PORQUE FALHA EM VOZ ALTA
+     Se o index.html deixar de bater certo com o conteudo-inicial.mjs, isto
+     pára em vez de publicar quatro páginas com o texto do molde. O molde e
+     a copy têm de dizer a mesma coisa em português, e é aqui que se verifica.  */
+const MARCA_ABRE = '<!-- INICIO CONTEUDO ESTATICO (gerado) -->';
+const MARCA_FECHA = '<!-- FIM CONTEUDO ESTATICO -->';
+
+function trocaBloco(h, l) {
+  const bloco = MARCA_ABRE + '\n' + corpoInicial(l) + '\n' + MARCA_FECHA;
+  if (!h.includes(MARCA_ABRE) || !h.includes(MARCA_FECHA))
+    throw new Error('index.html sem as marcas do conteúdo estático');
+  return h.slice(0, h.indexOf(MARCA_ABRE)) + bloco +
+    h.slice(h.indexOf(MARCA_FECHA) + MARCA_FECHA.length);
+}
+
+function paginaInicial(molde, l) {
+  let h = molde;
+  const trocar = (velho, novo) => {
+    if (!h.includes(velho))
+      throw new Error('index.html não tem a linha esperada:\n    ' + velho.slice(0, 110));
+    h = h.split(velho).join(novo);
+  };
+
+  trocar('<html lang="pt">', '<html lang="' + l + '">');
+
+  const tit = esc(t(IN.titulo, l)), des = esc(t(IN.descricao, l));
+  const cur = esc(t(IN.descricaoCurta, l)), alt = esc(t(IN.ogAlt, l));
+  const url = DOMINIO + inicioHref(l);
+
+  trocar('<title>' + esc(t(IN.titulo, OMISSAO)) + '</title>', '<title>' + tit + '</title>');
+  trocar('<meta name="description" content="' + esc(t(IN.descricao, OMISSAO)) + '" />',
+         '<meta name="description" content="' + des + '" />');
+  trocar('<link rel="canonical" href="' + DOMINIO + '/" />',
+         '<link rel="canonical" href="' + url + '" />');
+  trocar('<meta property="og:locale" content="' + IN.ogLocale[OMISSAO] + '" />',
+         '<meta property="og:locale" content="' + IN.ogLocale[l] + '" />');
+  trocar('<meta property="og:url" content="' + DOMINIO + '/" />',
+         '<meta property="og:url" content="' + url + '" />');
+  trocar('<meta property="og:title" content="' + esc(t(IN.titulo, OMISSAO)) + '" />',
+         '<meta property="og:title" content="' + tit + '" />');
+  trocar('<meta property="og:description" content="' + esc(t(IN.descricao, OMISSAO)) + '" />',
+         '<meta property="og:description" content="' + des + '" />');
+  trocar('<meta property="og:image:alt" content="' + esc(t(IN.ogAlt, OMISSAO)) + '" />',
+         '<meta property="og:image:alt" content="' + alt + '" />');
+  trocar('<meta name="twitter:title" content="' + esc(t(IN.titulo, OMISSAO)) + '" />',
+         '<meta name="twitter:title" content="' + tit + '" />');
+  trocar('<meta name="twitter:description" content="' + esc(t(IN.descricaoCurta, OMISSAO)) + '" />',
+         '<meta name="twitter:description" content="' + cur + '" />');
+
+  return trocaBloco(h, l);
+}
+
+function escreveIniciais() {
+  const f = path.join(RAIZ, 'index.html');
+  const molde = fs.readFileSync(f, 'utf8');
+
+  /* o português escreve-se no próprio index.html: só o bloco estático muda */
+  fs.writeFileSync(f, trocaBloco(molde, OMISSAO));
+
+  for (const l of IDIOMAS) {
+    if (l === OMISSAO) continue;
+    const dir = path.join(RAIZ, l);
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, 'index.html'), paginaInicial(molde, l));
   }
-  fs.writeFileSync(f, h);
-  const txt = corpoInicial().replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-  console.log('  index.html: ' + txt.length + ' caracteres de texto, ' +
+
+  const txt = corpoInicial(OMISSAO).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  console.log('  páginas iniciais: ' + IDIOMAS.length + ' (/ e ' +
+    IDIOMAS.filter(x => x !== OMISSAO).map(x => '/' + x + '/').join(', ') + ')');
+  console.log('  bloco estático: ' + txt.length + ' caracteres de texto, ' +
     produtos.length + ' ligações para as asas');
 }
 
@@ -759,7 +817,7 @@ function paginaFlow(l, num) {
     '@context': 'https://schema.org',
     '@graph': [
       { '@type': 'BreadcrumbList', itemListElement: [
-        { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + INICIO },
+        { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + inicioHref(l) },
         { '@type': 'ListItem', position: 2, name: 'Flow Paragliders Portugal', item: url }
       ]},
       { '@type': 'WebPage',
@@ -917,7 +975,7 @@ function paginaSmartGround(l, num) {
     '@context': 'https://schema.org',
     '@graph': [
       { '@type': 'BreadcrumbList', itemListElement: [
-        { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + INICIO },
+        { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + inicioHref(l) },
         { '@type': 'ListItem', position: 2, name: 'SmartGround', item: url }
       ]},
       { '@type': 'HowTo',
@@ -1219,6 +1277,15 @@ const flow = doc.elements.find(e => e.role === 'flow');
 const num = flow.whatsapp;
 const produtos = (flow.produtos || []).filter(p => p && p.nome && p.visible !== false);
 
+/* o hero é a fonte do h1 e do parágrafo de entrada das cinco iniciais: o
+   bloco estático lê de lá, o app.js desenha de lá, e não há dois textos */
+const HERO = (() => {
+  const d = JSON.parse(fs.readFileSync(path.join(RAIZ, 'content/slides/hero.json'), 'utf8'));
+  const e = (d.elements || []).find(x => x && x.role === 'text' && x.h1);
+  if (!e) throw new Error('content/slides/hero.json sem o elemento de texto com h1');
+  return e;
+})();
+
 const so = process.argv[2];
 const soIdioma = process.argv[3];
 /* gera para a raiz do projecto: assim o endereco local e o mesmo que o de
@@ -1246,7 +1313,7 @@ fs.writeFileSync(path.join(destino, '_urls.txt'), urls.join('\n') + '\n');
    que se acrescente. Só se escreve numa corrida completa — gerar uma asa
    só, para experimentar, não pode apagar as outras 109 do ficheiro. */
 if (!so && !soIdioma) {
-  escreveInicial();
+  escreveIniciais();
   for (const l of IDIOMAS) {
     const rel = caminhoSG(l);
     const dir = path.join(destino, rel);
@@ -1268,10 +1335,10 @@ if (!so && !soIdioma) {
 
 if (!so && !soIdioma) {
   const hoje = new Date().toISOString().slice(0, 10);
-  const fixas = [
-    { loc: DOMINIO + '/', freq: 'weekly', pri: '1.0' },
-    { loc: DOMINIO + '/reflex-lab/', freq: 'monthly', pri: '0.5' }
-  ];
+  /* as cinco iniciais têm a mesma prioridade: nenhuma é a tradução das
+     outras, são cinco portas de entrada para cinco mercados */
+  const fixas = IDIOMAS.map(l => ({ loc: DOMINIO + inicioHref(l), freq: 'weekly', pri: '1.0' }))
+    .concat([{ loc: DOMINIO + '/reflex-lab/', freq: 'monthly', pri: '0.5' }]);
   const entrada = (loc, freq, pri) => [
     '  <url>',
     '    <loc>' + loc + '</loc>',

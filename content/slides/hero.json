@@ -44,7 +44,13 @@
       "role": "text",
       "align": "left",
       "valign": "center",
-      "kicker": null,
+      "kicker": {
+        "pt": "Vive a tua paixão",
+        "en": "Live your passion",
+        "es": "Vive tu pasión",
+        "fr": "Vis ta passion",
+        "de": "Lebe deine Leidenschaft"
+      },
       "title": {
         "pt": "HAPPY",
         "en": "HAPPY",
@@ -60,13 +66,20 @@
         "de": "SOARING"
       },
       "accent2": true,
-      "titleTag": "h1",
+      "titleTag": "marca",
+      "h1": {
+        "pt": "Parakite e Parapente em Portugal",
+        "en": "Parakite and Paragliding in Portugal",
+        "es": "Parakite y Parapente en Portugal",
+        "fr": "Parakite et Parapente au Portugal",
+        "de": "Parakite und Gleitschirmfliegen in Portugal"
+      },
       "subtitle": {
-        "pt": "Cursos de Parakite em Portugal\nVive a tua paixão",
-        "en": "Parakite courses in Portugal\nLive your passion",
-        "es": "Cursos de Parakite en Portugal\n Vive tu pasión",
-        "fr": "Cours de Parakite au Portugal\nVis ta passion",
-        "de": "Parakitekurs in Portugal\nLebe deine Leidenschaft"
+        "pt": "Aconselhamento especializado, equipamento Flow Paragliders e formação com a escola parceira FelloFly.",
+        "en": "Expert advice, Flow Paragliders equipment and training with our partner school FelloFly.",
+        "es": "Asesoramiento especializado, equipo Flow Paragliders y formación con la escuela asociada FelloFly.",
+        "fr": "Conseils spécialisés, matériel Flow Paragliders et formation avec l’école partenaire FelloFly.",
+        "de": "Fachkundige Beratung, Ausrüstung von Flow Paragliders und Ausbildung mit der Partnerschule FelloFly."
       },
       "subtitleFormat": {
         "bold": false,
@@ -79,7 +92,7 @@
       "trust": {
         "pt": "Revendedor Oficial",
         "en": "Official Dealer",
-        "es": "Distribuidor Oficial",
+        "es": "Punto de venta oficial",
         "fr": "Revendeur Officiel",
         "de": "Offizieller Händler"
       },

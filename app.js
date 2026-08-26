@@ -16,27 +16,31 @@ const px = v => (typeof v === 'number' ? v + 'px' : v);
    Um campo de texto pode ser uma string simples (uma língua) ou um objeto
    { pt: "...", en: "...", ... }. t() escolhe o idioma atual, com fallback. */
 const DEFAULT_LOCALE = 'pt';
-let LOCALE = (typeof localStorage !== 'undefined' && localStorage.getItem('lang')) || DEFAULT_LOCALE;
 
-/* As páginas das asas, o SmartGround e o hub da Flow existem nas cinco
-   línguas com endereço próprio; a página inicial é uma só e guarda o idioma
-   no browser. Para quem vem de lá em alemão não aterrar em português, essas
-   páginas mandam o idioma no fragmento — /#lang=de, ou /#lang=de&produtos
-   quando também querem uma secção.
+/* O IDIOMA VEM DO ENDEREÇO, E DE MAIS LADO NENHUM.
+   / é português, /en/ é inglês, /es/, /fr/ e /de/ o resto. Cada uma é uma
+   página a sério, com o seu title, o seu canonical e o seu hreflang.
 
-   Fica guardado como se tivesse sido escolhido na bandeira, e o fragmento é
-   limpo da barra para não ficar um endereço estranho no histórico nem nas
-   partilhas. A âncora, essa, mantém-se: quem pediu #produtos vai a produtos. */
-(function () {
-  const m = (location.hash || '').match(/[#&]lang=(pt|en|es|fr|de)(?![a-z])/);
-  if (!m) return;
-  LOCALE = m[1];
-  try { localStorage.setItem('lang', LOCALE); } catch (e) {}
-  const resto = location.hash.replace(/[#&]lang=[a-z]{2}/, '').replace(/^[#&]+/, '');
-  try {
-    history.replaceState(null, '', location.pathname + location.search + (resto ? '#' + resto : ''));
-  } catch (e) {}
-})();
+   Antes vinha do localStorage, e isso partia a promessa que o endereço faz:
+   o Google a abrir /de/ tinha de receber alemão, e um leitor que tivesse
+   escolhido português noutro dia receberia português numa URL alemã. Um
+   endereço tem de servir sempre a mesma coisa a toda a gente. */
+const LOCALE = (location.pathname.match(/^\/(en|es|fr|de)(?:\/|$)/) || [])[1] || DEFAULT_LOCALE;
+/* Uma ligação interna escrita no CMS vem sempre em português — /smartground/,
+   /flow-paragliders-portugal/ — porque é assim que se escreve uma vez só. Na
+   página alemã tem de apontar para /de/smartground/, senão o visitante salta
+   de língua a meio da visita e o cluster alemão perde as ligações internas.
+
+   Endereços externos, âncoras e caminhos que já trazem prefixo ficam como
+   estão. */
+function local(href) {
+  const h = String(href || '');
+  if (!h || LOCALE === DEFAULT_LOCALE) return h;
+  if (h.charAt(0) !== '/' || h.charAt(1) === '/') return h;
+  if (/^\/(pt|en|es|fr|de)(\/|$)/.test(h)) return h;
+  return '/' + LOCALE + h;
+}
+
 function t(v) {
   if (v == null) return '';
   if (typeof v === 'string') return v;
@@ -397,8 +401,12 @@ function buildText(item) {
   const c = el('div', cls + visibilityClass(item));
   const kicker = t(item.kicker), title1 = t(item.title), title2 = t(item.title2), subtitle = t(item.subtitle);
   if (kicker) { const k = el('span', 'kicker'); k.textContent = kicker; c.appendChild(k); }
-  const tag = item.titleTag === 'h1' ? 'h1' : 'h2';
-  const title = el(tag, tag === 'h1' ? 'wordmark' : 'title');
+  /* "marca" é o wordmark do hero. Continua do mesmo tamanho, mas deixou de
+     ser o h1: duas palavras que só dizem o nome não são o assunto da página.
+     O h1 é a frase a seguir, no campo h1. O valor antigo "h1" continua a ser
+     aceite para o caso de sobrar num JSON por actualizar. */
+  const eMarca = item.titleTag === 'marca' || item.titleTag === 'h1';
+  const title = el(eMarca ? 'div' : 'h2', eMarca ? 'wordmark' : 'title');
   if (title1) title.appendChild(document.createTextNode(title1));
   if (title2) {
     title.appendChild(el('br'));
@@ -406,6 +414,8 @@ function buildText(item) {
     else title.appendChild(document.createTextNode(title2));
   }
   c.appendChild(title);
+  const oH1 = t(item.h1);
+  if (oH1) { const h = el('h1', 'hero-h1'); h.textContent = oH1; c.appendChild(h); }
   if (subtitle) {
     const p = el('p', 'lead');
     p.textContent = subtitle;
@@ -430,7 +440,7 @@ function buildText(item) {
     const row = el('div', 'btn-row');
     buttons.forEach(b => {
       const a = el('a', 'btn' + (b.variant === 'secondary' ? ' secondary' : ''));
-      a.href = b.href || '#'; a.textContent = t(b.label);
+      a.href = local(b.href) || '#'; a.textContent = t(b.label);
       row.appendChild(a);
     });
     c.appendChild(row);
@@ -723,7 +733,7 @@ function buildMusic(item) {
       if (!b || !t(b.label)) return;
       const a = el('a', 'music-btn primary');
       a.textContent = t(b.label);
-      a.href = b.href ? b.href : waLink(num, b.waMessage);
+      a.href = b.href ? local(b.href) : waLink(num, b.waMessage);
       a.target = '_blank'; a.rel = 'noopener';
       tb.appendChild(a);
     });
@@ -1052,7 +1062,7 @@ function buildFlow(item) {
        certas no sítio certo, e evita mais uma entrada no menu */
     const alvo = item.dealerHref;
     const d = el(alvo ? 'a' : 'div', 'flow-dealer');
-    if (alvo) d.href = alvo;
+    if (alvo) d.href = local(alvo);
     d.textContent = dl;
     head.appendChild(d);
   }
@@ -2784,7 +2794,7 @@ function acaoAviso(botao, aviso, num, fecha) {
       return a;
     }
     case 'url': {
-      const a = el('a'); a.href = alvo;
+      const a = el('a'); a.href = local(alvo);
       a.target = '_blank'; a.rel = 'noopener';
       return a;
     }
@@ -3236,9 +3246,10 @@ function buildLangSwitcher(locales) {
     b.setAttribute('aria-label', code);
     b.innerHTML = FLAGS[code] || code;
     b.addEventListener('click', () => {
-      guardaPosicao();                 /* para voltar ao mesmo sítio depois do reload */
-      localStorage.setItem('lang', code);
-      location.reload();
+      /* mudar de idioma é mudar de endereço: cada língua tem a sua página
+         inicial. A posição continua guardada, para aterrar na mesma secção. */
+      guardaPosicao();
+      location.href = (code === DEFAULT_LOCALE ? '/' : '/' + code + '/');
     });
     list.appendChild(b);
   });
@@ -3281,8 +3292,8 @@ function buildMenu(items) {
     const li = el('li');
     const a = el('a');
     const target = String(mi.target || '');
-    a.href = (/^https?:\/\//.test(target) || target.charAt(0) === '/')
-      ? target : '#' + target;
+    a.href = /^https?:\/\//.test(target) ? target
+      : target.charAt(0) === '/' ? local(target) : '#' + target;
     a.textContent = t(mi.label);
     li.appendChild(a);
     ul.appendChild(li);
