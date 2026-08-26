@@ -24,6 +24,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { ofertasDaAsa } from '../regras/avisos.js';
 import { rotuloFamilia, rotuloClasse } from '../regras/taxonomia.js';
+import { KN_PARA_KMH, PAISES_NOS, CHAVE_UNIDADE } from '../regras/unidades.js';
 import { SG } from './conteudo-smartground.mjs';
 import { FL } from './conteudo-flow.mjs';
 
@@ -101,6 +102,8 @@ const T = {
                fr:'Plage de vent', de:'Windbereich' },
   kn:        { pt:'nós', en:'kn', es:'nudos', fr:'nœuds', de:'kn' },
   kmh:       { pt:'km/h', en:'km/h', es:'km/h', fr:'km/h', de:'km/h' },
+  unidade:   { pt:'Unidade de velocidade', en:'Speed unit', es:'Unidad de velocidad',
+               fr:'Unité de vitesse', de:'Geschwindigkeitseinheit' },
   msg:       { pt:'Olá! Queria pedir preço para a {n}.', en:'Hi! I would like a price for the {n}.',
                es:'¡Hola! Quería pedir precio para la {n}.', fr:'Bonjour ! Je voudrais le prix de la {n}.',
                de:'Hallo! Ich hätte gern den Preis der {n}.' }
@@ -564,11 +567,21 @@ function blocoVideo(p, l) {
 }
 
 /* ---- gama de vento ----------------------------------------------------
-   Os valores guardados são em nós, como o fabricante os publica. Aqui
-   mostram-se os DOIS — nós e km/h — em vez do alternador que o site tem:
-   num documento não há razão para esconder metade da informação atrás de
-   um clique, e assim também aparece nos resultados de pesquisa. */
-const KN_PARA_KMH = 1.852;
+   Os valores guardados são em nós, como o fabricante os publica.
+
+   MOSTRA-SE UMA UNIDADE SÓ, e o visitante escolhe qual. Antes apareciam as
+   duas em cada linha: enchia a coluna e obrigava a ler duas vezes para
+   encontrar o número que interessa. Agora há um alternador, como no
+   catálogo, e a escolha fica guardada de página para página.
+
+   O HTML sai escrito em km/h — é a unidade dos países das cinco línguas do
+   site e é o que um crawler lê. O script só troca depois, se o visitante
+   vier de um país de nós ou se já tiver escolhido antes. Assim a página
+   nunca aparece sem números, mesmo sem JavaScript.
+
+   As barras são sempre calculadas em nós: mudar de unidade multiplica todos
+   os valores pelo mesmo factor, por isso o desenho é o mesmo. Só mudam os
+   números e a régua. */
 function blocoVento(p, l) {
   const wr = p.windRange;
   if (!wr || !(wr.groups || []).length) return '';
@@ -579,28 +592,46 @@ function blocoVento(p, l) {
   maxKn = Math.ceil((maxKn + 2) / 5) * 5;
   if (!maxKn) return '';
 
-  const marcas = [];
-  for (let v = 0; v <= maxKn; v += 5) marcas.push(v);
+  /* duas réguas prontas, uma escondida: de 5 em 5 nós, de 10 em 10 km/h.
+     Trocar de unidade não pode reposicionar marcas à mão no browser. */
+  const maxKmh = maxKn * KN_PARA_KMH;
+  /* `escala` é o fim do trilho na unidade em causa; `passo` é de quanto em
+     quanto se marca. Em km/h a última marca redonda cai antes do fim do
+     trilho — daí a posição sair sempre de `escala` e não da última marca,
+     e daí a classe de encosto só ir a quem está mesmo na ponta. */
+  const regua = (passo, escala) => {
+    const s = [];
+    for (let v = 0; v <= escala + 0.001; v += passo) {
+      const pos = (v / escala) * 100;
+      const cls = pos <= 0.5 ? ' class="pg-vento-i"' : pos >= 99.5 ? ' class="pg-vento-f"' : '';
+      s.push('<span' + cls + ' style="left:' + pos.toFixed(1) + '%">' + v + '</span>');
+    }
+    return s.join('');
+  };
+  const reguaKn  = regua(5, maxKn);
+  const reguaKmh = regua(10, maxKmh);
 
   const grupos = wr.groups.map(g => {
     const rot = t(g.label, l);
     const linhas = (g.rows || []).map(r => {
       const min = +r.min, max = +r.max;
       const ini = (min / maxKn) * 100, fim = (max / maxKn) * 100;
+      const kn = min + '–' + max;
       const kmh = Math.round(min * KN_PARA_KMH) + '–' + Math.round(max * KN_PARA_KMH);
       return `<tr>
         <th scope="row">${esc(r.tamanho)}</th>
         <td class="pg-vento-barra"><span class="pg-vento-trilho"><span class="pg-vento-b"
           style="left:${ini.toFixed(1)}%;width:${Math.max(0, fim - ini).toFixed(1)}%"></span></span></td>
-        <td class="pg-vento-val">${min}–${max}&nbsp;${esc(t(T.kn, l))}<br><small>${kmh}&nbsp;km/h</small></td>
+        <td class="pg-vento-val" data-kn="${kn}" data-kmh="${kmh}">${kmh}</td>
       </tr>`;
     }).join('');
     /* O eixo e uma LINHA DA TABELA, nao um div por baixo: so assim as marcas
        caem na mesma coluna que as barras. Fora da tabela, a largura da coluna
        dos valores muda com o idioma e o eixo deixa de bater certo. */
-    const eixo = `<tr class="pg-vento-eixo"><td></td><td class="pg-vento-marcas"><span class="pg-vento-reg">${
-      marcas.map(v => '<span style="left:' + ((v / maxKn) * 100).toFixed(1) + '%">' + v +
-        '</span>').join('')}</span></td><td class="pg-vento-un">${esc(t(T.kn, l))}</td></tr>`;
+    const eixo = `<tr class="pg-vento-eixo"><td></td><td class="pg-vento-marcas"><span
+      class="pg-vento-reg" data-un="kmh">${reguaKmh}</span><span
+      class="pg-vento-reg" data-un="kn" hidden>${reguaKn}</span></td><td
+      class="pg-vento-un">${esc(t(T.kmh, l))}</td></tr>`;
     return `<div class="pg-vento-g">
       ${rot ? '<h3>' + esc(rot) + '</h3>' : ''}
       <table class="pg-vento-t"><tbody>${linhas}${eixo}</tbody></table>
@@ -608,9 +639,62 @@ function blocoVento(p, l) {
   }).join('');
 
   const nota = t(wr.note, l);
-  return `<section class="pg-sec pg-largo"><h2>${esc(t(T.vento, l))}</h2>
+  return `<section class="pg-sec pg-largo pg-vento">
+    <div class="pg-vento-cab">
+      <h2>${esc(t(T.vento, l))}</h2>
+      <div class="pg-un" role="group" aria-label="${esc(t(T.unidade, l))}">
+        <button type="button" class="pg-un-b" data-un="kn" aria-pressed="false">${esc(t(T.kn, l))}</button>
+        <button type="button" class="pg-un-b on" data-un="kmh" aria-pressed="true">${esc(t(T.kmh, l))}</button>
+      </div>
+    </div>
     ${grupos}
-    ${nota ? '<p class="pg-nota">' + esc(nota) + '</p>' : ''}</section>`;
+    ${nota ? '<p class="pg-nota">' + esc(nota) + '</p>' : ''}
+  </section>
+<script>
+(function(){
+  var sec = document.querySelector('.pg-vento'); if (!sec) return;
+  var CHAVE = ${JSON.stringify(CHAVE_UNIDADE)};
+  var DE_NOS = ${JSON.stringify(PAISES_NOS)};
+
+  /* o país sai da língua do browser; sem região, fica km/h */
+  function porOmissao() {
+    try {
+      var r = '', ls = navigator.languages || [navigator.language || ''];
+      for (var i = 0; i < ls.length && !r; i++) r = (String(ls[i]).split('-')[1] || '');
+      return DE_NOS.indexOf(r.toUpperCase()) >= 0 ? 'kn' : 'kmh';
+    } catch (e) { return 'kmh'; }
+  }
+
+  function mostra(un) {
+    var rotulo = sec.querySelector('.pg-un-b[data-un="' + un + '"]').textContent;
+    sec.querySelectorAll('.pg-vento-val').forEach(function (c) {
+      c.textContent = un === 'kn' ? c.getAttribute('data-kn') : c.getAttribute('data-kmh');
+    });
+    sec.querySelectorAll('.pg-vento-reg').forEach(function (r) {
+      r.hidden = r.getAttribute('data-un') !== un;
+    });
+    sec.querySelectorAll('.pg-vento-un').forEach(function (u) { u.textContent = rotulo; });
+    sec.querySelectorAll('.pg-un-b').forEach(function (b) {
+      var on = b.getAttribute('data-un') === un;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+
+  var guardada = null;
+  try { guardada = localStorage.getItem(CHAVE); } catch (e) {}
+  var un = (guardada === 'kn' || guardada === 'kmh') ? guardada : porOmissao();
+  if (un !== 'kmh') mostra(un);   /* km/h já está escrito no HTML */
+
+  sec.querySelectorAll('.pg-un-b').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var u = b.getAttribute('data-un');
+      mostra(u);
+      try { localStorage.setItem(CHAVE, u); } catch (e) {}
+    });
+  });
+})();
+<\/script>`;
 }
 
 /* ---- a página /flow-paragliders-portugal/ -----------------------------

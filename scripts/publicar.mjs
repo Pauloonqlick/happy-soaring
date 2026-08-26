@@ -127,7 +127,7 @@ function carimbar() {
   /* Os módulos partilhados primeiro: o app.js importa-os, por isso o
      conteúdo dele muda quando as referências forem reescritas — e o
      resumo dele só pode ser calculado depois disso. */
-  const mods = ['regras/avisos.js', 'regras/taxonomia.js'];
+  const mods = ['regras/avisos.js', 'regras/taxonomia.js', 'regras/unidades.js'];
   const vMods = {};
   for (const m of mods) if (fs.existsSync(path.join(SAIDA, m))) vMods[m] = resumo(m);
 

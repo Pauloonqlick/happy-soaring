@@ -2,6 +2,8 @@ import { dentroDoPrazo, abrangeProduto, ofertasDaAsa, hojeISO }
   from './regras/avisos.js';
 import { rotuloFamilia as rotFamilia, rotuloClasse as rotClasse }
   from './regras/taxonomia.js';
+import { KN_PARA_KMH, PAISES_NOS, CHAVE_UNIDADE, unidadeDoPais }
+  from './regras/unidades.js';
 
 /* Motor do site orientado por content.json.
    Nada de conteúdo escrito à mão aqui — tudo vem do ficheiro de dados,
@@ -1697,19 +1699,41 @@ function buildFlow(item) {
   /* ---- gráfico de gama de vento ----
      Os valores são guardados em nós (é como o fabricante os publica); a
      conversão para km/h é feita na apresentação, para não haver dois
-     conjuntos de números a divergir. */
-  const KN_PARA_KMH = 1.852;
+     conjuntos de números a divergir.
+
+     A unidade de arranque não é fixa: é a do país do visitante, e passa a
+     ser a última que ele escolheu. A mesma chave serve as páginas de
+     detalhe geradas, para a escolha o seguir de uma para a outra. */
+  function unidadeInicial() {
+    try {
+      const g = localStorage.getItem(CHAVE_UNIDADE);
+      if (g === 'kn' || g === 'kmh') return g;
+    } catch (e) {}
+    try {
+      const ls = navigator.languages || [navigator.language || ''];
+      for (const x of ls) {
+        const r = String(x).split('-')[1];
+        if (r) return unidadeDoPais(r);
+      }
+    } catch (e) {}
+    return 'kmh';
+  }
+  function guardaUnidade(u) {
+    try { localStorage.setItem(CHAVE_UNIDADE, u); } catch (e) {}
+  }
   function graficoVento(p) {
     const wr = p.windRange;
     const box = el('div', 'flow-wind');
-    let unidade = 'kn';
+    let unidade = unidadeInicial();
 
     /* o alternador nós / km/h vive dentro da faixa, à direita do título */
     const topo = el('div', 'flow-sec-faixa flow-wind-top');
     const h = el('h4', 'flow-det-h'); h.textContent = ui('flowVento'); topo.appendChild(h);
     const sw = el('div', 'flow-wind-units');
-    const bKn = el('button', 'flow-unit on'); bKn.type = 'button'; bKn.textContent = ui('unidadeKn');
-    const bKm = el('button', 'flow-unit'); bKm.type = 'button'; bKm.textContent = ui('unidadeKmh');
+    const bKn = el('button', 'flow-unit' + (unidade === 'kn' ? ' on' : ''));
+    bKn.type = 'button'; bKn.textContent = ui('unidadeKn');
+    const bKm = el('button', 'flow-unit' + (unidade === 'kmh' ? ' on' : ''));
+    bKm.type = 'button'; bKm.textContent = ui('unidadeKmh');
     sw.appendChild(bKn); sw.appendChild(bKm); topo.appendChild(sw);
     box.appendChild(topo);
     const cxVento = el('div', 'flow-bloco-corpo');
@@ -1768,8 +1792,8 @@ function buildFlow(item) {
         grupos.appendChild(gd);
       });
     }
-    bKn.addEventListener('click', ev => { ev.stopPropagation(); unidade = 'kn'; bKn.classList.add('on'); bKm.classList.remove('on'); desenha(); });
-    bKm.addEventListener('click', ev => { ev.stopPropagation(); unidade = 'kmh'; bKm.classList.add('on'); bKn.classList.remove('on'); desenha(); });
+    bKn.addEventListener('click', ev => { ev.stopPropagation(); unidade = 'kn'; bKn.classList.add('on'); bKm.classList.remove('on'); guardaUnidade('kn'); desenha(); });
+    bKm.addEventListener('click', ev => { ev.stopPropagation(); unidade = 'kmh'; bKm.classList.add('on'); bKn.classList.remove('on'); guardaUnidade('kmh'); desenha(); });
     desenha();
 
     const nota = t(wr.note);
