@@ -24,6 +24,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { ofertasDaAsa } from '../regras/avisos.js';
 import { rotuloFamilia, rotuloClasse } from '../regras/taxonomia.js';
+import { SG } from './conteudo-smartground.mjs';
 
 const RAIZ = process.cwd();   /* corre-se a partir da raiz do projecto */
 const DOMINIO = 'https://happysoaring.com';
@@ -173,6 +174,20 @@ function jsonld(p, l, url, foto) {
   return JSON.stringify({ '@context': 'https://schema.org', '@graph': g }, (k, v) => v === undefined ? undefined : v);
 }
 
+/* ---- a asa do curso ---------------------------------------------------
+   Só na Mullet 2, e de propósito: é a asa com que o Curso de Parakite é
+   dado. Pôr isto em todas as asas seria inventar uma relação que não
+   existe — um arnês ou uma reserva não têm nada a ver com o método. */
+const ASA_DO_CURSO = 'Mullet 2';
+function blocoMetodo(p, l) {
+  if (p.nome !== ASA_DO_CURSO) return '';
+  return `<section class="pg-sec pg-metodo">
+  <p class="pg-metodo-et">${esc(t(SG.asaKicker, l))}</p>
+  <p class="pg-metodo-tx">${esc(t(SG.asaDoCurso, l))}</p>
+  <p><a class="pg-metodo-a" href="${l === OMISSAO ? '' : '/' + l}/smartground/">${esc(t(SG.conhecer, l))}</a></p>
+</section>`;
+}
+
 /* ---- outras asas da mesma família -------------------------------------
    As 110 páginas eram becos sem saída: só ligavam de volta à raiz, e mais
    nada. Quem lá chegasse — pessoa ou crawler — via uma asa e acabava.
@@ -234,6 +249,10 @@ function corpoInicial() {
     <p>Cursos de parakite em Portugal e revendedor oficial da
     <strong>Flow Paragliders</strong>. Aconselhamento a sério, primeira
     inspeção de segurança incluída e cor à tua escolha.</p>
+
+    <h2>${esc(t(SG.h1a, l))} ${esc(t(SG.h1b, l))}</h2>
+    <p>${esc(t(SG.descricao, l))}
+    <a href="/smartground/">${esc(t(SG.conhecer, l))}</a></p>
 
     <h2>Catálogo Flow Paragliders</h2>
     <p>${produtos.length} asas, arneses e reservas, cada uma com a sua página:</p>
@@ -588,6 +607,192 @@ function blocoVento(p, l) {
     ${nota ? '<p class="pg-nota">' + esc(nota) + '</p>' : ''}</section>`;
 }
 
+/* ---- a página /smartground/ -------------------------------------------
+   O SmartGround é o método com que o Curso de Parakite é dado. Tem página
+   própria e não uma secção dentro do curso por uma razão prática: é um
+   termo ambíguo — há um projecto europeu com nome parecido — e para o
+   reclamar é preciso uma página que SEJA sobre ele, com o nome no
+   endereço, no título e no h1.
+
+   O nome não se traduz, por isso o endereço é /smartground/ em todos os
+   idiomas, só com o prefixo de língua à frente. */
+const caminhoSG = l => (l === OMISSAO ? '' : '/' + l) + '/smartground/';
+
+function paginaSmartGround(l, num) {
+  const url = DOMINIO + caminhoSG(l);
+  const foto = DOMINIO + '/images/og-happysoaring.jpg';
+  const alt = IDIOMAS.map(x =>
+    '<link rel="alternate" hreflang="' + x + '" href="' + DOMINIO + caminhoSG(x) + '" />').join('\n');
+  const wa = 'https://wa.me/' + num + '?text=' + encodeURIComponent(t(SG.ctaMsg, l));
+  const cad = SG.cadeia[l] || SG.cadeia[OMISSAO];
+  const fases = SG.fases[l] || SG.fases[OMISSAO];
+  const etapasCurso = SG.cursoEtapas[l] || SG.cursoEtapas[OMISSAO];
+  const inicio = (l === OMISSAO ? '/' : '/' + l + '/');
+
+  /* HowTo descreve exactamente o que isto é: um método por etapas. Sem
+     duração nem custo — não os temos, e inventá-los é o que não se faz. */
+  const ld = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      { '@type': 'BreadcrumbList', itemListElement: [
+        { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + inicio },
+        { '@type': 'ListItem', position: 2, name: 'SmartGround', item: url }
+      ]},
+      { '@type': 'HowTo',
+        name: 'SmartGround',
+        description: t(SG.descricao, l),
+        url,
+        inLanguage: l,
+        author: { '@type': 'Person', name: SG.autorNome, worksFor: { '@type': 'Organization', name: 'Happy Soaring' } },
+        step: SG.etapas.map((e, i) => ({
+          '@type': 'HowToStep', position: i + 1, name: t(e.nome, l), text: t(e.texto, l)
+        }))
+      }
+    ]
+  });
+
+  const cartoes = SG.etapas.map((e, i) => {
+    const ultimo = i === 4, quarto = i === 3;
+    const fundo = ultimo ? 'background:rgba(255,106,19,0.14);border:2px solid #ff6a13'
+      : quarto ? 'background:rgba(255,201,166,0.09);border:1px solid rgba(255,201,166,0.34)'
+      : 'background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12)';
+    const numCor = ultimo ? 'rgba(255,106,19,0.5)' : quarto ? 'rgba(255,201,166,0.35)' : 'rgba(255,255,255,0.15)';
+    return `<li class="sg-etapa" style="${fundo}">
+      <span class="sg-etapa-n" style="color:${numCor}">0${i + 1}</span>
+      <h3>${esc(t(e.nome, l))}</h3>
+      <p>${esc(t(e.texto, l))}</p>
+    </li>`;
+  }).join('');
+
+  return `<!DOCTYPE html>
+<html lang="${l}">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>${esc(t(SG.titulo, l))}</title>
+<meta name="description" content="${esc(t(SG.descricao, l))}" />
+<link rel="canonical" href="${url}" />
+${alt}
+<link rel="alternate" hreflang="x-default" href="${DOMINIO + caminhoSG(OMISSAO)}" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Happy Soaring" />
+<meta property="og:url" content="${url}" />
+<meta property="og:title" content="${esc(t(SG.h1a, l) + ' ' + t(SG.h1b, l))}" />
+<meta property="og:description" content="${esc(t(SG.descricao, l))}" />
+<meta property="og:image" content="${foto}" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="stylesheet" href="/pagina.css" />
+<script type="application/ld+json">${ld}</script>
+</head>
+<body class="pg sg">
+
+<header class="pg-topo">
+  <a class="pg-marca" href="${inicio}">HAPPY <span>SOARING</span></a>
+  <span class="pg-dealer">${esc(t(T.dealer, l))}</span>
+</header>
+
+<main>
+
+  <section class="sg-heroi">
+    <div class="sg-heroi-txt">
+      <p class="pg-eyebrow">${esc(t(SG.kicker, l))}</p>
+      <h1>${esc(t(SG.h1a, l))}<br><span>${esc(t(SG.h1b, l))}</span></h1>
+      <p class="sg-tese">${esc(t(SG.tese, l))}</p>
+    </div>
+    <div class="sg-heroi-fig">
+      <video src="/images/smartground/movimento-left.webm" autoplay loop muted playsinline
+        aria-label="${esc(t(SG.legendaVideo, l))}" width="557" height="952"></video>
+    </div>
+  </section>
+
+  <section class="sg-abordagens">
+    <p class="pg-eyebrow">${esc(t(SG.abordagens, l))}</p>
+    <div class="sg-duas">
+      <div class="sg-abord">
+        <p class="sg-abord-et">${esc(t(SG.convLabel, l))}</p>
+        <p class="sg-abord-tx">${esc(t(SG.convTexto, l))}</p>
+      </div>
+      <div class="sg-abord sg-abord-nossa">
+        <p class="sg-abord-et">SmartGround</p>
+        <p class="sg-abord-tx">${esc(t(SG.sgTexto, l))}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sg-espinha">
+    <div class="sg-espinha-cab">
+      <div>
+        <p class="pg-eyebrow">${esc(t(SG.espinhaKicker, l))}</p>
+        <h2>${esc(t(SG.espinhaA, l))}<br>${esc(t(SG.espinhaB, l))}</h2>
+      </div>
+      <div class="sg-espinha-dir">
+        <p>${esc(t(SG.espinhaSub, l))}</p>
+        <p class="sg-cadeia">${cad.map((x, i) =>
+          `<span${i === cad.length - 1 ? ' class="fim"' : ''}>${esc(x)}</span>`).join('<i>&rarr;</i>')}</p>
+      </div>
+    </div>
+
+    <ol class="sg-etapas">
+      <li class="sg-fase sg-fase-1"><span>${esc(fases[0])}</span></li>
+      <li class="sg-fase sg-fase-2"><span>${esc(fases[1])}</span></li>
+      <li class="sg-fase sg-fase-3"><span>${esc(fases[2])}</span></li>
+      ${cartoes}
+    </ol>
+
+    <div class="sg-transicao">
+      <span class="sg-trans-et">${esc(t(SG.transAcaba, l))}</span>
+      <i>&rarr;</i>
+      <strong>${esc(t(SG.curso, l))}</strong>
+      <span class="sg-trans-lista">${etapasCurso.map(x => `<b>${esc(x)}</b>`).join('')}</span>
+    </div>
+  </section>
+
+  <section class="sg-duplo">
+    <div class="sg-perigo">
+      <p class="pg-eyebrow">${esc(t(SG.perigoKicker, l))}</p>
+      <h2>${esc(t(SG.perigoTitulo, l))}</h2>
+      <p>${esc(t(SG.perigoTexto, l))}</p>
+    </div>
+    <div class="sg-parapente">
+      <h2>${esc(t(SG.parapenteTitulo, l))}</h2>
+      <p>${esc(t(SG.parapenteTexto, l))}</p>
+    </div>
+  </section>
+
+  <section class="sg-principio">
+    <div>
+      <p class="pg-eyebrow">${esc(t(SG.principioKicker, l))}</p>
+      <p class="sg-principio-tx">${esc(t(SG.principio, l))}</p>
+    </div>
+    <div class="sg-autor">
+      <p class="sg-autor-et">${esc(t(SG.autorKicker, l))}</p>
+      <p class="sg-autor-n">${esc(SG.autorNome)}</p>
+      <p>${esc(t(SG.autorTexto, l))}</p>
+    </div>
+  </section>
+
+  <section class="sg-asa">
+    <div class="sg-asa-txt">
+      <p class="pg-eyebrow">${esc(t(SG.asaKicker, l))}</p>
+      <h2>${esc(t(SG.asaA, l))}<br>${esc(t(SG.asaB, l))}</h2>
+      <p>${esc(t(SG.asaTexto, l))}</p>
+      <p class="sg-acoes">
+        <a class="sg-cta" href="${wa}" rel="noopener" target="_blank">${esc(t(SG.cta, l))}</a>
+        <a class="sg-cta-2" href="${caminho(l, { nome: 'Mullet 2' })}">${esc(t(SG.verAsa, l))}</a>
+      </p>
+    </div>
+    <img src="/images/asas/mullet2__maui.webp" alt="Mullet 2" width="1200" height="794" loading="lazy" />
+  </section>
+
+  <p class="pg-voltar"><a href="${inicio}">${esc(t(SG.voltar, l))}</a></p>
+
+</main>
+
+<footer class="pg-rodape">Happy Soaring &middot; ${esc(t(T.dealer, l))}</footer>
+</body>
+</html>`;
+}
+
 function pagina(p, l, num) {
   const url = DOMINIO + caminho(l, p);
   const cor = (p.cores || [])[0];
@@ -680,6 +885,8 @@ ${alt}
 
   ${secs}
 
+  ${blocoMetodo(p, l)}
+
   ${blocoIrmas(p, l)}
 
   <p class="pg-voltar"><a href="${l === OMISSAO ? '/' : '/' + l + '/'}#produtos">${esc(t(T.voltar, l))}</a></p>
@@ -749,7 +956,18 @@ fs.writeFileSync(path.join(destino, '_urls.txt'), urls.join('\n') + '\n');
    desactualizado: um sitemap escrito à mão passa a mentir na primeira asa
    que se acrescente. Só se escreve numa corrida completa — gerar uma asa
    só, para experimentar, não pode apagar as outras 109 do ficheiro. */
-if (!so && !soIdioma) escreveInicial();
+if (!so && !soIdioma) {
+  escreveInicial();
+  for (const l of IDIOMAS) {
+    const rel = caminhoSG(l);
+    const dir = path.join(destino, rel);
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, 'index.html'), paginaSmartGround(l, num));
+    urls.push(DOMINIO + rel);
+  }
+  console.log('  SmartGround: ' + IDIOMAS.length + ' páginas');
+}
+
 
 if (!so && !soIdioma) {
   const hoje = new Date().toISOString().slice(0, 10);

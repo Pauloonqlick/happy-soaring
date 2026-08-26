@@ -61,6 +61,16 @@
     },
     {
       "label": {
+        "pt": "SmartGround",
+        "en": "SmartGround",
+        "es": "SmartGround",
+        "fr": "SmartGround",
+        "de": "SmartGround"
+      },
+      "target": "/smartground/"
+    },
+    {
+      "label": {
         "pt": "Produtos",
         "en": "Products",
         "es": "Productos",
@@ -114,6 +124,7 @@
     "sobre",
     "comunidade",
     "dealer",
+    "smartground",
     "produtos",
     "reflex-lab",
     "music"

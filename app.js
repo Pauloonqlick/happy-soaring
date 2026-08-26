@@ -3186,6 +3186,10 @@ function buildMenu(items) {
     const target = String(mi.target || '');
     if (!target) return false;
     if (/^https?:\/\//.test(target)) return true;
+    /* uma página do site (/smartground/) não é uma âncora desta página: não
+       tem elemento com esse id e ficava de fora do menu. É por aqui que
+       entram as páginas próprias que vamos criando. */
+    if (target.charAt(0) === '/') return true;
     return !!document.getElementById(target);
   });
   if (!vivos.length) return;
@@ -3202,7 +3206,8 @@ function buildMenu(items) {
     const li = el('li');
     const a = el('a');
     const target = String(mi.target || '');
-    a.href = /^https?:\/\//.test(target) ? target : '#' + target;
+    a.href = (/^https?:\/\//.test(target) || target.charAt(0) === '/')
+      ? target : '#' + target;
     a.textContent = t(mi.label);
     li.appendChild(a);
     ul.appendChild(li);
