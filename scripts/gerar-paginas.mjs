@@ -533,7 +533,7 @@ function blocoVideo(p, l) {
   if (!id) return '';
   const t0 = parseInt(p.videoStartAt, 10) > 0 ? '&start=' + parseInt(p.videoStartAt, 10) : '';
   const capa = p.videoThumbnail || ('https://img.youtube.com/vi/' + encodeURIComponent(id) + '/maxresdefault.jpg');
-  return `<section class="pg-sec"><h2>${esc(t(T.video, l))}</h2>
+  return `<section class="pg-sec pg-largo"><h2>${esc(t(T.video, l))}</h2>
     <a class="pg-video" href="https://www.youtube.com/watch?v=${encodeURIComponent(id)}"
        rel="noopener" target="_blank"
        data-id="${esc(id)}" data-extra="${esc(t0)}"
@@ -604,7 +604,7 @@ function blocoVento(p, l) {
   }).join('');
 
   const nota = t(wr.note, l);
-  return `<section class="pg-sec"><h2>${esc(t(T.vento, l))}</h2>
+  return `<section class="pg-sec pg-largo"><h2>${esc(t(T.vento, l))}</h2>
     ${grupos}
     ${nota ? '<p class="pg-nota">' + esc(nota) + '</p>' : ''}</section>`;
 }
@@ -1053,7 +1053,7 @@ ${alt}
 
   ${blocoVento(p, l)}
 
-  ${(p.specs || []).length ? `<section class="pg-sec"><h2>${esc(t(T.specs, l))}</h2>
+  ${(p.specs || []).length ? `<section class="pg-sec pg-largo"><h2>${esc(t(T.specs, l))}</h2>
     ${tabelaSpecs(p, l)}</section>` : ''}
 
   ${t(p.descricaoLonga, l) ? '<section class="pg-sec">' + corpo(t(p.descricaoLonga, l)) + '</section>' : ''}
