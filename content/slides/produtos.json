@@ -3284,6 +3284,7 @@
     {
      "visible": true,
      "nome": "Panorama",
+     "historico": true,
      "familia": "Tandem",
      "classificacao": "EN-B / EN 926-1",
      "tagline": {

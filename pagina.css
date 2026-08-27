@@ -736,3 +736,16 @@ a.fl-cor-a:hover{background:#ff7c31;color:#fff}
   position:absolute;width:1px;height:1px;padding:0;margin:-1px;
   overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;
 }
+
+/* uma asa cuja página descreve uma versão que já não se vende: o aviso deixa
+   de ser uma nota e passa a ser a primeira coisa que se lê, porque é ele que
+   explica por que razão não há aqui um botão de pedir preço */
+.pg-aviso-hist{
+  display:block;border-left:4px solid var(--orange);
+  background:rgba(255,106,19,.1);border-radius:0 10px 10px 0;
+  padding:14px 18px;max-width:80ch;
+}
+.pg .pg-aviso-hist b{
+  display:block;color:var(--orange);font-size:11.5px;font-weight:800;
+  letter-spacing:1.3px;text-transform:uppercase;margin-bottom:5px;
+}

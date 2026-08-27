@@ -104,6 +104,16 @@ const T = {
   kn:        { pt:'nós', en:'kn', es:'nudos', fr:'nœuds', de:'kn' },
   kmh:       { pt:'km/h', en:'km/h', es:'km/h', fr:'km/h', de:'km/h' },
   idioma:    { pt:'Idioma', en:'Language', es:'Idioma', fr:'Langue', de:'Sprache' },
+  historico: { pt:'Dados históricos', en:'Historical data', es:'Datos históricos',
+               fr:'Données historiques', de:'Historische Daten' },
+  qualVersao:{ pt:'Perguntar qual é a versão actual', en:'Ask which version is current',
+               es:'Preguntar cuál es la versión actual', fr:'Demander quelle version est actuelle',
+               de:'Nach der aktuellen Version fragen' },
+  msgVersao: { pt:'Olá! Vi a página da {n} e queria saber qual é a versão actual.',
+               en:'Hi! I saw the {n} page and would like to know which version is current.',
+               es:'¡Hola! Vi la página de la {n} y quería saber cuál es la versión actual.',
+               fr:'Bonjour ! J’ai vu la page de la {n} et je voudrais savoir quelle version est actuelle.',
+               de:'Hallo! Ich habe die Seite der {n} gesehen und möchte wissen, welche Version aktuell ist.' },
   unidade:   { pt:'Unidade de velocidade', en:'Speed unit', es:'Unidad de velocidad',
                fr:'Unité de vitesse', de:'Geschwindigkeitseinheit' },
   msg:       { pt:'Olá! Queria pedir preço para a {n}.', en:'Hi! I would like a price for the {n}.',
@@ -499,11 +509,27 @@ const dataCurta = (iso, l) => {
      Igual à do palco: sem país (e sem tamanho, quando a asa os tem) o <a>
      fica SEM href — não é clicável nem focável. Um botão morto que finge
      funcionar é pior do que um que se vê que ainda não está pronto. */
+/* ---- produto com dados históricos --------------------------------------
+   Uma asa cuja página descreve uma versão que já não é a que se vende. A
+   página fica — tem texto verdadeiro, vídeo, especificações, e há gente a
+   chegar-lhe pelo Google. O que sai é a possibilidade de pedir preço a
+   partir dela.
+
+   O aviso sozinho não chegava: dizia "confirma os tamanhos antes de
+   encomendares" logo por cima de um seletor de tamanhos e de um botão de
+   pedir preço. Quem lê depressa escolhe o 39 e envia. A página tem de
+   tornar isso impossível, não desaconselhá-lo.
+
+   A ligação ao WhatsApp não desaparece, muda de pergunta: em vez de pedir
+   preço para esta, pergunta qual é a versão actual. */
+const eHistorico = p => p.historico === true;
+
 function blocoPedido(p, l, num) {
   const k = chave(p.nome);
   const esquemas = (p.cores || []).map(String);
   const tams = (p.tamanhos || []).map(String);
   const custom = p.coresCustom ? TECIDOS : [];
+  if (eHistorico(p)) return '';        /* ver eHistorico, mesmo ficheiro */
   if (!esquemas.length && !tams.length) return '';
 
   const notaCust = p.coresCustom ? t(NOTA_CUSTOM, l) : '';
@@ -691,7 +717,10 @@ function blocoIncluido(p, l) {
    no sítio de onde já ninguém entra. */
 function blocoAviso(p, l) {
   const x = t(p.aviso, l);
-  return x ? '<p class="pg-aviso" role="note">' + esc(x) + '</p>' : '';
+  if (!x) return '';
+  if (!eHistorico(p)) return '<p class="pg-aviso" role="note">' + esc(x) + '</p>';
+  return '<div class="pg-aviso pg-aviso-hist" role="note">' +
+    '<b>' + esc(t(T.historico, l)) + '</b> ' + esc(x) + '</div>';
 }
 
 /* ---- vídeo ------------------------------------------------------------
@@ -1285,7 +1314,11 @@ ${alt}
       <h1>${esc(p.nome)}</h1>
       ${t(p.tagline, l) ? '<p class="pg-tagline">' + esc(t(p.tagline, l)) + '</p>' : ''}
       ${blocoOferta(p, l)}
-      <a class="pg-wa" href="#pedir">${esc(t(T.pedir, l))}</a>
+      ${eHistorico(p)
+        ? `<a class="pg-wa" rel="noopener" target="_blank" href="https://wa.me/${num}?text=${
+            encodeURIComponent(t(T.msgVersao, l).replace('{n}', p.nome))
+          }">${esc(t(T.qualVersao, l))}</a>`
+        : `<a class="pg-wa" href="#pedir">${esc(t(T.pedir, l))}</a>`}
     </div>
     ${cor ? `<img class="pg-foto" id="pg-foto" src="/images/asas/${chave(p.nome)}__${cor}.webp"
       alt="${esc(p.nome + ' — Flow Paragliders')}" width="1200" height="794" />` : ''}

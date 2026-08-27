@@ -234,6 +234,8 @@ const UI = {
   avisoUltimoDia: { pt:'Último dia', en:'Last day', es:'Último día',
                     fr:'Dernier jour', de:'Letzter Tag' },
   flowPedirPreco: { pt:'Preço', en:'Price', es:'Precio', fr:'Prix', de:'Preis' },
+  flowHistorico:  { pt:'Dados históricos', en:'Historical data', es:'Datos históricos',
+                    fr:'Données historiques', de:'Historische Daten' },
   flowMsgPreco:   { pt:'Olá! Queria pedir preço para a {n}. Estou em {p}.',
                     en:'Hi! I would like a price for the {n}. I am in {p}.',
                     es:'¡Hola! Quería pedir precio para la {n}. Estoy en {p}.',
@@ -1494,11 +1496,20 @@ function buildFlow(item) {
     /* abre sempre a escolha: o país é obrigatório, por isso nunca há caminho
        que vá direto ao WhatsApp. Se a asa não tiver tamanhos, a janela pede
        só o país. */
-    const preco = el('button', 'flow-btn wa'); preco.type = 'button';
-    preco.innerHTML = ICON_WA;
-    const pl = el('span'); pl.textContent = ui('flowPedirPreco'); preco.appendChild(pl);
-    preco.addEventListener('click', ev => { ev.stopPropagation(); pedirPreco(p, num); });
-    acoes.appendChild(ver); acoes.appendChild(preco);
+    /* uma asa marcada como histórica descreve uma versão que já não se
+       vende: não se pede preço a partir dela. Ver eHistorico no gerador —
+       a página de produto faz o mesmo. */
+    acoes.appendChild(ver);
+    if (p.historico === true) {
+      const marca = el('span', 'flow-hist'); marca.textContent = ui('flowHistorico');
+      acoes.appendChild(marca);
+    } else {
+      const preco = el('button', 'flow-btn wa'); preco.type = 'button';
+      preco.innerHTML = ICON_WA;
+      const pl = el('span'); pl.textContent = ui('flowPedirPreco'); preco.appendChild(pl);
+      preco.addEventListener('click', ev => { ev.stopPropagation(); pedirPreco(p, num); });
+      acoes.appendChild(preco);
+    }
     body.appendChild(acoes);
     c.appendChild(body);
 
@@ -2233,6 +2244,7 @@ function buildFlow(item) {
       const wa = el('button', 'flow-btn wa'); wa.type = 'button';
       wa.innerHTML = ICON_WA;
       const wl = el('span'); wl.textContent = ui('flowPedirPreco'); wa.appendChild(wl);
+      if (p.historico === true) wa.hidden = true;   /* não se pede preço de uma versão antiga */
       wa.addEventListener('click', () => {
         p.corEscolhida = corCustom ? corCustom.nome
           : (corStd ? String(corStd).replace(/-/g, ' ') : null);
