@@ -2642,6 +2642,7 @@ function paragrafos(txt) {
    não se traduzem, e t() devolve as strings tal e qual. */
 let bioSeq = 0;
 let TECIDOS = [];   /* carta de cores da Flow, carregada com o conteúdo */
+let ioVento = null; /* observador que liga/desliga o vento por secção */
 let AVISOS = [];    /* avisos e ofertas, para saber que asas trazem selo */
 
 function buildBio(item) {
@@ -3110,6 +3111,63 @@ function buildElement(item) {
   }
 }
 
+/* ---- uma secção -------------------------------------------------------
+   Saiu do meio do render() para poder ser chamada duas vezes: uma no
+   primeiro desenho, outra quando o catálogo chega depois. É o mesmo código
+   que estava no ciclo, sem uma linha alterada — só passou a ter nome. */
+function buildSection(sec, sky) {
+  if (sec.visible === false) return null;
+
+  /* o catálogo ainda não chegou: fica um lugar guardado com o id certo, para
+     o menu e as âncoras (#produtos) continuarem a encontrá-lo, e para a
+     página não saltar quando ele entrar. */
+  if (sec.adiado) {
+    const vazia = el('section', 'a-carregar');
+    vazia.id = sec.id;
+    vazia.dataset.wind = sec.wind === false ? '0' : '1';
+    return vazia;
+  }
+
+  const s = el('section');
+    s.id = sec.id;
+    /* animação de vento neste slide (liga/desliga por slide; por defeito ligada) */
+    s.dataset.wind = sec.wind === false ? '0' : '1';
+    /* altura da secção em nº de ecrãs (1 = normal). Editável no CMS. */
+    if (typeof sec.heightScreens === 'number' && sec.heightScreens > 1) {
+      s.style.minHeight = (sec.heightScreens * 100) + 'vh';
+    }
+    if (sec.heroScrim) {
+      s.classList.add('has-scrim', 'hero-fill');
+      /* o scrim (degradé azul p/ legibilidade do texto) partilha a cor e a
+         intensidade da camada azul da secção — controladas por sec.overlay */
+      const ov = sec.overlay;
+      const rgb = hexToRgb((ov && ov.color) || '#092852');
+      if (rgb) {
+        s.style.setProperty('--scrim-r', rgb.r);
+        s.style.setProperty('--scrim-g', rgb.g);
+        s.style.setProperty('--scrim-b', rgb.b);
+      }
+      const on = !ov || ov.visible !== false;
+      const a = (ov && typeof ov.intensity === 'number') ? Math.max(0, Math.min(100, ov.intensity)) / 100 : 1;
+      s.style.setProperty('--scrim-a', on ? a : 0);
+    }
+    const bg = buildSectionBg(sec, sky);
+    if (bg) s.appendChild(bg);
+    const topTint = buildTopTint(sec);
+    if (topTint) s.appendChild(topTint);
+    const ovTint = buildOverlayTint(sec);
+    if (ovTint) s.appendChild(ovTint);
+    (sec.elements || []).forEach(item => {
+      const node = buildElement(item);
+      if (node) s.appendChild(node);
+    });
+    const hint = t(sec.scrollHint);
+    if (hint && sec.scrollHintVisible !== false) {
+      const h = el('div', 'scrollhint'); h.textContent = hint; s.appendChild(h);
+    }
+  return s;
+}
+
 function render(data) {
   const root = document.getElementById('app');
   /* o corpo estático que o gerador escreveu sai daqui: é o mesmo material,
@@ -3142,48 +3200,10 @@ function render(data) {
 
   /* secções */
   (data.sections || []).forEach(sec => {
-    if (sec.visible === false) return;
-    const s = el('section');
-    s.id = sec.id;
-    /* animação de vento neste slide (liga/desliga por slide; por defeito ligada) */
-    s.dataset.wind = sec.wind === false ? '0' : '1';
-    /* altura da secção em nº de ecrãs (1 = normal). Editável no CMS. */
-    if (typeof sec.heightScreens === 'number' && sec.heightScreens > 1) {
-      s.style.minHeight = (sec.heightScreens * 100) + 'vh';
-    }
-    if (sec.heroScrim) {
-      s.classList.add('has-scrim', 'hero-fill');
-      /* o scrim (degradé azul p/ legibilidade do texto) partilha a cor e a
-         intensidade da camada azul da secção — controladas por sec.overlay */
-      const ov = sec.overlay;
-      const rgb = hexToRgb((ov && ov.color) || '#092852');
-      if (rgb) {
-        s.style.setProperty('--scrim-r', rgb.r);
-        s.style.setProperty('--scrim-g', rgb.g);
-        s.style.setProperty('--scrim-b', rgb.b);
-      }
-      const on = !ov || ov.visible !== false;
-      const a = (ov && typeof ov.intensity === 'number') ? Math.max(0, Math.min(100, ov.intensity)) / 100 : 1;
-      s.style.setProperty('--scrim-a', on ? a : 0);
-    }
-    const bg = buildSectionBg(sec, data.sky);
-    if (bg) s.appendChild(bg);
-    const topTint = buildTopTint(sec);
-    if (topTint) s.appendChild(topTint);
-    const ovTint = buildOverlayTint(sec);
-    if (ovTint) s.appendChild(ovTint);
-    (sec.elements || []).forEach(item => {
-      const node = buildElement(item);
-      if (node) s.appendChild(node);
-    });
-    const hint = t(sec.scrollHint);
-    if (hint && sec.scrollHintVisible !== false) {
-      const h = el('div', 'scrollhint'); h.textContent = hint; s.appendChild(h);
-    }
-    root.appendChild(s);
+    const s = buildSection(sec, data.sky);
+    if (s) root.appendChild(s);
   });
 
-  /* footer */
   if (data.footer) {
     const f = el('footer');
     const big = el('div', 'big');
@@ -3554,6 +3574,9 @@ function initMotion(data) {
         canvas.style.opacity = (top && top.dataset.wind === '0') ? '0' : '1';
       }, { threshold: [0, 0.15, 0.35, 0.55, 0.75, 1] });
       secs.forEach(s => io.observe(s));
+      /* fica guardado porque há uma secção que chega depois disto: a do
+         catálogo. Sem a observar, o vento não sabia que ela existe. */
+      ioVento = io;
     }
   } else {
     canvas.style.display = 'none';
@@ -3564,15 +3587,31 @@ function initMotion(data) {
 /* carrega settings.json (global + ordem dos slides) e depois cada slide
    individual (content/slides/<id>.json), juntando tudo na estrutura que o
    render() espera. Assim cada slide é um ficheiro/entrada própria no CMS. */
+/* O CATALOGO NAO ENTRA NO PRIMEIRO DESENHO
+   Medido em produção: o produtos.json são 132 KB comprimidos (472 KB em
+   bruto) e demorava 151 ms, enquanto os outros sete slides estavam todos
+   prontos em 54 ms. Como se esperava por todos com um Promise.all, o hero
+   ficava à espera de um catálogo que não usa — e as vagas seguintes
+   herdavam esse atraso.
+
+   Agora não. Sai da primeira vaga, e com ele sai a carta de tecidos, que só
+   existe por causa do configurador de cor do catálogo. No lugar dele fica
+   um marcador com o id certo, para o menu e a âncora #produtos continuarem
+   a funcionar e para a página não saltar quando ele entrar.
+
+   Não se divide o ficheiro nem se lhe toca na estrutura: só se muda QUANDO
+   é pedido. Se a medição depois disto disser que vale a pena dividi-lo,
+   divide-se então. */
+const SLIDE_ADIADO = 'produtos';
+
 async function loadSite() {
   const settings = await fetch('/content/settings.json').then(r => r.json());
   const ids = Array.isArray(settings.slides) ? settings.slides : [];
   const slides = await Promise.all(ids.map(id =>
-    fetch('/content/slides/' + id + '.json').then(r => (r.ok ? r.json() : null)).catch(() => null)
+    id === SLIDE_ADIADO
+      ? Promise.resolve({ id, adiado: true })
+      : fetch('/content/slides/' + id + '.json').then(r => (r.ok ? r.json() : null)).catch(() => null)
   ));
-  /* carta de tecidos da Flow — usada pelo configurador de cor */
-  const tecidos = await fetch('/content/cores/flow-tecidos.json')
-    .then(r => (r.ok ? r.json() : null)).catch(() => null);
 
   const avisosIds = Array.isArray(settings.avisos) ? settings.avisos : [];
   const avisos = await Promise.all(avisosIds.map(id =>
@@ -3581,8 +3620,31 @@ async function loadSite() {
   return Object.assign({}, settings, {
     sections: slides.filter(Boolean),
     listaAvisos: avisos.filter(Boolean),
-    tecidos: (tecidos && tecidos.cores) || []
+    tecidos: []
   });
+}
+
+/* ---- o catálogo, depois de a página estar de pé ------------------------
+   Corre a seguir ao primeiro render(). Substitui o marcador pela secção a
+   sério, no mesmo sítio da ordem, e diz ao observador do vento que ela
+   passou a existir. */
+async function carregaCatalogo(data) {
+  const [slide, tecidos] = await Promise.all([
+    fetch('/content/slides/' + SLIDE_ADIADO + '.json').then(r => (r.ok ? r.json() : null)).catch(() => null),
+    fetch('/content/cores/flow-tecidos.json').then(r => (r.ok ? r.json() : null)).catch(() => null)
+  ]);
+  if (!slide) return;                       /* falhou: o marcador fica, vazio */
+
+  TECIDOS = (tecidos && tecidos.cores) || [];
+  const lugar = document.getElementById(slide.id);
+  const s = buildSection(slide, data.sky);
+  if (!s) { if (lugar) lugar.remove(); return; }
+  if (lugar) lugar.replaceWith(s); else document.getElementById('app').appendChild(s);
+  if (ioVento) ioVento.observe(s);
+
+  /* o endereço podia estar a pedir uma asa concreta (#produtos/<slug>): a
+     secção só agora existe, por isso é agora que se salta para ela */
+  irParaAncora();
 }
 
 /* O FALLBACK NAO SE APAGA A SI PROPRIO
@@ -3596,7 +3658,7 @@ async function loadSite() {
    depurar, e acrescenta-se um aviso pequeno POR CIMA do conteúdo — que
    continua a ser lido, e continua a ligar às páginas todas. */
 loadSite()
-  .then(render)
+  .then(dados => { render(dados); return carregaCatalogo(dados); })
   .catch(err => {
     console.error('Happy Soaring: falhou o carregamento do conteúdo.', err);
     const app = document.getElementById('app');

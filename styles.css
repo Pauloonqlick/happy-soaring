@@ -1506,3 +1506,7 @@ a.flow-dealer:hover{color:var(--orange)}
   background:#fdf0d5;color:#8a5a00;border-radius:8px;
   padding:11px 15px;margin:0 0 18px;font-weight:600;font-size:14.5px;
 }
+
+/* lugar guardado para a secção do catálogo, que chega depois do primeiro
+   desenho. Ocupa um ecrã para a página não encolher e voltar a crescer. */
+section.a-carregar{min-height:100vh}
