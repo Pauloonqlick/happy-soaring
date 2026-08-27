@@ -100,6 +100,28 @@ body.pg{
 .pg .pg-papel a:hover{color:var(--orange)}
 .pg-papel .pg-fich a{font-weight:700}
 
+/* ABAIXO DE 900px NAO HA LARGURA PARA DUAS COLUNAS.
+   A coluna dos titulos e 230px FIXOS. Num telemovel de 375px, tirando o
+   contentor e o cartao sobram ~215px de conteudo — menos do que os 230 que
+   a primeira coluna exige. O grid nao encolhe uma coluna fixa: transborda.
+   Era isso que se via, com o texto a sair pela direita do ecra, uma palavra
+   por linha e cortado.
+
+   O 900 nao e escolhido a olho: 230 do titulo + 48 do intervalo + cerca de
+   460px de texto (~50 caracteres, o minimo de uma medida legivel) mais os
+   80px do cartao e os 80px do contentor dao 898. Abaixo disso a coluna da
+   direita ja nao tem medida, mesmo quando cabe.
+
+   E o mesmo ponto de corte das listas em duas colunas aqui em baixo: as
+   duas regras respondem a mesma pergunta — ha largura para dividir? */
+@media(max-width:899px){
+  .pg-papel .pg-sec{display:block}
+  .pg .pg-papel .pg-sec > h2{margin:0 0 12px}
+}
+@media(max-width:600px){
+  .pg-papel{padding:22px 20px 8px;border-radius:14px}
+}
+
 /* Listas curtas em duas colunas, so no desktop. Em prosa isto seria uma
    armadilha — encher a coluna 1 obriga a descer e voltar a subir para
    comecar a 2 — mas os pontos fortes sao itens de uma linha. */
