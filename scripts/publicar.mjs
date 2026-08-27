@@ -167,6 +167,66 @@ function carimbar() {
   console.log('  ' + n + ' páginas HTML actualizadas');
 }
 
+/* ---- a identidade do que vai para o ar --------------------------------
+   Escreve /meta.json na pasta de publicação: que commit, se a árvore estava
+   limpa, quando foi, e uma impressão digital do conteúdo.
+
+   PORQUE E PRECISO
+     Uma auditoria a este site concluiu que a produção estava atrasada em
+     relação ao GitHub. Não estava — o que ela tinha visto era uma cópia
+     antiga em cache. Não havia forma de o confirmar sem ir a olho ao HTML,
+     e por isso duas conclusões inteiras saíram erradas.
+
+   PORQUE NAO CHEGA O COMMIT
+     Publica-se com alterações por commitar mais vezes do que se admite. Um
+     meta.json a dizer "commit X" quando o envio levou trabalho que ainda
+     não está no X mente exactamente onde devia esclarecer. Daí o `sujo`.
+     E daí o `impressao`: dois envios do mesmo commit com alterações locais
+     diferentes têm o mesmo commit e o mesmo `sujo`, e só o resumo do
+     conteúdo os distingue.
+
+   PORQUE E DEPOIS DO CARIMBO
+     O carimbar() reescreve as referências a app.js?v=… em 121 ficheiros. Um
+     resumo calculado antes disso seria a impressão digital de uma coisa que
+     não foi a que subiu. */
+function escreveMeta() {
+  const git = a => {
+    try { return execFileSync('git', a, { cwd: RAIZ, encoding: 'utf8' }).trim(); }
+    catch (e) { return ''; }
+  };
+  const commit = git(['rev-parse', 'HEAD']);
+  const sujo = git(['status', '--porcelain']) !== '';
+
+  /* o resumo é dos ficheiros já carimbados, por ordem, caminho e conteúdo */
+  const h = crypto.createHash('sha256');
+  (function varre(dir) {
+    for (const e of fs.readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name < b.name ? -1 : 1)) {
+      const f = path.join(dir, e.name);
+      if (e.isDirectory()) { varre(f); continue; }
+      h.update(path.relative(SAIDA, f).split(path.sep).join('/'));
+      h.update(fs.readFileSync(f));
+    }
+  })(SAIDA);
+
+  const meta = {
+    commit,
+    commitCurto: commit.slice(0, 7),
+    sujo,
+    publicado: new Date().toISOString(),
+    impressao: h.digest('hex').slice(0, 16)
+  };
+  fs.writeFileSync(path.join(SAIDA, 'meta.json'), JSON.stringify(meta, null, 2) + '\n');
+  console.log('  commit ' + meta.commitCurto + (sujo ? ' (ÁRVORE SUJA)' : '') +
+    ' · impressão ' + meta.impressao);
+  if (sujo) {
+    console.log('');
+    console.log('  ⚠ PUBLICAÇÃO COM ALTERAÇÕES POR COMMITAR');
+    console.log('    O meta.json regista-o. Não impede nada — há alturas em que');
+    console.log('    faz sentido publicar primeiro e commitar depois — mas fica dito.');
+    console.log('');
+  }
+}
+
 /* ------------------------------------------------------------------ */
 passo('Gerar as páginas das asas e o sitemap');
 execFileSync(process.execPath, [path.join('scripts', 'gerar-paginas.mjs')],
@@ -192,6 +252,9 @@ for (const d of PASTAS.concat(PASTAS_GERADAS)) {
 
 passo('Carimbar a versão no JavaScript e no CSS');
 carimbar();
+
+passo('Registar o que vai para o ar');
+escreveMeta();
 
 passo('Verificar que não vai nada privado');
 for (const d of PROIBIDAS) {
