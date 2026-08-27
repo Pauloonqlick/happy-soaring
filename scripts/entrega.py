@@ -24,6 +24,28 @@ MODELO = os.path.join(RAIZ, 'MODELO-LICENCA.txt')
 BUCKET = 'happy-soaring-entregas'
 DOMINIO = 'https://downloads.happysoaring.com'
 
+# A REFERENCIA VEM DE FORA E TEM DE SER VERIFICADA
+#
+# Chega numa linha "Ref:" de uma mensagem que o cliente enviou, e ia daqui
+# direita para tres sitios perigosos: o nome de uma pasta temporaria, o nome
+# do ZIP e a chave do objecto no R2 -- que e passada a um processo externo.
+#
+# Uma referencia com "..", com barras ou com um caminho absoluto escrevia
+# ficheiros fora da pasta de entregas: o os.path.join descarta o primeiro
+# argumento assim que o segundo e absoluto. E como no Windows o npx e um
+# .cmd, o CreateProcess lanca-o sempre atraves do cmd.exe -- mesmo sem
+# shell=True -- por isso caracteres como & ou | podiam la chegar.
+#
+# O site gera as referencias com um formato fixo, e e esse que se exige.
+# O alfabeto nao tem I, O, 0 nem 1, porque a ref e lida e escrita por
+# pessoas (ver newOrderCode no app.js). Nao havendo razao nenhuma para
+# aceitar outra coisa, nao se aceita.
+REF_VALIDA = re.compile(r'^HS-\d{8}-[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{4}$')
+
+
+def ref_do_dia():
+    return 'HS-' + datetime.date.today().strftime('%Y%m%d') + '-XXXX'
+
 
 def norm(s):
     s = unicodedata.normalize('NFD', str(s))
@@ -109,8 +131,12 @@ def main():
         print('ERRO: nao encontrei faixas na encomenda (linhas a comecar por •).')
         sys.exit(1)
     if not ref:
-        ref = 'HS-' + datetime.date.today().strftime('%Y%m%d') + '-XXXX'
+        ref = ref_do_dia()
         print('AVISO: encomenda sem "Ref:". Usei ' + ref)
+    elif not REF_VALIDA.match(ref):
+        print('AVISO: a referencia "' + ref[:60] + '" nao tem o formato do site.')
+        ref = ref_do_dia()
+        print('       Usei ' + ref + '. Confirma a encomenda antes de entregar.')
 
     el, cat = catalogo()
     idx = indexa_wav()
@@ -176,10 +202,14 @@ def main():
 
     chave = 'd/%s/%s.zip' % (uuid.uuid4(), ref)
     print('\n  a enviar para a Cloudflare R2...')
-    r = subprocess.run(['npx', 'wrangler', 'r2', 'object', 'put',
+    npx = shutil.which('npx')
+    if not npx:
+        print('  ERRO: nao encontrei o npx no PATH.')
+        sys.exit(3)
+    r = subprocess.run([npx, 'wrangler', 'r2', 'object', 'put',
                         '%s/%s' % (BUCKET, chave), '--file', zip_path,
                         '--content-type', 'application/zip', '--remote'],
-                       cwd=RAIZ, shell=True, capture_output=True, text=True)
+                       cwd=RAIZ, capture_output=True, text=True)
     if r.returncode != 0:
         print('  ERRO no upload:\n' + (r.stderr or r.stdout)[-1200:])
         sys.exit(3)
