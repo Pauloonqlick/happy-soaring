@@ -17,6 +17,7 @@
  *   mentir. Gerando na publicação, não podem ficar desactualizados.
  *
  * USO
+ *   npm run check                           verifica sem publicar nada
  *   node scripts/publicar.mjs               prepara e verifica, NAO publica
  *   node scripts/publicar.mjs --publicar    prepara, verifica e publica
  *

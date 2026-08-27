@@ -36,6 +36,20 @@ Para regenerar as páginas sem publicar:
 node scripts/gerar-paginas.mjs
 ```
 
+## Verificar
+
+```
+npm run check
+```
+
+Gera as páginas e corre quatro verificações — as quatro classes de erro que
+já aconteceram aqui: uma pasta gerada fora da lista de autorizados, ligações
+internas mortas, páginas com zero ou dois h1, e campos obrigatórios sem
+tradução. Não publica nada. Sai com código 1 se alguma falhar.
+
+A lista cresce por cicatriz: cada vez que aparecer uma classe nova de
+regressão, acrescenta-se uma verificação.
+
 ## Publicar
 
 ```
