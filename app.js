@@ -5,9 +5,9 @@ import { rotuloFamilia as rotFamilia, rotuloClasse as rotClasse }
 import { KN_PARA_KMH, PAISES_NOS, CHAVE_UNIDADE, unidadeDoPais }
   from './regras/unidades.js';
 
-/* Motor do site orientado por content.json.
-   Nada de conteúdo escrito à mão aqui — tudo vem do ficheiro de dados,
-   que é o que o CMS (Sveltia) vai editar. */
+/* Motor do site orientado pelo conteúdo em content/.
+   Nada de conteúdo escrito à mão aqui — tudo vem de content/settings.json e
+   de content/slides/*.json, que é o que o CMS (Sveltia) edita. */
 
 const el = (tag, cls) => { const n = document.createElement(tag); if (cls) n.className = cls; return n; };
 const px = v => (typeof v === 'number' ? v + 'px' : v);
@@ -236,6 +236,11 @@ const UI = {
   flowPedirPreco: { pt:'Preço', en:'Price', es:'Precio', fr:'Prix', de:'Preis' },
   flowHistorico:  { pt:'Dados históricos', en:'Historical data', es:'Datos históricos',
                     fr:'Données historiques', de:'Historische Daten' },
+  erroParcial:    { pt:'Nem tudo carregou. O essencial está aqui em baixo.',
+                    en:'Not everything loaded. The essentials are below.',
+                    es:'No se cargó todo. Lo esencial está aquí abajo.',
+                    fr:'Tout n’a pas chargé. L’essentiel est ci-dessous.',
+                    de:'Nicht alles wurde geladen. Das Wesentliche steht unten.' },
   flowMsgPreco:   { pt:'Olá! Queria pedir preço para a {n}. Estou em {p}.',
                     en:'Hi! I would like a price for the {n}. I am in {p}.',
                     es:'¡Hola! Quería pedir precio para la {n}. Estoy en {p}.',
@@ -537,7 +542,7 @@ function buildHeroImage(item) {
 
 /* ---- secção de música (Happy Soaring Music) ----
    Leitor de MP3 próprios, listas verticais por género (com scroll), tabela de
-   licenças, aviso legal e CTA de WhatsApp. Tudo vem de content.json / CMS. */
+   licenças, aviso legal e CTA de WhatsApp. Tudo vem de content/ pelo CMS. */
 const ICON_PLAY = '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
 const ICON_PAUSE = '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>';
 
@@ -3547,9 +3552,29 @@ async function loadSite() {
   });
 }
 
+/* O FALLBACK NAO SE APAGA A SI PROPRIO
+   Dentro do #app está um bloco estático — identidade, método, catálogo com
+   as 22 asas ligadas — escrito de propósito para a página valer alguma coisa
+   sem JavaScript. E isto apagava-o precisamente quando o JavaScript falhava,
+   substituindo-o por uma linha de erro. A rede de segurança desaparecia no
+   momento em que era precisa.
+
+   Agora não se toca no que está lá. Regista-se o erro para quem estiver a
+   depurar, e acrescenta-se um aviso pequeno POR CIMA do conteúdo — que
+   continua a ser lido, e continua a ligar às páginas todas. */
 loadSite()
   .then(render)
   .catch(err => {
-    document.getElementById('app').innerHTML =
-      '<p style="padding:40px;color:#fff">Erro a carregar o conteúdo: ' + err.message + '</p>';
+    console.error('Happy Soaring: falhou o carregamento do conteúdo.', err);
+    const app = document.getElementById('app');
+    if (!app) return;
+    const estatico = app.querySelector('.hs-estatico');
+    if (!estatico) {
+      /* sem bloco estático não há nada a preservar: aí sim, diz-se */
+      app.innerHTML = '<p style="padding:40px;color:#fff">Erro a carregar o conteúdo.</p>';
+      return;
+    }
+    const nota = el('p', 'hs-degradado');
+    nota.textContent = ui('erroParcial');
+    estatico.insertBefore(nota, estatico.firstChild);
   });
