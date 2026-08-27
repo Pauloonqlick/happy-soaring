@@ -16,8 +16,15 @@
  * O QUE NAO SE TRADUZ, E PORQUE
  *   As normas (EN-A, EN 926-1) são códigos: traduzi-las tornava-as erradas.
  *   Os termos técnicos que a indústria usa em inglês em toda a parte
- *   (Full reflex, Speed flying) ficam como estão — um piloto alemão procura
+ *   (Speed flying) ficam como estão — um piloto alemão procura
  *   "speed flying", não a tradução dele.
+ *
+ * CHAVES NEUTRAS PARA O QUE UM DIA PODE MUDAR DE NOME
+ *   A classe do paramotor entra como `ppg_intermediate` e não como
+ *   "Intermediate PPG". Hoje mostram a mesma coisa nas cinco línguas. Mas se
+ *   um dia quisermos escrever "PPG intermédio" em português, muda-se uma
+ *   linha aqui em vez de mexer nos produtos todos — que é exactamente a razão
+ *   por que a família já era uma chave e não um rótulo.
  */
 
 const escolhe = (v, l) => (v && (v[l] || v.pt)) || '';
@@ -54,8 +61,30 @@ export const CLASSE_ROTULOS = {
   'Performance Parakite': { pt:'Performance Parakite', en:'Performance Parakite', es:'Performance Parakite', fr:'Performance Parakite', de:'Performance Parakite' },
   'Parawing':             { pt:'Parawing', en:'Parawing', es:'Parawing', fr:'Parawing', de:'Parawing' },
   'Speed flying':         { pt:'Speed flying', en:'Speed flying', es:'Speed flying', fr:'Speed flying', de:'Speed flying' },
-  'Full reflex':          { pt:'Full reflex', en:'Full reflex', es:'Full reflex', fr:'Full reflex', de:'Full reflex' },
-  'Semi-reflex':          { pt:'Semi-reflex', en:'Semi-reflex', es:'Semi-reflex', fr:'Semi-reflex', de:'Semi-reflex' }
+
+  /* NIVEL, E NAO PERFIL, PARA O PARAMOTOR
+     Aqui viveram 'Full reflex' e 'Semi-reflex'. Saíram por duas razões.
+
+     A primeira é que um selo que não distingue não é um selo: a RPM 3 e a
+     Cosmos Power 2 são as duas full reflex, e dizê-lo no cartão não ajudava
+     ninguém a escolher entre elas. O nível ajuda.
+
+     A segunda é que o campo estava a responder a cinco perguntas ao mesmo
+     tempo — o que é, para que disciplina, para que nível, que homologação,
+     que perfil — e dentro da própria família do paramotor usava três eixos
+     diferentes: perfil na RPM 3, perfil na Cosmos, homologação na Future
+     Power. Não se conseguia comparar duas asas da mesma família.
+
+     O perfil não se perdeu: continua no texto de cada asa, que é onde uma
+     característica aerodinâmica pertence. E há mais razão para lá ficar do
+     que parecia — o manual da Cosmos descreve o perfil a mudar com os
+     trimmers e o acelerador, e isso nunca cabia numa palavra só. */
+  'ppg_beginner':     { pt:'Beginner PPG', en:'Beginner PPG', es:'Beginner PPG',
+                        fr:'Beginner PPG', de:'Beginner PPG' },
+  'ppg_intermediate': { pt:'Intermediate PPG', en:'Intermediate PPG', es:'Intermediate PPG',
+                        fr:'Intermediate PPG', de:'Intermediate PPG' },
+  'ppg_advanced':     { pt:'Advanced PPG', en:'Advanced PPG', es:'Advanced PPG',
+                        fr:'Advanced PPG', de:'Advanced PPG' }
   /* As normas (EN-A, EN-B, EN-C, EN-D, EN 926-1, EN-B / EN 926-1) não entram:
      são códigos e escrevem-se sempre da mesma maneira. Caem pela chave. */
 };

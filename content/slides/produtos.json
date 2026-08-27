@@ -2595,7 +2595,7 @@
      "visible": true,
      "nome": "RPM 3",
      "familia": "Paramotor",
-     "classificacao": "Full reflex",
+     "classificacao": "ppg_advanced",
      "tagline": {
       "pt": "Velocidade, eficiência, estabilidade.",
       "en": "Speed, efficiency, stability.",
@@ -2833,7 +2833,7 @@
      "visible": true,
      "nome": "Cosmos Power 2",
      "familia": "Paramotor",
-     "classificacao": "Semi-reflex",
+     "classificacao": "ppg_intermediate",
      "tagline": {
       "pt": "Diversão pura em paramotor.",
       "en": "Pure fun on a paramotor.",
@@ -3423,7 +3423,7 @@
      "visible": true,
      "nome": "Future Power",
      "familia": "Paramotor",
-     "classificacao": "EN-A",
+     "classificacao": "ppg_beginner",
      "tagline": {
       "pt": "Uma asa para motor e para voo livre.",
       "en": "One wing for powered and free flight.",
