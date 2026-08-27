@@ -334,13 +334,46 @@ function buildSectionBg(sec, sky) {
     wrap.style.setProperty('--bg-bright', (1.05 * (1 - dk / 100)).toFixed(3));
   }
 
-  const imgD = el('img', 'hide-mobile');
-  imgD.src = sec.bgImage; imgD.alt = '';
-  wrap.appendChild(imgD);
+  /* UMA IMAGEM, NAO DUAS ESCONDIDAS UMA DA OUTRA
+     Aqui criavam-se dois <img> — o de desktop e o de telemóvel — e o CSS
+     escondia um com display:none. Só que display:none não impede o
+     download: o browser ia buscar os dois e usava um.
 
-  const imgM = el('img', 'hide-desktop');
-  imgM.src = sec.bgImageMobile || sec.bgImage; imgM.alt = '';
-  wrap.appendChild(imgM);
+     Medido em produção: um telemóvel descarregava hero-bg.jpg (370 KB) e
+     hero-bg-mobile.jpg (277 KB), deitando 370 KB fora. No desktop, 277 KB.
+     E esses bytes competem pela largura de banda exactamente na altura em
+     que a maior imagem da página está a tentar aparecer.
+
+     Com <picture>, o browser avalia o media query ANTES de pedir seja o que
+     for, e pede um ficheiro só.
+
+     O 760px não é escolhido ao acaso: é o mesmo ponto de corte das regras
+     .hide-mobile e .hide-desktop no styles.css. Um valor diferente abria uma
+     faixa de larguras onde o layout muda e a imagem não. */
+  const pic = el('picture');
+  const mob = sec.bgImageMobile && sec.bgImageMobile !== sec.bgImage ? sec.bgImageMobile : '';
+  if (mob) {
+    const src = el('source');
+    src.media = '(max-width: 760px)';
+    src.srcset = mob;
+    pic.appendChild(src);
+  }
+  /* O src E O ULTIMO A SER POSTO, E ISSO NAO E ESTILO
+     Pôr o src num <img> ainda solto começa o download nesse instante — do
+     ficheiro de desktop, porque não há <picture> nenhum à volta dele para
+     consultar. Ao inserir a seguir dentro do <picture>, o browser refaz a
+     escolha e vai buscar o de telemóvel. Resultado: os dois, que era
+     exactamente o que isto veio corrigir.
+
+     Medido: as duas imagens pedidas no mesmo milissegundo, 370 + 277 KB.
+     Com o img já dentro do <picture> antes de ter src, o browser avalia o
+     media query primeiro e pede um ficheiro só. */
+  const img = el('img');
+  img.alt = '';
+  img.setAttribute('aria-hidden', 'true');
+  pic.appendChild(img);
+  wrap.appendChild(pic);
+  img.src = sec.bgImage;
 
   const ov = sec.overlay;
   if (!ov || ov.visible !== false) {
