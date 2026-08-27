@@ -24,6 +24,11 @@ MODELO = os.path.join(RAIZ, 'MODELO-LICENCA.txt')
 BUCKET = 'happy-soaring-entregas'
 DOMINIO = 'https://downloads.happysoaring.com'
 
+# O wrangler e o do projecto, com versao fixa no package.json. Chama-se o
+# .js com o node em vez do .cmd pelo npx: assim nao ha shell pelo meio, e a
+# versao nao muda sozinha entre duas entregas.
+WRANGLER = os.path.join(RAIZ, 'node_modules', 'wrangler', 'bin', 'wrangler.js')
+
 # A REFERENCIA VEM DE FORA E TEM DE SER VERIFICADA
 #
 # Chega numa linha "Ref:" de uma mensagem que o cliente enviou, e ia daqui
@@ -213,11 +218,14 @@ def main():
 
     chave = 'd/%s/%s.zip' % (uuid.uuid4(), ref)
     print('\n  a enviar para a Cloudflare R2...')
-    npx = shutil.which('npx')
-    if not npx:
-        print('  ERRO: nao encontrei o npx no PATH.')
+    node = shutil.which('node')
+    if not node:
+        print('  ERRO: nao encontrei o node no PATH.')
         sys.exit(3)
-    r = subprocess.run([npx, 'wrangler', 'r2', 'object', 'put',
+    if not os.path.exists(WRANGLER):
+        print('  ERRO: falta o wrangler do projecto. Corre: npm ci')
+        sys.exit(3)
+    r = subprocess.run([node, WRANGLER, 'r2', 'object', 'put',
                         '%s/%s' % (BUCKET, chave), '--file', zip_path,
                         '--content-type', 'application/zip', '--remote'],
                        cwd=RAIZ, capture_output=True, text=True)

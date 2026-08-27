@@ -20,6 +20,18 @@ passo de compilação: o que está no repositório é o que corre no browser.
 - **`scripts/publicar.mjs`** — monta a pasta de publicação e envia para o
   Cloudflare Pages.
 
+## Preparar o ambiente
+
+```
+npm ci
+```
+
+Instala o Wrangler na versão exacta do `package-lock.json`. É a única
+dependência: o site não tem build nem bundler. Fixa-se a versão porque a
+ferramenta que põe o site no ar não pode mudar sozinha entre duas
+publicações — e chegou a mudar, de 4.126.0 para 4.127.0, no meio de uma
+sessão de trabalho.
+
 ## Correr localmente
 
 ```

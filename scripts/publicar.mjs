@@ -32,6 +32,18 @@ import { verifica } from './verificar.mjs';
 
 const RAIZ = process.cwd();
 const SAIDA = path.join(RAIZ, '_publicar');
+
+/* O WRANGLER E O DO PROJECTO, NAO O QUE O npx TROUXER HOJE
+   Durante uma sessão de trabalho, um `npx wrangler` trouxe a 4.126.0 de
+   manhã e a 4.127.0 à tarde, sem ninguém tocar no projecto. Nesse dia não
+   partiu nada. Mas a ferramenta que põe o site no ar não pode mudar de
+   versão sozinha entre duas publicações.
+
+   Fica fixo no package.json com a versão exacta e no package-lock.json.
+   Chama-se o .js directamente com o node — e não o .cmd pelo npx — para não
+   passar por nenhum shell. Foi isso que fez desaparecer o aviso de
+   segurança que o node dava em cada publicação. */
+const WRANGLER = path.join(RAIZ, 'node_modules', 'wrangler', 'bin', 'wrangler.js');
 const PUBLICAR = process.argv.includes('--publicar');
 
 /* ------------------------------------------------------------------ */
@@ -311,7 +323,8 @@ if (!PUBLICAR) {
 }
 
 passo('Publicar no Cloudflare Pages');
-execFileSync('npx', ['wrangler', 'pages', 'deploy', '_publicar',
+if (!fs.existsSync(WRANGLER)) erro('falta o wrangler do projecto — corre `npm ci`');
+execFileSync(process.execPath, [WRANGLER, 'pages', 'deploy', '_publicar',
   '--project-name=happy-soaring', '--branch=master'],
-  { cwd: RAIZ, stdio: 'inherit', shell: process.platform === 'win32' });
+  { cwd: RAIZ, stdio: 'inherit' });
 console.log('\n✔ https://happysoaring.com\n');
