@@ -23,24 +23,30 @@
  *   catálogo de boas práticas.
  *
  * USO
- *   npm run check      (corre o gerador primeiro; não publica nada)
+ *   npm run check                    corre o gerador e verifica
+ *   import { verifica } from ...     verifica o que já está gerado
+ *
+ * PORQUE EXPORTA UMA FUNCAO
+ *   A publicação chama-a. De outro modo os quatro testes eram opcionais —
+ *   bastava correr o publicar.mjs directamente para os saltar, que é
+ *   exactamente o que uma barreira não pode permitir. E como o publicar.mjs
+ *   já gera as páginas, chama a verificação sem as mandar gerar outra vez.
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { pathToFileURL } from 'node:url';
 
 const RAIZ = process.cwd();
 const IDIOMAS = ['pt', 'en', 'es', 'fr', 'de'];
+
+export function verifica({ silencioso = false } = {}) {
 const problemas = [];
 const falha = m => problemas.push(m);
 
-function titulo(t) { console.log('\n▸ ' + t); }
-function ok(m) { console.log('  ✓ ' + m); }
+const titulo = t => { if (!silencioso) console.log('\n▸ ' + t); };
+const ok = m => { if (!silencioso) console.log('  ✓ ' + m); };
 
-/* ------------------------------------------------------------------ */
-titulo('Gerar as páginas');
-execFileSync(process.execPath, [path.join('scripts', 'gerar-paginas.mjs')],
-  { cwd: RAIZ, stdio: 'inherit' });
 
 /* ---- as páginas do site são as que o sitemap promete ----------------
    E não "todas as pastas com um index.html". O /admin/ é o painel do CMS e
@@ -139,12 +145,24 @@ titulo('4. Campos obrigatórios traduzidos nas cinco línguas');
 }
 
 /* ------------------------------------------------------------------ */
-console.log('');
-if (problemas.length) {
-  console.log('✖ ' + problemas.length + ' problema(s):');
-  for (const p of problemas.slice(0, 40)) console.log('    ' + p);
-  if (problemas.length > 40) console.log('    … e mais ' + (problemas.length - 40));
-  console.log('');
-  process.exit(1);
+return problemas;
 }
-console.log('✓ tudo passou');
+
+/* ------------------------------------------------------------------ */
+/* Corrido à mão (npm run check): gera primeiro, verifica depois, e sai com
+   código 1 se alguma coisa falhar — para poder entrar num CI um dia. */
+if (import.meta.url === pathToFileURL(process.argv[1] || '').href) {
+  console.log('\n▸ Gerar as páginas');
+  execFileSync(process.execPath, [path.join('scripts', 'gerar-paginas.mjs')],
+    { cwd: RAIZ, stdio: 'inherit' });
+  const problemas = verifica();
+  console.log('');
+  if (problemas.length) {
+    console.log('✖ ' + problemas.length + ' problema(s):');
+    for (const p of problemas.slice(0, 40)) console.log('    ' + p);
+    if (problemas.length > 40) console.log('    … e mais ' + (problemas.length - 40));
+    console.log('');
+    process.exit(1);
+  }
+  console.log('✓ tudo passou');
+}

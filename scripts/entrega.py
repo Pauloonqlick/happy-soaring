@@ -43,10 +43,6 @@ DOMINIO = 'https://downloads.happysoaring.com'
 REF_VALIDA = re.compile(r'^HS-\d{8}-[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{4}$')
 
 
-def ref_do_dia():
-    return 'HS-' + datetime.date.today().strftime('%Y%m%d') + '-XXXX'
-
-
 def norm(s):
     s = unicodedata.normalize('NFD', str(s))
     s = ''.join(c for c in s if unicodedata.category(c) != 'Mn')
@@ -130,13 +126,28 @@ def main():
     if not nomes:
         print('ERRO: nao encontrei faixas na encomenda (linhas a comecar por •).')
         sys.exit(1)
+    # SEM REFERENCIA VALIDA, NAO SE ENTREGA NADA
+    #
+    # Antes inventava-se uma de recurso e seguia-se. Estava errado por duas
+    # razoes. A primeira e que uma referencia invalida so pode significar
+    # tres coisas -- ataque, copiar-colar mal feito, ou encomenda errada --
+    # e nenhuma delas melhora se o script continuar sozinho. A segunda e que
+    # a de recurso acabava em XXXX, portanto duas encomendas problematicas no
+    # mesmo dia ficavam com o mesmo nome de ficheiro na pasta de entregas.
+    #
+    # O site gera sempre uma referencia. Uma encomenda sem ela nao veio do
+    # site, e isso e por si so motivo para alguem olhar antes de enviar
+    # ficheiros a um cliente.
     if not ref:
-        ref = ref_do_dia()
-        print('AVISO: encomenda sem "Ref:". Usei ' + ref)
-    elif not REF_VALIDA.match(ref):
-        print('AVISO: a referencia "' + ref[:60] + '" nao tem o formato do site.')
-        ref = ref_do_dia()
-        print('       Usei ' + ref + '. Confirma a encomenda antes de entregar.')
+        print('ERRO: encomenda sem linha "Ref:".')
+        print('      Nada foi gerado nem enviado.')
+        sys.exit(2)
+    if not REF_VALIDA.match(ref):
+        print('ERRO: referencia invalida: ' + repr(ref[:60]))
+        print('      O formato do site e HS-AAAAMMDD-XXXX, com letras e algarismos')
+        print('      de ABCDEFGHJKLMNPQRSTUVWXYZ23456789.')
+        print('      Nada foi gerado nem enviado.')
+        sys.exit(2)
 
     el, cat = catalogo()
     idx = indexa_wav()

@@ -28,6 +28,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import crypto from 'node:crypto';
+import { verifica } from './verificar.mjs';
 
 const RAIZ = process.cwd();
 const SAIDA = path.join(RAIZ, '_publicar');
@@ -186,6 +187,11 @@ function carimbar() {
      diferentes têm o mesmo commit e o mesmo `sujo`, e só o resumo do
      conteúdo os distingue.
 
+   O QUE A IMPRESSAO NAO INCLUI
+     O próprio meta.json, que ainda não existe quando o resumo é calculado.
+     É inevitável — um ficheiro não pode conter o resumo de si mesmo — e não
+     é para corrigir. Quem tentar fechar esse ciclo vai encontrá-lo.
+
    PORQUE E DEPOIS DO CARIMBO
      O carimbar() reescreve as referências a app.js?v=… em 121 ficheiros. Um
      resumo calculado antes disso seria a impressão digital de uma coisa que
@@ -232,6 +238,22 @@ function escreveMeta() {
 passo('Gerar as páginas das asas e o sitemap');
 execFileSync(process.execPath, [path.join('scripts', 'gerar-paginas.mjs')],
   { cwd: RAIZ, stdio: 'inherit' });
+
+/* AS VERIFICACOES SAO OBRIGATORIAS AQUI, E NAO UM COMANDO A PARTE
+   Um `npm run check` que se pode não correr não é uma barreira, é um
+   conselho. Quem escrever `node scripts/publicar.mjs --publicar` passa por
+   aqui de qualquer maneira.
+
+   Não se gera duas vezes: as páginas acabaram de sair acima, e o
+   verificar.mjs é importado como função justamente para trabalhar sobre o
+   que já está no disco. */
+passo('Verificar as páginas geradas');
+const malParado = verifica();
+if (malParado.length) {
+  for (const m of malParado.slice(0, 20)) console.log('    ' + m);
+  if (malParado.length > 20) console.log('    … e mais ' + (malParado.length - 20));
+  erro(malParado.length + ' verificação(ões) falhou/falharam — nada foi publicado');
+}
 
 passo('Montar a pasta de publicação');
 fs.rmSync(SAIDA, { recursive: true, force: true });
