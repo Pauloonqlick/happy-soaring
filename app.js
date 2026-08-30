@@ -4,6 +4,8 @@ import { rotuloFamilia as rotFamilia, rotuloClasse as rotClasse }
   from './regras/taxonomia.js';
 import { KN_PARA_KMH, PAISES_NOS, CHAVE_UNIDADE, unidadeDoPais }
   from './regras/unidades.js';
+import { comIdioma, entradasDoMenu }
+  from './regras/navegacao.js';
 
 /* Motor do site orientado pelo conteúdo em content/.
    Nada de conteúdo escrito à mão aqui — tudo vem de content/settings.json e
@@ -33,12 +35,11 @@ const LOCALE = (location.pathname.match(/^\/(en|es|fr|de)(?:\/|$)/) || [])[1] ||
 
    Endereços externos, âncoras e caminhos que já trazem prefixo ficam como
    estão. */
+/* a regra mudou-se para regras/navegacao.js, que o gerador também usa —
+   era a única forma de o menu das páginas geradas não ser uma segunda
+   implementação desta mesma conta */
 function local(href) {
-  const h = String(href || '');
-  if (!h || LOCALE === DEFAULT_LOCALE) return h;
-  if (h.charAt(0) !== '/' || h.charAt(1) === '/') return h;
-  if (/^\/(pt|en|es|fr|de)(\/|$)/.test(h)) return h;
-  return '/' + LOCALE + h;
+  return comIdioma(href, LOCALE);
 }
 
 function t(v) {
@@ -3453,16 +3454,17 @@ function buildMenu(items) {
      não é desenhada, e a entrada de menu ficava a apontar para uma âncora que
      não existe — clicava-se e não acontecia nada. As ligações externas passam
      sempre, porque não dependem de nenhuma secção daqui. */
-  const vivos = items.filter(mi => {
-    const target = String(mi.target || '');
-    if (!target) return false;
-    if (/^https?:\/\//.test(target)) return true;
-    /* uma página do site (/smartground/) não é uma âncora desta página: não
-       tem elemento com esse id e ficava de fora do menu. É por aqui que
-       entram as páginas próprias que vamos criando. */
-    if (target.charAt(0) === '/') return true;
-    return !!document.getElementById(target);
-  });
+  /* O QUE VEM DO MODULO, E O QUE FICA AQUI
+     Os endereços e os rótulos saem do regras/navegacao.js, partilhado com o
+     gerador — é o que garante que o menu desta página e o das 131 geradas
+     dizem a mesma coisa.
+
+     O filtro fica aqui de propósito: perguntar ao DOM se a secção existe só
+     faz sentido nesta página. Numa página gerada, #produtos e #music nunca
+     existem, e se esta pergunta subisse para o módulo essas duas entradas
+     desapareciam de lá. */
+  const vivos = entradasDoMenu(items, LOCALE, { naInicial: true })
+    .filter(e => e.tipo !== 'ancora' || !!document.getElementById(e.alvo));
   if (!vivos.length) return;
 
   const burger = el('button', 'burger');
@@ -3473,13 +3475,11 @@ function buildMenu(items) {
   const drawer = el('nav', 'menu-drawer');
   drawer.setAttribute('aria-hidden', 'true');
   const ul = el('ul');
-  vivos.forEach(mi => {
+  vivos.forEach(e => {
     const li = el('li');
     const a = el('a');
-    const target = String(mi.target || '');
-    a.href = /^https?:\/\//.test(target) ? target
-      : target.charAt(0) === '/' ? local(target) : '#' + target;
-    a.textContent = t(mi.label);
+    a.href = e.href;
+    a.textContent = e.rotulo;
     li.appendChild(a);
     ul.appendChild(li);
   });

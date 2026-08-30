@@ -4,43 +4,69 @@ O que está por fazer e o que está por decidir. Vai sendo actualizado à medida
 que as coisas aparecem — o que se decide sai daqui e passa a estar escrito nas
 regras ou no código.
 
-Última actualização: 24/08/2026
+Última actualização: 30/08/2026
 
 ---
 
-## PRIORITÁRIO · Navegação global das páginas geradas
+## Feito, à espera de publicação · Navegação global
 
-Descoberto em 30/08/2026, durante a revisão visual do pilar.
+Descoberto em 30/08/2026, resolvido no mesmo dia. **Ainda não publicado.**
 
-**As 131 páginas geradas não têm menu.** Nem `/parakite-portugal/`, nem
-`/smartground/`, nem `/flow-paragliders-portugal/`, nem nenhuma das 110 páginas
-de asa. Verificado uma a uma: `class="burger"` aparece **zero** vezes em todas.
+As 131 páginas geradas não tinham menu nenhum: quem aterrava numa asa vinda de
+uma pesquisa só podia voltar à raiz ou mudar de língua. O `buildMenu()` do
+`app.js` só corre na página inicial.
 
-O menu é construído pelo `buildMenu()` do `app.js`, que só corre na página
-inicial. As páginas geradas têm `.pg-topo` — marca, linha de dealer e seletor
-de idiomas — e mais nada. Quem aterra numa asa vinda do Google só pode voltar à
-raiz ou mudar de língua.
+**O que se fez.** Uma barra no header em desktop; em ecrãs estreitos, um botão
+e uma gaveta. Os seis links estão sempre escritos no documento — o JavaScript
+só abre e fecha. Sem JavaScript a barra fica visível e quebra em duas filas,
+que era o comportamento anterior.
 
-**O que se quer:** que as páginas geradas tenham acesso à navegação principal —
+A lista, os rótulos e os endereços saem de `regras/navegacao.js`, o mesmo módulo
+que o `app.js` passou a usar. Não há segunda fonte de verdade: o `local()` do
+`app.js` foi mudado para delegar em `comIdioma()` em vez de ter a sua própria
+cópia da conta dos idiomas. O filtro que pergunta ao DOM se a secção existe
+ficou no `app.js` de propósito — numa página gerada `#produtos` e `#music`
+nunca existem, e se essa pergunta subisse para o módulo as duas entradas
+desapareciam de lá.
 
-    Início · Parakite · SmartGround · Flow Paragliders · Produtos · Música
+O componente vive em `menu.css` e `menu.js`, fora da `pagina.css`, porque tem
+dois consumidores que não partilham folha de estilo: as páginas geradas e o
+Reflex Lab.
 
-**As duas condições que tornam isto não-trivial:**
+**O Reflex Lab.** É uma página escrita à mão e ficava a ser a única sem
+navegação. Não leva menu escrito à mão: o gerador entra no ficheiro e escreve
+entre `<!-- ng:inicio -->` e `<!-- ng:fim -->`, da mesma fonte. É idempotente.
+Só em português — a página não tem traduções declaradas e inventar-lhe cinco
+não era trabalho desta tarefa.
 
-1. **Sem duplicar a lógica.** O menu vive em `content/settings.json` e é lido
-   pelo `app.js`. Se o gerador escrever um segundo menu à mão, passam a existir
-   duas fontes de verdade — e um dia dizem coisas diferentes. Foi exactamente
-   isso que aconteceu com os rótulos de família antes de irem para
-   `regras/taxonomia.js`.
+**`Início` aponta para a raiz da língua** (`/`, `/en/`, …) e não para `/#hero`.
+O fragmento levava ao topo de uma página onde o browser já aterra, e criava um
+segundo endereço para uma página que já tem canonical. Na homepage, onde a
+âncora serve mesmo para descer, continua `#hero`.
 
-2. **As cinco línguas.** Metade das entradas são âncoras da página inicial
-   (`#produtos`, `#music`) e metade são páginas próprias. Numa página gerada,
-   uma âncora não existe: tem de virar `/en/#produtos`. O `local()` do `app.js`
-   já resolve isto no browser; o gerador precisa do equivalente.
+**Efeito lateral que valeu a pena:** o `verificar.mjs` excluía o `#` do regex e
+por isso nunca chegava a ver ligações com fragmento — não dava falsos mortos,
+mas também não validava nada. Corrigido: 1775 → 2767 ligações verificadas.
 
-**Não implementar sem analisar primeiro.** A solução tem de sair do mesmo
-`settings.json`, provavelmente por um módulo partilhado em `regras/`, como já
-aconteceu com a taxonomia e as unidades.
+---
+
+## Acessibilidade do burger da página inicial
+
+Registado em 30/08/2026. O burger da homepage é outro botão, construído pelo
+`buildMenu()` do `app.js`, e continua exactamente como estava.
+
+O que lhe falta:
+
+- **`aria-expanded`** — o botão não diz se o menu está aberto ou fechado. Para
+  quem usa leitor de ecrã é um botão sem estado.
+- **Gestão de foco** — ao abrir, o foco não entra no menu.
+- **Devolução do foco** — ao fechar, o foco não volta ao botão que o abriu.
+  Quem navega por teclado é despejado no início do documento.
+- **Escape** — não fecha o menu.
+
+Já não é preciso desenhar isto do zero: são as mesmas quatro coisas que a
+`menu.js` faz, e o mais provável é que a solução certa seja a homepage passar a
+usar o mesmo componente em vez de ter um botão só dela.
 
 ---
 

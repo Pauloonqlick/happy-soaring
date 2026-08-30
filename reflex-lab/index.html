@@ -15,6 +15,7 @@
 <meta property="og:image" content="https://happysoaring.com/images/og-happysoaring.jpg" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="stylesheet" href="reflex-lab.css" />
+<link rel="stylesheet" href="/menu.css" />
 </head>
 <body>
 <div class="rl-app" id="rl-app">
@@ -31,6 +32,11 @@
       <h1 class="rl-title">REFLEX LAB</h1>
       <p class="rl-subtitle">Simulador aerodinâmico conceptual</p>
     </div>
+    <!-- A navegação global. NÃO EDITAR À MÃO: o que está entre os dois
+         marcadores é escrito pelo scripts/gerar-paginas.mjs a partir do
+         content/settings.json, pelo mesmo caminho que serve as 131 páginas
+         geradas. Esta é uma página manual, mas o menu dela não é. -->
+    <!-- ng:inicio --><button class="ng-btn" type="button" aria-expanded="false" aria-controls="ng-menu" aria-label="Abrir menu" data-abrir="Abrir menu" data-fechar="Fechar menu"><span class="ng-btn-r" aria-hidden="true"></span><span class="ng-btn-r" aria-hidden="true"></span><span class="ng-btn-r" aria-hidden="true"></span></button><nav class="ng" id="ng-menu" aria-label="Navegação principal"><a class="ng-l" href="/">Início</a><a class="ng-l" href="/parakite-portugal/">Parakite</a><a class="ng-l" href="/smartground/">SmartGround</a><a class="ng-l" href="/flow-paragliders-portugal/">Flow Paragliders</a><a class="ng-l" href="/#produtos">Produtos</a><a class="ng-l" href="/#music">Música</a></nav><!-- ng:fim -->
     <a class="rl-close" href="../index.html" aria-label="Fechar simulador" title="Fechar">&#10005;</a>
   </header>
 
@@ -78,6 +84,7 @@
   <div class="rl-controls" id="rl-controls"></div>
 
 </div>
+<script src="/menu.js" defer></script>
 <script src="reflex-lab.js"></script>
 </body>
 </html>

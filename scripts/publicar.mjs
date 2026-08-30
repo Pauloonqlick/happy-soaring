@@ -55,6 +55,8 @@ const FICHEIROS = [
   'app.js',
   'styles.css',
   'pagina.css',      /* folha das páginas das asas */
+  'menu.css',        /* a navegação global: páginas geradas e Reflex Lab */
+  'menu.js',         /* abre e fecha a gaveta; não constrói o menu */
   'robots.txt',
   'sitemap.xml',     /* escrito pelo gerador, logo abaixo */
   '_redirects'       /* redireccionamentos do Pages (ver comentários lá dentro) */
@@ -142,7 +144,8 @@ function carimbar() {
   /* Os módulos partilhados primeiro: o app.js importa-os, por isso o
      conteúdo dele muda quando as referências forem reescritas — e o
      resumo dele só pode ser calculado depois disso. */
-  const mods = ['regras/avisos.js', 'regras/taxonomia.js', 'regras/unidades.js'];
+  const mods = ['regras/avisos.js', 'regras/taxonomia.js', 'regras/unidades.js',
+    'regras/navegacao.js'];
   const vMods = {};
   for (const m of mods) if (fs.existsSync(path.join(SAIDA, m))) vMods[m] = resumo(m);
 
@@ -158,7 +161,7 @@ function carimbar() {
   }
 
   const v = {};
-  for (const f of ['app.js', 'styles.css', 'pagina.css'])
+  for (const f of ['app.js', 'styles.css', 'pagina.css', 'menu.css', 'menu.js'])
     if (fs.existsSync(path.join(SAIDA, f))) v[f] = resumo(f);
 
   /* reescrever as referências em todo o HTML publicado */

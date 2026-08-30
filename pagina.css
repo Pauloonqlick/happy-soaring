@@ -1293,3 +1293,31 @@ a.fl-cor-a:hover{background:#ff7c31;color:#fff}
   .pk-exemplo li,.pk-exemplo li:first-child,.pk-exemplo li:last-child{text-align:center}
   .pk-exemplo .pk-seta{justify-content:center;padding:0}
 }
+
+/* =======================================================================
+   O header com navegação — 30/08/2026
+   =======================================================================
+   A barra e a gaveta estão na menu.css, que o Reflex Lab também carrega.
+   O que fica aqui é só o que é deste header: como os quatro elementos se
+   arrumam quando o ecrã encolhe.
+
+   Aos 899px cabem duas coisas por linha, não quatro. A ordem foi escolhida
+   pelas larguras: a marca (153px) e o botão (44px) cabem juntos; a linha de
+   dealer (305px) não cabe ao lado de nada; o seletor de idiomas (167px) fica
+   sozinho na última. Três linhas curtas em vez das cinco que davam
+   naturalmente. */
+.pg-topo .ng-btn{margin-left:auto}
+
+@media(max-width:899px){
+  .pg-topo{gap:10px 14px;padding:14px 20px}
+  .pg-marca{order:1}
+  .pg-topo .ng-btn{order:2;margin-left:auto}
+  .pg-dealer{order:3;flex:1 1 100%}
+  /* o margin-left:auto do seletor somava-se ao gap e estourava a linha por
+     0,4px — o suficiente para o atirar para uma linha só dele. Agora que
+     está mesmo numa linha só dele, o auto deixou de fazer sentido. */
+  .pg-idiomas{order:4;flex:1 1 100%;margin-left:0}
+}
+@media(max-width:420px){
+  .pg-dealer{font-size:10.5px;letter-spacing:1px}
+}

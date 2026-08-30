@@ -95,8 +95,16 @@ titulo('2. As ligações internas resolvem');
   let n = 0, mortas = 0;
   for (const p of vivas) {
     const html = fs.readFileSync(p.ficheiro, 'utf8');
-    for (const m of html.matchAll(/href="(\/[^"#?]*)"/g)) {
-      let u = m[1];
+    /* O FRAGMENTO NAO FAZ PARTE DO FICHEIRO
+       O menu das páginas geradas aponta para secções da página inicial —
+       /en/#produtos. O regex excluía o '#' e por isso nem sequer via estas
+       ligações: não dava falsos mortos, mas também não validava nada.
+
+       Agora apanha-as e descarta o fragmento: o que tem de existir é a
+       página, e a âncora é assunto do browser. */
+    for (const m of html.matchAll(/href="(\/[^"?]*)"/g)) {
+      let u = m[1].split('#')[0];
+      if (!u) continue;                    /* href="/#algo" na própria raiz */
       n++;
       if (/\.(css|js|json|xml|txt|webp|jpg|jpeg|png|svg|webm|mp3|ico)$/i.test(u)) {
         if (!fs.existsSync(path.join(RAIZ, u.replace(/^\//, '')))) {

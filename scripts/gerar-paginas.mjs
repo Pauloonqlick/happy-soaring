@@ -29,6 +29,7 @@ import { SG } from './conteudo-smartground.mjs';
 import { FL } from './conteudo-flow.mjs';
 import { IN } from './conteudo-inicial.mjs';
 import { PK } from './conteudo-parakite.mjs';
+import { entradasDoMenu } from '../regras/navegacao.js';
 
 const RAIZ = process.cwd();   /* corre-se a partir da raiz do projecto */
 const DOMINIO = 'https://happysoaring.com';
@@ -52,6 +53,15 @@ const ORGANIZACAO = { '@id': DOMINIO + '/#organizacao' };
 const SEGMENTO = { pt: 'asas', en: 'wings', es: 'alas', fr: 'ailes', de: 'schirme' };
 
 const T = {
+  /* o botão tem dois nomes porque tem dois estados. Vão os dois no HTML:
+     a menu.js troca entre eles e não guarda texto nenhum. */
+  navAbrir:  { pt:'Abrir menu', en:'Open menu', es:'Abrir menú',
+               fr:'Ouvrir le menu', de:'Menü öffnen' },
+  navFechar: { pt:'Fechar menu', en:'Close menu', es:'Cerrar menú',
+               fr:'Fermer le menu', de:'Menü schließen' },
+  navGlobal: { pt:'Navegação principal', en:'Main navigation',
+               es:'Navegación principal', fr:'Navigation principale',
+               de:'Hauptnavigation' },
   tamanhos:  { pt:'Tamanhos', en:'Sizes', es:'Tallas', fr:'Tailles', de:'Größen' },
   cores:     { pt:'Cores disponíveis', en:'Available colours', es:'Colores disponibles',
                fr:'Couleurs disponibles', de:'Verfügbare Farben' },
@@ -251,6 +261,50 @@ function confereAlternativas(html, ondeEstou) {
     throw new Error('PARADO em ' + ondeEstou + ': o seletor e os hreflang não dizem o mesmo.\n' +
       '  hreflang: ' + doHead.join('\n            ') + '\n' +
       '  seletor:  ' + doSeletor.join('\n            '));
+}
+
+/* ---- a navegação principal, nas páginas geradas -----------------------
+   AS 131 PAGINAS NAO TINHAM MENU NENHUM.
+   O burger é construído pelo buildMenu() do app.js, que só corre na página
+   inicial. Quem aterrava numa asa vinda de uma pesquisa só podia voltar à
+   raiz ou mudar de língua.
+
+   Aqui não se repete o burger: estas páginas são documentos e já têm um
+   header. A navegação entra dentro dele, visível, em HTML servido — um
+   clique a menos do que um botão que é preciso descobrir, e nada que
+   dependa de JavaScript.
+
+   A lista, os rótulos e os endereços saem de regras/navegacao.js, o mesmo
+   módulo que o app.js usa. Não há segunda lista para manter. */
+const MENU = (() => {
+  try {
+    const st = JSON.parse(fs.readFileSync(path.join(RAIZ, 'content/settings.json'), 'utf8'));
+    return Array.isArray(st.menu) ? st.menu : [];
+  } catch (e) { return []; }
+})();
+
+function menuGlobal(l, url) {
+  if (!MENU.length) return '';
+  const aqui = String(url || '').replace(DOMINIO, '');
+  const itens = entradasDoMenu(MENU, l, { naInicial: false }).map(e => {
+    const actual = e.href === aqui ? ' aria-current="page"' : '';
+    const fora = e.tipo === 'externa' ? ' rel="noopener" target="_blank"' : '';
+    return '<a class="ng-l" href="' + esc(e.href) + '"' + actual + fora + '>'
+      + esc(e.rotulo) + '</a>';
+  }).join('');
+  /* O botão vem antes do <nav> no documento de propósito: pelo teclado,
+     abrir e cair logo dentro do que se abriu é a ordem natural. A menu.css
+     esconde-o enquanto a barra couber. */
+  return '<button class="ng-btn" type="button" aria-expanded="false"'
+    + ' aria-controls="ng-menu" aria-label="' + esc(t(T.navAbrir, l)) + '"'
+    + ' data-abrir="' + esc(t(T.navAbrir, l)) + '"'
+    + ' data-fechar="' + esc(t(T.navFechar, l)) + '">'
+    + '<span class="ng-btn-r" aria-hidden="true"></span>'
+    + '<span class="ng-btn-r" aria-hidden="true"></span>'
+    + '<span class="ng-btn-r" aria-hidden="true"></span>'
+    + '</button>'
+    + '<nav class="ng" id="ng-menu" aria-label="' + esc(t(T.navGlobal, l)) + '">'
+    + itens + '</nav>';
 }
 
 /* parágrafos e listas a partir do texto do CMS, com **negrito** */
@@ -989,6 +1043,8 @@ ${alt}
 <meta property="og:image" content="${foto}" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="stylesheet" href="/pagina.css" />
+<link rel="stylesheet" href="/menu.css" />
+<script src="/menu.js" defer></script>
 <script type="application/ld+json">${ld}</script>
 </head>
 <body class="pg">
@@ -996,6 +1052,7 @@ ${alt}
 <header class="pg-topo">
   <a class="pg-marca" href="${inicio}">HAPPY <span>SOARING</span></a>
   <span class="pg-dealer">${esc(t(T.dealer, l))}</span>
+  ${menuGlobal(l, url)}
   ${seletorIdiomas(alts, l)}
 </header>
 
@@ -1151,6 +1208,8 @@ ${alt}
 <meta property="og:image" content="${foto}" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="stylesheet" href="/pagina.css" />
+<link rel="stylesheet" href="/menu.css" />
+<script src="/menu.js" defer></script>
 <script type="application/ld+json">${ld}</script>
 </head>
 <body class="pg sg">
@@ -1158,6 +1217,7 @@ ${alt}
 <header class="pg-topo">
   <a class="pg-marca" href="${inicio}">HAPPY <span>SOARING</span></a>
   <span class="pg-dealer">${esc(t(T.dealer, l))}</span>
+  ${menuGlobal(l, url)}
   ${seletorIdiomas(alts, l)}
 </header>
 
@@ -1396,6 +1456,8 @@ ${alt}
 <meta property="og:image:alt" content="${esc(t(PK.ogAlt, l))}" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="stylesheet" href="/pagina.css" />
+<link rel="stylesheet" href="/menu.css" />
+<script src="/menu.js" defer></script>
 <script type="application/ld+json">${ld}</script>
 </head>
 <body class="pg pk">
@@ -1403,6 +1465,7 @@ ${alt}
 <header class="pg-topo">
   <a class="pg-marca" href="${inicio}">HAPPY <span>SOARING</span></a>
   <span class="pg-dealer">${esc(t(T.dealer, l))}</span>
+  ${menuGlobal(l, url)}
   ${seletorIdiomas(alts, l)}
 </header>
 
@@ -1624,12 +1687,15 @@ ${alt}
 <meta property="og:image" content="${foto}" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="stylesheet" href="/pagina.css" />
+<link rel="stylesheet" href="/menu.css" />
+<script src="/menu.js" defer></script>
 <script type="application/ld+json">${jsonld(p, l, url, foto)}</script>
 </head>
 <body class="pg">
 <header class="pg-topo">
   <a class="pg-marca" href="${inicioHref(l)}">HAPPY <span>SOARING</span></a>
   <span class="pg-dealer">${esc(t(T.dealer, l))}</span>
+  ${menuGlobal(l, url)}
   ${seletorIdiomas(alts, l)}
 </header>
 
@@ -1804,6 +1870,38 @@ if (!so && !soIdioma) {
   console.log('  Parakite Portugal: ' + IDIOMAS.length + ' páginas');
 }
 
+
+/* ---- o Reflex Lab -----------------------------------------------------
+   O simulador é uma página escrita à mão: tem folha própria, JavaScript
+   próprio e um header próprio, e não passa por nenhum dos moldes acima.
+   Ficava a ser a única página do site sem navegação — e publicar uma
+   "navegação global" com uma excepção é publicar outra coisa.
+
+   Escrever-lhe o menu à mão resolvia hoje e criava a segunda lista que este
+   módulo todo existe para não haver. Por isso o gerador entra lá dentro e
+   escreve entre dois marcadores. É idempotente: corre as vezes que forem
+   precisas e o resultado é o mesmo.
+
+   Só português. A página não tem traduções nem alternativas declaradas, e
+   inventar-lhe cinco não é trabalho desta tarefa. */
+function escreverReflexLab() {
+  const f = path.join(RAIZ, 'reflex-lab', 'index.html');
+  if (!fs.existsSync(f)) return;
+  const html = fs.readFileSync(f, 'utf8');
+  const ini = '<!-- ng:inicio -->', fim = '<!-- ng:fim -->';
+  const i = html.indexOf(ini), j = html.indexOf(fim);
+  if (i < 0 || j < 0) {
+    console.log('  Reflex Lab: sem marcadores, menu não escrito');
+    return;
+  }
+  const novo = html.slice(0, i + ini.length)
+    + menuGlobal('pt', DOMINIO + '/reflex-lab/')
+    + html.slice(j);
+  if (novo !== html) fs.writeFileSync(f, novo);
+  console.log('  Reflex Lab: navegação escrita entre marcadores');
+}
+
+if (!so && !soIdioma) escreverReflexLab();
 
 if (!so && !soIdioma) {
   const hoje = new Date().toISOString().slice(0, 10);
