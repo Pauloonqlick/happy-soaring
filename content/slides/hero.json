@@ -101,15 +101,15 @@
       "buttons": [
         {
           "label": {
-            "pt": "Cursos",
-            "en": "Courses",
-            "es": "Cursos",
-            "fr": "Cours",
-            "de": "Kurse"
+            "pt": "Parakite em Portugal",
+            "en": "Parakite in Portugal",
+            "es": "Parakite en Portugal",
+            "fr": "Parakite au Portugal",
+            "de": "Parakite in Portugal"
           },
-          "href": "#dealer",
+          "href": "/parakite-portugal/",
           "variant": "primary",
-          "visible": false
+          "visible": true
         },
         {
           "label": {

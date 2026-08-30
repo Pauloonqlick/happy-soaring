@@ -31,43 +31,13 @@
     },
     {
       "label": {
-        "pt": "A vela",
-        "en": "The wing",
-        "es": "La vela",
-        "fr": "L’aile",
-        "de": "Der Flügel"
+        "pt": "Parakite",
+        "en": "Parakite",
+        "es": "Parakite",
+        "fr": "Parakite",
+        "de": "Parakite"
       },
-      "target": "sobre"
-    },
-    {
-      "label": {
-        "pt": "A tribo",
-        "en": "The tribe",
-        "es": "La tribu",
-        "fr": "La tribu",
-        "de": "Die Community"
-      },
-      "target": "comunidade"
-    },
-    {
-      "label": {
-        "pt": "Dealer Flow",
-        "en": "Flow dealer",
-        "es": "Punto de venta Flow",
-        "fr": "Revendeur Flow",
-        "de": "Flow Händler"
-      },
-      "target": "dealer"
-    },
-    {
-      "label": {
-        "pt": "Flow Paragliders",
-        "en": "Flow Paragliders",
-        "es": "Flow Paragliders",
-        "fr": "Flow Paragliders",
-        "de": "Flow Paragliders"
-      },
-      "target": "/flow-paragliders-portugal/"
+      "target": "/parakite-portugal/"
     },
     {
       "label": {
@@ -81,6 +51,16 @@
     },
     {
       "label": {
+        "pt": "Flow Paragliders",
+        "en": "Flow Paragliders",
+        "es": "Flow Paragliders",
+        "fr": "Flow Paragliders",
+        "de": "Flow Paragliders"
+      },
+      "target": "/flow-paragliders-portugal/"
+    },
+    {
+      "label": {
         "pt": "Produtos",
         "en": "Products",
         "es": "Productos",
@@ -88,16 +68,6 @@
         "de": "Produkte"
       },
       "target": "produtos"
-    },
-    {
-      "label": {
-        "pt": "Reflex Lab",
-        "en": "Reflex Lab",
-        "es": "Reflex Lab",
-        "fr": "Reflex Lab",
-        "de": "Reflex Lab"
-      },
-      "target": "reflex-lab"
     },
     {
       "label": {
@@ -131,6 +101,7 @@
   ],
   "slides": [
     "hero",
+    "parakite",
     "sobre",
     "comunidade",
     "dealer",

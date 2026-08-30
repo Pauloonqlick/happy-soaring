@@ -28,11 +28,24 @@ import { KN_PARA_KMH, PAISES_NOS, CHAVE_UNIDADE } from '../regras/unidades.js';
 import { SG } from './conteudo-smartground.mjs';
 import { FL } from './conteudo-flow.mjs';
 import { IN } from './conteudo-inicial.mjs';
+import { PK } from './conteudo-parakite.mjs';
 
 const RAIZ = process.cwd();   /* corre-se a partir da raiz do projecto */
 const DOMINIO = 'https://happysoaring.com';
 const IDIOMAS = ['pt', 'en', 'es', 'fr', 'de'];
 const OMISSAO = 'pt';
+
+/* ---- a Happy Soaring é uma só -----------------------------------------
+   O index.html declara a Organization com @id próprio, igual nas cinco
+   línguas. Quem precisar dela nas páginas geradas REFERENCIA esse @id em
+   vez de a declarar outra vez.
+
+   Estava a ser declarada inline em dois sítios — no `author.worksFor` do
+   SmartGround e no `publisher` do hub da Flow. Para um motor de busca isso
+   são três Happy Soaring diferentes, nenhuma ligada às outras, e é o
+   oposto do que os dados estruturados servem para fazer: dizer que a
+   entidade é a mesma esteja onde estiver. */
+const ORGANIZACAO = { '@id': DOMINIO + '/#organizacao' };
 
 /* a categoria traduz-se — quem procura "parakite wings" clica mais depressa
    num endereço que diga wings. O nome do produto não: a Mullet 2 é Mullet 2 */
@@ -373,6 +386,10 @@ function corpoInicial(l) {
     <h2>${esc(t(SG.h1a, l))} ${esc(t(SG.h1b, l))}</h2>
     <p>${esc(t(SG.descricao, l))}
     <a href="${esc(caminhoSG(l))}">${esc(t(SG.conhecer, l))}</a></p>
+
+    <h2>${esc(t(PK.h1, l))}</h2>
+    <p>${esc(t(PK.asaTxt, l))}
+    <a href="${esc(caminhoPK(l))}">${esc(t(PK.asaCta, l))}</a></p>
 
     <h2>${esc(t(FL.gamaTit, l))}</h2>
     <p>${esc(t(FL.gamaSub, l))}
@@ -943,12 +960,7 @@ function paginaFlow(l, num) {
         description: t(FL.descricao, l),
         inLanguage: l,
         about: { '@type': 'Brand', name: 'Flow Paragliders' },
-        publisher: {
-          '@type': 'Organization',
-          name: 'Happy Soaring',
-          url: DOMINIO + '/',
-          areaServed: { '@type': 'Country', name: 'Portugal' }
-        }
+        publisher: ORGANIZACAO
       },
       { '@type': 'ItemList',
         name: t(FL.gamaTit, l),
@@ -1037,7 +1049,8 @@ ${alt}
     <div class="fl-cor-txt">
       <p class="pg-eyebrow">${esc(t(FL.corTit, l))}</p>
       <p class="fl-cor-tx">${esc(t(FL.corTxt, l))}</p>
-      <p><a class="fl-cor-a" href="${esc(caminho(l, { nome: 'Mullet 2' }))}">${esc(t(FL.verMullet, l))}</a></p>
+      <p><a class="fl-cor-a" href="${esc(caminho(l, { nome: 'Mullet 2' }))}">${esc(t(FL.verMullet, l))}</a>
+        <a class="fl-cor-a" href="${esc(caminhoPK(l))}">${esc(t(PK.asaCta, l))}</a></p>
     </div>
     <img src="/images/asas/mullet2__maui.webp" alt="Mullet 2" width="1200" height="794" loading="lazy" />
   </section>
@@ -1100,7 +1113,7 @@ function paginaSmartGround(l, num) {
         description: t(SG.descricao, l),
         url,
         inLanguage: l,
-        author: { '@type': 'Person', name: SG.autorNome, worksFor: { '@type': 'Organization', name: 'Happy Soaring' } },
+        author: { '@type': 'Person', name: SG.autorNome, worksFor: ORGANIZACAO },
         step: SG.etapas.map((e, i) => ({
           '@type': 'HowToStep', position: i + 1, name: t(e.nome, l), text: t(e.texto, l)
         }))
@@ -1236,6 +1249,7 @@ ${alt}
       <p class="sg-acoes">
         <a class="sg-cta" href="${wa}" rel="noopener" target="_blank">${esc(t(SG.cta, l))}</a>
         <a class="sg-cta-2" href="${caminho(l, { nome: 'Mullet 2' })}">${esc(t(SG.verAsa, l))}</a>
+        <a class="sg-cta-2" href="${caminhoPK(l)}">${esc(t(PK.asaCta, l))}</a>
       </p>
     </div>
     <img src="/images/asas/mullet2__maui.webp" alt="Mullet 2" width="1200" height="794" loading="lazy" />
@@ -1249,6 +1263,323 @@ ${alt}
 ${scriptIdiomas()}
 </body>
 </html>`;
+}
+
+/* ---- a página /parakite-portugal/ --------------------------------------
+   O pilar. Não é o catálogo nem o método: é a página que responde «o que é
+   isto em Portugal, e por onde começo».
+
+   O nome não se traduz — é a mesma regra do /smartground/ e do hub da Flow.
+   O que muda por língua é só o prefixo.
+
+   AS QUATRO SAÍDAS DO FIM
+   Cada CTA tem UM destino. Os dois primeiros abrem WhatsApp, o terceiro
+   desce à secção de onde se voa (que tem lá dentro o contacto) e o quarto
+   vai à gama da Flow. Nenhum leva a uma página que ainda não existe: o
+   curso, a página do «o que é» e a da gama entram na fase seguinte, e é aí
+   que se acrescentam as ligações. */
+const caminhoPK = l => (l === OMISSAO ? '' : '/' + l) + '/parakite-portugal/';
+
+/* negrito em linha, sem embrulhar em <p> como o corpo() faz */
+const forte = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+
+function paginaParakite(l, num) {
+  const rel = caminhoPK(l);
+  const url = DOMINIO + rel;
+  const alts = alternativas(caminhoPK);
+  const alt = etiquetasAlt(alts);
+  const inicio = inicioHref(l);
+  const foto = DOMINIO + '/images/og-parakite-portugal.jpg';
+  const wa = m => 'https://wa.me/' + num + '?text=' + encodeURIComponent(t(m, l));
+
+  const ld = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      { '@type': 'BreadcrumbList', itemListElement: [
+        { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + inicio },
+        { '@type': 'ListItem', position: 2, name: t(PK.migalha, l), item: url }
+      ]},
+      { '@type': 'WebPage',
+        '@id': url,
+        url,
+        name: t(PK.h1, l),
+        description: t(PK.descricao, l),
+        inLanguage: l,
+        isPartOf: { '@id': DOMINIO + '/#site' },
+        publisher: ORGANIZACAO,
+        author: { '@type': 'Person', name: SG.autorNome, worksFor: ORGANIZACAO },
+        primaryImageOfPage: { '@type': 'ImageObject', url: foto, width: 1200, height: 630 }
+      }
+    ]
+  });
+
+  /* 04 — os quatro percursos */
+  const percursos = PK.percursos.map((c, i) => {
+    const etapas = (c.etapas[l] || c.etapas[OMISSAO]).map((e, j) =>
+      '<li' + (c.soon === j ? ' class="pk-soon"' : '') + '>' + esc(e) + '</li>').join('');
+    return `<li class="pk-percurso">
+      <span class="pk-percurso-n">0${i + 1}</span>
+      <p class="pk-percurso-et">${esc(t(c.rotulo, l))}</p>
+      <h3>${esc(t(c.titulo, l))}</h3>
+      <p class="pk-percurso-tx">${esc(t(c.texto, l))}</p>
+      <ol class="pk-etapas">${etapas}</ol>
+    </li>`;
+  }).join('');
+
+  /* 03 — os quatro eixos */
+  const eixos = PK.eixos.map(e => `<li>
+      <b>${esc(t(e.nome, l))}</b>
+      <span>${esc(t(e.legenda, l))}</span>
+    </li>`).join('');
+
+  /* 08 — a cadeia do pós-venda */
+  const cadeia = PK.cadeia.map(c =>
+    '<li' + (c.oferta ? ' class="pk-oferta"' : '') + '>' + esc(t(c, l)) + '</li>').join('');
+  const casas = PK.casas.map(c => `<div class="pk-casa">
+      <h3>${esc(c.nome)}</h3>
+      <p>${esc((c.servicos[l] || c.servicos[OMISSAO]).join(' · '))}</p>
+    </div>`).join('');
+
+  /* 10 — os nove pontos */
+  const eco = PK.ecossistema.map(p => `<li${p.soon ? ' class="pk-soon-li"' : ''}>
+      <b>${esc(t(p.t, l))}</b>
+      <span>${esc(typeof p.s === 'string' ? p.s : t(p.s, l))}</span>
+    </li>`).join('');
+
+  /* 11 — o FAQ, HTML normal e não dados estruturados */
+  const faq = PK.faq.map(q => `<div class="pk-faq-q">
+      <h3>${esc(t(q.p, l))}</h3>
+      <p>${forte(t(q.r, l))}</p>
+    </div>`).join('');
+
+  /* 12 — um destino por botão */
+  const ctas = PK.ctas.map(c => {
+    const href = c.ancora ? '#' + c.ancora
+      : c.flow ? esc(caminhoFlow(l))
+      : esc(wa(c.msg));
+    const fora = (!c.ancora && !c.flow) ? ' rel="noopener" target="_blank"' : '';
+    return `<a class="pk-cta" href="${href}"${fora}>
+      <span class="pk-cta-et">${esc(t(c.et, l))}</span>
+      <span class="pk-cta-tit">${esc(t(c.tit, l))}</span>
+    </a>`;
+  }).join('');
+
+  /* as quatro fichas de produto, se existirem no catálogo */
+  const quatro = produtos.filter(p => p.familia === 'Parakites');
+  const asas = quatro.map(p =>
+    `<a href="${esc(caminho(l, p))}">${esc(p.nome)}</a>`).join('');
+
+  const incluido = PK.incluido.map(i => '<li>' + esc(t(i, l)) + '</li>').join('');
+  const colunas = PK.s5Colunas.map(c => '<li>' + esc(t(c, l)) + '</li>').join('');
+  const demoVars = PK.demoVars.map(v => '<li>' + esc(t(v, l)) + '</li>').join('');
+  const spots = PK.spots.map(s => '<li>' + esc(s) + '</li>').join('');
+  const palavras = PK.s9Palavras.map(p => '<li>' + esc(p) + '</li>').join('');
+
+  const html = `<!DOCTYPE html>
+<html lang="${l}">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>${esc(t(PK.titulo, l))}</title>
+<meta name="description" content="${esc(t(PK.descricao, l))}" />
+<link rel="canonical" href="${url}" />
+${alt}
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Happy Soaring" />
+<meta property="og:locale" content="${IN.ogLocale[l]}" />
+<meta property="og:url" content="${url}" />
+<meta property="og:title" content="${esc(t(PK.h1, l))}" />
+<meta property="og:description" content="${esc(t(PK.descricao, l))}" />
+<meta property="og:image" content="${foto}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="${esc(t(PK.ogAlt, l))}" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="stylesheet" href="/pagina.css" />
+<script type="application/ld+json">${ld}</script>
+</head>
+<body class="pg pk">
+
+<header class="pg-topo">
+  <a class="pg-marca" href="${inicio}">HAPPY <span>SOARING</span></a>
+  <span class="pg-dealer">${esc(t(T.dealer, l))}</span>
+  ${seletorIdiomas(alts, l)}
+</header>
+
+<main>
+
+  <nav class="pg-migalhas"><a href="${inicio}">${esc(t(T.inicio, l))}</a> &rsaquo;
+    <span>${esc(t(PK.migalha, l))}</span></nav>
+
+  <section class="pk-heroi" id="topo">
+    <div class="pk-heroi-tx">
+      <p class="pg-eyebrow">${esc(t(PK.kicker, l))}</p>
+      <h1>${esc(t(PK.h1, l))}</h1>
+      <p class="pk-citacao">${esc(t(PK.heroCitacao, l))}</p>
+      <p class="pk-tese">${esc(t(PK.heroTese, l))}</p>
+      <p class="pk-botoes">
+        <a class="pk-b" href="#aprender">${esc(t(PK.heroCta1, l))}</a>
+        <a class="pk-b pk-b2" href="#voar-em-portugal">${esc(t(PK.heroCta2, l))}</a>
+      </p>
+    </div>
+    <img class="pk-heroi-piloto" src="/images/hero-pilot.png" alt="" width="844" height="1500" />
+  </section>
+
+  <section class="pk-sec" id="o-que-e">
+    <p class="pg-eyebrow">${esc(t(PK.s2Kicker, l))}</p>
+    <h2>${esc(t(PK.s2H2, l))}</h2>
+    <div class="pk-duas">
+      <p class="pk-lead">${esc(t(PK.s2P1, l))}</p>
+      <p>${forte(t(PK.s2P2, l))}</p>
+    </div>
+  </section>
+
+  <section class="pk-energia" id="energia">
+    <h2>${esc(t(PK.s3H2, l))}</h2>
+    <ul class="pk-eixos">${eixos}</ul>
+    <p class="pk-declaracao" lang="en">${esc(PK.s3Declaracao)}</p>
+    <p class="pk-reflex"><a href="/reflex-lab/">${esc(t(PK.s3Reflex, l))}</a></p>
+  </section>
+
+  <section class="pk-sec" id="onde-estas">
+    <p class="pg-eyebrow">${esc(t(PK.s4Kicker, l))}</p>
+    <h2>${esc(t(PK.s4H2, l))}</h2>
+    <p class="pk-lead">${esc(t(PK.s4Texto, l))}</p>
+    <ol class="pk-percursos">${percursos}</ol>
+    <p class="pk-remate">${esc(t(PK.s4Remate, l))}</p>
+  </section>
+
+  <section class="pk-sec pk-papel" id="aprender">
+    <p class="pg-eyebrow">${esc(t(PK.s5Kicker, l))}</p>
+    <h2>${esc(t(PK.s5H2, l))}</h2>
+    <p class="pk-lead">${forte(t(PK.s5Texto, l))}</p>
+    <blockquote class="pk-cit">${esc(t(PK.s5Citacao, l))}</blockquote>
+    <div class="pk-trio">
+      <ul class="pk-tres">${colunas}</ul>
+      <p class="pk-trio-tx">${esc(t(PK.s5Tamanhos, l))}</p>
+    </div>
+    <div class="pk-metodo">
+      <p class="pk-metodo-et">${esc(t(PK.s5MetodoKicker, l))}</p>
+      <p class="pk-metodo-tit" lang="en">Body first. Controls after.</p>
+      <p class="pk-metodo-tx">${esc(t(PK.s5MetodoTxt, l))}</p>
+      <p><a class="pk-b pk-b2" href="${esc(caminhoSG(l))}">${esc(t(PK.s5MetodoCta, l))}</a></p>
+    </div>
+  </section>
+
+  <section class="pk-sec" id="voar-em-portugal">
+    <p class="pg-eyebrow">${esc(t(PK.s6Kicker, l))}</p>
+    <h2>${esc(t(PK.s6H2, l))}</h2>
+    <p class="pk-sub">${esc(t(PK.s6Sub, l))}</p>
+
+    <div class="pk-duo">
+    <div class="pk-demo" id="demo">
+      <p class="pk-et-laranja">${esc(t(PK.demoKicker, l))}</p>
+      <h3>${esc(t(PK.demoTit, l))}</h3>
+      <p>${forte(t(PK.demoTxt, l))}</p>
+      <ul class="pk-vars">${demoVars}</ul>
+      <p class="pk-nota">${esc(t(PK.demoNota, l))}</p>
+    </div>
+
+    <div class="pk-rental" id="rental">
+      <p class="pk-et-laranja">${esc(t(PK.rentalKicker, l))}
+        <span class="pk-soon-selo">${esc(PK.rentalSoon)}</span></p>
+      <h3 lang="en">${esc(PK.rentalTit)}</h3>
+      <p>${esc(t(PK.rentalTxt, l))}</p>
+      <p class="pk-nota">${esc(t(PK.rentalGestao, l))}</p>
+      <ul class="pk-exemplo">
+        <li><b>20</b><span>${esc(t(PK.rentalManha, l))}</span></li>
+        <li class="pk-seta" lang="en">${esc(PK.rentalVento)}</li>
+        <li><b>17.5</b><span>${esc(t(PK.rentalTarde, l))}</span></li>
+      </ul>
+      <p class="pk-nota">${esc(t(PK.rentalLegenda, l))}</p>
+    </div>
+    </div>
+
+    <div class="pk-spots">
+      <h3>${esc(t(PK.spotsTit, l))}</h3>
+      <ul class="pk-spots-l">${spots}</ul>
+      <div class="pk-spots-fim">
+        <p class="pk-nota">${esc(t(PK.spotsNota, l))}</p>
+        <p><a class="pk-b" href="${esc(wa(PK.s6Msg))}" rel="noopener" target="_blank">${esc(t(PK.s6Cta, l))}</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pk-sec pk-papel" id="escolher">
+    <p class="pg-eyebrow">${esc(t(PK.s7Kicker, l))}</p>
+    <h2>${esc(t(PK.s7H2, l))}</h2>
+    <div class="pk-dealer">
+      <p class="pk-dealer-et" lang="en">${esc(t(PK.dealerEt, l))}</p>
+      <p class="pk-dealer-nome">Flow Paragliders <span>Portugal</span></p>
+      <ul class="pk-incluido">${incluido}</ul>
+    </div>
+    <div class="pk-cor">
+      <p class="pk-et-laranja">Mullet 2</p>
+      <h3 lang="en">${esc(PK.corTit)}</h3>
+      <p>${esc(t(PK.corTxt, l))}</p>
+    </div>
+    <p class="pk-asas-et">${esc(t(PK.s7Asas, l))}</p>
+    <p class="pk-asas">${asas}</p>
+    <p><a class="pk-b" href="${esc(caminhoFlow(l))}">${esc(t(PK.s7Cta, l))}</a></p>
+  </section>
+
+  <section class="pk-sec" id="pos-venda">
+    <p class="pg-eyebrow">${esc(t(PK.s8Kicker, l))}</p>
+    <h2>${esc(t(PK.s8H2, l))}</h2>
+    <ul class="pk-cadeia">${cadeia}</ul>
+    <p class="pk-nota">${forte(t(PK.cadeiaLegenda, l))}</p>
+    <div class="pk-casas">${casas}</div>
+  </section>
+
+  <section class="pk-resp" id="responsabilidade">
+    <p class="pg-eyebrow">${esc(t(PK.s9Kicker, l))}</p>
+    <h2>${esc(t(PK.s9H2, l))}</h2>
+    <ul class="pk-palavras" lang="en">${palavras}</ul>
+    <p class="pk-lead">${esc(t(PK.s9Texto, l))}</p>
+    <blockquote class="pk-cit">${esc(t(PK.s9Citacao, l))}</blockquote>
+  </section>
+
+  <section class="pk-sec" id="ecossistema">
+    <p class="pg-eyebrow">${esc(t(PK.s10Kicker, l))}</p>
+    <h2>${esc(t(PK.s10H2, l))}</h2>
+    <p class="pk-sub">${esc(t(PK.s10Sub, l))}</p>
+    <p class="pk-lead">${esc(t(PK.s10Texto, l))}</p>
+    <ul class="pk-eco">${eco}</ul>
+    <p class="pk-remate">${esc(t(PK.s10Remate, l))}</p>
+  </section>
+
+  <section class="pk-sec pk-papel" id="faq">
+    <p class="pg-eyebrow">${esc(t(PK.faqKicker, l))}</p>
+    <h2>${esc(t(PK.faqKicker, l))}</h2>
+    <div class="pk-faq">${faq}</div>
+  </section>
+
+  <section class="pk-sec" id="comecar">
+    <h2 class="pk-h2-grande">${esc(t(PK.s12H2, l))}</h2>
+    <div class="pk-ctas">${ctas}</div>
+  </section>
+
+  <p class="pg-voltar"><a href="${inicio}">${esc(t(PK.voltar, l))}</a></p>
+</main>
+
+<footer class="pg-rodape">${esc(t(PK.rodape, l))}</footer>
+${scriptIdiomas()}
+</body>
+</html>`;
+  return html;
+}
+
+/* ---- a entrada contextual nas quatro páginas de Parakite --------------
+   A mesma ideia do blocoMetodo(): só onde faz sentido. A porta é a família,
+   e não o nome, porque são quatro asas e não uma. Um arnês ou uma reserva
+   não têm nada a ver com isto. */
+function blocoParakite(p, l) {
+  if (p.familia !== 'Parakites') return '';
+  return `<section class="pg-sec pg-metodo pg-pk">
+  <p class="pg-metodo-et">${esc(t(PK.asaEt, l))}</p>
+  <p class="pg-metodo-tx">${esc(t(PK.asaTxt, l))}</p>
+  <p><a class="pg-metodo-a" href="${esc(caminhoPK(l))}">${esc(t(PK.asaCta, l))}</a></p>
+</section>`;
 }
 
 function pagina(p, l, num) {
@@ -1353,6 +1684,8 @@ ${alt}
   </div>
 
   ${blocoDealer(p, l)}
+
+  ${blocoParakite(p, l)}
 
   ${blocoMetodo(p, l)}
 
@@ -1459,6 +1792,16 @@ if (!so && !soIdioma) {
     urls.push(DOMINIO + rel);
   }
   console.log('  Flow Paragliders Portugal: ' + IDIOMAS.length + ' páginas');
+  for (const l of IDIOMAS) {
+    const rel = caminhoPK(l);
+    const dir = path.join(destino, rel);
+    fs.mkdirSync(dir, { recursive: true });
+    const html = paginaParakite(l, num);
+    confereAlternativas(html, rel);
+    fs.writeFileSync(path.join(dir, 'index.html'), html);
+    urls.push(DOMINIO + rel);
+  }
+  console.log('  Parakite Portugal: ' + IDIOMAS.length + ' páginas');
 }
 
 

@@ -1,209 +1,209 @@
 {
- "id": "oferta-parakites-2026",
- "nome": "Oferta parakites — cor + inspeção",
- "ativo": false,
- "inicio": "",
- "fim": "2026-12-31",
- "abrange": {
-  "familias": [],
-  "produtos": [
-   "Mullet 2"
-  ]
- },
- "tipo": "oferta",
- "forma": "faixa-janela",
- "repetir": "sessao",
- "prazo": "contagem",
- "ofertasNaFaixa": false,
- "esperaSegundos": 20,
- "etiqueta": {
-  "pt": "Oferta",
-  "en": "Offer",
-  "es": "Oferta",
-  "fr": "Offre",
-  "de": "Angebot"
- },
- "titulo": {
-  "pt": "Cada piloto tem a sua cor",
-  "en": "Every pilot has a color",
-  "es": "Cada piloto tiene su color",
-  "fr": "Chaque pilote a sa couleur",
-  "de": "Jeder Pilot hat seine Farbe"
- },
- "tituloFormato": {
-  "ancora": "cima-esquerda",
-  "x": 5,
-  "y": 25,
-  "largura": 52,
-  "tamanho": 8,
-  "alinhar": "centro",
-  "peso": 900,
-  "entrelinha": "apertada",
-  "espacamento": "normal",
-  "maiusculas": true,
-  "cor": "branco",
-  "sombra": true,
-  "saiNoTelemovel": false
- },
- "subtitulo": {
-  "pt": "Desempenho. Precisão. Liberdade.",
-  "en": "Performance. Precision. Freedom.",
-  "es": "Rendimiento. Precisión. Libertad.",
-  "fr": "Performance. Précision. Liberté.",
-  "de": "Leistung. Präzision. Freiheit."
- },
- "texto": {
-  "pt": "Mullet 2 com cor à escolha e primeira inspeção de segurança incluídas.",
-  "en": "Mullet 2 with custom colour and first safety inspection included.",
-  "es": "Mullet 2 con color a elegir y primera inspección de seguridad incluidas.",
-  "fr": "Mullet 2 avec couleur au choix et première inspection de sécurité incluses.",
-  "de": "Mullet 2 mit Wunschfarbe und erster Sicherheitsüberprüfung inklusive."
- },
- "imagem": "/images/avisos/promo.webp",
- "imagemMobile": "",
- "alt": {
-  "pt": "Mullet 2 — Happy Soaring e FelloFly",
-  "en": "Mullet 2 — Happy Soaring and FelloFly",
-  "es": "Mullet 2 — Happy Soaring y FelloFly",
-  "fr": "Mullet 2 — Happy Soaring et FelloFly",
-  "de": "Mullet 2 — Happy Soaring und FelloFly"
- },
- "pontos": [
-  {
-   "icone": "/images/avisos/ic-cor.webp",
-   "titulo": {
-    "pt": "Cor à escolha",
-    "en": "Custom colour",
-    "es": "Color a elegir",
-    "fr": "Couleur au choix",
-    "de": "Wunschfarbe"
-   },
-   "nota": {
-    "pt": "incluída",
-    "en": "included",
-    "es": "incluido",
-    "fr": "incluse",
-    "de": "inklusive"
-   },
-   "naFaixa": true
+  "id": "oferta-parakites-2026",
+  "nome": "Oferta parakites — cor + inspeção",
+  "ativo": true,
+  "inicio": "",
+  "fim": "2026-12-31",
+  "abrange": {
+    "familias": [],
+    "produtos": [
+      "Mullet 2"
+    ]
   },
-  {
-   "icone": "/images/avisos/ic-inspecao.webp",
-   "titulo": {
-    "pt": "Primeira inspeção de segurança",
-    "en": "First safety inspection",
-    "es": "Primera inspección de seguridad",
-    "fr": "Première inspection de sécurité",
-    "de": "Erste Sicherheitsüberprüfung"
-   },
-   "nota": {
-    "pt": "incluída",
-    "en": "included",
-    "es": "incluida",
-    "fr": "incluse",
-    "de": "inklusive"
-   },
-   "naFaixa": true
+  "tipo": "oferta",
+  "forma": "faixa",
+  "repetir": "sessao",
+  "prazo": "contagem",
+  "ofertasNaFaixa": false,
+  "esperaSegundos": 20,
+  "etiqueta": {
+    "pt": "Oferta",
+    "en": "Offer",
+    "es": "Oferta",
+    "fr": "Offre",
+    "de": "Angebot"
   },
-  {
-   "icone": "/images/avisos/ic-qualidade.webp",
-   "titulo": {
-    "pt": "Qualidade em que podes confiar.",
-    "en": "Quality you can trust.",
-    "es": "Calidad en la que puedes confiar.",
-    "fr": "Une qualité fiable.",
-    "de": "Qualität, der du vertrauen kannst."
-   },
-   "nota": {
-    "pt": "Voa com confiança.",
-    "en": "Fly with confidence.",
-    "es": "Vuela con confianza.",
-    "fr": "Vole en confiance.",
-    "de": "Flieg mit Vertrauen."
-   },
-   "naFaixa": false
+  "titulo": {
+    "pt": "Cada piloto tem a sua cor",
+    "en": "Every pilot has a color",
+    "es": "Cada piloto tiene su color",
+    "fr": "Chaque pilote a sa couleur",
+    "de": "Jeder Pilot hat seine Farbe"
   },
-  {
-   "icone": "/images/avisos/ic-paixao.webp",
-   "titulo": {
-    "pt": "Feita com paixão.",
-    "en": "Designed for passion.",
-    "es": "Diseñada con pasión.",
-    "fr": "Conçue par passion.",
-    "de": "Mit Leidenschaft entworfen."
-   },
-   "nota": {
-    "pt": "Construída para a liberdade.",
-    "en": "Built for freedom.",
-    "es": "Construida para la libertad.",
-    "fr": "Construite pour la liberté.",
-    "de": "Für die Freiheit gebaut."
-   },
-   "naFaixa": false
+  "tituloFormato": {
+    "ancora": "cima-esquerda",
+    "x": 5,
+    "y": 25,
+    "largura": 52,
+    "tamanho": 8,
+    "alinhar": "centro",
+    "peso": 900,
+    "entrelinha": "apertada",
+    "espacamento": "normal",
+    "maiusculas": true,
+    "cor": "branco",
+    "sombra": true,
+    "saiNoTelemovel": false
+  },
+  "subtitulo": {
+    "pt": "Desempenho. Precisão. Liberdade.",
+    "en": "Performance. Precision. Freedom.",
+    "es": "Rendimiento. Precisión. Libertad.",
+    "fr": "Performance. Précision. Liberté.",
+    "de": "Leistung. Präzision. Freiheit."
+  },
+  "texto": {
+    "pt": "Mullet 2 com cor à escolha e primeira inspeção de segurança incluídas.",
+    "en": "Mullet 2 with custom colour and first safety inspection included.",
+    "es": "Mullet 2 con color a elegir y primera inspección de seguridad incluidas.",
+    "fr": "Mullet 2 avec couleur au choix et première inspection de sécurité incluses.",
+    "de": "Mullet 2 mit Wunschfarbe und erster Sicherheitsüberprüfung inklusive."
+  },
+  "imagem": "/images/avisos/promo.webp",
+  "imagemMobile": "",
+  "alt": {
+    "pt": "Mullet 2 — Happy Soaring e FelloFly",
+    "en": "Mullet 2 — Happy Soaring and FelloFly",
+    "es": "Mullet 2 — Happy Soaring y FelloFly",
+    "fr": "Mullet 2 — Happy Soaring et FelloFly",
+    "de": "Mullet 2 — Happy Soaring und FelloFly"
+  },
+  "pontos": [
+    {
+      "icone": "/images/avisos/ic-cor.webp",
+      "titulo": {
+        "pt": "Cor à escolha",
+        "en": "Custom colour",
+        "es": "Color a elegir",
+        "fr": "Couleur au choix",
+        "de": "Wunschfarbe"
+      },
+      "nota": {
+        "pt": "incluída",
+        "en": "included",
+        "es": "incluido",
+        "fr": "incluse",
+        "de": "inklusive"
+      },
+      "naFaixa": true
+    },
+    {
+      "icone": "/images/avisos/ic-inspecao.webp",
+      "titulo": {
+        "pt": "Primeira inspeção de segurança",
+        "en": "First safety inspection",
+        "es": "Primera inspección de seguridad",
+        "fr": "Première inspection de sécurité",
+        "de": "Erste Sicherheitsüberprüfung"
+      },
+      "nota": {
+        "pt": "incluída",
+        "en": "included",
+        "es": "incluida",
+        "fr": "incluse",
+        "de": "inklusive"
+      },
+      "naFaixa": true
+    },
+    {
+      "icone": "/images/avisos/ic-qualidade.webp",
+      "titulo": {
+        "pt": "Qualidade em que podes confiar.",
+        "en": "Quality you can trust.",
+        "es": "Calidad en la que puedes confiar.",
+        "fr": "Une qualité fiable.",
+        "de": "Qualität, der du vertrauen kannst."
+      },
+      "nota": {
+        "pt": "Voa com confiança.",
+        "en": "Fly with confidence.",
+        "es": "Vuela con confianza.",
+        "fr": "Vole en confiance.",
+        "de": "Flieg mit Vertrauen."
+      },
+      "naFaixa": false
+    },
+    {
+      "icone": "/images/avisos/ic-paixao.webp",
+      "titulo": {
+        "pt": "Feita com paixão.",
+        "en": "Designed for passion.",
+        "es": "Diseñada con pasión.",
+        "fr": "Conçue par passion.",
+        "de": "Mit Leidenschaft entworfen."
+      },
+      "nota": {
+        "pt": "Construída para a liberdade.",
+        "en": "Built for freedom.",
+        "es": "Construida para la libertad.",
+        "fr": "Construite pour la liberté.",
+        "de": "Für die Freiheit gebaut."
+      },
+      "naFaixa": false
+    }
+  ],
+  "botao1": {
+    "texto": {
+      "pt": "Pedir preço",
+      "en": "Ask for a price",
+      "es": "Pedir precio",
+      "fr": "Demander le prix",
+      "de": "Preis anfragen"
+    },
+    "acao": "whatsapp",
+    "alvo": "",
+    "mensagem": {
+      "pt": "Olá! Queria saber o preço da Mullet 2 com a oferta de cor à escolha e inspeção incluídas.",
+      "en": "Hi! I would like the price of the Mullet 2 with the custom colour and inspection offer.",
+      "es": "¡Hola! Quería saber el precio de la Mullet 2 con la oferta de color a elegir e inspección incluidas.",
+      "fr": "Bonjour ! Je voudrais le prix de la Mullet 2 avec l’offre couleur au choix et inspection incluses.",
+      "de": "Hallo! Ich hätte gern den Preis der Mullet 2 mit der Aktion Wunschfarbe und Inspektion inklusive."
+    },
+    "visivel": true
+  },
+  "botao2": {
+    "texto": {
+      "pt": "Ver os parakites",
+      "en": "See the parakites",
+      "es": "Ver los parakites",
+      "fr": "Voir les parakites",
+      "de": "Parakites ansehen"
+    },
+    "acao": "familia",
+    "alvo": "Parakites",
+    "mensagem": {
+      "pt": "",
+      "en": "",
+      "es": "",
+      "fr": "",
+      "de": ""
+    },
+    "visivel": true
+  },
+  "botao3": {
+    "texto": {
+      "pt": "Escolher a minha cor",
+      "en": "Choose my colour",
+      "es": "Elegir mi color",
+      "fr": "Choisir ma couleur",
+      "de": "Meine Farbe wählen"
+    },
+    "acao": "url",
+    "alvo": "/escolher-cor/",
+    "visivel": false,
+    "mensagem": {
+      "pt": "",
+      "en": "",
+      "es": "",
+      "fr": "",
+      "de": ""
+    }
+  },
+  "letraPequena": {
+    "pt": "Válido em asas novas encomendadas na Happy Soaring. A inspeção de segurança é feita pela FelloFly, escola parceira. Cor à escolha entre as opções do fabricante.",
+    "en": "Valid on new wings ordered from Happy Soaring. The safety inspection is carried out by FelloFly, our partner school. Custom colour from the manufacturer’s options.",
+    "es": "Válido en velas nuevas pedidas a Happy Soaring. La inspección de seguridad la realiza FelloFly, escuela asociada. Color a elegir entre las opciones del fabricante.",
+    "fr": "Valable sur les ailes neuves commandées chez Happy Soaring. L’inspection de sécurité est réalisée par FelloFly, école partenaire. Couleur au choix parmi les options du fabricant.",
+    "de": "Gültig für neue Schirme, die bei Happy Soaring bestellt werden. Die Sicherheitsüberprüfung führt FelloFly durch, unsere Partnerschule. Wunschfarbe aus den Optionen des Herstellers."
   }
- ],
- "botao1": {
-  "texto": {
-   "pt": "Pedir preço",
-   "en": "Ask for a price",
-   "es": "Pedir precio",
-   "fr": "Demander le prix",
-   "de": "Preis anfragen"
-  },
-  "acao": "whatsapp",
-  "alvo": "",
-  "mensagem": {
-   "pt": "Olá! Queria saber o preço da Mullet 2 com a oferta de cor à escolha e inspeção incluídas.",
-   "en": "Hi! I would like the price of the Mullet 2 with the custom colour and inspection offer.",
-   "es": "¡Hola! Quería saber el precio de la Mullet 2 con la oferta de color a elegir e inspección incluidas.",
-   "fr": "Bonjour ! Je voudrais le prix de la Mullet 2 avec l’offre couleur au choix et inspection incluses.",
-   "de": "Hallo! Ich hätte gern den Preis der Mullet 2 mit der Aktion Wunschfarbe und Inspektion inklusive."
-  },
-  "visivel": true
- },
- "botao2": {
-  "texto": {
-   "pt": "Ver os parakites",
-   "en": "See the parakites",
-   "es": "Ver los parakites",
-   "fr": "Voir les parakites",
-   "de": "Parakites ansehen"
-  },
-  "acao": "familia",
-  "alvo": "Parakites",
-  "mensagem": {
-   "pt": "",
-   "en": "",
-   "es": "",
-   "fr": "",
-   "de": ""
-  },
-  "visivel": true
- },
- "botao3": {
-  "texto": {
-   "pt": "Escolher a minha cor",
-   "en": "Choose my colour",
-   "es": "Elegir mi color",
-   "fr": "Choisir ma couleur",
-   "de": "Meine Farbe wählen"
-  },
-  "acao": "url",
-  "alvo": "/escolher-cor/",
-  "visivel": false,
-  "mensagem": {
-   "pt": "",
-   "en": "",
-   "es": "",
-   "fr": "",
-   "de": ""
-  }
- },
- "letraPequena": {
-  "pt": "Válido em asas novas encomendadas na Happy Soaring. A inspeção de segurança é feita pela FelloFly, escola parceira. Cor à escolha entre as opções do fabricante.",
-  "en": "Valid on new wings ordered from Happy Soaring. The safety inspection is carried out by FelloFly, our partner school. Custom colour from the manufacturer’s options.",
-  "es": "Válido en velas nuevas pedidas a Happy Soaring. La inspección de seguridad la realiza FelloFly, escuela asociada. Color a elegir entre las opciones del fabricante.",
-  "fr": "Valable sur les ailes neuves commandées chez Happy Soaring. L’inspection de sécurité est réalisée par FelloFly, école partenaire. Couleur au choix parmi les options du fabricant.",
-  "de": "Gültig für neue Schirme, die bei Happy Soaring bestellt werden. Die Sicherheitsüberprüfung führt FelloFly durch, unsere Partnerschule. Wunschfarbe aus den Optionen des Herstellers."
- }
 }
