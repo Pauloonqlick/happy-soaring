@@ -1183,7 +1183,10 @@ a.fl-cor-a:hover{background:#ff7c31;color:#fff}
    Dois blocos irmãos com a mesma função — experimentar antes de decidir.
    Empilhados, gastavam dois ecrãs para dizer isso. A par, lêem-se como o
    par que são. No telemóvel voltam a empilhar. */
-.pk-duo{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+/* 42/58: o Rental tem mais conteúdo — o selo, a faixa do exemplo e a
+   legenda. A partes iguais, o cartão do Demo ficava com um terço vazio. */
+.pk-duo{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);
+  gap:16px;align-items:start}
 .pk-duo>div{margin-bottom:0;height:100%}
 
 /* 4 · OS SPOTS EM LINHA
@@ -1232,4 +1235,61 @@ a.fl-cor-a:hover{background:#ff7c31;color:#fff}
 }
 @media(max-width:520px){
   .pk-spots-l{grid-template-columns:1fr}
+}
+
+
+/* =======================================================================
+   Acabamento — 30/08/2026
+   =======================================================================
+   5 · O EXEMPLO DO RENTAL COMO FAIXA
+   20 → WIND UP → 17.5 era uma linha de três coisas encostadas à esquerda.
+   Passa a faixa: ocupa a largura do cartão, com os dois tamanhos nas
+   extremidades e a transição ao meio. É a ideia toda do Rental numa linha —
+   não se reserva a asa, reserva-se o dia. */
+.pk-exemplo{
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:0;
+  border:1px solid var(--linha);border-radius:14px;
+  background:rgba(255,255,255,.04);
+  padding:18px 22px;margin:22px 0;
+}
+.pk-exemplo li{text-align:center}
+.pk-exemplo li:first-child{text-align:left}
+.pk-exemplo li:last-child{text-align:right}
+.pk-exemplo b{font-size:clamp(30px,3vw,44px)}
+.pk-exemplo span{font-size:11.5px;letter-spacing:1.2px;text-transform:uppercase}
+.pk-exemplo .pk-seta{
+  display:flex;align-items:center;gap:10px;padding:0 18px;
+  font-size:12px;font-weight:800;letter-spacing:1.4px;
+}
+.pk-exemplo .pk-seta::before{content:none}
+.pk-exemplo .pk-seta i{font-style:normal;color:rgba(255,255,255,.3);font-size:15px}
+
+/* 6 · OS SPOTS AO LADO DO TEXTO
+   O bloco era alto e estreito de conteúdo: título, seis pastilhas numa
+   linha, nota e botão, cada um a gastar a sua faixa horizontal. Passa a
+   duas colunas — o que se lê à esquerda, onde se voa à direita. */
+.pk-spots{
+  display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:start;
+}
+.pk-spots-tx{min-width:0}
+.pk-spots-tx h3{margin-bottom:10px}
+.pk-spots-cta{margin:16px 0 0}
+.pk-spots-l{
+  grid-template-columns:repeat(2,1fr);gap:8px;margin:0;
+}
+.pk-spots-l li{
+  text-align:left;justify-content:flex-start;padding:11px 14px;font-size:14px;
+}
+
+@media(max-width:899px){
+  .pk-spots{grid-template-columns:1fr;gap:20px}
+  .pk-spots-l{grid-template-columns:repeat(2,1fr)}
+  .pk-exemplo{padding:16px 18px;margin:18px 0}
+  .pk-exemplo .pk-seta{padding:0 10px;font-size:11px}
+}
+@media(max-width:520px){
+  .pk-spots-l{grid-template-columns:1fr}
+  .pk-exemplo{grid-template-columns:1fr;gap:12px;text-align:center}
+  .pk-exemplo li,.pk-exemplo li:first-child,.pk-exemplo li:last-child{text-align:center}
+  .pk-exemplo .pk-seta{justify-content:center;padding:0}
 }

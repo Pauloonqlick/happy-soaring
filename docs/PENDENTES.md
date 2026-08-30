@@ -8,6 +8,42 @@ regras ou no código.
 
 ---
 
+## PRIORITÁRIO · Navegação global das páginas geradas
+
+Descoberto em 30/08/2026, durante a revisão visual do pilar.
+
+**As 131 páginas geradas não têm menu.** Nem `/parakite-portugal/`, nem
+`/smartground/`, nem `/flow-paragliders-portugal/`, nem nenhuma das 110 páginas
+de asa. Verificado uma a uma: `class="burger"` aparece **zero** vezes em todas.
+
+O menu é construído pelo `buildMenu()` do `app.js`, que só corre na página
+inicial. As páginas geradas têm `.pg-topo` — marca, linha de dealer e seletor
+de idiomas — e mais nada. Quem aterra numa asa vinda do Google só pode voltar à
+raiz ou mudar de língua.
+
+**O que se quer:** que as páginas geradas tenham acesso à navegação principal —
+
+    Início · Parakite · SmartGround · Flow Paragliders · Produtos · Música
+
+**As duas condições que tornam isto não-trivial:**
+
+1. **Sem duplicar a lógica.** O menu vive em `content/settings.json` e é lido
+   pelo `app.js`. Se o gerador escrever um segundo menu à mão, passam a existir
+   duas fontes de verdade — e um dia dizem coisas diferentes. Foi exactamente
+   isso que aconteceu com os rótulos de família antes de irem para
+   `regras/taxonomia.js`.
+
+2. **As cinco línguas.** Metade das entradas são âncoras da página inicial
+   (`#produtos`, `#music`) e metade são páginas próprias. Numa página gerada,
+   uma âncora não existe: tem de virar `/en/#produtos`. O `local()` do `app.js`
+   já resolve isto no browser; o gerador precisa do equivalente.
+
+**Não implementar sem analisar primeiro.** A solução tem de sair do mesmo
+`settings.json`, provavelmente por um módulo partilhado em `regras/`, como já
+aconteceu com a taxonomia e as unidades.
+
+---
+
 ## Precisa de decisão tua
 
 Nada disto avança sem ti. Não são tarefas, são escolhas.

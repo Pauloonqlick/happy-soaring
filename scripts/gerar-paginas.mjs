@@ -1488,7 +1488,7 @@ ${alt}
       <p class="pk-nota">${esc(t(PK.rentalGestao, l))}</p>
       <ul class="pk-exemplo">
         <li><b>20</b><span>${esc(t(PK.rentalManha, l))}</span></li>
-        <li class="pk-seta" lang="en">${esc(PK.rentalVento)}</li>
+        <li class="pk-seta" lang="en"><i aria-hidden="true">&rarr;</i>${esc(PK.rentalVento)}<i aria-hidden="true">&rarr;</i></li>
         <li><b>17.5</b><span>${esc(t(PK.rentalTarde, l))}</span></li>
       </ul>
       <p class="pk-nota">${esc(t(PK.rentalLegenda, l))}</p>
@@ -1496,12 +1496,12 @@ ${alt}
     </div>
 
     <div class="pk-spots">
-      <h3>${esc(t(PK.spotsTit, l))}</h3>
-      <ul class="pk-spots-l">${spots}</ul>
-      <div class="pk-spots-fim">
+      <div class="pk-spots-tx">
+        <h3>${esc(t(PK.spotsTit, l))}</h3>
         <p class="pk-nota">${esc(t(PK.spotsNota, l))}</p>
-        <p><a class="pk-b" href="${esc(wa(PK.s6Msg))}" rel="noopener" target="_blank">${esc(t(PK.s6Cta, l))}</a></p>
+        <p class="pk-spots-cta"><a class="pk-b" href="${esc(wa(PK.s6Msg))}" rel="noopener" target="_blank">${esc(t(PK.s6Cta, l))}</a></p>
       </div>
+      <ul class="pk-spots-l">${spots}</ul>
     </div>
   </section>
 

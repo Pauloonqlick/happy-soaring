@@ -19,8 +19,8 @@
  *
  * O QUE ESTA PAGINA NAO DIZ, E PORQUE
  *   Não diz que licença o curso dá, nem quem a emite: depende das credenciais
- *   da FelloFly, que ainda não estão fechadas. Diz o que está documentado —
- *   quem forma, e que o enquadramento passa pela FPVL com inscrição e seguro.
+ *   da FelloFly, que ainda não estão fechadas. A pergunta do FAQ é «quem dá a
+ *   formação?» — e a resposta atribui-a à escola parceira e pára aí.
  *
  *   Não diz que modelos ou tamanhos existem para Demo. Anuncia o serviço,
  *   condicionado à disponibilidade, e mais nada.
@@ -117,11 +117,11 @@ export const PK = {
     de: 'Was einen Parakite ausmacht, ist das Steuerungssystem — und die Fähigkeit des Piloten, die Konfiguration des Schirms im Flug deutlich zu verändern. Fliegen ist nicht mehr nur Richtung: es wird zu Energiemanagement.'
   },
   s2P2: {
-    pt: 'Uma asa pequena voa depressa. Um Parakite voa depressa **porque o piloto decide que sim**, e trava quando o piloto decide que não. É essa a diferença.',
-    en: 'A small wing flies fast. A Parakite flies fast **because the pilot decides it should**, and slows down when the pilot decides it should not. That is the difference.',
-    es: 'Un ala pequeña vuela rápido. Un Parakite vuela rápido **porque el piloto decide que sí**, y frena cuando el piloto decide que no. Esa es la diferencia.',
-    fr: 'Une petite aile vole vite. Un Parakite vole vite **parce que le pilote le décide**, et freine quand le pilote décide que non. C’est là toute la différence.',
-    de: 'Ein kleiner Schirm fliegt schnell. Ein Parakite fliegt schnell, **weil der Pilot es so will**, und bremst, wenn der Pilot es nicht will. Das ist der Unterschied.'
+    pt: 'É a capacidade de alterar significativamente a configuração da asa através do sistema de controlo que distingue a pilotagem de um Parakite de simplesmente voar uma asa pequena.',
+    en: 'It is the ability to significantly change the wing’s configuration through the control system that sets flying a Parakite apart from simply flying a small wing.',
+    es: 'Es la capacidad de alterar significativamente la configuración del ala a través del sistema de control lo que distingue pilotar un Parakite de simplemente volar un ala pequeña.',
+    fr: 'C’est la capacité de modifier significativement la configuration de l’aile par le système de contrôle qui distingue le pilotage d’un Parakite du simple fait de voler une petite aile.',
+    de: 'Es ist die Fähigkeit, die Konfiguration des Schirms über das Steuerungssystem deutlich zu verändern, die das Fliegen eines Parakite vom bloßen Fliegen eines kleinen Schirms unterscheidet.'
   },
 
   /* -------------------------------------------------------- 03 energia */
@@ -146,9 +146,9 @@ export const PK = {
                  es: 'gana · gestiona · gasta', fr: 'gagne · gère · dépense',
                  de: 'gewinnen · verwalten · ausgeben' } },
     { nome: { pt: 'Energia', en: 'Energy', es: 'Energía', fr: 'Énergie', de: 'Energie' },
-      legenda: { pt: 'tudo o resto vem daqui', en: 'everything else comes from here',
-                 es: 'todo lo demás viene de aquí', fr: 'tout le reste vient de là',
-                 de: 'alles andere kommt von hier' } }
+      legenda: { pt: 'liga tudo', en: 'ties it all together',
+                 es: 'lo conecta todo', fr: 'relie tout',
+                 de: 'verbindet alles' } }
   ],
   /* fica em inglês nas cinco versões: é a frase-assinatura */
   s3Declaracao: 'Parakite flying is energy management.',
@@ -440,8 +440,8 @@ export const PK = {
       fr: 'Choix du modèle', de: 'Modellwahl' },
     { pt: 'Escolha do tamanho', en: 'Choice of size', es: 'Elección de la talla',
       fr: 'Choix de la taille', de: 'Größenwahl' },
-    { pt: 'Condições competitivas', en: 'Competitive terms', es: 'Condiciones competitivas',
-      fr: 'Conditions compétitives', de: 'Wettbewerbsfähige Konditionen' },
+    { pt: 'Condições comerciais', en: 'Commercial terms', es: 'Condiciones comerciales',
+      fr: 'Conditions commerciales', de: 'Kaufkonditionen' },
     { pt: 'Pós-venda', en: 'After-sales', es: 'Posventa', fr: 'Après-vente',
       de: 'Betreuung nach dem Kauf' }
   ],
@@ -600,16 +600,16 @@ export const PK = {
            de: 'Nein. Man kann direkt mit dem Parakite anfangen, mit spezifischer Ausbildung. Gleitschirm-Erfahrung hilft als Grundlage, ersetzt diese Ausbildung aber nicht — das Steuerungssystem ist ein anderes.' }
     },
     {
-      p: { pt: 'Quem emite a formação e a licença?',
-           en: 'Who delivers the training and the licence?',
-           es: '¿Quién imparte la formación y la licencia?',
-           fr: 'Qui délivre la formation et la licence ?',
-           de: 'Wer erteilt Ausbildung und Lizenz?' },
-      r: { pt: 'A formação é dada pela escola parceira **FelloFly**. A Happy Soaring não é escola: acompanha a escolha da asa, a venda e o pós-venda. O enquadramento da prática em Portugal passa pela **FPVL**, e o percurso inclui inscrição na federação e seguro.',
-           en: 'Training is delivered by our partner school **FelloFly**. Happy Soaring is not a school: it handles choosing the wing, the sale and the after-sales. The framework for flying in Portugal runs through the **FPVL**, and the path includes federation membership and insurance.',
-           es: 'La formación la imparte la escuela asociada **FelloFly**. Happy Soaring no es escuela: acompaña la elección del ala, la venta y la posventa. El marco de la práctica en Portugal pasa por la **FPVL**, y el recorrido incluye inscripción en la federación y seguro.',
-           fr: 'La formation est assurée par l’école partenaire **FelloFly**. Happy Soaring n’est pas une école : elle accompagne le choix de l’aile, la vente et l’après-vente. Le cadre de la pratique au Portugal passe par la **FPVL**, et le parcours inclut l’inscription à la fédération et l’assurance.',
-           de: 'Die Ausbildung übernimmt die Partnerschule **FelloFly**. Happy Soaring ist keine Schule: wir begleiten die Schirmwahl, den Verkauf und die Betreuung danach. Der Rahmen für die Ausübung in Portugal läuft über die **FPVL**, und der Weg umfasst Verbandsmitgliedschaft und Versicherung.' }
+      p: { pt: 'Quem dá a formação?',
+           en: 'Who delivers the training?',
+           es: '¿Quién imparte la formación?',
+           fr: 'Qui assure la formation ?',
+           de: 'Wer macht die Ausbildung?' },
+      r: { pt: 'A formação é dada pela escola parceira **FelloFly**. A Happy Soaring não é escola: acompanha a escolha da asa, a venda e o pós-venda.',
+           en: 'Training is delivered by our partner school **FelloFly**. Happy Soaring is not a school: it handles choosing the wing, the sale and the after-sales.',
+           es: 'La formación la imparte la escuela asociada **FelloFly**. Happy Soaring no es escuela: acompaña la elección del ala, la venta y la posventa.',
+           fr: 'La formation est assurée par l’école partenaire **FelloFly**. Happy Soaring n’est pas une école : elle accompagne le choix de l’aile, la vente et l’après-vente.',
+           de: 'Die Ausbildung übernimmt die Partnerschule **FelloFly**. Happy Soaring ist keine Schule: wir begleiten die Schirmwahl, den Verkauf und die Betreuung danach.' }
     },
     {
       p: { pt: 'Posso experimentar antes de comprar?',
