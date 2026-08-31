@@ -67,7 +67,7 @@ roteiro, não uma auditoria.
 
 ### Precisa de trabalho técnico antes
 
-- **§5 SmartGround** — a plataforma existe e funciona, mas tem 2 skills, o
+- **§5 Pilot2Wing** — a plataforma existe e funciona, mas tem 2 skills, o
   áudio inglês aponta para o WordPress morto, e os editores de autoria
   ficariam à vista de todos
 - **§11 ParaKiteLog** — **a Mocha vai encerrar**. Autenticação, ficheiros e
@@ -85,7 +85,7 @@ roteiro, não uma auditoria.
 | **Serviços** | Quais estão operacionais **hoje**: inspecção, trim, reparação. O documento avisa, e bem, para não anunciar o que ainda não existe |
 | **Demos** | Que asas e tamanhos tens mesmo para emprestar |
 | **A música** | Fica no site de parakite? É uma decisão de posicionamento, não de código |
-| **SmartGround** | Público como protótipo, ou página sem link por agora |
+| **Pilot2Wing** | Público como protótipo, ou página sem link por agora |
 
 ---
 
@@ -108,8 +108,8 @@ Diferente da do documento (§27) em dois pontos, com razões.
 4. **Parakite em Portugal** — a página pilar
 5. **Curso de parakite em Portugal** — com a FelloFly como credibilidade lá
    dentro, e não como assunto da página (ver `docs/FORMACAO.md` quando existir)
-6. **Groundhandling** → liga ao SmartGround
-7. **SmartGround**
+6. **Groundhandling** → liga ao Pilot2Wing
+7. **Pilot2Wing**
 
 ### Depois — o comercial
 
@@ -136,7 +136,7 @@ pensada.
 **§11 ParaKiteLog está cedo demais.** O documento não sabe que a plataforma
 vai encerrar.
 
-**§27 põe o SmartGround em 12.º.** É o activo mais distintivo que tens —
+**§27 põe o Pilot2Wing em 12.º.** É o activo mais distintivo que tens —
 nenhum concorrente tem uma plataforma de treino com Vision. Mas também é o
 menos pronto. Mantenho-o a meio: depois do groundhandling, antes do
 comercial.

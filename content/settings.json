@@ -41,13 +41,13 @@
     },
     {
       "label": {
-        "pt": "SmartGround",
-        "en": "SmartGround",
-        "es": "SmartGround",
-        "fr": "SmartGround",
-        "de": "SmartGround"
+        "pt": "Pilot2Wing",
+        "en": "Pilot2Wing",
+        "es": "Pilot2Wing",
+        "fr": "Pilot2Wing",
+        "de": "Pilot2Wing"
       },
-      "target": "/smartground/"
+      "target": "/pilot2wing/"
     },
     {
       "label": {
@@ -105,7 +105,7 @@
     "sobre",
     "comunidade",
     "dealer",
-    "smartground",
+    "pilot2wing",
     "produtos",
     "reflex-lab",
     "music"

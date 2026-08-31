@@ -4,7 +4,7 @@
  *
  * PORQUE EXISTE
  *   O menu vivia só no `buildMenu()` do app.js, e por isso só existia na
- *   página inicial. As 131 páginas geradas — as 110 asas, o SmartGround, o
+ *   página inicial. As 131 páginas geradas — as 110 asas, o Pilot2Wing, o
  *   hub da Flow e o pilar — não tinham navegação nenhuma: quem chegasse a
  *   uma delas por uma pesquisa só podia voltar à raiz ou mudar de língua.
  *

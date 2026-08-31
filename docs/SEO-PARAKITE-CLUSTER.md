@@ -94,7 +94,7 @@ escreve em inglês; o serviço é local e vende-se em português.
 |---|---|
 | **Pesquisas** | Parakite · Parakites · What is a Parakite · How does a Parakite work · Parakite flying |
 | **Intenção** | Informacional, topo de funil. Ouviu a palavra e quer perceber. Não quer comprar nem aprender ainda |
-| **Página atual** | Nenhuma. A homepage menciona parakite no H1 mas é sobre a Happy Soaring; `/smartground/` é sobre o método; as páginas de asa são sobre modelos |
+| **Página atual** | Nenhuma. A homepage menciona parakite no H1 mas é sobre a Happy Soaring; `/pilot2wing/` é sobre o método; as páginas de asa são sobre modelos |
 | **Suficiente?** | **Não.** Não existe uma única página cujo assunto seja «o que é um parakite» |
 | **Gap** | A definição, o mecanismo, e a distinção face a uma asa pequena qualquer |
 | **Página recomendada** | `/o-que-e-um-parakite/` · `/en/what-is-a-parakite/` |
@@ -103,8 +103,8 @@ escreve em inglês; o serviço é local e vende-se em português.
 | **Tipo** | Pilar educativo |
 | **Prioridade** | **P1** |
 | **Canibalização** | **Média com `/parakite-portugal/`** — era alta enquanto o endereço era `/parakite/`; o slug traduzido baixou-a. Ver a secção de riscos |
-| **Links de entrada** | Homepage (menu + bloco estático), `/parakite-portugal/`, as 4 asas, `/smartground/` |
-| **Links de saída** | `/parakite-portugal/`, `/asas/parakites/`, `/parakite-vs-parapente/`, `/reflex-lab/`, `/smartground/` |
+| **Links de entrada** | Homepage (menu + bloco estático), `/parakite-portugal/`, as 4 asas, `/pilot2wing/` |
+| **Links de saída** | `/parakite-portugal/`, `/asas/parakites/`, `/parakite-vs-parapente/`, `/reflex-lab/`, `/pilot2wing/` |
 | **Conteúdo original HS** | A tese «não é simplesmente um parapente pequeno»; os quatro eixos — velocidade, trajetória, altura, energia; 23 anos de voo, 4 dedicados ao parakite; e o Reflex Lab como demonstração interativa, que nenhum concorrente tem |
 | **Idioma prioritário** | **EN** escreve-se primeiro, PT a seguir |
 
@@ -149,7 +149,7 @@ mecanismo novo — fica registado para a fase de implementação.
 | **Tipo** | Artigo técnico |
 | **Prioridade** | **P2** |
 | **Canibalização** | Baixa. Nenhuma outra página trata disto |
-| **Links de entrada** | `/o-que-e-um-parakite/`, `/parakite-portugal/` (a banda dos quatro eixos), `/smartground/` |
+| **Links de entrada** | `/o-que-e-um-parakite/`, `/parakite-portugal/` (a banda dos quatro eixos), `/pilot2wing/` |
 | **Links de saída** | `/reflex-lab/`, `/parakite-control-system/`, `/asas/parakites/` |
 | **Conteúdo original HS** | É a frase-assinatura. «Parakite flying is energy management» é da Happy Soaring, não é um termo da indústria — e os quatro eixos são um modelo próprio |
 | **Idioma prioritário** | **EN** — o termo é inglês |
@@ -237,7 +237,7 @@ gira sem tema próprio.
 |---|---|
 | **Pesquisas** | Parakite training · Parakite lessons · Parakite course |
 | **Intenção** | Transacional. Quer aprender e procura quem ensina |
-| **Página atual** | `/smartground/` responde ao **método**, não ao curso. O CTA pede informações por WhatsApp precisamente porque a página do curso não existe |
+| **Página atual** | `/pilot2wing/` responde ao **método**, não ao curso. O CTA pede informações por WhatsApp precisamente porque a página do curso não existe |
 | **Suficiente?** | Não |
 | **Gap** | A página do curso |
 | **Página recomendada** | `/curso-parakite-portugal/` |
@@ -245,10 +245,10 @@ gira sem tema próprio.
 | **Secundárias** | parakite training, parakite lessons, aprender parakite, parakite school portugal |
 | **Tipo** | Página de serviço |
 | **Prioridade** | **P1 — escrevível já.** Não é a página que está bloqueada; são duas afirmações dentro dela |
-| **Canibalização** | Média com `/smartground/`. A fronteira já está escrita: o SmartGround diz «aqui acaba o SmartGround» e passa a palavra ao Curso de Parakite |
-| **Links de entrada** | `/parakite-portugal/` (CTA 01), `/smartground/`, `/o-que-e-um-parakite/`, homepage |
-| **Links de saída** | `/smartground/`, `/asas/mullet-2/`, `/licenca-parakite-portugal/` |
-| **Conteúdo original HS** | O método SmartGround, que nenhuma escola tem; a parceria FelloFly; as cinco etapas já publicadas |
+| **Canibalização** | Média com `/pilot2wing/`. A fronteira já está escrita: o Pilot2Wing diz «aqui acaba o Pilot2Wing» e passa a palavra ao Curso de Parakite |
+| **Links de entrada** | `/parakite-portugal/` (CTA 01), `/pilot2wing/`, `/o-que-e-um-parakite/`, homepage |
+| **Links de saída** | `/pilot2wing/`, `/asas/mullet-2/`, `/licenca-parakite-portugal/` |
+| **Conteúdo original HS** | O método Pilot2Wing, que nenhuma escola tem; a parceria FelloFly; as cinco etapas já publicadas |
 | **Idioma prioritário** | **PT** — é um serviço local. EN a seguir, para turismo de voo |
 
 ### O que já se pode escrever, e o que fica marcado
@@ -260,7 +260,7 @@ confirmado**, e só as afirmações sobre titulação ficam por preencher.
 protocolo:
 
 - A formação é realizada através da escola parceira FelloFly
-- O método SmartGround e as suas cinco etapas
+- O método Pilot2Wing e as suas cinco etapas
 - O Curso de Parakite faz-se com a Mullet 2
 - As etapas do curso: descolagem · voo · controlo · aterragem
 - As mini-wings de 8, 10 e 12 m² na quarta etapa do método
@@ -285,7 +285,7 @@ saber quem ensina, com que asa, e como se começa — e a isso já se responde.
 |---|---|
 | **Pesquisas** | Parakite ground handling · Parakite skills |
 | **Intenção** | Informacional. Piloto ativo que quer treinar |
-| **Página atual** | `/smartground/` toca no assunto nas etapas 2 a 4, mas o assunto dela é o método |
+| **Página atual** | `/pilot2wing/` toca no assunto nas etapas 2 a 4, mas o assunto dela é o método |
 | **Suficiente?** | Parcialmente |
 | **Gap** | Uma página cujo assunto **seja** groundhandling |
 | **Página recomendada** | `/groundhandling-parakite/` |
@@ -293,9 +293,9 @@ saber quem ensina, com que asa, e como se começa — e a isso já se responde.
 | **Secundárias** | parakite skills, kiting, treino de solo, groundhandling parapente |
 | **Tipo** | Guia |
 | **Prioridade** | **P2** |
-| **Canibalização** | **Média-alta com `/smartground/`.** Groundhandling é a prática; SmartGround é o método que a organiza. Se a distinção não se aguentar na escrita, isto é secção e não página |
-| **Links de entrada** | `/smartground/`, `/o-que-e-um-parakite/`, `/curso-parakite-portugal/` |
-| **Links de saída** | `/smartground/`, `/asas/parakites/` |
+| **Canibalização** | **Média-alta com `/pilot2wing/`.** Groundhandling é a prática; Pilot2Wing é o método que a organiza. Se a distinção não se aguentar na escrita, isto é secção e não página |
+| **Links de entrada** | `/pilot2wing/`, `/o-que-e-um-parakite/`, `/curso-parakite-portugal/` |
+| **Links de saída** | `/pilot2wing/`, `/asas/parakites/` |
 | **Conteúdo original HS** | A filosofia que o `PLANO.md` diz já estar escrita na plataforma; o Quick Response Game; as mini-wings de 8, 10 e 12 m² |
 | **Idioma prioritário** | **EN**, PT a seguir |
 
@@ -442,7 +442,7 @@ escrever o hub outra vez.
 | **Prioridade** | **P2 — bloqueada** até estarem fechados os requisitos oficiais do ParaKite e a unidade de formação da FelloFly |
 | **Canibalização** | Média com `/curso-parakite-portugal/`. A licença é o **enquadramento**; o curso é o **serviço**. Se a página do curso explicar a licença em detalhe, esta deixa de fazer sentido |
 | **Links de entrada** | `/curso-parakite-portugal/`, `/parakite-portugal/`, `/o-que-e-um-parakite/` |
-| **Links de saída** | `/curso-parakite-portugal/`, `/smartground/` |
+| **Links de saída** | `/curso-parakite-portugal/`, `/pilot2wing/` |
 | **Conteúdo original HS** | O Protocolo com a FelloFly descreve quatro percursos distintos; os Procedimentos FPVL 2026 têm Ficha de Praticante (ParaKite) própria. **É informação que quase ninguém tem escrita em português** |
 | **Idioma prioritário** | **PT.** Uma licença é nacional — a pesquisa genérica em inglês não tem resposta útil vinda de Portugal |
 
@@ -531,7 +531,7 @@ existentes mais o gerador.
    │  management/      │    │  portugal/   [P1] │      │            [P1] │
    │              [P2] │    │  ~ 2 marcações    │      └────────┬────────┘
    ├───────────────────┤    ├───────────────────┤               │
-   │ /parakite-control-│    │ /smartground/     │      ┌────────┴────────┐
+   │ /parakite-control-│    │ /pilot2wing/     │      ┌────────┴────────┐
    │  system/     [P2] │    │  ✓ existe         │      │  Mullet 2       │
    ├───────────────────┤    ├───────────────────┤      │  MulletX        │
    │ /reflex-lab/      │    │ /groundhandling-  │      │  AlbatroXX      │
@@ -611,14 +611,14 @@ is a parakite», ou alternar entre as duas para a mesma pesquisa.
 **Plano B:** fundir. `/o-que-e-um-parakite/` redireciona para
 `/parakite-portugal/`, que absorve a parte educativa. Decidir com dados.
 
-### 2 · `/groundhandling-parakite/` contra `/smartground/` — **média-alta**
+### 2 · `/groundhandling-parakite/` contra `/pilot2wing/` — **média-alta**
 
 Ambas falam de treino de solo. A distinção — prática contra método — é real mas
 fina.
 
-**Mitigação:** o groundhandling é para quem já voa e quer treinar; o SmartGround
+**Mitigação:** o groundhandling é para quem já voa e quer treinar; o Pilot2Wing
 é o método de quem está a aprender. Se, ao escrever, o texto começar a repetir o
-SmartGround, isto é uma secção e não uma página.
+Pilot2Wing, isto é uma secção e não uma página.
 
 ### 3 · Reviews contra páginas de asa — **média-alta**
 
@@ -670,7 +670,7 @@ Só depois de a fase 1 estar publicada e indexada.
 - `/parakite-control-system/` — o diferenciador técnico
 - `/parakite-energy-management/` — a frase-assinatura, desenvolvida
 - `/parakite-vs-parapente/` — a comparação que traz tráfego de investigação
-- `/groundhandling-parakite/` — se a distinção face ao SmartGround se aguentar
+- `/groundhandling-parakite/` — se a distinção face ao Pilot2Wing se aguentar
 - `/inspecao-e-reparacao-parakite/` — serviço confirmado, sem preços
 - `/demo-parakite/` — quando a secção do pilar der sinais de procura própria
 - `/licenca-parakite-portugal/` — **quando desbloquear**

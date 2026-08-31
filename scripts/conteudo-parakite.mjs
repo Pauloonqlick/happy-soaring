@@ -7,7 +7,7 @@
  * traduzem essas, e nada mais.
  *
  * O QUE NAO SE TRADUZ, E PORQUE
- *   "Parakite", "SmartGround", "Flow Paragliders", "FelloFly", "FPVL",
+ *   "Parakite", "Pilot2Wing", "Flow Paragliders", "FelloFly", "FPVL",
  *   "Demo Sessions", "Custom color" e "Rent the day. Not the wing." são nomes
  *   ou termos que a comunidade usa em inglês em toda a parte. Traduzi-los
  *   tornava-os menos encontráveis, não mais claros.
@@ -187,11 +187,11 @@ export const PK = {
                fr: 'Tu peux commencer même sans expérience préalable en parapente.',
                de: 'Du kannst auch ganz ohne Gleitschirm-Erfahrung anfangen.' },
       etapas: {
-        pt: ['Zero experiência', 'SmartGround', 'Curso de Parakite', 'Voar'],
-        en: ['Zero experience', 'SmartGround', 'Parakite Course', 'Fly'],
-        es: ['Cero experiencia', 'SmartGround', 'Curso de Parakite', 'Volar'],
-        fr: ['Zéro expérience', 'SmartGround', 'Cours de Parakite', 'Voler'],
-        de: ['Null Erfahrung', 'SmartGround', 'Parakite-Kurs', 'Fliegen']
+        pt: ['Zero experiência', 'Pilot2Wing', 'Curso de Parakite', 'Voar'],
+        en: ['Zero experience', 'Pilot2Wing', 'Parakite Course', 'Fly'],
+        es: ['Cero experiencia', 'Pilot2Wing', 'Curso de Parakite', 'Volar'],
+        fr: ['Zéro expérience', 'Pilot2Wing', 'Cours de Parakite', 'Voler'],
+        de: ['Null Erfahrung', 'Pilot2Wing', 'Parakite-Kurs', 'Fliegen']
       }
     },
     {
@@ -316,9 +316,9 @@ export const PK = {
     de: 'Zuerst automatisieren wir den Piloten. Dann kommt der Schirm dazu.'
   },
   s5MetodoCta: {
-    pt: 'Conhecer o SmartGround', en: 'Discover SmartGround',
-    es: 'Conocer el SmartGround', fr: 'Découvrir le SmartGround',
-    de: 'SmartGround kennenlernen'
+    pt: 'Conhecer o Pilot2Wing', en: 'Discover Pilot2Wing',
+    es: 'Conocer el Pilot2Wing', fr: 'Découvrir le Pilot2Wing',
+    de: 'Pilot2Wing kennenlernen'
   },
 
   /* ------------------------------------------------ 06 voar em Portugal */
@@ -558,7 +558,7 @@ export const PK = {
   },
   ecossistema: [
     { t: { pt: 'Aprender', en: 'Learn', es: 'Aprender', fr: 'Apprendre', de: 'Lernen' }, s: 'FelloFly' },
-    { t: { pt: 'Treinar', en: 'Train', es: 'Entrenar', fr: 'S’entraîner', de: 'Trainieren' }, s: 'SmartGround' },
+    { t: { pt: 'Treinar', en: 'Train', es: 'Entrenar', fr: 'S’entraîner', de: 'Trainieren' }, s: 'Pilot2Wing' },
     { t: { pt: 'Experimentar', en: 'Try', es: 'Probar', fr: 'Essayer', de: 'Testen' }, s: 'Demo Sessions' },
     { t: { pt: 'Alugar', en: 'Rent', es: 'Alquilar', fr: 'Louer', de: 'Mieten' }, s: 'Coming soon', soon: 1 },
     { t: { pt: 'Escolher', en: 'Choose', es: 'Elegir', fr: 'Choisir', de: 'Wählen' },

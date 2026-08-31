@@ -12,7 +12,7 @@ passo de compilação: o que está no repositório é o que corre no browser.
   runtime a partir do conteúdo em `content/`.
 - **`content/`** — todo o conteúdo, em JSON, editado pelo Sveltia CMS.
 - **`scripts/gerar-paginas.mjs`** — gera 120 páginas estáticas (110 de
-  produto, 5 do SmartGround, 5 do hub da Flow), as cinco páginas iniciais e
+  produto, 5 do Pilot2Wing, 5 do hub da Flow), as cinco páginas iniciais e
   o sitemap, a partir do mesmo JSON que o site lê.
 - **`regras/`** — as regras que o site e o gerador têm de partilhar: avisos,
   taxonomia, unidades. Estão à parte porque estar em duplicado já as fez
@@ -97,12 +97,12 @@ A categoria traduz-se, o nome do produto não:
 /asas/mullet-2/          /en/wings/mullet-2/      /de/schirme/mullet-2/
 ```
 
-O `/smartground/` e o `/flow-paragliders-portugal/` mantêm o mesmo slug nas
+O `/pilot2wing/` e o `/flow-paragliders-portugal/` mantêm o mesmo slug nas
 cinco — são nomes próprios.
 
 ## Gerado ou versionado
 
-As pastas `asas/`, `en/`, `es/`, `fr/`, `de/`, `smartground/` e
+As pastas `asas/`, `en/`, `es/`, `fr/`, `de/`, `pilot2wing/` e
 `flow-paragliders-portugal/` **são geradas** e estão no `.gitignore`. Não se
 editam à mão: qualquer alteração perde-se na geração seguinte. O mesmo vale
 para o `sitemap.xml`, embora esse seja versionado.

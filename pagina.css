@@ -4,7 +4,7 @@
    tipografia) mas com medida de leitura e hierarquia de títulos a sério. */
 :root{
   --azul:#0e3b6d; --azul-esc:#0a2c53; --orange:#ff6a13;
-  /* A superficie e azul, como o catalogo e o SmartGround. As fotos das asas
+  /* A superficie e azul, como o catalogo e o Pilot2Wing. As fotos das asas
      sao recortes: foram feitas para fundo escuro e e ai que assentam.
      O que precisa de contraste de leitura ganha painel claro proprio. */
   --papel:#071d3a; --tinta:#fff; --tinta-fraca:rgba(255,255,255,.68);
@@ -432,7 +432,7 @@ a.pg-video:hover .pg-video-play{background:#ff7c31}
   color:var(--tinta-fraca);margin-top:2px}
 
 /* ======================================================================
-   /smartground/ — o método
+   /pilot2wing/ — o método
    Escura, ao contrário das páginas das asas, que são papel. É deliberado:
    uma é um documento de produto, esta é um argumento.
    ====================================================================== */
@@ -777,10 +777,10 @@ a.fl-cor-a:hover{background:#ff7c31;color:#fff}
    =======================================================================
    AS MEDIDAS SAO AS DO SITE, E NAO UMA ESCALA PROPRIA.
    A maqueta chegou aqui com contentores de 1760 e um h1 de 136px. Foi
-   alinhada com o que o site já usa: o contentor do SmartGround (1440/72),
+   alinhada com o que o site já usa: o contentor do Pilot2Wing (1440/72),
    o h1 do .sg-heroi, os h2 do .sg-espinha-cab, o número do .sg-etapa-n e
    o lead do .sg-abord-tx. Uma página-pilar com escala própria parecia de
-   outro site quando aberta ao lado do SmartGround.
+   outro site quando aberta ao lado do Pilot2Wing.
 
    Sem tipografia nova: a mesma pilha de sistema do resto. */
 

@@ -1,6 +1,6 @@
 {
- "id": "smartground",
- "nome": "SmartGround — o método",
+ "id": "pilot2wing",
+ "nome": "Pilot2Wing — o método",
  "visible": true,
  "wind": false,
  "heightScreens": 1,
@@ -50,13 +50,13 @@
    "buttons": [
     {
      "label": {
-      "pt": "Conhecer o método SmartGround",
-      "en": "Discover the SmartGround method",
-      "es": "Conocer el método SmartGround",
-      "fr": "Découvrir la méthode SmartGround",
-      "de": "Die SmartGround-Methode kennenlernen"
+      "pt": "Conhecer o método Pilot2Wing",
+      "en": "Discover the Pilot2Wing method",
+      "es": "Conocer el método Pilot2Wing",
+      "fr": "Découvrir la méthode Pilot2Wing",
+      "de": "Die Pilot2Wing-Methode kennenlernen"
      },
-     "href": "/smartground/",
+     "href": "/pilot2wing/",
      "visible": true
     }
    ],

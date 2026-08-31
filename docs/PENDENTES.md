@@ -173,7 +173,7 @@ próprios para as 22 asas** (110 páginas, 5 idiomas), **sitemap gerado** com as
 
 Por fazer:
 
-1. **Conteúdo** — as páginas que querias (/parakite/, /smartground/,
+1. **Conteúdo** — as páginas que querias (/parakite/, /pilot2wing/,
    comparações) não existem. SEO num site sem conteúdo não optimiza nada
 2. **Páginas de família** (/asas/parakites/) — ficaram de fora de propósito:
    uma lista de asas sem texto próprio é conteúdo fraco. Entram quando houver

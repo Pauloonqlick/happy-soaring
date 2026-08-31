@@ -25,7 +25,7 @@ import path from 'node:path';
 import { ofertasDaAsa } from '../regras/avisos.js';
 import { rotuloFamilia, rotuloClasse } from '../regras/taxonomia.js';
 import { KN_PARA_KMH, PAISES_NOS, CHAVE_UNIDADE } from '../regras/unidades.js';
-import { SG } from './conteudo-smartground.mjs';
+import { P2W } from './conteudo-pilot2wing.mjs';
 import { FL } from './conteudo-flow.mjs';
 import { IN } from './conteudo-inicial.mjs';
 import { PK } from './conteudo-parakite.mjs';
@@ -42,7 +42,7 @@ const OMISSAO = 'pt';
    vez de a declarar outra vez.
 
    Estava a ser declarada inline em dois sítios — no `author.worksFor` do
-   SmartGround e no `publisher` do hub da Flow. Para um motor de busca isso
+   Pilot2Wing e no `publisher` do hub da Flow. Para um motor de busca isso
    são três Happy Soaring diferentes, nenhuma ligada às outras, e é o
    oposto do que os dados estruturados servem para fazer: dizer que a
    entidade é a mesma esteja onde estiver. */
@@ -362,9 +362,9 @@ const ASA_DO_CURSO = 'Mullet 2';
 function blocoMetodo(p, l) {
   if (p.nome !== ASA_DO_CURSO) return '';
   return `<section class="pg-sec pg-metodo">
-  <p class="pg-metodo-et">${esc(t(SG.asaKicker, l))}</p>
-  <p class="pg-metodo-tx">${esc(t(SG.asaDoCurso, l))}</p>
-  <p><a class="pg-metodo-a" href="${l === OMISSAO ? '' : '/' + l}/smartground/">${esc(t(SG.conhecer, l))}</a></p>
+  <p class="pg-metodo-et">${esc(t(P2W.asaKicker, l))}</p>
+  <p class="pg-metodo-tx">${esc(t(P2W.asaDoCurso, l))}</p>
+  <p><a class="pg-metodo-a" href="${l === OMISSAO ? '' : '/' + l}/pilot2wing/">${esc(t(P2W.conhecer, l))}</a></p>
 </section>`;
 }
 
@@ -437,9 +437,9 @@ function corpoInicial(l) {
     <h1>${esc(h1)}</h1>
     <p>${esc(entrada)}</p>
 
-    <h2>${esc(t(SG.h1a, l))} ${esc(t(SG.h1b, l))}</h2>
-    <p>${esc(t(SG.descricao, l))}
-    <a href="${esc(caminhoSG(l))}">${esc(t(SG.conhecer, l))}</a></p>
+    <h2>${esc(t(P2W.h1a, l))} ${esc(t(P2W.h1b, l))}</h2>
+    <p>${esc(t(P2W.descricao, l))}
+    <a href="${esc(caminhoP2W(l))}">${esc(t(P2W.conhecer, l))}</a></p>
 
     <h2>${esc(t(PK.h1, l))}</h2>
     <p>${esc(t(PK.asaTxt, l))}
@@ -1134,26 +1134,26 @@ function blocoDealer(p, l) {
     <a href="${esc(caminhoFlow(l))}">${esc(t(FL.ancoraLink, l))}</a></p>`;
 }
 
-/* ---- a página /smartground/ -------------------------------------------
-   O SmartGround é o método com que o Curso de Parakite é dado. Tem página
+/* ---- a página /pilot2wing/ -------------------------------------------
+   O Pilot2Wing é o método com que o Curso de Parakite é dado. Tem página
    própria e não uma secção dentro do curso por uma razão prática: é um
    termo ambíguo — há um projecto europeu com nome parecido — e para o
    reclamar é preciso uma página que SEJA sobre ele, com o nome no
    endereço, no título e no h1.
 
-   O nome não se traduz, por isso o endereço é /smartground/ em todos os
+   O nome não se traduz, por isso o endereço é /pilot2wing/ em todos os
    idiomas, só com o prefixo de língua à frente. */
-const caminhoSG = l => (l === OMISSAO ? '' : '/' + l) + '/smartground/';
+const caminhoP2W = l => (l === OMISSAO ? '' : '/' + l) + '/pilot2wing/';
 
-function paginaSmartGround(l, num) {
-  const url = DOMINIO + caminhoSG(l);
+function paginaPilot2Wing(l, num) {
+  const url = DOMINIO + caminhoP2W(l);
   const foto = DOMINIO + '/images/og-happysoaring.jpg';
-  const alts = alternativas(x => caminhoSG(x));
+  const alts = alternativas(x => caminhoP2W(x));
   const alt = etiquetasAlt(alts);
-  const wa = 'https://wa.me/' + num + '?text=' + encodeURIComponent(t(SG.ctaMsg, l));
-  const cad = SG.cadeia[l] || SG.cadeia[OMISSAO];
-  const fases = SG.fases[l] || SG.fases[OMISSAO];
-  const etapasCurso = SG.cursoEtapas[l] || SG.cursoEtapas[OMISSAO];
+  const wa = 'https://wa.me/' + num + '?text=' + encodeURIComponent(t(P2W.ctaMsg, l));
+  const cad = P2W.cadeia[l] || P2W.cadeia[OMISSAO];
+  const fases = P2W.fases[l] || P2W.fases[OMISSAO];
+  const etapasCurso = P2W.cursoEtapas[l] || P2W.cursoEtapas[OMISSAO];
   const inicio = inicioHref(l);
 
   /* HowTo descreve exactamente o que isto é: um método por etapas. Sem
@@ -1163,22 +1163,22 @@ function paginaSmartGround(l, num) {
     '@graph': [
       { '@type': 'BreadcrumbList', itemListElement: [
         { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + inicioHref(l) },
-        { '@type': 'ListItem', position: 2, name: 'SmartGround', item: url }
+        { '@type': 'ListItem', position: 2, name: 'Pilot2Wing', item: url }
       ]},
       { '@type': 'HowTo',
-        name: 'SmartGround',
-        description: t(SG.descricao, l),
+        name: 'Pilot2Wing',
+        description: t(P2W.descricao, l),
         url,
         inLanguage: l,
-        author: { '@type': 'Person', name: SG.autorNome, worksFor: ORGANIZACAO },
-        step: SG.etapas.map((e, i) => ({
+        author: { '@type': 'Person', name: P2W.autorNome, worksFor: ORGANIZACAO },
+        step: P2W.etapas.map((e, i) => ({
           '@type': 'HowToStep', position: i + 1, name: t(e.nome, l), text: t(e.texto, l)
         }))
       }
     ]
   });
 
-  const cartoes = SG.etapas.map((e, i) => {
+  const cartoes = P2W.etapas.map((e, i) => {
     const ultimo = i === 4, quarto = i === 3;
     const fundo = ultimo ? 'background:rgba(255,106,19,0.14);border:2px solid #ff6a13'
       : quarto ? 'background:rgba(255,201,166,0.09);border:1px solid rgba(255,201,166,0.34)'
@@ -1196,15 +1196,15 @@ function paginaSmartGround(l, num) {
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>${esc(t(SG.titulo, l))}</title>
-<meta name="description" content="${esc(t(SG.descricao, l))}" />
+<title>${esc(t(P2W.titulo, l))}</title>
+<meta name="description" content="${esc(t(P2W.descricao, l))}" />
 <link rel="canonical" href="${url}" />
 ${alt}
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="Happy Soaring" />
 <meta property="og:url" content="${url}" />
-<meta property="og:title" content="${esc(t(SG.h1a, l) + ' ' + t(SG.h1b, l))}" />
-<meta property="og:description" content="${esc(t(SG.descricao, l))}" />
+<meta property="og:title" content="${esc(t(P2W.h1a, l) + ' ' + t(P2W.h1b, l))}" />
+<meta property="og:description" content="${esc(t(P2W.descricao, l))}" />
 <meta property="og:image" content="${foto}" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="stylesheet" href="/pagina.css" />
@@ -1225,26 +1225,26 @@ ${alt}
 
   <section class="sg-heroi">
     <div class="sg-heroi-txt">
-      <p class="pg-eyebrow">${esc(t(SG.kicker, l))}</p>
-      <h1>${esc(t(SG.h1a, l))}<br><span>${esc(t(SG.h1b, l))}</span></h1>
-      <p class="sg-tese">${esc(t(SG.tese, l))}</p>
+      <p class="pg-eyebrow">${esc(t(P2W.kicker, l))}</p>
+      <h1>${esc(t(P2W.h1a, l))}<br><span>${esc(t(P2W.h1b, l))}</span></h1>
+      <p class="sg-tese">${esc(t(P2W.tese, l))}</p>
     </div>
     <div class="sg-heroi-fig">
       <video src="/images/smartground/movimento-left.webm" autoplay loop muted playsinline
-        aria-label="${esc(t(SG.legendaVideo, l))}" width="557" height="952"></video>
+        aria-label="${esc(t(P2W.legendaVideo, l))}" width="557" height="952"></video>
     </div>
   </section>
 
   <section class="sg-abordagens">
-    <p class="pg-eyebrow">${esc(t(SG.abordagens, l))}</p>
+    <p class="pg-eyebrow">${esc(t(P2W.abordagens, l))}</p>
     <div class="sg-duas">
       <div class="sg-abord">
-        <p class="sg-abord-et">${esc(t(SG.convLabel, l))}</p>
-        <p class="sg-abord-tx">${esc(t(SG.convTexto, l))}</p>
+        <p class="sg-abord-et">${esc(t(P2W.convLabel, l))}</p>
+        <p class="sg-abord-tx">${esc(t(P2W.convTexto, l))}</p>
       </div>
       <div class="sg-abord sg-abord-nossa">
-        <p class="sg-abord-et">SmartGround</p>
-        <p class="sg-abord-tx">${esc(t(SG.sgTexto, l))}</p>
+        <p class="sg-abord-et">Pilot2Wing</p>
+        <p class="sg-abord-tx">${esc(t(P2W.sgTexto, l))}</p>
       </div>
     </div>
   </section>
@@ -1252,11 +1252,11 @@ ${alt}
   <section class="sg-espinha">
     <div class="sg-espinha-cab">
       <div>
-        <p class="pg-eyebrow">${esc(t(SG.espinhaKicker, l))}</p>
-        <h2>${esc(t(SG.espinhaA, l))}<br>${esc(t(SG.espinhaB, l))}</h2>
+        <p class="pg-eyebrow">${esc(t(P2W.espinhaKicker, l))}</p>
+        <h2>${esc(t(P2W.espinhaA, l))}<br>${esc(t(P2W.espinhaB, l))}</h2>
       </div>
       <div class="sg-espinha-dir">
-        <p>${esc(t(SG.espinhaSub, l))}</p>
+        <p>${esc(t(P2W.espinhaSub, l))}</p>
         <p class="sg-cadeia">${cad.map((x, i) =>
           `<span${i === cad.length - 1 ? ' class="fim"' : ''}>${esc(x)}</span>`).join('<i>&rarr;</i>')}</p>
       </div>
@@ -1270,52 +1270,52 @@ ${alt}
     </ol>
 
     <div class="sg-transicao">
-      <span class="sg-trans-et">${esc(t(SG.transAcaba, l))}</span>
+      <span class="sg-trans-et">${esc(t(P2W.transAcaba, l))}</span>
       <i>&rarr;</i>
-      <strong>${esc(t(SG.curso, l))}</strong>
+      <strong>${esc(t(P2W.curso, l))}</strong>
       <span class="sg-trans-lista">${etapasCurso.map(x => `<b>${esc(x)}</b>`).join('')}</span>
     </div>
   </section>
 
   <section class="sg-duplo">
     <div class="sg-perigo">
-      <p class="pg-eyebrow">${esc(t(SG.perigoKicker, l))}</p>
-      <h2>${esc(t(SG.perigoTitulo, l))}</h2>
-      <p>${esc(t(SG.perigoTexto, l))}</p>
+      <p class="pg-eyebrow">${esc(t(P2W.perigoKicker, l))}</p>
+      <h2>${esc(t(P2W.perigoTitulo, l))}</h2>
+      <p>${esc(t(P2W.perigoTexto, l))}</p>
     </div>
     <div class="sg-parapente">
-      <h2>${esc(t(SG.parapenteTitulo, l))}</h2>
-      <p>${esc(t(SG.parapenteTexto, l))}</p>
+      <h2>${esc(t(P2W.parapenteTitulo, l))}</h2>
+      <p>${esc(t(P2W.parapenteTexto, l))}</p>
     </div>
   </section>
 
   <section class="sg-principio">
     <div>
-      <p class="pg-eyebrow">${esc(t(SG.principioKicker, l))}</p>
-      <p class="sg-principio-tx">${esc(t(SG.principio, l))}</p>
+      <p class="pg-eyebrow">${esc(t(P2W.principioKicker, l))}</p>
+      <p class="sg-principio-tx">${esc(t(P2W.principio, l))}</p>
     </div>
     <div class="sg-autor">
-      <p class="sg-autor-et">${esc(t(SG.autorKicker, l))}</p>
-      <p class="sg-autor-n">${esc(SG.autorNome)}</p>
-      <p>${esc(t(SG.autorTexto, l))}</p>
+      <p class="sg-autor-et">${esc(t(P2W.autorKicker, l))}</p>
+      <p class="sg-autor-n">${esc(P2W.autorNome)}</p>
+      <p>${esc(t(P2W.autorTexto, l))}</p>
     </div>
   </section>
 
   <section class="sg-asa">
     <div class="sg-asa-txt">
-      <p class="pg-eyebrow">${esc(t(SG.asaKicker, l))}</p>
-      <h2>${esc(t(SG.asaA, l))}<br>${esc(t(SG.asaB, l))}</h2>
-      <p>${esc(t(SG.asaTexto, l))}</p>
+      <p class="pg-eyebrow">${esc(t(P2W.asaKicker, l))}</p>
+      <h2>${esc(t(P2W.asaA, l))}<br>${esc(t(P2W.asaB, l))}</h2>
+      <p>${esc(t(P2W.asaTexto, l))}</p>
       <p class="sg-acoes">
-        <a class="sg-cta" href="${wa}" rel="noopener" target="_blank">${esc(t(SG.cta, l))}</a>
-        <a class="sg-cta-2" href="${caminho(l, { nome: 'Mullet 2' })}">${esc(t(SG.verAsa, l))}</a>
+        <a class="sg-cta" href="${wa}" rel="noopener" target="_blank">${esc(t(P2W.cta, l))}</a>
+        <a class="sg-cta-2" href="${caminho(l, { nome: 'Mullet 2' })}">${esc(t(P2W.verAsa, l))}</a>
         <a class="sg-cta-2" href="${caminhoPK(l)}">${esc(t(PK.asaCta, l))}</a>
       </p>
     </div>
     <img src="/images/asas/mullet2__maui.webp" alt="Mullet 2" width="1200" height="794" loading="lazy" />
   </section>
 
-  <p class="pg-voltar"><a href="${inicio}">${esc(t(SG.voltar, l))}</a></p>
+  <p class="pg-voltar"><a href="${inicio}">${esc(t(P2W.voltar, l))}</a></p>
 
 </main>
 
@@ -1329,7 +1329,7 @@ ${scriptIdiomas()}
    O pilar. Não é o catálogo nem o método: é a página que responde «o que é
    isto em Portugal, e por onde começo».
 
-   O nome não se traduz — é a mesma regra do /smartground/ e do hub da Flow.
+   O nome não se traduz — é a mesma regra do /pilot2wing/ e do hub da Flow.
    O que muda por língua é só o prefixo.
 
    AS QUATRO SAÍDAS DO FIM
@@ -1367,7 +1367,7 @@ function paginaParakite(l, num) {
         inLanguage: l,
         isPartOf: { '@id': DOMINIO + '/#site' },
         publisher: ORGANIZACAO,
-        author: { '@type': 'Person', name: SG.autorNome, worksFor: ORGANIZACAO },
+        author: { '@type': 'Person', name: P2W.autorNome, worksFor: ORGANIZACAO },
         primaryImageOfPage: { '@type': 'ImageObject', url: foto, width: 1200, height: 630 }
       }
     ]
@@ -1525,7 +1525,7 @@ ${alt}
       <p class="pk-metodo-et">${esc(t(PK.s5MetodoKicker, l))}</p>
       <p class="pk-metodo-tit" lang="en">Body first. Controls after.</p>
       <p class="pk-metodo-tx">${esc(t(PK.s5MetodoTxt, l))}</p>
-      <p><a class="pk-b pk-b2" href="${esc(caminhoSG(l))}">${esc(t(PK.s5MetodoCta, l))}</a></p>
+      <p><a class="pk-b pk-b2" href="${esc(caminhoP2W(l))}">${esc(t(PK.s5MetodoCta, l))}</a></p>
     </div>
   </section>
 
@@ -1839,15 +1839,15 @@ fs.writeFileSync(path.join(destino, '_urls.txt'), urls.join('\n') + '\n');
 if (!so && !soIdioma) {
   escreveIniciais();
   for (const l of IDIOMAS) {
-    const rel = caminhoSG(l);
+    const rel = caminhoP2W(l);
     const dir = path.join(destino, rel);
     fs.mkdirSync(dir, { recursive: true });
-    const html = paginaSmartGround(l, num);
+    const html = paginaPilot2Wing(l, num);
     confereAlternativas(html, rel);
     fs.writeFileSync(path.join(dir, 'index.html'), html);
     urls.push(DOMINIO + rel);
   }
-  console.log('  SmartGround: ' + IDIOMAS.length + ' páginas');
+  console.log('  Pilot2Wing: ' + IDIOMAS.length + ' páginas');
   for (const l of IDIOMAS) {
     const rel = caminhoFlow(l);
     const dir = path.join(destino, rel);

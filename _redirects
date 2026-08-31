@@ -11,3 +11,26 @@
 # deitar fora, que é o que um 404 faz.
 /coming-soon/    /    301
 /coming-soon     /    301
+
+# SmartGround passou a chamar-se Pilot2Wing — 31/08/2026
+# ======================================================
+# O metodo e o mesmo; mudou o nome. As cinco paginas antigas estiveram
+# publicadas e no sitemap, por isso nao podem simplesmente desaparecer: um
+# 404 deita fora o historico do endereco, um 301 transfere-o.
+#
+# Cada linha aponta directamente ao destino final. Nenhuma passa por outra:
+# uma cadeia de redirects perde autoridade em cada salto e o Google acaba
+# por deixar de a seguir.
+#
+# Duas linhas por lingua porque a barra final conta: /en/smartground e
+# /en/smartground/ sao enderecos diferentes para quem os escreve a mao.
+/smartground/       /pilot2wing/       301
+/smartground        /pilot2wing/       301
+/en/smartground/    /en/pilot2wing/    301
+/en/smartground     /en/pilot2wing/    301
+/es/smartground/    /es/pilot2wing/    301
+/es/smartground     /es/pilot2wing/    301
+/fr/smartground/    /fr/pilot2wing/    301
+/fr/smartground     /fr/pilot2wing/    301
+/de/smartground/    /de/pilot2wing/    301
+/de/smartground     /de/pilot2wing/    301

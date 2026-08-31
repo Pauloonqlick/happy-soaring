@@ -28,9 +28,9 @@ const DEFAULT_LOCALE = 'pt';
    escolhido português noutro dia receberia português numa URL alemã. Um
    endereço tem de servir sempre a mesma coisa a toda a gente. */
 const LOCALE = (location.pathname.match(/^\/(en|es|fr|de)(?:\/|$)/) || [])[1] || DEFAULT_LOCALE;
-/* Uma ligação interna escrita no CMS vem sempre em português — /smartground/,
+/* Uma ligação interna escrita no CMS vem sempre em português — /pilot2wing/,
    /flow-paragliders-portugal/ — porque é assim que se escreve uma vez só. Na
-   página alemã tem de apontar para /de/smartground/, senão o visitante salta
+   página alemã tem de apontar para /de/pilot2wing/, senão o visitante salta
    de língua a meio da visita e o cluster alemão perde as ligações internas.
 
    Endereços externos, âncoras e caminhos que já trazem prefixo ficam como

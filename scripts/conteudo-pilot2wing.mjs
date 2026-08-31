@@ -1,5 +1,5 @@
 /**
- * Conteúdo da página /smartground/, nos cinco idiomas.
+ * Conteúdo da página /pilot2wing/, nos cinco idiomas.
  * ===================================================
  *
  * Fica num ficheiro à parte porque é TEXTO, e texto revê-se — não se anda a
@@ -10,23 +10,23 @@
  * mais: não há aqui um número, uma data ou uma credencial que ele não tenha
  * dado.
  *
- * "SmartGround", "Parakite", "Quick Response Game" e "mini-wings" não se
+ * "Pilot2Wing", "Parakite", "Quick Response Game" e "mini-wings" não se
  * traduzem — são nomes, e um piloto alemão procura-os em inglês.
  */
-export const SG = {
+export const P2W = {
   titulo: {
-    pt: 'SmartGround — o método de formação em parakite | Happy Soaring',
-    en: 'SmartGround — the parakite training method | Happy Soaring',
-    es: 'SmartGround — el método de formación en parakite | Happy Soaring',
-    fr: 'SmartGround — la méthode de formation parakite | Happy Soaring',
-    de: 'SmartGround — die Parakite-Ausbildungsmethode | Happy Soaring'
+    pt: 'Pilot2Wing — o método de formação em parakite | Happy Soaring',
+    en: 'Pilot2Wing — the parakite training method | Happy Soaring',
+    es: 'Pilot2Wing — el método de formación en parakite | Happy Soaring',
+    fr: 'Pilot2Wing — la méthode de formation parakite | Happy Soaring',
+    de: 'Pilot2Wing — die Parakite-Ausbildungsmethode | Happy Soaring'
   },
   descricao: {
-    pt: 'Primeiro automatizamos o piloto, depois acrescentamos a asa. As cinco etapas do método SmartGround, do treino sem asa até ao Parakite.',
-    en: 'First we make the pilot automatic, then we add the wing. The five stages of the SmartGround method, from training without a wing to the Parakite.',
-    es: 'Primero automatizamos al piloto, después añadimos el ala. Las cinco etapas del método SmartGround, del entrenamiento sin ala al Parakite.',
-    fr: 'D’abord on automatise le pilote, ensuite on ajoute l’aile. Les cinq étapes de la méthode SmartGround, de l’entraînement sans aile au Parakite.',
-    de: 'Zuerst automatisieren wir den Piloten, dann kommt der Schirm dazu. Die fünf Stufen der SmartGround-Methode, vom Training ohne Schirm bis zum Parakite.'
+    pt: 'Primeiro automatizamos o piloto, depois acrescentamos a asa. As cinco etapas do método Pilot2Wing, do treino sem asa até ao Parakite.',
+    en: 'First we make the pilot automatic, then we add the wing. The five stages of the Pilot2Wing method, from training without a wing to the Parakite.',
+    es: 'Primero automatizamos al piloto, después añadimos el ala. Las cinco etapas del método Pilot2Wing, del entrenamiento sin ala al Parakite.',
+    fr: 'D’abord on automatise le pilote, ensuite on ajoute l’aile. Les cinq étapes de la méthode Pilot2Wing, de l’entraînement sans aile au Parakite.',
+    de: 'Zuerst automatisieren wir den Piloten, dann kommt der Schirm dazu. Die fünf Stufen der Pilot2Wing-Methode, vom Training ohne Schirm bis zum Parakite.'
   },
 
   kicker: {
@@ -111,8 +111,8 @@ export const SG = {
 
   etapas: [
     {
-      nome: { pt: 'Documento SmartGround', en: 'SmartGround document', es: 'Documento SmartGround',
-              fr: 'Document SmartGround', de: 'SmartGround-Dokument' },
+      nome: { pt: 'Documento Pilot2Wing', en: 'Pilot2Wing document', es: 'Documento Pilot2Wing',
+              fr: 'Document Pilot2Wing', de: 'Pilot2Wing-Dokument' },
       texto: {
         pt: 'O aluno aprende técnicas, posições e movimentos — e um vocabulário comum com o formador. A partir daqui, quando ele diz um nome, os dois falam da mesma coisa.',
         en: 'The student learns techniques, positions and movements — and a shared vocabulary with the instructor. From here on, when the instructor names something, both mean the same thing.',
@@ -167,9 +167,9 @@ export const SG = {
     }
   ],
 
-  transAcaba: { pt: 'Aqui acaba o SmartGround', en: 'This is where SmartGround ends',
-                es: 'Aquí acaba el SmartGround', fr: 'Ici s’achève le SmartGround',
-                de: 'Hier endet SmartGround' },
+  transAcaba: { pt: 'Aqui acaba o Pilot2Wing', en: 'This is where Pilot2Wing ends',
+                es: 'Aquí acaba el Pilot2Wing', fr: 'Ici s’achève le Pilot2Wing',
+                de: 'Hier endet Pilot2Wing' },
   curso: { pt: 'Curso de Parakite', en: 'Parakite Course', es: 'Curso de Parakite',
            fr: 'Cours de Parakite', de: 'Parakite-Kurs' },
   cursoEtapas: {
@@ -202,16 +202,16 @@ export const SG = {
                      es: '¿Ya vuelas en parapente?', fr: 'Tu voles déjà en parapente ?',
                      de: 'Fliegst du schon Gleitschirm?' },
   parapenteTexto: {
-    pt: 'A tua experiência é uma vantagem — mas um Parakite exige novas respostas. Energia, comandos, inflação e utilização do corpo têm características próprias. O SmartGround ajuda-te a fazer essa transição de forma estruturada.',
-    en: 'Your experience is an advantage — but a Parakite calls for new responses. Energy, brake input, inflation and the use of the body all behave differently. SmartGround helps you make that transition in a structured way.',
-    es: 'Tu experiencia es una ventaja — pero un Parakite exige nuevas respuestas. Energía, mandos, inflado y uso del cuerpo tienen características propias. El SmartGround te ayuda a hacer esa transición de forma estructurada.',
-    fr: 'Ton expérience est un atout — mais un Parakite exige de nouvelles réponses. L’énergie, les commandes, le gonflage et l’usage du corps ont leurs propres caractéristiques. SmartGround t’aide à faire cette transition de façon structurée.',
-    de: 'Deine Erfahrung ist ein Vorteil — aber ein Parakite verlangt neue Reaktionen. Energie, Steuerung, Aufziehen und Körpereinsatz haben ihre eigenen Merkmale. SmartGround hilft dir, diesen Übergang strukturiert zu schaffen.'
+    pt: 'A tua experiência é uma vantagem — mas um Parakite exige novas respostas. Energia, comandos, inflação e utilização do corpo têm características próprias. O Pilot2Wing ajuda-te a fazer essa transição de forma estruturada.',
+    en: 'Your experience is an advantage — but a Parakite calls for new responses. Energy, brake input, inflation and the use of the body all behave differently. Pilot2Wing helps you make that transition in a structured way.',
+    es: 'Tu experiencia es una ventaja — pero un Parakite exige nuevas respuestas. Energía, mandos, inflado y uso del cuerpo tienen características propias. El Pilot2Wing te ayuda a hacer esa transición de forma estructurada.',
+    fr: 'Ton expérience est un atout — mais un Parakite exige de nouvelles réponses. L’énergie, les commandes, le gonflage et l’usage du corps ont leurs propres caractéristiques. Pilot2Wing t’aide à faire cette transition de façon structurée.',
+    de: 'Deine Erfahrung ist ein Vorteil — aber ein Parakite verlangt neue Reaktionen. Energie, Steuerung, Aufziehen und Körpereinsatz haben ihre eigenen Merkmale. Pilot2Wing hilft dir, diesen Übergang strukturiert zu schaffen.'
   },
 
-  principioKicker: { pt: 'O princípio SmartGround', en: 'The SmartGround principle',
-                     es: 'El principio SmartGround', fr: 'Le principe SmartGround',
-                     de: 'Das SmartGround-Prinzip' },
+  principioKicker: { pt: 'O princípio Pilot2Wing', en: 'The Pilot2Wing principle',
+                     es: 'El principio Pilot2Wing', fr: 'Le principe Pilot2Wing',
+                     de: 'Das Pilot2Wing-Prinzip' },
   principio: {
     pt: 'Preparamos a resposta antes de ela ser necessária.',
     en: 'We build the response before it is needed.',
@@ -224,11 +224,11 @@ export const SG = {
                  de: 'Wer die Methode entwickelt hat' },
   autorNome: 'Paulo Pereira',
   autorTexto: {
-    pt: 'Vinte e três anos a voar, os últimos quatro dedicados ao parakite — muitas horas em várias asas. O SmartGround nasceu daí.',
-    en: 'Twenty-three years of flying, the last four devoted to the parakite — many hours across several wings. SmartGround came out of that.',
-    es: 'Veintitrés años volando, los últimos cuatro dedicados al parakite — muchas horas en varias alas. El SmartGround nació de ahí.',
-    fr: 'Vingt-trois ans de vol, les quatre dernières années consacrées au parakite — beaucoup d’heures sur plusieurs ailes. SmartGround est né de là.',
-    de: 'Dreiundzwanzig Jahre Fliegen, die letzten vier davon dem Parakite gewidmet — viele Stunden auf verschiedenen Schirmen. Daraus ist SmartGround entstanden.'
+    pt: 'Vinte e três anos a voar, os últimos quatro dedicados ao parakite — muitas horas em várias asas. O Pilot2Wing nasceu daí.',
+    en: 'Twenty-three years of flying, the last four devoted to the parakite — many hours across several wings. Pilot2Wing came out of that.',
+    es: 'Veintitrés años volando, los últimos cuatro dedicados al parakite — muchas horas en varias alas. El Pilot2Wing nació de ahí.',
+    fr: 'Vingt-trois ans de vol, les quatre dernières années consacrées au parakite — beaucoup d’heures sur plusieurs ailes. Pilot2Wing est né de là.',
+    de: 'Dreiundzwanzig Jahre Fliegen, die letzten vier davon dem Parakite gewidmet — viele Stunden auf verschiedenen Schirmen. Daraus ist Pilot2Wing entstanden.'
   },
 
   asaKicker: { pt: 'A asa do curso', en: 'The wing used on the course',
@@ -253,21 +253,21 @@ export const SG = {
          es: 'Pedir información sobre el curso', fr: 'Demander des informations sur le cours',
          de: 'Infos zum Kurs anfragen' },
   ctaMsg: {
-    pt: 'Olá! Queria informações sobre o Curso de Parakite e o método SmartGround.',
-    en: 'Hi! I would like information about the Parakite Course and the SmartGround method.',
-    es: '¡Hola! Quería información sobre el Curso de Parakite y el método SmartGround.',
-    fr: 'Bonjour ! Je voudrais des informations sur le Cours de Parakite et la méthode SmartGround.',
-    de: 'Hallo! Ich hätte gern Infos zum Parakite-Kurs und zur SmartGround-Methode.'
+    pt: 'Olá! Queria informações sobre o Curso de Parakite e o método Pilot2Wing.',
+    en: 'Hi! I would like information about the Parakite Course and the Pilot2Wing method.',
+    es: '¡Hola! Quería información sobre el Curso de Parakite y el método Pilot2Wing.',
+    fr: 'Bonjour ! Je voudrais des informations sur le Cours de Parakite et la méthode Pilot2Wing.',
+    de: 'Hallo! Ich hätte gern Infos zum Parakite-Kurs und zur Pilot2Wing-Methode.'
   },
-  conhecer: { pt: 'Conhecer o método SmartGround', en: 'Discover the SmartGround method',
-              es: 'Conocer el método SmartGround', fr: 'Découvrir la méthode SmartGround',
-              de: 'Die SmartGround-Methode kennenlernen' },
+  conhecer: { pt: 'Conhecer o método Pilot2Wing', en: 'Discover the Pilot2Wing method',
+              es: 'Conocer el método Pilot2Wing', fr: 'Découvrir la méthode Pilot2Wing',
+              de: 'Die Pilot2Wing-Methode kennenlernen' },
   asaDoCurso: {
-    pt: 'É esta a asa com que se faz o Curso de Parakite, com o método SmartGround: primeiro automatizamos o piloto, depois acrescentamos a asa.',
-    en: 'This is the wing the Parakite Course is flown on, using the SmartGround method: first we make the pilot automatic, then we add the wing.',
-    es: 'Es esta el ala con la que se hace el Curso de Parakite, con el método SmartGround: primero automatizamos al piloto, después añadimos el ala.',
-    fr: 'C’est l’aile sur laquelle se fait le Cours de Parakite, avec la méthode SmartGround : d’abord on automatise le pilote, ensuite on ajoute l’aile.',
-    de: 'Auf diesem Schirm findet der Parakite-Kurs statt, nach der SmartGround-Methode: zuerst automatisieren wir den Piloten, dann kommt der Schirm dazu.'
+    pt: 'É esta a asa com que se faz o Curso de Parakite, com o método Pilot2Wing: primeiro automatizamos o piloto, depois acrescentamos a asa.',
+    en: 'This is the wing the Parakite Course is flown on, using the Pilot2Wing method: first we make the pilot automatic, then we add the wing.',
+    es: 'Es esta el ala con la que se hace el Curso de Parakite, con el método Pilot2Wing: primero automatizamos al piloto, después añadimos el ala.',
+    fr: 'C’est l’aile sur laquelle se fait le Cours de Parakite, avec la méthode Pilot2Wing : d’abord on automatise le pilote, ensuite on ajoute l’aile.',
+    de: 'Auf diesem Schirm findet der Parakite-Kurs statt, nach der Pilot2Wing-Methode: zuerst automatisieren wir den Piloten, dann kommt der Schirm dazu.'
   },
   voltar: { pt: 'Voltar ao início', en: 'Back to the homepage', es: 'Volver al inicio',
             fr: 'Retour à l’accueil', de: 'Zurück zur Startseite' }

@@ -8,7 +8,7 @@
  *   alguém a reparar, não por uma máquina:
  *
  *     1. uma pasta gerada fora da lista de autorizados
- *        — o /smartground/ português esteve 404 no ar por causa disto
+ *        — o /pilot2wing/ português esteve 404 no ar por causa disto
  *     2. ligações internas para páginas que não existem
  *        — 196 ligações para /en/, /es/, /fr/ e /de/ antes de essas
  *          páginas existirem
@@ -72,7 +72,7 @@ const vivas = paginas.filter(p => fs.existsSync(p.ficheiro));
 titulo('1. As pastas geradas estão na lista de autorizados da publicação');
 {
   /* toda a pasta que o sitemap promete tem de estar autorizada a sair, ou
-     em FICHEIROS/PASTAS. O /smartground/ português esteve 404 no ar
+     em FICHEIROS/PASTAS. O /pilot2wing/ português esteve 404 no ar
      precisamente por faltar uma linha aqui. */
   const pub = fs.readFileSync(path.join(RAIZ, 'scripts', 'publicar.mjs'), 'utf8');
   const nomes = l => {
