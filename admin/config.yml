@@ -486,6 +486,26 @@ collections:
                 hint: >-
                   "marca" é o wordmark gigante do hero (HAPPY SOARING). Não é
                   o h1 da página — o h1 é o campo a seguir.
+              - label: Tamanho do título
+                name: titleSize
+                widget: select
+                default: normal
+                options:
+                  - label: Pequeno
+                    value: pequeno
+                  - label: Normal
+                    value: normal
+                  - label: Grande
+                    value: grande
+                  - label: Enorme
+                    value: enorme
+                  - label: Marca (o tamanho do HAPPY SOARING)
+                    value: marca
+                hint: >-
+                  Cada degrau ajusta-se sozinho ao ecrã: o que escolheres é o
+                  tamanho no computador, e no telemóvel encolhe na mesma
+                  proporção. "Marca" é o maior de todos e foi feito para o
+                  topo da página — usado a meio, compete com ele.
               - label: Título principal da página (h1)
                 name: h1
                 widget: object

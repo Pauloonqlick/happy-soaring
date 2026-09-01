@@ -1,6 +1,6 @@
 {
   "id": "parakite",
-  "nome": "Parakite em Portugal",
+  "nome": "Parakite Portugal",
   "visible": true,
   "wind": false,
   "heightScreens": 1,
@@ -37,14 +37,15 @@
         "de": "Parakite "
       },
       "title2": {
-        "pt": "em Portugal",
-        "en": "in Portugal",
-        "es": "en Portugal",
-        "fr": "au Portugal",
-        "de": "in Portugal"
+        "pt": "Portugal",
+        "en": "Portugal",
+        "es": "Portugal",
+        "fr": "Portugal",
+        "de": "Portugal"
       },
       "accent2": true,
       "titleTag": "h2",
+      "titleSize": "grande",
       "subtitle": {
         "pt": "Quatro pontos de partida diferentes. Nenhum é melhor do que o outro — e todos acabam no mesmo ecossistema.",
         "en": "Four different starting points. None is better than the others — and they all end up in the same ecosystem.",

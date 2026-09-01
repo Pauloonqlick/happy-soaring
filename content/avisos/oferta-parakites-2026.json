@@ -1,7 +1,7 @@
 {
   "id": "oferta-parakites-2026",
   "nome": "Oferta parakites — cor + inspeção",
-  "ativo": true,
+  "ativo": false,
   "inicio": "",
   "fim": "2026-12-31",
   "abrange": {
@@ -12,10 +12,10 @@
   },
   "tipo": "oferta",
   "forma": "faixa",
+  "esperaSegundos": 20,
   "repetir": "sessao",
   "prazo": "contagem",
   "ofertasNaFaixa": false,
-  "esperaSegundos": 20,
   "etiqueta": {
     "pt": "Oferta",
     "en": "Offer",
@@ -71,6 +71,7 @@
   "pontos": [
     {
       "icone": "/images/avisos/ic-cor.webp",
+      "naFaixa": true,
       "titulo": {
         "pt": "Cor à escolha",
         "en": "Custom colour",
@@ -84,11 +85,11 @@
         "es": "incluido",
         "fr": "incluse",
         "de": "inklusive"
-      },
-      "naFaixa": true
+      }
     },
     {
       "icone": "/images/avisos/ic-inspecao.webp",
+      "naFaixa": true,
       "titulo": {
         "pt": "Primeira inspeção de segurança",
         "en": "First safety inspection",
@@ -102,11 +103,11 @@
         "es": "incluida",
         "fr": "incluse",
         "de": "inklusive"
-      },
-      "naFaixa": true
+      }
     },
     {
       "icone": "/images/avisos/ic-qualidade.webp",
+      "naFaixa": false,
       "titulo": {
         "pt": "Qualidade em que podes confiar.",
         "en": "Quality you can trust.",
@@ -120,11 +121,11 @@
         "es": "Vuela con confianza.",
         "fr": "Vole en confiance.",
         "de": "Flieg mit Vertrauen."
-      },
-      "naFaixa": false
+      }
     },
     {
       "icone": "/images/avisos/ic-paixao.webp",
+      "naFaixa": false,
       "titulo": {
         "pt": "Feita com paixão.",
         "en": "Designed for passion.",
@@ -138,8 +139,7 @@
         "es": "Construida para la libertad.",
         "fr": "Construite pour la liberté.",
         "de": "Für die Freiheit gebaut."
-      },
-      "naFaixa": false
+      }
     }
   ],
   "botao1": {
@@ -150,6 +150,7 @@
       "fr": "Demander le prix",
       "de": "Preis anfragen"
     },
+    "visivel": true,
     "acao": "whatsapp",
     "alvo": "",
     "mensagem": {
@@ -158,8 +159,7 @@
       "es": "¡Hola! Quería saber el precio de la Mullet 2 con la oferta de color a elegir e inspección incluidas.",
       "fr": "Bonjour ! Je voudrais le prix de la Mullet 2 avec l’offre couleur au choix et inspection incluses.",
       "de": "Hallo! Ich hätte gern den Preis der Mullet 2 mit der Aktion Wunschfarbe und Inspektion inklusive."
-    },
-    "visivel": true
+    }
   },
   "botao2": {
     "texto": {
@@ -169,6 +169,7 @@
       "fr": "Voir les parakites",
       "de": "Parakites ansehen"
     },
+    "visivel": true,
     "acao": "familia",
     "alvo": "Parakites",
     "mensagem": {
@@ -177,8 +178,7 @@
       "es": "",
       "fr": "",
       "de": ""
-    },
-    "visivel": true
+    }
   },
   "botao3": {
     "texto": {
@@ -188,9 +188,9 @@
       "fr": "Choisir ma couleur",
       "de": "Meine Farbe wählen"
     },
+    "visivel": false,
     "acao": "url",
     "alvo": "/escolher-cor/",
-    "visivel": false,
     "mensagem": {
       "pt": "",
       "en": "",

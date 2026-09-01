@@ -447,7 +447,15 @@ function buildText(item) {
      O h1 é a frase a seguir, no campo h1. O valor antigo "h1" continua a ser
      aceite para o caso de sobrar num JSON por actualizar. */
   const eMarca = item.titleTag === 'marca' || item.titleTag === 'h1';
-  const title = el(eMarca ? 'div' : 'h2', eMarca ? 'wordmark' : 'title');
+  /* O tamanho do título vem do CMS. A lista fechada é de propósito: um valor
+     escrito à mão que não exista aqui cairia numa classe sem regra nenhuma e
+     o título ficava com o tamanho do browser. Assim, o que não se reconhece
+     é "normal", que é o que já lá estava. */
+  const TAMANHOS = ['pequeno', 'normal', 'grande', 'enorme', 'marca'];
+  const tam = TAMANHOS.indexOf(String(item.titleSize || '')) >= 0
+    ? item.titleSize : 'normal';
+  const title = el(eMarca ? 'div' : 'h2',
+    (eMarca ? 'wordmark' : 'title') + ' tam-' + tam);
   if (title1) title.appendChild(document.createTextNode(title1));
   if (title2) {
     title.appendChild(el('br'));
