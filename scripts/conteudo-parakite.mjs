@@ -98,30 +98,30 @@ export const PK = {
 
   /* ------------------------------------------------------- 02 o que é */
   s2Kicker: {
-    pt: 'O que é realmente um parakite', en: 'What a parakite really is',
-    es: 'Qué es realmente un parakite', fr: 'Ce qu’est vraiment un parakite',
-    de: 'Was ein Parakite wirklich ist'
+    pt: 'A característica diferenciadora', en: 'The distinguishing characteristic',
+    es: 'La característica diferenciadora', fr: 'La caractéristique distinctive',
+    de: 'Das unterscheidende Merkmal'
   },
   s2H2: {
-    pt: 'Não é simplesmente um parapente pequeno.',
-    en: 'It is not simply a small paraglider.',
-    es: 'No es simplemente un parapente pequeño.',
-    fr: 'Ce n’est pas simplement un petit parapente.',
-    de: 'Es ist nicht einfach ein kleiner Gleitschirm.'
+    pt: 'O que caracteriza um Parakite',
+    en: 'What characterises a Parakite',
+    es: 'Qué caracteriza a un Parakite',
+    fr: 'Ce qui caractérise un Parakite',
+    de: 'Was ein Parakite ausmacht'
   },
   s2P1: {
-    pt: 'O que distingue um Parakite é o sistema de controlo — e a capacidade do piloto de alterar significativamente a configuração da asa em voo. A pilotagem deixa de ser só direcção: passa a ser gestão de energia.',
-    en: 'What sets a Parakite apart is the control system — and the pilot’s ability to significantly change the wing’s configuration in flight. Flying stops being only about direction: it becomes energy management.',
-    es: 'Lo que distingue a un Parakite es el sistema de control — y la capacidad del piloto de alterar significativamente la configuración del ala en vuelo. El pilotaje deja de ser solo dirección: pasa a ser gestión de energía.',
-    fr: 'Ce qui distingue un Parakite, c’est le système de contrôle — et la capacité du pilote à modifier significativement la configuration de l’aile en vol. Le pilotage n’est plus seulement une question de direction : il devient gestion de l’énergie.',
-    de: 'Was einen Parakite ausmacht, ist das Steuerungssystem — und die Fähigkeit des Piloten, die Konfiguration des Schirms im Flug deutlich zu verändern. Fliegen ist nicht mehr nur Richtung: es wird zu Energiemanagement.'
+    pt: 'Está sobretudo na arquitetura do sistema de controlo: os comandos, os risers e as linhas trabalham em conjunto, e é essa ligação que permite ao piloto alterar a configuração da asa durante o voo.',
+    en: 'It lies above all in the architecture of the control system: the brakes, the risers and the lines work together, and it is that connection which lets the pilot change the wing’s configuration in flight.',
+    es: 'Está sobre todo en la arquitectura del sistema de control: los mandos, los risers y las líneas trabajan en conjunto, y es esa conexión la que permite al piloto alterar la configuración del ala durante el vuelo.',
+    fr: 'Elle tient avant tout à l’architecture du système de commande : les commandes, les élévateurs et les suspentes travaillent ensemble, et c’est ce lien qui permet au pilote de modifier la configuration de l’aile en vol.',
+    de: 'Vor allem in der Architektur des Steuersystems: Steuerleinen, Tragegurte und Leinen wirken zusammen, und dieses Zusammenspiel erlaubt dem Piloten, die Konfiguration des Schirms im Flug zu verändern.'
   },
   s2P2: {
-    pt: 'É a capacidade de alterar significativamente a configuração da asa através do sistema de controlo que distingue a pilotagem de um Parakite de simplesmente voar uma asa pequena.',
-    en: 'It is the ability to significantly change the wing’s configuration through the control system that sets flying a Parakite apart from simply flying a small wing.',
-    es: 'Es la capacidad de alterar significativamente la configuración del ala a través del sistema de control lo que distingue pilotar un Parakite de simplemente volar un ala pequeña.',
-    fr: 'C’est la capacité de modifier significativement la configuration de l’aile par le système de contrôle qui distingue le pilotage d’un Parakite du simple fait de voler une petite aile.',
-    de: 'Es ist die Fähigkeit, die Konfiguration des Schirms über das Steuerungssystem deutlich zu verändern, die das Fliegen eines Parakite vom bloßen Fliegen eines kleinen Schirms unterscheidet.'
+    pt: 'É essa amplitude que muda a lógica da pilotagem: a partir dos comandos, o piloto gere velocidade, pitch, trajetória e energia. Deixa de ser só direcção — passa a ser gestão de energia.',
+    en: 'That range is what changes the logic of flying: through the brakes, the pilot manages speed, pitch, trajectory and energy. It stops being only about direction — it becomes energy management.',
+    es: 'Es esa amplitud la que cambia la lógica del pilotaje: desde los mandos, el piloto gestiona velocidad, pitch, trayectoria y energía. Deja de ser solo dirección — pasa a ser gestión de energía.',
+    fr: 'C’est cette amplitude qui change la logique du pilotage : par les commandes, le pilote gère vitesse, tangage, trajectoire et énergie. Ce n’est plus seulement une question de direction — cela devient de la gestion d’énergie.',
+    de: 'Diese Bandbreite verändert die Logik des Fliegens: über die Steuerleinen regelt der Pilot Geschwindigkeit, Nicken, Flugbahn und Energie. Es geht nicht mehr nur um die Richtung — es wird zu Energiemanagement.'
   },
 
   /* -------------------------------------------------------- 03 energia */

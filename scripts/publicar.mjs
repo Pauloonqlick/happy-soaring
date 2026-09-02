@@ -76,6 +76,7 @@ const PASTAS = [
    marca em /flow-paragliders-portugal/, o pilar em /parakite-portugal/, e as
    quatro traduções de todos dentro do prefixo de cada língua */
 const PASTAS_GERADAS = ['asas', 'pilot2wing', 'flow-paragliders-portugal',
+  'o-que-e-um-parakite',
   'parakite-portugal', 'en', 'es', 'fr', 'de'];
 
 /* Nunca, em circunstância nenhuma. É a rede de segurança: mesmo que uma

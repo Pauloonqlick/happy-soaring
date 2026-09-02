@@ -26,6 +26,7 @@ import { ofertasDaAsa } from '../regras/avisos.js';
 import { rotuloFamilia, rotuloClasse } from '../regras/taxonomia.js';
 import { KN_PARA_KMH, PAISES_NOS, CHAVE_UNIDADE } from '../regras/unidades.js';
 import { P2W } from './conteudo-pilot2wing.mjs';
+import { QP } from './conteudo-o-que-e-um-parakite.mjs';
 import { FL } from './conteudo-flow.mjs';
 import { IN } from './conteudo-inicial.mjs';
 import { PK } from './conteudo-parakite.mjs';
@@ -82,6 +83,8 @@ const T = {
                fr:'Revendeur officiel Flow Paragliders au Portugal',
                de:'Offizieller Flow-Paragliders-Händler in Portugal' },
   inicio:    { pt:'Início', en:'Home', es:'Inicio', fr:'Accueil', de:'Start' },
+  migalhas:  { pt:'Onde estás', en:'Breadcrumb', es:'Dónde estás',
+               fr:'Fil d’Ariane', de:'Brotkrumen' },
   /* Estas frases são copiadas à letra do dicionário do app.js. Se as
      reescrevesse por minhas palavras, a mesma pergunta apareceria de duas
      maneiras conforme a pessoa entrasse pelo palco ou pela página. */
@@ -1145,6 +1148,18 @@ function blocoDealer(p, l) {
    idiomas, só com o prefixo de língua à frente. */
 const caminhoP2W = l => (l === OMISSAO ? '' : '/' + l) + '/pilot2wing/';
 
+/* As rotas da pagina educativa vivem aqui em cima porque as fichas das asas
+   ligam para ela e sao geradas antes: um `const` mais abaixo ficava na zona
+   morta temporal e rebentava com "Cannot access before initialization". */
+const CAMINHOS_QP = {
+  pt: '/o-que-e-um-parakite/',
+  en: '/en/what-is-a-parakite/',
+  es: '/es/que-es-un-parakite/',
+  fr: '/fr/qu-est-ce-qu-un-parakite/',
+  de: '/de/was-ist-ein-parakite/'
+};
+const caminhoQP = l => CAMINHOS_QP[l] || CAMINHOS_QP[OMISSAO];
+
 function paginaPilot2Wing(l, num) {
   const url = DOMINIO + caminhoP2W(l);
   const foto = DOMINIO + '/images/og-happysoaring.jpg';
@@ -1285,7 +1300,8 @@ ${alt}
     </div>
     <div class="sg-parapente">
       <h2>${esc(t(P2W.parapenteTitulo, l))}</h2>
-      <p>${esc(t(P2W.parapenteTexto, l))}</p>
+      <p>${esc(t(P2W.parapenteTexto, l))}
+      <a class="pg-saibamais" href="${esc(caminhoQP(l))}">${esc(t(QP.ancoraComo, l))}</a></p>
     </div>
   </section>
 
@@ -1493,7 +1509,8 @@ ${alt}
     <h2>${esc(t(PK.s2H2, l))}</h2>
     <div class="pk-duas">
       <p class="pk-lead">${esc(t(PK.s2P1, l))}</p>
-      <p>${forte(t(PK.s2P2, l))}</p>
+      <p>${forte(t(PK.s2P2, l))}
+      <a class="pg-saibamais" href="${esc(caminhoQP(l))}">${esc(t(QP.ancoraOque, l))}</a></p>
     </div>
   </section>
 
@@ -1707,7 +1724,12 @@ ${alt}
 
   <div class="pg-cab">
     <div class="pg-cab-txt">
-      <p class="pg-eyebrow">${esc(rotuloClasse(p.classificacao, l) || rotuloFamilia(p.familia, l))}</p>
+      <p class="pg-eyebrow">${esc(rotuloClasse(p.classificacao, l) || rotuloFamilia(p.familia, l))}${
+        /* só nas asas que o catálogo classifica como Parakite. O Mohawk é
+           "Speed flying" e a D-Wing "Parawing": não entram. */
+        /Parakite/.test(String(p.classificacao || ''))
+          ? ` <a class="pg-saibamais" href="${esc(caminhoQP(l))}">${esc(t(QP.ancoraOque, l))}</a>`
+          : ''}</p>
       <h1>${esc(p.nome)}</h1>
       ${t(p.tagline, l) ? '<p class="pg-tagline">' + esc(t(p.tagline, l)) + '</p>' : ''}
       ${blocoOferta(p, l)}
@@ -1871,6 +1893,267 @@ if (!so && !soIdioma) {
 }
 
 
+/* ---- a página /o-que-e-um-parakite/ -----------------------------------
+   A página educativa sobre a categoria. Ao contrário do /pilot2wing/ e do
+   pilar, o endereço TRADUZ-SE: "o que é um parakite" é uma pergunta, e uma
+   pergunta escreve-se na língua de quem a faz. Só o nome "parakite" fica
+   igual nas cinco, porque é o nome da coisa.
+
+   Não há aqui marcas, modelos nem fabricantes — nem no texto, nem no alt,
+   nem no schema. As asas concretas serviram para validar o conteúdo e
+   ficaram de fora dele.
+
+   Schema: WebPage + BreadcrumbList, com a Organization por referência.
+   Sem FAQPage, mesmo havendo FAQ: foi decisão do Paulo. */
+
+function paginaQueParakite(l) {
+  const url = DOMINIO + caminhoQP(l);
+  const foto = DOMINIO + '/images/og-o-que-e-um-parakite.jpg';
+  const alts = alternativas(x => caminhoQP(x));
+  const alt = etiquetasAlt(alts);
+  const inicio = inicioHref(l);
+  const A = x => (l === OMISSAO ? '' : '/' + l) + x;   /* endereço na língua */
+  const arr = (campo) => QP[campo][l] || QP[campo][OMISSAO];
+
+  const ld = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      { '@type': 'BreadcrumbList', itemListElement: [
+        { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + inicio },
+        { '@type': 'ListItem', position: 2, name: t(QP.migalha, l), item: url }
+      ]},
+      { '@type': 'WebPage',
+        '@id': url,
+        url,
+        name: t(QP.h1, l),
+        headline: t(QP.h1, l),
+        description: t(QP.desc, l),
+        inLanguage: l,
+        isPartOf: { '@id': DOMINIO + '/#organizacao' },
+        publisher: ORGANIZACAO,
+        /* a imagem principal é a fotografia, não o cartão social: é ela
+           que faz sentido no Google Images e como miniatura da página */
+        primaryImageOfPage: {
+          '@type': 'ImageObject',
+          url: DOMINIO + '/images/parakite-controlo.jpg',
+          width: 1600, height: 900,
+          caption: t(QP.fotoAlt, l)
+        },
+        about: { '@type': 'Thing', name: 'Parakite', description: t(QP.definicao, l) }
+      }
+    ]
+  });
+
+  const paras = (campo) => arr(campo).map(p => '<p class="qp-p">' + esc(p) + '</p>').join('');
+
+  const cartoes = arr('s1Cartoes').map(c =>
+    '<div class="qp-card"><b>' + esc(c[0]) + '</b><span>' + esc(c[1]) + '</span></div>').join('');
+
+  const passos = arr('fluxo').map((p, i) =>
+    (i ? '<div class="qp-seta" aria-hidden="true">&#9660;</div>' : '')
+    + '<div class="qp-passo"><i>' + (i + 1) + '</i>' + esc(p) + '</div>').join('');
+
+  const maos = arr('maos').map(m =>
+    '<div class="qp-mao"><b>' + esc(m[0]) + '</b><span>' + esc(m[1]) + '</span></div>').join('');
+
+  const defs = arr('s4Defs').map(d =>
+    '<div class="qp-def-it"><b>' + esc(d[0]) + '</b><span>' + esc(d[1]) + '</span></div>').join('');
+
+  const naos = arr('s5Nao').map(n =>
+    '<div><b>' + esc(n[0]) + '</b><span>' + esc(n[1]) + '</span></div>').join('');
+
+  const tri = arr('s6Tri').map((x, i) =>
+    (i ? '<i aria-hidden="true">&#8646;</i>' : '') + '<b>' + esc(x) + '</b>').join('');
+
+  const comps = arr('s8Blocos').map(b =>
+    '<article class="qp-comp"><h3>' + esc(b[0]) + '</h3>'
+    + '<p>' + esc(b[1]) + '</p><p class="qp-vs">' + esc(b[2]) + '</p></article>').join('');
+
+  const variam = arr('s9Varia').map(v =>
+    '<div class="qp-varia-it"><b>' + esc(v[0]) + '</b><span>' + esc(v[1]) + '</span></div>').join('');
+
+  const destinos = [A('/parakite-portugal/'), A('/pilot2wing/'), '/reflex-lab/'];
+  const links = arr('s10Links').map((x, i) =>
+    '<a class="qp-link" href="' + destinos[i] + '"><b>' + esc(x[0]) + '</b>'
+    + '<span>' + esc(x[1]) + '</span></a>').join('');
+
+  const faq = arr('faq').map(f =>
+    '<details><summary>' + esc(f[0]) + '</summary><p>' + esc(f[1]) + '</p></details>').join('');
+
+  return `<!DOCTYPE html>
+<html lang="${l}">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>${esc(t(QP.title, l))}</title>
+<meta name="description" content="${esc(t(QP.desc, l))}" />
+<meta name="robots" content="max-image-preview:large" />
+<link rel="canonical" href="${url}" />
+${alt}
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Happy Soaring" />
+<meta property="og:locale" content="${l}" />
+<meta property="og:url" content="${url}" />
+<meta property="og:title" content="${esc(t(QP.h1, l))}" />
+<meta property="og:description" content="${esc(t(QP.desc, l))}" />
+<meta property="og:image" content="${foto}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="${esc(t(QP.ogAlt, l))}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="${esc(t(QP.h1, l))}" />
+<meta name="twitter:description" content="${esc(t(QP.desc, l))}" />
+<meta name="twitter:image" content="${foto}" />
+<meta name="twitter:image:alt" content="${esc(t(QP.ogAlt, l))}" />
+<link rel="stylesheet" href="/pagina.css" />
+<link rel="stylesheet" href="/menu.css" />
+<script src="/menu.js" defer></script>
+<script type="application/ld+json">${ld}</script>
+</head>
+<body class="pg qp">
+
+<header class="pg-topo">
+  <a class="pg-marca" href="${inicio}">HAPPY <span>SOARING</span></a>
+  <span class="pg-dealer">${esc(t(T.dealer, l))}</span>
+  ${menuGlobal(l, url)}
+  ${seletorIdiomas(alts, l)}
+</header>
+
+<nav class="pg-migalhas" aria-label="${esc(t(T.migalhas, l))}">
+  <div class="qp-cx"><a href="${inicio}">${esc(t(T.inicio, l))}</a> &rsaquo;
+  <span>${esc(t(QP.migalha, l))}</span></div>
+</nav>
+
+<main>
+
+  <section class="qp-hero">
+    <div class="qp-cx">
+      <p class="qp-kicker">${esc(t(QP.eyebrow, l))}</p>
+      <h1>${esc(t(QP.h1, l))}</h1>
+      <p class="qp-def">${esc(t(QP.definicao, l))}</p>
+      <a class="qp-cta" href="${A('/parakite-portugal/')}">${esc(t(QP.heroCta, l))}</a>
+    </div>
+  </section>
+
+  <figure class="qp-foto">
+    <img src="/images/parakite-controlo.jpg"
+      srcset="/images/parakite-controlo-800.jpg 800w, /images/parakite-controlo.jpg 1600w"
+      sizes="(max-width:899px) 100vw, 1080px"
+      width="1600" height="900" decoding="async"
+      loading="eager" fetchpriority="high"
+      alt="${esc(t(QP.fotoAlt, l))}" />
+  </figure>
+
+  <section class="qp-sec">
+    <div class="qp-cx">
+      <p class="qp-kicker">${esc(t(QP.s1Kicker, l))}</p>
+      <h2>${esc(t(QP.s1H2, l))}</h2>
+      ${paras('s1P')}
+      <p class="qp-frase">${esc(t(QP.s1Frase, l))}</p>
+      <div class="qp-cards">${cartoes}</div>
+    </div>
+  </section>
+
+  <section class="qp-sec">
+    <div class="qp-cx">
+      <p class="qp-kicker">${esc(t(QP.s2Kicker, l))}</p>
+      <h2>${esc(t(QP.s2H2, l))}</h2>
+      ${paras('s2P')}
+      <div class="qp-fluxo">
+        <p class="qp-fluxo-t">${esc(t(QP.fluxoTit, l))}</p>
+        <div class="qp-passos">${passos}</div>
+      </div>
+      <div class="qp-maos">${maos}</div>
+    </div>
+  </section>
+
+  <section class="qp-sec">
+    <div class="qp-cx">
+      <p class="qp-kicker">${esc(t(QP.s3Kicker, l))}</p>
+      <h2>${esc(t(QP.s3H2, l))}</h2>
+      ${paras('s3P')}
+      <div class="qp-destaque">${esc(t(QP.s3Aviso, l))}</div>
+    </div>
+  </section>
+
+  <section class="qp-sec">
+    <div class="qp-cx">
+      <p class="qp-kicker">${esc(t(QP.s4Kicker, l))}</p>
+      <h2>${esc(t(QP.s4H2, l))}</h2>
+      <div class="qp-defs">${defs}</div>
+      ${paras('s4P')}
+      <h3>${esc(t(QP.s5H3, l))}</h3>
+      ${paras('s5P')}
+      <div class="qp-nao2">${naos}</div>
+    </div>
+  </section>
+
+  <section class="qp-sec">
+    <div class="qp-cx">
+      <p class="qp-kicker">${esc(t(QP.s6Kicker, l))}</p>
+      <h2>${esc(t(QP.s6H2, l))}</h2>
+      <p class="qp-frase"><em>${esc(t(QP.s6Frase, l))}</em></p>
+      <div class="qp-tri">${tri}</div>
+      ${paras('s6P')}
+      <div class="qp-rigor">${esc(t(QP.s6Rigor, l))}</div>
+    </div>
+  </section>
+
+  <section class="qp-sec" id="reflex">
+    <div class="qp-cx">
+      <p class="qp-kicker">${esc(t(QP.s7Kicker, l))}</p>
+      <h2>${esc(t(QP.s7H2, l))}</h2>
+      <p class="qp-frase">${esc(t(QP.s7Frase, l))}</p>
+      ${paras('s7P')}
+      <div class="qp-destaque">${esc(t(QP.s7Limite, l))}</div>
+      <a class="qp-cta" href="/reflex-lab/">${esc(t(QP.s7Cta, l))}</a>
+    </div>
+  </section>
+
+  <section class="qp-sec">
+    <div class="qp-cx">
+      <p class="qp-kicker">${esc(t(QP.s8Kicker, l))}</p>
+      <h2>${esc(t(QP.s8H2, l))}</h2>
+      <p class="qp-p">${esc(t(QP.s8Intro, l))}</p>
+      <div class="qp-comps">${comps}</div>
+      <div class="qp-destaque">${esc(t(QP.s8Speed, l))}</div>
+    </div>
+  </section>
+
+  <section class="qp-sec">
+    <div class="qp-cx">
+      <p class="qp-kicker">${esc(t(QP.s9Kicker, l))}</p>
+      <h2>${esc(t(QP.s9H2, l))}</h2>
+      <p class="qp-frase">${esc(t(QP.s9Frase, l))}</p>
+      <p class="qp-p">${esc(t(QP.s9P, l))}</p>
+      <p class="qp-varia-t">${esc(t(QP.s9VariaTit, l))}</p>
+      <div class="qp-varia">${variam}</div>
+    </div>
+  </section>
+
+  <section class="qp-sec">
+    <div class="qp-cx">
+      <h2>${esc(t(QP.faqH2, l))}</h2>
+      <div class="qp-faq">${faq}</div>
+    </div>
+  </section>
+
+  <section class="qp-sec">
+    <div class="qp-cx">
+      <h2>${esc(t(QP.s10H2, l))}</h2>
+      <div class="qp-links">${links}</div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pg-rodape">Happy Soaring &middot; ${esc(t(T.dealer, l))}</footer>
+</body>
+</html>
+`;
+}
+
+
 /* ---- o Reflex Lab -----------------------------------------------------
    O simulador é uma página escrita à mão: tem folha própria, JavaScript
    próprio e um header próprio, e não passa por nenhum dos moldes acima.
@@ -1899,6 +2182,19 @@ function escreverReflexLab() {
     + html.slice(j);
   if (novo !== html) fs.writeFileSync(f, novo);
   console.log('  Reflex Lab: navegação escrita entre marcadores');
+}
+
+if (!so || so === 'o-que-e-um-parakite') {
+  for (const l of (soIdioma ? [soIdioma] : IDIOMAS)) {
+    const rel = caminhoQP(l);
+    const dir = path.join(destino, rel);
+    fs.mkdirSync(dir, { recursive: true });
+    const html = paginaQueParakite(l);
+    confereAlternativas(html, rel);
+    fs.writeFileSync(path.join(dir, 'index.html'), html);
+    urls.push(DOMINIO + rel);
+  }
+  console.log('  O que é um Parakite: ' + IDIOMAS.length + ' páginas');
 }
 
 if (!so && !soIdioma) escreverReflexLab();

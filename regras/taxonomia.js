@@ -62,6 +62,19 @@ export const CLASSE_ROTULOS = {
   'Parawing':             { pt:'Parawing', en:'Parawing', es:'Parawing', fr:'Parawing', de:'Parawing' },
   'Speed flying':         { pt:'Speed flying', en:'Speed flying', es:'Speed flying', fr:'Speed flying', de:'Speed flying' },
 
+  /* O MOHAWK E UM PARAKITE, E NAO UMA CATEGORIA CHAMADA "SPEED FLYING"
+     Speedflying é uma modalidade — uma forma de voar —, não uma família de
+     asas. Havia aqui uma asa classificada pela modalidade, o que a punha
+     fora da categoria a que pertence e a deixava de fora de tudo o que o
+     site diz sobre Parakites.
+
+     O rótulo passa a dizer as duas coisas na ordem certa: a categoria
+     primeiro, a utilização depois. É a única entrada desta tabela que se
+     traduz mesmo, porque a preposição muda em cada língua. */
+  'Parakite speed flying': { pt:'Parakite para speed flying', en:'Parakite for speed flying',
+                             es:'Parakite para speed flying', fr:'Parakite pour le speed flying',
+                             de:'Parakite fürs Speedflying' },
+
   /* NIVEL, E NAO PERFIL, PARA O PARAMOTOR
      Aqui viveram 'Full reflex' e 'Semi-reflex'. Saíram por duas razões.
 

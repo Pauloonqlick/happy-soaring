@@ -1321,3 +1321,269 @@ a.fl-cor-a:hover{background:#ff7c31;color:#fff}
 @media(max-width:420px){
   .pg-dealer{font-size:10.5px;letter-spacing:1px}
 }
+
+/* ---- a ligação editorial para a página que explica a categoria ----
+   Aparece no pilar, no Pilot2Wing e nas três asas classificadas como
+   Parakite, sempre no fim de um parágrafo que já está a falar do assunto.
+   Não é um CTA: é do tamanho do texto à volta, com a seta a dizer que sai
+   dali. Se ficasse com aspecto de botão, passava a ser publicidade dentro
+   de um texto — e o que se quer é uma nota de rodapé que se pode seguir. */
+.pg a.pg-saibamais{
+  display:inline;white-space:nowrap;
+  font-weight:700;color:var(--orange);text-decoration:none;
+  border-bottom:1px solid rgba(255,106,19,.38);
+}
+.pg a.pg-saibamais:hover{border-bottom-color:var(--orange)}
+.pg a.pg-saibamais::after{content:' →'}
+/* na ficha da asa fica ao lado da classificação, no mesmo registo pequeno */
+.pg-eyebrow a.pg-saibamais{font-size:inherit;letter-spacing:inherit;margin-left:10px}
+
+/* =======================================================================
+   /o-que-e-um-parakite/ — a página que explica a categoria
+   =======================================================================
+   IDENTIDADE PROPRIA, E PORQUE
+     O pilar /parakite-portugal/ é uma página de convite: fotografia grande,
+     azul, quatro portas de entrada. Esta é outra coisa — é para se ler e
+     para ser citada. Por isso troca o azul do site por quase-preto, tira as
+     fotografias do caminho e deixa a tipografia e os diagramas ocupar o
+     espaço. Quem chega aqui de uma pesquisa não vem comprar nada.
+
+     O truque é redefinir os tokens que a folha já usa em vez de escrever
+     uma segunda folha: o header, o seletor de idiomas e a gaveta do menu
+     leem `--papel` e `--tinta` e adaptam-se sozinhos. Uma linha em vez de
+     um ficheiro.
+
+   O AZUL
+     Fica, mas só a marcar: a barra do lado das definições e o contorno do
+     bloco de rigor. É a única cor que não é preto, branco ou laranja, e é
+     de propósito que quase não aparece. */
+.pg.qp{
+  --papel:#0b0c0e;
+  --tinta:#fff;
+  --tinta-fraca:rgba(255,255,255,.62);
+  --linha:rgba(255,255,255,.13);
+  --qp-cx:#141619;          /* as superfícies que sobem do fundo */
+  --qp-cx2:#1b1e23;
+  --qp-azul:#3b82c4;        /* o azul pontual */
+}
+
+.qp-cx{max-width:1080px;margin:0 auto;padding:0 40px}
+.qp-sec{padding:96px 0;border-top:1px solid var(--linha)}
+
+.qp-kicker{
+  display:block;font-size:11.5px;font-weight:800;letter-spacing:2.6px;
+  text-transform:uppercase;color:var(--orange);margin-bottom:18px;
+}
+.pg.qp h2{
+  font-size:clamp(30px,4.6vw,52px);font-weight:900;letter-spacing:-1.4px;
+  line-height:1.04;margin-bottom:28px;max-width:16ch;
+}
+.pg.qp h3{
+  font-size:clamp(19px,2.2vw,24px);font-weight:800;letter-spacing:-.4px;
+  margin:44px 0 16px;
+}
+.qp-p{font-size:17px;line-height:1.72;color:var(--tinta-fraca);max-width:68ch;margin-bottom:18px}
+.qp-p:last-child{margin-bottom:0}
+.qp-p strong{color:var(--tinta);font-weight:700}
+
+/* ---- hero ----
+   Sem fotografia: a definição é a imagem. O que se vê primeiro é a frase
+   que a página inteira existe para sustentar. */
+.qp-hero{padding:76px 0 84px;border-bottom:1px solid var(--linha)}
+.qp-hero h1{
+  font-size:clamp(38px,7.2vw,84px);font-weight:900;letter-spacing:-2.4px;
+  line-height:1;margin:0 0 34px;
+}
+.qp-def{
+  font-size:clamp(18px,2.3vw,25px);line-height:1.5;font-weight:500;
+  color:var(--tinta);max-width:40ch;
+  padding-left:22px;border-left:4px solid var(--orange);
+}
+.qp-hero-nota{
+  margin-top:30px;font-size:13.5px;line-height:1.6;
+  color:rgba(255,255,255,.42);max-width:52ch;
+}
+.pg.qp a.qp-cta{
+  display:inline-flex;align-items:center;gap:9px;margin-top:34px;
+  font-size:14px;font-weight:800;letter-spacing:.3px;color:var(--tinta);
+  text-decoration:none;padding:13px 22px;border-radius:100px;
+  border:1px solid rgba(255,255,255,.22);transition:border-color .18s,background .18s;
+}
+.pg.qp a.qp-cta:hover{background:rgba(255,255,255,.07);border-color:var(--orange);color:var(--tinta)}
+.pg.qp a.qp-cta::after{content:'\2192';color:var(--orange)}
+
+/* ---- a frase grande ---- */
+.qp-frase{
+  font-size:clamp(24px,3.6vw,40px);font-weight:900;letter-spacing:-1px;
+  line-height:1.16;color:var(--tinta);max-width:22ch;margin:38px 0;
+}
+.qp-frase em{font-style:normal;color:var(--orange)}
+
+/* ---- cartões ---- */
+.qp-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:40px}
+.qp-card{background:var(--qp-cx);border:1px solid var(--linha);border-radius:14px;padding:22px 20px}
+.qp-card b{display:block;font-size:14.5px;font-weight:800;margin-bottom:8px}
+.qp-card span{font-size:13.5px;line-height:1.55;color:var(--tinta-fraca)}
+
+/* ---- o diagrama do fluxo ----
+   Cinco degraus e uma seta entre eles. É HTML e CSS: não há aqui nenhum
+   desenho aerodinâmico, porque um desenho aerodinâmico bonito e errado é
+   pior do que uma lista honesta. */
+.qp-fluxo{margin:44px 0 0;background:var(--qp-cx);border:1px solid var(--linha);border-radius:18px;padding:30px 26px}
+.qp-fluxo-t{font-size:11.5px;font-weight:800;letter-spacing:2.2px;text-transform:uppercase;
+  color:rgba(255,255,255,.4);margin-bottom:22px}
+.qp-passos{display:flex;flex-direction:column;gap:0}
+.qp-passo{
+  display:flex;align-items:center;gap:16px;
+  background:var(--qp-cx2);border:1px solid var(--linha);border-radius:12px;
+  padding:16px 20px;font-size:15.5px;font-weight:700;
+}
+.qp-passo i{
+  font-style:normal;flex:none;width:26px;height:26px;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,106,19,.14);color:var(--orange);
+  font-size:11.5px;font-weight:800;
+}
+.qp-passo:last-child{border-color:rgba(255,106,19,.42);background:rgba(255,106,19,.07)}
+.qp-seta{height:22px;display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.28);font-size:15px;line-height:1}
+
+/* ---- mãos altas / mãos baixas ---- */
+.qp-maos{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:34px}
+.qp-mao{background:var(--qp-cx);border:1px solid var(--linha);border-radius:14px;padding:22px}
+.qp-mao b{display:block;font-size:16px;font-weight:800;color:var(--orange);margin-bottom:8px}
+.qp-mao span{font-size:14.5px;line-height:1.6;color:var(--tinta-fraca)}
+
+/* ---- as quatro definições ----
+   A barra azul é o único sítio da página onde o azul do site aparece com
+   alguma superfície. Serve para dizer "isto são definições, não prosa". */
+.qp-defs{margin-top:40px;display:grid;gap:2px}
+.qp-def-it{
+  background:var(--qp-cx);border-left:3px solid var(--qp-azul);
+  padding:20px 24px;
+}
+.qp-def-it:first-child{border-top-right-radius:12px}
+.qp-def-it:last-child{border-bottom-right-radius:12px}
+.qp-def-it b{display:block;font-size:15px;font-weight:800;letter-spacing:.2px;margin-bottom:7px}
+.qp-def-it span{font-size:14.5px;line-height:1.65;color:var(--tinta-fraca)}
+
+/* ---- o que hands up não é ---- */
+.qp-nao2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}
+.qp-nao2 div{border:1px solid rgba(255,106,19,.28);border-radius:14px;padding:20px;background:rgba(255,106,19,.045)}
+.qp-nao2 b{display:block;font-size:14.5px;font-weight:800;margin-bottom:8px}
+.qp-nao2 span{font-size:13.5px;line-height:1.6;color:var(--tinta-fraca)}
+
+/* ---- energia: altura · velocidade · trajetória ---- */
+.qp-tri{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;
+  margin:40px 0;padding:30px 20px;background:var(--qp-cx);border:1px solid var(--linha);border-radius:18px}
+.qp-tri b{font-size:clamp(15px,2.2vw,22px);font-weight:900;letter-spacing:-.4px;padding:0 18px}
+.qp-tri i{font-style:normal;color:var(--orange);font-size:18px}
+.qp-rigor{
+  margin-top:34px;padding:24px 26px;border-radius:14px;
+  background:rgba(59,130,196,.08);border:1px solid rgba(59,130,196,.32);
+  font-size:15.5px;line-height:1.68;color:var(--tinta);
+}
+
+/* ---- comparações ---- */
+.qp-comps{display:grid;gap:16px;margin-top:40px}
+.qp-comp{background:var(--qp-cx);border:1px solid var(--linha);border-radius:16px;padding:26px 28px}
+.qp-comp h3{margin:0 0 14px;font-size:20px}
+.qp-comp p{font-size:15px;line-height:1.68;color:var(--tinta-fraca);margin-bottom:12px}
+.qp-comp p:last-child{margin-bottom:0}
+.qp-comp p.qp-vs{color:var(--tinta);border-left:2px solid var(--orange);padding-left:14px}
+.qp-destaque{
+  margin-top:26px;padding:24px 26px;border-radius:14px;
+  background:var(--qp-cx2);border:1px solid var(--linha);
+  font-size:15.5px;line-height:1.68;color:var(--tinta);
+}
+
+/* ---- o que varia entre projetos ----
+   Estava aqui uma lista de palavras riscadas a dizer o que NAO existe. Lida
+   depressa, uma lista riscada parece uma lista de defeitos — e o assunto e o
+   contrario: sao as coisas que legitimamente mudam de projeto para projeto.
+   A mesma informacao, apresentada como aquilo que e. */
+.qp-varia-t{
+  margin-top:38px;font-size:11.5px;font-weight:800;letter-spacing:2.2px;
+  text-transform:uppercase;color:rgba(255,255,255,.4);
+}
+.qp-varia{margin-top:16px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.qp-varia-it{
+  background:var(--qp-cx);border:1px solid var(--linha);border-radius:14px;
+  padding:20px 22px;border-left:3px solid var(--orange);
+}
+.qp-varia-it b{display:block;font-size:15px;font-weight:800;margin-bottom:7px}
+.qp-varia-it span{font-size:13.5px;line-height:1.6;color:var(--tinta-fraca)}
+
+/* ---- a fotografia ----
+   Entra a seguir ao hero e nao dentro dele: no hero, a definicao e a imagem,
+   e por cima de uma fotografia perderia o contraste que a faz ler-se.
+
+   Vem do proprio arquivo da Happy Soaring e mostra o que a pagina explica —
+   as maos nos comandos, as linhas, os risers. A vela ficou deliberadamente
+   fora do enquadramento: e nela que estao o nome do modelo e a marca do
+   fabricante, e esta pagina nao tem nem uma coisa nem outra.
+
+   `eager` + `fetchpriority=high` porque a esta altura da pagina e quase
+   sempre a maior imagem visivel — e o LCP agradece que nao espere. */
+.qp-foto{margin:0;border-bottom:1px solid var(--linha)}
+.qp-foto img{
+  display:block;width:100%;height:auto;
+  max-height:min(62vh,620px);object-fit:cover;object-position:60% 40%;
+}
+
+/* ---- aprender mais ---- */
+.qp-links{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:34px}
+.pg.qp a.qp-link{
+  display:block;background:var(--qp-cx);border:1px solid var(--linha);
+  border-radius:16px;padding:24px;text-decoration:none;color:var(--tinta);
+  transition:border-color .18s,background .18s;
+}
+.pg.qp a.qp-link:hover{border-color:var(--orange);background:var(--qp-cx2);color:var(--tinta)}
+.qp-link b{display:block;font-size:16.5px;font-weight:800;margin-bottom:8px}
+.qp-link span{display:block;font-size:13.5px;line-height:1.55;color:var(--tinta-fraca)}
+.qp-link b::after{content:' \2192';color:var(--orange)}
+
+/* ---- FAQ ----
+   <details> nativo: sem JavaScript, e o texto das respostas está no HTML
+   servido mesmo quando a resposta está fechada. */
+.qp-faq{margin-top:34px;display:grid;gap:2px}
+.qp-faq details{background:var(--qp-cx);border:1px solid var(--linha)}
+.qp-faq details:first-of-type{border-radius:14px 14px 0 0}
+.qp-faq details:last-of-type{border-radius:0 0 14px 14px}
+.qp-faq summary{
+  cursor:pointer;list-style:none;padding:19px 24px;
+  font-size:15.5px;font-weight:700;display:flex;align-items:center;
+  justify-content:space-between;gap:16px;min-height:56px;
+}
+.qp-faq summary::-webkit-details-marker{display:none}
+.qp-faq summary::after{content:'+';color:var(--orange);font-size:20px;font-weight:400;flex:none}
+.qp-faq details[open] summary::after{content:'\2013'}
+.qp-faq summary:hover{background:var(--qp-cx2)}
+.qp-faq summary:focus-visible{outline:2px solid var(--orange);outline-offset:-2px}
+.qp-faq p{padding:0 24px 22px;font-size:14.5px;line-height:1.7;color:var(--tinta-fraca);margin:0;max-width:72ch}
+
+/* ------------------------------------------------------------- estreito */
+@media(max-width:899px){
+  .qp-cx{padding:0 20px}
+  .qp-sec{padding:60px 0}
+  .qp-hero{padding:46px 0 54px}
+  .qp-cards{grid-template-columns:1fr 1fr;gap:10px}
+  .qp-links{grid-template-columns:1fr}
+  .qp-fluxo{padding:22px 16px}
+}
+@media(max-width:620px){
+  .qp-cards,.qp-maos,.qp-nao2,.qp-varia{grid-template-columns:1fr}
+  /* a 390px o 16:9 dava uma faixa de 219px: a costa lia-se, o piloto nao.
+     Um recorte mais alto, puxado para ele, devolve-lhe presenca sem roubar
+     o contexto — a imagem e a mesma, muda o enquadramento. */
+  .qp-foto img{aspect-ratio:4/3;max-height:none;object-position:92% 50%}
+  .qp-def{padding-left:16px}
+  .qp-comp{padding:22px 20px}
+  .qp-tri{flex-direction:column;gap:6px;padding:24px 16px}
+  .qp-tri b{padding:0}
+  .qp-tri i{transform:rotate(90deg)}
+  .qp-passo{font-size:14.5px;padding:14px 16px;gap:12px}
+  .qp-faq summary{padding:17px 18px;font-size:15px}
+  .qp-faq p{padding:0 18px 20px}
+  .qp-p{font-size:16px}
+}
