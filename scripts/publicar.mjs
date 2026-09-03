@@ -56,7 +56,9 @@ const FICHEIROS = [
   'styles.css',
   'pagina.css',      /* folha das páginas das asas */
   'menu.css',        /* a navegação global: páginas geradas e Reflex Lab */
+  'musica.css',      /* a loja de música: página inicial e /musica/ */
   'menu.js',         /* abre e fecha a gaveta; não constrói o menu */
+  'musica.js',       /* arranca a loja de música na página própria */
   'robots.txt',
   'sitemap.xml',     /* escrito pelo gerador, logo abaixo */
   '_redirects'       /* redireccionamentos do Pages (ver comentários lá dentro) */
@@ -76,7 +78,7 @@ const PASTAS = [
    marca em /flow-paragliders-portugal/, o pilar em /parakite-portugal/, e as
    quatro traduções de todos dentro do prefixo de cada língua */
 const PASTAS_GERADAS = ['asas', 'pilot2wing', 'flow-paragliders-portugal',
-  'o-que-e-um-parakite',
+  'o-que-e-um-parakite', 'musica',
   'parakite-portugal', 'en', 'es', 'fr', 'de'];
 
 /* Nunca, em circunstância nenhuma. É a rede de segurança: mesmo que uma
@@ -142,27 +144,53 @@ function carimbar() {
   const resumo = f => crypto.createHash('md5')
     .update(fs.readFileSync(path.join(SAIDA, f))).digest('hex').slice(0, 8);
 
-  /* Os módulos partilhados primeiro: o app.js importa-os, por isso o
-     conteúdo dele muda quando as referências forem reescritas — e o
-     resumo dele só pode ser calculado depois disso. */
-  const mods = ['regras/avisos.js', 'regras/taxonomia.js', 'regras/unidades.js',
-    'regras/navegacao.js'];
-  const vMods = {};
-  for (const m of mods) if (fs.existsSync(path.join(SAIDA, m))) vMods[m] = resumo(m);
+  /* A CADEIA INTEIRA, E POR ORDEM
+     O resumo de um ficheiro só é estável depois de as referências que ele
+     contém estarem escritas: mudar `./dom.js` para `./dom.js?v=abc` muda o
+     ficheiro e, com ele, o próprio resumo.
 
-  const fApp = path.join(SAIDA, 'app.js');
-  if (fs.existsSync(fApp)) {
-    let js = fs.readFileSync(fApp, 'utf8');
-    for (const m of Object.keys(vMods)) {
-      const nome = m.replace('regras/', '');
-      js = js.replace(new RegExp("(['\"])\\./regras/" + nome + "\\1", 'g'),
+     Por isso a lista está ordenada das folhas para o tronco. O
+     regras/musica.js vem no fim porque importa o dom.js; se viesse antes,
+     ficava carimbado com um resumo que deixava de corresponder ao seu
+     conteúdo — e o browser servia uma versão velha achando que era nova.
+
+     Antes daqui só se reescreviam os imports DENTRO do app.js. Bastava
+     enquanto o app.js era o único a importar de regras/. Deixou de ser: a
+     página /musica/ tem o seu próprio arranque, e o regras/musica.js importa
+     o regras/dom.js. Três ficheiros ficavam sem carimbo nenhum. */
+  const mods = ['regras/avisos.js', 'regras/taxonomia.js', 'regras/unidades.js',
+    'regras/navegacao.js', 'regras/dom.js', 'regras/textos.js',
+    'regras/musica.js'];
+
+  /* quem pode conter imports para regras/ — os de topo e os próprios módulos */
+  const importadores = ['app.js', 'menu.js', 'musica.js'].concat(mods);
+
+  const escapa = x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  const vMods = {};
+  for (const m of mods) {
+    if (!fs.existsSync(path.join(SAIDA, m))) continue;
+    vMods[m] = resumo(m);                       /* já com os seus imports escritos */
+    const nome = m.replace('regras/', '');
+    const e = escapa(nome);
+    for (const alvo of importadores) {
+      const fa = path.join(SAIDA, alvo);
+      if (!fs.existsSync(fa)) continue;
+      let js = fs.readFileSync(fa, 'utf8');
+      const antes = js;
+      /* de fora da pasta: './regras/dom.js' */
+      js = js.replace(new RegExp("(['\"])\\./regras/" + e + "\\1", 'g'),
         "'./regras/" + nome + "?v=" + vMods[m] + "'");
+      /* de dentro dela: './dom.js' */
+      js = js.replace(new RegExp("(['\"])\\./" + e + "\\1", 'g'),
+        "'./" + nome + "?v=" + vMods[m] + "'");
+      if (js !== antes) fs.writeFileSync(fa, js);
     }
-    fs.writeFileSync(fApp, js);
   }
 
   const v = {};
-  for (const f of ['app.js', 'styles.css', 'pagina.css', 'menu.css', 'menu.js'])
+  for (const f of ['app.js', 'styles.css', 'pagina.css', 'menu.css', 'menu.js',
+    'musica.css', 'musica.js'])
     if (fs.existsSync(path.join(SAIDA, f))) v[f] = resumo(f);
 
   /* reescrever as referências em todo o HTML publicado */

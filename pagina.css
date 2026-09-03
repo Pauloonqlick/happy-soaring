@@ -1587,3 +1587,109 @@ a.fl-cor-a:hover{background:#ff7c31;color:#fff}
   .qp-faq p{padding:0 18px 20px}
   .qp-p{font-size:16px}
 }
+
+/* =======================================================================
+   /musica/ — o enquadramento da página
+   =======================================================================
+   A LOJA NAO ESTA AQUI
+     O leitor, a lista, os filtros e o carrinho vêm da musica.css, que é a
+     mesma folha que a página inicial carrega. Aqui está só o que é desta
+     página: o header, o hero e a lista estática que o JavaScript substitui.
+
+   A COR
+     Herda a paleta da pagina.css — azul da casa, laranja da marca. Ao
+     contrário da página educativa, que trocou o azul por quase-preto, esta
+     não tem razão para se afastar: é a mesma secção que já existia, agora
+     com morada. */
+.mu-cx{max-width:1180px;margin:0 auto;padding:0 40px}
+
+.mu-hero{padding:56px 0 40px;border-bottom:1px solid var(--linha);overflow:hidden}
+
+/* ---- o hero em duas colunas ----
+   O texto sozinho deixava o lado direito vazio numa página que é sobre
+   música. A guitarra é a mesma imagem que a secção da página inicial usa,
+   e o alt vem do mesmo elemento do CMS — se lá a tirarem, sai daqui também.
+
+   Em WebP recortado: o PNG original tem 883 KB para 900x1068, quase todo
+   transparente. Aqui são 74 KB, e 32 KB na variante de telemóvel.
+
+   `align-items:end` porque a guitarra é uma figura recortada com o músico
+   sentado: assenta no fundo do bloco em vez de flutuar a meio dele. */
+.mu-hero-in{display:flex;align-items:flex-end;gap:40px}
+.mu-hero-txt{flex:1 1 auto;min-width:0}
+.mu-foto{
+  flex:none;width:min(380px,34vw);height:auto;
+  margin-bottom:-40px;   /* encosta ao limite inferior da secção */
+  filter:drop-shadow(0 18px 34px rgba(0,0,0,.45));
+}
+.mu-kicker{
+  display:block;font-size:11.5px;font-weight:800;letter-spacing:2.6px;
+  text-transform:uppercase;color:var(--orange);margin-bottom:16px;
+}
+.pg.mu h1{
+  font-size:clamp(34px,6vw,68px);font-weight:900;letter-spacing:-2px;
+  line-height:1.02;margin:0 0 20px;
+}
+.mu-lead{
+  font-size:clamp(16px,2vw,21px);line-height:1.55;
+  color:var(--tinta-fraca);max-width:44ch;
+}
+
+.pg.mu h2.mu-h2{
+  font-size:clamp(22px,3vw,32px);font-weight:900;letter-spacing:-.8px;
+  margin:48px 0 18px;
+}
+
+/* ---- a lista estática ----
+   Vive pouco tempo no ecrã: a musica.js troca-a pela loja assim que chega.
+   Mas é ela que fica para quem não tem JavaScript e é ela que os motores de
+   busca leem, por isso tem de se ler como uma lista a sério e não como um
+   esqueleto à espera. */
+.mu-nota{font-size:13.5px;color:rgba(255,255,255,.42);margin-bottom:20px}
+.mu-lista{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.mu-lista li{
+  display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+  padding:12px 16px;border-radius:10px;
+  background:rgba(255,255,255,.04);border:1px solid var(--linha);
+}
+.mu-lista b{font-size:15px;font-weight:700;flex:1 1 auto;min-width:0}
+.mu-lista span{
+  font-size:12.5px;color:var(--tinta-fraca);
+  padding:3px 9px;border-radius:100px;background:rgba(255,255,255,.06);
+}
+.mu-legal{
+  margin-top:24px;font-size:13px;line-height:1.65;color:var(--tinta-fraca);
+  max-width:70ch;padding-left:16px;border-left:2px solid var(--linha);
+}
+
+/* ---- a biografia, na versão estática ---- */
+.pg.mu #musica-app > p{font-size:16px;line-height:1.7;color:var(--tinta-fraca);max-width:68ch;margin-bottom:16px}
+.mu-marcos{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:10px;max-width:68ch}
+.mu-marcos li{font-size:14.5px;line-height:1.6;color:var(--tinta-fraca)}
+.mu-marcos b{color:var(--tinta);font-weight:800;margin-right:6px}
+.mu-lema{
+  margin-top:26px;font-size:clamp(17px,2.2vw,22px);font-weight:800;
+  line-height:1.35;color:var(--tinta);max-width:30ch;
+}
+
+/* ---- a loja, quando entra ----
+   A musica.css foi escrita para viver dentro de um slide da página inicial,
+   que tem largura própria. Aqui o contentor é o .mu-cx, por isso o painel
+   solta-se da largura do slide e ocupa o que lhe derem. */
+.pg.mu .music{position:static;padding:0;min-height:0}
+.pg.mu .music-panel{margin:0 auto}
+
+@media(max-width:899px){
+  .mu-cx{padding:0 20px}
+  .mu-hero{padding:36px 0 28px}
+  .pg.mu h2.mu-h2{margin:36px 0 14px}
+  .mu-hero-in{gap:16px}
+  .mu-foto{width:38vw;margin-bottom:-28px}
+}
+@media(max-width:520px){
+  /* a 390px, 38vw da guitarra roubavam largura ao h1 e ele partia-se em
+     quatro linhas. Passa para baixo do texto, alinhada à direita, e o
+     título volta a ter a largura toda. */
+  .mu-hero-in{flex-direction:column;align-items:stretch;gap:6px}
+  .mu-foto{width:56%;align-self:flex-end;margin-bottom:-28px}
+}

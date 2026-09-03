@@ -50,9 +50,41 @@ export function rotulo(label, lingua) {
  *   - um endereço externo (ou //algo) fica como está;
  *   - um caminho que JÁ traz prefixo não leva um segundo.
  */
+/**
+ * As paginas cujo ENDERECO muda de lingua.
+ *
+ * A regra geral do site e simples: um endereco interno escreve-se uma vez,
+ * em portugues, e ganha o prefixo da lingua. Funciona porque a maioria dos
+ * enderecos sao nomes proprios — /pilot2wing/ e /pilot2wing/ em alemao.
+ *
+ * Nao funciona quando o endereco e uma palavra comum. "Musica" e "musik",
+ * "o que e um parakite" e "was ist ein parakite". Sem esta tabela, o menu
+ * alemao apontava para /de/musica/ e dava 404.
+ *
+ * A chave e sempre a versao portuguesa, que e a que se escreve no CMS.
+ * O gerador usa a mesma tabela para decidir onde escrever os ficheiros, e e
+ * por isso que ela vive aqui e nao la: uma so lista, dois leitores.
+ */
+export const ROTAS = {
+  '/musica/': { pt: '/musica/', en: '/en/music/', es: '/es/musica/',
+                fr: '/fr/musique/', de: '/de/musik/' },
+  '/o-que-e-um-parakite/': { pt: '/o-que-e-um-parakite/', en: '/en/what-is-a-parakite/',
+                             es: '/es/que-es-un-parakite/', fr: '/fr/qu-est-ce-qu-un-parakite/',
+                             de: '/de/was-ist-ein-parakite/' }
+};
+
 export function comIdioma(href, lingua) {
   const h = String(href || '');
-  if (!h || lingua === OMISSAO) return h;
+  if (!h) return h;
+  /* primeiro a tabela: um endereco que traduz nao leva prefixo, leva outro
+     endereco. E o fragmento, se houver, viaja com ele. */
+  const corte = h.indexOf('#');
+  const base = corte < 0 ? h : h.slice(0, corte);
+  const ancora = corte < 0 ? '' : h.slice(corte);
+  const traduzida = ROTAS[base];
+  if (traduzida) return (traduzida[lingua] || traduzida[OMISSAO]) + ancora;
+
+  if (lingua === OMISSAO) return h;
   if (h.charAt(0) !== '/' || h.charAt(1) === '/') return h;
   if (/^\/(pt|en|es|fr|de)(\/|$)/.test(h)) return h;
   return '/' + lingua + h;

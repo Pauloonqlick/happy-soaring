@@ -1205,6 +1205,15 @@ collections:
             summary: 'Biografia - {{fields.nome}}'
             hint: Faixa de imagem, credenciais, abertura e o percurso em linha de tempo.
             fields:
+              - label: Só na página própria
+                name: soNaPagina
+                widget: boolean
+                default: false
+                hint: >-
+                  Ligado, este bloco deixa de aparecer na página inicial e
+                  passa a existir só na página dedicada — a loja de música e a
+                  biografia vivem em /musica/. O conteúdo não se apaga: muda
+                  de sítio.
               - label: Nome
                 name: nome
                 widget: string
@@ -1357,6 +1366,15 @@ collections:
             summary: Música (leitor + listas)
             hint: Só o leitor, listas por género, licenças e CTA. O título/subtítulo do slide fazem-se com um elemento "Texto" à parte (com todas as opções).
             fields:
+              - label: Só na página própria
+                name: soNaPagina
+                widget: boolean
+                default: false
+                hint: >-
+                  Ligado, este bloco deixa de aparecer na página inicial e
+                  passa a existir só na página dedicada — a loja de música e a
+                  biografia vivem em /musica/. O conteúdo não se apaga: muda
+                  de sítio.
               - label: Número de WhatsApp
                 name: whatsapp
                 widget: string

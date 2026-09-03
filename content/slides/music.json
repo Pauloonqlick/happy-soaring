@@ -1,675 +1,690 @@
 {
- "id": "music",
- "nome": "Música",
- "visible": true,
- "wind": false,
- "heightScreens": null,
- "heroScrim": false,
- "bgImage": "",
- "bgImageMobile": "",
- "bgImageVisible": true,
- "bgDarken": null,
- "topTint": "",
- "overlay": {
+  "id": "music",
+  "nome": "Música",
   "visible": true,
-  "color": "#141414",
-  "color2": "#141414",
-  "intensity": 100
- },
- "scrollHint": {
-  "pt": "",
-  "en": "",
-  "es": "",
-  "fr": "",
-  "de": ""
- },
- "elements": [
-  {
-   "role": "text",
-   "align": "left",
-   "valign": "top",
-   "kicker": {
-    "pt": "HAPPY SOARING",
-    "en": "HAPPY SOARING",
-    "es": "HAPPY SOARING",
-    "fr": "HAPPY SOARING",
-    "de": "HAPPY SOARING"
-   },
-   "title": {
-    "pt": "Happy Soaring Music",
-    "en": "Happy Soaring Music",
-    "es": "Happy Soaring Music",
-    "fr": "Happy Soaring Music",
-    "de": "Happy Soaring Music"
-   },
-   "title2": {
+  "wind": false,
+  "heightScreens": null,
+  "heroScrim": false,
+  "bgImage": "",
+  "bgImageMobile": "",
+  "bgImageVisible": true,
+  "bgDarken": null,
+  "topTint": "",
+  "overlay": {
+    "visible": true,
+    "color": "#141414",
+    "color2": "#141414",
+    "intensity": 100
+  },
+  "scrollHint": {
     "pt": "",
     "en": "",
     "es": "",
     "fr": "",
     "de": ""
-   },
-   "accent2": true,
-   "titleTag": "h2",
-   "subtitle": {
-    "pt": "Música original inspirada no vento, mar, liberdade e voo.",
-    "en": "Original music inspired by wind, sea, freedom and flight.",
-    "es": "Música original inspirada en el viento, el mar, la libertad y el vuelo.",
-    "fr": "Musique originale inspirée par le vent, la mer, la liberté et le vol.",
-    "de": "Originalmusik, inspiriert von Wind, Meer, Freiheit und Flug."
-   },
-   "subtitleFormat": {
-    "bold": false,
-    "italic": false,
-    "uppercase": false,
-    "size": null,
-    "letterSpacing": null,
-    "color": "default"
-   },
-   "trustHref": "",
-   "buttons": [],
-   "showDesktop": true,
-   "showMobile": true
   },
-  {
-   "role": "floatImage",
-   "showDesktop": true,
-   "showMobile": false,
-   "src": "/images/music-guitar.png",
-   "alt": {
-    "pt": "Happy Soaring Music — guitarra",
-    "es": "Happy Soaring Music — guitarra",
-    "fr": "Happy Soaring Music — guitare",
-    "de": "Happy Soaring Music — Gitarre",
-    "en": "Happy Soaring Music — guitar"
-   },
-   "opacity": 100,
-   "shadow": true,
-   "dim": false,
-   "rotation": 0,
-   "floatSpeed": 11,
-   "parallax": 0,
-   "zIndex": 2,
-   "y": 4,
-   "x": 4,
-   "anchorX": "right",
-   "widthVW": 20,
-   "widthMax": 280,
-   "mobile": {
-    "x": 2,
-    "y": 2,
-    "widthVW": 32,
-    "widthMax": 170
-   }
-  },
-  {
-   "role": "music",
-   "buttons": [],
-   "showDesktop": true,
-   "showMobile": true,
-   "whatsapp": "351927187912",
-   "listHeight": 620,
-   "pricing": {
-    "currency": "€",
-    "title": {
-     "pt": "Preços",
-     "en": "Prices",
-     "es": "Precios",
-     "fr": "Tarifs",
-     "de": "Preise"
-    },
-    "buyLabel": {
-     "pt": "Comprar no WhatsApp",
-     "en": "Buy on WhatsApp",
-     "es": "Comprar por WhatsApp",
-     "fr": "Acheter sur WhatsApp",
-     "de": "Über WhatsApp kaufen"
-    },
-    "intro": {
-     "pt": "Olá! Quero comprar estas faixas:",
-     "en": "Hi! I want to buy these tracks:",
-     "es": "¡Hola! Quiero comprar estas canciones:",
-     "fr": "Bonjour ! Je souhaite acheter ces morceaux :",
-     "de": "Hallo! Ich möchte diese Titel kaufen:"
-    },
-    "tiers": [
-     {
-      "minQty": 1,
-      "price": 1
-     },
-     {
-      "minQty": 5,
-      "price": 0.75
-     },
-     {
-      "minQty": 14,
-      "price": 0.5
-     }
-    ]
-   },
-   "tracks": [
+  "elements": [
     {
-     "name": "Reggae Groove",
-     "lang": "en",
-     "genre": "Reggae",
-     "duration": "1:38",
-     "file": "/music/happy-soaring_2026-05-16-12-02-06-2_total-01m38s_preview-00m32s.mp3",
-     "free": false
+      "role": "text",
+      "align": "left",
+      "valign": "top",
+      "kicker": {
+        "pt": "HAPPY SOARING",
+        "en": "HAPPY SOARING",
+        "es": "HAPPY SOARING",
+        "fr": "HAPPY SOARING",
+        "de": "HAPPY SOARING"
+      },
+      "title": {
+        "pt": "Happy Soaring Music",
+        "en": "Happy Soaring Music",
+        "es": "Happy Soaring Music",
+        "fr": "Happy Soaring Music",
+        "de": "Happy Soaring Music"
+      },
+      "title2": {
+        "pt": "",
+        "en": "",
+        "es": "",
+        "fr": "",
+        "de": ""
+      },
+      "accent2": true,
+      "titleTag": "h2",
+      "subtitle": {
+        "pt": "Música original inspirada no vento, mar, liberdade e voo.",
+        "en": "Original music inspired by wind, sea, freedom and flight.",
+        "es": "Música original inspirada en el viento, el mar, la libertad y el vuelo.",
+        "fr": "Musique originale inspirée par le vent, la mer, la liberté et le vol.",
+        "de": "Originalmusik, inspiriert von Wind, Meer, Freiheit und Flug."
+      },
+      "subtitleFormat": {
+        "bold": false,
+        "italic": false,
+        "uppercase": false,
+        "size": null,
+        "letterSpacing": null,
+        "color": "default"
+      },
+      "trustHref": "",
+      "buttons": [
+        {
+          "label": {
+            "pt": "Ouvir todas as músicas",
+            "en": "Listen to all the tracks",
+            "es": "Escuchar todas las pistas",
+            "fr": "Écouter tous les morceaux",
+            "de": "Alle Titel hören"
+          },
+          "href": "/musica/",
+          "variant": "primary",
+          "visible": true
+        }
+      ],
+      "showDesktop": true,
+      "showMobile": true
     },
     {
-     "name": "African Roots",
-     "lang": "en",
-     "genre": "Reggae",
-     "duration": "1:03",
-     "file": "/music/happy-soaring_african-roots-reggae-soul-1_total-01m03s_preview-00m30s.mp3",
-     "free": false
+      "role": "floatImage",
+      "showDesktop": true,
+      "showMobile": false,
+      "src": "/images/music-guitar.png",
+      "alt": {
+        "pt": "Happy Soaring Music — guitarra",
+        "es": "Happy Soaring Music — guitarra",
+        "fr": "Happy Soaring Music — guitare",
+        "de": "Happy Soaring Music — Gitarre",
+        "en": "Happy Soaring Music — guitar"
+      },
+      "opacity": 100,
+      "shadow": true,
+      "dim": false,
+      "rotation": 0,
+      "floatSpeed": 11,
+      "parallax": 0,
+      "zIndex": 2,
+      "y": 4,
+      "x": 4,
+      "anchorX": "right",
+      "widthVW": 20,
+      "widthMax": 280,
+      "mobile": {
+        "x": 2,
+        "y": 2,
+        "widthVW": 32,
+        "widthMax": 170
+      }
     },
     {
-     "name": "Alegria Agora",
-     "lang": "pt",
-     "genre": "Reggae",
-     "duration": "1:20",
-     "file": "/music/happy-soaring_alegria-agora_total-01m20s_preview-00m30s.mp3",
-     "free": false
+      "role": "music",
+      "buttons": [],
+      "showDesktop": true,
+      "showMobile": true,
+      "whatsapp": "351927187912",
+      "listHeight": 620,
+      "pricing": {
+        "currency": "€",
+        "title": {
+          "pt": "Preços",
+          "en": "Prices",
+          "es": "Precios",
+          "fr": "Tarifs",
+          "de": "Preise"
+        },
+        "buyLabel": {
+          "pt": "Comprar no WhatsApp",
+          "en": "Buy on WhatsApp",
+          "es": "Comprar por WhatsApp",
+          "fr": "Acheter sur WhatsApp",
+          "de": "Über WhatsApp kaufen"
+        },
+        "intro": {
+          "pt": "Olá! Quero comprar estas faixas:",
+          "en": "Hi! I want to buy these tracks:",
+          "es": "¡Hola! Quiero comprar estas canciones:",
+          "fr": "Bonjour ! Je souhaite acheter ces morceaux :",
+          "de": "Hallo! Ich möchte diese Titel kaufen:"
+        },
+        "tiers": [
+          {
+            "minQty": 1,
+            "price": 1
+          },
+          {
+            "minQty": 5,
+            "price": 0.75
+          },
+          {
+            "minQty": 14,
+            "price": 0.5
+          }
+        ]
+      },
+      "tracks": [
+        {
+          "name": "Reggae Groove",
+          "lang": "en",
+          "genre": "Reggae",
+          "duration": "1:38",
+          "file": "/music/happy-soaring_2026-05-16-12-02-06-2_total-01m38s_preview-00m32s.mp3",
+          "free": false
+        },
+        {
+          "name": "African Roots",
+          "lang": "en",
+          "genre": "Reggae",
+          "duration": "1:03",
+          "file": "/music/happy-soaring_african-roots-reggae-soul-1_total-01m03s_preview-00m30s.mp3",
+          "free": false
+        },
+        {
+          "name": "Alegria Agora",
+          "lang": "pt",
+          "genre": "Reggae",
+          "duration": "1:20",
+          "file": "/music/happy-soaring_alegria-agora_total-01m20s_preview-00m30s.mp3",
+          "free": false
+        },
+        {
+          "name": "Dancing Together",
+          "lang": "en",
+          "genre": "Reggae",
+          "duration": "0:58",
+          "file": "/music/happy-soaring_bd-dacing-together_total-00m58s_preview-00m23s.mp3",
+          "free": false
+        },
+        {
+          "name": "Lá vai o Velho",
+          "lang": "en",
+          "genre": "Reggae",
+          "duration": "3:04",
+          "file": "/music/happy-soaring_bezugo_total-03m04s_preview-00m35s.mp3",
+          "free": false
+        },
+        {
+          "name": "This World need more Colors",
+          "lang": "en",
+          "genre": "Message",
+          "duration": "0:30",
+          "file": "/music/happy-soaring_colors-smiles-love-1_total-00m30s_preview-00m13s.mp3",
+          "free": true
+        },
+        {
+          "name": "Come Closer Baby",
+          "lang": "en",
+          "genre": "Reggae",
+          "duration": "4:32",
+          "file": "/music/happy-soaring_come-closer-baby_total-04m32s_preview-com-voz-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "Deixa O Fogo Subir",
+          "lang": "pt",
+          "genre": "Funk",
+          "duration": "3:31",
+          "file": "/music/happy-soaring_deixa-o-fogo-subir_total-03m31s_preview-com-voz-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "Ela É Demais",
+          "lang": "pt",
+          "genre": "Reggae",
+          "duration": "2:56",
+          "file": "/music/happy-soaring_ela-e-demais-10_total-02m56s_preview-com-voz-00m35s.mp3",
+          "free": false
+        },
+        {
+          "name": "Eu Sou Eu",
+          "lang": "pt",
+          "genre": "Acoustic",
+          "duration": "1:33",
+          "file": "/music/happy-soaring_eu-sou-eu-6_total-01m33s_preview-com-voz-00m32s.mp3",
+          "free": false
+        },
+        {
+          "name": "Golden Cliffs",
+          "lang": "en",
+          "genre": "Alternative Rock",
+          "duration": "3:16",
+          "file": "/music/happy-soaring_fly-with-me_total-03m16s_preview-com-voz-00m35s.mp3",
+          "free": false
+        },
+        {
+          "name": "Go Fly",
+          "lang": "en",
+          "genre": "Message",
+          "duration": "0:49",
+          "file": "/music/happy-soaring_go-fly_total-00m49s_preview-com-voz-00m20s.mp3",
+          "free": true
+        },
+        {
+          "name": "Beautiful Moments",
+          "lang": "en",
+          "genre": "Message",
+          "duration": "0:31",
+          "file": "/music/happy-soaring_go-flyy-2_total-00m31s_preview-com-voz-00m14s.mp3",
+          "free": true
+        },
+        {
+          "name": "Hoje Celebro A Vida",
+          "lang": "pt",
+          "genre": "Reggae",
+          "duration": "4:17",
+          "file": "/music/happy-soaring_hoje-celebro-a-vida_total-04m17s_preview-com-voz-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "Keep It Alive",
+          "lang": "en",
+          "genre": "Message",
+          "duration": "2:06",
+          "file": "/music/happy-soaring_keep-it-alive_total-02m06s_preview-com-voz-00m32s.mp3",
+          "free": true
+        },
+        {
+          "name": "Let Be Happy",
+          "lang": "en",
+          "genre": "Reggae",
+          "duration": "1:12",
+          "file": "/music/happy-soaring_let-s-be-happy_total-01m12s_preview-com-voz-00m30s.mp3",
+          "free": false
+        },
+        {
+          "name": "Live In Peace",
+          "lang": "en",
+          "genre": "Acoustic",
+          "duration": "3:50",
+          "file": "/music/happy-soaring_live-in-peace_total-03m50s_preview-com-voz-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "No Wind No Fun",
+          "lang": "en",
+          "genre": "Message",
+          "duration": "0:35",
+          "file": "/music/happy-soaring_no-wind-no-fun-1_total-00m35s_preview-com-voz-00m14s.mp3",
+          "free": true
+        },
+        {
+          "name": "Olá Sou Eu",
+          "lang": "pt",
+          "genre": "Alternative Rock",
+          "duration": "2:07",
+          "file": "/music/happy-soaring_ola-sou-eu-1_total-02m07s_preview-com-voz-00m32s.mp3",
+          "free": false
+        },
+        {
+          "name": "One World One Love",
+          "lang": "en",
+          "genre": "Reggae",
+          "duration": "0:53",
+          "file": "/music/happy-soaring_one-world-one-love_total-00m53s_preview-com-voz-00m21s.mp3",
+          "free": false
+        },
+        {
+          "name": "Se Por Acaso A Porta Não Abrir",
+          "lang": "inst",
+          "genre": "Instrumental",
+          "duration": "3:09",
+          "file": "/music/happy-soaring_se-por-acaso-a-porta-nao-abrir-9_total-03m09s_preview-com-voz-00m35s.mp3",
+          "free": false
+        },
+        {
+          "name": "Super Man",
+          "lang": "en",
+          "genre": "Reggae",
+          "duration": "2:03",
+          "file": "/music/happy-soaring_super-man_total-02m03s_preview-com-voz-00m32s.mp3",
+          "free": false
+        },
+        {
+          "name": "Tenho Uma Filha",
+          "lang": "pt",
+          "genre": "Acoustic",
+          "duration": "3:41",
+          "file": "/music/happy-soaring_tenho-uma-filha_total-03m41s_preview-com-voz-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "This World Needs More Colors",
+          "lang": "en",
+          "genre": "Message",
+          "duration": "1:09",
+          "file": "/music/happy-soaring_this-world-needs-more-colors-1_total-01m09s_preview-com-voz-00m30s.mp3",
+          "free": true
+        },
+        {
+          "name": "Nada Vem Por Acaso",
+          "lang": "pt",
+          "genre": "Acoustic",
+          "duration": "3:30",
+          "file": "/music/happy-soaring_up-acaso-1_total-03m30s_preview-com-voz-00m35s.mp3",
+          "free": false
+        },
+        {
+          "name": "Vai Só",
+          "lang": "pt",
+          "genre": "Reggae",
+          "duration": "1:18",
+          "file": "/music/happy-soaring_vai-so_total-01m18s_preview-com-voz-00m30s.mp3",
+          "free": false
+        },
+        {
+          "name": "Wing Of The Wind",
+          "lang": "en",
+          "genre": "Reggae",
+          "duration": "0:55",
+          "file": "/music/happy-soaring_wing-of-the-wind-5_total-00m55s_preview-com-voz-00m22s.mp3",
+          "free": false
+        },
+        {
+          "name": "Sunset Dub",
+          "lang": "inst",
+          "genre": "Dub",
+          "duration": "3:35",
+          "file": "/music/happy-soaring_dub-1_total-03m35s_preview-instrumental-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "Bass Rider",
+          "lang": "inst",
+          "genre": "Dub",
+          "duration": "4:10",
+          "file": "/music/happy-soaring_dub-bass-3_total-04m10s_preview-instrumental-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "Deep Bass Dub",
+          "lang": "inst",
+          "genre": "Dub",
+          "duration": "3:49",
+          "file": "/music/happy-soaring_dub-bass_total-03m49s_preview-instrumental-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "Slow Strings Dub",
+          "lang": "inst",
+          "genre": "Dub",
+          "duration": "3:42",
+          "file": "/music/happy-soaring_dub-violino-2_total-03m42s_preview-instrumental-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "Strings in Dub",
+          "lang": "inst",
+          "genre": "Dub",
+          "duration": "4:15",
+          "file": "/music/happy-soaring_dub-violino_total-04m15s_preview-instrumental-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "Dune Drift",
+          "lang": "inst",
+          "genre": "Instrumental",
+          "duration": "3:07",
+          "file": "/music/happy-soaring_dunes-at-145-1_total-03m07s_preview-instrumental-00m35s.mp3",
+          "free": false
+        },
+        {
+          "name": "Groove Flight",
+          "lang": "inst",
+          "genre": "Instrumental",
+          "duration": "1:00",
+          "file": "/music/happy-soaring_fly-with-groove_total-01m00s_preview-instrumental-00m24s.mp3",
+          "free": false
+        },
+        {
+          "name": "Golden Glide",
+          "lang": "inst",
+          "genre": "Instrumental",
+          "duration": "6:48",
+          "file": "/music/happy-soaring_golden-sand-dive-1_total-06m48s_preview-instrumental-00m40s.mp3",
+          "free": false
+        },
+        {
+          "name": "Coastal Guitars",
+          "lang": "inst",
+          "genre": "Instrumental",
+          "duration": "2:30",
+          "file": "/music/happy-soaring_guitaras-so-goodddd_total-02m30s_preview-instrumental-00m32s.mp3",
+          "free": false
+        },
+        {
+          "name": "Ridge Rhythm",
+          "lang": "inst",
+          "genre": "Instrumental",
+          "duration": "2:29",
+          "file": "/music/happy-soaring_percussive-rhythm_total-02m29s_preview-instrumental-00m32s.mp3",
+          "free": false
+        },
+        {
+          "name": "Thermal Lift",
+          "lang": "inst",
+          "genre": "Instrumental",
+          "duration": "1:38",
+          "file": "/music/happy-soaring_untitled_total-01m38s_preview-instrumental-00m32s.mp3",
+          "free": false
+        },
+        {
+          "name": "FX - Wind Whoosh",
+          "lang": "inst",
+          "genre": "FX",
+          "duration": "0:08",
+          "file": "/music/happy-soaring_big-wind-transitions-with-wow_total-00m08s_preview-00m08s.mp3",
+          "free": true
+        },
+        {
+          "name": "FX - Deep Impact",
+          "lang": "inst",
+          "genre": "FX",
+          "duration": "0:05",
+          "file": "/music/happy-soaring_create-transitions-effects_total-00m05s_preview-instrumental-00m05s.mp3",
+          "free": true
+        },
+        {
+          "name": "FX - Energy Riser",
+          "lang": "inst",
+          "genre": "FX",
+          "duration": "0:29",
+          "file": "/music/happy-soaring_energy-responsive-ease-1_total-00m29s_preview-instrumental-00m13s.mp3",
+          "free": true
+        },
+        {
+          "name": "Midnight Drift",
+          "lang": "inst",
+          "genre": "Instrumental",
+          "duration": "3:18",
+          "file": "/music/happy-soaring_midnight-static_total-03m18s_preview-instrumental-00m35s.mp3",
+          "free": true
+        }
+      ],
+      "legal": {
+        "pt": "A música oferecida pela Happy Soaring destina-se apenas a uso pessoal e em redes sociais. A revenda, redistribuição ou uso comercial por terceiros não é permitido sem autorização escrita.",
+        "en": "Music offered by Happy Soaring is for personal and social media use only. Resale, redistribution or commercial use by third parties is not allowed without written permission.",
+        "es": "La música ofrecida por Happy Soaring es solo para uso personal y en redes sociales. No se permite la reventa, redistribución ni el uso comercial por parte de terceros sin autorización escrita.",
+        "fr": "La musique proposée par Happy Soaring est réservée à un usage personnel et aux réseaux sociaux. La revente, la redistribution ou l’usage commercial par des tiers ne sont pas autorisés sans accord écrit.",
+        "de": "Die Musik von Happy Soaring ist ausschliesslich für den persönlichen Gebrauch und für soziale Medien bestimmt. Weiterverkauf, Weiterverbreitung oder kommerzielle Nutzung durch Dritte sind ohne schriftliche Genehmigung nicht gestattet."
+      },
+      "cta": {
+        "title": {
+          "pt": "Precisas de música original para o teu vídeo de voo?",
+          "en": "Need original music for your flight video?",
+          "es": "¿Necesitas música original para tu vídeo de vuelo?",
+          "fr": "Besoin d’une musique originale pour votre vidéo de vol ?",
+          "de": "Brauchst du Originalmusik für dein Flugvideo?"
+        },
+        "text": {
+          "pt": "Fala com a Happy Soaring.",
+          "en": "Contact Happy Soaring.",
+          "es": "Habla con Happy Soaring.",
+          "fr": "Contactez Happy Soaring.",
+          "de": "Sprich mit Happy Soaring."
+        },
+        "buttonLabel": {
+          "pt": "Falar no WhatsApp",
+          "en": "Chat on WhatsApp",
+          "es": "Hablar por WhatsApp",
+          "fr": "Discuter sur WhatsApp",
+          "de": "Auf WhatsApp schreiben"
+        },
+        "waMessage": {
+          "de": "Hallo! Ich habe Happy Soaring Music gesehen und hätte gerne mehr Informationen.",
+          "fr": "Bonjour ! J’ai vu Happy Soaring Music et je voudrais plus d’informations.",
+          "es": "¡Hola! He visto Happy Soaring Music y quería más información.",
+          "en": "Hi! I saw Happy Soaring Music and would like more info.",
+          "pt": "Olá! Vi a Happy Soaring Music e queria mais informação."
+        }
+      },
+      "genreList": [
+        "Acoustic",
+        "Alternative Rock",
+        "Dub",
+        "FX",
+        "Funk",
+        "Instrumental",
+        "Message",
+        "Reggae"
+      ],
+      "soNaPagina": true
     },
     {
-     "name": "Dancing Together",
-     "lang": "en",
-     "genre": "Reggae",
-     "duration": "0:58",
-     "file": "/music/happy-soaring_bd-dacing-together_total-00m58s_preview-00m23s.mp3",
-     "free": false
-    },
-    {
-     "name": "Lá vai o Velho",
-     "lang": "en",
-     "genre": "Reggae",
-     "duration": "3:04",
-     "file": "/music/happy-soaring_bezugo_total-03m04s_preview-00m35s.mp3",
-     "free": false
-    },
-    {
-     "name": "This World need more Colors",
-     "lang": "en",
-     "genre": "Message",
-     "duration": "0:30",
-     "file": "/music/happy-soaring_colors-smiles-love-1_total-00m30s_preview-00m13s.mp3",
-     "free": true
-    },
-    {
-     "name": "Come Closer Baby",
-     "lang": "en",
-     "genre": "Reggae",
-     "duration": "4:32",
-     "file": "/music/happy-soaring_come-closer-baby_total-04m32s_preview-com-voz-00m40s.mp3",
-     "free": false
-    },
-    {
-     "name": "Deixa O Fogo Subir",
-     "lang": "pt",
-     "genre": "Funk",
-     "duration": "3:31",
-     "file": "/music/happy-soaring_deixa-o-fogo-subir_total-03m31s_preview-com-voz-00m40s.mp3",
-     "free": false
-    },
-    {
-     "name": "Ela É Demais",
-     "lang": "pt",
-     "genre": "Reggae",
-     "duration": "2:56",
-     "file": "/music/happy-soaring_ela-e-demais-10_total-02m56s_preview-com-voz-00m35s.mp3",
-     "free": false
-    },
-    {
-     "name": "Eu Sou Eu",
-     "lang": "pt",
-     "genre": "Acoustic",
-     "duration": "1:33",
-     "file": "/music/happy-soaring_eu-sou-eu-6_total-01m33s_preview-com-voz-00m32s.mp3",
-     "free": false
-    },
-    {
-     "name": "Golden Cliffs",
-     "lang": "en",
-     "genre": "Alternative Rock",
-     "duration": "3:16",
-     "file": "/music/happy-soaring_fly-with-me_total-03m16s_preview-com-voz-00m35s.mp3",
-     "free": false
-    },
-    {
-     "name": "Go Fly",
-     "lang": "en",
-     "genre": "Message",
-     "duration": "0:49",
-     "file": "/music/happy-soaring_go-fly_total-00m49s_preview-com-voz-00m20s.mp3",
-     "free": true
-    },
-    {
-     "name": "Beautiful Moments",
-     "lang": "en",
-     "genre": "Message",
-     "duration": "0:31",
-     "file": "/music/happy-soaring_go-flyy-2_total-00m31s_preview-com-voz-00m14s.mp3",
-     "free": true
-    },
-    {
-     "name": "Hoje Celebro A Vida",
-     "lang": "pt",
-     "genre": "Reggae",
-     "duration": "4:17",
-     "file": "/music/happy-soaring_hoje-celebro-a-vida_total-04m17s_preview-com-voz-00m40s.mp3",
-     "free": false
-    },
-    {
-     "name": "Keep It Alive",
-     "lang": "en",
-     "genre": "Message",
-     "duration": "2:06",
-     "file": "/music/happy-soaring_keep-it-alive_total-02m06s_preview-com-voz-00m32s.mp3",
-     "free": true
-    },
-    {
-     "name": "Let Be Happy",
-     "lang": "en",
-     "genre": "Reggae",
-     "duration": "1:12",
-     "file": "/music/happy-soaring_let-s-be-happy_total-01m12s_preview-com-voz-00m30s.mp3",
-     "free": false
-    },
-    {
-     "name": "Live In Peace",
-     "lang": "en",
-     "genre": "Acoustic",
-     "duration": "3:50",
-     "file": "/music/happy-soaring_live-in-peace_total-03m50s_preview-com-voz-00m40s.mp3",
-     "free": false
-    },
-    {
-     "name": "No Wind No Fun",
-     "lang": "en",
-     "genre": "Message",
-     "duration": "0:35",
-     "file": "/music/happy-soaring_no-wind-no-fun-1_total-00m35s_preview-com-voz-00m14s.mp3",
-     "free": true
-    },
-    {
-     "name": "Olá Sou Eu",
-     "lang": "pt",
-     "genre": "Alternative Rock",
-     "duration": "2:07",
-     "file": "/music/happy-soaring_ola-sou-eu-1_total-02m07s_preview-com-voz-00m32s.mp3",
-     "free": false
-    },
-    {
-     "name": "One World One Love",
-     "lang": "en",
-     "genre": "Reggae",
-     "duration": "0:53",
-     "file": "/music/happy-soaring_one-world-one-love_total-00m53s_preview-com-voz-00m21s.mp3",
-     "free": false
-    },
-    {
-     "name": "Se Por Acaso A Porta Não Abrir",
-     "lang": "inst",
-     "genre": "Instrumental",
-     "duration": "3:09",
-     "file": "/music/happy-soaring_se-por-acaso-a-porta-nao-abrir-9_total-03m09s_preview-com-voz-00m35s.mp3",
-     "free": false
-    },
-    {
-     "name": "Super Man",
-     "lang": "en",
-     "genre": "Reggae",
-     "duration": "2:03",
-     "file": "/music/happy-soaring_super-man_total-02m03s_preview-com-voz-00m32s.mp3",
-     "free": false
-    },
-    {
-     "name": "Tenho Uma Filha",
-     "lang": "pt",
-     "genre": "Acoustic",
-     "duration": "3:41",
-     "file": "/music/happy-soaring_tenho-uma-filha_total-03m41s_preview-com-voz-00m40s.mp3",
-     "free": false
-    },
-    {
-     "name": "This World Needs More Colors",
-     "lang": "en",
-     "genre": "Message",
-     "duration": "1:09",
-     "file": "/music/happy-soaring_this-world-needs-more-colors-1_total-01m09s_preview-com-voz-00m30s.mp3",
-     "free": true
-    },
-    {
-     "name": "Nada Vem Por Acaso",
-     "lang": "pt",
-     "genre": "Acoustic",
-     "duration": "3:30",
-     "file": "/music/happy-soaring_up-acaso-1_total-03m30s_preview-com-voz-00m35s.mp3",
-     "free": false
-    },
-    {
-     "name": "Vai Só",
-     "lang": "pt",
-     "genre": "Reggae",
-     "duration": "1:18",
-     "file": "/music/happy-soaring_vai-so_total-01m18s_preview-com-voz-00m30s.mp3",
-     "free": false
-    },
-    {
-     "name": "Wing Of The Wind",
-     "lang": "en",
-     "genre": "Reggae",
-     "duration": "0:55",
-     "file": "/music/happy-soaring_wing-of-the-wind-5_total-00m55s_preview-com-voz-00m22s.mp3",
-     "free": false
-    },
-    {
-     "name": "Sunset Dub",
-     "lang": "inst",
-     "genre": "Dub",
-     "duration": "3:35",
-     "file": "/music/happy-soaring_dub-1_total-03m35s_preview-instrumental-00m40s.mp3",
-     "free": false
-    },
-    {
-     "name": "Bass Rider",
-     "lang": "inst",
-     "genre": "Dub",
-     "duration": "4:10",
-     "file": "/music/happy-soaring_dub-bass-3_total-04m10s_preview-instrumental-00m40s.mp3",
-     "free": false
-    },
-    {
-     "name": "Deep Bass Dub",
-     "lang": "inst",
-     "genre": "Dub",
-     "duration": "3:49",
-     "file": "/music/happy-soaring_dub-bass_total-03m49s_preview-instrumental-00m40s.mp3",
-     "free": false
-    },
-    {
-     "name": "Slow Strings Dub",
-     "lang": "inst",
-     "genre": "Dub",
-     "duration": "3:42",
-     "file": "/music/happy-soaring_dub-violino-2_total-03m42s_preview-instrumental-00m40s.mp3",
-     "free": false
-    },
-    {
-     "name": "Strings in Dub",
-     "lang": "inst",
-     "genre": "Dub",
-     "duration": "4:15",
-     "file": "/music/happy-soaring_dub-violino_total-04m15s_preview-instrumental-00m40s.mp3",
-     "free": false
-    },
-    {
-     "name": "Dune Drift",
-     "lang": "inst",
-     "genre": "Instrumental",
-     "duration": "3:07",
-     "file": "/music/happy-soaring_dunes-at-145-1_total-03m07s_preview-instrumental-00m35s.mp3",
-     "free": false
-    },
-    {
-     "name": "Groove Flight",
-     "lang": "inst",
-     "genre": "Instrumental",
-     "duration": "1:00",
-     "file": "/music/happy-soaring_fly-with-groove_total-01m00s_preview-instrumental-00m24s.mp3",
-     "free": false
-    },
-    {
-     "name": "Golden Glide",
-     "lang": "inst",
-     "genre": "Instrumental",
-     "duration": "6:48",
-     "file": "/music/happy-soaring_golden-sand-dive-1_total-06m48s_preview-instrumental-00m40s.mp3",
-     "free": false
-    },
-    {
-     "name": "Coastal Guitars",
-     "lang": "inst",
-     "genre": "Instrumental",
-     "duration": "2:30",
-     "file": "/music/happy-soaring_guitaras-so-goodddd_total-02m30s_preview-instrumental-00m32s.mp3",
-     "free": false
-    },
-    {
-     "name": "Ridge Rhythm",
-     "lang": "inst",
-     "genre": "Instrumental",
-     "duration": "2:29",
-     "file": "/music/happy-soaring_percussive-rhythm_total-02m29s_preview-instrumental-00m32s.mp3",
-     "free": false
-    },
-    {
-     "name": "Thermal Lift",
-     "lang": "inst",
-     "genre": "Instrumental",
-     "duration": "1:38",
-     "file": "/music/happy-soaring_untitled_total-01m38s_preview-instrumental-00m32s.mp3",
-     "free": false
-    },
-    {
-     "name": "FX - Wind Whoosh",
-     "lang": "inst",
-     "genre": "FX",
-     "duration": "0:08",
-     "file": "/music/happy-soaring_big-wind-transitions-with-wow_total-00m08s_preview-00m08s.mp3",
-     "free": true
-    },
-    {
-     "name": "FX - Deep Impact",
-     "lang": "inst",
-     "genre": "FX",
-     "duration": "0:05",
-     "file": "/music/happy-soaring_create-transitions-effects_total-00m05s_preview-instrumental-00m05s.mp3",
-     "free": true
-    },
-    {
-     "name": "FX - Energy Riser",
-     "lang": "inst",
-     "genre": "FX",
-     "duration": "0:29",
-     "file": "/music/happy-soaring_energy-responsive-ease-1_total-00m29s_preview-instrumental-00m13s.mp3",
-     "free": true
-    },
-    {
-     "name": "Midnight Drift",
-     "lang": "inst",
-     "genre": "Instrumental",
-     "duration": "3:18",
-     "file": "/music/happy-soaring_midnight-static_total-03m18s_preview-instrumental-00m35s.mp3",
-     "free": true
+      "role": "bio",
+      "nome": "Paulo Pereira",
+      "gatilho": {
+        "pt": "Paulo Pereira Biografia",
+        "en": "Paulo Pereira Biography",
+        "es": "Paulo Pereira Biografía",
+        "fr": "Paulo Pereira Biographie",
+        "de": "Paulo Pereira Biografie"
+      },
+      "imagem": "/images/bio/banner.webp",
+      "imagemMobile": "/images/bio/banner-mobile.webp",
+      "alt": {
+        "pt": "Paulo Pereira em seis instrumentos diferentes",
+        "en": "Paulo Pereira playing six different instruments",
+        "es": "Paulo Pereira en seis instrumentos diferentes",
+        "fr": "Paulo Pereira sur six instruments différents",
+        "de": "Paulo Pereira an sechs verschiedenen Instrumenten"
+      },
+      "abertura": {
+        "pt": "Começou a tocar guitarra aos 13 anos e nunca mais deixou de procurar novas formas de fazer música. Ao longo do tempo tornou-se multi-instrumentista, passando também pelo baixo, bateria e teclados, e desenvolvendo igualmente trabalho como compositor.",
+        "en": "He picked up the guitar at 13 and never stopped looking for new ways to make music. Over time he became a multi-instrumentalist, taking on bass, drums and keyboards, and working as a composer as well.",
+        "es": "Empezó a tocar la guitarra a los 13 años y nunca dejó de buscar nuevas formas de hacer música. Con el tiempo se convirtió en multiinstrumentista, pasando también por el bajo, la batería y los teclados, y desarrollando igualmente trabajo como compositor.",
+        "fr": "Il commence la guitare à 13 ans et n’a jamais cessé de chercher de nouvelles façons de faire de la musique. Au fil du temps, il devient multi-instrumentiste — basse, batterie et claviers — et développe également un travail de compositeur.",
+        "de": "Mit 13 Jahren griff er zur Gitarre und suchte seitdem immer neue Wege, Musik zu machen. Mit der Zeit wurde er Multiinstrumentalist — Bass, Schlagzeug und Keyboards — und arbeitete ebenso als Komponist."
+      },
+      "marcos": [
+        {
+          "ano": {
+            "pt": "Aos 13 anos",
+            "en": "At 13",
+            "es": "A los 13 años",
+            "fr": "À 13 ans",
+            "de": "Mit 13 Jahren"
+          },
+          "facto": {
+            "pt": "A primeira guitarra",
+            "en": "The first guitar",
+            "es": "La primera guitarra",
+            "fr": "La première guitare",
+            "de": "Die erste Gitarre"
+          }
+        },
+        {
+          "ano": "1990",
+          "facto": "40ª Vez",
+          "nota": {
+            "pt": "Final do concurso “Aqui d’El Rock”, da RTP — 3.º lugar.",
+            "en": "Final of the “Aqui d’El Rock” contest, on RTP — 3rd place.",
+            "es": "Final del concurso “Aqui d’El Rock”, de RTP — 3.er puesto.",
+            "fr": "Finale du concours « Aqui d’El Rock », sur RTP — 3e place.",
+            "de": "Finale des Wettbewerbs „Aqui d’El Rock“ bei RTP — 3. Platz."
+          }
+        },
+        {
+          "ano": "1993/94",
+          "facto": "Lorelei"
+        },
+        {
+          "ano": "1994/95",
+          "facto": "Felhi!Pop",
+          "nota": {
+            "pt": "Concurso de Música Moderna Rock Rendez-Vous.",
+            "en": "Rock Rendez-Vous modern music contest.",
+            "es": "Concurso de Música Moderna Rock Rendez-Vous.",
+            "fr": "Concours de musique moderne Rock Rendez-Vous.",
+            "de": "Wettbewerb für moderne Musik Rock Rendez-Vous."
+          }
+        },
+        {
+          "ano": {
+            "pt": "Três anos",
+            "en": "Three years",
+            "es": "Tres años",
+            "fr": "Trois ans",
+            "de": "Drei Jahre"
+          },
+          "facto": "Kussondulola",
+          "nota": {
+            "pt": "Músico profissional na banda pioneira do reggae em Portugal. Teclados, samples e percussões eletrónicas, como Oluap ou Paulo Reggae.",
+            "en": "Professional musician in the band that pioneered reggae in Portugal. Keyboards, samples and electronic percussion, as Oluap or Paulo Reggae.",
+            "es": "Músico profesional en la banda pionera del reggae en Portugal. Teclados, samples y percusiones electrónicas, como Oluap o Paulo Reggae.",
+            "fr": "Musicien professionnel dans le groupe pionnier du reggae au Portugal. Claviers, samples et percussions électroniques, sous le nom d’Oluap ou Paulo Reggae.",
+            "de": "Berufsmusiker in der Band, die den Reggae in Portugal begründete. Keyboards, Samples und elektronische Perkussion, als Oluap oder Paulo Reggae."
+          }
+        },
+        {
+          "ano": "2003",
+          "facto": "Mola Dudle",
+          "nota": {
+            "pt": "Gravações do álbum “O Futuro Só Se Diz Em Particular”.",
+            "en": "Recording sessions for the album “O Futuro Só Se Diz Em Particular”.",
+            "es": "Grabaciones del álbum “O Futuro Só Se Diz Em Particular”.",
+            "fr": "Enregistrements de l’album « O Futuro Só Se Diz Em Particular ».",
+            "de": "Aufnahmen zum Album „O Futuro Só Se Diz Em Particular“."
+          }
+        },
+        {
+          "ano": {
+            "pt": "Hoje",
+            "en": "Today",
+            "es": "Hoy",
+            "fr": "Aujourd’hui",
+            "de": "Heute"
+          },
+          "facto": {
+            "pt": "Composição e produção",
+            "en": "Writing and producing",
+            "es": "Composición y producción",
+            "fr": "Composition et production",
+            "de": "Komposition und Produktion"
+          },
+          "nota": {
+            "pt": "Com a Inteligência Artificial como mais um instrumento.",
+            "en": "With Artificial Intelligence as one more instrument.",
+            "es": "Con la Inteligencia Artificial como un instrumento más.",
+            "fr": "Avec l’intelligence artificielle comme un instrument de plus.",
+            "de": "Mit künstlicher Intelligenz als einem weiteren Instrument."
+          }
+        }
+      ],
+      "remate": {
+        "pt": "A IA não como substituto do músico, mas como extensão da imaginação — uma ferramenta para explorar novas harmonias, arranjos, timbres e estruturas.",
+        "en": "AI not as a replacement for the musician, but as an extension of the imagination — a tool for exploring new harmonies, arrangements, timbres and structures.",
+        "es": "La IA no como sustituto del músico, sino como extensión de la imaginación — una herramienta para explorar nuevas armonías, arreglos, timbres y estructuras.",
+        "fr": "L’IA non pas en remplacement du musicien, mais en prolongement de l’imagination — un outil pour explorer de nouvelles harmonies, de nouveaux arrangements, timbres et structures.",
+        "de": "KI nicht als Ersatz für den Musiker, sondern als Erweiterung der Vorstellungskraft — ein Werkzeug, um neue Harmonien, Arrangements, Klangfarben und Strukturen zu erkunden."
+      },
+      "lema": {
+        "pt": "A música deve evoluir, surpreender e nunca deixar de experimentar",
+        "en": "Music should evolve, surprise, and never stop experimenting",
+        "es": "La música debe evolucionar, sorprender y nunca dejar de experimentar",
+        "fr": "La musique doit évoluer, surprendre et ne jamais cesser d’expérimenter",
+        "de": "Musik muss sich entwickeln, überraschen und nie aufhören zu experimentieren"
+      },
+      "showDesktop": true,
+      "showMobile": true,
+      "soNaPagina": true
     }
-   ],
-   "legal": {
-    "pt": "A música oferecida pela Happy Soaring destina-se apenas a uso pessoal e em redes sociais. A revenda, redistribuição ou uso comercial por terceiros não é permitido sem autorização escrita.",
-    "en": "Music offered by Happy Soaring is for personal and social media use only. Resale, redistribution or commercial use by third parties is not allowed without written permission.",
-    "es": "La música ofrecida por Happy Soaring es solo para uso personal y en redes sociales. No se permite la reventa, redistribución ni el uso comercial por parte de terceros sin autorización escrita.",
-    "fr": "La musique proposée par Happy Soaring est réservée à un usage personnel et aux réseaux sociaux. La revente, la redistribution ou l’usage commercial par des tiers ne sont pas autorisés sans accord écrit.",
-    "de": "Die Musik von Happy Soaring ist ausschliesslich für den persönlichen Gebrauch und für soziale Medien bestimmt. Weiterverkauf, Weiterverbreitung oder kommerzielle Nutzung durch Dritte sind ohne schriftliche Genehmigung nicht gestattet."
-   },
-   "cta": {
-    "title": {
-     "pt": "Precisas de música original para o teu vídeo de voo?",
-     "en": "Need original music for your flight video?",
-     "es": "¿Necesitas música original para tu vídeo de vuelo?",
-     "fr": "Besoin d’une musique originale pour votre vidéo de vol ?",
-     "de": "Brauchst du Originalmusik für dein Flugvideo?"
-    },
-    "text": {
-     "pt": "Fala com a Happy Soaring.",
-     "en": "Contact Happy Soaring.",
-     "es": "Habla con Happy Soaring.",
-     "fr": "Contactez Happy Soaring.",
-     "de": "Sprich mit Happy Soaring."
-    },
-    "buttonLabel": {
-     "pt": "Falar no WhatsApp",
-     "en": "Chat on WhatsApp",
-     "es": "Hablar por WhatsApp",
-     "fr": "Discuter sur WhatsApp",
-     "de": "Auf WhatsApp schreiben"
-    },
-    "waMessage": {
-     "de": "Hallo! Ich habe Happy Soaring Music gesehen und hätte gerne mehr Informationen.",
-     "fr": "Bonjour ! J’ai vu Happy Soaring Music et je voudrais plus d’informations.",
-     "es": "¡Hola! He visto Happy Soaring Music y quería más información.",
-     "en": "Hi! I saw Happy Soaring Music and would like more info.",
-     "pt": "Olá! Vi a Happy Soaring Music e queria mais informação."
-    }
-   },
-   "genreList": [
-    "Acoustic",
-    "Alternative Rock",
-    "Dub",
-    "FX",
-    "Funk",
-    "Instrumental",
-    "Message",
-    "Reggae"
-   ]
-  },
-  {
-   "role": "bio",
-   "nome": "Paulo Pereira",
-   "gatilho": {
-    "pt": "Paulo Pereira Biografia",
-    "en": "Paulo Pereira Biography",
-    "es": "Paulo Pereira Biografía",
-    "fr": "Paulo Pereira Biographie",
-    "de": "Paulo Pereira Biografie"
-   },
-   "imagem": "/images/bio/banner.webp",
-   "imagemMobile": "/images/bio/banner-mobile.webp",
-   "alt": {
-    "pt": "Paulo Pereira em seis instrumentos diferentes",
-    "en": "Paulo Pereira playing six different instruments",
-    "es": "Paulo Pereira en seis instrumentos diferentes",
-    "fr": "Paulo Pereira sur six instruments différents",
-    "de": "Paulo Pereira an sechs verschiedenen Instrumenten"
-   },
-   "abertura": {
-    "pt": "Começou a tocar guitarra aos 13 anos e nunca mais deixou de procurar novas formas de fazer música. Ao longo do tempo tornou-se multi-instrumentista, passando também pelo baixo, bateria e teclados, e desenvolvendo igualmente trabalho como compositor.",
-    "en": "He picked up the guitar at 13 and never stopped looking for new ways to make music. Over time he became a multi-instrumentalist, taking on bass, drums and keyboards, and working as a composer as well.",
-    "es": "Empezó a tocar la guitarra a los 13 años y nunca dejó de buscar nuevas formas de hacer música. Con el tiempo se convirtió en multiinstrumentista, pasando también por el bajo, la batería y los teclados, y desarrollando igualmente trabajo como compositor.",
-    "fr": "Il commence la guitare à 13 ans et n’a jamais cessé de chercher de nouvelles façons de faire de la musique. Au fil du temps, il devient multi-instrumentiste — basse, batterie et claviers — et développe également un travail de compositeur.",
-    "de": "Mit 13 Jahren griff er zur Gitarre und suchte seitdem immer neue Wege, Musik zu machen. Mit der Zeit wurde er Multiinstrumentalist — Bass, Schlagzeug und Keyboards — und arbeitete ebenso als Komponist."
-   },
-   "marcos": [
-    {
-     "ano": {
-      "pt": "Aos 13 anos",
-      "en": "At 13",
-      "es": "A los 13 años",
-      "fr": "À 13 ans",
-      "de": "Mit 13 Jahren"
-     },
-     "facto": {
-      "pt": "A primeira guitarra",
-      "en": "The first guitar",
-      "es": "La primera guitarra",
-      "fr": "La première guitare",
-      "de": "Die erste Gitarre"
-     }
-    },
-    {
-     "ano": "1990",
-     "facto": "40ª Vez",
-     "nota": {
-      "pt": "Final do concurso “Aqui d’El Rock”, da RTP — 3.º lugar.",
-      "en": "Final of the “Aqui d’El Rock” contest, on RTP — 3rd place.",
-      "es": "Final del concurso “Aqui d’El Rock”, de RTP — 3.er puesto.",
-      "fr": "Finale du concours « Aqui d’El Rock », sur RTP — 3e place.",
-      "de": "Finale des Wettbewerbs „Aqui d’El Rock“ bei RTP — 3. Platz."
-     }
-    },
-    {
-     "ano": "1993/94",
-     "facto": "Lorelei"
-    },
-    {
-     "ano": "1994/95",
-     "facto": "Felhi!Pop",
-     "nota": {
-      "pt": "Concurso de Música Moderna Rock Rendez-Vous.",
-      "en": "Rock Rendez-Vous modern music contest.",
-      "es": "Concurso de Música Moderna Rock Rendez-Vous.",
-      "fr": "Concours de musique moderne Rock Rendez-Vous.",
-      "de": "Wettbewerb für moderne Musik Rock Rendez-Vous."
-     }
-    },
-    {
-     "ano": {
-      "pt": "Três anos",
-      "en": "Three years",
-      "es": "Tres años",
-      "fr": "Trois ans",
-      "de": "Drei Jahre"
-     },
-     "facto": "Kussondulola",
-     "nota": {
-      "pt": "Músico profissional na banda pioneira do reggae em Portugal. Teclados, samples e percussões eletrónicas, como Oluap ou Paulo Reggae.",
-      "en": "Professional musician in the band that pioneered reggae in Portugal. Keyboards, samples and electronic percussion, as Oluap or Paulo Reggae.",
-      "es": "Músico profesional en la banda pionera del reggae en Portugal. Teclados, samples y percusiones electrónicas, como Oluap o Paulo Reggae.",
-      "fr": "Musicien professionnel dans le groupe pionnier du reggae au Portugal. Claviers, samples et percussions électroniques, sous le nom d’Oluap ou Paulo Reggae.",
-      "de": "Berufsmusiker in der Band, die den Reggae in Portugal begründete. Keyboards, Samples und elektronische Perkussion, als Oluap oder Paulo Reggae."
-     }
-    },
-    {
-     "ano": "2003",
-     "facto": "Mola Dudle",
-     "nota": {
-      "pt": "Gravações do álbum “O Futuro Só Se Diz Em Particular”.",
-      "en": "Recording sessions for the album “O Futuro Só Se Diz Em Particular”.",
-      "es": "Grabaciones del álbum “O Futuro Só Se Diz Em Particular”.",
-      "fr": "Enregistrements de l’album « O Futuro Só Se Diz Em Particular ».",
-      "de": "Aufnahmen zum Album „O Futuro Só Se Diz Em Particular“."
-     }
-    },
-    {
-     "ano": {
-      "pt": "Hoje",
-      "en": "Today",
-      "es": "Hoy",
-      "fr": "Aujourd’hui",
-      "de": "Heute"
-     },
-     "facto": {
-      "pt": "Composição e produção",
-      "en": "Writing and producing",
-      "es": "Composición y producción",
-      "fr": "Composition et production",
-      "de": "Komposition und Produktion"
-     },
-     "nota": {
-      "pt": "Com a Inteligência Artificial como mais um instrumento.",
-      "en": "With Artificial Intelligence as one more instrument.",
-      "es": "Con la Inteligencia Artificial como un instrumento más.",
-      "fr": "Avec l’intelligence artificielle comme un instrument de plus.",
-      "de": "Mit künstlicher Intelligenz als einem weiteren Instrument."
-     }
-    }
-   ],
-   "remate": {
-    "pt": "A IA não como substituto do músico, mas como extensão da imaginação — uma ferramenta para explorar novas harmonias, arranjos, timbres e estruturas.",
-    "en": "AI not as a replacement for the musician, but as an extension of the imagination — a tool for exploring new harmonies, arrangements, timbres and structures.",
-    "es": "La IA no como sustituto del músico, sino como extensión de la imaginación — una herramienta para explorar nuevas armonías, arreglos, timbres y estructuras.",
-    "fr": "L’IA non pas en remplacement du musicien, mais en prolongement de l’imagination — un outil pour explorer de nouvelles harmonies, de nouveaux arrangements, timbres et structures.",
-    "de": "KI nicht als Ersatz für den Musiker, sondern als Erweiterung der Vorstellungskraft — ein Werkzeug, um neue Harmonien, Arrangements, Klangfarben und Strukturen zu erkunden."
-   },
-   "lema": {
-    "pt": "A música deve evoluir, surpreender e nunca deixar de experimentar",
-    "en": "Music should evolve, surprise, and never stop experimenting",
-    "es": "La música debe evolucionar, sorprender y nunca dejar de experimentar",
-    "fr": "La musique doit évoluer, surprendre et ne jamais cesser d’expérimenter",
-    "de": "Musik muss sich entwickeln, überraschen und nie aufhören zu experimentieren"
-   },
-   "showDesktop": true,
-   "showMobile": true
-  }
- ]
+  ]
 }

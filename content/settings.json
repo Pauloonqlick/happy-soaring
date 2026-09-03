@@ -77,7 +77,7 @@
         "fr": "Musique",
         "de": "Musik"
       },
-      "target": "music"
+      "target": "/musica/"
     }
   ],
   "footer": {

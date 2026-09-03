@@ -27,10 +27,11 @@ import { rotuloFamilia, rotuloClasse } from '../regras/taxonomia.js';
 import { KN_PARA_KMH, PAISES_NOS, CHAVE_UNIDADE } from '../regras/unidades.js';
 import { P2W } from './conteudo-pilot2wing.mjs';
 import { QP } from './conteudo-o-que-e-um-parakite.mjs';
+import { MU } from './conteudo-musica.mjs';
 import { FL } from './conteudo-flow.mjs';
 import { IN } from './conteudo-inicial.mjs';
 import { PK } from './conteudo-parakite.mjs';
-import { entradasDoMenu } from '../regras/navegacao.js';
+import { entradasDoMenu, ROTAS } from '../regras/navegacao.js';
 
 const RAIZ = process.cwd();   /* corre-se a partir da raiz do projecto */
 const DOMINIO = 'https://happysoaring.com';
@@ -1151,14 +1152,8 @@ const caminhoP2W = l => (l === OMISSAO ? '' : '/' + l) + '/pilot2wing/';
 /* As rotas da pagina educativa vivem aqui em cima porque as fichas das asas
    ligam para ela e sao geradas antes: um `const` mais abaixo ficava na zona
    morta temporal e rebentava com "Cannot access before initialization". */
-const CAMINHOS_QP = {
-  pt: '/o-que-e-um-parakite/',
-  en: '/en/what-is-a-parakite/',
-  es: '/es/que-es-un-parakite/',
-  fr: '/fr/qu-est-ce-qu-un-parakite/',
-  de: '/de/was-ist-ein-parakite/'
-};
-const caminhoQP = l => CAMINHOS_QP[l] || CAMINHOS_QP[OMISSAO];
+const caminhoQP = l => ROTAS['/o-que-e-um-parakite/'][l]
+  || ROTAS['/o-que-e-um-parakite/'][OMISSAO];
 
 function paginaPilot2Wing(l, num) {
   const url = DOMINIO + caminhoP2W(l);
@@ -2154,6 +2149,187 @@ ${alt}
 }
 
 
+/* ---- a página /musica/ -------------------------------------------------
+   A música vivia numa secção da página inicial. Uma secção não tem endereço:
+   não se partilha, não se anuncia e não se mede — e o cartão que o Facebook
+   mostra ao partilhar `/#music` é o da página inicial, com uma fotografia de
+   parapente. Para uma página que tem preços e botão de compra, isso não era
+   um pormenor.
+
+   O endereço traduz-se, porque "música" é um nome comum e é o que as pessoas
+   escrevem. O título continua a ser a marca, "Happy Soaring Music".
+
+   O QUE ESTA AQUI E O QUE VEM DEPOIS
+     O gerador escreve a lista das faixas, os termos e a biografia em HTML.
+     A seguir, a musica.js substitui esse bloco pela loja a sério — leitor,
+     filtros, carrinho — usando o MESMO regras/musica.js que a página inicial
+     usa. Sem JavaScript fica a lista; com JavaScript fica a loja. As duas
+     dizem o mesmo porque saem do mesmo JSON. */
+/* a mesma tabela que o menu usa — ver regras/navegacao.js */
+const caminhoMU = l => ROTAS['/musica/'][l] || ROTAS['/musica/'][OMISSAO];
+
+/* o mesmo ficheiro que o CMS edita e que a página inicial lê */
+const MUSICA = (() => {
+  try {
+    return JSON.parse(fs.readFileSync(path.join(RAIZ, 'content/slides/music.json'), 'utf8'));
+  } catch (e) { return { elements: [] }; }
+})();
+
+function paginaMusica(l) {
+  const url = DOMINIO + caminhoMU(l);
+  const foto = DOMINIO + '/images/og-musica.jpg';
+  const alts = alternativas(x => caminhoMU(x));
+  const alt = etiquetasAlt(alts);
+  const inicio = inicioHref(l);
+  const els = MUSICA.elements || [];
+  const txt = els.find(e => e.role === 'text') || {};
+  const mus = els.find(e => e.role === 'music') || {};
+  const bio = els.find(e => e.role === 'bio') || {};
+  /* a guitarra vem do mesmo elemento do CMS que a página inicial usa: o alt
+     é o dele, traduzido, e se um dia lá tirarem a imagem esta também sai */
+  const fig = els.find(e => e.role === 'floatImage') || {};
+  const faixas = mus.tracks || [];
+  const generos = mus.genreList || [];
+
+  /* MusicPlaylist descreve o que isto e: uma coleccao de gravacoes do mesmo
+     autor. O Person leva @id proprio para o dia em que houver pagina dele —
+     a entidade ja existe, so ganha morada. */
+  const ld = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      { '@type': 'BreadcrumbList', itemListElement: [
+        { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + inicio },
+        { '@type': 'ListItem', position: 2, name: t(MU.migalha, l), item: url }
+      ]},
+      { '@type': 'MusicPlaylist',
+        '@id': url,
+        url,
+        name: t(txt.title, l) || 'Happy Soaring Music',
+        description: t(MU.desc, l),
+        inLanguage: l,
+        numTracks: faixas.length,
+        genre: generos,
+        publisher: ORGANIZACAO,
+        track: faixas.map(f => ({
+          '@type': 'MusicRecording',
+          name: f.name,
+          genre: f.genre || undefined,
+          byArtist: { '@id': DOMINIO + '/#paulo' }
+        })),
+        byArtist: {
+          '@type': 'Person',
+          '@id': DOMINIO + '/#paulo',
+          name: bio.nome || 'Paulo Pereira',
+          description: t(bio.abertura, l) || undefined
+        }
+      }
+    ]
+  });
+
+  /* ---- o estático: o que fica sem JavaScript e o que os motores leem ---- */
+  const listaFaixas = faixas.map(f =>
+    '<li><b>' + esc(f.name) + '</b>'
+    + (f.genre ? '<span>' + esc(f.genre) + '</span>' : '')
+    + (f.duration ? '<span>' + esc(f.duration) + '</span>' : '')
+    + '</li>').join('');
+
+  const marcos = (bio.marcos || []).map(m =>
+    '<li><b>' + esc(t(m.ano, l)) + '</b> ' + esc(t(m.facto, l)) + '</li>').join('');
+
+  const bioTxt = [t(bio.abertura, l), t(bio.remate, l)]
+    .filter(Boolean).map(p => '<p>' + esc(p) + '</p>').join('');
+
+  return `<!DOCTYPE html>
+<html lang="${l}">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>${esc(t(MU.title, l))}</title>
+<meta name="description" content="${esc(t(MU.desc, l))}" />
+<meta name="robots" content="max-image-preview:large" />
+<link rel="canonical" href="${url}" />
+${alt}
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Happy Soaring" />
+<meta property="og:locale" content="${l}" />
+<meta property="og:url" content="${url}" />
+<meta property="og:title" content="${esc(t(txt.title, l) || 'Happy Soaring Music')}" />
+<meta property="og:description" content="${esc(t(MU.desc, l))}" />
+<meta property="og:image" content="${foto}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="${esc(t(MU.ogAlt, l))}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="${esc(t(txt.title, l) || 'Happy Soaring Music')}" />
+<meta name="twitter:description" content="${esc(t(MU.desc, l))}" />
+<meta name="twitter:image" content="${foto}" />
+<meta name="twitter:image:alt" content="${esc(t(MU.ogAlt, l))}" />
+<link rel="stylesheet" href="/pagina.css" />
+<link rel="stylesheet" href="/menu.css" />
+<link rel="stylesheet" href="/musica.css" />
+<script src="/menu.js" defer></script>
+<script src="/musica.js" type="module"></script>
+<script type="application/ld+json">${ld}</script>
+</head>
+<body class="pg mu">
+
+<header class="pg-topo">
+  <a class="pg-marca" href="${inicio}">HAPPY <span>SOARING</span></a>
+  <span class="pg-dealer">${esc(t(T.dealer, l))}</span>
+  ${menuGlobal(l, url)}
+  ${seletorIdiomas(alts, l)}
+</header>
+
+<nav class="pg-migalhas" aria-label="${esc(t(T.migalhas, l))}">
+  <div class="mu-cx"><a href="${inicio}">${esc(t(T.inicio, l))}</a> &rsaquo;
+  <span>${esc(t(MU.migalha, l))}</span></div>
+</nav>
+
+<main>
+  <section class="mu-hero">
+    <div class="mu-cx mu-hero-in">
+      <div class="mu-hero-txt">
+        <p class="mu-kicker">${esc(t(txt.kicker, l))}</p>
+        <h1>${esc(t(txt.title, l) || 'Happy Soaring Music')}</h1>
+        <p class="mu-lead">${esc(t(txt.subtitle, l))}</p>
+      </div>
+      ${fig.src ? `<img class="mu-foto"
+        src="/images/music-guitar.webp"
+        srcset="/images/music-guitar-380.webp 380w, /images/music-guitar.webp 760w"
+        sizes="(max-width:899px) 46vw, 380px"
+        width="760" height="826" decoding="async" loading="eager"
+        alt="${esc(t(fig.alt, l))}" />` : ''}
+    </div>
+  </section>
+
+  <div class="mu-cx">
+    <!-- Os <h2> ficam FORA dos contentores. O JavaScript esvazia-os para pôr
+         a loja e a biografia, e com os títulos lá dentro a página passava a
+         ter só um h1 e um h3 — um salto de nível para quem navega por
+         cabeçalhos, e dois títulos de secção a menos para quem indexa.
+         O npm run check não apanhava: lê o HTML servido, onde estão. -->
+    <h2 class="mu-h2">${esc(t(MU.faixasTit, l))}</h2>
+    <div id="musica-loja">
+      <p class="mu-nota">${esc(t(MU.semJs, l))}</p>
+      <ol class="mu-lista">${listaFaixas}</ol>
+      ${t(mus.legal, l) ? '<p class="mu-legal">' + esc(t(mus.legal, l)) + '</p>' : ''}
+    </div>
+
+    <h2 class="mu-h2">${esc(t(MU.quemFaz, l))}</h2>
+    <div id="musica-bio">
+      ${bioTxt}
+      ${marcos ? '<ul class="mu-marcos">' + marcos + '</ul>' : ''}
+      ${t(bio.lema, l) ? '<p class="mu-lema">' + esc(t(bio.lema, l)) + '</p>' : ''}
+    </div>
+  </div>
+</main>
+
+<footer class="pg-rodape">Happy Soaring &middot; ${esc(t(T.dealer, l))}</footer>
+</body>
+</html>
+`;
+}
+
 /* ---- o Reflex Lab -----------------------------------------------------
    O simulador é uma página escrita à mão: tem folha própria, JavaScript
    próprio e um header próprio, e não passa por nenhum dos moldes acima.
@@ -2195,6 +2371,19 @@ if (!so || so === 'o-que-e-um-parakite') {
     urls.push(DOMINIO + rel);
   }
   console.log('  O que é um Parakite: ' + IDIOMAS.length + ' páginas');
+}
+
+if (!so || so === 'musica') {
+  for (const l of (soIdioma ? [soIdioma] : IDIOMAS)) {
+    const rel = caminhoMU(l);
+    const dir = path.join(destino, rel);
+    fs.mkdirSync(dir, { recursive: true });
+    const html = paginaMusica(l);
+    confereAlternativas(html, rel);
+    fs.writeFileSync(path.join(dir, 'index.html'), html);
+    urls.push(DOMINIO + rel);
+  }
+  console.log('  Música: ' + IDIOMAS.length + ' páginas');
 }
 
 if (!so && !soIdioma) escreverReflexLab();
