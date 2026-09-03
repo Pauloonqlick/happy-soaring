@@ -2185,8 +2185,19 @@ function paginaMusica(l) {
   const txt = els.find(e => e.role === 'text') || {};
   const mus = els.find(e => e.role === 'music') || {};
   const bio = els.find(e => e.role === 'bio') || {};
-  /* a guitarra vem do mesmo elemento do CMS que a página inicial usa: o alt
-     é o dele, traduzido, e se um dia lá tirarem a imagem esta também sai */
+  /* A GUITARRA, E PORQUE E QUE AS BANDEIRAS DO SLIDE NAO SE APLICAM AQUI
+     Usa-se o `src` e o `alt` do elemento do CMS — o alt traduzido é o dele, e
+     se um dia lá tirarem a imagem esta sai também.
+
+     O que NAO se usa são o showDesktop/showMobile. Esses governam um
+     `floatImage`: uma decoração que flutua sobre a secção da página inicial,
+     com x, y, parallax e zIndex, e que a essa escala não cabe num telemóvel.
+     Aqui a imagem não flutua — é a figura do hero, a única que a página tem,
+     e escondê-la no telemóvel deixava o hero vazio.
+
+     São dois componentes diferentes a partilhar um ficheiro, não a mesma
+     coisa em dois sítios. Se um dia isto tiver de ser controlável na página,
+     pede campo próprio — como o "só na página própria" da loja. */
   const fig = els.find(e => e.role === 'floatImage') || {};
   const faixas = mus.tracks || [];
   const generos = mus.genreList || [];

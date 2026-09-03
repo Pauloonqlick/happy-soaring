@@ -4,7 +4,7 @@ O que está por fazer e o que está por decidir. Vai sendo actualizado à medida
 que as coisas aparecem — o que se decide sai daqui e passa a estar escrito nas
 regras ou no código.
 
-Última actualização: 30/08/2026
+Última actualização: 03/09/2026
 
 ---
 
@@ -160,10 +160,46 @@ gama toda dos parakites — foi decidido assim.
 
 ## Música
 
+A secção passou a ter página própria em 03/09/2026 — `/musica/` e as quatro
+traduções. A loja é a mesma nos dois sítios: o código vive em
+`regras/musica.js` e a página inicial ficou com um convite.
+
+**Decidido em 03/09/2026 — o pagamento fica fora do site.** Tudo se trata por
+WhatsApp. A razão é a que já estava escrita aqui: a 1€ por faixa, qualquer
+plataforma com taxa fixa por transacção come a venda inteira. Isto deixa de
+ser uma falta e passa a ser uma escolha; se um dia o preço médio subir, volta
+a valer a pena pensar nisso.
+
+Duas peças do código passaram a ser load-bearing por causa desta decisão, e
+não são decoração:
+
+- a **referência de encomenda** (`HS-AAAAMMDD-XXXX`) é a única coisa que liga
+  a selecção feita no site à conversa que chega ao WhatsApp
+- a **pergunta de regresso** («chegaste a enviar?») é o único mecanismo de
+  reconciliação que existe
+
+A factura sai desta lista: seja qual for o canal, é contabilidade e não tem
+que ver com o código.
+
+Duas decisões fechadas em 03/09/2026, para não voltarem a aparecer como
+dúvida:
+
+- **A guitarra aparece no telemóvel da página**, apesar de o elemento no CMS
+  ter `showMobile: false`. Essa bandeira governa um `floatImage` — uma
+  decoração que flutua sobre a secção da página inicial. Na página não flutua:
+  é a figura do hero, a única imagem que lá está. São dois componentes a
+  partilhar um ficheiro. Se um dia tiver de ser controlável na página, leva
+  campo próprio.
+- **O botão da barra desliga-se quando a lista está vazia.** Com uma pesquisa
+  sem resultados não há o que arrancar, e um botão vivo que não faz nada é o
+  defeito que estávamos a corrigir. Não se limpa o filtro que a pessoa pôs —
+  isso responderia a outra pergunta. Se já houver música a tocar, o botão
+  continua vivo, senão não havia como pausar.
+
+Por fazer:
+
 - **Teste completo** do processo de compra, de ponta a ponta
 - **Playlist diária** — a ideia ficou por implementar
-- **Plataforma de pagamento** que trate do IVA europeu — a venda a 1€ não é
-  viável com taxas fixas por transacção
 
 ## SEO
 

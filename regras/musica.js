@@ -209,6 +209,25 @@ export function criarMusica(ajudas) {
         r.classList.toggle('mfhide', !(okL && okG && okQ));
       });
       refreshSelAll();
+      sincronizaPlay();
+    }
+
+    /* O BOTAO DA BARRA QUANDO NAO HA NADA QUE TOCAR
+       Com a lista vazia — uma pesquisa sem resultados, um género sem faixas —
+       o botão não tinha o que arrancar e voltava a ser o que era antes: um
+       botão com cursor de mão que não faz nada.
+
+       `disabled` resolve as três coisas de uma vez: perde o cursor, sai da
+       ordem de tabulação e passa a anunciar-se como indisponível a um leitor
+       de ecrã. Não se limpa o filtro que a pessoa pôs para arranjar alguma
+       coisa para tocar — isso era responder a outra pergunta.
+
+       Excepção: se já há música a tocar, o botão continua vivo mesmo com a
+       lista vazia, senão não havia como pausar o que se está a ouvir. */
+    function sincronizaPlay() {
+      if (!flatBody) return;
+      const ha = !!flatBody.querySelector('.music-track:not(.mfhide)');
+      npBtn.disabled = !ha && !audio.src;
     }
     /* põe todas as linhas de acordo com a seleção guardada */
     function syncRows() {
@@ -410,6 +429,7 @@ export function criarMusica(ajudas) {
       flatBody.appendChild(row);
     });
     listbox.appendChild(flatBody);
+    sincronizaPlay();
     panel.appendChild(listbox);
     applyFilter();
 
