@@ -1351,8 +1351,8 @@ function buildFlow(item) {
       const t2 = el('div', 'desc-tira');
       const ic = el('div', 'desc-tira-ic');
       ic.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
-        '<path d="M9.1 9a3 3 0 1 1 4.2 2.8c-.8.4-1.3 1.1-1.3 2v.7" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>' +
-        '<circle cx="12" cy="18.5" r="1.3" fill="#fff"/></svg>';
+        '<path d="M9.1 9a3 3 0 1 1 4.2 2.8c-.8.4-1.3 1.1-1.3 2v.7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>' +
+        '<circle cx="12" cy="18.5" r="1.3" fill="currentColor"/></svg>';
       const txt = el('div', 'desc-tira-txt');
       const h = el('div', 'desc-tira-h'); h.textContent = ui('descTitulo');
       const sub = el('div', 'desc-tira-sub');

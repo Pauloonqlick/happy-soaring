@@ -1,5 +1,13 @@
 :root{
   --orange:#ff6a13;
+  /* O preto que vai sobre o laranja.
+     Branco sobre #ff6a13 dá 2,87:1 — abaixo dos 4,5 que o WCAG pede para
+     texto normal. Não era o descuido de um botão: era a cor de TODOS os
+     botões primários do site. Este preto dá 6,39:1 no mesmo laranja.
+     Não é inventado. Já era o que o `.rl-seg button.on` e a
+     `.av-etiqueta.t-oferta` usavam por conta própria, cada um com o seu
+     valor. Passa a haver um só, e com nome. */
+  --sobre-laranja:#231000;
   --black:#141414;
   --white:#ffffff;
 }
@@ -187,7 +195,7 @@ h2.title{
 
 .btn{
   display:inline-block;
-  background:var(--orange);color:#fff;font-weight:800;
+  background:var(--orange);color:var(--sobre-laranja);font-weight:800;
   padding:16px 34px;border-radius:100px;text-decoration:none;
   font-size:16px;letter-spacing:.3px;
   box-shadow:0 12px 30px rgba(255,106,19,.45);
@@ -195,7 +203,9 @@ h2.title{
 }
 .btn:hover{transform:translateY(-3px)}
 .btn.secondary{
-  background:transparent;box-shadow:none;
+  /* o .btn deixou de ser branco: sem esta linha a variante transparente
+     herdava o preto do laranja e desaparecia sobre a fotografia */
+  background:transparent;box-shadow:none;color:#fff;
   border:2px solid rgba(255,255,255,.55);padding:14px 32px;
 }
 .btn.secondary:hover{border-color:#fff;background:rgba(255,255,255,.08)}
@@ -498,7 +508,7 @@ footer small{opacity:.7}
   background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.4);color:#fff;
 }
 .flow-btn:hover{background:rgba(255,255,255,.24);border-color:rgba(255,255,255,.7)}
-.flow-btn.primary{background:var(--orange);border-color:var(--orange);color:#fff}
+.flow-btn.primary{background:var(--orange);border-color:var(--orange);color:var(--sobre-laranja)}
 .flow-btn.primary:hover{background:#ff7c31}
 /* pedir preço abre o WhatsApp: leva o verde e o ícone da própria aplicação */
 .flow-btn.wa{
@@ -628,7 +638,7 @@ footer small{opacity:.7}
 .hs-play{
   position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
   width:82px;height:82px;border-radius:50%;border:2px solid #fff;
-  background:var(--orange);color:#fff;z-index:3;
+  background:var(--orange);color:var(--sobre-laranja);z-index:3;
   display:flex;align-items:center;justify-content:center;padding-left:5px;
   box-shadow:0 8px 30px rgba(0,0,0,.35);
   transition:transform .25s ease,background .25s ease;
@@ -1067,7 +1077,7 @@ body.tem-faixa .lang-switcher{top:calc(24px + var(--faixa-h,56px))}
 /* a tira do convite: 56px, para nao empurrar a asa para baixo da dobra */
 .desc-tira{display:flex;align-items:center;gap:16px;background:rgba(255,255,255,.10);
   border:1px solid rgba(255,255,255,.32);border-radius:12px;padding:13px 20px;margin-bottom:22px}
-.desc-tira-ic{width:30px;height:30px;border-radius:50%;background:var(--orange);flex:none;
+.desc-tira-ic{width:30px;height:30px;border-radius:50%;background:var(--orange);color:var(--sobre-laranja);flex:none;
   display:flex;align-items:center;justify-content:center}
 .desc-tira-txt{flex:1;min-width:0}
 .desc-tira-h{font-size:15.5px;font-weight:800}
@@ -1096,13 +1106,13 @@ body.tem-faixa .lang-switcher{top:calc(24px + var(--faixa-h,56px))}
   color:rgba(255,255,255,.82);text-transform:uppercase;letter-spacing:.7px;
   background:none;cursor:pointer}
 .desc-cat span{font-weight:600;color:rgba(255,255,255,.5);font-size:12px}
-.desc-cat.on{background:var(--orange);border-color:var(--orange);color:#fff}
+.desc-cat.on{background:var(--orange);border-color:var(--orange);color:var(--sobre-laranja)}
 .desc-cat.on span{color:rgba(255,255,255,.85)}
 .desc-cat.livre{border-style:dashed;text-transform:none;letter-spacing:0;font-weight:600}
 .desc-chips{display:flex;flex-wrap:wrap;gap:8px}
 .desc-chip{border:1px solid rgba(255,255,255,.38);border-radius:100px;padding:9px 17px;
   font:inherit;font-size:13px;color:rgba(255,255,255,.82);background:none;cursor:pointer}
-.desc-chip.on{background:var(--orange);border-color:var(--orange);color:#fff;font-weight:800}
+.desc-chip.on{background:var(--orange);border-color:var(--orange);color:var(--sobre-laranja);font-weight:800}
 .desc-peso{display:flex;align-items:center;gap:14px;padding-top:8px}
 .desc-peso-sl{flex:1;accent-color:var(--orange)}
 .desc-peso-kg{font-size:16px;font-weight:800;white-space:nowrap}
@@ -1132,7 +1142,7 @@ body.tem-faixa .lang-switcher{top:calc(24px + var(--faixa-h,56px))}
 .desc-img{width:100%;max-width:620px;height:auto;object-fit:contain;
   filter:drop-shadow(0 26px 50px rgba(0,0,0,.5))}
 .desc-selo-linha{display:flex;align-items:center;gap:10px}
-.desc-selo{background:var(--orange);border-radius:100px;padding:5px 13px;font-size:10.5px;
+.desc-selo{background:var(--orange);color:var(--sobre-laranja);border-radius:100px;padding:5px 13px;font-size:10.5px;
   font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
 .desc-quantas{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;
   font-weight:700;color:#ffd6ad}
@@ -1316,7 +1326,7 @@ a.flow-dealer:hover{color:var(--orange)}
 .sug-q{font-size:13.5px;font-weight:700;line-height:1.35;margin:0 0 11px;color:#16202c}
 .sug-b{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .sug-sim{
-  background:var(--orange);color:#fff;border:0;border-radius:100px;font-family:inherit;
+  background:var(--orange);color:var(--sobre-laranja);border:0;border-radius:100px;font-family:inherit;
   font-size:12px;font-weight:800;padding:9px 16px;cursor:pointer;
 }
 .sug-sim:hover{background:#ff7c31}

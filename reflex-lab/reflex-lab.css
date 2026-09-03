@@ -5,6 +5,7 @@
    ============================================================ */
 :root{
   --orange:#ff6a13;
+  --sobre-laranja:#231000;   /* o preto sobre o laranja — ver styles.css */
   --orange-soft:#ff8a45;
   --ink:#0d0f12;
   --ink-2:#14171c;
@@ -220,7 +221,7 @@ a{color:inherit;text-decoration:none}
 /* segmentado (roldanas) */
 .rl-seg{display:flex;background:var(--ink-3);border:1px solid var(--line-2);border-radius:10px;overflow:hidden}
 .rl-seg button{flex:1;background:none;border:none;color:var(--muted);font-family:inherit;font-size:13px;font-weight:700;padding:8px 4px;cursor:pointer}
-.rl-seg button.on{background:var(--orange);color:#231000}
+.rl-seg button.on{background:var(--orange);color:var(--sobre-laranja)}
 
 /* ---------- SVG dinâmico ---------- */
 .rl-scene .flow{fill:none;stroke:var(--rl-flow);stroke-width:1.4;opacity:.55;stroke-linecap:round}

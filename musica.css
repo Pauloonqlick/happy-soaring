@@ -47,7 +47,7 @@
 
 .music-btn{border:none;border-radius:100px;font-weight:700;font-size:13px;padding:11px 20px;cursor:pointer;text-decoration:none;display:inline-block;transition:transform .2s,background .2s}
 
-.music-btn.primary{background:var(--orange);color:#fff}
+.music-btn.primary{background:var(--orange);color:var(--sobre-laranja)}
 
 .music-btn.primary:hover{transform:translateY(-2px)}
 
@@ -57,7 +57,7 @@
 
 .music-np{display:flex;align-items:center;gap:12px;background:#1e1e1e;border:1px solid #2c2c2c;border-radius:14px;padding:10px 12px;margin:18px 0 8px}
 
-.music-np-thumb{width:44px;height:44px;border-radius:8px;background:var(--orange);flex:none;display:flex;align-items:center;justify-content:center}
+.music-np-thumb{width:44px;height:44px;border-radius:8px;background:var(--orange);color:var(--sobre-laranja);flex:none;display:flex;align-items:center;justify-content:center}
 
 .music-np-btn{width:38px;height:38px;border-radius:50%;border:none;background:#fff;color:#141414;flex:none;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .music-np-btn:disabled{background:rgba(255,255,255,.22);color:rgba(255,255,255,.5);cursor:default}
@@ -96,7 +96,7 @@
 
 .music-track:first-child{border-top:none}
 
-.music-pl{width:30px;height:30px;border-radius:50%;border:none;flex:none;cursor:pointer;background:var(--orange);color:#fff;display:flex;align-items:center;justify-content:center}
+.music-pl{width:30px;height:30px;border-radius:50%;border:none;flex:none;cursor:pointer;background:var(--orange);color:var(--sobre-laranja);display:flex;align-items:center;justify-content:center}
 
 .music-pl:hover{background:var(--orange-dark,#e0570a)}
 
@@ -138,7 +138,7 @@
 
 .music-track.sel{background:rgba(255,106,19,.16)}
 
-.music-track.sel .music-add{background:var(--orange);color:#fff}
+.music-track.sel .music-add{background:var(--orange);color:var(--sobre-laranja)}
 
 .music-free{background:#134e2b;color:#4ade80;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;margin-left:8px;vertical-align:middle}
 
@@ -146,7 +146,7 @@
 
 .music-fbtn{background:#1e1e1e;border:1px solid #2c2c2c;color:#ccc;font-size:12px;font-weight:600;padding:7px 14px;border-radius:100px;cursor:pointer}
 
-.music-fbtn.on{background:var(--orange);border-color:var(--orange);color:#fff}
+.music-fbtn.on{background:var(--orange);border-color:var(--orange);color:var(--sobre-laranja)}
 
 .music-track.mfhide{display:none}
 
@@ -162,15 +162,15 @@
 
 .music-cart.show{display:flex}
 
-.music-cart-total{color:#fff;font-weight:800;font-size:19px;line-height:1.1}
+.music-cart-total{color:var(--sobre-laranja);font-weight:800;font-size:19px;line-height:1.1}
 
-.music-cart-sub{color:#fff;opacity:.9;font-size:12px}
+.music-cart-sub{color:var(--sobre-laranja);opacity:.82;font-size:12px}
 
-.music-cart-ref{color:#fff;opacity:.6;font-size:10.5px;letter-spacing:.6px;margin-top:2px}
+.music-cart-ref{color:var(--sobre-laranja);opacity:.72;font-size:10.5px;letter-spacing:.6px;margin-top:2px}
 
 .music-cart-ref:empty{display:none}
 
-.music-cart-nudge{color:#fff;background:rgba(0,0,0,.2);border-radius:100px;padding:5px 12px;font-size:12px;font-weight:600}
+.music-cart-nudge{color:#fff;background:rgba(0,0,0,.42);border-radius:100px;padding:5px 12px;font-size:12px;font-weight:600}
 
 .music-cart-buy{margin-left:auto;background:#25D366;color:#08351a;font-weight:800;font-size:13px;padding:10px 16px;border-radius:100px;text-decoration:none;display:inline-flex;align-items:center;gap:7px}
 

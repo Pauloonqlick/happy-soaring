@@ -201,6 +201,80 @@ Por fazer:
 - **Teste completo** do processo de compra, de ponta a ponta
 - **Playlist diária** — a ideia ficou por implementar
 
+## Acessibilidade · auditoria de 03/09/2026
+
+A auditoria mediu contraste, estrutura de títulos, alvos de toque, carimbos de
+versão e canonical/hreflang nas 141 páginas. As três primeiras versões da sonda
+davam falsos positivos — não compunham transparência e não liam o gradiente do
+`body` — e por isso só entrou aqui o que foi medido no DOM já renderizado.
+
+### Corrigido
+
+- **`.sg-cta` invisível.** O botão do Pilot2Wing estava laranja sobre laranja,
+  1,00:1. `.sg-cta` é (0,1,0) e perdia para `.pg a{color:var(--orange)}`, que é
+  (0,1,1). Só se via ao passar o rato, porque o `:hover` é (0,2,0) e ganha —
+  num telemóvel não há hover nenhum. Afetava as 5 páginas `/pilot2wing/`.
+- **`.sg-cta-2` e `.pg-marca`, a mesma armadilha.** Os secundários do
+  Pilot2Wing diziam `color:#fff` e saíam laranja. A marca da casa é
+  `HAPPY <span>SOARING</span>`, branco e laranja: saía toda laranja em 135
+  páginas. Nenhum dos dois dava erro de contraste — por isso é que estavam lá
+  há tanto tempo. Com estes, a regra `.pg a` já apanhou **sete** elementos.
+- **Alvos do seletor de idiomas.** Mediam 15–18 × 25 px a 390 px de largura, no
+  topo de 135 páginas; o mínimo do WCAG 2.2 AA é 24 × 24. Passaram a 43–46 × 47
+  sem mudar um pixel do desenho, com um `::after` a estender a área de toque.
+  A extensão lateral é metade do espaço do separador: se fosse mais, as áreas
+  sobrepunham-se e o dedo abria a língua errada.
+- **Texto branco sobre o laranja da marca.** Dava 2,87:1 em todos os botões
+  primários do site. Passou a `--sobre-laranja:#231000`, 6,39:1 — o preto que o
+  `.rl-seg button.on` e a `.av-etiqueta.t-oferta` já usavam por conta própria.
+
+### Não corrigido, e porquê
+
+Ficam registados com o número medido. Nenhum é defeito de código: são decisões
+de desenho que só tu podes tomar.
+
+1. **Laranja como texto sobre painéis claros** — `.pk-papel .pg-eyebrow` 2,87:1
+   sobre branco, `.pk-et-laranja` 2,87, `.pk-dealer-et` 2,66 sobre `#fff5ee`.
+   São etiquetas a 11,5 px, logo o mínimo é 4,5. Mudar implica escolher um
+   laranja escuro para texto sobre claro — outra cor de marca, não um ajuste.
+2. **Cinzentos pequenos** — `.music-dur-exc` `#6f6f6f` 3,35:1 nas 42 faixas,
+   `.music-legal` 3,35, `.music-foot-unit` 4,23, `.rl-disclaimer` e as
+   etiquetas do Reflex Lab 3,14 em 17 sítios.
+3. **`.rl-slider` com 5 px de altura** e pega de 17 px. São 7 comandos; em
+   telemóvel a área de toque é a barra.
+4. **Números decorativos e setas** — `.pk-percurso-n`, `.sg-etapa-n` (1,57 a
+   2,24) e as setas `→` e `▼` a 0,28 de alfa. Duplicam texto visível ao lado e
+   por isso não contam como achado. Fica a nota de que as setas dos diagramas
+   de fluxo **transportam sentido**, ao contrário dos números.
+
+### Fora do alcance de qualquer sonda
+
+A página inicial põe texto sobre fotografias com scrim. O fundo não é uma cor
+CSS e nenhuma medição estática o pode decidir — foram 64 nós marcados como
+indetermináveis. Não estão aprovados: estão por decidir.
+
+### O que o `npm run check` passou a apanhar
+
+Três verificações novas, escritas por cicatriz e não por catálogo:
+
+- **5 · a armadilha da `.pg a`** — abre cada página, lê a `<body>`, e só conta
+  como apanha-tudo uma regra `X a` cujo `X` a `<body>` satisfaz. A primeira
+  versão acusou quatro coisas falsas por não fazer isto.
+- **6 · contraste de fundo e texto declarados na mesma regra** — só pares
+  decidíveis, e diz quantos ficaram por decidir para que o silêncio não passe
+  por aprovação. Isenta o estado desactivado, que o WCAG 1.4.3 também isenta.
+- **7 · saltos de nível nos títulos** — conta o `alt` de uma imagem como nome
+  acessível.
+
+As três foram partidas de propósito para confirmar que sabem falhar. Duas
+estavam erradas e só se soube por causa disso: a 5 comparava classes por
+substring e a defesa do `.sg-cta-2` escondia a falta de defesa do `.sg-cta`;
+a 7 atravessava comentários HTML e via dois títulos numa página que tem quatro.
+
+**Por fazer:** alvos de toque exigem layout renderizado, e isso pede um browser
+sem cabeça — a primeira dependência de um projeto que hoje não tem nenhuma.
+Fica em aberto, com o custo dito.
+
 ## SEO
 
 Feito: robots.txt, canonical, Open Graph, JSON-LD, 404 a sério, **endereços

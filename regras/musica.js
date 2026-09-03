@@ -262,7 +262,7 @@ export function criarMusica(ajudas) {
     /* áudio partilhado + barra "a tocar agora" */
     const audio = el('audio'); audio.preload = 'none';
     const np = el('div', 'music-np');
-    const npThumb = el('div', 'music-np-thumb'); npThumb.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="#fff" aria-hidden="true"><path d="M12 3v10.55A4 4 0 1014 17V7h4V3z"/></svg>';
+    const npThumb = el('div', 'music-np-thumb'); npThumb.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 3v10.55A4 4 0 1014 17V7h4V3z"/></svg>';
     const npBtn = el('button', 'music-np-btn'); npBtn.type = 'button'; npBtn.setAttribute('aria-label', ui('playPause')); npBtn.innerHTML = ICON_PLAY;
     const npMid = el('div', 'music-np-mid');
     const npTitle = el('div', 'music-np-title'); npTitle.textContent = '—';
