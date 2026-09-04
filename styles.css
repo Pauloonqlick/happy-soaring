@@ -348,13 +348,32 @@ a.trust:hover{transform:translateY(-2px);opacity:.88}
 .menu-drawer.open{transform:translateX(0)}
 .menu-drawer ul{list-style:none}
 .menu-drawer li{margin:16px 0}
+/* A GAVETA E LARANJA, E O BRANCO NAO CHEGA
+   Medido: `#fff` sobre `#ff6a13` da 2,87:1. A 38px o minimo e 3, e por isso
+   falhava por treze centesimas — pouco, mas falhava, e falhava na navegacao
+   inteira da pagina inicial.
+
+   Nao e cor nova: o `--sobre-laranja` existe desde a auditoria de 03/09
+   exactamente para texto EM CIMA do laranja, e da 6,39:1. Foi escrito para
+   os botoes primarios e o menu ficou de fora — provavelmente porque a
+   gaveta so se ve depois de se carregar no burger, e nenhuma medicao a
+   tinha aberto. */
 .menu-drawer a{
-  color:#fff;text-decoration:none;font-weight:800;letter-spacing:-.5px;
+  color:var(--sobre-laranja);text-decoration:none;font-weight:800;letter-spacing:-.5px;
   font-size:clamp(26px,4vw,38px);transition:color .2s;
 }
 /* o laranja da marca em cima do laranja do painel não se via: passa a um tom
    claro e quente, que sobre este fundo dá 4,3:1 */
-.menu-drawer a:hover,.menu-drawer a:focus-visible{color:#ffd2a8}
+/* O hover era `#ffd2a8`, que sobre o laranja da 2,05:1 — pior ainda que o
+   branco que aqui estava. Com a tinta escura por baixo, qualquer mudanca de
+   cor ou nao se ve ou nao se le: o laranja e claro e nao ha muito espaco
+   entre "distingue-se" e "some-se".
+   O sublinhado nao depende de cor nenhuma, le-se sempre, e serve tambem
+   quem navega por teclado — que era o que o `:focus-visible` ja queria. */
+.menu-drawer a:hover,.menu-drawer a:focus-visible{
+  color:var(--sobre-laranja);
+  text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:3px;
+}
 
 .scrollhint{
   position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
@@ -1556,3 +1575,44 @@ section.a-carregar{min-height:100vh}
 .lang-switcher.sobre-claro{background:rgba(27,34,42,.9)}
 .lang-switcher.sobre-claro.open{background:rgba(27,34,42,.96)}
 .lang-switcher.sobre-claro .lang{box-shadow:0 0 0 1px rgba(255,255,255,.34)}
+
+
+/* ======================================================================
+   O MARCADOR DE NOME PROPRIO NAO E UM ELEMENTO DE DESENHO
+   ======================================================================
+   Para dizer ao tradutor que "Happy Soaring" nao e texto, e preciso um
+   elemento a volta dele. Esse elemento e um `<span>` — e a folha de estilo
+   deste site tem dezenas de regras que estilizam `span` pelo contexto:
+   `h2.title span` pinta de laranja, `.pk-dealer-nome span` mete 13px e
+   maiusculas, `.ng-l span` mete `display:block`.
+
+   Medido depois de ligar a proteccao: o "Happy Soaring" do h2 da inicial
+   ficou LARANJA, e o "Flow Paragliders" do bloco de dealer encolheu de
+   32px para 13px. Nenhuma dessas regras esta errada — nenhuma delas foi
+   escrita a pensar que ia aparecer ali um span que nao e de ninguem.
+
+   A solucao nao e ir corrigir trinta selectores: e declarar que este span
+   esta fora da cascata. Nao herda estilo proprio, herda o do pai e nada
+   mais. O `!important` aqui nao esta a ganhar uma discussao — esta a dizer
+   que nao ha discussao nenhuma para ter.
+   ====================================================================== */
+span.hs-nome{
+  /* `contents` e nao `inline`: o marcador deixa de gerar caixa nenhuma e o
+     texto passa a contar como se ele nao existisse. Num contentor `flex`
+     um `inline` era blockificado por regra da especificacao e virava um
+     item — no `.qp-cta`, que tem `gap:9px` para separar o texto do icone,
+     esse gap passou a separar as palavras e o botao cresceu 5px.
+     Com `contents` nao ha item, nao ha gap, nao ha 5px.
+     As linhas abaixo continuam a ser precisas: `display:contents` tira a
+     caixa mas o texto continua a herdar do span, e por isso um
+     `h2.title span{color:laranja}` ainda o pintava. */
+  display:contents !important;
+  color:inherit !important;
+  font:inherit !important;
+  letter-spacing:inherit !important;
+  text-transform:inherit !important;
+  background:none !important;
+  border:0 !important;
+  padding:0 !important;
+  margin:0 !important;
+}

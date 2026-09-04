@@ -549,10 +549,6 @@ export const QP = {
     fr: 'Le reflex augmente la marge de stabilité dans certaines configurations, mais il ne rend pas l’aile impossible à fermer. Turbulence, pression interne faible, déformations, problèmes de trim ou actions inadaptées peuvent encore provoquer une perte de stabilité. Il ne remplace pas le pilotage — et il n’est pas, à lui seul, ce qui définit un Parakite.',
     de: 'Reflex vergrößert die Stabilitätsreserve in bestimmten Konfigurationen, macht den Schirm aber nicht klappunmöglich. Turbulenz, geringer Innendruck, Verformungen, Trimmprobleme oder unpassende Eingriffe können weiterhin zu Stabilitätsverlust führen. Es ersetzt das Fliegen nicht — und es ist für sich allein auch nicht das, was ein Parakite ausmacht.'
   },
-  s7Cta: { pt: 'Explorar o Reflex Lab', en: 'Explore the Reflex Lab',
-           es: 'Explorar el Reflex Lab', fr: 'Explorer le Reflex Lab',
-           de: 'Das Reflex Lab erkunden' },
-
   /* ----------------------------------------------------- 8 · comparações */
   s8Kicker: { pt: 'Onde estão as fronteiras', en: 'Where the boundaries are',
               es: 'Dónde están las fronteras', fr: 'Où sont les frontières',
@@ -698,20 +694,15 @@ export const QP = {
            fr: 'Aller plus loin', de: 'Mehr erfahren' },
   s10Links: {
     pt: [['Parakite em Portugal', 'Aprender, testar e voar — por onde se começa.'],
-         ['Pilot2Wing', 'O método de formação: primeiro o piloto, depois a asa.'],
-         ['Reflex Lab', 'Um simulador conceptual para ver a geometria a mexer.']],
+         ['Pilot2Wing', 'O método de formação: primeiro o piloto, depois a asa.']],
     en: [['Parakite in Portugal', 'Learning, trying and flying — where to start.'],
-         ['Pilot2Wing', 'The training method: first the pilot, then the wing.'],
-         ['Reflex Lab', 'A conceptual simulator to watch the geometry move.']],
+         ['Pilot2Wing', 'The training method: first the pilot, then the wing.']],
     es: [['Parakite en Portugal', 'Aprender, probar y volar — por dónde se empieza.'],
-         ['Pilot2Wing', 'El método de formación: primero el piloto, después el ala.'],
-         ['Reflex Lab', 'Un simulador conceptual para ver la geometría en movimiento.']],
+         ['Pilot2Wing', 'El método de formación: primero el piloto, después el ala.']],
     fr: [['Parakite au Portugal', 'Apprendre, essayer et voler — par où commencer.'],
-         ['Pilot2Wing', 'La méthode de formation : d’abord le pilote, ensuite l’aile.'],
-         ['Reflex Lab', 'Un simulateur conceptuel pour voir la géométrie bouger.']],
+         ['Pilot2Wing', 'La méthode de formation : d’abord le pilote, ensuite l’aile.']],
     de: [['Parakite in Portugal', 'Lernen, testen und fliegen — wo man anfängt.'],
-         ['Pilot2Wing', 'Die Ausbildungsmethode: erst der Pilot, dann der Schirm.'],
-         ['Reflex Lab', 'Ein konzeptioneller Simulator, der die Geometrie zeigt.']]
+         ['Pilot2Wing', 'Die Ausbildungsmethode: erst der Pilot, dann der Schirm.']]
   },
 
   /* ----------------------------------------------------------------- FAQ */

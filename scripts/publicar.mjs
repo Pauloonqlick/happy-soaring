@@ -55,7 +55,8 @@ const FICHEIROS = [
   'app.js',
   'styles.css',
   'pagina.css',      /* folha das páginas das asas */
-  'menu.css',        /* a navegação global: páginas geradas e Reflex Lab */
+  'tema.css',        /* escrita pelo gerador a partir de content/tema.json */
+  'menu.css',        /* a navegação global das páginas geradas */
   'musica.css',      /* a loja de música: página inicial e /musica/ */
   'menu.js',         /* abre e fecha a gaveta; não constrói o menu */
   'musica.js',       /* arranca a loja de música na página própria */
@@ -69,8 +70,7 @@ const PASTAS = [
   'content',         /* o JSON que o site lê */
   'images',
   'music',
-  'admin',           /* CMS: pede sessão do GitHub, e o robots.txt tapa-o */
-  'reflex-lab'
+  'admin'            /* CMS: pede sessão do GitHub, e o robots.txt tapa-o */
 ];
 
 /* as páginas das asas, geradas: /asas/… em pt e /en|es|fr|de/… nas outras */

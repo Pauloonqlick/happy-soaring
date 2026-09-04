@@ -12,6 +12,15 @@
  *   ou termos que a comunidade usa em inglês em toda a parte. Traduzi-los
  *   tornava-os menos encontráveis, não mais claros.
  *
+ *   "Happy Soaring" é o primeiro dessa lista e o único que não admite sequer
+ *   uma alteração de forma. Não é só que não se traduza: não se junta a
+ *   outra palavra com hífen, não se abrevia, não se declina. O alemão
+ *   escrevia "Die Happy-Soaring-Methode" — que é ortografia alemã correcta,
+ *   porque o alemão compõe com hífen — mas parte o nome em três pedaços.
+ *   "Die Methode von Happy Soaring" é igualmente correcto e deixa o nome
+ *   inteiro. Entre a gramática de uma língua e a integridade do nome, ganha
+ *   o nome; e neste caso não foi preciso escolher.
+ *
  *   "Parakite flying is energy management." fica em inglês de propósito: é a
  *   frase-assinatura da Happy Soaring e é assim que se diz. Entra como
  *   declaração visual, nunca como h2 — um h2 em inglês numa página portuguesa
@@ -58,7 +67,7 @@ export const PK = {
     en: 'Happy Soaring pilot flying a Mullet over the Portuguese Atlantic coast',
     es: 'Piloto de Happy Soaring con una Mullet sobre la costa atlántica portuguesa',
     fr: 'Pilote Happy Soaring avec une Mullet au-dessus de la côte atlantique portugaise',
-    de: 'Happy-Soaring-Pilot mit einer Mullet über der portugiesischen Atlantikküste'
+    de: 'Pilot von Happy Soaring mit einer Mullet über der portugiesischen Atlantikküste'
   },
   migalha: {
     pt: 'Parakite em Portugal', en: 'Parakite in Portugal', es: 'Parakite en Portugal',
@@ -152,12 +161,6 @@ export const PK = {
   ],
   /* fica em inglês nas cinco versões: é a frase-assinatura */
   s3Declaracao: 'Parakite flying is energy management.',
-  s3Reflex: {
-    pt: 'Ver o perfil reflex a funcionar', en: 'See the reflex profile at work',
-    es: 'Ver el perfil reflex en acción', fr: 'Voir le profil reflex à l’œuvre',
-    de: 'Das Reflexprofil in Aktion sehen'
-  },
-
   /* ------------------------------------------------ 04 quatro entradas */
   s4Kicker: {
     pt: 'Quatro entradas', en: 'Four ways in', es: 'Cuatro entradas',
@@ -306,7 +309,7 @@ export const PK = {
   s5MetodoKicker: {
     pt: 'O método Happy Soaring', en: 'The Happy Soaring method',
     es: 'El método Happy Soaring', fr: 'La méthode Happy Soaring',
-    de: 'Die Happy-Soaring-Methode'
+    de: 'Die Methode von Happy Soaring'
   },
   s5MetodoTxt: {
     pt: 'Primeiro automatizamos o piloto. Depois acrescentamos a asa.',

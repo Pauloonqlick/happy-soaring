@@ -1,9 +1,4 @@
 {
-  "brand": {
-    "orange": "#ff6a13",
-    "black": "#141414",
-    "font": "'Segoe UI', system-ui, -apple-system, sans-serif"
-  },
   "wind": {
     "enabled": true,
     "density": 95
@@ -102,13 +97,7 @@
   "slides": [
     "hero",
     "mapa",
-    "parakite",
-    "sobre",
-    "comunidade",
-    "dealer",
-    "pilot2wing",
     "produtos",
-    "reflex-lab",
     "music"
   ],
   "avisos": [

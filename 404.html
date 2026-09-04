@@ -17,7 +17,7 @@
   h1 span{color:var(--orange)}
   p{font-size:17px;line-height:1.6;color:rgba(255,255,255,.86);margin-top:14px}
   a.btn{display:inline-block;margin-top:26px;background:var(--orange);color:#fff;
-    font-weight:800;font-size:15px;padding:14px 30px;border-radius:100px;
+    font-weight:800;font-size:15px;padding:14px 30px;border-radius:0;
     text-decoration:none;box-shadow:0 12px 30px rgba(255,106,19,.4)}
   a.btn:hover{background:#ff7c31}
 </style>
@@ -28,5 +28,53 @@
     <p>Esta página não existe — ou já não está aqui.</p>
     <a class="btn" href="/">Voltar ao início</a>
   </div>
+
+<script>
+/* A PAGINA DE ERRO FALA A LINGUA DE QUEM SE PERDEU
+   ================================================
+   O Cloudflare Pages serve este ficheiro para qualquer endereco que nao
+   exista, e serve-o TAL E QUAL — nao ha gerador do outro lado a escrever
+   cinco versoes. Durante muito tempo isso quis dizer que um visitante
+   frances que escrevesse mal um endereco, ou seguisse uma ligacao velha,
+   recebia uma pagina em portugues e um botao que o despejava na inicial
+   portuguesa. Perdia-se e mudava de lingua ao mesmo tempo.
+
+   O que salva isto e que o endereco falhado chega ca inteiro: quem pediu
+   /fr/qualquer-coisa continua a ter /fr/ no `location.pathname`, mesmo
+   com o 404. E o mesmo sinal que o app.js usa na inicial, e a mesma
+   expressao — se um dia mudar, muda nos dois sitios.
+
+   O PORTUGUES FICA ESCRITO NO HTML, E E DE PROPOSITO
+     E a lingua base do site. Fica no documento, nao no script: quem
+     chegar sem JavaScript le portugues em vez de ler uma pagina vazia.
+     O script so troca o texto quando o endereco pede outra lingua. */
+(function () {
+  var BASE = 'pt';
+  var T = {
+    en: { t: 'Page not found — Happy Soaring',
+          p: 'This page does not exist — or is no longer here.',
+          b: 'Back to home', h: '/en/' },
+    es: { t: 'Página no encontrada — Happy Soaring',
+          p: 'Esta página no existe — o ya no está aquí.',
+          b: 'Volver al inicio', h: '/es/' },
+    fr: { t: 'Page introuvable — Happy Soaring',
+          p: 'Cette page n’existe pas — ou n’est plus ici.',
+          b: 'Retour à l’accueil', h: '/fr/' },
+    de: { t: 'Seite nicht gefunden — Happy Soaring',
+          p: 'Diese Seite existiert nicht — oder ist nicht mehr hier.',
+          b: 'Zurück zur Startseite', h: '/de/' }
+  };
+  /* a mesma expressao do app.js: apanha /fr/ e tambem /fr sem barra */
+  var l = (location.pathname.match(/^\/(en|es|fr|de)(?:\/|$)/) || [])[1] || BASE;
+  if (l === BASE) return;
+  var x = T[l];
+  document.documentElement.lang = l;
+  document.title = x.t;
+  document.querySelector('p').textContent = x.p;
+  var a = document.querySelector('a.btn');
+  a.textContent = x.b;
+  a.setAttribute('href', x.h);
+})();
+</script>
 </body>
 </html>

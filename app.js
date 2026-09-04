@@ -7,7 +7,8 @@ import { KN_PARA_KMH, PAISES_NOS, CHAVE_UNIDADE, unidadeDoPais }
 import { comIdioma, entradasDoMenu }
   from './regras/navegacao.js';
 import { criarMusica } from './regras/musica.js';
-import { UI } from './regras/textos.js';
+import { UI, comQualificadores, vigiaNomes } from './regras/textos.js';
+import { tokensDoTema } from './regras/tema.js';
 import { el, fmtTime, criarWaLink, visibilityClass, paragrafos,
   ICON_PLAY, ICON_PAUSE } from './regras/dom.js';
 
@@ -212,6 +213,10 @@ function buildText(item) {
     ? item.titleSize : 'normal';
   const title = el(eMarca ? 'div' : 'h2',
     (eMarca ? 'wordmark' : 'title') + ' tam-' + tam);
+  /* O wordmark e o nome da casa partido por um <br>: "HAPPY" e "SOARING"
+     sao dois nos de texto, e nenhuma busca de texto os junta. Foi este que
+     o Chrome traduziu para "FELIZ VOO". Aqui a marca vai no elemento. */
+  if (eMarca) title.setAttribute('translate', 'no');
   if (title1) title.appendChild(document.createTextNode(title1));
   if (title2) {
     title.appendChild(el('br'));
@@ -880,7 +885,8 @@ function buildFlow(item) {
       const box = el('div');
       const l = el('div', 'flow-lbl'); l.textContent = ui('flowTamanhos'); box.appendChild(l);
       const ts = el('div', 'flow-sizes');
-      p.tamanhos.forEach(s => { const x = el('span', 'flow-size'); x.textContent = s; ts.appendChild(x); });
+      p.tamanhos.forEach(s => { const x = el('span', 'flow-size');
+        x.textContent = comQualificadores(s, LOCALE); ts.appendChild(x); });
       box.appendChild(ts); body.appendChild(box);
     }
 
@@ -1038,7 +1044,8 @@ function buildFlow(item) {
       let html = '<thead><tr><th>' + ui('sTam') + '</th>' + usadas.map(k => '<th>' + k[1] + '</th>').join('') + '</tr></thead><tbody>';
       p.specs.forEach(sp => {
         html += '<tr><td><b>' + (sp.tamanho || '') + '</b></td>' +
-          usadas.map(k => '<td>' + (sp[k[0]] !== undefined ? sp[k[0]] : '—') + '</td>').join('') + '</tr>';
+          usadas.map(k => '<td>' + (sp[k[0]] !== undefined
+            ? comQualificadores(sp[k[0]], LOCALE) : '—') + '</td>').join('') + '</tr>';
       });
       tb.innerHTML = html + '</tbody>';
       scroll.appendChild(tb); cxSpecs.appendChild(scroll); specsBox.appendChild(cxSpecs);
@@ -2561,10 +2568,21 @@ function render(data) {
   responsiveRules = [];
 
   /* marca */
-  if (data.brand) {
-    if (data.brand.orange) document.documentElement.style.setProperty('--orange', data.brand.orange);
-    if (data.brand.black) document.documentElement.style.setProperty('--black', data.brand.black);
-    if (data.brand.font) document.body.style.fontFamily = data.brand.font;
+  {
+    /* O TEMA, APLICADO NA PAGINA QUE SE MONTA NO BROWSER
+       As 140 paginas geradas levam o tema no `tema.css`, escrito pelo
+       gerador. A inicial monta-se aqui, e le o mesmo `content/tema.json`
+       pela mesma funcao — nao ha uma segunda composicao para manter.
+
+       Isto substitui o `brand` do settings.json. O `brand` so era aplicado
+       AQUI: mudar o laranja no CMS mudava a inicial e deixava as outras
+       135 paginas com o valor escrito na folha. Agora e um valor so, e
+       chega aos dois lados. */
+    const tk = tokensDoTema(data.tema);
+    for (const [k, v] of Object.entries(tk)) {
+      if (k === '--fonte') document.body.style.fontFamily = v;
+      else document.documentElement.style.setProperty(k, v);
+    }
   }
 
   /* céu */
@@ -2584,6 +2602,7 @@ function render(data) {
   if (data.footer) {
     const f = el('footer');
     const big = el('div', 'big');
+    big.setAttribute('translate', 'no');   /* o nome, outra vez partido */
     big.appendChild(document.createTextNode(t(data.footer.line1) + ' '));
     if (data.footer.accent) { const sp = el('span'); sp.textContent = t(data.footer.accent); big.appendChild(sp); }
     big.appendChild(document.createTextNode(' ' + t(data.footer.line2)));
@@ -2600,6 +2619,18 @@ function render(data) {
   const numWa = (data.sections || []).reduce((n, s) =>
     n || ((s.elements || []).find(e => e.whatsapp) || {}).whatsapp, null);
   iniciaAvisos(data.listaAvisos, numWa);
+
+  /* OS NOMES PROPRIOS, DEPOIS DE A PAGINA ESTAR MONTADA
+     Corre uma vez, no fim, e nao em cada sitio que escreve texto: os nomes
+     aparecem em titulos, em prosa, em botoes e em cartoes, e ir marca-los
+     um a um era garantir que um ficava de fora. Os nomes das asas saem do
+     catalogo que a pagina acabou de desenhar. */
+  const nomesAsas = (data.sections || []).flatMap(s =>
+    (s.elements || []).flatMap(e => (e.produtos || []).map(p => p && p.nome)));
+  /* vigia-se o `body` e nao o `#app`: o menu, o seletor de idiomas e os
+     fundos das faixas sao pendurados directamente no body, fora do root.
+     Com o root, tres entradas do menu ficavam por proteger — medido. */
+  vigiaNomes(document.body, nomesAsas.filter(Boolean));
 
   const locales = (data.locales && data.locales.length) ? data.locales : [DEFAULT_LOCALE];
   if (locales.length > 1) { buildLangSwitcher(locales); sugereIdioma(locales); }
@@ -2984,6 +3015,10 @@ const SLIDE_ADIADO = 'produtos';
 
 async function loadSite() {
   const settings = await fetch('/content/settings.json').then(r => r.json());
+  /* o tema e opcional: sem ficheiro valem as omissoes, que sao os
+     valores que as folhas ja trazem escritos */
+  const tema = await fetch('/content/tema.json')
+    .then(r => (r.ok ? r.json() : {})).catch(() => ({}));
   const ids = Array.isArray(settings.slides) ? settings.slides : [];
   const slides = await Promise.all(ids.map(id =>
     id === SLIDE_ADIADO
@@ -2996,6 +3031,7 @@ async function loadSite() {
     fetch('/content/avisos/' + id + '.json').then(r => (r.ok ? r.json() : null)).catch(() => null)
   ));
   return Object.assign({}, settings, {
+    tema,
     sections: slides.filter(Boolean),
     listaAvisos: avisos.filter(Boolean),
     tecidos: []

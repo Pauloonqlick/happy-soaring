@@ -254,3 +254,360 @@ export const UI = {
   unidadeKmh:{ pt:'km/h', en:'km/h', es:'km/h', fr:'km/h', de:'km/h' },
   flowDescricao:{ pt:'Descrição', en:'Description', es:'Descripción', fr:'Description', de:'Beschreibung' }
 };
+
+/**
+ * As palavras que se esconderam dentro de um valor de tabela
+ * =========================================================
+ *
+ * O QUE ACONTECEU
+ *   Os campos de especificação — `ptv`, `tamanhos` — são texto simples no
+ *   CMS, e texto simples não tem cinco línguas: sai igual em todas. Isso
+ *   está certo enquanto o valor for "75–105 kg", que se lê em qualquer
+ *   língua. Deixou de estar quando alguém precisou de dizer QUAL das duas
+ *   gamas é para que piloto e escreveu, dentro do campo:
+ *
+ *       75–105 kg (intermédio) / 75–120 kg (avançado)
+ *
+ *   A partir daí a tabela da RPM 3 e da Cosmos Power 2 tinha duas palavras
+ *   portuguesas nas páginas inglesa, espanhola, francesa e alemã. Não foi
+ *   um esquecimento de tradução: o campo nunca teve para onde a receber.
+ *
+ * PORQUE NAO SE RESOLVE PROMOVENDO O CAMPO A OBJECTO
+ *   Havia a hipótese de dar cinco línguas ao `ptv`, como os outros campos
+ *   traduzíveis. Mas há 84 valores `ptv` no catálogo e 82 são só números:
+ *   obrigar a escrever "75–105 kg" cinco vezes em 82 sítios para resolver
+ *   dois é piorar o CMS para toda a gente por causa da excepção.
+ *
+ * O QUE SE FAZ EM VEZ DISSO
+ *   O qualificador é vocabulário fechado — não é prosa. Vive aqui, com as
+ *   cinco línguas, e os dois lados que desenham a tabela traduzem-no à
+ *   passagem. E como vocabulário fechado tem um risco próprio — alguém
+ *   escrever amanhã uma palavra nova que ninguém traduz — a verificação 11
+ *   recusa qualquer palavra destes campos que não esteja nesta lista.
+ *   É isso que torna a lista segura: não é preciso lembrar dela.
+ */
+export const QUALIFICADORES = {
+  'intermédio':    { pt:'intermédio', en:'intermediate', es:'intermedio',
+                     fr:'intermédiaire', de:'fortgeschritten' },
+  'avançado':      { pt:'avançado', en:'advanced', es:'avanzado',
+                     fr:'confirmé', de:'erfahren' },
+  'tamanho único': { pt:'tamanho único', en:'one size', es:'talla única',
+                     fr:'taille unique', de:'Einheitsgröße' }
+};
+
+/* Substitui os qualificadores conhecidos dentro de um valor de tabela.
+   Vai do mais longo para o mais curto para que "tamanho único" nunca seja
+   partido por uma entrada mais curta que apareça primeiro. */
+export function comQualificadores(valor, lingua) {
+  if (valor == null) return valor;
+  let s = String(valor);
+  const chaves = Object.keys(QUALIFICADORES).sort((a, b) => b.length - a.length);
+  for (const k of chaves) {
+    const traduzido = QUALIFICADORES[k][lingua] || QUALIFICADORES[k].pt;
+    if (traduzido === k) continue;
+    s = s.split(k).join(traduzido);
+  }
+  return s;
+}
+
+/**
+ * O que não é palavra
+ * ===================
+ *
+ * O QUE SE VIU
+ *   Um visitante com o Chrome em português abre a /fr/ e o browser oferece-se
+ *   para traduzir. Ele aceita — e tem todo o direito. O que saiu foi isto:
+ *
+ *       HAPPY SOARING          ->  FELIZ VOO
+ *       Parakite em Portugal   ->  Paraquito em Portugal
+ *       Parakite e Parapente   ->  Parapente e paraquedas
+ *
+ *   Mas "Flow Paragliders" e "FelloFly" ficaram intactos. Isso diz o que se
+ *   passa: o tradutor reconheceu esses dois como nomes e não reconheceu os
+ *   outros. "Happy Soaring" são duas palavras inglesas correntes e "Parakite"
+ *   parece um diminutivo — traduziu ambos, e fez o que se lhe pediu.
+ *
+ * PORQUE E QUE ISTO E DO SITE E NAO DO VISITANTE
+ *   Impedir a tradução da página seria a resposta errada: quem lê melhor em
+ *   português tem direito a lê-la assim, e desligar isso fecha o site a
+ *   quem mais precisa dele. O que o site pode fazer — e não estava a fazer —
+ *   é dizer ao tradutor QUAIS pedaços não são texto. `translate="no"` é
+ *   norma HTML e o Chrome respeita-a.
+ *
+ * O QUE ENTRA NESTA LISTA, E O QUE NAO
+ *   Entra o que é nome: a casa, o método, as marcas, a categoria que o
+ *   negócio define, e os modelos das asas. Não entra "parapente", que é uma
+ *   palavra comum e DEVE traduzir-se — quem lê em alemão quer ler
+ *   "Gleitschirm". A regra é: se traduzir muda o que a coisa é, não se
+ *   traduz; se traduzir só muda a língua, traduz-se.
+ *
+ *   Os nomes das asas não estão aqui escritos: vêm do catálogo, porque uma
+ *   segunda lista de 22 nomes é uma segunda lista para manter.
+ */
+export const NOMES_INTOCAVEIS = [
+  'Happy Soaring',
+  'Flow Paragliders',
+  'Pilot2Wing',
+  'FelloFly',
+  'Parakites',           /* antes do singular: o mais longo ganha */
+  'Parakite',
+  'Parawing',
+  'SmartGround'          /* o nome antigo do Pilot2Wing, que ainda circula */
+];
+
+/* limite de palavra sem expressao regular: o que esta antes e depois nao
+   pode ser letra nem digito, senao "Parakite" apanhava "Parakiteboard" */
+function eLetra(c) {
+  return c !== undefined && /[0-9A-Za-zÀ-ÿ]/.test(c);
+}
+
+/* Marca os nomes dentro de UM pedaço de texto. Recebe texto que ja vem
+   escapado e devolve HTML — os unicos sinais `<` que acrescenta sao os das
+   etiquetas que ela propria escreve. */
+function marcaTexto(txt, nomes) {
+  let fora = '', i = 0, achou = false;
+  while (i < txt.length) {
+    let nome = null;
+    for (const n of nomes) {
+      if (txt.startsWith(n, i) && !eLetra(txt[i - 1]) && !eLetra(txt[i + n.length])) {
+        nome = n; break;
+      }
+    }
+    if (nome) {
+      fora += '<span class="hs-nome" translate="no">' + nome + '</span>';
+      i += nome.length; achou = true;
+    } else { fora += txt[i]; i++; }
+  }
+  return achou ? fora : txt;
+}
+
+/**
+ * Marca os nomes no CORPO de um documento HTML já montado.
+ *
+ * Trabalha só no texto entre etiquetas, nunca dentro delas. E a razão é
+ * concreta: os mesmos nomes vivem em `alt=`, em `content=`, no `<title>` e
+ * no JSON-LD, e um `<span>` enfiado ali dentro não é marcação — é lixo que
+ * o Google lê como parte do título. Por isso o `<head>` fica de fora
+ * inteiro, e dentro do corpo saltam-se o `<script>` e o `<style>`.
+ */
+export function protegeNomes(html, extra) {
+  const nomes = NOMES_INTOCAVEIS.concat(extra || [])
+    .filter(Boolean).sort((a, b) => b.length - a.length);
+
+  const ini = html.indexOf('<body');
+  if (ini < 0) return html;
+  const abre = html.indexOf('>', ini);
+  const fim = html.lastIndexOf('</body>');
+  if (abre < 0 || fim < 0) return html;
+
+  /* Elementos que nunca fecham: nao entram na pilha, senao a pilha nunca
+     mais desce e a partir do primeiro <br> o documento inteiro parecia
+     estar dentro dele. */
+  const VAZIOS = new Set(['br', 'img', 'meta', 'link', 'input', 'hr', 'source',
+    'area', 'base', 'col', 'embed', 'param', 'track', 'wbr']);
+
+  /* O QUE ESTA DENTRO DE UM `<script>` NAO E HTML
+     A primeira versao entrava no script e ia procurando `<` e `>` como se
+     fossem etiquetas. Dentro de JavaScript ha `x<0` e `a > b`, e o leitor
+     apanhava `<0` como uma etiqueta a abrir, engolia o `</script>` a
+     caminho do `>` seguinte, e ficava convencido de que o script nunca
+     tinha fechado. A partir dai TODO o resto do documento era saltado.
+
+     Medido na /asas/mullet-2/: dez nomes por proteger depois do primeiro
+     script, incluindo o rodape e "A Happy Soaring é revendedor oficial".
+
+     A norma trata estes elementos como texto cru: o conteudo copia-se tal
+     e qual ate ao fecho correspondente, sem o interpretar. E o que se faz
+     aqui — e por isso o contador `mudo` desapareceu, deixou de haver
+     estado nenhum para se prender. */
+  const CRUS = new Set(['script', 'style', 'textarea', 'title']);
+
+  const corpo = html.slice(abre + 1, fim);
+  const pilha = [];
+  let saida = '', i = 0, protegido = 0;
+  while (i < corpo.length) {
+    const t = corpo.indexOf('<', i);
+    const texto = t < 0 ? corpo.slice(i) : corpo.slice(i, t);
+    /* dentro de `translate="no"` nao se marca outra vez: e o que torna esta
+       funcao idempotente */
+    saida += protegido ? texto : marcaTexto(texto, nomes);
+    if (t < 0) break;
+    const f = corpo.indexOf('>', t);
+    if (f < 0) { saida += corpo.slice(t); break; }
+    const etiqueta = corpo.slice(t, f + 1);
+    const nome = (etiqueta.match(/^<\/?\s*([a-zA-Z0-9-]+)/) || [])[1];
+    if (nome) {
+      const baixo = nome.toLowerCase();
+      const fecha = etiqueta[1] === '/';
+      const solto = etiqueta.slice(-2) === '/>' || VAZIOS.has(baixo);
+      if (!fecha && !solto && CRUS.has(baixo)) {
+        /* salta o conteudo inteiro de uma vez, sem o ler */
+        const fim2 = corpo.toLowerCase().indexOf('</' + baixo, f);
+        if (fim2 < 0) { saida += corpo.slice(t); break; }
+        const f3 = corpo.indexOf('>', fim2);
+        if (f3 < 0) { saida += corpo.slice(t); break; }
+        saida += corpo.slice(t, f3 + 1);
+        i = f3 + 1;
+        continue;
+      }
+      if (fecha) {
+        /* desenrola ate ao elemento que fecha: um documento com uma
+           etiqueta por fechar nao pode deixar a pilha presa para sempre */
+        for (let k = pilha.length - 1; k >= 0; k--) {
+          if (pilha[k].nome === baixo) {
+            for (let j = pilha.length - 1; j >= k; j--) {
+              if (pilha[j].protege) protegido = Math.max(0, protegido - 1);
+            }
+            pilha.length = k;
+            break;
+          }
+        }
+      } else if (!solto) {
+        const protege = /\btranslate\s*=\s*["']?no\b/i.test(etiqueta);
+        pilha.push({ nome: baixo, protege });
+        if (protege) protegido++;
+      }
+    }
+    saida += etiqueta;
+    i = f + 1;
+  }
+
+  /* QUANDO O NOME E O ELEMENTO TODO, NAO E PRECISO SPAN NENHUM
+     Um `<a class="ng-l"><span …>Parakite</span></a>` diz o mesmo que um
+     `<a class="ng-l" translate="no">Parakite</a>` e tem menos uma caixa.
+     E a caixa a mais nao era inofensiva: `.ng-l` e `.qp-cta` sao
+     contentores `flex`, e a especificacao BLOQUEIA os filhos de um flex —
+     o `display:inline` do marcador e ignorado por regra, nao por cascata.
+     Medido: um botao ficava 5px mais largo.
+
+     Aqui desfaz-se isso. So colapsa quando entre a etiqueta e o span nao
+     ha mais nada senao espacos, que e o unico caso em que os dois sao
+     equivalentes. */
+  saida = saida.replace(
+    /<([a-z0-9-]+)((?:[^>"']|"[^"]*"|'[^']*')*)>(\s*)<span class="hs-nome" translate="no">([^<]*)<\/span>(\s*)<\/\1>/gi,
+    (todo, tag, atrib, e1, texto, e2) =>
+      /\btranslate\s*=/i.test(atrib) ? todo
+        : '<' + tag + atrib + ' translate="no">' + e1 + texto + e2 + '</' + tag + '>');
+
+  return html.slice(0, abre + 1) + saida + html.slice(fim);
+}
+
+/**
+ * A mesma coisa, mas para uma página montada no browser.
+ *
+ * Aqui não há string de HTML para percorrer: há nós. Percorre-se o texto,
+ * que é exactamente o que a versão de cima faz — só muda o material. Cria
+ * elementos em vez de escrever etiquetas, e por isso não há nada a escapar.
+ */
+/**
+ * A mesma protecção, mas a durar.
+ *
+ * PORQUE E QUE UMA PASSAGEM SO NAO CHEGA
+ *   A `protegeNomesNoDom` corre no fim do render e apanha o que existe nessa
+ *   altura. Mas metade da página inicial só nasce quando alguém mexe nela:
+ *   abrir uma família, escolher um chip, abrir a descrição de uma asa. Medido
+ *   depois de a ligar: 12 ocorrências de "Parakite" ficavam de fora, todas em
+ *   coisas desenhadas mais tarde.
+ *
+ *   Ir chamar a função a cada sítio que desenha texto era garantir que um dia
+ *   fica um de fora — que é exactamente o defeito que se está a corrigir.
+ *   Um observador é UM sítio, e cobre o que a página vier a desenhar, mesmo
+ *   o que ainda não existe.
+ *
+ * O CUIDADO OBVIO
+ *   Marcar nomes é, ele próprio, mexer no DOM. Sem trava, o observador
+ *   reagia ao seu próprio trabalho para sempre. A `ocupado` fecha o ciclo.
+ */
+export function vigiaNomes(raiz, extra) {
+  if (!raiz || typeof document === 'undefined') return null;
+  protegeNomesNoDom(raiz, extra);
+  if (typeof MutationObserver === 'undefined') return null;
+
+  let ocupado = false, agendado = false;
+  const pendentes = [];
+  const obs = new MutationObserver(muts => {
+    if (ocupado) return;
+    for (const m of muts) {
+      for (const n of m.addedNodes) {
+        if (n.nodeType === 1 || n.nodeType === 3) pendentes.push(n);
+      }
+    }
+    if (!pendentes.length || agendado) return;
+    agendado = true;
+    /* junta as mutações da mesma volta numa passagem só */
+    Promise.resolve().then(() => {
+      agendado = false;
+      const lote = pendentes.splice(0, pendentes.length);
+      ocupado = true;
+      try {
+        for (const n of lote) {
+          if (!n.isConnected) continue;
+          /* um nó de texto solto não se percorre: trata-se o pai */
+          const alvo = n.nodeType === 3 ? n.parentElement : n;
+          if (alvo) protegeNomesNoDom(alvo, extra);
+        }
+      } finally { ocupado = false; }
+    });
+  });
+  obs.observe(raiz, { childList: true, subtree: true });
+  return obs;
+}
+
+export function protegeNomesNoDom(raiz, extra) {
+  if (!raiz || typeof document === 'undefined') return;
+  const nomes = NOMES_INTOCAVEIS.concat(extra || [])
+    .filter(Boolean).sort((a, b) => b.length - a.length);
+
+  const it = document.createTreeWalker(raiz, NodeFilter.SHOW_TEXT, {
+    acceptNode(n) {
+      const p = n.parentElement;
+      if (!p) return NodeFilter.FILTER_REJECT;
+      const et = p.tagName;
+      if (et === 'SCRIPT' || et === 'STYLE' || et === 'TEXTAREA') return NodeFilter.FILTER_REJECT;
+      if (p.closest('[translate="no"]')) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const alvos = [];
+  let n; while ((n = it.nextNode())) alvos.push(n);
+
+  for (const no of alvos) {
+    const txt = no.nodeValue || '';
+    let i = 0, frag = null, corrente = '';
+    while (i < txt.length) {
+      let nome = null;
+      for (const x of nomes) {
+        if (txt.startsWith(x, i) && !eLetra(txt[i - 1]) && !eLetra(txt[i + x.length])) {
+          nome = x; break;
+        }
+      }
+      if (nome) {
+        if (!frag) frag = document.createDocumentFragment();
+        if (corrente) { frag.appendChild(document.createTextNode(corrente)); corrente = ''; }
+        const s = document.createElement('span');
+        s.className = 'hs-nome';
+        s.setAttribute('translate', 'no');
+        s.textContent = nome;
+        frag.appendChild(s);
+        i += nome.length;
+      } else { corrente += txt[i]; i++; }
+    }
+    if (frag) {
+      if (corrente) frag.appendChild(document.createTextNode(corrente));
+      const pai = no.parentNode;
+      pai.replaceChild(frag, no);
+      /* o mesmo colapso da versão de texto: se o elemento ficou com um
+         único filho, que é o marcador, a marca vai para o elemento e o
+         marcador desaparece. Poupa uma caixa e, nos contentores `flex`,
+         poupa os 5px que a blockificação dos filhos acrescentava. */
+      if (pai.nodeType === 1 && pai.children.length === 1
+          && pai.firstElementChild.classList.contains('hs-nome')
+          && !pai.hasAttribute('translate')
+          && pai.textContent === pai.firstElementChild.textContent) {
+        const so = pai.firstElementChild;
+        pai.setAttribute('translate', 'no');
+        pai.replaceChild(document.createTextNode(so.textContent), so);
+      }
+    }
+  }
+}

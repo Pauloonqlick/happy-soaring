@@ -34,3 +34,16 @@
 /fr/smartground     /fr/pilot2wing/    301
 /de/smartground/    /de/pilot2wing/    301
 /de/smartground     /de/pilot2wing/    301
+
+# Reflex Lab retirado do site — 04/09/2026
+# ========================================
+# O simulador era a unica pagina so em portugues, e os botoes traduzidos
+# apontavam-lhe: um visitante frances carregava em "Explorer le Reflex Lab" e
+# aterrava numa pagina portuguesa. Saiu do site; os ficheiros ficam no disco,
+# fora da publicacao.
+#
+# O endereco esteve publicado e no sitemap, por isso leva 301 e nao 404 —
+# a mesma razao das duas seccoes acima. O destino e a seccao #reflex da
+# /o-que-e-um-parakite/, que trata do mesmo assunto e ficou de pe.
+/reflex-lab/    /o-que-e-um-parakite/#reflex    301
+/reflex-lab     /o-que-e-um-parakite/#reflex    301

@@ -32,6 +32,8 @@ import { FL } from './conteudo-flow.mjs';
 import { IN } from './conteudo-inicial.mjs';
 import { PK } from './conteudo-parakite.mjs';
 import { entradasDoMenu, ROTAS, comIdioma } from '../regras/navegacao.js';
+import { comQualificadores, protegeNomes } from '../regras/textos.js';
+import { folhaDoTema } from '../regras/tema.js';
 
 const RAIZ = process.cwd();   /* corre-se a partir da raiz do projecto */
 const DOMINIO = 'https://happysoaring.com';
@@ -333,7 +335,8 @@ function tabelaSpecs(p, l) {
   if (!cols.length) return '';
   const th = cols.map(k => '<th scope="col">' + esc(t(SPEC_ROT[k], l)) + '</th>').join('');
   const tr = linhas.map(s =>
-    '<tr>' + cols.map((k, i) => (i === 0 ? '<th scope="row">' : '<td>') + esc(s[k] == null ? '—' : s[k])
+    '<tr>' + cols.map((k, i) => (i === 0 ? '<th scope="row">' : '<td>')
+      + esc(s[k] == null ? '—' : comQualificadores(s[k], l))
       + (i === 0 ? '</th>' : '</td>')).join('') + '</tr>').join('\n');
   return '<div class="pg-tabela"><table><caption>' + esc(t(T.specs, l)) + ' — ' + esc(p.nome)
     + '</caption><thead><tr>' + th + '</tr></thead><tbody>' + tr + '</tbody></table></div>';
@@ -529,13 +532,13 @@ function escreveIniciais() {
   const molde = fs.readFileSync(f, 'utf8');
 
   /* o português escreve-se no próprio index.html: só o bloco estático muda */
-  fs.writeFileSync(f, trocaBloco(molde, OMISSAO));
+  escrevePagina(f, trocaBloco(molde, OMISSAO));
 
   for (const l of IDIOMAS) {
     if (l === OMISSAO) continue;
     const dir = path.join(RAIZ, l);
     fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(path.join(dir, 'index.html'), paginaInicial(molde, l));
+    escrevePagina(path.join(dir, 'index.html'), paginaInicial(molde, l));
   }
 
   const txt = corpoInicial(OMISSAO).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
@@ -607,7 +610,7 @@ const eHistorico = p => p.historico === true;
 function blocoPedido(p, l, num) {
   const k = chave(p.nome);
   const esquemas = (p.cores || []).map(String);
-  const tams = (p.tamanhos || []).map(String);
+  const tams = (p.tamanhos || []).map(x => comQualificadores(x, l));
   const custom = p.coresCustom ? TECIDOS : [];
   if (eHistorico(p)) return '';        /* ver eHistorico, mesmo ficheiro */
   if (!esquemas.length && !tams.length) return '';
@@ -1056,10 +1059,10 @@ ${alt}
 <script src="/menu.js" defer></script>
 <script type="application/ld+json">${ld}</script>
 </head>
-<body class="pg">
+<body class="pg fl tema">
 
 <header class="pg-topo">
-  <a class="pg-marca" href="${inicio}">HAPPY <span>SOARING</span></a>
+  <a class="pg-marca" translate="no" href="${inicio}">HAPPY <span>SOARING</span></a>
   <span class="pg-dealer">${esc(t(T.dealer, l))}</span>
   ${menuGlobal(l, url)}
   ${seletorIdiomas(alts, l)}
@@ -1227,10 +1230,10 @@ ${alt}
 <script src="/menu.js" defer></script>
 <script type="application/ld+json">${ld}</script>
 </head>
-<body class="pg sg">
+<body class="pg sg tema">
 
 <header class="pg-topo">
-  <a class="pg-marca" href="${inicio}">HAPPY <span>SOARING</span></a>
+  <a class="pg-marca" translate="no" href="${inicio}">HAPPY <span>SOARING</span></a>
   <span class="pg-dealer">${esc(t(T.dealer, l))}</span>
   ${menuGlobal(l, url)}
   ${seletorIdiomas(alts, l)}
@@ -1476,10 +1479,10 @@ ${alt}
 <script src="/menu.js" defer></script>
 <script type="application/ld+json">${ld}</script>
 </head>
-<body class="pg pk">
+<body class="pg pk tema">
 
 <header class="pg-topo">
-  <a class="pg-marca" href="${inicio}">HAPPY <span>SOARING</span></a>
+  <a class="pg-marca" translate="no" href="${inicio}">HAPPY <span>SOARING</span></a>
   <span class="pg-dealer">${esc(t(T.dealer, l))}</span>
   ${menuGlobal(l, url)}
   ${seletorIdiomas(alts, l)}
@@ -1518,7 +1521,6 @@ ${alt}
     <h2>${esc(semPonto(t(PK.s3H2, l)))}</h2>
     <ul class="pk-eixos">${eixos}</ul>
     <p class="pk-declaracao" lang="en">${esc(PK.s3Declaracao)}</p>
-    <p class="pk-reflex"><a href="/reflex-lab/">${esc(t(PK.s3Reflex, l))}</a></p>
   </section>
 
   <section class="pk-sec" id="onde-estas">
@@ -1720,9 +1722,9 @@ ${alt}
 <script src="/menu.js" defer></script>
 <script type="application/ld+json">${jsonld(p, l, url, foto)}</script>
 </head>
-<body class="pg">
+<body class="pg asa tema">
 <header class="pg-topo">
-  <a class="pg-marca" href="${inicioHref(l)}">HAPPY <span>SOARING</span></a>
+  <a class="pg-marca" translate="no" href="${inicioHref(l)}">HAPPY <span>SOARING</span></a>
   <span class="pg-dealer">${esc(t(T.dealer, l))}</span>
   ${menuGlobal(l, url)}
   ${seletorIdiomas(alts, l)}
@@ -1833,6 +1835,41 @@ const flow = doc.elements.find(e => e.role === 'flow');
 const num = flow.whatsapp;
 const produtos = (flow.produtos || []).filter(p => p && p.nome && p.visible !== false);
 
+/* TODAS AS PAGINAS SAEM POR AQUI
+   Nao e um embrulho por embrulhar. Havia oito chamadas a `fs.writeFileSync`
+   espalhadas pelo ficheiro, e proteger sete era o mesmo que nao proteger
+   nenhuma: bastava a oitava para quem traduz a pagina ler "FELIZ VOO" onde
+   diz Happy Soaring. Um sitio so e a unica forma de a garantia valer.
+
+   Os nomes das asas vem do catalogo, e nao de uma lista escrita a mao: sao
+   22, mudam quando a Flow muda a gama, e uma segunda lista e uma lista que
+   um dia diz outra coisa. "Freedom 2" traduzido da "Liberdade 2", que nao e
+   nenhuma asa. */
+const NOMES_ASAS = produtos.map(p => p.nome).filter(Boolean);
+
+/* A LIGACAO A FOLHA DO TEMA ENTRA AQUI, E NAO NOS OITO MOLDES
+   Havia seis sitios a escrever `<link href="/pagina.css">` e mais dois
+   moldes de pagina inicial. Acrescentar a linha em oito sitios e
+   acrescenta-la em sete: o oitavo esquece-se, e essa pagina fica com uma
+   escala diferente das outras sem nada que o denuncie.
+
+   Entra imediatamente antes de `</head>`, o que garante que vem DEPOIS de
+   todas as outras folhas. E de proposito: as folhas trazem os valores de
+   hoje escritos la dentro e o tema passa por cima. Se o `tema.css`
+   desaparecer, o site fica exactamente como esta em vez de ficar sem
+   tipografia nenhuma.
+
+   So entra se ainda nao la estiver: o `index.html` e lido do disco, e
+   sem esta condicao ganhava uma ligacao nova a cada geracao. */
+const LIGACAO_TEMA = '<link rel="stylesheet" href="/tema.css" />';
+function escrevePagina(caminho, html) {
+  let h = protegeNomes(html, NOMES_ASAS);
+  if (h.indexOf('href="/tema.css"') < 0) {
+    h = h.replace('</head>', LIGACAO_TEMA + '\n</head>');
+  }
+  fs.writeFileSync(caminho, h);
+}
+
 /* o hero é a fonte do h1 e do parágrafo de entrada das cinco iniciais: o
    bloco estático lê de lá, o app.js desenha de lá, e não há dois textos */
 /* Um título não leva ponto final. A frase leva, e é por isso que isto
@@ -1886,7 +1923,7 @@ for (const p of produtos) {
     fs.mkdirSync(dir, { recursive: true });
     const html = pagina(p, l, num);
     confereAlternativas(html, rel);
-    fs.writeFileSync(path.join(dir, 'index.html'), html);
+    escrevePagina(path.join(dir, 'index.html'), html);
     urls.push(DOMINIO + rel);
     n++;
   }
@@ -1904,7 +1941,7 @@ if (!so && !soIdioma) {
     fs.mkdirSync(dir, { recursive: true });
     const html = paginaPilot2Wing(l, num);
     confereAlternativas(html, rel);
-    fs.writeFileSync(path.join(dir, 'index.html'), html);
+    escrevePagina(path.join(dir, 'index.html'), html);
     urls.push(DOMINIO + rel);
   }
   console.log('  Pilot2Wing: ' + IDIOMAS.length + ' páginas');
@@ -1914,7 +1951,7 @@ if (!so && !soIdioma) {
     fs.mkdirSync(dir, { recursive: true });
     const html = paginaFlow(l, num);
     confereAlternativas(html, rel);
-    fs.writeFileSync(path.join(dir, 'index.html'), html);
+    escrevePagina(path.join(dir, 'index.html'), html);
     urls.push(DOMINIO + rel);
   }
   console.log('  Flow Paragliders Portugal: ' + IDIOMAS.length + ' páginas');
@@ -1924,7 +1961,7 @@ if (!so && !soIdioma) {
     fs.mkdirSync(dir, { recursive: true });
     const html = paginaParakite(l, num);
     confereAlternativas(html, rel);
-    fs.writeFileSync(path.join(dir, 'index.html'), html);
+    escrevePagina(path.join(dir, 'index.html'), html);
     urls.push(DOMINIO + rel);
   }
   console.log('  Parakite Portugal: ' + IDIOMAS.length + ' páginas');
@@ -2010,7 +2047,7 @@ function paginaQueParakite(l) {
   const variam = arr('s9Varia').map(v =>
     '<div class="qp-varia-it"><b>' + esc(v[0]) + '</b><span>' + esc(v[1]) + '</span></div>').join('');
 
-  const destinos = [A('/parakite-portugal/'), A('/pilot2wing/'), '/reflex-lab/'];
+  const destinos = [A('/parakite-portugal/'), A('/pilot2wing/')];
   const links = arr('s10Links').map((x, i) =>
     '<a class="qp-link" href="' + destinos[i] + '"><b>' + esc(x[0]) + '</b>'
     + '<span>' + esc(x[1]) + '</span></a>').join('');
@@ -2048,10 +2085,10 @@ ${alt}
 <script src="/menu.js" defer></script>
 <script type="application/ld+json">${ld}</script>
 </head>
-<body class="pg qp">
+<body class="pg qp tema">
 
 <header class="pg-topo">
-  <a class="pg-marca" href="${inicio}">HAPPY <span>SOARING</span></a>
+  <a class="pg-marca" translate="no" href="${inicio}">HAPPY <span>SOARING</span></a>
   <span class="pg-dealer">${esc(t(T.dealer, l))}</span>
   ${menuGlobal(l, url)}
   ${seletorIdiomas(alts, l)}
@@ -2144,7 +2181,6 @@ ${alt}
       <p class="qp-frase">${esc(t(QP.s7Frase, l))}</p>
       ${paras('s7P')}
       <div class="qp-destaque">${esc(t(QP.s7Limite, l))}</div>
-      <a class="qp-cta" href="/reflex-lab/">${esc(t(QP.s7Cta, l))}</a>
     </div>
   </section>
 
@@ -2325,10 +2361,10 @@ ${alt}
 <script src="/musica.js" type="module"></script>
 <script type="application/ld+json">${ld}</script>
 </head>
-<body class="pg mu">
+<body class="pg mu tema">
 
 <header class="pg-topo">
-  <a class="pg-marca" href="${inicio}">HAPPY <span>SOARING</span></a>
+  <a class="pg-marca" translate="no" href="${inicio}">HAPPY <span>SOARING</span></a>
   <span class="pg-dealer">${esc(t(T.dealer, l))}</span>
   ${menuGlobal(l, url)}
   ${seletorIdiomas(alts, l)}
@@ -2384,35 +2420,21 @@ ${alt}
 `;
 }
 
-/* ---- o Reflex Lab -----------------------------------------------------
-   O simulador é uma página escrita à mão: tem folha própria, JavaScript
-   próprio e um header próprio, e não passa por nenhum dos moldes acima.
-   Ficava a ser a única página do site sem navegação — e publicar uma
-   "navegação global" com uma excepção é publicar outra coisa.
+/* ---- o Reflex Lab, que saiu do site -----------------------------------
+   Havia aqui uma rotina que entrava no /reflex-lab/index.html e lhe escrevia
+   a navegacao entre dois marcadores, porque era uma pagina escrita a mao e
+   ficava a ser a unica sem menu.
 
-   Escrever-lhe o menu à mão resolvia hoje e criava a segunda lista que este
-   módulo todo existe para não haver. Por isso o gerador entra lá dentro e
-   escreve entre dois marcadores. É idempotente: corre as vezes que forem
-   precisas e o resultado é o mesmo.
+   A pagina saiu do site em 04/09/2026. A pasta continua no disco — o
+   simulador e o calculo aerodinamico ficam guardados — mas nao e publicada,
+   nao esta no sitemap, e nenhuma pagina lhe aponta. O endereco antigo esteve
+   publicado, por isso leva 301 no `_redirects` para a seccao #reflex da
+   /o-que-e-um-parakite/, que trata do mesmo assunto. Um 404 deitava fora o
+   historico do endereco; um 301 transfere-o.
 
-   Só português. A página não tem traduções nem alternativas declaradas, e
-   inventar-lhe cinco não é trabalho desta tarefa. */
-function escreverReflexLab() {
-  const f = path.join(RAIZ, 'reflex-lab', 'index.html');
-  if (!fs.existsSync(f)) return;
-  const html = fs.readFileSync(f, 'utf8');
-  const ini = '<!-- ng:inicio -->', fim = '<!-- ng:fim -->';
-  const i = html.indexOf(ini), j = html.indexOf(fim);
-  if (i < 0 || j < 0) {
-    console.log('  Reflex Lab: sem marcadores, menu não escrito');
-    return;
-  }
-  const novo = html.slice(0, i + ini.length)
-    + menuGlobal('pt', DOMINIO + '/reflex-lab/')
-    + html.slice(j);
-  if (novo !== html) fs.writeFileSync(f, novo);
-  console.log('  Reflex Lab: navegação escrita entre marcadores');
-}
+   A rotina foi retirada e nao substituida: o gerador nao volta a escrever
+   dentro daquele ficheiro. */
+
 
 if (!so || so === 'o-que-e-um-parakite') {
   for (const l of (soIdioma ? [soIdioma] : IDIOMAS)) {
@@ -2421,7 +2443,7 @@ if (!so || so === 'o-que-e-um-parakite') {
     fs.mkdirSync(dir, { recursive: true });
     const html = paginaQueParakite(l);
     confereAlternativas(html, rel);
-    fs.writeFileSync(path.join(dir, 'index.html'), html);
+    escrevePagina(path.join(dir, 'index.html'), html);
     urls.push(DOMINIO + rel);
   }
   console.log('  O que é um Parakite: ' + IDIOMAS.length + ' páginas');
@@ -2434,20 +2456,18 @@ if (!so || so === 'musica') {
     fs.mkdirSync(dir, { recursive: true });
     const html = paginaMusica(l);
     confereAlternativas(html, rel);
-    fs.writeFileSync(path.join(dir, 'index.html'), html);
+    escrevePagina(path.join(dir, 'index.html'), html);
     urls.push(DOMINIO + rel);
   }
   console.log('  Música: ' + IDIOMAS.length + ' páginas');
 }
 
-if (!so && !soIdioma) escreverReflexLab();
 
 if (!so && !soIdioma) {
   const hoje = new Date().toISOString().slice(0, 10);
   /* as cinco iniciais têm a mesma prioridade: nenhuma é a tradução das
      outras, são cinco portas de entrada para cinco mercados */
-  const fixas = IDIOMAS.map(l => ({ loc: DOMINIO + inicioHref(l), freq: 'weekly', pri: '1.0' }))
-    .concat([{ loc: DOMINIO + '/reflex-lab/', freq: 'monthly', pri: '0.5' }]);
+  const fixas = IDIOMAS.map(l => ({ loc: DOMINIO + inicioHref(l), freq: 'weekly', pri: '1.0' }));
   const entrada = (loc, freq, pri) => [
     '  <url>',
     '    <loc>' + loc + '</loc>',
@@ -2458,7 +2478,17 @@ if (!so && !soIdioma) {
   ].join('\n');
   const corpoMapa = fixas.map(u => entrada(u.loc, u.freq, u.pri))
     .concat(urls.map(u => entrada(u, 'monthly', '0.8')));
-  fs.writeFileSync(path.join(RAIZ, 'sitemap.xml'), [
+  /* ---- a folha do tema, escrita a partir do CMS ---------------------- */
+{
+  const t = (() => {
+    try { return JSON.parse(fs.readFileSync(path.join(RAIZ, 'content/tema.json'), 'utf8')); }
+    catch (e) { return {}; }      /* sem ficheiro, valem as omissoes */
+  })();
+  fs.writeFileSync(path.join(RAIZ, 'tema.css'), folhaDoTema(t));
+  console.log('  tema.css escrito a partir de content/tema.json');
+}
+
+fs.writeFileSync(path.join(RAIZ, 'sitemap.xml'), [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<!-- Gerado por scripts/gerar-paginas.mjs. Não editar à mão: -->',
     '<!-- qualquer alteração aqui perde-se na publicação seguinte. -->',

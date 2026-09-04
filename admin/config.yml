@@ -9,30 +9,150 @@ media_folder: images
 public_folder: /images
 locale: pt
 collections:
+  # ====================================================================
+  #  TEMA
+  # ====================================================================
+  #  Estes campos são NÚMEROS e CORES, nunca CSS. A razão está escrita no
+  #  regras/tema.js: um campo que aceita `clamp(30px,4.4vw,50px)` também
+  #  aceita a versão com uma vírgula trocada, e essa não dá erro nenhum —
+  #  o browser deita a declaração fora em silêncio e a página fica sem
+  #  escala de títulos sem nada que o denuncie.
+  #
+  #  O gerador compõe o CSS a partir daqui e escreve o /tema.css, que as
+  #  140 páginas carregam depois da folha principal. A página inicial lê o
+  #  mesmo ficheiro no browser, pela mesma função.
+  #
+  #  Um campo deixado em branco não parte nada: volta ao valor de omissão.
+  - name: tema
+    label: Tema
+    editor:
+      preview: false
+    files:
+      - name: tema
+        label: Tipografia, cores e cantos
+        file: content/tema.json
+        format: json
+        description: >-
+          O desenho de todo o site. Mudar aqui muda as 140 páginas de uma
+          vez. Os títulos crescem com a largura do ecrã: o mínimo é o que
+          se vê no telemóvel, o máximo o que se vê num ecrã grande.
+        fields:
+          - label: Marca
+            name: marca
+            widget: object
+            fields:
+              - label: Cor laranja
+                name: laranja
+                widget: color
+                hint: A cor da marca. Muda em todo o site.
+              - label: Cor preta
+                name: preto
+                widget: color
+              - label: Laranja sobre fundo claro
+                name: laranjaTinta
+                widget: color
+                hint: >-
+                  O mesmo laranja, escurecido até se ler sobre branco. O
+                  #ff6a13 sobre branco dá 2,87:1 e o mínimo legível é 4,5.
+                  Se mudares o laranja da marca, muda também este.
+              - label: Laranja sobre o painel azul
+                name: laranjaPainel
+                widget: color
+                hint: >-
+                  O laranja aclarado para o painel do método, que é azul e
+                  não preto. Sem ele, a etiqueta fica a 3,92:1.
+              - label: Tipo de letra
+                name: fonte
+                widget: string
+                hint: >-
+                  Lista de famílias separadas por vírgula, da preferida para
+                  a alternativa.
+          - label: Tamanhos de letra
+            name: escala
+            widget: object
+            fields:
+              - label: Título grande (h1) — mínimo em px
+                name: d1
+                widget: object
+                fields:
+                  - { label: Mínimo (px), name: min, widget: number, value_type: float }
+                  - { label: Ideal (% da largura do ecrã), name: ideal, widget: number, value_type: float }
+                  - { label: Máximo (px), name: max, widget: number, value_type: float }
+              - label: Título de secção (h2)
+                name: d2
+                widget: object
+                fields:
+                  - { label: Mínimo (px), name: min, widget: number, value_type: float }
+                  - { label: Ideal (% da largura do ecrã), name: ideal, widget: number, value_type: float }
+                  - { label: Máximo (px), name: max, widget: number, value_type: float }
+              - label: Rótulo lateral
+                name: dLateral
+                widget: object
+                hint: >-
+                  Os títulos que são rótulo da coluna esquerda, numa coluna
+                  de 230px. Precisam de ser menores ou partem em quatro
+                  linhas.
+                fields:
+                  - { label: Mínimo (px), name: min, widget: number, value_type: float }
+                  - { label: Ideal (% da largura do ecrã), name: ideal, widget: number, value_type: float }
+                  - { label: Máximo (px), name: max, widget: number, value_type: float }
+              - { label: Subtítulo (h3) (px), name: d3, widget: number, value_type: float }
+              - { label: Texto corrido (px), name: corpo, widget: number, value_type: float }
+              - { label: Nota (px), name: nota, widget: number, value_type: float }
+              - { label: Rótulo pequeno (px), name: rotulo, widget: number, value_type: float }
+          - label: Pesos
+            name: pesos
+            widget: object
+            hint: Quatro, e não os oito que se iam inventando.
+            fields:
+              - label: Display
+                name: display
+                widget: select
+                options: ['400', '500', '600', '700', '800', '900']
+              - label: Forte
+                name: forte
+                widget: select
+                options: ['400', '500', '600', '700', '800', '900']
+              - label: Médio
+                name: medio
+                widget: select
+                options: ['400', '500', '600', '700', '800', '900']
+              - label: Corpo
+                name: corpo
+                widget: select
+                options: ['300', '400', '500', '600']
+          - label: Espaço entre letras (em)
+            name: tracking
+            widget: object
+            fields:
+              - { label: Nos títulos de secção, name: display, widget: number, value_type: float }
+              - { label: No título principal, name: h1, widget: number, value_type: float }
+              - { label: Nos rótulos pequenos, name: rotulo, widget: number, value_type: float }
+          - label: Altura de linha
+            name: alturaLinha
+            widget: object
+            fields:
+              - { label: Nos títulos, name: display, widget: number, value_type: float }
+              - { label: No texto corrido, name: corpo, widget: number, value_type: float }
+          - label: Raio dos cantos (px)
+            name: raio
+            widget: number
+            value_type: float
+            hint: 0 dá cantos vivos, que é o que o site usa hoje.
+
   - name: settings
     label: Definições gerais
     editor:
       preview: false
     files:
       - name: general
-        label: Geral (marca, menu, céu, rodapé, ordem)
+        label: Geral (menu, céu, rodapé, ordem)
         file: content/settings.json
         format: json
-        description: Definições globais do site e a ordem dos slides.
+        description: >-
+          Definições globais do site e a ordem dos slides. As cores da marca
+          e a tipografia mudaram-se para a secção "Tema".
         fields:
-          - label: Marca
-            name: brand
-            widget: object
-            fields:
-              - label: Cor laranja
-                name: orange
-                widget: color
-              - label: Cor preta
-                name: black
-                widget: color
-              - label: Tipo de letra
-                name: font
-                widget: string
           - label: Vento
             name: wind
             widget: object

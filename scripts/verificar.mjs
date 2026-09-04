@@ -36,6 +36,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
+import { QUALIFICADORES, protegeNomes } from '../regras/textos.js';
+import { tokensDoTema } from '../regras/tema.js';
 
 const RAIZ = process.cwd();
 const IDIOMAS = ['pt', 'en', 'es', 'fr', 'de'];
@@ -468,6 +470,353 @@ titulo('7. Os títulos descem um nível de cada vez');
     }
   }
   ok(vivas.length + ' páginas, ' + mau + ' problema(s) de estrutura');
+}
+
+/* ------------------------------------------------------------------ */
+titulo('8. O nome da casa aparece sempre inteiro');
+{
+  /* A REGRA
+       "Happy Soaring" nao se traduz, nao se abrevia, nao se declina e nao
+       se junta a outra palavra com hifen. E o unico nome do site que nao
+       admite sequer uma alteracao de forma.
+
+     PORQUE E QUE PRECISA DE UM TESTE
+       Porque a maneira como se partiu nao foi um erro de tradutor: foi
+       ortografia CORRECTA. O alemao compoe substantivos com hifen, e por
+       isso "Die Happy-Soaring-Methode" saiu de uma traducao bem feita.
+       Uma regra que so se quebra quando alguem escreve mal defende-se com
+       atencao; esta quebra-se quando alguem escreve BEM, e por isso tem de
+       se defender com uma verificacao.
+
+     O QUE PROCURA
+       Qualquer sitio onde as duas palavras aparecam separadas por outra
+       coisa que nao um espaco — hifen, hifen longo, sublinhado, barra —
+       e qualquer sitio onde "Soaring" apareca sem "Happy" antes.
+       O `happysoaring.com` e o `happy-soaring` de um nome de ficheiro nao
+       contam: sao enderecos, e um endereco nao e o nome. */
+  const PARTIDO = /Happy[-–—_/]+Soaring|Happy\s+Soaring[-–—_]+\w/g;
+  let mau = 0, visto = 0;
+  for (const p of vivas) {
+    let h = fs.readFileSync(p.ficheiro, 'utf8');
+    h = h.replace(/<!--[\s\S]*?-->/g, ' ');
+    /* fora os enderecos: href, src, content de url, e o dominio */
+    h = h.replace(/(?:href|src|content)="[^"]*"/g, m =>
+      /https?:|^"?\//.test(m.slice(m.indexOf('"') + 1)) ? ' ' : m);
+    h = h.replace(/happysoaring\.com/gi, ' ');
+    visto++;
+    for (const m of h.match(PARTIDO) || []) {
+      falha('o nome partido em ' + p.url + ': "' + m + '"');
+      mau++;
+    }
+  }
+  ok(visto + ' páginas, ' + mau + ' ocorrência(s) do nome partido');
+}
+
+/* ------------------------------------------------------------------ */
+titulo('9. Nenhuma ligação atira o visitante para outra língua sem o dizer');
+{
+  /* O QUE ISTO APANHA, E COMO SE SOUBE QUE ERA PRECISO
+       O /reflex-lab/ era a unica pagina so em portugues, e as paginas
+       traduzidas apontavam-lhe na lingua do visitante: um frances carregava
+       em "Explorer le Reflex Lab" e aterrava numa pagina portuguesa. Nao
+       havia nada partido — o botao estava certo, o destino e que nao tinha
+       traducao. Nenhuma das oito verificacoes anteriores podia ver isso,
+       porque a ligacao resolvia e a pagina existia.
+
+     A REGRA, E PORQUE E ESTA
+       Sair da lingua nao e proibido: o proprio selector de idiomas faz
+       exactamente isso, e tem de o fazer. O que nao pode acontecer e sair
+       em silencio. E por isso a regra nao e "nao saias" — e "se sais,
+       declara-o", com o `hreflang` que o selector ja usa em todas as suas
+       ligacoes. Assim a excepcao legitima documenta-se a si propria e nao
+       precisa de uma lista de perdoados aqui dentro, que era o que um dia
+       deixaria passar a proxima.
+
+     SO PAGINAS
+       Um href que nao acabe em barra e uma imagem, um PDF ou uma ancora —
+       nao e uma pagina, e nao tem lingua para trair. */
+  const lingua = u => {
+    const p = String(u).split('#')[0].split('?')[0].replace(/^\//, '').split('/');
+    return IDIOMAS.indexOf(p[0]) > 0 ? p[0] : 'pt';
+  };
+  let mau = 0;
+  for (const p of vivas) {
+    const daPagina = lingua(p.url);
+    let h = fs.readFileSync(p.ficheiro, 'utf8').replace(/<!--[\s\S]*?-->/g, ' ');
+    for (const m of h.matchAll(/<a\b([^>]*)href="(\/[^"]*\/)"([^>]*)>/g)) {
+      const atrib = m[1] + m[3];
+      if (/\bhreflang=/.test(atrib)) continue;      /* diz que sai: e legitimo */
+      const destino = lingua(m[2]);
+      if (destino === daPagina) continue;
+      falha('em ' + p.url + ' uma ligação sai para ' + destino
+            + ' sem hreflang: ' + m[2]);
+      mau++;
+    }
+  }
+  ok(vivas.length + ' páginas, ' + mau + ' ligação(ões) que saem da língua em silêncio');
+}
+
+/* ------------------------------------------------------------------ */
+titulo('10. A página de erro fala as cinco línguas');
+{
+  /* PORQUE E QUE ISTO E FACIL DE ESQUECER
+       O 404.html nao passa pelo gerador — nao ha cinco versoes dele, ha
+       uma. Por isso nao entra em nenhuma das contagens acima: nao esta no
+       sitemap, nao e uma "pagina viva", e durante muito tempo esteve so
+       em portugues sem que nada se queixasse. Um visitante frances que
+       escrevesse mal um endereco recebia portugues e um botao que o
+       levava para a inicial portuguesa.
+
+     O QUE SE VERIFICA
+       Que a tabela de traducoes la dentro cobre TODAS as linguas do site
+       menos a base, e que cada uma leva a sua propria inicial. No dia em
+       que o site ganhar uma sexta lingua, e esta linha que avisa — em vez
+       de a pagina de erro ficar caladamente em portugues para ela. */
+  const h = fs.readFileSync(path.join(RAIZ, '404.html'), 'utf8');
+  let mau = 0;
+  /* Sem expressao regular de proposito. A primeira versao desta linha
+     construia uma com `new RegExp` e escapes, e os escapes chegaram ca
+     comidos: `"\s"` em JavaScript nao e `\s`, e uma escapatoria mal
+     escrita e a barra a mais — o teste passava a procurar outra coisa e
+     dizia que estava tudo bem. Duas buscas de texto nao tem como mentir. */
+  for (const l of IDIOMAS) {
+    if (l === 'pt') continue;                 /* a base esta escrita no HTML */
+    const i = h.indexOf(l + ': {');
+    const fim = i < 0 ? -1 : h.indexOf('}', i);
+    const bloco = i < 0 ? '' : h.slice(i, fim);
+    if (i < 0 || bloco.indexOf("h: '/" + l + "/'") < 0) {
+      falha('o 404.html não tem texto nem destino próprios para ' + l);
+      mau++;
+    }
+  }
+  /* e a base tem de estar mesmo no documento, para quem chega sem JS */
+  if (!/<html lang="pt"/.test(h)) { falha('o 404.html não traz o português no documento'); mau++; }
+  ok((IDIOMAS.length - 1) + ' línguas + a base, ' + mau + ' em falta');
+}
+
+/* ------------------------------------------------------------------ */
+titulo('11. Os valores das tabelas não escondem palavras por traduzir');
+{
+  /* A METADE QUE FALTAVA
+       O `regras/textos.js` traduz um vocabulario fechado de qualificadores
+       — "intermédio", "avançado", "tamanho único" — que aparecem dentro de
+       campos de especificacao. Uma lista fechada resolve o que esta la
+       hoje e nao resolve nada do que la for posto amanha: basta alguem
+       escrever "iniciante" no CMS e volta a haver portugues nas cinco
+       linguas, em silencio.
+
+       Por isso a lista nao se defende com memoria, defende-se com esta
+       linha: qualquer palavra nestes campos que nao esteja no vocabulario
+       conhecido faz o `npm run check` parar, e quem a escreveu fica a
+       saber no momento em que a escreve.
+
+     O QUE E "PALAVRA CONHECIDA"
+       As unidades e os codigos que se leem igual em qualquer lingua (kg,
+       cm, EN, LTF, EP, XS, ML) e tudo o que o vocabulario ja traduz — as
+       chaves portuguesas e as cinco traducoes de cada uma. Numeros nao
+       contam: nao ha numero por traduzir. */
+  const NEUTRAS = new Set(['kg', 'cm', 'mm', 'm', 'km', 'en', 'ltf', 'ep', 'dgac',
+    'xs', 's', 'ml', 'l', 'xl', 'xxl', 'xxs']);
+  const conhecidas = new Set(NEUTRAS);
+  for (const [chave, trad] of Object.entries(QUALIFICADORES)) {
+    for (const parte of chave.split(/\s+/)) conhecidas.add(parte.toLowerCase());
+    for (const v of Object.values(trad)) {
+      for (const parte of String(v).split(/\s+/)) conhecidas.add(parte.toLowerCase());
+    }
+  }
+
+  const cat = JSON.parse(fs.readFileSync(
+    path.join(RAIZ, 'content', 'slides', 'produtos.json'), 'utf8'));
+  let mau = 0, vistos = 0;
+  for (const e of cat.elements || []) {
+    for (const p of e.produtos || []) {
+      const valores = (p.tamanhos || []).map(x => ['tamanhos', String(x)]);
+      for (const s of p.specs || []) {
+        for (const [k, v] of Object.entries(s)) {
+          if (typeof v === 'string') valores.push([k, v]);
+        }
+      }
+      for (const [campo, v] of valores) {
+        vistos++;
+        for (const w of v.match(/[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ]+/g) || []) {
+          if (conhecidas.has(w.toLowerCase())) continue;
+          falha('"' + w + '" em ' + p.nome + ' · ' + campo
+                + ' sai igual nas cinco línguas e não está no vocabulário');
+          mau++;
+        }
+      }
+    }
+  }
+  ok(vistos + ' valores de tabela, ' + mau + ' palavra(s) por traduzir');
+}
+
+/* ------------------------------------------------------------------ */
+titulo('12. Os nomes próprios estão ao abrigo do tradutor');
+{
+  /* O QUE ACONTECEU
+       Um visitante com o Chrome em portugues abriu a /fr/ e mandou traduzir.
+       O tradutor fez o que se lhe pediu, e o cabecalho passou a dizer
+       "FELIZ VOO" onde diz Happy Soaring; "Parakite" virou "Paraquito".
+       Curiosamente "Flow Paragliders" e "FelloFly" sobreviveram — o
+       tradutor reconheceu-os como nomes e nao reconheceu os outros dois.
+       Nao ha aqui defeito de traducao: ha um site que nunca disse quais
+       pedacos nao sao texto. `translate="no"` di-lo, e e norma HTML.
+
+     DUAS MEDIDAS, E PORQUE NAO CHEGA UMA
+       A primeira e a idempotencia: a funcao salta o que ja esta protegido,
+       logo aplicada a uma pagina tratada nao muda um caracter. Se mudar,
+       encontrou um nome a descoberto.
+
+       Isso parecia elegante e era cego. Uma verificacao que usa a
+       ferramenta contra o seu proprio resultado so ve o que a ferramenta
+       ve — e quando a `protegeNomes` entrava num `<script>`, apanhava um
+       `x<0` como etiqueta, engolia o `</script>` e desistia do resto do
+       documento, ela era perfeitamente consistente consigo propria: saltava
+       a mesma metade nas duas passagens. A idempotencia dizia "tudo bem"
+       com dez nomes por proteger na /asas/mullet-2/.
+
+       A segunda medida nao usa a `protegeNomes` para nada, e e por isso que
+       serve: tira os comentarios e os elementos de texto cru com uma
+       expressao regular, achata o resto a texto simples, e conta os nomes.
+       Depois conta os que estao DENTRO de marcacao de proteccao. Se o
+       primeiro numero for maior que o segundo, ha nomes a descoberto —
+       e isto sabe-o sem partilhar uma linha de codigo com o que verifica.
+
+       Duas implementacoes independentes falham de maneiras diferentes. E
+       essa a unica razao para haver duas. */
+  const cat = JSON.parse(fs.readFileSync(
+    path.join(RAIZ, 'content', 'slides', 'produtos.json'), 'utf8'));
+  const asas = (cat.elements || []).flatMap(e => (e.produtos || []).map(p => p && p.nome))
+    .filter(Boolean);
+  const NOMES = ['Happy Soaring', 'Flow Paragliders', 'Pilot2Wing', 'FelloFly',
+    'Parakites', 'Parakite', 'Parawing'].concat(asas);
+
+  /* conta quantas vezes um nome aparece num texto, sem apanhar palavras
+     maiores que o contenham */
+  const conta = (txt, nome) => {
+    let n = 0, i = 0;
+    const letra = c => c !== undefined && /[0-9A-Za-zÀ-ÿ]/.test(c);
+    while ((i = txt.indexOf(nome, i)) >= 0) {
+      if (!letra(txt[i - 1]) && !letra(txt[i + nome.length])) n++;
+      i += nome.length;
+    }
+    return n;
+  };
+
+  let mau = 0;
+  for (const p of vivas) {
+    const h = fs.readFileSync(p.ficheiro, 'utf8');
+    if (protegeNomes(h, asas) !== h) {
+      falha('em ' + p.url + ' há nome(s) próprio(s) sem translate="no"');
+      mau++;
+    }
+
+    /* ---- a segunda medida, independente da primeira ---- */
+    const ini = h.indexOf('<body');
+    const corpo = ini < 0 ? '' : h.slice(h.indexOf('>', ini), h.lastIndexOf('</body>'));
+    const limpo = corpo
+      .replace(/<!--[\s\S]*?-->/g, ' ')
+      .replace(/<(script|style|textarea)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ');
+    const planoTodo = limpo.replace(/<[^>]*>/g, ' ');
+    /* o conteudo de tudo o que declara `translate="no"` */
+    const protegidos = (limpo.match(
+      /<([a-z0-9-]+)[^>]*\btranslate="no"[^>]*>[\s\S]*?<\/\1>/gi) || [])
+      .join(' ').replace(/<[^>]*>/g, ' ');
+    for (const nome of NOMES) {
+      const todos = conta(planoTodo, nome);
+      if (!todos) continue;
+      const cobertos = conta(protegidos, nome);
+      if (todos > cobertos) {
+        falha('em ' + p.url + ': "' + nome + '" aparece ' + todos
+              + 'x e só ' + cobertos + 'x está protegido');
+        mau++;
+      }
+    }
+    /* O PONTO CEGO DA MEDIDA DE CIMA, E PORQUE PRECISA DE LINHA PROPRIA
+       O wordmark escreve-se `HAPPY <span>SOARING</span>`: o nome esta
+       partido por uma etiqueta, e por isso nenhuma busca de texto o
+       encontra — nem a `protegeNomes`. Tirar-lhe o `translate="no"` nao
+       muda nada no teste de idempotencia, e mesmo assim e o elemento mais
+       visivel da pagina: foi este que apareceu como "FELIZ VOO".
+       Aqui protege-se o elemento, e aqui verifica-se o elemento. */
+    for (const m of h.matchAll(/<a\b[^>]*class="pg-marca"[^>]*>/g)) {
+      if (!/\btranslate\s*=\s*"no"/.test(m[0])) {
+        falha('em ' + p.url + ' o wordmark não tem translate="no"');
+        mau++;
+      }
+    }
+  }
+  ok(vivas.length + ' páginas, ' + mau + ' com nomes a descoberto');
+}
+
+/* ------------------------------------------------------------------ */
+titulo('13. Todo o token do tema chega mesmo a uma folha');
+{
+  /* O RISCO PROPRIO DE POR O DESENHO NUM FORMULARIO
+       O CMS passou a ter uma seccao Tema. O perigo nao e escrever um valor
+       mau — isso ve-se e desfaz-se. O perigo e escrever um valor BOM num
+       campo que nao esta ligado a nada: mexe-se no numero, guarda-se,
+       publica-se, e a pagina fica exactamente igual. Nao ha erro, nao ha
+       aviso, e a conclusao natural de quem la mexeu e que o site esta
+       avariado.
+
+       Isso acontece de duas maneiras: o gerador deixar de escrever um
+       token, ou as folhas deixarem de o usar depois de alguem renomear uma
+       variavel. As duas se apanham aqui.
+
+     O QUE SE VERIFICA
+       1. o tema.css existe e traz TODOS os tokens que a composicao produz;
+       2. cada um deles e MESMO usado, com `var(--x)`, nalguma folha —
+          senao e um campo no CMS que nao manda em nada;
+       3. o tema.css e carregado por todas as paginas, e em ultimo, senao
+          ha paginas onde o CMS nao chega. */
+  const tema = (() => {
+    try { return JSON.parse(fs.readFileSync(path.join(RAIZ, 'content', 'tema.json'), 'utf8')); }
+    catch (e) { return {}; }
+  })();
+  const tk = tokensDoTema(tema);
+
+  const caminhoTema = path.join(RAIZ, 'tema.css');
+  let mau = 0;
+  if (!fs.existsSync(caminhoTema)) {
+    falha('o tema.css não existe — o gerador não o escreveu');
+    mau++;
+  } else {
+    const folha = fs.readFileSync(caminhoTema, 'utf8');
+    /* as folhas onde os tokens podem ser consumidos */
+    const usos = CSS_FICHEIROS.concat(['tema.css'])
+      .filter(x => fs.existsSync(path.join(RAIZ, x)))
+      .map(x => fs.readFileSync(path.join(RAIZ, x), 'utf8')).join('\n')
+      + '\n' + fs.readFileSync(path.join(RAIZ, 'app.js'), 'utf8');
+    /* o `tema.css` conta como consumidor porque e la que o `--fonte` e
+       usado: `body{font-family:var(--fonte)}`. Sem esta linha a
+       verificacao acusava-o de nao mandar em nada, e mandava. */
+
+    for (const nome of Object.keys(tk)) {
+      if (folha.indexOf(nome + ':') < 0) {
+        falha('o tema.css não escreve ' + nome);
+        mau++;
+      } else if (usos.indexOf('var(' + nome + ')') < 0) {
+        falha(nome + ' é escrito mas nenhuma folha o usa — é um campo do CMS que não manda em nada');
+        mau++;
+      }
+    }
+  }
+
+  let semLigacao = 0;
+  for (const p of vivas) {
+    const h = fs.readFileSync(p.ficheiro, 'utf8');
+    const i = h.indexOf('href="/tema.css"');
+    if (i < 0) { falha(p.url + ' não carrega o tema.css'); semLigacao++; continue; }
+    /* tem de vir depois das outras folhas, senao nao ganha */
+    const ultima = h.lastIndexOf('rel="stylesheet"', h.indexOf('</head>'));
+    if (h.lastIndexOf('rel="stylesheet"', i) !== ultima) {
+      falha(p.url + ' carrega o tema.css antes de outra folha — não ganha');
+      semLigacao++;
+    }
+  }
+  mau += semLigacao;
+  ok(Object.keys(tk).length + ' tokens, ' + vivas.length + ' páginas, ' + mau + ' problema(s)');
 }
 
 /* ------------------------------------------------------------------ */

@@ -54,6 +54,6 @@ export const IN = {
     en: 'The Portuguese coast from above, with the Happy Soaring wordmark',
     es: 'La costa portuguesa desde el aire, con la marca Happy Soaring',
     fr: 'La côte portugaise vue du ciel, avec la marque Happy Soaring',
-    de: 'Die portugiesische Küste von oben, mit dem Happy-Soaring-Schriftzug'
+    de: 'Die portugiesische Küste von oben, mit dem Schriftzug Happy Soaring'
   }
 };

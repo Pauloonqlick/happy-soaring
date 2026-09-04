@@ -1,0 +1,46 @@
+{
+  "marca": {
+    "laranja": "#ff6a13",
+    "preto": "#141414",
+    "fonte": "'Segoe UI', system-ui, -apple-system, sans-serif",
+    "laranjaTinta": "#a63f00",
+    "laranjaPainel": "#ff842d"
+  },
+  "escala": {
+    "d1": {
+      "min": 30,
+      "ideal": 4.4,
+      "max": 50
+    },
+    "d2": {
+      "min": 22,
+      "ideal": 3.1,
+      "max": 41
+    },
+    "dLateral": {
+      "min": 15,
+      "ideal": 1.5,
+      "max": 23
+    },
+    "d3": 19,
+    "corpo": 17,
+    "nota": 14,
+    "rotulo": 11.5
+  },
+  "pesos": {
+    "display": 800,
+    "forte": 700,
+    "medio": 600,
+    "corpo": 400
+  },
+  "tracking": {
+    "display": 0,
+    "h1": 0.004,
+    "rotulo": 0.139
+  },
+  "alturaLinha": {
+    "display": 1.02,
+    "corpo": 1.6
+  },
+  "raio": 0
+}

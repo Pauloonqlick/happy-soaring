@@ -78,8 +78,17 @@ const server = createServer(async (req, res) => {
     });
     res.end(data);
   } catch {
+    /* O MESMO 404 QUE O CLOUDFLARE SERVE
+       Isto respondia `<h1>404</h1>`, e por isso a pagina de erro a serio
+       — que agora escolhe a lingua a partir do endereco falhado — nao se
+       podia experimentar aqui. Uma pagina que so existe em producao e uma
+       pagina que ninguem testa. Servir o mesmo ficheiro poe as duas
+       pontas de acordo, e o endereco falhado chega-lhe igual dos dois
+       lados, que e o sinal de que ela precisa. */
+    let corpo = '<h1>404</h1>';
+    try { corpo = await readFile(join(ROOT, '404.html'), 'utf8'); } catch {}
     res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
-    res.end('<h1>404</h1>');
+    res.end(corpo);
   }
 });
 

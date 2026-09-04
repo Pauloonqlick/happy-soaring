@@ -155,7 +155,7 @@ body.pg{
 
 .pg-cab{display:flex;gap:56px;align-items:center;flex-wrap:wrap;margin-bottom:44px}
 .pg-cab-txt{flex:1 1 380px;min-width:0}
-.pg-eyebrow{font-size:11.5px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
+.pg-eyebrow{font-size:var(--rotulo);font-weight:800;letter-spacing:var(--tr-rotulo);text-transform:uppercase;
   color:var(--orange);margin-bottom:6px}
 .pg h1{font-size:clamp(34px,6vw,52px);font-weight:800;letter-spacing:-1.6px;line-height:1.02}
 .pg-tagline{font-size:18px;color:var(--tinta-fraca);margin-top:12px;max-width:34ch}
@@ -864,10 +864,10 @@ a.fl-cor-a:hover{background:#ff7c31;color:var(--sobre-laranja)}
   line-height:1.1;margin:0 0 20px;max-width:22ch;
 }
 .pk p{max-width:66ch}
-.pk-nota{font-size:14px;color:var(--tinta-fraca);line-height:1.5;max-width:62ch}
+.pk-nota{font-size:var(--nota);color:var(--tinta-fraca);line-height:1.5;max-width:62ch}
 .pk .pg-eyebrow{margin-bottom:12px}
 .pk-et-laranja{
-  font-size:11.5px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
+  font-size:var(--rotulo);font-weight:800;letter-spacing:var(--tr-rotulo);text-transform:uppercase;
   color:var(--orange);margin:0 0 8px;
 }
 
@@ -1580,7 +1580,11 @@ a.fl-cor-a:hover{background:#ff7c31;color:var(--sobre-laranja)}
 }
 
 /* ---- aprender mais ---- */
-.qp-links{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:34px}
+/* `repeat(3,1fr)` era o numero de cartoes escrito na folha de estilo.
+   Quando o terceiro saiu — o Reflex Lab, em 04/09/2026 — ficou uma coluna
+   vazia a direita. O `auto-fit` conta os cartoes que houver. */
+.qp-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+          gap:14px;margin-top:34px}
 .pg.qp a.qp-link{
   display:block;background:var(--qp-cx);border:1px solid var(--linha);
   border-radius:16px;padding:24px;text-decoration:none;color:var(--tinta);
@@ -1742,171 +1746,204 @@ a.fl-cor-a:hover{background:#ff7c31;color:var(--sobre-laranja)}
   .mu-foto{width:56%;align-self:flex-end;margin-bottom:-28px}
 }
 
+/* ======================================================================
+   O TEMA — as decisões, com nome
+   ======================================================================
+   PORQUE E QUE ISTO EXISTE
+     A /parakite-portugal/ ganhou 245 linhas de CSS. O inventario disse
+     que 16 das 18 regras nao eram daquela pagina: eram decisoes do site
+     inteiro vestidas de `.pk-*`. So duas eram mesmo dela — os paddings
+     verticais do hero e dos paineis.
+     Deixar assim significava reescrever catorze regras no `/pilot2wing/`
+     para mudar duas coisas. E depois outra vez. E outra.
+
+   O QUE O INVENTARIO TAMBEM MOSTROU
+     Quatro tamanhos de letra e cinco pesos escritos a mao em numero, e a
+     formula do alinhamento copiada quatro vezes. E assim que daqui a tres
+     paginas ha sete tamanhos e nove pesos — como havia doze raios antes
+     de se arrumarem.
+
+   PORQUE E `.tema` E NAO `.pg`
+     Porque a adopcao e por pagina. Hoje so a /parakite-portugal/ o leva;
+     as 110 paginas de asas ficam como estao ate serem medidas uma a uma.
+     No dia em que forem todas, troca-se `.pg.tema` por `.pg` e o `.tema`
+     desaparece. Uma linha, nao uma migracao.
+   ====================================================================== */
+:root{
+  /* escala — dois degraus de display, tres de leitura */
+  --d1:clamp(30px,4.4vw,50px);
+  --d2:clamp(22px,3.1vw,41px);
+  --d3:19px;
+  /* O DEGRAU QUE FALTAVA: O ROTULO LATERAL
+     As paginas de asas tem duas familias de titulo que a 21px eram
+     indistinguiveis e a 41 deixaram de o ser: uns atravessam a pagina
+     (1055px) e outros sao o rotulo esquerdo de uma grelha de duas
+     colunas, com 230px. "Risers e direccao nas pontas" a 41px nessa
+     coluna dava QUATRO linhas.
+     O tema so revelou o que ja la estava: dois papeis com o mesmo nome. */
+  --d-lateral:clamp(15px,1.5vw,23px);
+  --corpo:17px;
+  --nota:14px;
+  --rotulo:12px;
+
+  /* pesos — quatro, e nao os oito que se iam inventando */
+  --peso-display:800;
+  --peso-forte:700;
+  --peso-medio:600;
+  --peso-corpo:400;
+
+  /* tracking — zero no display, largo no rotulo. O negativo saiu:
+     era um dos seis maneirismos da auditoria. */
+  --tr-display:0;
+  --tr-h1:.004em;
+  --tr-rotulo:.13em;
+
+  --lh-display:1.02;
+  --lh-corpo:1.6;
+
+  --raio:0;
+
+  /* O LARANJA TEM DE TER DUAS TINTAS
+     O #ff6a13 da 6,7:1 sobre o azul da pagina e 2,87 sobre um painel
+     branco. Nao e uma quarta cor: e o mesmo laranja escurecido ate
+     passar sobre claro, e da 6,3:1. O `--sobre-laranja` faz o simetrico
+     do outro lado — preto para texto EM cima do laranja. */
+  --laranja-tinta:#a63f00;
+
+  /* E UMA TERCEIRA, PARA O AZUL
+     O painel do metodo nao e preto: e `#0e3b6d`. E um fundo bem mais
+     CLARO que a pagina, e por isso o laranja vivo, que ali dava 6,7:1
+     sobre a pagina, cai para 3,92 sobre o painel. A etiqueta tem 11,5px
+     e pede 4,5. Nao e cor nova outra vez: e o mesmo laranja aclarado ate
+     passar sobre o azul — 4,60:1. */
+  --laranja-painel:#ff842d;
+
+}
+
+/* A CONTA DO ALINHAMENTO, ESCRITA UMA VEZ
+   Estava copiada em quatro regras. Poe o conteudo de uma faixa que sangra
+   exactamente onde as seccoes normais o poem.
+
+   VIVE AQUI E NAO NO `:root`, E A RAZAO E ESTRANHA A PRIMEIRA VISTA
+     Uma propriedade personalizada resolve os `var()` que tem dentro no
+     sitio onde e DECLARADA, nao onde e usada. O `--pk-cx` e o `--pk-pad`
+     estao no `.pk`, nao no `:root` — declarada la em cima, esta morria a
+     nascenca e herdava vazia. O padding das faixas dava zero e a pagina
+     inteira saia do alinhamento.
+     O `100%`, esse, resolve mesmo no sitio de uso: tem de ser aplicada a
+     um elemento que ocupe a largura toda. */
+.pk{
+  --margem-faixa:max(var(--pk-pad), calc((100% - var(--pk-cx))/2 + var(--pk-pad)));
+}
+
+/* ---- o tema, ligado a selectores genericos ------------------------- */
+.pg.tema h1{
+  font-size:var(--d1); line-height:var(--lh-display);
+  letter-spacing:var(--tr-h1); text-transform:uppercase;
+  font-weight:var(--peso-display);
+}
+.pg.tema h2{
+  font-size:var(--d2); line-height:var(--lh-display);
+  letter-spacing:var(--tr-display); text-transform:uppercase;
+  font-weight:var(--peso-display); max-width:none; text-wrap:balance;
+}
+.pg.tema h3{letter-spacing:0; font-weight:var(--peso-forte)}
+
+/* Justifica-se TODO o paragrafo e nomeiam-se as excepcoes. A versao
+   anterior nomeava classes e deixava de fora os `<p>` sem classe — uma
+   lista de excepcoes mantem-se correcta sozinha, uma de inclusoes
+   obriga a lembrar de a aumentar. */
+.pg.tema p{
+  text-align:justify; -webkit-hyphens:auto; hyphens:auto; max-width:none;
+}
+/* `.pg ul` e (0,1,1) e ganhava as regras de uma classe so: todas as
+   listas levavam 20px de avanco que ninguem pediu. */
+.pg.tema ul{margin-left:0}
+
+/* O ROTULO LATERAL
+   `.pg-papel .pg-sec` e uma grelha de duas colunas em que o h2 e o
+   rotulo esquerdo, com 230px. A 41px "Risers e direccao nas pontas"
+   dava quatro linhas. O tema so revelou o que ja la estava: dois papeis
+   de titulo com o mesmo nome, indistinguiveis a 21px. */
+.pg.tema .pg-papel .pg-sec > h2{font-size:var(--d-lateral); line-height:1.1}
+
+/* o rotulo e a unica classe partilhada entre paginas */
+.pg.tema .pg-eyebrow{
+  font-weight:var(--peso-forte); text-align:left; hyphens:none;
+}
+
+@media(max-width:760px){
+  /* coluna estreita: justificar abre buracos, e nao ha garantia de
+     hifenizacao — ha browsers com dicionario e browsers sem */
+  .pg.tema p{text-align:left}
+}
 
 /* ======================================================================
-   REGRAS DE TIPOGRAFIA — /parakite-portugal/
+   /parakite-portugal/ — o que e mesmo desta pagina
    ======================================================================
-   SEM TIPO NOVO
-     Fica a pilha do sistema. Isso custa uma coisa e uma só: sem eixo de
-     largura, o titulo mais longo desta pagina — 43 caracteres — cabe
-     numa linha a 41px e nao a 53. Medido, nao estimado.
-     Mas o h2 desta pagina tem HOJE 30px. Passar a 41 em maiusculas e
-     mais 37%, nao menos. A fonte nunca foi o problema maior.
-
-   O QUE MUDA MESMO E O RACIO
-     Titulo a dividir por corpo: esta pagina esta em 1,6x; o site que
-     serviu de referencia esta em 3,3x. E a diferenca mais visivel entre
-     os dois, e nao depende de letra nenhuma — sobe-se o titulo e
-     desce-se o corpo. Aqui fica em 2,4x: nao chega aos 3,3 porque este
-     corpo tem de continuar a ser lido, e nao so varrido.
-
-   O TRACKING NEGATIVO SAI
-     -1,6px num titulo de 30px sao -0,053em. E o gesto "apertado" que
-     esta em todo o lado e que qualquer gerador produz por omissao. Em
-     caixa alta quer-se zero.
-     As etiquetas pequenas ja tinham +0,13em e ficam como estao: essas
-     ja estavam certas.
-
-   NAO SE USOU `scaleX`
-     Condensar sinteticamente dava 66px em vez de 41. Mas distorce todas
-     as hastes, e a 66px isso ve-se — le-se como barato, que e o oposto
-     do que se procura.
+   Depois de o tema levar o que era dele, sobra isto: as ligacoes as
+   classes `.pk-*`, que so existem aqui, e dois paddings verticais.
    ====================================================================== */
 
-/* ---- titulos: caixa alta, uma linha, sem aperto ---- */
-.pg.pk .pk-heroi h1{
-  font-size:clamp(30px,4.4vw,50px); line-height:1.02;
-  letter-spacing:.004em; text-transform:uppercase; font-weight:800;
-}
-/* o `.pk-resp>h2` traz !important no corpo, no peso e no tracking.
-   Entre dois !important quem decide e a especificidade: esta e (0,3,1)
-   contra a (0,1,2) dele. Empilhar !important nao e bonito, mas a
-   alternativa era ir mexer numa regra que existe por outra razao. */
-.pg.pk .pk-sec > h2,
-.pg.pk .pk-h2-grande,
-.pg.pk .pk-energia h2,
-.pg.pk .pk-resp > h2{
-  font-size:clamp(22px,3.1vw,41px) !important; line-height:1.02;
-  letter-spacing:0 !important; text-transform:uppercase;
-  font-weight:800 !important;
-  max-width:none; text-wrap:balance;
-}
+/* as excepcoes a justificacao: rotulos, frases de destaque, linhas de
+   botoes — nada disto e texto corrido */
+.pg.pk .pk-et-laranja,
+.pg.pk .pk-dealer-et,
+.pg.pk .pk-metodo-et,
+.pg.pk .pk-percurso-et,
+.pg.pk .pk-cta-et,
+.pg.pk .pk-sub,
+.pg.pk .pk-citacao,
+.pg.pk .pk-declaracao,
+.pg.pk .pk-metodo-tit,
+.pg.pk .pk-remate,
+.pg.pk .pk-reflex,
+.pg.pk .pk-botoes,
+.pg.pk .pk-spots-cta{text-align:left; hyphens:none}
 
-/* ---- o lead deixa de gritar ----
-   19px a peso 700 e a pagina a levantar a voz antes de dizer alguma
-   coisa. O peso pesado fica para os titulos. */
-.pg.pk .pk-lead{
-  font-size:17px; font-weight:400; letter-spacing:0; line-height:1.6;
-}
-.pg.pk .pk-remate{font-size:19px; font-weight:600; letter-spacing:0}
-
-/* ---- os titulos pequenos perdem o tracking negativo ---- */
-.pg.pk .pk-percurso h3,
-.pg.pk .pk-cta-tit,
-.pg.pk .pk-metodo h3{letter-spacing:0; font-weight:700}
-
-/* ---- as etiquetas descem de 800 para 700 ----
-   A 12px com +0,13em de tracking, o 800 fecha os contra-formas. O 700
-   diz o mesmo e respira. */
-.pg.pk .pg-eyebrow,
+/* os rotulos desta pagina, alinhados ao peso do tema */
 .pg.pk .pk-et-laranja,
 .pg.pk .pk-dealer-et,
 .pg.pk .pk-metodo-et,
 .pg.pk .pk-percurso-et,
 .pg.pk .pk-cta-et,
 .pg.pk .pk-etapas li,
-.pg.pk .pk-soon{font-weight:700}
+.pg.pk .pk-soon{font-weight:var(--peso-forte)}
 
-/* ---- o texto: justificado e a encher a coluna ----
-   Como o material da Flow. O lead fica de fora: e vizinho do titulo e a
-   54 caracteres esta bem. O negrito dos termos-chave nao precisa de
-   nada — a convencao `**` ja existe no gerador. */
-.pg.pk .pk-tese,
-.pg.pk .pk-nota,
-.pg.pk .pk-metodo-tx,
-.pg.pk .pk-faq dd,
-.pg.pk .pk-papel p{
-  text-align:justify; -webkit-hyphens:auto; hyphens:auto; max-width:none;
+/* corpo e destaques */
+.pg.pk .pk-lead{
+  font-size:var(--corpo); font-weight:var(--peso-corpo);
+  letter-spacing:0; line-height:var(--lh-corpo);
 }
-.pg.pk .pk-tese{font-size:17px}
+.pg.pk .pk-tese{font-size:var(--corpo)}
+.pg.pk .pk-remate{font-size:var(--d3); font-weight:var(--peso-medio); letter-spacing:0}
+.pg.pk .pk-percurso h3,
+.pg.pk .pk-cta-tit,
+.pg.pk .pk-metodo h3{letter-spacing:0; font-weight:var(--peso-forte)}
 
-@media(max-width:760px){
-  /* numa coluna estreita justificar abre buracos, e nao ha garantia de
-     hifenizacao: ha browsers com dicionario e browsers sem */
-  .pg.pk .pk-tese,.pg.pk .pk-nota,.pg.pk .pk-metodo-tx,
-  .pg.pk .pk-faq dd,.pg.pk .pk-papel p{text-align:left}
+/* O `.pk-resp>h2` traz !important no corpo, no peso e no tracking.
+   Entre dois !important decide a especificidade: esta e (0,3,1) contra
+   a (0,1,2) dele. */
+.pg.pk .pk-resp > h2{
+  font-size:var(--d2) !important;
+  letter-spacing:var(--tr-display) !important;
+  font-weight:var(--peso-display) !important;
 }
 
-
-/* ======================================================================
-   FAIXAS DE MARGEM A MARGEM — /parakite-portugal/
-   ======================================================================
-   O hero e os paineis brancos eram cartoes: `max-width:1440px` com
-   cantos redondos, a boiar dentro do azul com margem a toda a volta.
-   Passam a sangrar.
-
-   O PADRAO JA EXISTIA NESTA FOLHA
-     O `.pk-resp` ja o fazia: seccao a toda a largura, filhos centrados.
-     E isso que se estende ao hero e aos `.pk-papel`, em vez de inventar
-     um mecanismo novo.
-
-   PORQUE `100%` E NAO `100vw`
-     `100vw` inclui a barra de deslocamento e provoca scroll horizontal
-     assim que ela aparece. `100%` resolve contra o bloco que contem a
-     seccao, que e a largura util — sem barra.
-
-   O CONTEUDO CONTINUA ALINHADO
-     A conta do padding poe o texto exactamente onde as outras seccoes o
-     poem: `(100% - 1440px)/2 + 72px`. Num ecra de 2000px sao 352px de
-     cada lado e 1296px de mancha — os mesmos 1296 que uma `.pk-sec`
-     normal tem. Abaixo dos 1440 o `max()` segura os 72px e a conta
-     deixa de mandar. E por isso que a margem esquerda e a mesma de cima
-     a baixo da pagina, que e o que faz isto parecer desenhado.
-   ====================================================================== */
+/* as faixas sangram; o conteudo fica onde as outras seccoes o poem */
 .pg.pk .pk-heroi,
-.pg.pk .pk-sec.pk-papel{
-  max-width:none;
-  border-radius:0;
-  padding-inline:max(var(--pk-pad), calc((100% - var(--pk-cx))/2 + var(--pk-pad)));
-}
-/* o painel tinha padding proprio mais curto; agora o vertical e o das
-   outras seccoes e o horizontal vem da conta acima */
+.pg.pk .pk-sec.pk-papel,
+.pg.pk .pk-energia,
+.pg.pk .pk-resp{padding-inline:var(--margem-faixa)}
+.pg.pk .pk-heroi,
+.pg.pk .pk-sec.pk-papel{max-width:none}
+.pg.pk .pk-resp > *{max-width:none; margin-left:0; margin-right:0}
+
+/* os unicos dois valores que sao mesmo desta pagina */
 .pg.pk .pk-sec.pk-papel{padding-top:72px; padding-bottom:72px}
 .pg.pk .pk-heroi{padding-top:56px; padding-bottom:64px}
 
-/* as duas que ja sangravam passam a alinhar pela mesma conta */
-.pg.pk .pk-energia{
-  padding-inline:max(var(--pk-pad), calc((100% - var(--pk-cx))/2 + var(--pk-pad)));
-}
-/* O `.pk-resp` alinhava por `max-width` + `margin:auto`, e isso e fragil:
-   basta um filho ganhar `max-width:none` — como o h2 ganhou na regra de
-   tipografia — para ele deixar de estar centrado e cair no 72 do padding,
-   enquanto os irmaos ficam no 294. Foi o que aconteceu.
-   Passa a alinhar como as outras faixas: o padding da seccao poe a margem
-   e os filhos ocupam o que sobra. Uma so conta, e nao uma por filho. */
-.pg.pk .pk-resp{
-  padding-inline:max(var(--pk-pad), calc((100% - var(--pk-cx))/2 + var(--pk-pad)));
-}
-.pg.pk .pk-resp > *{
-  max-width:none; margin-left:0; margin-right:0;
-}
-
-@media(max-width:899px){
-  .pg.pk .pk-heroi,
-  .pg.pk .pk-sec.pk-papel,
-  .pg.pk .pk-energia{padding-inline:var(--pk-pad)}
-}
-
-
-/* ======================================================================
-   CANTOS VIVOS — /parakite-portugal/
-   ======================================================================
-   Havia doze raios diferentes nesta pagina: 100px nos botoes e nas
-   fichas, e depois 8, 14, 16, 18, 20 e 22 nos paineis. Nao era "tudo em
-   pilula" — era nao haver sistema nenhum.
-   Passa a zero. Um so valor e uma so decisao, e e o oposto do que
-   qualquer gerador produz por omissao.
-   ====================================================================== */
+/* cantos vivos — a lista e por pagina porque os nomes sao daqui */
 .pg.pk .pk-heroi,
 .pg.pk .pk-papel,
 .pg.pk .pk-metodo,
@@ -1928,61 +1965,188 @@ a.fl-cor-a:hover{background:#ff7c31;color:var(--sobre-laranja)}
 .pg.pk .pk-asas a,
 .pg.pk .pk-cadeia li,
 .pg.pk .pk-palavras li,
-.pg.pk .pk-eco li{border-radius:0}
-
-/* ======================================================================
-   A FORMATACAO DO TEXTO, AGORA EM TODOS OS PARAGRAFOS
-   ======================================================================
-   A regra anterior nomeava classes — `.pk-tese`, `.pk-nota`, `.pk-faq
-   dd`. Mas os paragrafos do Demo e do Aluguer sao `<p>` sem classe
-   nenhuma, e ficaram de fora: alinhados a esquerda e com a mancha a
-   meio da coluna, ao lado de outros ja justificados.
-   Inverte-se: justifica-se TODO o `<p>` e nomeiam-se as excepcoes, que
-   sao poucas e sabem-se — rotulos, frases de destaque e linhas de
-   botoes. Uma lista de excepcoes e mais facil de manter correcta do que
-   uma lista de inclusoes que ha que lembrar de aumentar.
-   ====================================================================== */
-.pg.pk p{
-  text-align:justify; -webkit-hyphens:auto; hyphens:auto; max-width:none;
-}
-/* o que NAO e texto corrido */
-.pg.pk .pg-eyebrow,
-.pg.pk .pk-et-laranja,
-.pg.pk .pk-dealer-et,
-.pg.pk .pk-metodo-et,
-.pg.pk .pk-percurso-et,
-.pg.pk .pk-cta-et,
-.pg.pk .pk-sub,
-.pg.pk .pk-citacao,
-.pg.pk .pk-declaracao,
-.pg.pk .pk-metodo-tit,
-.pg.pk .pk-remate,
-.pg.pk .pk-reflex,
-.pg.pk .pk-botoes,
-.pg.pk .pk-spots-cta{text-align:left; hyphens:none}
-
-@media(max-width:760px){
-  /* coluna estreita: justificar abre buracos e nao ha garantia de
-     hifenizacao — ha browsers com dicionario e browsers sem */
-  .pg.pk p{text-align:left}
-}
+.pg.pk .pk-eco li{border-radius:var(--raio)}
 
 
 /* ======================================================================
-   AS LISTAS PERDIAM A MARGEM PARA UMA REGRA GENERICA
+   /pilot2wing/ — o que e mesmo desta pagina
    ======================================================================
-   `.pg ul{margin:0 0 14px 20px}` e (0,1,1). O `.pk-exemplo{margin:22px 0}`
-   e (0,1,0) — declara margem esquerda zero e PERDE. Todas as listas desta
-   pagina levavam 20px de avanco que ninguem pediu, e era isso que punha o
-   quadro do aluguer, a cadeia e o ecossistema desalinhados dos titulos.
+   A ESCALA BAIXA, E E O TEMA A FUNCIONAR
+     O tema foi calibrado na /parakite-portugal/, cujo titulo mais longo
+     tem 43 caracteres. Aqui o mais longo tem 61, e varios trazem um <br>
+     de proposito — sao declaracoes de duas frases, nao manchetes.
+     A 41px partiam em tres e quatro linhas.
 
-   E a mesma armadilha da `.pg a` que ja apanhou sete elementos, noutra
-   roupa: uma regra de elemento com um ancestral a ganhar a uma regra de
-   uma classe so. A verificacao 5 do `check` cobre os `<a>`; esta e num
-   `<ul>` e passou-lhe ao lado.
+     Nao se muda o tema por causa disso: muda-se a escala NESTA pagina.
+     E para isto que as decisoes tem nome — a pagina redefine dois tokens
+     e tudo o resto continua a vir do tema. Se fosse preciso reescrever
+     regras, o tema nao estava a servir para nada.
 
-   Nesta pagina nenhuma lista quer avanco: sao todas `list-style:none` e
-   componentes desenhados. Por isso zero, e so aqui — as paginas das asas
-   tem prosa com listas a serio e essas ficam como estao.
+   CONTRASTE
+     As onze falhas medidas aqui sao anteriores ao tema — estao na lista
+     de "nao corrigido" da auditoria de 03/09. As setas da cadeia
+     transportam sentido (mostram a ordem das etapas) e sobem. Os numeros
+     de etapa a 1,57:1 ficam: sao decoracao que repete, ao lado, o rotulo
+     que ja se le, e o WCAG isenta texto decorativo.
    ====================================================================== */
-.pg.pk ul{margin-left:0}
+.pg.sg{
+  --d1:clamp(26px,3.3vw,38px);
+  --d2:clamp(20px,2.7vw,34px);
+}
+
+/* as setas mostram a ordem e a direccao: 2,40:1 nao chega. Sao duas
+   familias — a da cadeia de etapas e a da transicao. */
+.pg.sg .sg-cadeia i,
+.pg.sg .sg-transicao i{color:rgba(255,255,255,.52)}
+
+/* O H1 SAO DUAS FRASES COM UM <br> DE PROPOSITO, NAO UMA MANCHETE
+   A coluna do heroi tem 649px: a 38px em caixa alta a primeira frase ja
+   nao cabe e passam a ser tres linhas em vez das duas desenhadas. A 32
+   cabem as duas. E o mesmo raciocinio do resto — a escala serve o texto,
+   nao o contrario. */
+.pg.sg{--d1:clamp(24px,2.6vw,32px)}
+
+/* a etiqueta da coluna "abordagem convencional" estava a 4,25 */
+.pg.sg .sg-abord-et{color:rgba(255,255,255,.62)}
+.pg.sg .sg-abord-nossa .sg-abord-et{color:var(--orange)}
+
+/* os rotulos desta pagina, ao peso do tema */
+.pg.sg .sg-abord-et,
+.pg.sg .sg-etapa-et,
+.pg.sg .sg-cadeia span{font-weight:var(--peso-forte)}
+
+/* excepcoes a justificacao: o que nao e texto corrido */
+.pg.sg .sg-abord-et,
+.pg.sg .sg-cadeia,
+.pg.sg .sg-cadeia span,
+.pg.sg .sg-declaracao,
+.pg.sg .sg-botoes{text-align:left; hyphens:none}
+
+/* cantos vivos */
+.pg.sg .sg-cta,
+.pg.sg .sg-cta-2,
+.pg.sg .sg-abord-nossa,
+.pg.sg .sg-abord-conv,
+.pg.sg .sg-etapa,
+.pg.sg .sg-fase,
+.pg.sg .pk-b{border-radius:var(--raio)}
+
+
+/* ======================================================================
+   /asas/* — o que e mesmo destas paginas
+   ====================================================================== */
+/* nada aqui: o rotulo lateral subiu para o tema — e um padrao da folha
+   (`.pg-papel .pg-sec`), nao das paginas de asas. A Flow usa o mesmo. */
+
+/* excepcoes a justificacao */
+.pg.asa .pg-eyebrow,
+.pg.asa .pg-migalhas,
+.pg.asa .pg-dealer,
+.pg.asa .pg-un,
+.pg.asa .pg-tsel,
+.pg.asa .pg-esq-b span,
+.pg.asa .pg-cust-nome{text-align:left; hyphens:none}
+
+/* cantos vivos — mas as amostras de cor sao redondas de proposito:
+   sao circulos de tinta, nao componentes */
+.pg.asa .pg-papel,
+.pg.asa .pg-wa,
+.pg.asa .pg-b,
+.pg.asa .pg-esq-b,
+.pg.asa .pg-tsel-b,
+.pg.asa .pg-un-b,
+.pg.asa .pg-irmas-l a,
+.pg.asa .pg-metodo-a{border-radius:var(--raio)}
+
+
+/* ======================================================================
+   /flow-paragliders-portugal/ — o que e mesmo desta pagina
+   ====================================================================== */
+/* os titulos aqui sao frases, nao rotulos: a 41px partiam em quatro */
+.pg.fl{--d2:clamp(20px,2.5vw,32px)}
+
+/* os contadores "4 modelos" dentro dos h3 estavam a 3,97:1 */
+.pg.fl h3 span{color:rgba(255,255,255,.56)}
+
+/* excepcoes a justificacao */
+.pg.fl .pg-eyebrow,
+.pg.fl .fl-lista a,
+.pg.fl .pg-migalhas{text-align:left; hyphens:none}
+
+/* cantos vivos */
+.pg.fl .fl-lista a,
+.pg.fl .fl-cor,
+.pg.fl .fl-cor-a,
+.pg.fl .pg-papel{border-radius:var(--raio)}
+
+/* ======================================================================
+   /o-que-e-um-parakite/ — as setas transportam sentido
+   ======================================================================
+   Mostram o caminho do input pelo sistema de controlo. A 2,51:1 nao se
+   viam. Os rotulos dos diagramas estavam a 3,8. */
+.pg.qp .qp-seta{color:rgba(255,255,255,.5)}
+.pg.qp .qp-fluxo-t,
+.pg.qp .qp-varia-t{color:rgba(255,255,255,.56)}
+
+
+/* ======================================================================
+   O LARANJA DENTRO DOS PAINEIS CLAROS
+   ======================================================================
+   Os `.pk-papel` sao ilhas brancas dentro de uma pagina escura, e as
+   etiquetas la dentro sao laranja: 2,87:1 contra os 4,5 exigidos. Era o
+   achado no 4 da auditoria de 03/09, que ficou em aberto por ser decisao
+   de marca. Com o tema ha onde o resolver de uma vez, e sem cor nova.
+   ====================================================================== */
+.pg.tema .pk-papel .pg-eyebrow,
+.pg.tema .pk-papel .pk-et-laranja,
+.pg.tema .pk-papel .pk-dealer-et,
+.pg.tema .pk-papel .pk-cta-et{color:var(--laranja-tinta)}
+/* O metodo e um painel escuro dentro do painel claro — mas escuro nao
+   quer dizer preto. O azul `#0e3b6d` e claro que chegue para derrubar o
+   laranja vivo para 3,92:1. Ali entra a tinta do azul. */
+.pg.tema .pk-metodo .pk-metodo-et{color:var(--laranja-painel)}
+
+/* as setas do exemplo do aluguer mostram a direccao do vento: 2,64 nao chega */
+.pg.tema .pk-exemplo .pk-seta i,
+.pg.tema .pk-exemplo .pk-seta::before{color:rgba(255,255,255,.55)}
+
+
+/* ======================================================================
+   O MARCADOR DE NOME PROPRIO NAO E UM ELEMENTO DE DESENHO
+   ======================================================================
+   Para dizer ao tradutor que "Happy Soaring" nao e texto, e preciso um
+   elemento a volta dele. Esse elemento e um `<span>` — e a folha de estilo
+   deste site tem dezenas de regras que estilizam `span` pelo contexto:
+   `h2.title span` pinta de laranja, `.pk-dealer-nome span` mete 13px e
+   maiusculas, `.ng-l span` mete `display:block`.
+
+   Medido depois de ligar a proteccao: o "Happy Soaring" do h2 da inicial
+   ficou LARANJA, e o "Flow Paragliders" do bloco de dealer encolheu de
+   32px para 13px. Nenhuma dessas regras esta errada — nenhuma delas foi
+   escrita a pensar que ia aparecer ali um span que nao e de ninguem.
+
+   A solucao nao e ir corrigir trinta selectores: e declarar que este span
+   esta fora da cascata. Nao herda estilo proprio, herda o do pai e nada
+   mais. O `!important` aqui nao esta a ganhar uma discussao — esta a dizer
+   que nao ha discussao nenhuma para ter.
+   ====================================================================== */
+span.hs-nome{
+  /* `contents` e nao `inline`: o marcador deixa de gerar caixa nenhuma e o
+     texto passa a contar como se ele nao existisse. Num contentor `flex`
+     um `inline` era blockificado por regra da especificacao e virava um
+     item — no `.qp-cta`, que tem `gap:9px` para separar o texto do icone,
+     esse gap passou a separar as palavras e o botao cresceu 5px.
+     Com `contents` nao ha item, nao ha gap, nao ha 5px.
+     As linhas abaixo continuam a ser precisas: `display:contents` tira a
+     caixa mas o texto continua a herdar do span, e por isso um
+     `h2.title span{color:laranja}` ainda o pintava. */
+  display:contents !important;
+  color:inherit !important;
+  font:inherit !important;
+  letter-spacing:inherit !important;
+  text-transform:inherit !important;
+  background:none !important;
+  border:0 !important;
+  padding:0 !important;
+  margin:0 !important;
+}
