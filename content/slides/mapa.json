@@ -1,0 +1,206 @@
+{
+  "id": "mapa",
+  "nome": "Mapa — as três áreas",
+  "visible": true,
+  "wind": false,
+  "heightScreens": 1,
+  "heroScrim": false,
+  "bgImage": "",
+  "bgImageMobile": "",
+  "bgImageVisible": false,
+  "bgDarken": 0,
+  "topTint": false,
+  "overlay": false,
+  "scrollHintVisible": false,
+  "elements": [
+    {
+      "role": "mapa",
+      "title": {
+        "pt": "Tudo para o teu voo",
+        "en": "Everything for your flight",
+        "es": "Todo para tu vuelo",
+        "fr": "Tout pour ton vol",
+        "de": "Alles für deinen Flug"
+      },
+      "nota": {
+        "pt": "Três áreas, três portas. O resto do site abre a partir daqui.",
+        "en": "Three areas, three doors. The rest of the site opens from here.",
+        "es": "Tres áreas, tres puertas. El resto del sitio se abre desde aquí.",
+        "fr": "Trois domaines, trois portes. Le reste du site s'ouvre à partir d'ici.",
+        "de": "Drei Bereiche, drei Türen. Von hier aus öffnet sich der Rest der Seite."
+      },
+      "cartoes": [
+        {
+          "id": "parakite",
+          "largo": true,
+          "visible": true,
+          "titulo": {
+            "pt": "Parakite",
+            "en": "Parakite",
+            "es": "Parakite",
+            "fr": "Parakite",
+            "de": "Parakite"
+          },
+          "texto": {
+            "pt": "Formação, informação técnica e voo em Portugal.",
+            "en": "Training, technical information and flying in Portugal.",
+            "es": "Formación, información técnica y vuelo en Portugal.",
+            "fr": "Formation, information technique et vol au Portugal.",
+            "de": "Ausbildung, technische Informationen und Fliegen in Portugal."
+          },
+          "imagem": "/images/mapa/parakite.webp",
+          "imagemAlt": {
+            "pt": "Piloto em voo de parakite sobre o mar",
+            "en": "Pilot flying a parakite over the sea",
+            "es": "Piloto en vuelo de parakite sobre el mar",
+            "fr": "Pilote en vol de parakite au-dessus de la mer",
+            "de": "Pilot im Parakite-Flug über dem Meer"
+          },
+          "imagemTipo": "banda",
+          "acessos": [
+            {
+              "href": "/parakite-portugal/",
+              "principal": true,
+              "label": {
+                "pt": "Parakite em Portugal",
+                "en": "Parakite in Portugal",
+                "es": "Parakite en Portugal",
+                "fr": "Le Parakite au Portugal",
+                "de": "Parakite in Portugal"
+              },
+              "descricao": {
+                "pt": "Escolas, locais de voo, demos e muito mais.",
+                "en": "Schools, flying sites, demos and much more.",
+                "es": "Escuelas, lugares de vuelo, demos y mucho más.",
+                "fr": "Écoles, sites de vol, démos et bien plus.",
+                "de": "Schulen, Fluggebiete, Demos und mehr."
+              }
+            },
+            {
+              "href": "/o-que-e-um-parakite/",
+              "principal": false,
+              "label": {
+                "pt": "O que é um Parakite?",
+                "en": "What is a Parakite?",
+                "es": "¿Qué es un Parakite?",
+                "fr": "Qu'est-ce qu'un Parakite ?",
+                "de": "Was ist ein Parakite?"
+              },
+              "descricao": {
+                "pt": "Descobre como funciona e o que o caracteriza.",
+                "en": "Find out how it works and what defines it.",
+                "es": "Descubre cómo funciona y qué lo caracteriza.",
+                "fr": "Découvre comment il fonctionne et ce qui le caractérise.",
+                "de": "Erfahre, wie er funktioniert und was ihn ausmacht."
+              }
+            }
+          ]
+        },
+        {
+          "id": "pilot2wing",
+          "largo": false,
+          "visible": true,
+          "titulo": {
+            "pt": "Pilot2Wing",
+            "en": "Pilot2Wing",
+            "es": "Pilot2Wing",
+            "fr": "Pilot2Wing",
+            "de": "Pilot2Wing"
+          },
+          "lema": {
+            "pt": "Primeiro o piloto, depois a asa",
+            "en": "The pilot first, then the wing",
+            "es": "Primero el piloto, después el ala",
+            "fr": "D'abord le pilote, ensuite l'aile",
+            "de": "Erst der Pilot, dann der Schirm"
+          },
+          "texto": {
+            "pt": "Método de treino no solo para melhorar controlo, postura e coordenação.",
+            "en": "Ground training method to improve control, posture and coordination.",
+            "es": "Método de entrenamiento en tierra para mejorar control, postura y coordinación.",
+            "fr": "Méthode d'entraînement au sol pour améliorer contrôle, posture et coordination.",
+            "de": "Bodentraining für bessere Kontrolle, Haltung und Koordination."
+          },
+          "imagem": "/images/mapa/pilot2wing.webp",
+          "imagemAlt": {
+            "pt": "Treino de solo em postura de pilotagem",
+            "en": "Ground handling training in flying posture",
+            "es": "Entrenamiento en tierra en postura de pilotaje",
+            "fr": "Entraînement au sol en position de pilotage",
+            "de": "Bodentraining in Flughaltung"
+          },
+          "imagemTipo": "recorte",
+          "acessos": [
+            {
+              "href": "/pilot2wing/",
+              "principal": true,
+              "label": {
+                "pt": "Conhecer o Pilot2Wing",
+                "en": "Discover Pilot2Wing",
+                "es": "Conocer Pilot2Wing",
+                "fr": "Découvrir Pilot2Wing",
+                "de": "Pilot2Wing kennenlernen"
+              },
+              "descricao": {
+                "pt": "",
+                "en": "",
+                "es": "",
+                "fr": "",
+                "de": ""
+              }
+            }
+          ]
+        },
+        {
+          "id": "flow",
+          "largo": false,
+          "visible": true,
+          "titulo": {
+            "pt": "Flow Paragliders",
+            "en": "Flow Paragliders",
+            "es": "Flow Paragliders",
+            "fr": "Flow Paragliders",
+            "de": "Flow Paragliders"
+          },
+          "texto": {
+            "pt": "Dealer oficial Flow Paragliders em Portugal.",
+            "en": "Official Flow Paragliders dealer in Portugal.",
+            "es": "Punto de venta oficial Flow Paragliders en Portugal.",
+            "fr": "Revendeur officiel Flow Paragliders au Portugal.",
+            "de": "Offizieller Flow Paragliders Händler in Portugal."
+          },
+          "imagem": "/images/mapa/flow-asa.webp",
+          "imagemAlt": {
+            "pt": "Asa Flow vista de cima",
+            "en": "Flow wing seen from above",
+            "es": "Ala Flow vista desde arriba",
+            "fr": "Aile Flow vue de dessus",
+            "de": "Flow-Schirm von oben"
+          },
+          "imagemTipo": "recorte",
+          "acessos": [
+            {
+              "href": "/flow-paragliders-portugal/",
+              "principal": true,
+              "label": {
+                "pt": "Ver Flow Paragliders",
+                "en": "See Flow Paragliders",
+                "es": "Ver Flow Paragliders",
+                "fr": "Voir Flow Paragliders",
+                "de": "Flow Paragliders ansehen"
+              },
+              "descricao": {
+                "pt": "",
+                "en": "",
+                "es": "",
+                "fr": "",
+                "de": ""
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "claro": true
+}

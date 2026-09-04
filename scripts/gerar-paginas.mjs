@@ -31,7 +31,7 @@ import { MU } from './conteudo-musica.mjs';
 import { FL } from './conteudo-flow.mjs';
 import { IN } from './conteudo-inicial.mjs';
 import { PK } from './conteudo-parakite.mjs';
-import { entradasDoMenu, ROTAS } from '../regras/navegacao.js';
+import { entradasDoMenu, ROTAS, comIdioma } from '../regras/navegacao.js';
 
 const RAIZ = process.cwd();   /* corre-se a partir da raiz do projecto */
 const DOMINIO = 'https://happysoaring.com';
@@ -437,17 +437,22 @@ function corpoInicial(l) {
   const h1 = t(HERO.h1, l);
   const entrada = t(HERO.subtitle, l);
 
+  /* as três áreas, tal como a secção do mapa as mostra */
+  const areas = !MAPA ? '' : `
+    <h2>${esc(t(MAPA.title, l))}</h2>
+${(MAPA.cartoes || []).filter(c => c && c.visible !== false).map(c => `    <h3>${esc(t(c.titulo, l))}</h3>
+    <p>${esc(t(c.texto, l))}</p>
+    <ul>${(c.acessos || []).filter(a => a && a.visible !== false && t(a.label, l))
+      .map(a => {
+        const d = t(a.descricao, l);
+        return `<li><a href="${esc(comIdioma(a.href, l))}">${esc(t(a.label, l))}</a>${
+          d ? ' — ' + esc(d) : ''}</li>`;
+      }).join('')}</ul>`).join('\n')}`;
+
   return `<div class="hs-estatico">
     <h1>${esc(h1)}</h1>
     <p>${esc(entrada)}</p>
-
-    <h2>${esc(t(P2W.h1a, l))} ${esc(t(P2W.h1b, l))}</h2>
-    <p>${esc(t(P2W.descricao, l))}
-    <a href="${esc(caminhoP2W(l))}">${esc(t(P2W.conhecer, l))}</a></p>
-
-    <h2>${esc(t(PK.h1, l))}</h2>
-    <p>${esc(t(PK.asaTxt, l))}
-    <a href="${esc(caminhoPK(l))}">${esc(t(PK.asaCta, l))}</a></p>
+${areas}
 
     <h2>${esc(t(FL.gamaTit, l))}</h2>
     <p>${esc(t(FL.gamaSub, l))}
@@ -1488,7 +1493,7 @@ ${alt}
   <section class="pk-heroi" id="topo">
     <div class="pk-heroi-tx">
       <p class="pg-eyebrow">${esc(t(PK.kicker, l))}</p>
-      <h1>${esc(t(PK.h1, l))}</h1>
+      <h1>${esc(semPonto(t(PK.h1, l)))}</h1>
       <p class="pk-citacao">${esc(t(PK.heroCitacao, l))}</p>
       <p class="pk-tese">${esc(t(PK.heroTese, l))}</p>
       <p class="pk-botoes">
@@ -1501,7 +1506,7 @@ ${alt}
 
   <section class="pk-sec" id="o-que-e">
     <p class="pg-eyebrow">${esc(t(PK.s2Kicker, l))}</p>
-    <h2>${esc(t(PK.s2H2, l))}</h2>
+    <h2>${esc(semPonto(t(PK.s2H2, l)))}</h2>
     <div class="pk-duas">
       <p class="pk-lead">${esc(t(PK.s2P1, l))}</p>
       <p>${forte(t(PK.s2P2, l))}
@@ -1510,7 +1515,7 @@ ${alt}
   </section>
 
   <section class="pk-energia" id="energia">
-    <h2>${esc(t(PK.s3H2, l))}</h2>
+    <h2>${esc(semPonto(t(PK.s3H2, l)))}</h2>
     <ul class="pk-eixos">${eixos}</ul>
     <p class="pk-declaracao" lang="en">${esc(PK.s3Declaracao)}</p>
     <p class="pk-reflex"><a href="/reflex-lab/">${esc(t(PK.s3Reflex, l))}</a></p>
@@ -1518,7 +1523,7 @@ ${alt}
 
   <section class="pk-sec" id="onde-estas">
     <p class="pg-eyebrow">${esc(t(PK.s4Kicker, l))}</p>
-    <h2>${esc(t(PK.s4H2, l))}</h2>
+    <h2>${esc(semPonto(t(PK.s4H2, l)))}</h2>
     <p class="pk-lead">${esc(t(PK.s4Texto, l))}</p>
     <ol class="pk-percursos">${percursos}</ol>
     <p class="pk-remate">${esc(t(PK.s4Remate, l))}</p>
@@ -1526,7 +1531,7 @@ ${alt}
 
   <section class="pk-sec pk-papel" id="aprender">
     <p class="pg-eyebrow">${esc(t(PK.s5Kicker, l))}</p>
-    <h2>${esc(t(PK.s5H2, l))}</h2>
+    <h2>${esc(semPonto(t(PK.s5H2, l)))}</h2>
     <p class="pk-lead">${forte(t(PK.s5Texto, l))}</p>
     <blockquote class="pk-cit">${esc(t(PK.s5Citacao, l))}</blockquote>
     <div class="pk-trio">
@@ -1541,24 +1546,33 @@ ${alt}
     </div>
   </section>
 
-  <section class="pk-sec" id="voar-em-portugal">
+  <!-- DEMO — a primeira das três.
+       Guarda o "Já sabes voar?" como cabeçalho: e a pergunta que faz a
+       ponte da seccao anterior para este grupo. O titulo do Demo fica
+       em <h3> por baixo dela. -->
+  <section class="pk-sec pk-tema" id="demo">
     <p class="pg-eyebrow">${esc(t(PK.s6Kicker, l))}</p>
-    <h2>${esc(t(PK.s6H2, l))}</h2>
+    <h2>${esc(semPonto(t(PK.s6H2, l)))}</h2>
     <p class="pk-sub">${esc(t(PK.s6Sub, l))}</p>
 
-    <div class="pk-duo">
-    <div class="pk-demo" id="demo">
+    <div class="pk-demo">
       <p class="pk-et-laranja">${esc(t(PK.demoKicker, l))}</p>
       <h3>${esc(t(PK.demoTit, l))}</h3>
       <p>${forte(t(PK.demoTxt, l))}</p>
       <ul class="pk-vars">${demoVars}</ul>
       <p class="pk-nota">${esc(t(PK.demoNota, l))}</p>
     </div>
+  </section>
 
-    <div class="pk-rental" id="rental">
-      <p class="pk-et-laranja">${esc(t(PK.rentalKicker, l))}
-        <span class="pk-soon-selo">${esc(PK.rentalSoon)}</span></p>
-      <h3 lang="en">${esc(PK.rentalTit)}</h3>
+  <!-- ALUGUER — secção própria.
+       Era um cartão ao lado do Demo; passou a secção porque é outro
+       assunto: um experimenta-se antes de escolher, o outro aluga-se
+       o dia. Ter cada tema com o seu <h2> também dá a cada um um
+       endereço e um título próprios para quem chega de uma pesquisa. -->
+  <section class="pk-sec pk-tema" id="rental">
+    <p class="pg-eyebrow">${esc(t(PK.rentalKicker, l))}
+      <span class="pk-soon-selo">${esc(PK.rentalSoon)}</span></p>
+    <h2 lang="en">${esc(semPonto(PK.rentalTit))}</h2>
       <p>${esc(t(PK.rentalTxt, l))}</p>
       <p class="pk-nota">${esc(t(PK.rentalGestao, l))}</p>
       <ul class="pk-exemplo">
@@ -1567,12 +1581,15 @@ ${alt}
         <li><b>17.5</b><span>${esc(t(PK.rentalTarde, l))}</span></li>
       </ul>
       <p class="pk-nota">${esc(t(PK.rentalLegenda, l))}</p>
-    </div>
-    </div>
+  </section>
 
+  <!-- ONDE SE VOA — a terceira. Guarda o id antigo porque o botão do
+       hero aponta para #voar-em-portugal e não se parte um link que já
+       está no ar por causa de uma arrumação interna. -->
+  <section class="pk-sec pk-tema" id="voar-em-portugal">
+    <h2>${esc(semPonto(t(PK.spotsTit, l)))}</h2>
     <div class="pk-spots">
       <div class="pk-spots-tx">
-        <h3>${esc(t(PK.spotsTit, l))}</h3>
         <p class="pk-nota">${esc(t(PK.spotsNota, l))}</p>
         <p class="pk-spots-cta"><a class="pk-b" href="${esc(wa(PK.s6Msg))}" rel="noopener" target="_blank">${esc(t(PK.s6Cta, l))}</a></p>
       </div>
@@ -1582,7 +1599,7 @@ ${alt}
 
   <section class="pk-sec pk-papel" id="escolher">
     <p class="pg-eyebrow">${esc(t(PK.s7Kicker, l))}</p>
-    <h2>${esc(t(PK.s7H2, l))}</h2>
+    <h2>${esc(semPonto(t(PK.s7H2, l)))}</h2>
     <div class="pk-dealer">
       <p class="pk-dealer-et" lang="en">${esc(t(PK.dealerEt, l))}</p>
       <p class="pk-dealer-nome">Flow Paragliders <span>Portugal</span></p>
@@ -1600,7 +1617,7 @@ ${alt}
 
   <section class="pk-sec" id="pos-venda">
     <p class="pg-eyebrow">${esc(t(PK.s8Kicker, l))}</p>
-    <h2>${esc(t(PK.s8H2, l))}</h2>
+    <h2>${esc(semPonto(t(PK.s8H2, l)))}</h2>
     <ul class="pk-cadeia">${cadeia}</ul>
     <p class="pk-nota">${forte(t(PK.cadeiaLegenda, l))}</p>
     <div class="pk-casas">${casas}</div>
@@ -1608,7 +1625,7 @@ ${alt}
 
   <section class="pk-resp" id="responsabilidade">
     <p class="pg-eyebrow">${esc(t(PK.s9Kicker, l))}</p>
-    <h2>${esc(t(PK.s9H2, l))}</h2>
+    <h2>${esc(semPonto(t(PK.s9H2, l)))}</h2>
     <ul class="pk-palavras" lang="en">${palavras}</ul>
     <p class="pk-lead">${esc(t(PK.s9Texto, l))}</p>
     <blockquote class="pk-cit">${esc(t(PK.s9Citacao, l))}</blockquote>
@@ -1616,7 +1633,7 @@ ${alt}
 
   <section class="pk-sec" id="ecossistema">
     <p class="pg-eyebrow">${esc(t(PK.s10Kicker, l))}</p>
-    <h2>${esc(t(PK.s10H2, l))}</h2>
+    <h2>${esc(semPonto(t(PK.s10H2, l)))}</h2>
     <p class="pk-sub">${esc(t(PK.s10Sub, l))}</p>
     <p class="pk-lead">${esc(t(PK.s10Texto, l))}</p>
     <ul class="pk-eco">${eco}</ul>
@@ -1625,12 +1642,12 @@ ${alt}
 
   <section class="pk-sec pk-papel" id="faq">
     <p class="pg-eyebrow">${esc(t(PK.faqKicker, l))}</p>
-    <h2>${esc(t(PK.faqKicker, l))}</h2>
+    <h2>${esc(semPonto(t(PK.faqKicker, l)))}</h2>
     <div class="pk-faq">${faq}</div>
   </section>
 
   <section class="pk-sec" id="comecar">
-    <h2 class="pk-h2-grande">${esc(t(PK.s12H2, l))}</h2>
+    <h2 class="pk-h2-grande">${esc(semPonto(t(PK.s12H2, l)))}</h2>
     <div class="pk-ctas">${ctas}</div>
   </section>
 
@@ -1818,11 +1835,37 @@ const produtos = (flow.produtos || []).filter(p => p && p.nome && p.visible !== 
 
 /* o hero é a fonte do h1 e do parágrafo de entrada das cinco iniciais: o
    bloco estático lê de lá, o app.js desenha de lá, e não há dois textos */
+/* Um título não leva ponto final. A frase leva, e é por isso que isto
+   corta só o ÚLTIMO: "Velocidade, trajetória e altura. A energia liga
+   tudo." fica com o ponto do meio e perde o do fim.
+
+   Vive aqui e não no conteúdo porque as mesmas frases servem também de
+   `<title>`, de og:description e do bloco estático, onde a pontuação faz
+   falta. O que muda é o que se pinta como cabeçalho, não o que se diz. */
+function semPonto(txt) {
+  return String(txt || '').replace(/\s*\.\s*$/, '');
+}
+
 const HERO = (() => {
   const d = JSON.parse(fs.readFileSync(path.join(RAIZ, 'content/slides/hero.json'), 'utf8'));
   const e = (d.elements || []).find(x => x && x.role === 'text' && x.h1);
   if (!e) throw new Error('content/slides/hero.json sem o elemento de texto com h1');
   return e;
+})();
+
+/* O mapa, pela mesma razão e da mesma maneira.
+   Os slides do Parakite e do Pilot2Wing saíram da página inicial. Se o
+   bloco estático continuasse a contá-los, dizia ao Google e às IA uma
+   página que ninguém vê — que é exactamente o que o comentário do
+   corpoInicial() avisa que não pode acontecer. Agora sai do mesmo JSON
+   que o app.js desenha: uma só fonte, dois leitores. */
+const MAPA = (() => {
+  const p = path.join(RAIZ, 'content/slides/mapa.json');
+  if (!fs.existsSync(p)) return null;
+  const d = JSON.parse(fs.readFileSync(p, 'utf8'));
+  if (d.visible === false) return null;
+  const e = (d.elements || []).find(x => x && x.role === 'mapa');
+  return e || null;
 })();
 
 const so = process.argv[2];

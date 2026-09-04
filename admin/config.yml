@@ -251,6 +251,15 @@ collections:
         default: true
         required: false
         hint: Liga/desliga as linhas de vento enquanto este slide está visível. A animação global tem de estar ligada nas Definições gerais.
+      - label: Superfície clara
+        name: claro
+        widget: boolean
+        default: false
+        required: false
+        hint: >-
+          Ligado, esta secção tem fundo claro. Além do desenho, avisa o
+          seletor de idiomas — que é fixo no topo e foi feito para fundo
+          escuro — para trocar de cor quando passar por cima dela.
       - label: Altura (nº de ecrãs)
         name: heightScreens
         widget: number
@@ -1199,6 +1208,257 @@ collections:
                         name: de
                         widget: string
                         required: false
+          - label: Mapa das áreas
+            name: mapa
+            widget: object
+            summary: 'Mapa - {{fields.title.pt}}'
+            hint: >-
+              A faixa branca logo a seguir ao hero. Cartões desiguais que
+              apontam para as páginas próprias — não repetem o conteúdo
+              delas, mandam para lá.
+            fields:
+              - label: Título da secção
+                name: title
+                widget: object
+                fields:
+                  - label: Português
+                    name: pt
+                    widget: string
+                    required: true
+                  - label: English
+                    name: en
+                    widget: string
+                    required: false
+                  - label: Español
+                    name: es
+                    widget: string
+                    required: false
+                  - label: Français
+                    name: fr
+                    widget: string
+                    required: false
+                  - label: Deutsch
+                    name: de
+                    widget: string
+                    required: false
+              - label: Nota ao lado
+                name: nota
+                widget: object
+                hint: Uma linha curta à direita do título.
+                fields:
+                  - label: Português
+                    name: pt
+                    widget: string
+                    required: false
+                  - label: English
+                    name: en
+                    widget: string
+                    required: false
+                  - label: Español
+                    name: es
+                    widget: string
+                    required: false
+                  - label: Français
+                    name: fr
+                    widget: string
+                    required: false
+                  - label: Deutsch
+                    name: de
+                    widget: string
+                    required: false
+              - label: Cartões
+                name: cartoes
+                widget: list
+                summary: '{{fields.titulo.pt}}'
+                fields:
+                  - label: Identificador
+                    name: id
+                    widget: string
+                    hint: >-
+                      Sem espaços nem acentos. É por ele que o desenho sabe
+                      se o cartão leva a fotografia em banda (parakite) ou um
+                      recorte a sair pelo topo (pilot2wing, flow).
+                  - label: Mostrar
+                    name: visible
+                    widget: boolean
+                    default: true
+                  - label: Ocupa duas colunas
+                    name: largo
+                    widget: boolean
+                    default: false
+                    hint: O cartão principal. Só um deve ter isto ligado.
+                  - label: Título
+                    name: titulo
+                    widget: object
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: string
+                        required: true
+                      - label: English
+                        name: en
+                        widget: string
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: string
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: string
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: string
+                        required: false
+                  - label: Texto
+                    name: texto
+                    widget: object
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: string
+                        required: true
+                      - label: English
+                        name: en
+                        widget: string
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: string
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: string
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: string
+                        required: false
+                  - label: Frase forte
+                    name: lema
+                    widget: object
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: string
+                        required: false
+                      - label: English
+                        name: en
+                        widget: string
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: string
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: string
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: string
+                        required: false
+                  - label: Imagem
+                    name: imagem
+                    widget: image
+                    required: false
+                  - label: Descrição da imagem (alt)
+                    name: imagemAlt
+                    widget: object
+                    fields:
+                      - label: Português
+                        name: pt
+                        widget: string
+                        required: false
+                      - label: English
+                        name: en
+                        widget: string
+                        required: false
+                      - label: Español
+                        name: es
+                        widget: string
+                        required: false
+                      - label: Français
+                        name: fr
+                        widget: string
+                        required: false
+                      - label: Deutsch
+                        name: de
+                        widget: string
+                        required: false
+                  - label: Tipo de imagem
+                    name: imagemTipo
+                    widget: select
+                    options: ['banda', 'recorte']
+                    default: recorte
+                    hint: >-
+                      "banda" é fotografia rectangular dentro do cartão.
+                      "recorte" é um objecto sem fundo que sai pelo topo — e
+                      para esse o PNG tem de ter transparência a sério.
+                  - label: Acessos
+                    name: acessos
+                    widget: list
+                    summary: '{{fields.label.pt}}'
+                    fields:
+                      - label: Endereço
+                        name: href
+                        widget: string
+                        hint: >-
+                          Em português, começado por barra. O prefixo de
+                          idioma é acrescentado sozinho.
+                      - label: Acesso principal
+                        name: principal
+                        widget: boolean
+                        default: false
+                      - label: Texto do acesso
+                        name: label
+                        widget: object
+                        fields:
+                          - label: Português
+                            name: pt
+                            widget: string
+                            required: true
+                          - label: English
+                            name: en
+                            widget: string
+                            required: false
+                          - label: Español
+                            name: es
+                            widget: string
+                            required: false
+                          - label: Français
+                            name: fr
+                            widget: string
+                            required: false
+                          - label: Deutsch
+                            name: de
+                            widget: string
+                            required: false
+                      - label: Descrição
+                        name: descricao
+                        widget: object
+                        fields:
+                          - label: Português
+                            name: pt
+                            widget: string
+                            required: false
+                          - label: English
+                            name: en
+                            widget: string
+                            required: false
+                          - label: Español
+                            name: es
+                            widget: string
+                            required: false
+                          - label: Français
+                            name: fr
+                            widget: string
+                            required: false
+                          - label: Deutsch
+                            name: de
+                            widget: string
+                            required: false
           - label: Biografia
             name: bio
             widget: object

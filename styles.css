@@ -1369,3 +1369,190 @@ a.flow-dealer:hover{color:var(--orange)}
 /* lugar guardado para a secção do catálogo, que chega depois do primeiro
    desenho. Ocupa um ecrã para a página não encolher e voltar a crescer. */
 section.a-carregar{min-height:100vh}
+
+
+/* ======================================================================
+   O MAPA — a faixa branca depois do hero
+   ======================================================================
+   PORQUE E BRANCA, E SO ELA
+     E a unica parte da homepage que e navegacao e nao conteudo. Tudo o
+     resto sao capitulos sobre alguma coisa; isto e o indice. Coisa de
+     outra natureza, superficie de outra natureza — e e isso que faz a
+     faixa ler-se como decisao e nao como uma migracao a meio.
+
+   QUATRO REGRAS DA `section` QUE TIVERAM DE SAIR
+     A base e `min-height:100vh; display:flex; align-items:center;
+     padding:8vh 7vw; overflow:hidden`. Nenhuma das quatro serve aqui:
+       · 100vh centrava a faixa dentro de um ecra e deixava azul por cima
+         e por baixo — deixava de ser faixa e passava a bloco a boiar;
+       · o padding em vw impedia o margem-a-margem;
+       · e o `overflow:hidden` CORTAVA a figura e a asa que saem dos
+         cartoes. E o mesmo corte que ja se tinha resolvido uma vez.
+
+   A TIPOGRAFIA VIVE AQUI DENTRO E NAO NO BODY
+     O site nao carregava tipo nenhum — era 'Segoe UI' no Windows, San
+     Francisco no iPhone, Roboto no Android. O Archivo entra so nesta
+     seccao, de proposito: e o piloto. Se alastrar, alastra depois e com
+     as 141 paginas medidas. E nao se poe no body porque o app.js escreve
+     `body.style.fontFamily` a partir do brand.font do CMS e ganhava.
+   ====================================================================== */
+#mapa{
+  min-height:0; display:block; overflow:visible;
+  padding:clamp(46px,5.4vw,80px) 0 clamp(54px,6vw,92px);
+  background:#fff; color:#333f48;
+  font-family:Archivo,'Segoe UI',system-ui,-apple-system,sans-serif;
+  font-variation-settings:'wdth' 100,'wght' 400;
+}
+/* margem a margem: sem caixa central, so uma goteira que cresce com o ecra */
+.mapa-cx{padding:0 clamp(18px,3.2vw,56px)}
+
+.mapa-cab{
+  border-top:2px solid var(--orange); padding-top:20px;
+  margin-bottom:clamp(20px,2.4vw,32px);
+  display:flex; align-items:flex-end; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+}
+.mapa-cab h2{
+  margin:0; font-size:clamp(32px,4.4vw,58px); line-height:.94; color:#333f48;
+  font-variation-settings:'wdth' 62,'wght' 800;
+  text-transform:uppercase; letter-spacing:.015em; text-wrap:balance;
+}
+.mapa-nota{
+  margin:0; font-size:14px; line-height:1.5; color:#6f7276; max-width:32ch;
+  font-variation-settings:'wdth' 96,'wght' 400;
+}
+
+/* quatro colunas; o Parakite ocupa duas. A desigualdade e a hierarquia. */
+.mapa-grelha{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:14px;
+  padding-top:120px;          /* por onde a figura e a asa saem */
+}
+.mapa-cart{
+  position:relative; display:flex; overflow:hidden;
+  min-height:clamp(400px,31vw,540px);
+  /* DOIS CINZENTOS, E NAO UM
+     O #333f48 e o do titulo sobre branco (10,8:1). Como fundo de cartao
+     deixava a seta laranja a 3,7:1 — abaixo dos 4,5. No #1b222a a mesma
+     seta da 5,6:1. Mesma familia, dois degraus. */
+  background:#1b222a; color:#fff;
+}
+.mapa-in{
+  position:relative; z-index:2; width:100%;
+  padding:26px 24px 24px; display:flex; flex-direction:column;
+  justify-content:flex-end;
+}
+.mapa-cart h3{
+  margin:0 0 12px; font-size:clamp(24px,2.2vw,32px); line-height:.94; color:#fff;
+  font-variation-settings:'wdth' 64,'wght' 800;
+  text-transform:uppercase; letter-spacing:.015em;
+}
+.mapa-lema{
+  margin:0 0 12px; font-size:clamp(15px,1.3vw,18px); line-height:1.15;
+  color:#fff; max-width:15ch;
+  font-variation-settings:'wdth' 78,'wght' 800;
+  text-transform:uppercase; letter-spacing:.01em;
+}
+.mapa-txt{
+  margin:0; font-size:14px; line-height:1.5; max-width:32ch;
+  color:rgba(255,255,255,.6);
+}
+
+/* acessos: caixa alta com tracking. O principal leva barra laranja. */
+.mapa-aces{margin-top:20px; display:grid; gap:0}
+.mapa-ac{
+  display:block; text-decoration:none; padding:13px 0;
+  border-top:1px solid rgba(255,255,255,.18);
+}
+.mapa-ac:last-child{border-bottom:1px solid rgba(255,255,255,.18)}
+.mapa-ac-t{
+  display:flex; align-items:center; gap:9px; font-size:13px; color:#fff;
+  font-variation-settings:'wdth' 88,'wght' 700;
+  text-transform:uppercase; letter-spacing:.13em;
+}
+.mapa-ac-t::after{
+  content:'\2192'; margin-left:auto; color:var(--orange); font-weight:400;
+  letter-spacing:0; transition:transform .18s ease;
+}
+.mapa-ac-d{
+  display:block; margin-top:5px; font-size:12.5px; line-height:1.4;
+  color:rgba(255,255,255,.48);
+}
+.mapa-ac.principal{border-top:2px solid var(--orange); padding-top:14px}
+.mapa-ac.principal .mapa-ac-t{font-size:15px; font-variation-settings:'wdth' 84,'wght' 800}
+.mapa-ac:hover .mapa-ac-t{color:var(--orange)}
+.mapa-ac:hover .mapa-ac-t::after{transform:translateX(4px)}
+.mapa-ac:focus-visible{outline:2px solid var(--orange); outline-offset:3px}
+
+/* ---- PARAKITE: duas colunas, texto a esquerda, fotografia em banda ---- */
+.mapa-cart.e-largo{grid-column:span 2}
+.mapa-cart.e-largo .mapa-in{width:56%; padding-right:20px}
+.mapa-foto{position:absolute; inset:0 0 0 auto; width:44%; overflow:hidden}
+.mapa-foto img{
+  width:100%; height:100%; object-fit:cover; object-position:50% 22%; display:block;
+}
+.mapa-foto::after{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(90deg,#1b222a 0%,rgba(27,34,42,.55) 26%,rgba(27,34,42,0) 62%);
+}
+
+/* ---- os recortes saem PELO TOPO, nunca pelo lado ----
+   Sair pela direita cabia a 1440 e cortava a 1280 — e no site nao seria
+   um corte, seria scroll horizontal na pagina inteira. Sair pelo topo e
+   seguro em qualquer largura, porque a folga de cima e nossa.
+   E o `right` e POSITIVO na asa porque ela esta rodada: um elemento
+   rodado 16 graus ocupa mais 51px de cada lado do que a sua largura. */
+.mapa-recorte{position:absolute; z-index:0; pointer-events:none}
+.m-pilot2wing{overflow:visible}
+.m-pilot2wing .mapa-recorte{
+  left:50%; top:-118px; transform:translateX(-48%);
+  height:264px; width:auto; z-index:1;
+}
+.m-pilot2wing .mapa-in{padding-top:160px}
+.m-pilot2wing::before{
+  content:''; position:absolute; inset:0; z-index:1;
+  background:linear-gradient(180deg,rgba(27,34,42,0) 30%,rgba(27,34,42,.9) 58%,#1b222a 80%);
+}
+.m-flow{overflow:visible}
+.m-flow .mapa-recorte{
+  top:-150px; right:30px; width:250px; height:auto;
+  transform:rotate(16deg);
+  filter:drop-shadow(0 18px 30px rgba(0,0,0,.22));
+}
+.m-flow::before{
+  content:''; position:absolute; inset:0; z-index:1;
+  background:linear-gradient(180deg,rgba(27,34,42,0) 22%,rgba(27,34,42,.86) 52%,#1b222a 76%);
+}
+
+@media(max-width:899px){
+  #mapa{padding:36px 0 48px}
+  .mapa-cx{padding:0 18px}
+  .mapa-cab{flex-direction:column; align-items:flex-start; gap:10px}
+  /* a folga e de quem precisa dela, nao da grelha: empilhados, um padding
+     comum punha um vazio por cima do Parakite, que nao tem nada a sair */
+  .mapa-grelha{grid-template-columns:1fr; gap:12px; padding-top:0}
+  .m-pilot2wing{margin-top:118px}
+  .m-flow{margin-top:128px}
+  .mapa-cart{min-height:344px}
+  .mapa-cart.e-largo{grid-column:span 1; flex-direction:column}
+  .mapa-cart.e-largo .mapa-in{width:100%; padding-right:24px}
+  .mapa-foto{position:relative; inset:auto; width:100%; height:240px; flex:none}
+  /* 40% e medido: o piloto ocupa a faixa 0,31–0,54 da fotografia, com o
+     centro em 0,43. A 22% — o valor do desktop — apanhava as linhas */
+  .mapa-foto img{object-position:50% 40%}
+  .mapa-foto::after{
+    background:linear-gradient(180deg,rgba(27,34,42,0) 44%,rgba(27,34,42,.55) 80%,#1b222a 100%);
+  }
+  .m-pilot2wing .mapa-recorte{height:250px; top:-124px; left:auto; right:16px; transform:none}
+  .m-pilot2wing .mapa-in{padding-top:140px}
+  .m-flow .mapa-recorte{width:190px; right:26px; top:-132px}
+}
+@media(prefers-reduced-motion:reduce){
+  .mapa-ac-t::after{transition:none}
+}
+
+/* o seletor de idiomas por cima de uma seccao clara.
+   O azul a 28% dava 1,78:1 sobre branco e as bandeiras ficavam sem
+   contorno. Ver vigiarSeccoesClaras() no app.js. */
+.lang-switcher.sobre-claro{background:rgba(27,34,42,.9)}
+.lang-switcher.sobre-claro.open{background:rgba(27,34,42,.96)}
+.lang-switcher.sobre-claro .lang{box-shadow:0 0 0 1px rgba(255,255,255,.34)}

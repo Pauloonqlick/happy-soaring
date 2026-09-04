@@ -2349,6 +2349,93 @@ function iniciaAvisos(lista, num) {
   poeFaixa(a, num);
 }
 
+/* ---- o mapa das três áreas -------------------------------------------
+   A PRIMEIRA COISA DEPOIS DO HERO
+     Três cartões desiguais: o Parakite ocupa duas colunas de quatro, o
+     Pilot2Wing e a Flow uma cada. A desigualdade não é decoração — é a
+     hierarquia real do negócio, e é ela que dá ao cartão do Parakite o
+     espaço para levar dois acessos em vez de um.
+
+   PORQUE E SO UMA SECCAO BRANCA
+     É a única parte da página que é navegação e não conteúdo. Tudo o
+     resto na homepage é um capítulo sobre alguma coisa; isto é o índice.
+     Coisa de outra natureza, superfície de outra natureza — e é isso que
+     faz a faixa branca ler-se como decisão e não como migração a meio.
+
+   O QUE ESTA SECCAO NAO FAZ
+     Não repete o conteúdo das páginas para onde aponta. Manda para lá.
+     Os slides do Parakite e do Pilot2Wing saíram da homepage no mesmo
+     dia em que isto entrou, precisamente para não dizerem duas vezes a
+     mesma coisa — uma em cartão e outra em ecrã inteiro. */
+function buildMapa(item) {
+  const cartoes = (item.cartoes || []).filter(c => c && c.visible !== false);
+  if (!cartoes.length) return null;
+
+  const cx = el('div', 'mapa-cx');
+
+  const cab = el('div', 'mapa-cab');
+  const tit = t(item.title);
+  if (tit) { const h = el('h2'); h.textContent = tit; cab.appendChild(h); }
+  const nota = t(item.nota);
+  if (nota) { const p = el('p', 'mapa-nota'); p.textContent = nota; cab.appendChild(p); }
+  if (cab.childNodes.length) cx.appendChild(cab);
+
+  const grelha = el('div', 'mapa-grelha');
+  cartoes.forEach(c => {
+    const classes = ['mapa-cart'];
+    if (c.largo) classes.push('e-largo');
+    if (c.id) classes.push('m-' + String(c.id).replace(/[^a-z0-9-]/gi, ''));
+    const art = el('article', classes.join(' '));
+
+    /* dois tipos de imagem, e a diferença é de desenho:
+       - "banda" é fotografia rectangular, dentro do cartão;
+       - "recorte" é um objecto sem fundo, que sai do cartão pelo topo. */
+    if (c.imagem) {
+      const alt = t(c.imagemAlt) || '';
+      if (c.imagemTipo === 'banda') {
+        const cxf = el('div', 'mapa-foto');
+        const img = el('img');
+        img.src = c.imagem; img.alt = alt;
+        img.loading = 'lazy'; img.decoding = 'async';
+        cxf.appendChild(img);
+        art.appendChild(cxf);
+      } else {
+        const img = el('img', 'mapa-recorte');
+        img.src = c.imagem; img.alt = alt;
+        img.loading = 'lazy'; img.decoding = 'async';
+        art.appendChild(img);
+      }
+    }
+
+    const dentro = el('div', 'mapa-in');
+    const h3 = el('h3'); h3.textContent = t(c.titulo); dentro.appendChild(h3);
+    const lema = t(c.lema);
+    if (lema) { const p = el('p', 'mapa-lema'); p.textContent = lema; dentro.appendChild(p); }
+    const txt = t(c.texto);
+    if (txt) { const p = el('p', 'mapa-txt'); p.textContent = txt; dentro.appendChild(p); }
+
+    const acessos = (c.acessos || []).filter(a => a && a.visible !== false && t(a.label));
+    if (acessos.length) {
+      const lista = el('div', 'mapa-aces');
+      acessos.forEach(a => {
+        const link = el('a', 'mapa-ac' + (a.principal ? ' principal' : ''));
+        link.href = local(a.href) || '#';
+        const rot = el('span', 'mapa-ac-t'); rot.textContent = t(a.label);
+        link.appendChild(rot);
+        const des = t(a.descricao);
+        if (des) { const d = el('span', 'mapa-ac-d'); d.textContent = des; link.appendChild(d); }
+        lista.appendChild(link);
+      });
+      dentro.appendChild(lista);
+    }
+
+    art.appendChild(dentro);
+    grelha.appendChild(art);
+  });
+  cx.appendChild(grelha);
+  return cx;
+}
+
 function buildElement(item) {
   /* Elementos marcados no CMS como "só na página própria". A loja de música
      e a biografia são disso: vivem em /musica/ e a página inicial fica com o
@@ -2363,6 +2450,7 @@ function buildElement(item) {
     case 'music': return buildMusic(item);
     case 'flow': return buildFlow(item);
     case 'bio': return buildBio(item);
+    case 'mapa': return buildMapa(item);
     default: return null;
   }
 }
@@ -2388,6 +2476,10 @@ function buildSection(sec, sky) {
     s.id = sec.id;
     /* animação de vento neste slide (liga/desliga por slide; por defeito ligada) */
     s.dataset.wind = sec.wind === false ? '0' : '1';
+    /* secção de superfície clara. Não é decoração: há coisas fixas no topo
+       da página — o seletor de idiomas — que foram desenhadas para fundo
+       escuro e precisam de saber quando passam por cima de branco. */
+    if (sec.claro) s.dataset.claro = '1';
     /* altura da secção em nº de ecrãs (1 = normal). Editável no CMS. */
     if (typeof sec.heightScreens === 'number' && sec.heightScreens > 1) {
       s.style.minHeight = (sec.heightScreens * 100) + 'vh';
@@ -2422,6 +2514,35 @@ function buildSection(sec, sky) {
       const h = el('div', 'scrollhint'); h.textContent = hint; s.appendChild(h);
     }
   return s;
+}
+
+/* ---- o que e fixo no topo tem de sobreviver ao branco ----------------
+   O `.lang-switcher` e `position:fixed` com fundo `rgba(9,40,82,.28)` e as
+   bandeiras com contorno branco a 20%. Foi desenhado para viver sobre
+   fotografia escura, e sobre a faixa branca do mapa media 1,78:1 — um
+   borrao azul palido com as bandeiras sem contorno.
+
+   Isto observa as seccoes que se declaram claras e avisa o seletor
+   quando uma delas esta debaixo dele. Conta-as num conjunto porque
+   amanha pode haver mais do que uma, e duas a entrar e sair ao mesmo
+   tempo faziam o interruptor bater. */
+function vigiarSeccoesClaras() {
+  const ls = document.querySelector('.lang-switcher');
+  if (!ls || typeof IntersectionObserver !== 'function') return;
+  const claras = document.querySelectorAll('section[data-claro="1"]');
+  if (!claras.length) { ls.classList.remove('sobre-claro'); return; }
+
+  /* a faixa onde o chip vive: do topo ate ao fim dele, com uma folga */
+  const alto = Math.round(ls.getBoundingClientRect().height) || 34;
+  const faixa = 24 + alto + 6;
+  const debaixo = new Set();
+  const obs = new IntersectionObserver(entradas => {
+    entradas.forEach(e => {
+      if (e.isIntersecting) debaixo.add(e.target); else debaixo.delete(e.target);
+    });
+    ls.classList.toggle('sobre-claro', debaixo.size > 0);
+  }, { rootMargin: '0px 0px -' + Math.max(0, window.innerHeight - faixa) + 'px 0px' });
+  claras.forEach(s => obs.observe(s));
 }
 
 function render(data) {
@@ -2482,6 +2603,8 @@ function render(data) {
 
   const locales = (data.locales && data.locales.length) ? data.locales : [DEFAULT_LOCALE];
   if (locales.length > 1) { buildLangSwitcher(locales); sugereIdioma(locales); }
+  /* depois do seletor existir, e nao antes */
+  vigiarSeccoesClaras();
 
   if (responsiveRules.length) {
     const st = el('style'); st.id = 'mobile-overrides';

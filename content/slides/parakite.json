@@ -1,7 +1,7 @@
 {
   "id": "parakite",
   "nome": "Parakite Portugal",
-  "visible": true,
+  "visible": false,
   "wind": false,
   "heightScreens": 1,
   "heroScrim": false,
