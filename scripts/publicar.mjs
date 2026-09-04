@@ -159,7 +159,7 @@ function carimbar() {
      página /musica/ tem o seu próprio arranque, e o regras/musica.js importa
      o regras/dom.js. Três ficheiros ficavam sem carimbo nenhum. */
   const mods = ['regras/avisos.js', 'regras/taxonomia.js', 'regras/unidades.js',
-    'regras/navegacao.js', 'regras/dom.js', 'regras/textos.js',
+    'regras/navegacao.js', 'regras/dom.js', 'regras/tema.js', 'regras/textos.js',
     'regras/musica.js'];
 
   /* quem pode conter imports para regras/ — os de topo e os próprios módulos */
@@ -188,9 +188,13 @@ function carimbar() {
     }
   }
 
+  /* O `tema.css` é a folha que MAIS muda: é a que o CMS reescreve. Ficou de
+     fora desta lista quando nasceu, e sem carimbo um visitante que voltasse
+     recebia a versão velha da cache — ou seja, a única folha cuja mudança se
+     quer ver imediatamente era a única que não se via. */
   const v = {};
-  for (const f of ['app.js', 'styles.css', 'pagina.css', 'menu.css', 'menu.js',
-    'musica.css', 'musica.js'])
+  for (const f of ['app.js', 'styles.css', 'pagina.css', 'tema.css', 'menu.css',
+    'menu.js', 'musica.css', 'musica.js'])
     if (fs.existsSync(path.join(SAIDA, f))) v[f] = resumo(f);
 
   /* reescrever as referências em todo o HTML publicado */
