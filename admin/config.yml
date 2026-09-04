@@ -552,6 +552,8 @@ collections:
                 collapsed: true
                 summary: '{{fields.pt}}'
                 required: false
+                hint: >-
+                  Sem ponto final: um título nomeia, não afirma. Se ficar lá um, o site tira-o sozinho — mas fica melhor escrito de raiz.
                 fields:
                   - label: Português
                     name: pt
@@ -579,6 +581,8 @@ collections:
                 collapsed: true
                 summary: '{{fields.pt}}'
                 required: false
+                hint: >-
+                  Sem ponto final: um título nomeia, não afirma. Se ficar lá um, o site tira-o sozinho — mas fica melhor escrito de raiz.
                 fields:
                   - label: Português
                     name: pt
@@ -643,7 +647,8 @@ collections:
                 required: false
                 hint: >-
                   Só a página inicial tem h1, e só um. É a frase que diz do
-                  que trata a página, não o nome da marca.
+                  que trata a página, não o nome da marca. Sem ponto final:
+                  um título nomeia, não afirma.
                 fields:
                   - label: Português
                     name: pt
@@ -1340,6 +1345,8 @@ collections:
               - label: Título da secção
                 name: title
                 widget: object
+                hint: >-
+                  Sem ponto final: um título nomeia, não afirma. Se ficar lá um, o site tira-o sozinho — mas fica melhor escrito de raiz.
                 fields:
                   - label: Português
                     name: pt
@@ -1410,6 +1417,8 @@ collections:
                   - label: Título
                     name: titulo
                     widget: object
+                    hint: >-
+                      Sem ponto final: um título nomeia, não afirma. Se ficar lá um, o site tira-o sozinho — mas fica melhor escrito de raiz.
                     fields:
                       - label: Português
                         name: pt
@@ -1786,6 +1795,8 @@ collections:
                     collapsed: true
                     summary: '{{fields.pt}}'
                     required: false
+                    hint: >-
+                      Sem ponto final: um título nomeia, não afirma. Se ficar lá um, o site tira-o sozinho — mas fica melhor escrito de raiz.
                     fields:
                       - label: Português
                         name: pt
@@ -2019,6 +2030,8 @@ collections:
                     collapsed: true
                     summary: '{{fields.pt}}'
                     required: false
+                    hint: >-
+                      Sem ponto final: um título nomeia, não afirma. Se ficar lá um, o site tira-o sozinho — mas fica melhor escrito de raiz.
                     fields:
                       - label: Português
                         name: pt
@@ -2148,6 +2161,8 @@ collections:
                 collapsed: true
                 summary: '{{fields.pt}}'
                 required: false
+                hint: >-
+                  Sem ponto final: um título nomeia, não afirma. Se ficar lá um, o site tira-o sozinho — mas fica melhor escrito de raiz.
                 fields:
                   - label: Português
                     name: pt
@@ -2582,6 +2597,8 @@ collections:
                         collapsed: true
                         summary: '{{fields.pt}}'
                         required: false
+                        hint: >-
+                          Sem ponto final: um título nomeia, não afirma. Se ficar lá um, o site tira-o sozinho — mas fica melhor escrito de raiz.
                         fields:
                           - label: Português
                             name: pt
@@ -2684,6 +2701,8 @@ collections:
                 collapsed: true
                 summary: '{{fields.pt}}'
                 required: false
+                hint: >-
+                  Sem ponto final: um título nomeia, não afirma. Se ficar lá um, o site tira-o sozinho — mas fica melhor escrito de raiz.
                 fields:
                   - label: Português
                     name: pt
@@ -2842,7 +2861,7 @@ collections:
         collapsed: true
         required: false
         summary: '{{fields.pt}}'
-        hint: 'Na janela assenta no canto da imagem'
+        hint: 'Na janela assenta no canto da imagem. Sem ponto final: um título nomeia, não afirma'
         fields:
           - {label: Português, name: pt, widget: string, required: false}
           - {label: English, name: en, widget: string, required: false}
@@ -3002,6 +3021,8 @@ collections:
             collapsed: true
             required: false
             summary: '{{fields.pt}}'
+            hint: >-
+              Sem ponto final: um título nomeia, não afirma. Se ficar lá um, o site tira-o sozinho — mas fica melhor escrito de raiz.
             fields:
               - {label: Português, name: pt, widget: string, required: false}
               - {label: English, name: en, widget: string, required: false}

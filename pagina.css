@@ -1173,7 +1173,7 @@ a.fl-cor-a:hover{background:#ff7c31;color:var(--sobre-laranja)}
   .pk-percurso:nth-child(3){border-left:0;padding-left:0}
   .pk-eco{grid-template-columns:repeat(2,1fr)}
   .pk-ctas{grid-template-columns:repeat(2,1fr)}
-  .pk-heroi-piloto{right:-4%;max-height:440px;opacity:.9}
+  .pk-heroi-piloto{right:-4%;opacity:.9}   /* o tecto saiu: ver acima */
 }
 @media(max-width:899px){
   .pk{ --pk-pad:26px }
@@ -2151,3 +2151,140 @@ span.hs-nome{
   padding:0 !important;
   margin:0 !important;
 }
+
+
+/* ======================================================================
+   O HEROI DA /parakite-portugal/ COMECA NO TOPO DA PAGINA
+   ======================================================================
+   O cabecalho e as migalhas passaram a ser filhos da seccao (ver o
+   comentario no gerador). Falta so dizer-lhes que ja nao sao uma barra
+   por cima de nada: sao conteudo por cima da foto, como na pagina
+   inicial. */
+
+/* A seccao era `display:flex` em linha com um filho so. Agora tem tres —
+   cabecalho, migalhas e texto — e em linha ficavam lado a lado. Em coluna
+   empilham-se pela ordem em que estao escritos, que e a ordem certa. */
+.pg.pk .pk-heroi{
+  /* (0,3,0) de proposito: a regra do tema mais acima e `.pg.pk .pk-heroi`
+     e poe 56px de respiro no topo. Com o cabecalho la dentro, esse respiro
+     deixava uma faixa escura por cima dele — a mesma margem que se veio
+     tirar, mais pequena. */
+  padding-top:0;
+  flex-direction:column; align-items:stretch; justify-content:flex-start;
+}
+/* As migalhas eram um bloco centrado dentro do <main>: `margin:0 auto` com
+   1440 de largura maxima. Num contentor flex esse `auto` encolhe-as ate ao
+   texto e centra-as. O `align-self` devolve-lhes a caixa que tinham. */
+.pk .pk-heroi > .pg-migalhas{
+  align-self:center; width:100%; max-width:var(--pk-cx);
+}
+
+/* A ALTURA E A DA PAGINA INICIAL: UM ECRA
+   O heroi da inicial tem min-height:100vh — medido a 390, 900, 1440 e
+   1920, sempre um ecra cheio. Este tinha 520px fixos, e por isso a foto
+   parecia um cartao e nao uma paisagem.
+
+   Com o menu por cima, o primeiro ecra mostra o menu mais um ecra de foto:
+   fica uma pequena parte por baixo da dobra. E de proposito — cortar a
+   altura pela altura do menu obrigava a saber quanto ele mede, e isso muda
+   com a largura E com a lingua. */
+.pg.pk .pk-heroi{ min-height:100vh }
+
+/* A MASCARA E A DA PAGINA INICIAL, E A DIFERENCA E QUE ESTA NAO TAPA
+   A daqui era linha(100deg, --papel 30%, ...): OPACA nos primeiros 30 por
+   cento. O terco esquerdo da fotografia nao se via — havia ali uma
+   paisagem que ninguem tinha visto.
+
+   A da inicial (`.has-scrim::after`, styles.css) nunca chega a opaca: vai
+   de .7 a transparente na horizontal, e junta-lhe um escurecimento por
+   baixo, onde ficam os botoes. Ve-se a foto toda e le-se o texto na
+   mesma. Sao os mesmos valores, copiados de la. */
+/* A seccao deixa de ter fundo proprio: se tivesse, tapava as camadas que
+   estao por tras dela com z-index negativo. E o mesmo arranjo do #hero da
+   inicial, que tambem nao tem fundo nenhum. */
+.pg.pk .pk-heroi{ background:none }
+
+/* 1 — a fotografia, dessaturada. O filtro so se aplica a um elemento, e e
+       por isso que ela deixou de ser um `background-image`. */
+.pk-heroi-fundo{position:absolute;inset:0;z-index:-3;overflow:hidden}
+.pk-heroi-fundo img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  filter:grayscale(1) contrast(1.05) brightness(1.05);
+}
+/* 2 — a cor. `mix-blend-mode:color` pega no tom desta camada e no brilho
+       da de baixo: a paisagem fica azul e continua a ler-se toda. */
+.pk-heroi-tinta{
+  position:absolute;inset:0;mix-blend-mode:color;
+  background:linear-gradient(rgb(10,61,122) 0%,rgb(31,111,192) 100%);
+}
+/* 3 — o scrim, com os valores da inicial. Nunca chega a opaco. */
+.pk-heroi::after{
+  content:'';position:absolute;inset:0;z-index:-2;pointer-events:none;
+  background:
+    linear-gradient(90deg, rgba(9,40,82,.7) 0%, rgba(9,40,82,.35) 40%,
+                           rgba(9,40,82,.1) 62%, transparent 78%),
+    linear-gradient(180deg, transparent 0%, transparent 45%,
+                            rgba(9,40,82,.5) 72%, rgba(9,40,82,.78) 100%);
+}
+
+/* O PILOTO A ALTURA TODA, COMO NA INICIAL
+   Tinha `height:100%` e um `max-height:560px` que o travava. Numa seccao
+   de 520px o tecto nunca se notava; numa de um ecra, o piloto ficava com
+   pouco mais de metade. Na inicial ocupa os 100% — 535x950 num heroi de
+   1425 de largura. E o tecto que sai, nao a altura que se acrescenta. */
+.pg.pk .pk-heroi-piloto{ max-height:none }
+
+/* O RECUO LATERAL MUDA DE DONO
+   Era da seccao, para alinhar o texto do heroi com o resto da pagina. Com
+   o cabecalho e as migalhas la dentro, esse recuo passou a empurra-los
+   tambem: a marca deixou de comecar na margem e as migalhas foram parar ao
+   centro. O recuo passa para quem precisa dele — o texto — e os outros
+   dois voltam a ter a largura toda e a geometria que sempre tiveram. */
+.pg.pk .pk-heroi{ padding-inline:0 }
+.pk .pk-heroi .pk-heroi-tx{ margin-inline:var(--margem-faixa) }
+/* o texto fica centrado no espaco que sobrar depois do cabecalho, que e
+   onde estava antes de eles entrarem */
+.pk .pk-heroi .pk-heroi-tx{ margin-top:auto; margin-bottom:auto }
+
+/* O CABECALHO FICA COM A BARRA QUE TINHA
+   A primeira versao tirava-lha, para se parecer com a pagina inicial. Mas
+   a inicial tem ali uma bandeira e um burger; esta tem um menu de texto
+   inteiro, e por baixo dele a foto tem ceu claro. O rgba(0,0,0,.22) nao
+   era decoracao: era o que mantem o menu legivel sobre a fotografia.
+   Nao ha regra nenhuma aqui — o cabecalho e as migalhas ficam exactamente
+   como estavam. So mudou o que esta por tras deles. */
+
+
+/* ======================================================================
+   O CABECALHO ACOMPANHA O SCROLL
+   ======================================================================
+   `sticky` e nao `fixed`: continua a ocupar o seu lugar no fluxo, e por
+   isso nada por baixo dele salta quando a pagina carrega. Um `fixed`
+   obrigava a compensar a altura dele no primeiro elemento — outro numero
+   que muda com a largura e com a lingua.
+
+   O FUNDO TEM DE DEIXAR DE SER TRANSPARENTE
+     Parado no topo, o rgba(0,0,0,.22) assentava no azul da pagina e dava
+     18:1. A acompanhar o scroll, passa a assentar no que vier por baixo —
+     um painel branco, uma foto, o que for. O fundo passa a ser o azul da
+     pagina com 92% e um desfoque por tras, que e o que o resto do site ja
+     usa no seletor de idiomas e na gaveta do menu.
+
+   AS ANCORAS
+     `scroll-padding-top` desloca o destino de uma ligacao interna para
+     baixo do cabecalho. A altura vem do menu.js, que a mede; o 96px e a
+     rede para quando nao ha JavaScript.
+   ====================================================================== */
+html{ scroll-padding-top:var(--h-topo, 96px) }
+
+.pg .pg-topo{
+  position:sticky; top:0; z-index:30;
+  background:rgba(7,29,58,.92);
+  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+}
+
+/* Na /parakite-portugal/ o cabecalho arranca por cima da fotografia. Ali
+   quer-se o vidro leve do inicio — e so quando ja saiu do heroi e que
+   precisa de tapar o que passa por baixo. O `scroll-timeline` ainda nao
+   se pode usar sem JavaScript, por isso fica o fundo cheio: e o mesmo
+   compromisso que o resto do site faz. */

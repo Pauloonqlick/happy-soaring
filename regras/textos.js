@@ -311,6 +311,48 @@ export function comQualificadores(valor, lingua) {
 }
 
 /**
+ * Um título não leva ponto final
+ * ==============================
+ *
+ * A REGRA
+ *   Um título nomeia, não afirma. O ponto fecha uma frase, e um título não
+ *   é uma frase — é uma etiqueta. Vale para h1, h2 e h3, nas 140 páginas e
+ *   nas que vierem.
+ *
+ * O CASO QUE OBRIGA A PENSAR
+ *   O h1 do /pilot2wing/ tem duas linhas:
+ *
+ *       Toda a gente começa pela asa.
+ *       Nós começamos pelo piloto.
+ *
+ *   Escrito, é `<h1>A<br><span>B.</span></h1>`. Há DOIS pontos, e o
+ *   segundo está dentro de um `<span>`. Uma regra que só apagasse o
+ *   caractere antes de `</h1>` não apanhava nenhum dos dois.
+ *
+ *   Por isso o título parte-se pelos `<br>` e trata-se cada linha como um
+ *   título por direito próprio — que é o que ela é, para quem lê. E o
+ *   ponto pode vir seguido de etiquetas a fechar.
+ *
+ * O QUE NAO SE APAGA
+ *   Reticências, porque `…` não é um ponto que sobra — é intenção. E o
+ *   ponto no meio de um título com duas frases fica: só sai o que fecha
+ *   a linha.
+ */
+const FIM_DE_LINHA = /(?<![.…])\.((?:\s*<\/[a-z0-9-]+>)*\s*)$/i;
+
+export function semPontoFinal(txt) {
+  return String(txt == null ? '' : txt).replace(FIM_DE_LINHA, '$1');
+}
+
+/** A mesma regra, aplicada aos títulos de um documento já montado. */
+export function tiraPontosDosTitulos(html) {
+  return String(html).replace(/(<h[1-3]\b[^>]*>)([\s\S]*?)(<\/h[1-3]>)/gi,
+    (todo, abre, dentro, fecha) =>
+      abre + dentro.split(/(<br\s*\/?>)/i)
+        .map(p => (/^<br/i.test(p) ? p : semPontoFinal(p))).join('') + fecha);
+}
+
+/**
  * O que não é palavra
  * ===================
  *
@@ -521,6 +563,7 @@ export function protegeNomes(html, extra) {
 export function vigiaNomes(raiz, extra) {
   if (!raiz || typeof document === 'undefined') return null;
   protegeNomesNoDom(raiz, extra);
+  tiraPontosNoDom(raiz);
   if (typeof MutationObserver === 'undefined') return null;
 
   let ocupado = false, agendado = false;
@@ -544,13 +587,58 @@ export function vigiaNomes(raiz, extra) {
           if (!n.isConnected) continue;
           /* um nó de texto solto não se percorre: trata-se o pai */
           const alvo = n.nodeType === 3 ? n.parentElement : n;
-          if (alvo) protegeNomesNoDom(alvo, extra);
+          if (alvo) { protegeNomesNoDom(alvo, extra); tiraPontosNoDom(alvo); }
         }
       } finally { ocupado = false; }
     });
   });
   obs.observe(raiz, { childList: true, subtree: true });
   return obs;
+}
+
+/**
+ * A regra dos titulos, na pagina que se monta no browser.
+ *
+ * As 140 paginas geradas ja saem sem ponto: o gerador aplica a regra ao
+ * documento inteiro antes de o escrever. A pagina inicial nao tem gerador —
+ * os titulos dela vem do CMS e sao escritos aqui — e por isso a regra tem
+ * de existir tambem deste lado. Assim, quem escrever um titulo com ponto
+ * no CMS ve-o sair sem ele, em vez de ver a pagina desobedecer a regra.
+ *
+ * Corre no mesmo observador que protege os nomes proprios, pela mesma
+ * razao: metade da inicial so nasce quando alguem mexe nela, e uma
+ * passagem unica no fim do render nao ve o que ainda nao existe.
+ *
+ * COMO E QUE UM TITULO SE PARTE EM LINHAS
+ *   O h1 do wordmark e HAPPY<br><span>SOARING</span>: um <br> comeca uma
+ *   linha nova, e cada linha e um titulo por direito proprio para quem le.
+ *   Por isso junta-se os nos de texto por linha e trata-se o ULTIMO de
+ *   cada uma — que pode estar dentro de um <span>, como esta ali.
+ */
+export function tiraPontosNoDom(raiz) {
+  if (!raiz || typeof document === 'undefined') return;
+  const tits = [];
+  if (raiz.matches && raiz.matches('h1,h2,h3')) tits.push(raiz);
+  if (raiz.querySelectorAll) tits.push(...raiz.querySelectorAll('h1,h2,h3'));
+
+  for (const h of tits) {
+    /* percorre elementos e texto pela ordem em que aparecem, para saber
+       onde os <br> caem */
+    const it = document.createTreeWalker(h, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT);
+    const linhas = [[]];
+    let n;
+    while ((n = it.nextNode())) {
+      if (n.nodeType === 1) { if (n.tagName === 'BR') linhas.push([]); continue; }
+      if ((n.nodeValue || '').trim()) linhas[linhas.length - 1].push(n);
+    }
+    for (const linha of linhas) {
+      const ultimo = linha[linha.length - 1];
+      if (!ultimo) continue;
+      const cauda = (ultimo.nodeValue || '').replace(/\s+$/, '');
+      const limpo = semPontoFinal(cauda);
+      if (limpo !== cauda) ultimo.nodeValue = limpo;
+    }
+  }
 }
 
 export function protegeNomesNoDom(raiz, extra) {

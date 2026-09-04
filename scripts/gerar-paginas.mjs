@@ -32,7 +32,7 @@ import { FL } from './conteudo-flow.mjs';
 import { IN } from './conteudo-inicial.mjs';
 import { PK } from './conteudo-parakite.mjs';
 import { entradasDoMenu, ROTAS, comIdioma } from '../regras/navegacao.js';
-import { comQualificadores, protegeNomes } from '../regras/textos.js';
+import { comQualificadores, protegeNomes, tiraPontosDosTitulos } from '../regras/textos.js';
 import { folhaDoTema } from '../regras/tema.js';
 
 const RAIZ = process.cwd();   /* corre-se a partir da raiz do projecto */
@@ -1506,13 +1506,39 @@ ${alt}
 
 <main>
 
-  <nav class="pg-migalhas"><a href="${inicio}">${esc(t(T.inicio, l))}</a> &rsaquo;
-    <span>${esc(t(PK.migalha, l))}</span></nav>
+  <!-- AS MIGALHAS VIVEM DENTRO DO HEROI
+       A foto comeca logo a seguir ao menu, como devia. Antes nao comecava:
+       entre os dois havia uma faixa escura de 42px, que era esta linha de
+       navegacao — "Inicio > Parakite em Portugal" — sentada no fundo da
+       pagina em vez de estar sobre a foto.
 
+       Poe-las aqui dentro resolve isso sem contas: a foto encosta ao menu,
+       e a linha passa a ler-se por cima dela, no canto onde a mascara do
+       heroi e opaca. Nao se perdem — sao o que diz ao visitante onde esta e
+       o que diz ao Google a hierarquia do site. -->
   <section class="pk-heroi" id="topo">
+
+    <!-- A FOTO EM TRES CAMADAS, COMO NA PAGINA INICIAL
+         Era um background-image na seccao com uma mascara opaca por
+         cima. Agora e o mesmo que a inicial faz: a fotografia num <img>
+         que se pode filtrar, uma camada de cor por cima em
+         mix-blend-mode:color, e o scrim no ::after da seccao.
+
+         Nao e enfeite: e o que torna a mascara leve possivel. Dessaturar
+         e tingir de azul achata a foto o suficiente para o texto branco
+         se ler sobre ela sem ser preciso tapa-la. Com a foto em cor
+         natural e a mesma mascara, o h1 media 1,31:1. -->
+    <div class="pk-heroi-fundo" aria-hidden="true">
+      <img src="/images/hero-bg.jpg" alt="" decoding="async" />
+      <div class="pk-heroi-tinta"></div>
+    </div>
+
+    <nav class="pg-migalhas"><a href="${inicio}">${esc(t(T.inicio, l))}</a> &rsaquo;
+      <span>${esc(t(PK.migalha, l))}</span></nav>
+
     <div class="pk-heroi-tx">
       <p class="pg-eyebrow">${esc(t(PK.kicker, l))}</p>
-      <h1>${esc(semPonto(t(PK.h1, l)))}</h1>
+      <h1>${esc(t(PK.h1, l))}</h1>
       <p class="pk-citacao">${esc(t(PK.heroCitacao, l))}</p>
       <p class="pk-tese">${esc(t(PK.heroTese, l))}</p>
       <p class="pk-botoes">
@@ -1525,7 +1551,7 @@ ${alt}
 
   <section class="pk-sec" id="o-que-e">
     <p class="pg-eyebrow">${esc(t(PK.s2Kicker, l))}</p>
-    <h2>${esc(semPonto(t(PK.s2H2, l)))}</h2>
+    <h2>${esc(t(PK.s2H2, l))}</h2>
     <div class="pk-duas">
       <p class="pk-lead">${esc(t(PK.s2P1, l))}</p>
       <p>${forte(t(PK.s2P2, l))}
@@ -1534,14 +1560,14 @@ ${alt}
   </section>
 
   <section class="pk-energia" id="energia">
-    <h2>${esc(semPonto(t(PK.s3H2, l)))}</h2>
+    <h2>${esc(t(PK.s3H2, l))}</h2>
     <ul class="pk-eixos">${eixos}</ul>
     <p class="pk-declaracao" lang="en">${esc(PK.s3Declaracao)}</p>
   </section>
 
   <section class="pk-sec" id="onde-estas">
     <p class="pg-eyebrow">${esc(t(PK.s4Kicker, l))}</p>
-    <h2>${esc(semPonto(t(PK.s4H2, l)))}</h2>
+    <h2>${esc(t(PK.s4H2, l))}</h2>
     <p class="pk-lead">${esc(t(PK.s4Texto, l))}</p>
     <!-- <ul> e nao <ol>: sao quatro situacoes alternativas, nao quatro
          passos. Um <ol> promete uma ordem que nao existe, e essa promessa
@@ -1552,7 +1578,7 @@ ${alt}
 
   <section class="pk-sec pk-papel" id="aprender">
     <p class="pg-eyebrow">${esc(t(PK.s5Kicker, l))}</p>
-    <h2>${esc(semPonto(t(PK.s5H2, l)))}</h2>
+    <h2>${esc(t(PK.s5H2, l))}</h2>
     <p class="pk-lead">${forte(t(PK.s5Texto, l))}</p>
     <blockquote class="pk-cit">${esc(t(PK.s5Citacao, l))}</blockquote>
     <div class="pk-trio">
@@ -1573,7 +1599,7 @@ ${alt}
        em <h3> por baixo dela. -->
   <section class="pk-sec pk-tema" id="demo">
     <p class="pg-eyebrow">${esc(t(PK.s6Kicker, l))}</p>
-    <h2>${esc(semPonto(t(PK.s6H2, l)))}</h2>
+    <h2>${esc(t(PK.s6H2, l))}</h2>
     <p class="pk-sub">${esc(t(PK.s6Sub, l))}</p>
 
     <div class="pk-demo">
@@ -1593,7 +1619,7 @@ ${alt}
   <section class="pk-sec pk-tema" id="rental">
     <p class="pg-eyebrow">${esc(t(PK.rentalKicker, l))}
       <span class="pk-soon-selo">${esc(PK.rentalSoon)}</span></p>
-    <h2 lang="en">${esc(semPonto(PK.rentalTit))}</h2>
+    <h2 lang="en">${esc(PK.rentalTit)}</h2>
       <p>${esc(t(PK.rentalTxt, l))}</p>
       <p class="pk-nota">${esc(t(PK.rentalGestao, l))}</p>
       <ul class="pk-exemplo">
@@ -1608,7 +1634,7 @@ ${alt}
        hero aponta para #voar-em-portugal e não se parte um link que já
        está no ar por causa de uma arrumação interna. -->
   <section class="pk-sec pk-tema" id="voar-em-portugal">
-    <h2>${esc(semPonto(t(PK.spotsTit, l)))}</h2>
+    <h2>${esc(t(PK.spotsTit, l))}</h2>
     <div class="pk-spots">
       <div class="pk-spots-tx">
         <p class="pk-nota">${esc(t(PK.spotsNota, l))}</p>
@@ -1620,7 +1646,7 @@ ${alt}
 
   <section class="pk-sec pk-papel" id="escolher">
     <p class="pg-eyebrow">${esc(t(PK.s7Kicker, l))}</p>
-    <h2>${esc(semPonto(t(PK.s7H2, l)))}</h2>
+    <h2>${esc(t(PK.s7H2, l))}</h2>
     <div class="pk-dealer">
       <p class="pk-dealer-et" lang="en">${esc(t(PK.dealerEt, l))}</p>
       <p class="pk-dealer-nome">Flow Paragliders <span>Portugal</span></p>
@@ -1638,7 +1664,7 @@ ${alt}
 
   <section class="pk-sec" id="pos-venda">
     <p class="pg-eyebrow">${esc(t(PK.s8Kicker, l))}</p>
-    <h2>${esc(semPonto(t(PK.s8H2, l)))}</h2>
+    <h2>${esc(t(PK.s8H2, l))}</h2>
     <ul class="pk-cadeia">${cadeia}</ul>
     <p class="pk-nota">${forte(t(PK.cadeiaLegenda, l))}</p>
     <div class="pk-casas">${casas}</div>
@@ -1646,7 +1672,7 @@ ${alt}
 
   <section class="pk-resp" id="responsabilidade">
     <p class="pg-eyebrow">${esc(t(PK.s9Kicker, l))}</p>
-    <h2>${esc(semPonto(t(PK.s9H2, l)))}</h2>
+    <h2>${esc(t(PK.s9H2, l))}</h2>
     <ul class="pk-palavras" lang="en">${palavras}</ul>
     <p class="pk-lead">${esc(t(PK.s9Texto, l))}</p>
     <blockquote class="pk-cit">${esc(t(PK.s9Citacao, l))}</blockquote>
@@ -1654,7 +1680,7 @@ ${alt}
 
   <section class="pk-sec" id="ecossistema">
     <p class="pg-eyebrow">${esc(t(PK.s10Kicker, l))}</p>
-    <h2>${esc(semPonto(t(PK.s10H2, l)))}</h2>
+    <h2>${esc(t(PK.s10H2, l))}</h2>
     <p class="pk-sub">${esc(t(PK.s10Sub, l))}</p>
     <p class="pk-lead">${esc(t(PK.s10Texto, l))}</p>
     <ul class="pk-eco">${eco}</ul>
@@ -1663,12 +1689,12 @@ ${alt}
 
   <section class="pk-sec pk-papel" id="faq">
     <p class="pg-eyebrow">${esc(t(PK.faqKicker, l))}</p>
-    <h2>${esc(semPonto(t(PK.faqKicker, l)))}</h2>
+    <h2>${esc(t(PK.faqKicker, l))}</h2>
     <div class="pk-faq">${faq}</div>
   </section>
 
   <section class="pk-sec" id="comecar">
-    <h2 class="pk-h2-grande">${esc(semPonto(t(PK.s12H2, l)))}</h2>
+    <h2 class="pk-h2-grande">${esc(t(PK.s12H2, l))}</h2>
     <div class="pk-ctas">${ctas}</div>
   </section>
 
@@ -1882,7 +1908,13 @@ const NOMES_ASAS = produtos.map(p => p.nome).filter(Boolean);
    sem esta condicao ganhava uma ligacao nova a cada geracao. */
 const LIGACAO_TEMA = '<link rel="stylesheet" href="/tema.css" />';
 function escrevePagina(caminho, html) {
-  let h = protegeNomes(html, NOMES_ASAS);
+  /* A REGRA DOS TITULOS APLICA-SE AQUI, E NAO NOS QUARENTA SITIOS
+     Ha mais de quarenta pontos no ficheiro a emitir um <h1>, <h2> ou <h3>.
+     Chamar a regra em cada um deles e chama-la em trinta e nove: o
+     quadragesimo esquece-se, e essa pagina fica com um ponto que as outras
+     nao tem. Aqui e um sitio so, e cobre tambem os titulos que ainda nao
+     existem. */
+  let h = tiraPontosDosTitulos(protegeNomes(html, NOMES_ASAS));
   if (h.indexOf('href="/tema.css"') < 0) {
     h = h.replace('</head>', LIGACAO_TEMA + '\n</head>');
   }
@@ -1898,9 +1930,11 @@ function escrevePagina(caminho, html) {
    Vive aqui e não no conteúdo porque as mesmas frases servem também de
    `<title>`, de og:description e do bloco estático, onde a pontuação faz
    falta. O que muda é o que se pinta como cabeçalho, não o que se diz. */
-function semPonto(txt) {
-  return String(txt || '').replace(/\s*\.\s*$/, '');
-}
+/* O `semPonto` vivia aqui e era chamado a mao em catorze titulos da
+   /parakite-portugal/. Saiu quando a regra passou a valer para o site
+   inteiro: duas implementacoes da mesma regra sao duas regras, e um dia
+   dizem coisas diferentes. Agora e o `regras/textos.js`, aplicado de uma
+   vez no `escrevePagina`. */
 
 const HERO = (() => {
   const d = JSON.parse(fs.readFileSync(path.join(RAIZ, 'content/slides/hero.json'), 'utf8'));

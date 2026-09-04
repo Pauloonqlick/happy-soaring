@@ -103,10 +103,31 @@
     fechar(false);
   });
 
+  /* A ALTURA DO CABECALHO, PUBLICADA PARA O CSS
+     O cabecalho passou a acompanhar o scroll. Isso cria um problema que
+     nao existia: uma ligacao para #aprender leva a seccao ao topo da
+     janela, e o cabecalho fica por cima dela — o visitante clica e chega a
+     um sitio onde o titulo esta tapado.
+
+     O CSS resolve isso com `scroll-padding-top`, mas precisa de saber
+     quanto o cabecalho mede. E nao ha numero: sao 67px a 1440, 110 em
+     espanhol a essa mesma largura, 152 a 360. Depende da largura E da
+     lingua, porque o menu quebra em sitios diferentes.
+
+     Medi-lo aqui e escreve-lo numa variavel e a unica forma de a conta
+     estar sempre certa. Sem JavaScript o CSS usa 96px, que e o valor mais
+     comum — as ancoras ficam um pouco fora do sitio e mais nada. */
+  function alturaDoTopo() {
+    document.documentElement.style.setProperty('--h-topo', topo.offsetHeight + 'px');
+  }
+  alturaDoTopo();
+  window.addEventListener('load', alturaDoTopo);
+
   /* rodar o telemóvel ou alargar a janela pode fazer o botão desaparecer.
      Se isso acontecer com a gaveta aberta, ficava um painel fixo por cima
      de uma barra que já estava visível. */
   window.addEventListener('resize', function () {
+    alturaDoTopo();
     if (aberto && !compacto()) fechar(false);
   });
 })();

@@ -36,7 +36,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
-import { QUALIFICADORES, protegeNomes } from '../regras/textos.js';
+import { QUALIFICADORES, protegeNomes, semPontoFinal } from '../regras/textos.js';
 import { tokensDoTema } from '../regras/tema.js';
 
 const RAIZ = process.cwd();
@@ -817,6 +817,46 @@ titulo('13. Todo o token do tema chega mesmo a uma folha');
   }
   mau += semLigacao;
   ok(Object.keys(tk).length + ' tokens, ' + vivas.length + ' páginas, ' + mau + ' problema(s)');
+}
+
+/* ------------------------------------------------------------------ */
+titulo('14. Nenhum título acaba em ponto final');
+{
+  /* A REGRA
+       Um título nomeia, não afirma. O ponto fecha uma frase, e um título
+       não é uma frase.
+
+     PORQUE E QUE PRECISA DE VERIFICACAO
+       A regra existia desde 03/09 mas vivia numa funcao chamada a mao em
+       catorze titulos de UMA pagina. As outras 139 nunca a viram, e o h1
+       do /pilot2wing/ andou publicado com dois pontos finais — um em cada
+       linha. Ninguem estava distraido: a regra e que nunca tinha chegado
+       la.
+
+       Agora e uma passagem unica no `escrevePagina` e um observador no
+       app.js. Esta linha e o que garante que continua a ser verdade em
+       todas, incluindo nas que ainda nao existem.
+
+     LINHA A LINHA, E NAO TITULO A TITULO
+       Um <br> comeca uma linha nova, e cada linha e um titulo por direito
+       proprio para quem le. O h1 do /pilot2wing/ tem duas, e as duas
+       tinham ponto. */
+  let mau = 0, vistos = 0;
+  for (const p of vivas) {
+    const h = fs.readFileSync(p.ficheiro, 'utf8').replace(/<!--[\s\S]*?-->/g, ' ');
+    for (const m of h.matchAll(/<(h[1-3])\b[^>]*>([\s\S]*?)<\/\1>/gi)) {
+      for (const parte of m[2].split(/<br\s*\/?>/i)) {
+        const txt = parte.replace(/<[^>]*>/g, '').replace(/&[a-z]+;|&#\d+;/gi, ' ').trim();
+        if (!txt) continue;
+        vistos++;
+        if (semPontoFinal(txt) !== txt) {
+          falha('em ' + p.url + ' um ' + m[1] + ' acaba em ponto: "' + txt.slice(0, 52) + '"');
+          mau++;
+        }
+      }
+    }
+  }
+  ok(vistos + ' linhas de título em ' + vivas.length + ' páginas, ' + mau + ' com ponto final');
 }
 
 /* ------------------------------------------------------------------ */
