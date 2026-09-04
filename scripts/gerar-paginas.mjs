@@ -1201,7 +1201,24 @@ function paginaPilot2Wing(l, num) {
     const fundo = ultimo ? 'background:rgba(255,106,19,0.14);border:2px solid #ff6a13'
       : quarto ? 'background:rgba(255,201,166,0.09);border:1px solid rgba(255,201,166,0.34)'
       : 'background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12)';
-    const numCor = ultimo ? 'rgba(255,106,19,0.5)' : quarto ? 'rgba(255,201,166,0.35)' : 'rgba(255,255,255,0.15)';
+    /* OS NUMEROS TEM DE SE LER, E A RAZAO MUDOU DESDE QUE FORAM ESCRITOS
+       Estavam a 1,57:1 (etapas 1-3), 2,24 (a quarta) e 2,02 (a quinta).
+       Ficaram assim por se lhes chamar decoracao — e a isencao do WCAG
+       para decoracao exige uma coisa que nunca tiveram: estar escondidos
+       da tecnologia de apoio. Sem `aria-hidden`, um leitor de ecra
+       anuncia "zero um" antes de cada etapa. Ou sao texto, ou sao enfeite;
+       nao podem ser as duas coisas conforme convem.
+
+       Sao texto: numeram as cinco etapas de um metodo que E sequencial.
+       A 40px o minimo e 3:1 (texto grande), e cada variante subiu ate ao
+       primeiro alfa que la chega contra o SEU cartao — que nao e o mesmo
+       fundo nos tres casos:
+         etapas 1-3  .15 -> .37   (3,03:1)
+         etapa 4     .35 -> .49   (3,05:1)
+         etapa 5     .50 -> .76   (3,02:1)
+       O fantasma fica menos fantasma. E o preco de o numero querer dizer
+       alguma coisa. */
+    const numCor = ultimo ? 'rgba(255,106,19,0.76)' : quarto ? 'rgba(255,201,166,0.49)' : 'rgba(255,255,255,0.37)';
     return `<li class="sg-etapa" style="${fundo}">
       <span class="sg-etapa-n" style="color:${numCor}">0${i + 1}</span>
       <h3>${esc(t(e.nome, l))}</h3>
@@ -1397,7 +1414,6 @@ function paginaParakite(l, num) {
     const etapas = (c.etapas[l] || c.etapas[OMISSAO]).map((e, j) =>
       '<li' + (c.soon === j ? ' class="pk-soon"' : '') + '>' + esc(e) + '</li>').join('');
     return `<li class="pk-percurso">
-      <span class="pk-percurso-n">0${i + 1}</span>
       <p class="pk-percurso-et">${esc(t(c.rotulo, l))}</p>
       <h3>${esc(t(c.titulo, l))}</h3>
       <p class="pk-percurso-tx">${esc(t(c.texto, l))}</p>
@@ -1527,7 +1543,10 @@ ${alt}
     <p class="pg-eyebrow">${esc(t(PK.s4Kicker, l))}</p>
     <h2>${esc(semPonto(t(PK.s4H2, l)))}</h2>
     <p class="pk-lead">${esc(t(PK.s4Texto, l))}</p>
-    <ol class="pk-percursos">${percursos}</ol>
+    <!-- <ul> e nao <ol>: sao quatro situacoes alternativas, nao quatro
+         passos. Um <ol> promete uma ordem que nao existe, e essa promessa
+         chega a quem le a pagina com um leitor de ecra. -->
+    <ul class="pk-percursos">${percursos}</ul>
     <p class="pk-remate">${esc(t(PK.s4Remate, l))}</p>
   </section>
 
