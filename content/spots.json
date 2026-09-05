@@ -4,102 +4,213 @@
       "id": "fonte-da-telha",
       "nome": "Fonte da Telha",
       "publicar": false,
-      "descricao": { "pt": "", "en": "", "es": "", "fr": "", "de": "" },
+      "descricao": {
+        "pt": "",
+        "en": "",
+        "es": "",
+        "fr": "",
+        "de": ""
+      },
       "album": []
     },
     {
       "id": "lagoa-de-albufeira",
       "nome": "Lagoa de Albufeira",
-      "publicar": false,
-      "descricao": { "pt": "", "en": "", "es": "", "fr": "", "de": "" },
-      "album": [
-        {
-          "imagem": "/images/spots/lagoa-de-albufeira.webp",
-          "alt": {
-            "pt": "Vista aérea da Lagoa de Albufeira: a lagoa com bancos de areia à esquerda, o pinhal, a praia extensa e o mar aberto à direita.",
-            "en": "Aerial view of Lagoa de Albufeira: the lagoon with sandbanks on the left, the pine woods, the long beach and the open sea on the right.",
-            "es": "Vista aérea de la Lagoa de Albufeira: la laguna con bancos de arena a la izquierda, el pinar, la playa extensa y el mar abierto a la derecha.",
-            "fr": "Vue aérienne de la Lagoa de Albufeira : la lagune avec ses bancs de sable à gauche, la pinède, la longue plage et la mer ouverte à droite.",
-            "de": "Luftaufnahme der Lagoa de Albufeira: links die Lagune mit Sandbänken, der Pinienwald, der lange Strand und rechts das offene Meer."
-          },
-          "legenda": { "pt": "", "en": "", "es": "", "fr": "", "de": "" }
-        }
-      ]
-    },
-    {
-      "id": "meco",
-      "nome": "Meco",
-      "publicar": false,
-      "descricao": { "pt": "", "en": "", "es": "", "fr": "", "de": "" },
-      "album": []
-    },
-    {
-      "id": "alfarim",
-      "nome": "Alfarim",
-      "publicar": false,
-      "descricao": { "pt": "", "en": "", "es": "", "fr": "", "de": "" },
-      "album": []
-    },
-    {
-      "id": "peniche",
-      "nome": "Peniche",
-      "publicar": false,
-      "descricao": { "pt": "", "en": "", "es": "", "fr": "", "de": "" },
-      "album": []
-    },
-    {
-      "id": "praia-da-gralha",
-      "nome": "Praia da Gralha",
-      "publicar": false,
-      "descricao": { "pt": "", "en": "", "es": "", "fr": "", "de": "" },
-      "album": []
-    },
-    {
-      "id": "praia-das-bicas",
-      "nome": "Praia das Bicas",
       "publicar": true,
       "titulo": {
-        "pt": "Praia das Bicas — Parakite e parapente",
-        "en": "Praia das Bicas — Parakite and paragliding",
-        "es": "Praia das Bicas — Parakite y parapente",
-        "fr": "Praia das Bicas — Parakite et parapente",
-        "de": "Praia das Bicas — Parakite und Gleitschirm"
+        "pt": "Lagoa de Albufeira — Spot de Parakite",
+        "en": "Lagoa de Albufeira — Parakite site",
+        "es": "Lagoa de Albufeira — Spot de Parakite",
+        "fr": "Lagoa de Albufeira — Site de Parakite",
+        "de": "Lagoa de Albufeira — Parakitespot"
       },
       "descricao": {
-        "pt": "A Praia das Bicas, no concelho de Sesimbra, é um conhecido spot de voo de costa, utilizado para parapente e Parakite. Situada na costa ocidental, numa zona de falésia sobre o Atlântico, oferece condições para soaring quando a direção e a intensidade do vento são adequadas.\n\nA cerca de 40 km de Lisboa, normalmente a aproximadamente 45–55 minutos de carro, a Praia das Bicas é também um dos spots costeiros de voo relativamente próximos da capital.",
-        "en": "Praia das Bicas, in the municipality of Sesimbra, is a well-known coastal flying site used for paragliding and Parakite. Set on the west coast, on a stretch of cliff above the Atlantic, it offers soaring conditions when wind direction and strength are suitable.\n\nAbout 40 km from Lisbon, normally around 45–55 minutes by car, Praia das Bicas is also one of the coastal flying sites relatively close to the capital.",
-        "es": "La Praia das Bicas, en el municipio de Sesimbra, es un conocido spot de vuelo de costa, utilizado para parapente y Parakite. Situada en la costa occidental, en una zona de acantilado sobre el Atlántico, ofrece condiciones para soaring cuando la dirección y la intensidad del viento son adecuadas.\n\nA unos 40 km de Lisboa, normalmente a aproximadamente 45–55 minutos en coche, la Praia das Bicas es también uno de los spots costeros de vuelo relativamente cercanos a la capital.",
-        "fr": "La Praia das Bicas, dans la commune de Sesimbra, est un site de vol de côte connu, utilisé pour le parapente et le Parakite. Située sur la côte occidentale, dans une zone de falaise au-dessus de l’Atlantique, elle offre des conditions de soaring lorsque la direction et la force du vent sont adaptées.\n\nÀ environ 40 km de Lisbonne, normalement à quelque 45–55 minutes de voiture, la Praia das Bicas est aussi l’un des sites côtiers de vol relativement proches de la capitale.",
-        "de": "Die Praia das Bicas in der Gemeinde Sesimbra ist ein bekannter Küstenflugspot, der für Gleitschirm und Parakite genutzt wird. Sie liegt an der Westküste, in einem Steilküstenabschnitt über dem Atlantik, und bietet Soaring-Bedingungen, wenn Windrichtung und Windstärke passen.\n\nRund 40 km von Lissabon entfernt, normalerweise etwa 45–55 Autominuten, ist die Praia das Bicas auch einer der Küstenspots, die verhältnismäßig nah an der Hauptstadt liegen."
+        "pt": "A Lagoa de Albufeira, no concelho de Sesimbra, é um spot de voo costeiro utilizado para Parakite, numa extensa zona natural onde a lagoa, as dunas, a praia e o Oceano Atlântico se encontram.\n\nA cerca de 30–35 km de Lisboa, normalmente a aproximadamente 40–50 minutos de carro, é um dos spots de Parakite relativamente próximos da capital.",
+        "en": "Lagoa de Albufeira, in the municipality of Sesimbra, is a coastal flying site used for Parakite, in a wide natural area where the lagoon, the dunes, the beach and the Atlantic Ocean meet.\n\nAbout 30–35 km from Lisbon, normally around 40–50 minutes by car, it is one of the Parakite sites relatively close to the capital.",
+        "es": "La Lagoa de Albufeira, en el municipio de Sesimbra, es un spot de vuelo costero utilizado para Parakite, en una amplia zona natural donde se encuentran la laguna, las dunas, la playa y el océano Atlántico.\n\nA unos 30–35 km de Lisboa, normalmente a aproximadamente 40–50 minutos en coche, es uno de los spots de Parakite relativamente cercanos a la capital.",
+        "fr": "La Lagoa de Albufeira, dans la commune de Sesimbra, est un site de vol de côte utilisé pour le Parakite, dans une vaste zone naturelle où se rejoignent la lagune, les dunes, la plage et l’océan Atlantique.\n\nÀ environ 30–35 km de Lisbonne, normalement à quelque 40–50 minutes de voiture, c’est l’un des sites de Parakite relativement proches de la capitale.",
+        "de": "Die Lagoa de Albufeira in der Gemeinde Sesimbra ist ein Küstenflugspot für Parakite, in einem weiten Naturgebiet, in dem Lagune, Dünen, Strand und Atlantik zusammentreffen.\n\nRund 30–35 km von Lissabon entfernt, normalerweise etwa 40–50 Autominuten, ist sie einer der Parakitespots, die verhältnismäßig nah an der Hauptstadt liegen."
       },
       "ficha": {
-        "local": "Praia das Bicas, Sesimbra, Portugal",
-        "distanciaLisboaKm": 40,
-        "tempoViagem": {
-          "pt": "aproximadamente 45–55 minutos de carro",
-          "en": "approximately 45–55 minutes by car",
-          "es": "aproximadamente 45–55 minutos en coche",
-          "fr": "environ 45–55 minutes de voiture",
-          "de": "etwa 45–55 Autominuten"
-        },
-        "tipoVoo": {
-          "pt": "soaring costeiro / falésia",
-          "en": "coastal soaring / cliff",
-          "es": "soaring costero / acantilado",
-          "fr": "soaring de côte / falaise",
-          "de": "Küstensoaring / Steilküste"
-        },
-        "direcoes": ["W", "NW"],
-        "modalidades": ["parakite", "parapente"],
-        "altitudeDescolagemM": "30–40",
-        "altitudeFonte": "",
-        "acesso": {
-          "pt": "estacionamento na zona superior e acesso pedonal à praia, por escadaria",
-          "en": "parking on the upper area and pedestrian access to the beach, by a stairway",
-          "es": "aparcamiento en la zona superior y acceso peatonal a la playa, por una escalera",
-          "fr": "stationnement sur la partie haute et accès piéton à la plage, par un escalier",
-          "de": "Parkplatz im oberen Bereich und Fußweg zum Strand über eine Treppe"
-        }
+        "concelho": "Sesimbra",
+        "linhas": [
+          {
+            "rotulo": {
+              "pt": "Local",
+              "en": "Location",
+              "es": "Lugar",
+              "fr": "Lieu",
+              "de": "Ort"
+            },
+            "valor": {
+              "pt": "Lagoa de Albufeira, Sesimbra, Portugal",
+              "en": "Lagoa de Albufeira, Sesimbra, Portugal",
+              "es": "Lagoa de Albufeira, Sesimbra, Portugal",
+              "fr": "Lagoa de Albufeira, Sesimbra, Portugal",
+              "de": "Lagoa de Albufeira, Sesimbra, Portugal"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Distância de Lisboa",
+              "en": "Distance from Lisbon",
+              "es": "Distancia de Lisboa",
+              "fr": "Distance de Lisbonne",
+              "de": "Entfernung von Lissabon"
+            },
+            "valor": {
+              "pt": "aproximadamente 30–35 km",
+              "en": "approximately 30–35 km",
+              "es": "aproximadamente 30–35 km",
+              "fr": "environ 30–35 km",
+              "de": "etwa 30–35 km"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Tempo de viagem",
+              "en": "Travel time",
+              "es": "Tiempo de viaje",
+              "fr": "Temps de trajet",
+              "de": "Fahrzeit"
+            },
+            "valor": {
+              "pt": "aproximadamente 40–50 minutos de carro",
+              "en": "approximately 40–50 minutes by car",
+              "es": "aproximadamente 40–50 minutos en coche",
+              "fr": "environ 40–50 minutes de voiture",
+              "de": "etwa 40–50 Autominuten"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Modalidade",
+              "en": "Discipline",
+              "es": "Modalidad",
+              "fr": "Pratique",
+              "de": "Disziplin"
+            },
+            "valor": {
+              "pt": "Parakite",
+              "en": "Parakite",
+              "es": "Parakite",
+              "fr": "Parakite",
+              "de": "Parakite"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Tipo de voo",
+              "en": "Type of flying",
+              "es": "Tipo de vuelo",
+              "fr": "Type de vol",
+              "de": "Flugart"
+            },
+            "valor": {
+              "pt": "soaring costeiro / dunas / voo de proximidade",
+              "en": "coastal soaring / dunes / proximity flying",
+              "es": "soaring costero / dunas / vuelo de proximidad",
+              "fr": "soaring de côte / dunes / vol de proximité",
+              "de": "Küstensoaring / Dünen / Proximityflug"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Direções utilizadas",
+              "en": "Directions used",
+              "es": "Direcciones utilizadas",
+              "fr": "Directions utilisées",
+              "de": "Genutzte Richtungen"
+            },
+            "valor": {
+              "pt": "NW / W / SW",
+              "en": "NW / W / SW",
+              "es": "NW / W / SW",
+              "fr": "NW / W / SW",
+              "de": "NW / W / SW"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Descolagem",
+              "en": "Take-off",
+              "es": "Despegue",
+              "fr": "Décollage",
+              "de": "Start"
+            },
+            "valor": {
+              "pt": "sempre que possível, a partir da praia",
+              "en": "from the beach whenever possible",
+              "es": "siempre que sea posible, desde la playa",
+              "fr": "depuis la plage dans la mesure du possible",
+              "de": "nach Möglichkeit vom Strand"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Distância desde o estacionamento",
+              "en": "Distance from the car park",
+              "es": "Distancia desde el aparcamiento",
+              "fr": "Distance depuis le parking",
+              "de": "Entfernung vom Parkplatz"
+            },
+            "valor": {
+              "pt": "aproximadamente 10 minutos a pé até à descolagem",
+              "en": "approximately 10 minutes on foot to the take-off",
+              "es": "aproximadamente 10 minutos a pie hasta el despegue",
+              "fr": "environ 10 minutes à pied jusqu’au décollage",
+              "de": "etwa 10 Gehminuten bis zum Startplatz"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Aterragem",
+              "en": "Landing",
+              "es": "Aterrizaje",
+              "fr": "Atterrissage",
+              "de": "Landung"
+            },
+            "valor": {
+              "pt": "praia",
+              "en": "beach",
+              "es": "playa",
+              "fr": "plage",
+              "de": "Strand"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Ambiente",
+              "en": "Setting",
+              "es": "Entorno",
+              "fr": "Environnement",
+              "de": "Umgebung"
+            },
+            "valor": {
+              "pt": "lagoa, dunas, praia e Oceano Atlântico",
+              "en": "lagoon, dunes, beach and the Atlantic Ocean",
+              "es": "laguna, dunas, playa y océano Atlántico",
+              "fr": "lagune, dunes, plage et océan Atlantique",
+              "de": "Lagune, Dünen, Strand und Atlantik"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Outras atividades",
+              "en": "Other activities",
+              "es": "Otras actividades",
+              "fr": "Autres activités",
+              "de": "Weitere Aktivitäten"
+            },
+            "valor": {
+              "pt": "kitesurf, windsurf, vela, canoagem, surf e atividades de praia",
+              "en": "kitesurfing, windsurfing, sailing, canoeing, surfing and beach activities",
+              "es": "kitesurf, windsurf, vela, piragüismo, surf y actividades de playa",
+              "fr": "kitesurf, planche à voile, voile, canoë, surf et activités de plage",
+              "de": "Kitesurfen, Windsurfen, Segeln, Kanufahren, Surfen und Strandaktivitäten"
+            }
+          }
+        ]
       },
       "seccoes": [
         {
@@ -111,27 +222,499 @@
             "de": "Flugbedingungen"
           },
           "texto": {
-            "pt": "As direções mais favoráveis são geralmente Oeste (W) e Noroeste (NW).\n\nNo entanto, nas Bicas não basta olhar para a direção e velocidade indicadas na previsão meteorológica. A qualidade do voo pode variar com a intensidade, rajadas, componente lateral, condições atmosféricas e características locais do relevo.\n\nPor isso, uma direção normalmente favorável não significa, por si só, que as condições estejam boas para voar.",
-            "en": "The most favourable directions are generally West (W) and North-West (NW).\n\nAt Bicas, however, it is not enough to look at the direction and speed given in the forecast. Flight quality can vary with strength, gusts, cross component, atmospheric conditions and local features of the terrain.\n\nA normally favourable direction therefore does not, on its own, mean that conditions are good for flying.",
-            "es": "Las direcciones más favorables son generalmente Oeste (W) y Noroeste (NW).\n\nSin embargo, en las Bicas no basta con mirar la dirección y la velocidad indicadas en la previsión meteorológica. La calidad del vuelo puede variar con la intensidad, las rachas, la componente lateral, las condiciones atmosféricas y las características locales del relieve.\n\nPor eso, una dirección normalmente favorable no significa, por sí sola, que las condiciones sean buenas para volar.",
-            "fr": "Les directions les plus favorables sont généralement l’Ouest (W) et le Nord-Ouest (NW).\n\nAux Bicas, il ne suffit toutefois pas de regarder la direction et la vitesse indiquées par la prévision météo. La qualité du vol peut varier selon la force, les rafales, la composante latérale, les conditions atmosphériques et les caractéristiques locales du relief.\n\nUne direction normalement favorable ne signifie donc pas, à elle seule, que les conditions sont bonnes pour voler.",
-            "de": "Die günstigsten Richtungen sind in der Regel West (W) und Nordwest (NW).\n\nAn den Bicas genügt es allerdings nicht, auf Richtung und Geschwindigkeit der Wettervorhersage zu schauen. Die Flugqualität kann sich mit Stärke, Böen, Seitenkomponente, atmosphärischen Bedingungen und örtlichen Geländeeigenschaften ändern.\n\nEine normalerweise günstige Richtung bedeutet daher für sich allein noch nicht, dass die Bedingungen zum Fliegen gut sind."
+            "pt": "As principais direções utilizadas para voar de Parakite na Lagoa de Albufeira são Noroeste (NW), Oeste (W) e Sudoeste (SW).\n\nNo entanto, a direção indicada numa previsão meteorológica não é suficiente para determinar se existem boas condições para voar.\n\nA intensidade, rajadas, componente lateral, qualidade do fluxo e forma como o vento interage com as dunas e o relevo costeiro devem ser avaliadas em conjunto.",
+            "en": "The main directions used for flying Parakite at Lagoa de Albufeira are North-West (NW), West (W) and South-West (SW).\n\nHowever, the direction given in a weather forecast is not enough to determine whether conditions are good for flying.\n\nStrength, gusts, cross component, the quality of the flow and the way the wind interacts with the dunes and the coastal terrain all have to be assessed together.",
+            "es": "Las principales direcciones utilizadas para volar en Parakite en la Lagoa de Albufeira son Noroeste (NW), Oeste (W) y Suroeste (SW).\n\nSin embargo, la dirección indicada en una previsión meteorológica no basta para determinar si hay buenas condiciones para volar.\n\nLa intensidad, las rachas, la componente lateral, la calidad del flujo y la forma en que el viento interactúa con las dunas y el relieve costero deben evaluarse en conjunto.",
+            "fr": "Les principales directions utilisées pour voler en Parakite à la Lagoa de Albufeira sont le Nord-Ouest (NW), l’Ouest (W) et le Sud-Ouest (SW).\n\nLa direction indiquée par une prévision météo ne suffit toutefois pas à déterminer si les conditions sont bonnes pour voler.\n\nLa force, les rafales, la composante latérale, la qualité du flux et la façon dont le vent interagit avec les dunes et le relief côtier doivent être évaluées ensemble.",
+            "de": "Die wichtigsten Richtungen, die an der Lagoa de Albufeira für Parakite genutzt werden, sind Nordwest (NW), West (W) und Südwest (SW).\n\nDie Richtung aus einer Wettervorhersage genügt jedoch nicht, um zu bestimmen, ob die Bedingungen zum Fliegen gut sind.\n\nStärke, Böen, Seitenkomponente, die Qualität der Strömung und die Art, wie der Wind mit den Dünen und dem Küstenrelief zusammenwirkt, müssen zusammen beurteilt werden."
           }
         },
         {
           "titulo": {
-            "pt": "Voar de Parakite nas Bicas",
-            "en": "Flying a Parakite at Bicas",
-            "es": "Volar en Parakite en las Bicas",
-            "fr": "Voler en Parakite aux Bicas",
-            "de": "Mit dem Parakite an den Bicas fliegen"
+            "pt": "Qual a intensidade de vento necessária?",
+            "en": "How much wind is needed?",
+            "es": "¿Qué intensidad de viento se necesita?",
+            "fr": "Quelle force de vent faut-il ?",
+            "de": "Wie viel Wind ist nötig?"
           },
           "texto": {
-            "pt": "O Parakite permite aproveitar uma gama relativamente ampla de condições, mas não existe um valor de vento que possa ser aplicado a todos os pilotos e a todas as asas.\n\nComo referência baseada na experiência local, cerca de 24 km/h podem já permitir soaring com Parakite em determinadas configurações. A intensidade necessária depende, entre outros fatores, do tamanho e características da asa, peso total em voo e experiência do piloto.\n\nPilotos experientes, utilizando equipamento adequado, podem também voar com condições consideravelmente mais fortes. Já foram utilizados Parakites nas Bicas com vento na ordem dos 45 km/h, mas este valor não deve ser interpretado como um limite máximo ou uma recomendação de segurança.\n\nUma asa, tamanho ou carga alar diferente pode alterar completamente aquilo que é adequado para determinado piloto.",
-            "en": "A Parakite makes it possible to use a relatively wide range of conditions, but there is no wind figure that can be applied to every pilot and every wing.\n\nAs a reference based on local experience, around 24 km/h may already allow soaring with a Parakite in certain configurations. The strength required depends, among other factors, on the size and characteristics of the wing, all-up weight and the pilot’s experience.\n\nExperienced pilots using suitable equipment can also fly in considerably stronger conditions. Parakites have been used at Bicas in winds of the order of 45 km/h, but this figure must not be read as a maximum limit or as a safety recommendation.\n\nA different wing, size or wing loading can completely change what is appropriate for a given pilot.",
-            "es": "El Parakite permite aprovechar una gama relativamente amplia de condiciones, pero no existe un valor de viento que pueda aplicarse a todos los pilotos y a todas las alas.\n\nComo referencia basada en la experiencia local, unos 24 km/h pueden ya permitir soaring con Parakite en determinadas configuraciones. La intensidad necesaria depende, entre otros factores, del tamaño y las características del ala, el peso total en vuelo y la experiencia del piloto.\n\nPilotos experimentados, utilizando equipo adecuado, pueden también volar con condiciones considerablemente más fuertes. Ya se han utilizado Parakites en las Bicas con viento del orden de los 45 km/h, pero este valor no debe interpretarse como un límite máximo ni como una recomendación de seguridad.\n\nUn ala, un tamaño o una carga alar diferentes pueden cambiar por completo lo que es adecuado para un piloto determinado.",
-            "fr": "Le Parakite permet d’exploiter une gamme de conditions relativement large, mais il n’existe pas de valeur de vent applicable à tous les pilotes et à toutes les ailes.\n\nÀ titre de référence fondée sur l’expérience locale, environ 24 km/h peuvent déjà permettre le soaring en Parakite dans certaines configurations. La force nécessaire dépend, entre autres facteurs, de la taille et des caractéristiques de l’aile, du poids total en vol et de l’expérience du pilote.\n\nDes pilotes expérimentés, avec un matériel adapté, peuvent aussi voler dans des conditions nettement plus fortes. Des Parakites ont déjà été utilisés aux Bicas par un vent de l’ordre de 45 km/h, mais cette valeur ne doit pas être interprétée comme une limite maximale ni comme une recommandation de sécurité.\n\nUne aile, une taille ou une charge alaire différentes peuvent changer complètement ce qui convient à un pilote donné.",
-            "de": "Der Parakite erlaubt es, eine verhältnismäßig breite Bandbreite an Bedingungen zu nutzen, aber es gibt keinen Windwert, der auf alle Piloten und alle Schirme angewendet werden kann.\n\nAls Anhaltspunkt aus der örtlichen Erfahrung: etwa 24 km/h können in bestimmten Konfigurationen bereits Soaring mit dem Parakite ermöglichen. Die nötige Stärke hängt unter anderem von Größe und Eigenschaften des Schirms, vom Abfluggewicht und von der Erfahrung des Piloten ab.\n\nErfahrene Piloten können mit geeignetem Material auch bei deutlich stärkeren Bedingungen fliegen. An den Bicas wurden Parakites bereits bei Wind in der Größenordnung von 45 km/h eingesetzt, dieser Wert darf jedoch nicht als Höchstgrenze oder als Sicherheitsempfehlung verstanden werden.\n\nEin anderer Schirm, eine andere Größe oder eine andere Flächenbelastung können völlig verändern, was für einen bestimmten Piloten angemessen ist."
+            "pt": "Não indicamos um valor mínimo ou máximo de vento porque não existe um valor que possa ser aplicado de forma segura a todos os pilotos e equipamentos.\n\nA intensidade necessária depende de vários fatores, incluindo:\n\n- modelo e características do Parakite\n- tamanho da asa\n- peso total em voo\n- experiência do piloto\n- direção do vento\n- rajadas e qualidade do fluxo\n- condições existentes no local\n\nDuas pessoas no mesmo spot e com a mesma velocidade de vento podem necessitar de tamanhos de asa diferentes.\n\nAs diferenças entre modelos, tamanhos e cargas alares podem alterar significativamente as condições adequadas para cada piloto.",
+            "en": "We do not give a minimum or maximum wind figure, because there is no figure that can be safely applied to every pilot and every piece of equipment.\n\nThe strength required depends on several factors, including:\n\n- the model and characteristics of the Parakite\n- wing size\n- all-up weight\n- the pilot’s experience\n- wind direction\n- gusts and the quality of the flow\n- the conditions present on site\n\nTwo people at the same site with the same wind speed may need different wing sizes.\n\nThe differences between models, sizes and wing loadings can significantly change what conditions are appropriate for each pilot.",
+            "es": "No indicamos un valor mínimo ni máximo de viento porque no existe un valor que pueda aplicarse de forma segura a todos los pilotos y equipos.\n\nLa intensidad necesaria depende de varios factores, entre ellos:\n\n- modelo y características del Parakite\n- tamaño del ala\n- peso total en vuelo\n- experiencia del piloto\n- dirección del viento\n- rachas y calidad del flujo\n- condiciones existentes en el lugar\n\nDos personas en el mismo spot y con la misma velocidad de viento pueden necesitar tamaños de ala diferentes.\n\nLas diferencias entre modelos, tamaños y cargas alares pueden cambiar significativamente las condiciones adecuadas para cada piloto.",
+            "fr": "Nous n’indiquons pas de valeur minimale ou maximale de vent, parce qu’il n’existe pas de valeur applicable en toute sécurité à tous les pilotes et à tous les matériels.\n\nLa force nécessaire dépend de plusieurs facteurs, dont :\n\n- le modèle et les caractéristiques du Parakite\n- la taille de l’aile\n- le poids total en vol\n- l’expérience du pilote\n- la direction du vent\n- les rafales et la qualité du flux\n- les conditions présentes sur le site\n\nDeux personnes sur le même site et avec la même vitesse de vent peuvent avoir besoin de tailles d’aile différentes.\n\nLes différences entre modèles, tailles et charges alaires peuvent modifier sensiblement les conditions qui conviennent à chaque pilote.",
+            "de": "Wir nennen keinen Mindest- oder Höchstwert für den Wind, weil es keinen Wert gibt, der sich sicher auf alle Piloten und alle Ausrüstungen anwenden lässt.\n\nDie nötige Stärke hängt von mehreren Faktoren ab, unter anderem:\n\n- Modell und Eigenschaften des Parakite\n- Schirmgröße\n- Abfluggewicht\n- Erfahrung des Piloten\n- Windrichtung\n- Böen und Qualität der Strömung\n- die Bedingungen vor Ort\n\nZwei Personen am selben Spot und bei derselben Windgeschwindigkeit können unterschiedliche Schirmgrößen brauchen.\n\nDie Unterschiede zwischen Modellen, Größen und Flächenbelastungen können deutlich verändern, welche Bedingungen für welchen Piloten angemessen sind."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Descolagem",
+            "en": "Take-off",
+            "es": "Despegue",
+            "fr": "Décollage",
+            "de": "Start"
+          },
+          "texto": {
+            "pt": "Sempre que as condições o permitem, a descolagem é feita a partir da praia, evitando caminhar sobre as dunas.\n\nA descolagem fica a aproximadamente 10 minutos a pé do estacionamento.\n\nAlém de facilitar o acesso, utilizar a praia para chegar à zona de descolagem ajuda a reduzir o impacto sobre o sistema dunar e a sua vegetação.",
+            "en": "Whenever conditions allow, take-off is done from the beach, avoiding walking over the dunes.\n\nThe take-off is about 10 minutes on foot from the car park.\n\nAs well as making access easier, using the beach to reach the take-off area helps reduce the impact on the dune system and its vegetation.",
+            "es": "Siempre que las condiciones lo permiten, el despegue se hace desde la playa, evitando caminar sobre las dunas.\n\nEl despegue está a unos 10 minutos a pie del aparcamiento.\n\nAdemás de facilitar el acceso, utilizar la playa para llegar a la zona de despegue ayuda a reducir el impacto sobre el sistema dunar y su vegetación.",
+            "fr": "Chaque fois que les conditions le permettent, le décollage se fait depuis la plage, en évitant de marcher sur les dunes.\n\nLe décollage se trouve à environ 10 minutes à pied du parking.\n\nOutre la facilité d’accès, passer par la plage pour rejoindre la zone de décollage aide à réduire l’impact sur le système dunaire et sa végétation.",
+            "de": "Wann immer es die Bedingungen erlauben, wird vom Strand aus gestartet, ohne über die Dünen zu laufen.\n\nDer Startplatz liegt etwa 10 Gehminuten vom Parkplatz entfernt.\n\nDer Weg über den Strand erleichtert nicht nur den Zugang, sondern hilft auch, die Belastung des Dünensystems und seiner Vegetation zu verringern."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Voar de Parakite na Lagoa de Albufeira",
+            "en": "Flying Parakite at Lagoa de Albufeira",
+            "es": "Volar en Parakite en la Lagoa de Albufeira",
+            "fr": "Voler en Parakite à la Lagoa de Albufeira",
+            "de": "Mit dem Parakite an der Lagoa de Albufeira fliegen"
+          },
+          "texto": {
+            "pt": "A Lagoa de Albufeira oferece um ambiente de voo diferente de um spot de falésia como a [Praia das Bicas](/parakite-portugal/praia-das-bicas/).\n\nAs dunas e o relevo costeiro influenciam a forma como o vento se comporta e permitem aproveitar a sustentação dinâmica criada pelo fluxo ao encontrar o terreno.\n\nQuando a direção e as restantes condições são adequadas, é possível realizar soaring costeiro e voo de proximidade ao longo das dunas.\n\nA presença de pessoas na praia e junto às dunas deve ser considerada durante o voo, mantendo distância e margem adequadas.",
+            "en": "Lagoa de Albufeira offers a flying environment different from a cliff site such as [Praia das Bicas](/parakite-portugal/praia-das-bicas/).\n\nThe dunes and the coastal terrain shape how the wind behaves and make it possible to use the dynamic lift created when the flow meets the ground.\n\nWhen the direction and the remaining conditions are suitable, coastal soaring and proximity flying along the dunes are possible.\n\nThe presence of people on the beach and near the dunes must be taken into account during the flight, keeping adequate distance and margin.",
+            "es": "La Lagoa de Albufeira ofrece un entorno de vuelo diferente al de un spot de acantilado como la [Praia das Bicas](/parakite-portugal/praia-das-bicas/).\n\nLas dunas y el relieve costero influyen en cómo se comporta el viento y permiten aprovechar la sustentación dinámica creada por el flujo al encontrar el terreno.\n\nCuando la dirección y las demás condiciones son adecuadas, es posible hacer soaring costero y vuelo de proximidad a lo largo de las dunas.\n\nLa presencia de personas en la playa y junto a las dunas debe considerarse durante el vuelo, manteniendo distancia y margen adecuados.",
+            "fr": "La Lagoa de Albufeira offre un environnement de vol différent d’un site de falaise comme la [Praia das Bicas](/parakite-portugal/praia-das-bicas/).\n\nLes dunes et le relief côtier influencent le comportement du vent et permettent d’exploiter la portance dynamique créée lorsque le flux rencontre le terrain.\n\nLorsque la direction et les autres conditions sont adaptées, le soaring de côte et le vol de proximité le long des dunes sont possibles.\n\nLa présence de personnes sur la plage et près des dunes doit être prise en compte pendant le vol, en gardant une distance et une marge adaptées.",
+            "de": "Die Lagoa de Albufeira bietet eine andere Flugumgebung als ein Steilküstenspot wie die [Praia das Bicas](/parakite-portugal/praia-das-bicas/).\n\nDünen und Küstenrelief prägen das Verhalten des Windes und ermöglichen es, den dynamischen Aufwind zu nutzen, der entsteht, wenn die Strömung auf das Gelände trifft.\n\nWenn die Richtung und die übrigen Bedingungen passen, sind Küstensoaring und Proximityflug entlang der Dünen möglich.\n\nDie Anwesenheit von Menschen am Strand und an den Dünen ist während des Flugs zu berücksichtigen, mit ausreichendem Abstand und Sicherheitsmarge."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Aterragem",
+            "en": "Landing",
+            "es": "Aterrizaje",
+            "fr": "Atterrissage",
+            "de": "Landung"
+          },
+          "texto": {
+            "pt": "A praia é utilizada para aterragem.\n\nO espaço disponível pode variar com a maré, estado do mar e presença de outras pessoas.",
+            "en": "The beach is used for landing.\n\nThe space available can vary with the tide, the state of the sea and the presence of other people.",
+            "es": "La playa se utiliza para aterrizar.\n\nEl espacio disponible puede variar con la marea, el estado del mar y la presencia de otras personas.",
+            "fr": "La plage sert à l’atterrissage.\n\nL’espace disponible peut varier selon la marée, l’état de la mer et la présence d’autres personnes.",
+            "de": "Gelandet wird am Strand.\n\nDer verfügbare Platz kann sich mit den Gezeiten, dem Seegang und der Anwesenheit anderer Menschen ändern."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "A lagoa, a praia e as dunas",
+            "en": "The lagoon, the beach and the dunes",
+            "es": "La laguna, la playa y las dunas",
+            "fr": "La lagune, la plage et les dunes",
+            "de": "Die Lagune, der Strand und die Dünen"
+          },
+          "texto": {
+            "pt": "Uma das características particulares deste spot é a proximidade entre a Lagoa de Albufeira, o cordão dunar, a praia e o Oceano Atlântico.\n\nA lagoa encontra-se separada do oceano por um cordão dunar e é periodicamente aberta ao mar. Quando existe ligação ao oceano, podem formar-se correntes fortes no canal.\n\nEsta condição deve ser considerada na escolha da zona de aterragem, especialmente quando se voa próximo da abertura da lagoa.\n\nDo lado marítimo existe um extenso areal exposto à ondulação atlântica. No interior, as águas da lagoa são geralmente mais tranquilas e utilizadas para diferentes atividades náuticas.\n\nA Lagoa de Albufeira é também conhecida pela prática de kitesurf, windsurf, vela, canoagem, surf e outras atividades ligadas ao mar e ao vento.",
+            "en": "One of the particular features of this site is how close the Lagoa de Albufeira, the dune cordon, the beach and the Atlantic Ocean are to one another.\n\nThe lagoon is separated from the ocean by a dune cordon and is periodically opened to the sea. When the connection to the ocean is open, strong currents can form in the channel.\n\nThis has to be taken into account when choosing the landing area, particularly when flying close to the lagoon’s opening.\n\nOn the ocean side there is a long stretch of sand exposed to the Atlantic swell. Inland, the waters of the lagoon are generally calmer and are used for various water activities.\n\nLagoa de Albufeira is also known for kitesurfing, windsurfing, sailing, canoeing, surfing and other activities linked to the sea and the wind.",
+            "es": "Una de las características particulares de este spot es la proximidad entre la Lagoa de Albufeira, el cordón dunar, la playa y el océano Atlántico.\n\nLa laguna está separada del océano por un cordón dunar y se abre periódicamente al mar. Cuando existe conexión con el océano, pueden formarse corrientes fuertes en el canal.\n\nEsta condición debe considerarse al elegir la zona de aterrizaje, especialmente cuando se vuela cerca de la abertura de la laguna.\n\nDel lado marítimo hay un extenso arenal expuesto al oleaje atlántico. En el interior, las aguas de la laguna son generalmente más tranquilas y se utilizan para distintas actividades náuticas.\n\nLa Lagoa de Albufeira es también conocida por la práctica del kitesurf, windsurf, vela, piragüismo, surf y otras actividades ligadas al mar y al viento.",
+            "fr": "L’une des particularités de ce site est la proximité entre la Lagoa de Albufeira, le cordon dunaire, la plage et l’océan Atlantique.\n\nLa lagune est séparée de l’océan par un cordon dunaire et elle est périodiquement ouverte à la mer. Lorsque la liaison avec l’océan est ouverte, de forts courants peuvent se former dans le chenal.\n\nCette condition doit être prise en compte dans le choix de la zone d’atterrissage, en particulier lorsqu’on vole près de l’ouverture de la lagune.\n\nCôté océan s’étend une longue plage exposée à la houle atlantique. À l’intérieur, les eaux de la lagune sont généralement plus calmes et servent à différentes activités nautiques.\n\nLa Lagoa de Albufeira est aussi connue pour la pratique du kitesurf, de la planche à voile, de la voile, du canoë, du surf et d’autres activités liées à la mer et au vent.",
+            "de": "Eine der Besonderheiten dieses Spots ist die Nähe zwischen der Lagoa de Albufeira, dem Dünengürtel, dem Strand und dem Atlantik.\n\nDie Lagune ist durch einen Dünengürtel vom Meer getrennt und wird regelmäßig zum Meer hin geöffnet. Wenn die Verbindung offen ist, können im Kanal starke Strömungen entstehen.\n\nDas ist bei der Wahl des Landebereichs zu berücksichtigen, besonders wenn man nahe der Öffnung der Lagune fliegt.\n\nZur Meerseite hin liegt ein langer Sandstrand, der dem Atlantikschwell ausgesetzt ist. Landeinwärts ist das Wasser der Lagune in der Regel ruhiger und wird für verschiedene Wassersportarten genutzt.\n\nDie Lagoa de Albufeira ist außerdem für Kitesurfen, Windsurfen, Segeln, Kanufahren, Surfen und weitere Aktivitäten rund um Meer und Wind bekannt."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Um espaço partilhado",
+            "en": "A shared space",
+            "es": "Un espacio compartido",
+            "fr": "Un espace partagé",
+            "de": "Ein geteilter Raum"
+          },
+          "texto": {
+            "pt": "A Lagoa de Albufeira é uma zona utilizada por banhistas, caminhantes, surfistas, praticantes de kitesurf, windsurf e outros utilizadores.\n\nA convivência responsável entre pilotos de Parakite e restantes utilizadores do local é essencial, particularmente nas zonas utilizadas para preparação, voo e aterragem.\n\nNos períodos de maior utilização da praia, a presença de pessoas deve ser especialmente considerada.",
+            "en": "Lagoa de Albufeira is an area used by swimmers, walkers, surfers, kitesurfers, windsurfers and others.\n\nResponsible coexistence between Parakite pilots and the other people using the site is essential, particularly in the areas used for preparing, flying and landing.\n\nAt the busiest times on the beach, the presence of people must be given particular attention.",
+            "es": "La Lagoa de Albufeira es una zona utilizada por bañistas, caminantes, surfistas, practicantes de kitesurf, windsurf y otros usuarios.\n\nLa convivencia responsable entre pilotos de Parakite y el resto de usuarios del lugar es esencial, sobre todo en las zonas utilizadas para preparación, vuelo y aterrizaje.\n\nEn los periodos de mayor uso de la playa, la presencia de personas debe considerarse de forma especial.",
+            "fr": "La Lagoa de Albufeira est une zone fréquentée par des baigneurs, des promeneurs, des surfeurs, des kitesurfeurs, des véliplanchistes et d’autres usagers.\n\nUne cohabitation responsable entre les pilotes de Parakite et les autres usagers du site est essentielle, en particulier dans les zones utilisées pour la préparation, le vol et l’atterrissage.\n\nAux périodes de forte fréquentation de la plage, la présence de personnes doit faire l’objet d’une attention particulière.",
+            "de": "Die Lagoa de Albufeira wird von Badenden, Spaziergängern, Surfern, Kitesurfern, Windsurfern und anderen genutzt.\n\nEin verantwortungsvolles Miteinander zwischen Parakite-Piloten und den übrigen Nutzern des Ortes ist entscheidend, besonders in den Bereichen für Vorbereitung, Flug und Landung.\n\nIn Zeiten starker Strandnutzung ist die Anwesenheit von Menschen besonders zu berücksichtigen."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Respeito pelo spot",
+            "en": "Respect for the site",
+            "es": "Respeto por el spot",
+            "fr": "Respect du site",
+            "de": "Respekt vor dem Spot"
+          },
+          "texto": {
+            "pt": "As dunas da Lagoa de Albufeira fazem parte de um ambiente costeiro sensível que deve ser preservado.\n\nA prática de Parakite deve ser feita procurando minimizar o impacto sobre o local, respeitar os acessos existentes e evitar pisar ou danificar a vegetação dunar.\n\nRespeitar o spot ajuda a mantê-lo aberto para todos.",
+            "en": "The dunes at Lagoa de Albufeira are part of a sensitive coastal environment that should be preserved.\n\nParakite should be practised so as to minimise the impact on the site, to respect the existing accesses, and to avoid treading on or damaging the dune vegetation.\n\nRespecting the site helps keep it open to everyone.",
+            "es": "Las dunas de la Lagoa de Albufeira forman parte de un entorno costero sensible que debe preservarse.\n\nLa práctica del Parakite debe hacerse procurando minimizar el impacto sobre el lugar, respetar los accesos existentes y evitar pisar o dañar la vegetación dunar.\n\nRespetar el spot ayuda a mantenerlo abierto para todos.",
+            "fr": "Les dunes de la Lagoa de Albufeira font partie d’un environnement côtier sensible qui doit être préservé.\n\nLa pratique du Parakite doit se faire en cherchant à minimiser l’impact sur le site, à respecter les accès existants et à éviter de piétiner ou d’endommager la végétation dunaire.\n\nRespecter le site aide à le garder ouvert à tous.",
+            "de": "Die Dünen der Lagoa de Albufeira gehören zu einer empfindlichen Küstenlandschaft, die erhalten werden soll.\n\nParakite sollte so ausgeübt werden, dass die Auswirkungen auf den Ort möglichst gering bleiben, die vorhandenen Zugänge respektiert werden und die Dünenvegetation nicht betreten oder beschädigt wird.\n\nDen Spot zu respektieren hilft, ihn für alle offen zu halten."
+          }
+        }
+      ],
+      "aviso": {
+        "pt": "As informações desta página não substituem a avaliação das condições no local.\n\nA decisão de voar deve ter em conta a experiência do piloto, o equipamento utilizado e as condições reais do spot.\n\nSe não conheces o local, procura informação junto de pilotos locais antes de voar.",
+        "en": "The information on this page does not replace assessing the conditions on site.\n\nThe decision to fly must take into account the pilot’s experience, the equipment used and the actual conditions at the site.\n\nIf you do not know the site, seek information from local pilots before flying.",
+        "es": "La información de esta página no sustituye la evaluación de las condiciones en el lugar.\n\nLa decisión de volar debe tener en cuenta la experiencia del piloto, el equipo utilizado y las condiciones reales del spot.\n\nSi no conoces el lugar, busca información entre los pilotos locales antes de volar.",
+        "fr": "Les informations de cette page ne remplacent pas l’évaluation des conditions sur place.\n\nLa décision de voler doit tenir compte de l’expérience du pilote, du matériel utilisé et des conditions réelles du site.\n\nSi tu ne connais pas le site, renseigne-toi auprès des pilotes locaux avant de voler.",
+        "de": "Die Informationen auf dieser Seite ersetzen nicht die Beurteilung der Bedingungen vor Ort.\n\nDie Entscheidung zu fliegen muss die Erfahrung des Piloten, die verwendete Ausrüstung und die tatsächlichen Bedingungen am Spot berücksichtigen.\n\nWenn du den Ort nicht kennst, hol dir vor dem Fliegen Informationen bei örtlichen Piloten."
+      },
+      "album": [
+        {
+          "imagem": "/images/spots/lagoa-de-albufeira.webp",
+          "alt": {
+            "pt": "Vista aérea da Lagoa de Albufeira: a lagoa com bancos de areia à esquerda, o pinhal, a praia extensa e o mar aberto à direita.",
+            "en": "Aerial view of Lagoa de Albufeira: the lagoon with sandbanks on the left, the pine woods, the long beach and the open sea on the right.",
+            "es": "Vista aérea de la Lagoa de Albufeira: la laguna con bancos de arena a la izquierda, el pinar, la playa extensa y el mar abierto a la derecha.",
+            "fr": "Vue aérienne de la Lagoa de Albufeira : la lagune avec ses bancs de sable à gauche, la pinède, la longue plage et la mer ouverte à droite.",
+            "de": "Luftaufnahme der Lagoa de Albufeira: links die Lagune mit Sandbänken, der Pinienwald, der lange Strand und rechts das offene Meer."
+          },
+          "legenda": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "meco",
+      "nome": "Meco",
+      "publicar": false,
+      "descricao": {
+        "pt": "",
+        "en": "",
+        "es": "",
+        "fr": "",
+        "de": ""
+      },
+      "album": []
+    },
+    {
+      "id": "alfarim",
+      "nome": "Alfarim",
+      "publicar": false,
+      "descricao": {
+        "pt": "",
+        "en": "",
+        "es": "",
+        "fr": "",
+        "de": ""
+      },
+      "album": []
+    },
+    {
+      "id": "peniche",
+      "nome": "Peniche",
+      "publicar": false,
+      "descricao": {
+        "pt": "",
+        "en": "",
+        "es": "",
+        "fr": "",
+        "de": ""
+      },
+      "album": []
+    },
+    {
+      "id": "praia-da-gralha",
+      "nome": "Praia da Gralha",
+      "publicar": false,
+      "descricao": {
+        "pt": "",
+        "en": "",
+        "es": "",
+        "fr": "",
+        "de": ""
+      },
+      "album": []
+    },
+    {
+      "id": "praia-das-bicas",
+      "nome": "Praia das Bicas",
+      "publicar": true,
+      "titulo": {
+        "pt": "Praia das Bicas — Spot de Parakite e parapente",
+        "en": "Praia das Bicas — Parakite and paragliding site",
+        "es": "Praia das Bicas — Spot de Parakite y parapente",
+        "fr": "Praia das Bicas — Site de Parakite et parapente",
+        "de": "Praia das Bicas — Parakite- und Gleitschirmspot"
+      },
+      "descricao": {
+        "pt": "A Praia das Bicas, no concelho de Sesimbra, é um conhecido spot de voo costeiro utilizado para Parakite e parapente. Situada na costa ocidental, numa zona de falésia sobre o Oceano Atlântico, oferece condições para soaring quando a direção, intensidade e qualidade do vento são adequadas.\n\nA cerca de 40 km de Lisboa, normalmente a aproximadamente 45–55 minutos de carro, é um dos spots costeiros de voo relativamente próximos da capital.",
+        "en": "Praia das Bicas, in the municipality of Sesimbra, is a well-known coastal flying site used for Parakite and paragliding. Set on the west coast, on a stretch of cliff above the Atlantic Ocean, it offers soaring conditions when the direction, strength and quality of the wind are suitable.\n\nAbout 40 km from Lisbon, normally around 45–55 minutes by car, it is one of the coastal flying sites relatively close to the capital.",
+        "es": "La Praia das Bicas, en el municipio de Sesimbra, es un conocido spot de vuelo costero utilizado para Parakite y parapente. Situada en la costa occidental, en una zona de acantilado sobre el océano Atlántico, ofrece condiciones para soaring cuando la dirección, la intensidad y la calidad del viento son adecuadas.\n\nA unos 40 km de Lisboa, normalmente a aproximadamente 45–55 minutos en coche, es uno de los spots costeros de vuelo relativamente cercanos a la capital.",
+        "fr": "La Praia das Bicas, dans la commune de Sesimbra, est un site de vol de côte connu, utilisé pour le Parakite et le parapente. Située sur la côte occidentale, dans une zone de falaise au-dessus de l’océan Atlantique, elle offre des conditions de soaring lorsque la direction, la force et la qualité du vent sont adaptées.\n\nÀ environ 40 km de Lisbonne, normalement à quelque 45–55 minutes de voiture, c’est l’un des sites côtiers de vol relativement proches de la capitale.",
+        "de": "Die Praia das Bicas in der Gemeinde Sesimbra ist ein bekannter Küstenflugspot, der für Parakite und Gleitschirm genutzt wird. Sie liegt an der Westküste, in einem Steilküstenabschnitt über dem Atlantik, und bietet Soaring-Bedingungen, wenn Richtung, Stärke und Qualität des Windes passen.\n\nRund 40 km von Lissabon entfernt, normalerweise etwa 45–55 Autominuten, ist sie einer der Küstenspots, die verhältnismäßig nah an der Hauptstadt liegen."
+      },
+      "ficha": {
+        "concelho": "Sesimbra",
+        "linhas": [
+          {
+            "rotulo": {
+              "pt": "Local",
+              "en": "Location",
+              "es": "Lugar",
+              "fr": "Lieu",
+              "de": "Ort"
+            },
+            "valor": {
+              "pt": "Praia das Bicas, Sesimbra, Portugal",
+              "en": "Praia das Bicas, Sesimbra, Portugal",
+              "es": "Praia das Bicas, Sesimbra, Portugal",
+              "fr": "Praia das Bicas, Sesimbra, Portugal",
+              "de": "Praia das Bicas, Sesimbra, Portugal"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Distância de Lisboa",
+              "en": "Distance from Lisbon",
+              "es": "Distancia de Lisboa",
+              "fr": "Distance de Lisbonne",
+              "de": "Entfernung von Lissabon"
+            },
+            "valor": {
+              "pt": "cerca de 40 km",
+              "en": "about 40 km",
+              "es": "unos 40 km",
+              "fr": "environ 40 km",
+              "de": "rund 40 km"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Tempo de viagem",
+              "en": "Travel time",
+              "es": "Tiempo de viaje",
+              "fr": "Temps de trajet",
+              "de": "Fahrzeit"
+            },
+            "valor": {
+              "pt": "aproximadamente 45–55 minutos de carro",
+              "en": "approximately 45–55 minutes by car",
+              "es": "aproximadamente 45–55 minutos en coche",
+              "fr": "environ 45–55 minutes de voiture",
+              "de": "etwa 45–55 Autominuten"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Modalidades",
+              "en": "Disciplines",
+              "es": "Modalidades",
+              "fr": "Pratiques",
+              "de": "Disziplinen"
+            },
+            "valor": {
+              "pt": "Parakite e parapente",
+              "en": "Parakite and paragliding",
+              "es": "Parakite y parapente",
+              "fr": "Parakite et parapente",
+              "de": "Parakite und Gleitschirm"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Tipo de voo",
+              "en": "Type of flying",
+              "es": "Tipo de vuelo",
+              "fr": "Type de vol",
+              "de": "Flugart"
+            },
+            "valor": {
+              "pt": "soaring costeiro / falésia",
+              "en": "coastal soaring / cliff",
+              "es": "soaring costero / acantilado",
+              "fr": "soaring de côte / falaise",
+              "de": "Küstensoaring / Steilküste"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Direções utilizadas",
+              "en": "Directions used",
+              "es": "Direcciones utilizadas",
+              "fr": "Directions utilisées",
+              "de": "Genutzte Richtungen"
+            },
+            "valor": {
+              "pt": "W / NW",
+              "en": "W / NW",
+              "es": "W / NW",
+              "fr": "W / NW",
+              "de": "W / NW"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Descolagem",
+              "en": "Take-off",
+              "es": "Despegue",
+              "fr": "Décollage",
+              "de": "Start"
+            },
+            "valor": {
+              "pt": "topo da arriba, aproximadamente 5 minutos a pé do estacionamento",
+              "en": "top of the cliff, about 5 minutes’ walk from the car park",
+              "es": "parte alta del acantilado, a unos 5 minutos a pie del aparcamiento",
+              "fr": "sommet de la falaise, à environ 5 minutes à pied du parking",
+              "de": "oben an der Steilküste, etwa 5 Gehminuten vom Parkplatz"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Possibilidade de voo",
+              "en": "Possible flight",
+              "es": "Posibilidad de vuelo",
+              "fr": "Vol possible",
+              "de": "Mögliche Flugstrecke"
+            },
+            "valor": {
+              "pt": "com condições adequadas, é possível voar de Parakite e parapente das Bicas para norte até à Praia do Meco",
+              "en": "in suitable conditions it is possible to fly Parakite and paragliders north from Bicas to Praia do Meco",
+              "es": "con condiciones adecuadas es posible volar en Parakite y parapente desde las Bicas hacia el norte hasta la Praia do Meco",
+              "fr": "dans des conditions adaptées, il est possible de voler en Parakite et parapente depuis les Bicas vers le nord jusqu’à la Praia do Meco",
+              "de": "bei passenden Bedingungen ist ein Flug mit Parakite und Gleitschirm von den Bicas nach Norden bis zur Praia do Meco möglich"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Altitude da descolagem",
+              "en": "Take-off altitude",
+              "es": "Altitud del despegue",
+              "fr": "Altitude du décollage",
+              "de": "Starthöhe"
+            },
+            "valor": {
+              "pt": "aproximadamente 30–40 m",
+              "en": "approximately 30–40 m",
+              "es": "aproximadamente 30–40 m",
+              "fr": "environ 30–40 m",
+              "de": "etwa 30–40 m"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Ambiente",
+              "en": "Setting",
+              "es": "Entorno",
+              "fr": "Environnement",
+              "de": "Umgebung"
+            },
+            "valor": {
+              "pt": "falésia, praia e Oceano Atlântico",
+              "en": "cliff, beach and the Atlantic Ocean",
+              "es": "acantilado, playa y océano Atlántico",
+              "fr": "falaise, plage et océan Atlantique",
+              "de": "Steilküste, Strand und Atlantik"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Outras atividades",
+              "en": "Other activities",
+              "es": "Otras actividades",
+              "fr": "Autres activités",
+              "de": "Weitere Aktivitäten"
+            },
+            "valor": {
+              "pt": "surf, bodyboard e atividades de praia",
+              "en": "surfing, bodyboarding and beach activities",
+              "es": "surf, bodyboard y actividades de playa",
+              "fr": "surf, bodyboard et activités de plage",
+              "de": "Surfen, Bodyboarden und Strandaktivitäten"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Acesso à praia",
+              "en": "Beach access",
+              "es": "Acceso a la playa",
+              "fr": "Accès à la plage",
+              "de": "Zugang zum Strand"
+            },
+            "valor": {
+              "pt": "escadaria a partir da zona superior",
+              "en": "a stairway from the upper area",
+              "es": "escalera desde la zona superior",
+              "fr": "un escalier depuis la partie haute",
+              "de": "eine Treppe vom oberen Bereich"
+            }
+          }
+        ]
+      },
+      "seccoes": [
+        {
+          "titulo": {
+            "pt": "Condições de voo",
+            "en": "Flying conditions",
+            "es": "Condiciones de vuelo",
+            "fr": "Conditions de vol",
+            "de": "Flugbedingungen"
+          },
+          "texto": {
+            "pt": "As principais direções utilizadas para voar de Parakite e parapente na Praia das Bicas são Oeste (W) e Noroeste (NW).\n\nNo entanto, a direção indicada numa previsão meteorológica não é suficiente para determinar se existem boas condições para voar.\n\nA intensidade, rajadas, componente lateral, qualidade do fluxo e forma como o vento interage com a falésia devem ser avaliadas em conjunto.",
+            "en": "The main directions used for flying Parakite and paragliders at Praia das Bicas are West (W) and North-West (NW).\n\nHowever, the direction given in a weather forecast is not enough to determine whether conditions are good for flying.\n\nStrength, gusts, cross component, the quality of the flow and the way the wind interacts with the cliff all have to be assessed together.",
+            "es": "Las principales direcciones utilizadas para volar en Parakite y parapente en la Praia das Bicas son Oeste (W) y Noroeste (NW).\n\nSin embargo, la dirección indicada en una previsión meteorológica no basta para determinar si hay buenas condiciones para volar.\n\nLa intensidad, las rachas, la componente lateral, la calidad del flujo y la forma en que el viento interactúa con el acantilado deben evaluarse en conjunto.",
+            "fr": "Les principales directions utilisées pour voler en Parakite et en parapente à la Praia das Bicas sont l’Ouest (W) et le Nord-Ouest (NW).\n\nLa direction indiquée par une prévision météo ne suffit toutefois pas à déterminer si les conditions sont bonnes pour voler.\n\nLa force, les rafales, la composante latérale, la qualité du flux et la façon dont le vent interagit avec la falaise doivent être évaluées ensemble.",
+            "de": "Die wichtigsten Richtungen, die an der Praia das Bicas für Parakite und Gleitschirm genutzt werden, sind West (W) und Nordwest (NW).\n\nDie Richtung aus einer Wettervorhersage genügt jedoch nicht, um zu bestimmen, ob die Bedingungen zum Fliegen gut sind.\n\nStärke, Böen, Seitenkomponente, die Qualität der Strömung und die Art, wie der Wind mit der Steilküste zusammenwirkt, müssen zusammen beurteilt werden."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Qual a intensidade de vento necessária?",
+            "en": "How much wind is needed?",
+            "es": "¿Qué intensidad de viento se necesita?",
+            "fr": "Quelle force de vent faut-il ?",
+            "de": "Wie viel Wind ist nötig?"
+          },
+          "texto": {
+            "pt": "Não indicamos um valor mínimo ou máximo de vento porque não existe um valor que possa ser aplicado de forma segura a todos os pilotos e equipamentos.\n\nA intensidade necessária depende de vários fatores, incluindo:\n\n- modalidade — Parakite ou parapente\n- modelo e características da asa\n- tamanho da asa\n- peso total em voo\n- experiência do piloto\n- direção do vento\n- rajadas e qualidade do fluxo\n- condições existentes no local\n\nDuas pessoas no mesmo spot e com a mesma velocidade de vento podem necessitar de equipamentos diferentes ou avaliar as condições de forma diferente.\n\nAs diferenças entre Parakite e parapente, bem como entre diferentes modelos, tamanhos e cargas alares, podem alterar significativamente as condições adequadas para cada piloto.\n\nA velocidade do vento deve, portanto, ser considerada juntamente com todos estes fatores e nunca utilizada isoladamente como critério para decidir voar.",
+            "en": "We do not give a minimum or maximum wind figure, because there is no figure that can be safely applied to every pilot and every piece of equipment.\n\nThe strength required depends on several factors, including:\n\n- discipline — Parakite or paragliding\n- the model and characteristics of the wing\n- wing size\n- all-up weight\n- the pilot’s experience\n- wind direction\n- gusts and the quality of the flow\n- the conditions present on site\n\nTwo people at the same site with the same wind speed may need different equipment, or may assess the conditions differently.\n\nThe differences between Parakite and paragliding, and between different models, sizes and wing loadings, can significantly change what conditions are appropriate for each pilot.\n\nWind speed must therefore be considered together with all of these factors, and never used on its own as the criterion for deciding to fly.",
+            "es": "No indicamos un valor mínimo ni máximo de viento porque no existe un valor que pueda aplicarse de forma segura a todos los pilotos y equipos.\n\nLa intensidad necesaria depende de varios factores, entre ellos:\n\n- modalidad — Parakite o parapente\n- modelo y características del ala\n- tamaño del ala\n- peso total en vuelo\n- experiencia del piloto\n- dirección del viento\n- rachas y calidad del flujo\n- condiciones existentes en el lugar\n\nDos personas en el mismo spot y con la misma velocidad de viento pueden necesitar equipos diferentes o evaluar las condiciones de forma diferente.\n\nLas diferencias entre Parakite y parapente, así como entre distintos modelos, tamaños y cargas alares, pueden cambiar significativamente las condiciones adecuadas para cada piloto.\n\nLa velocidad del viento debe, por tanto, considerarse junto con todos estos factores y nunca utilizarse aisladamente como criterio para decidir volar.",
+            "fr": "Nous n’indiquons pas de valeur minimale ou maximale de vent, parce qu’il n’existe pas de valeur applicable en toute sécurité à tous les pilotes et à tous les matériels.\n\nLa force nécessaire dépend de plusieurs facteurs, dont :\n\n- la discipline — Parakite ou parapente\n- le modèle et les caractéristiques de l’aile\n- la taille de l’aile\n- le poids total en vol\n- l’expérience du pilote\n- la direction du vent\n- les rafales et la qualité du flux\n- les conditions présentes sur le site\n\nDeux personnes sur le même site et avec la même vitesse de vent peuvent avoir besoin de matériels différents, ou évaluer les conditions différemment.\n\nLes différences entre Parakite et parapente, ainsi qu’entre modèles, tailles et charges alaires, peuvent modifier sensiblement les conditions qui conviennent à chaque pilote.\n\nLa vitesse du vent doit donc être considérée avec tous ces facteurs, et jamais utilisée seule comme critère pour décider de voler.",
+            "de": "Wir nennen keinen Mindest- oder Höchstwert für den Wind, weil es keinen Wert gibt, der sich sicher auf alle Piloten und alle Ausrüstungen anwenden lässt.\n\nDie nötige Stärke hängt von mehreren Faktoren ab, unter anderem:\n\n- Disziplin — Parakite oder Gleitschirm\n- Modell und Eigenschaften des Schirms\n- Schirmgröße\n- Abfluggewicht\n- Erfahrung des Piloten\n- Windrichtung\n- Böen und Qualität der Strömung\n- die Bedingungen vor Ort\n\nZwei Personen am selben Spot und bei derselben Windgeschwindigkeit können unterschiedliche Ausrüstung brauchen oder die Bedingungen unterschiedlich einschätzen.\n\nDie Unterschiede zwischen Parakite und Gleitschirm sowie zwischen Modellen, Größen und Flächenbelastungen können deutlich verändern, welche Bedingungen für welchen Piloten angemessen sind.\n\nDie Windgeschwindigkeit ist deshalb zusammen mit all diesen Faktoren zu betrachten und nie allein als Kriterium für die Entscheidung zu fliegen."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Descolagem",
+            "en": "Take-off",
+            "es": "Despegue",
+            "fr": "Décollage",
+            "de": "Start"
+          },
+          "texto": {
+            "pt": "A Praia das Bicas tem uma zona de descolagem no topo da arriba, a aproximadamente 5 minutos a pé do parque de estacionamento.\n\nEsta proximidade torna o acesso relativamente simples, mas as condições devem ser avaliadas no próprio local de descolagem antes de qualquer decisão de voo.",
+            "en": "Praia das Bicas has a take-off area at the top of the cliff, about 5 minutes’ walk from the car park.\n\nThat proximity makes access relatively straightforward, but the conditions must be assessed at the take-off itself before any decision to fly.",
+            "es": "La Praia das Bicas tiene una zona de despegue en la parte alta del acantilado, a unos 5 minutos a pie del aparcamiento.\n\nEsta proximidad hace que el acceso sea relativamente sencillo, pero las condiciones deben evaluarse en el propio lugar de despegue antes de cualquier decisión de vuelo.",
+            "fr": "La Praia das Bicas dispose d’une aire de décollage au sommet de la falaise, à environ 5 minutes à pied du parking.\n\nCette proximité rend l’accès relativement simple, mais les conditions doivent être évaluées sur le décollage lui-même avant toute décision de vol.",
+            "de": "Die Praia das Bicas hat einen Startplatz oben an der Steilküste, etwa 5 Gehminuten vom Parkplatz.\n\nDiese Nähe macht den Zugang verhältnismäßig einfach, die Bedingungen müssen aber am Startplatz selbst beurteilt werden, bevor über einen Flug entschieden wird."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Voar de Parakite e parapente nas Bicas",
+            "en": "Flying Parakite and paragliders at Bicas",
+            "es": "Volar en Parakite y parapente en las Bicas",
+            "fr": "Voler en Parakite et parapente aux Bicas",
+            "de": "Mit Parakite und Gleitschirm an den Bicas fliegen"
+          },
+          "texto": {
+            "pt": "A falésia das Bicas permite aproveitar a sustentação dinâmica criada pelo vento ao encontrar o relevo costeiro.\n\nQuando a direção e as restantes condições são adequadas, é possível realizar soaring ao longo da costa com Parakite e parapente.\n\nA leitura constante do vento, do relevo e da evolução das condições é especialmente importante neste tipo de voo.\n\nO comportamento da asa e as condições adequadas dependem do tipo de equipamento, tamanho da asa, peso total em voo e experiência do piloto.",
+            "en": "The cliff at Bicas makes it possible to use the dynamic lift created when the wind meets the coastal terrain.\n\nWhen the direction and the remaining conditions are suitable, soaring along the coast is possible with Parakite and paragliders.\n\nConstantly reading the wind, the terrain and the way conditions are developing is particularly important in this kind of flying.\n\nHow the wing behaves, and which conditions are appropriate, depend on the type of equipment, the wing size, the all-up weight and the pilot’s experience.",
+            "es": "El acantilado de las Bicas permite aprovechar la sustentación dinámica creada por el viento al encontrar el relieve costero.\n\nCuando la dirección y las demás condiciones son adecuadas, es posible hacer soaring a lo largo de la costa con Parakite y parapente.\n\nLa lectura constante del viento, del relieve y de la evolución de las condiciones es especialmente importante en este tipo de vuelo.\n\nEl comportamiento del ala y las condiciones adecuadas dependen del tipo de equipo, del tamaño del ala, del peso total en vuelo y de la experiencia del piloto.",
+            "fr": "La falaise des Bicas permet d’exploiter la portance dynamique créée par le vent lorsqu’il rencontre le relief côtier.\n\nLorsque la direction et les autres conditions sont adaptées, le soaring le long de la côte est possible en Parakite et en parapente.\n\nLa lecture constante du vent, du relief et de l’évolution des conditions est particulièrement importante dans ce type de vol.\n\nLe comportement de l’aile et les conditions qui conviennent dépendent du type de matériel, de la taille de l’aile, du poids total en vol et de l’expérience du pilote.",
+            "de": "Die Steilküste der Bicas erlaubt es, den dynamischen Aufwind zu nutzen, der entsteht, wenn der Wind auf das Küstenrelief trifft.\n\nWenn die Richtung und die übrigen Bedingungen passen, ist Soaring entlang der Küste mit Parakite und Gleitschirm möglich.\n\nDas ständige Lesen von Wind, Gelände und der Entwicklung der Bedingungen ist bei dieser Art von Flug besonders wichtig.\n\nWie sich der Schirm verhält und welche Bedingungen angemessen sind, hängt von der Art der Ausrüstung, der Schirmgröße, dem Abfluggewicht und der Erfahrung des Piloten ab."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Voar para norte em direção ao Meco",
+            "en": "Flying north towards Meco",
+            "es": "Volar hacia el norte en dirección al Meco",
+            "fr": "Voler vers le nord en direction du Meco",
+            "de": "Nach Norden Richtung Meco fliegen"
+          },
+          "texto": {
+            "pt": "Quando as condições estão boas, é possível voar de Parakite e parapente desde a Praia das Bicas para norte até à Praia do Meco, prolongando o voo ao longo da costa.\n\nA possibilidade de realizar este percurso depende das condições existentes no momento e da capacidade do piloto e equipamento utilizados.",
+            "en": "When conditions are good, it is possible to fly Parakite and paragliders north from Praia das Bicas to Praia do Meco, extending the flight along the coast.\n\nWhether that route is possible depends on the conditions at the time and on the capability of the pilot and the equipment being used.",
+            "es": "Cuando las condiciones son buenas, es posible volar en Parakite y parapente desde la Praia das Bicas hacia el norte hasta la Praia do Meco, prolongando el vuelo a lo largo de la costa.\n\nLa posibilidad de realizar este recorrido depende de las condiciones existentes en ese momento y de la capacidad del piloto y del equipo utilizados.",
+            "fr": "Lorsque les conditions sont bonnes, il est possible de voler en Parakite et en parapente depuis la Praia das Bicas vers le nord jusqu’à la Praia do Meco, en prolongeant le vol le long de la côte.\n\nLa possibilité de réaliser ce parcours dépend des conditions du moment et des capacités du pilote et du matériel utilisés.",
+            "de": "Wenn die Bedingungen gut sind, ist es möglich, mit Parakite und Gleitschirm von der Praia das Bicas nach Norden bis zur Praia do Meco zu fliegen und den Flug entlang der Küste zu verlängern.\n\nOb diese Strecke möglich ist, hängt von den Bedingungen im jeweiligen Moment und vom Können des Piloten und der eingesetzten Ausrüstung ab."
           }
         },
         {
@@ -143,11 +726,11 @@
             "de": "Ein Spot, der das Lesen der Bedingungen verlangt"
           },
           "texto": {
-            "pt": "Nas Bicas, pequenas alterações nas condições podem mudar significativamente o voo.\n\nA direção do vento, intensidade, rajadas, componente lateral e forma como o fluxo interage com a falésia devem ser avaliadas em conjunto. O comportamento do vento também pode variar ao longo do próprio spot.\n\nPor esse motivo, não é correto estabelecer regras simples como “com Norte acontece isto” ou “com Oeste acontece aquilo”. O resultado depende da combinação de vários fatores e das condições existentes naquele momento.",
-            "en": "At Bicas, small changes in conditions can significantly change the flight.\n\nWind direction, strength, gusts, cross component and the way the flow interacts with the cliff have to be assessed together. Wind behaviour can also vary along the site itself.\n\nFor this reason it is not correct to establish simple rules such as “with North this happens” or “with West that happens”. The outcome depends on the combination of several factors and on the conditions present at that moment.",
-            "es": "En las Bicas, pequeños cambios en las condiciones pueden modificar significativamente el vuelo.\n\nLa dirección del viento, la intensidad, las rachas, la componente lateral y la forma en que el flujo interactúa con el acantilado deben evaluarse en conjunto. El comportamiento del viento también puede variar a lo largo del propio spot.\n\nPor ese motivo, no es correcto establecer reglas simples como «con Norte pasa esto» o «con Oeste pasa aquello». El resultado depende de la combinación de varios factores y de las condiciones existentes en ese momento.",
-            "fr": "Aux Bicas, de petites variations des conditions peuvent modifier sensiblement le vol.\n\nLa direction du vent, la force, les rafales, la composante latérale et la façon dont le flux interagit avec la falaise doivent être évaluées ensemble. Le comportement du vent peut aussi varier le long du site lui-même.\n\nPour cette raison, il n’est pas correct d’établir des règles simples du type « avec du Nord il se passe ceci » ou « avec de l’Ouest il se passe cela ». Le résultat dépend de la combinaison de plusieurs facteurs et des conditions présentes à ce moment-là.",
-            "de": "An den Bicas können kleine Änderungen der Bedingungen den Flug erheblich verändern.\n\nWindrichtung, Stärke, Böen, Seitenkomponente und die Art, wie die Strömung mit der Steilküste zusammenwirkt, müssen zusammen beurteilt werden. Das Windverhalten kann auch entlang des Spots selbst unterschiedlich sein.\n\nAus diesem Grund ist es nicht richtig, einfache Regeln aufzustellen wie „bei Nord passiert dies“ oder „bei West passiert jenes“. Das Ergebnis hängt von der Kombination mehrerer Faktoren und von den Bedingungen im jeweiligen Moment ab."
+            "pt": "Nas Bicas, pequenas alterações nas condições podem mudar significativamente a qualidade do voo.\n\nNão é correto estabelecer regras simples como “com Norte acontece isto” ou “com Oeste acontece aquilo”. O resultado depende da combinação de vários fatores e das condições existentes naquele momento.\n\nO comportamento do vento pode ainda variar ao longo do próprio spot devido à orientação e às características do relevo.",
+            "en": "At Bicas, small changes in conditions can significantly change the quality of the flight.\n\nIt is not correct to establish simple rules such as “with North this happens” or “with West that happens”. The outcome depends on the combination of several factors and on the conditions present at that moment.\n\nWind behaviour can also vary along the site itself, because of the orientation and the characteristics of the terrain.",
+            "es": "En las Bicas, pequeños cambios en las condiciones pueden modificar significativamente la calidad del vuelo.\n\nNo es correcto establecer reglas simples como «con Norte pasa esto» o «con Oeste pasa aquello». El resultado depende de la combinación de varios factores y de las condiciones existentes en ese momento.\n\nEl comportamiento del viento puede además variar a lo largo del propio spot debido a la orientación y a las características del relieve.",
+            "fr": "Aux Bicas, de petites variations des conditions peuvent modifier sensiblement la qualité du vol.\n\nIl n’est pas correct d’établir des règles simples du type « avec du Nord il se passe ceci » ou « avec de l’Ouest il se passe cela ». Le résultat dépend de la combinaison de plusieurs facteurs et des conditions présentes à ce moment-là.\n\nLe comportement du vent peut en outre varier le long du site lui-même, du fait de l’orientation et des caractéristiques du relief.",
+            "de": "An den Bicas können kleine Änderungen der Bedingungen die Qualität des Flugs erheblich verändern.\n\nEs ist nicht richtig, einfache Regeln aufzustellen wie „bei Nord passiert dies“ oder „bei West passiert jenes“. Das Ergebnis hängt von der Kombination mehrerer Faktoren und von den Bedingungen im jeweiligen Moment ab.\n\nDas Windverhalten kann außerdem entlang des Spots selbst unterschiedlich sein, wegen der Ausrichtung und der Eigenschaften des Geländes."
           }
         },
         {
@@ -159,20 +742,52 @@
             "de": "Der Strand und die Steilküste"
           },
           "texto": {
-            "pt": "A Praia das Bicas encontra-se numa zona de arribas costeiras, com acesso ao areal através de uma escadaria. A praia é também conhecida pela ondulação e pela prática de surf e bodyboard.\n\nDurante o voo devem ser considerados não apenas o vento e o relevo, mas também as condições do mar, maré, espaço disponível no areal, presença de pessoas e atividade de outros pilotos.",
-            "en": "Praia das Bicas lies in an area of coastal cliffs, with access to the sand by a stairway. The beach is also known for its swell and for surfing and bodyboarding.\n\nDuring the flight, not only wind and terrain must be considered, but also sea conditions, tide, the space available on the sand, the presence of people and the activity of other pilots.",
-            "es": "La Praia das Bicas se encuentra en una zona de acantilados costeros, con acceso a la arena por una escalera. La playa es también conocida por el oleaje y por la práctica del surf y el bodyboard.\n\nDurante el vuelo deben considerarse no solo el viento y el relieve, sino también las condiciones del mar, la marea, el espacio disponible en la arena, la presencia de personas y la actividad de otros pilotos.",
-            "fr": "La Praia das Bicas se trouve dans une zone de falaises côtières, avec un accès au sable par un escalier. La plage est aussi connue pour sa houle et pour la pratique du surf et du bodyboard.\n\nPendant le vol, il faut prendre en compte non seulement le vent et le relief, mais aussi l’état de la mer, la marée, l’espace disponible sur le sable, la présence de personnes et l’activité d’autres pilotes.",
-            "de": "Die Praia das Bicas liegt in einem Bereich von Küstenkliffs, der Zugang zum Sandstrand führt über eine Treppe. Der Strand ist außerdem für seinen Wellengang und für Surfen und Bodyboarden bekannt.\n\nWährend des Flugs sind nicht nur Wind und Gelände zu berücksichtigen, sondern auch der Seegang, die Gezeiten, der verfügbare Platz am Strand, die Anwesenheit von Menschen und die Aktivität anderer Piloten."
+            "pt": "A Praia das Bicas encontra-se numa zona de arribas costeiras, com um extenso ambiente natural voltado para o Atlântico.\n\nO acesso ao areal é feito através de uma escadaria a partir da zona superior.\n\nA praia é também conhecida pela ondulação e pela prática de surf e bodyboard.\n\nDurante o voo de Parakite e parapente devem ser considerados não apenas o vento e o relevo, mas também as condições do mar, maré, espaço disponível no areal, presença de pessoas e atividade de outros pilotos.",
+            "en": "Praia das Bicas lies in an area of coastal cliffs, in a wide natural setting facing the Atlantic.\n\nAccess to the sand is by a stairway from the upper area.\n\nThe beach is also known for its swell and for surfing and bodyboarding.\n\nWhen flying Parakite and paragliders, not only wind and terrain must be considered, but also sea conditions, tide, the space available on the sand, the presence of people and the activity of other pilots.",
+            "es": "La Praia das Bicas se encuentra en una zona de acantilados costeros, en un amplio entorno natural orientado al Atlántico.\n\nEl acceso a la arena se hace por una escalera desde la zona superior.\n\nLa playa es también conocida por el oleaje y por la práctica del surf y el bodyboard.\n\nDurante el vuelo en Parakite y parapente deben considerarse no solo el viento y el relieve, sino también las condiciones del mar, la marea, el espacio disponible en la arena, la presencia de personas y la actividad de otros pilotos.",
+            "fr": "La Praia das Bicas se trouve dans une zone de falaises côtières, dans un vaste environnement naturel tourné vers l’Atlantique.\n\nL’accès au sable se fait par un escalier depuis la partie haute.\n\nLa plage est aussi connue pour sa houle et pour la pratique du surf et du bodyboard.\n\nPendant le vol en Parakite et en parapente, il faut prendre en compte non seulement le vent et le relief, mais aussi l’état de la mer, la marée, l’espace disponible sur le sable, la présence de personnes et l’activité d’autres pilotes.",
+            "de": "Die Praia das Bicas liegt in einem Bereich von Küstenkliffs, in einer weiten Naturlandschaft zum Atlantik hin.\n\nDer Zugang zum Sandstrand führt über eine Treppe vom oberen Bereich.\n\nDer Strand ist außerdem für seinen Wellengang und für Surfen und Bodyboarden bekannt.\n\nBeim Fliegen mit Parakite und Gleitschirm sind nicht nur Wind und Gelände zu berücksichtigen, sondern auch der Seegang, die Gezeiten, der verfügbare Platz am Strand, die Anwesenheit von Menschen und die Aktivität anderer Piloten."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Um espaço partilhado",
+            "en": "A shared space",
+            "es": "Un espacio compartido",
+            "fr": "Un espace partagé",
+            "de": "Ein geteilter Raum"
+          },
+          "texto": {
+            "pt": "Bicas é um spot utilizado por pilotos de Parakite e parapente, além de ser uma praia frequentada por banhistas, surfistas, caminhantes e outros utilizadores.\n\nA diferença de velocidade e comportamento entre diferentes tipos e tamanhos de asa deve ser considerada quando vários pilotos partilham a mesma zona de voo.\n\nA convivência responsável entre pilotos e restantes utilizadores do local é essencial, particularmente nas zonas utilizadas para preparação, descolagem e aterragem.",
+            "en": "Bicas is a site used by Parakite and paragliding pilots, and it is also a beach used by swimmers, surfers, walkers and others.\n\nThe difference in speed and behaviour between different types and sizes of wing has to be taken into account when several pilots share the same flying area.\n\nResponsible coexistence between pilots and the other people using the site is essential, particularly in the areas used for preparing, taking off and landing.",
+            "es": "Bicas es un spot utilizado por pilotos de Parakite y parapente, además de ser una playa frecuentada por bañistas, surfistas, caminantes y otros usuarios.\n\nLa diferencia de velocidad y comportamiento entre distintos tipos y tamaños de ala debe considerarse cuando varios pilotos comparten la misma zona de vuelo.\n\nLa convivencia responsable entre pilotos y el resto de usuarios del lugar es esencial, sobre todo en las zonas utilizadas para preparación, despegue y aterrizaje.",
+            "fr": "Les Bicas sont un site utilisé par des pilotes de Parakite et de parapente, et c’est aussi une plage fréquentée par des baigneurs, des surfeurs, des promeneurs et d’autres usagers.\n\nLa différence de vitesse et de comportement entre les types et les tailles d’ailes doit être prise en compte lorsque plusieurs pilotes partagent la même zone de vol.\n\nUne cohabitation responsable entre les pilotes et les autres usagers du site est essentielle, en particulier dans les zones utilisées pour la préparation, le décollage et l’atterrissage.",
+            "de": "Die Bicas sind ein Spot, den Parakite- und Gleitschirmpiloten nutzen, und zugleich ein Strand, an dem Badende, Surfer, Spaziergänger und andere unterwegs sind.\n\nDer Unterschied in Geschwindigkeit und Verhalten zwischen verschiedenen Schirmtypen und -größen muss berücksichtigt werden, wenn mehrere Piloten denselben Flugbereich teilen.\n\nEin verantwortungsvolles Miteinander zwischen Piloten und den übrigen Nutzern des Ortes ist entscheidend, besonders in den Bereichen für Vorbereitung, Start und Landung."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Respeito pelo spot",
+            "en": "Respect for the site",
+            "es": "Respeto por el spot",
+            "fr": "Respect du site",
+            "de": "Respekt vor dem Spot"
+          },
+          "texto": {
+            "pt": "As arribas e o ambiente costeiro das Bicas fazem parte de uma paisagem natural que deve ser preservada.\n\nA prática de Parakite e parapente deve ser feita procurando minimizar o impacto sobre o local, respeitar os acessos existentes e evitar comportamentos que possam degradar o terreno ou criar conflitos com outros utilizadores.\n\nRespeitar o spot ajuda a mantê-lo aberto para todos.",
+            "en": "The cliffs and the coastal environment at Bicas are part of a natural landscape that should be preserved.\n\nParakite and paragliding should be practised so as to minimise the impact on the site, to respect the existing accesses, and to avoid behaviour that could damage the terrain or create conflict with other users.\n\nRespecting the site helps keep it open to everyone.",
+            "es": "Los acantilados y el entorno costero de las Bicas forman parte de un paisaje natural que debe preservarse.\n\nLa práctica del Parakite y del parapente debe hacerse procurando minimizar el impacto sobre el lugar, respetar los accesos existentes y evitar comportamientos que puedan degradar el terreno o crear conflictos con otros usuarios.\n\nRespetar el spot ayuda a mantenerlo abierto para todos.",
+            "fr": "Les falaises et l’environnement côtier des Bicas font partie d’un paysage naturel qui doit être préservé.\n\nLa pratique du Parakite et du parapente doit se faire en cherchant à minimiser l’impact sur le site, à respecter les accès existants et à éviter les comportements susceptibles de dégrader le terrain ou de créer des conflits avec d’autres usagers.\n\nRespecter le site aide à le garder ouvert à tous.",
+            "de": "Die Steilküste und die Küstenlandschaft der Bicas sind Teil einer Natur, die erhalten werden soll.\n\nParakite und Gleitschirmfliegen sollten so ausgeübt werden, dass die Auswirkungen auf den Ort möglichst gering bleiben, die vorhandenen Zugänge respektiert werden und Verhalten vermieden wird, das das Gelände schädigen oder Konflikte mit anderen Nutzern auslösen könnte.\n\nDen Spot zu respektieren hilft, ihn für alle offen zu halten."
           }
         }
       ],
       "aviso": {
-        "pt": "As informações desta página servem para ajudar a compreender as características gerais da Praia das Bicas e não substituem a avaliação das condições no local.\n\nA decisão de descolar deve considerar as condições reais, experiência do piloto, equipamento utilizado e capacidade para avaliar vento, relevo e restantes riscos.\n\nSe não conheces o spot, procura informação local antes de voar.",
-        "en": "The information on this page is intended to help understand the general characteristics of Praia das Bicas and does not replace assessing the conditions on site.\n\nThe decision to launch must take into account the actual conditions, the pilot’s experience, the equipment used and the ability to assess wind, terrain and the remaining risks.\n\nIf you do not know the site, seek local information before flying.",
-        "es": "La información de esta página sirve para ayudar a comprender las características generales de la Praia das Bicas y no sustituye la evaluación de las condiciones en el lugar.\n\nLa decisión de despegar debe tener en cuenta las condiciones reales, la experiencia del piloto, el equipo utilizado y la capacidad para evaluar el viento, el relieve y los demás riesgos.\n\nSi no conoces el spot, busca información local antes de volar.",
-        "fr": "Les informations de cette page servent à aider à comprendre les caractéristiques générales de la Praia das Bicas et ne remplacent pas l’évaluation des conditions sur place.\n\nLa décision de décoller doit tenir compte des conditions réelles, de l’expérience du pilote, du matériel utilisé et de la capacité à évaluer le vent, le relief et les autres risques.\n\nSi tu ne connais pas le site, renseigne-toi localement avant de voler.",
-        "de": "Die Informationen auf dieser Seite sollen helfen, die allgemeinen Eigenschaften der Praia das Bicas zu verstehen, und ersetzen nicht die Beurteilung der Bedingungen vor Ort.\n\nDie Entscheidung zu starten muss die tatsächlichen Bedingungen berücksichtigen, die Erfahrung des Piloten, das verwendete Material und die Fähigkeit, Wind, Gelände und die übrigen Risiken einzuschätzen.\n\nWenn du den Spot nicht kennst, hol dir vor dem Fliegen örtliche Informationen."
+        "pt": "As informações desta página destinam-se a ajudar a compreender as características gerais da Praia das Bicas e não substituem a avaliação das condições no local.\n\nA decisão de voar de Parakite ou parapente deve considerar as condições reais, direção e intensidade do vento, rajadas, experiência do piloto, equipamento utilizado, relevo, estado da praia e presença de outras pessoas.\n\nSe não conheces o local, procura informação junto de pilotos locais antes de voar.",
+        "en": "The information on this page is intended to help understand the general characteristics of Praia das Bicas and does not replace assessing the conditions on site.\n\nThe decision to fly a Parakite or a paraglider must take into account the actual conditions, wind direction and strength, gusts, the pilot’s experience, the equipment used, the terrain, the state of the beach and the presence of other people.\n\nIf you do not know the site, seek information from local pilots before flying.",
+        "es": "La información de esta página está destinada a ayudar a comprender las características generales de la Praia das Bicas y no sustituye la evaluación de las condiciones en el lugar.\n\nLa decisión de volar en Parakite o parapente debe considerar las condiciones reales, la dirección y la intensidad del viento, las rachas, la experiencia del piloto, el equipo utilizado, el relieve, el estado de la playa y la presencia de otras personas.\n\nSi no conoces el lugar, busca información entre los pilotos locales antes de volar.",
+        "fr": "Les informations de cette page servent à aider à comprendre les caractéristiques générales de la Praia das Bicas et ne remplacent pas l’évaluation des conditions sur place.\n\nLa décision de voler en Parakite ou en parapente doit tenir compte des conditions réelles, de la direction et de la force du vent, des rafales, de l’expérience du pilote, du matériel utilisé, du relief, de l’état de la plage et de la présence d’autres personnes.\n\nSi tu ne connais pas le site, renseigne-toi auprès des pilotes locaux avant de voler.",
+        "de": "Die Informationen auf dieser Seite sollen helfen, die allgemeinen Eigenschaften der Praia das Bicas zu verstehen, und ersetzen nicht die Beurteilung der Bedingungen vor Ort.\n\nDie Entscheidung, mit Parakite oder Gleitschirm zu fliegen, muss die tatsächlichen Bedingungen berücksichtigen, Windrichtung und -stärke, Böen, die Erfahrung des Piloten, die verwendete Ausrüstung, das Gelände, den Zustand des Strands und die Anwesenheit anderer Menschen.\n\nWenn du den Ort nicht kennst, hol dir vor dem Fliegen Informationen bei örtlichen Piloten."
       },
       "album": [
         {
@@ -184,7 +799,13 @@
             "fr": "Parapente rose évoluant au ras de la falaise verte de la Praia das Bicas, avec la brume marine et les rochers en contrebas.",
             "de": "Rosa Gleitschirm dicht an der grünen Steilküste der Praia das Bicas, darunter Meeresnebel und Felsen."
           },
-          "legenda": { "pt": "", "en": "", "es": "", "fr": "", "de": "" }
+          "legenda": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          }
         },
         {
           "videoId": "nAymp6E4TuA",
@@ -196,7 +817,13 @@
             "fr": "Vidéo : une AlbatroXX rouge vue d’en bas, en vol au-dessus de la côte.",
             "de": "Video: eine rote AlbatroXX von unten, im Flug über der Küste."
           },
-          "legenda": { "pt": "", "en": "", "es": "", "fr": "", "de": "" }
+          "legenda": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          }
         }
       ]
     }

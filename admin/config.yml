@@ -2830,77 +2830,58 @@ collections:
                   - {label: Español, name: es, widget: string, required: false}
                   - {label: Français, name: fr, widget: string, required: false}
                   - {label: Deutsch, name: de, widget: string, required: false}
+              # A ficha e uma LISTA LIVRE, e nao campos fixos. Comecou com
+              # campos fixos e ao segundo spot ja faltavam quatro. Cada sitio
+              # tem o que tem para dizer, e quem sabe isso e quem la voa.
               - label: Ficha de referência
                 name: ficha
                 widget: object
                 collapsed: true
                 required: false
                 hint: >-
-                  Os dados secos, que é o que um motor de pesquisa e um
-                  sistema de IA conseguem ler e reutilizar. O texto corrido
-                  vai nas secções, abaixo.
+                  Os dados secos, em linhas de rótulo e valor. É a parte que um
+                  motor de pesquisa e um sistema de IA conseguem reutilizar sem
+                  interpretar prosa. O texto corrido vai nas secções, abaixo.
                 fields:
-                  - {label: Local, name: local, widget: string, required: false,
-                     hint: 'Ex.: Praia das Bicas, Sesimbra, Portugal'}
-                  - {label: Distância de Lisboa (km), name: distanciaLisboaKm,
-                     widget: number, value_type: int, required: false}
-                  - {label: Altitude da descolagem (m), name: altitudeDescolagemM,
-                     widget: string, required: false,
-                     hint: 'Um número ou um intervalo, ex.: 30–40'}
-                  - label: Fonte da altitude
-                    name: altitudeFonte
+                  - label: Concelho
+                    name: concelho
                     widget: string
                     required: false
                     hint: >-
-                      De onde vem o valor acima. Se não souberes dizer de onde
-                      vem, é melhor deixar a altitude em branco do que
-                      publicá-la sem saber.
-                  - label: Direções de vento
-                    name: direcoes
+                      Só serve para os dados estruturados da página. Ex.: Sesimbra.
+                  - label: Linhas
+                    name: linhas
                     widget: list
                     required: false
-                    hint: 'Códigos, um por linha: W, NW, N…'
-                  - label: Modalidades
-                    name: modalidades
-                    widget: list
-                    required: false
-                    hint: 'parakite, parapente'
-                  - label: Tempo de viagem
-                    name: tempoViagem
-                    widget: object
-                    collapsed: true
-                    required: false
-                    summary: '{{fields.pt}}'
+                    label_singular: Linha
+                    summary: '{{fields.rotulo.pt}}: {{fields.valor.pt}}'
+                    hint: >-
+                      Escreve as linhas que fizerem sentido para este sítio, pela
+                      ordem que quiseres — é essa a ordem na página. Um valor cuja
+                      origem não saibas dizer é melhor não estar do que estar.
                     fields:
-                      - {label: Português, name: pt, widget: string, required: false}
-                      - {label: English, name: en, widget: string, required: false}
-                      - {label: Español, name: es, widget: string, required: false}
-                      - {label: Français, name: fr, widget: string, required: false}
-                      - {label: Deutsch, name: de, widget: string, required: false}
-                  - label: Tipo de voo
-                    name: tipoVoo
-                    widget: object
-                    collapsed: true
-                    required: false
-                    summary: '{{fields.pt}}'
-                    fields:
-                      - {label: Português, name: pt, widget: string, required: false}
-                      - {label: English, name: en, widget: string, required: false}
-                      - {label: Español, name: es, widget: string, required: false}
-                      - {label: Français, name: fr, widget: string, required: false}
-                      - {label: Deutsch, name: de, widget: string, required: false}
-                  - label: Acesso
-                    name: acesso
-                    widget: object
-                    collapsed: true
-                    required: false
-                    summary: '{{fields.pt}}'
-                    fields:
-                      - {label: Português, name: pt, widget: text, required: false}
-                      - {label: English, name: en, widget: text, required: false}
-                      - {label: Español, name: es, widget: text, required: false}
-                      - {label: Français, name: fr, widget: text, required: false}
-                      - {label: Deutsch, name: de, widget: text, required: false}
+                      - label: Rótulo
+                        name: rotulo
+                        widget: object
+                        collapsed: true
+                        summary: '{{fields.pt}}'
+                        fields:
+                          - {label: Português, name: pt, widget: string, required: false}
+                          - {label: English, name: en, widget: string, required: false}
+                          - {label: Español, name: es, widget: string, required: false}
+                          - {label: Français, name: fr, widget: string, required: false}
+                          - {label: Deutsch, name: de, widget: string, required: false}
+                      - label: Valor
+                        name: valor
+                        widget: object
+                        collapsed: true
+                        summary: '{{fields.pt}}'
+                        fields:
+                          - {label: Português, name: pt, widget: string, required: false}
+                          - {label: English, name: en, widget: string, required: false}
+                          - {label: Español, name: es, widget: string, required: false}
+                          - {label: Français, name: fr, widget: string, required: false}
+                          - {label: Deutsch, name: de, widget: string, required: false}
               - label: Secções
                 name: seccoes
                 widget: list

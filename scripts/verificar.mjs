@@ -933,6 +933,25 @@ titulo('15. A galeria dos spots aguenta o que o CMS lá puser');
         else faltasDeRascunho++;
       };
 
+      /* UMA LIGAÇÃO NO TEXTO TEM DE SER UM CAMINHO DESTE SITE
+           O Paulo escreveu uma ligação para a Praia das Bicas colada do sítio
+           onde redigiu o texto, e o endereço trazia o domínio de lá —
+           https://chatgpt.com/parakite-portugal/... A verificação 2, que
+           apanha ligações internas partidas, não a via: começa por https e
+           para ela isso é o site de outra pessoa. Passou-me à frente duas
+           vezes antes de eu dar por ela. Agora não passa. */
+      for (const campo of [s2.descricao, s2.aviso, ...((s2.seccoes || []).map(x => x.texto))]) {
+        for (const lg of IDIOMAS) {
+          for (const m of String((campo || {})[lg] || '').matchAll(/\]\(([^)\s]+)\)/g)) {
+            if (!m[1].startsWith('/')) {
+              falha(nome + ' (' + lg + '): a ligação "' + m[1]
+                    + '" não é um caminho deste site — escreve-se /parakite-portugal/...');
+              mau++;
+            }
+          }
+        }
+      }
+
       nasCinco(s2.descricao, 'descrição');
       for (const [i, sec] of (s2.seccoes || []).entries()) {
         nasCinco(sec.titulo, 'secção ' + (i + 1) + ' · título');
@@ -943,7 +962,12 @@ titulo('15. A galeria dos spots aguenta o que o CMS lá puser');
         nasCinco(s2.aviso, 'aviso de segurança');
         /* o aviso não é um extra: é a única parte da página que diz que a
            página não decide nada. Sem ele não se publica. */
-        if (!s2.ficha) { falha(nome + ': publicado sem ficha de referência'); mau++; }
+        const linhasDaFicha = (s2.ficha || {}).linhas || [];
+        if (!linhasDaFicha.length) { falha(nome + ': publicado sem ficha de referência'); mau++; }
+        for (const [k, r] of linhasDaFicha.entries()) {
+          nasCinco(r.rotulo, 'ficha · linha ' + (k + 1) + ' · rótulo');
+          nasCinco(r.valor, 'ficha · linha ' + (k + 1) + ' · valor');
+        }
         if (!(s2.seccoes || []).length) { falha(nome + ': publicado sem uma única secção'); mau++; }
       }
       if (faltasDeRascunho) rascunhos++;

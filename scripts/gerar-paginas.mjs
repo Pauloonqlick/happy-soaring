@@ -2109,39 +2109,46 @@ const SP = {
                 de:'Referenzangaben' },
   seguranca:  { pt:'Segurança', en:'Safety', es:'Seguridad',
                 fr:'Sécurité', de:'Sicherheit' },
-  fLocal:     { pt:'Local', en:'Location', es:'Lugar', fr:'Lieu', de:'Ort' },
-  fDistancia: { pt:'Distância de Lisboa', en:'Distance from Lisbon',
-                es:'Distancia de Lisboa', fr:'Distance de Lisbonne',
-                de:'Entfernung von Lissabon' },
-  fViagem:    { pt:'Tempo de viagem', en:'Travel time', es:'Tiempo de viaje',
-                fr:'Temps de trajet', de:'Fahrzeit' },
-  fTipo:      { pt:'Tipo de voo', en:'Type of flying', es:'Tipo de vuelo',
-                fr:'Type de vol', de:'Flugart' },
-  fDirecoes:  { pt:'Direções preferenciais', en:'Preferred directions',
-                es:'Direcciones preferentes', fr:'Directions favorables',
-                de:'Bevorzugte Richtungen' },
-  fModal:     { pt:'Modalidades', en:'Disciplines', es:'Modalidades',
-                fr:'Pratiques', de:'Disziplinen' },
-  fAltitude:  { pt:'Altitude da descolagem', en:'Take-off altitude',
-                es:'Altitud del despegue', fr:'Altitude du décollage',
-                de:'Starthöhe' },
-  fAcesso:    { pt:'Acesso', en:'Access', es:'Acceso', fr:'Accès', de:'Zugang' },
   voltar:     { pt:'Voltar a Parakite em Portugal', en:'Back to Parakite in Portugal',
                 es:'Volver a Parakite en Portugal', fr:'Retour à Parakite au Portugal',
                 de:'Zurück zu Parakite in Portugal' },
 };
-const MODALIDADE = {
-  parakite:  { pt:'Parakite', en:'Parakite', es:'Parakite', fr:'Parakite', de:'Parakite' },
-  parapente: { pt:'parapente', en:'paragliding', es:'parapente',
-               fr:'parapente', de:'Gleitschirm' },
-};
-
 /* uma linha em branco no CMS é um parágrafo novo na página. É a única
    formatação que estes campos têm, e é de propósito: quem escreve não
    devia ter de saber HTML para separar dois parágrafos. */
-const paragrafos = txt => String(txt || '').split(/\n\s*\n/)
+/* UMA LIGAÇÃO ESCREVE-SE COMO TODA A GENTE A ESCREVE
+   [Praia das Bicas](/parakite-portugal/praia-das-bicas/) — a convenção que
+   qualquer pessoa já usa, sem ter de saber HTML. É o mesmo espírito do traço
+   que faz listas.
+
+   O ENDEREÇO ESCREVE-SE UMA VEZ, EM PORTUGUÊS.
+   Passa pelo comIdioma(), que lhe põe o prefixo da língua: na página alemã
+   o link vai dar a /de/parakite-portugal/... Sem isto, o leitor alemão caía
+   numa página em português a meio de uma frase em alemão — e ninguém ia
+   escrever o mesmo endereço cinco vezes só para evitar isso. */
+const LIGACAO = /\[([^\]\n]+)\]\(([^)\s]+)\)/g;
+const comLigacoes = (jaEscapado, l) =>
+  jaEscapado.replace(LIGACAO, (_, rotulo, destino) =>
+    '<a href="' + esc(comIdioma(destino, l)) + '">' + rotulo + '</a>');
+
+const paragrafos = (txt, l) => String(txt || '').split(/\n\s*\n/)
   .map(p => p.trim()).filter(Boolean)
-  .map(p => '<p>' + esc(p).replace(/\n/g, '<br />') + '</p>').join('\n      ');
+  .map(bloco => {
+    /* UM BLOCO DE LINHAS COMECADAS POR TRACO E UMA LISTA.
+       O texto "Qual a intensidade de vento necessaria?" tem oito factores,
+       e como paragrafo corrido eles perdem-se. Quem escreve no CMS escreve
+       como se escreve em qualquer sitio — um traco a abrir a linha — e nao
+       tem de saber HTML nenhum. Nao e magia: e a convencao que toda a gente
+       ja usa quando faz uma lista a mao. */
+    const linhas = bloco.split('\n').map(x => x.trim()).filter(Boolean);
+    const eLista = linhas.length > 1 && linhas.every(x => /^[-*]\s+/.test(x));
+    if (eLista) {
+      return '<ul class="spot-lista">'
+        + linhas.map(x => '<li>' + comLigacoes(esc(x.replace(/^[-*]\s+/, '')), l) + '</li>').join('')
+        + '</ul>';
+    }
+    return '<p>' + comLigacoes(esc(bloco).replace(/\n/g, '<br />'), l) + '</p>';
+  }).join('\n      ');
 
 function paginaSpot(s, l, num) {
   const url = DOMINIO + caminhoSpot(l, s);
@@ -2165,28 +2172,23 @@ function paginaSpot(s, l, num) {
   const capa = (s.album || []).find(m => m.imagem);
   const foto = capa ? DOMINIO + capa.imagem : DOMINIO + '/images/og-happysoaring.jpg';
 
-  const linha = (rotulo, valor) => valor
-    ? '<div class="spot-lin"><dt>' + esc(t(rotulo, l)) + '</dt><dd>' + esc(valor) + '</dd></div>'
-    : '';
-  const ficha = [
-    linha(SP.fLocal, f.local),
-    linha(SP.fDistancia, f.distanciaLisboaKm ? '≈ ' + f.distanciaLisboaKm + ' km' : ''),
-    linha(SP.fViagem, t(f.tempoViagem, l)),
-    linha(SP.fTipo, t(f.tipoVoo, l)),
-    linha(SP.fDirecoes, (f.direcoes || []).join(' · ')),
-    linha(SP.fModal, (f.modalidades || []).map(m => t(MODALIDADE[m], l) || m).join(' · ')),
-    /* a altitude só aparece com fonte declarada. Um número sobre altura
-       de descolagem que ninguém sabe de onde vem é o género de dado que
-       alguém usa e não devia — mais vale não estar. */
-    f.altitudeDescolagemM && f.altitudeFonte
-      ? linha(SP.fAltitude, f.altitudeDescolagemM + ' m (' + f.altitudeFonte + ')') : '',
-    linha(SP.fAcesso, t(f.acesso, l)),
-  ].filter(Boolean).join('\n        ');
+  /* A FICHA E UMA LISTA LIVRE, E TEM DE SER.
+     Comecou com campos fixos — local, distancia, tipo de voo — e ao segundo
+     spot ja faltavam quatro: descolagem, ambiente, outras atividades,
+     acesso a praia. Ao terceiro faltariam outros quatro. Cada spot tem o
+     que tem para dizer, e quem sabe isso e quem la voa, nao quem escreve
+     o gerador. Agora a ficha e o que o CMS la puser, pela ordem que la
+     estiver. */
+  const ficha = (f.linhas || []).map(r => {
+    const rot = t(r.rotulo, l), val = t(r.valor, l);
+    if (!rot || !val) return '';
+    return '<div class="spot-lin"><dt>' + esc(rot) + '</dt><dd>' + esc(val) + '</dd></div>';
+  }).filter(Boolean).join('\n        ');
 
   const seccoes = (s.seccoes || []).map(sec =>
     `  <section class="spot-sec">
       <h2>${esc(t(sec.titulo, l))}</h2>
-      ${paragrafos(t(sec.texto, l))}
+      ${paragrafos(t(sec.texto, l), l)}
     </section>`).join('\n');
 
   const ld = JSON.stringify({
@@ -2200,9 +2202,12 @@ function paginaSpot(s, l, num) {
       /* Place com o que está mesmo visível na ficha, e nada mais. Sem
          coordenadas: não as temos, e inventá-las seria pôr no schema uma
          precisão que a página não tem. */
+      /* o concelho vem do ficheiro: estava escrito 'Sesimbra' a mao, e o
+         terceiro spot podia nao ser em Sesimbra nenhuma */
       { '@type': 'Place', '@id': url + '#local', name: s.nome,
-        address: { '@type': 'PostalAddress', addressLocality: 'Sesimbra',
-                   addressCountry: 'PT' } },
+        address: f.concelho
+          ? { '@type': 'PostalAddress', addressLocality: f.concelho, addressCountry: 'PT' }
+          : { '@type': 'PostalAddress', addressCountry: 'PT' } },
       /* sem primaryImageOfPage: a pagina deixou de mostrar fotografias, e
          prometer uma no schema seria descrever conteudo que nao esta la.
          A og:image fica — essa e o cartao de partilha, e nao uma afirmacao
@@ -2227,7 +2232,7 @@ function paginaSpot(s, l, num) {
 
   <h1 class="spot-h1">${h1Linhas}</h1>
   <div class="spot-abre">
-      ${paragrafos(resumo)}
+      ${paragrafos(resumo, l)}
   </div>
 
 ${seccoes}
@@ -2241,7 +2246,7 @@ ${seccoes}
 
   <aside class="spot-aviso" role="note">
     <h2>${esc(t(SP.seguranca, l))}</h2>
-    ${paragrafos(t(s.aviso, l))}
+    ${paragrafos(t(s.aviso, l), l)}
   </aside>
 
   <p class="pg-voltar"><a href="${esc(hub)}">${esc(t(SP.voltar, l))}</a></p>

@@ -2703,3 +2703,12 @@ body.spot.papel .spot-aviso > p{grid-column:2;max-width:none}
 /* o titulo do spot centra-se: sao duas linhas curtas e centradas leem-se
    como um cabecalho, encostadas a esquerda leem-se como texto cortado */
 body.spot.papel .spot-h1{text-align:center;margin-bottom:26px}
+
+/* a lista de factores dentro de uma secção: mesma cor e mesmo ritmo do
+   texto à volta, só com o ponto a marcar cada item */
+body.spot.papel .spot-lista{
+  margin:0 0 12px;padding-left:1.15em;list-style:disc;max-width:none;
+  color:var(--tinta-fraca);font-size:16px;line-height:1.68;
+}
+body.spot.papel .spot-lista li{margin:0 0 5px;padding-left:.15em}
+body.spot.papel .spot-lista li::marker{color:var(--laranja-tinta)}

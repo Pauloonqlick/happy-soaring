@@ -45,7 +45,7 @@ outro spot, é isto — não voltar a decidir nada disto do zero.
 |---|---|
 | `titulo` | uma linha só, com travessão: `Praia das Bicas — Parakite e parapente` |
 | `descricao` | a abertura, um ou dois parágrafos. Também é o que o popup do hub mostra |
-| `ficha` | os dados secos: local, distância, tempo, tipo de voo, direções, modalidades, acesso |
+| `ficha` | `concelho` (só para o schema) e `linhas`: uma lista livre de rótulo/valor, pela ordem que estiver |
 | `seccoes` | o texto por assuntos, cada uma com título e texto. A ordem aqui é a ordem na página |
 | `aviso` | a parte que diz que a página não decide nada. Obrigatória |
 | `publicar` | `false` enquanto se escreve; `true` só quando está inteiro |
@@ -63,9 +63,30 @@ cinco `hreflang`, portanto ou existe nas cinco ou não existe.
 **Nas traduções, a força das afirmações mantém-se.** Uma referência não vira
 recomendação, um "pode" não vira "deve", um valor observado não vira limite.
 
-**Um número sem fonte não se publica.** A altitude de descolagem só aparece na
-página se `altitudeFonte` estiver preenchida. Vale como princípio para qualquer
-dado novo: sem origem declarada, fica fora.
+**A ficha é uma lista livre, e tem de ser.** Começou com campos fixos — local,
+distância, tipo de voo — e ao segundo spot já faltavam quatro: descolagem,
+ambiente, outras atividades, acesso à praia. Ao terceiro faltariam outros
+quatro. Cada sítio tem o que tem para dizer, e quem sabe isso é quem lá voa,
+não quem escreve o gerador. Nunca voltar a acrescentar campos fixos à ficha.
+
+**Um número cuja origem não se saiba dizer é melhor não estar.** Isto já foi
+uma regra do código — a altitude só aparecia com a fonte preenchida — e deixou
+de ser: a ficha livre não sabe quais das linhas são números. Passou a ser
+julgamento de quem escreve, e é por isso que fica aqui escrito. Se um valor
+precisa de uma fonte para se sustentar, ou a fonte se cita à vista na página,
+ou o valor não entra. Nunca esconder a fonte nos dados estruturados: uma fonte
+que só existe em dados que ninguém lê não é uma fonte, é um álibi.
+
+**Listas escrevem-se com um traço.** Uma linha começada por `- ` dentro do
+texto de uma secção vira um ponto de lista. Não é preciso saber HTML para
+separar oito factores.
+
+**Ligações escrevem-se `[texto](/caminho/)`**, com o caminho português e sem
+domínio. O gerador põe-lhe o prefixo da língua, portanto escreve-se uma vez e
+as cinco páginas apontam cada uma para a sua. Um endereço com domínio lá dentro
+faz a publicação parar — já veio um colado do sítio onde o texto foi redigido, e
+a verificação das ligações internas não o via, porque para ela um `https://` é o
+site de outra pessoa.
 
 **Sem fotografias nem vídeo na página.** A galeria vive no popup do hub. A
 página é para ler; repetir lá as imagens era duplicar o mesmo conteúdo em dois
