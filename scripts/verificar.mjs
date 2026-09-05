@@ -860,6 +860,96 @@ titulo('14. Nenhum título acaba em ponto final');
 }
 
 /* ------------------------------------------------------------------ */
+titulo('15. A galeria dos spots aguenta o que o CMS lá puser');
+{
+  /* PORQUE E QUE ISTO PRECISA DE VERIFICACAO
+       Esta seccao passou a ser editavel no CMS: acrescentar uma foto ja nao
+       exige abrir codigo. Isso e o objectivo — e e tambem a razao de haver
+       aqui uma linha. Quatro coisas podem correr mal sem ninguem dar por
+       ela, e todas terminam numa pagina publicada em silencio:
+
+         1. uma foto de 5 MB direita do telemovel. O `otimizar-spots.py`
+            existe para isso e e facil de esquecer;
+         2. um item sem texto alternativo — invisivel a olho, e a unica
+            coisa que quem nao ve tem;
+         3. uma descricao escrita so em portugues: o `t()` cai para pt sem
+            se queixar, e a pagina alema mostra portugues;
+         4. um `id` repetido ou com acentos, que parte o endereco do popup.
+
+     O QUE NAO SE EXIGE
+       Que haja fotografias. Um spot sem album fica caixa de texto, e isso
+       e uma decisao editorial, nao um defeito. E a descricao pode estar
+       vazia — o que nao pode e estar em uma lingua so. */
+  const TECTO_KB = 400;
+  const spots = (() => {
+    try { return JSON.parse(fs.readFileSync(
+      path.join(RAIZ, 'content', 'spots.json'), 'utf8')).spots || []; }
+    catch (e) { return null; }
+  })();
+
+  let mau = 0, itens = 0;
+  if (!spots) {
+    falha('o content/spots.json não existe ou não é JSON válido');
+    mau++;
+  } else {
+    const ids = new Set();
+    for (const s2 of spots) {
+      const nome = s2.nome || '(sem nome)';
+      if (!s2.nome) { falha('um spot sem nome'); mau++; }
+      if (!s2.id || !/^[a-z0-9-]+$/.test(s2.id)) {
+        falha(nome + ': o id "' + (s2.id || '') + '" tem de ser minúsculas, números e hífens');
+        mau++;
+      } else if (ids.has(s2.id)) {
+        falha(nome + ': o id "' + s2.id + '" está repetido — dois spots com o mesmo endereço');
+        mau++;
+      } else ids.add(s2.id);
+
+      /* a descrição: ou em todas, ou em nenhuma */
+      const d = s2.descricao || {};
+      const escritas = IDIOMAS.filter(l => String(d[l] || '').trim());
+      if (escritas.length && escritas.length < IDIOMAS.length) {
+        falha(nome + ': descrição em ' + escritas.join(', ')
+              + ' e sem ' + IDIOMAS.filter(l => !escritas.includes(l)).join(', '));
+        mau++;
+      }
+
+      for (const [i, m] of (s2.album || []).entries()) {
+        itens++;
+        const onde = nome + ' · item ' + (i + 1);
+        if (!m.imagem && !m.videoId) {
+          falha(onde + ': não tem fotografia nem vídeo'); mau++;
+        }
+        const semAlt = IDIOMAS.filter(l => !String((m.alt || {})[l] || '').trim());
+        if (semAlt.length) {
+          falha(onde + ': sem texto alternativo em ' + semAlt.join(', ')); mau++;
+        }
+        const leg = m.legenda || {};
+        const legEscritas = IDIOMAS.filter(l => String(leg[l] || '').trim());
+        if (legEscritas.length && legEscritas.length < IDIOMAS.length) {
+          falha(onde + ': legenda em ' + legEscritas.join(', ') + ' e não nas outras');
+          mau++;
+        }
+        if (m.imagem) {
+          const rel = String(m.imagem).replace(/^\//, '');
+          const fich = path.join(RAIZ, rel);
+          if (!fs.existsSync(fich)) {
+            falha(onde + ': a imagem ' + m.imagem + ' não existe'); mau++;
+          } else {
+            const kb = fs.statSync(fich).size / 1024;
+            if (kb > TECTO_KB) {
+              falha(onde + ': ' + m.imagem + ' tem ' + Math.round(kb)
+                    + ' KB (o tecto é ' + TECTO_KB + ') — passa-a pelo otimizar-spots.py');
+              mau++;
+            }
+          }
+        }
+      }
+    }
+  }
+  ok((spots ? spots.length : 0) + ' spots, ' + itens + ' fotos/vídeos, ' + mau + ' problema(s)');
+}
+
+/* ------------------------------------------------------------------ */
 return problemas;
 }
 

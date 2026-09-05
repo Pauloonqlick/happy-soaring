@@ -2737,6 +2737,126 @@ collections:
                 widget: image
                 required: false
                 hint: Se vazio, usa a miniatura do YouTube
+  # ====================================================================
+  #  ONDE SE VOA — a galeria de spots da /parakite-portugal/
+  # ====================================================================
+  #  Esta lista vivia dentro do scripts/conteudo-parakite.mjs, que é
+  #  JavaScript e que nem sequer é publicado. Mudou para aqui em 05/09/2026
+  #  para se poderem acrescentar e apagar fotos e vídeos sem abrir código.
+  #
+  #  A ORDEM DA LISTA É A ORDEM NA PÁGINA. Arrastar aqui muda lá.
+  #
+  #  Um spot sem fotografia nenhuma não desaparece: fica caixa de texto com
+  #  o nome. A informação conta na mesma, e a grelha não se desalinha.
+  - name: spots
+    label: Onde se voa (galeria)
+    editor:
+      preview: false
+    files:
+      - name: spots
+        label: Spots e álbuns
+        file: content/spots.json
+        format: json
+        description: >-
+          Os sítios que aparecem na secção "O vento decide onde vamos". Cada um
+          pode ter fotografias e vídeos. Sem foto, fica só o nome.
+        fields:
+          - label: Spots
+            name: spots
+            widget: list
+            label_singular: Spot
+            summary: '{{fields.nome}}  ·  {{fields.album.length}} foto(s)'
+            fields:
+              - label: Nome
+                name: nome
+                widget: string
+                hint: >-
+                  Aparece por cima da fotografia, em maiúsculas. Curto — "Lagoa
+                  de Albufeira" é o limite do que cabe bem em duas linhas.
+              - label: Identificador
+                name: id
+                widget: string
+                pattern: ['^[a-z0-9-]+$', 'Só minúsculas, números e hífens']
+                hint: >-
+                  Sem espaços nem acentos. Vai para o endereço quando alguém
+                  abre este spot — /parakite-portugal/#lagoa-de-albufeira — e
+                  por isso não deve mudar depois de estar publicado.
+              - label: Descrição
+                name: descricao
+                widget: object
+                collapsed: true
+                summary: '{{fields.pt}}'
+                required: false
+                hint: >-
+                  O texto do painel, ao lado da fotografia. É do SÍTIO e não de
+                  uma foto: fica visível em todas as vistas do álbum. Uma ou
+                  duas frases. Se escreveres numa língua, escreve nas cinco —
+                  senão a página alemã mostra português sem se queixar.
+                fields:
+                  - {label: Português, name: pt, widget: text, required: false}
+                  - {label: English, name: en, widget: text, required: false}
+                  - {label: Español, name: es, widget: text, required: false}
+                  - {label: Français, name: fr, widget: text, required: false}
+                  - {label: Deutsch, name: de, widget: text, required: false}
+              - label: Álbum
+                name: album
+                widget: list
+                required: false
+                label_singular: Foto ou vídeo
+                summary: '{{fields.videoId}}{{fields.imagem}}'
+                hint: >-
+                  A primeira é a capa: é ela que aparece na grelha. Arrasta para
+                  mudar a ordem.
+                fields:
+                  - label: Fotografia
+                    name: imagem
+                    widget: image
+                    required: false
+                    media_folder: /images/spots
+                    public_folder: /images/spots
+                    hint: >-
+                      Passa-a primeiro pelo scripts/otimizar-spots.py. Uma foto
+                      do telemóvel tem 5 MB; depois de otimizada tem 250 KB, e
+                      a verificação recusa acima de 400 KB.
+                  - label: Vídeo do YouTube
+                    name: videoId
+                    widget: string
+                    required: false
+                    hint: >-
+                      Só o código. Em youtube.com/shorts/nAymp6E4TuA o código é
+                      nAymp6E4TuA. A capa vem do YouTube sozinha; se puseres
+                      também uma fotografia acima, é essa que manda.
+                  - label: Texto alternativo
+                    name: alt
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
+                    hint: >-
+                      Descreve a imagem a quem não a vê. NÃO é o nome do sítio
+                      outra vez: "Parapente rosa a soarear rente à arriba verde"
+                      diz alguma coisa, "Praia das Bicas" não diz nada.
+                    fields:
+                      - {label: Português, name: pt, widget: string, required: false}
+                      - {label: English, name: en, widget: string, required: false}
+                      - {label: Español, name: es, widget: string, required: false}
+                      - {label: Français, name: fr, widget: string, required: false}
+                      - {label: Deutsch, name: de, widget: string, required: false}
+                  - label: Legenda
+                    name: legenda
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
+                    required: false
+                    hint: >-
+                      Opcional, e quase sempre vazia. Uma linha sobre ESTA
+                      fotografia. Quando está vazia não aparece nada.
+                    fields:
+                      - {label: Português, name: pt, widget: string, required: false}
+                      - {label: English, name: en, widget: string, required: false}
+                      - {label: Español, name: es, widget: string, required: false}
+                      - {label: Français, name: fr, widget: string, required: false}
+                      - {label: Deutsch, name: de, widget: string, required: false}
+
   - name: avisos
     label: Avisos e ofertas
     label_singular: Aviso

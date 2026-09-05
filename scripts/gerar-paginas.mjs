@@ -128,6 +128,12 @@ const T = {
   video:     { pt:'Vídeo', en:'Video', es:'Vídeo', fr:'Vidéo', de:'Video' },
   verNoYt:   { pt:'Ver no YouTube', en:'Watch on YouTube', es:'Ver en YouTube',
                fr:'Voir sur YouTube', de:'Auf YouTube ansehen' },
+  /* ---- a galeria dos spots ---- */
+  fechar:    { pt:'Fechar', en:'Close', es:'Cerrar', fr:'Fermer', de:'Schliessen' },
+  verVideo:  { pt:'Ver o vídeo', en:'Play the video', es:'Ver el vídeo',
+               fr:'Voir la vidéo', de:'Video ansehen' },
+  anterior:  { pt:'Anterior', en:'Previous', es:'Anterior', fr:'Précédent', de:'Zurück' },
+  seguinte:  { pt:'Seguinte', en:'Next', es:'Siguiente', fr:'Suivant', de:'Weiter' },
   vento:     { pt:'Gama de vento', en:'Wind range', es:'Rango de viento',
                fr:'Plage de vent', de:'Windbereich' },
   kn:        { pt:'nós', en:'kn', es:'nudos', fr:'nœuds', de:'kn' },
@@ -1467,7 +1473,54 @@ function paginaParakite(l, num) {
   const incluido = PK.incluido.map(i => '<li>' + esc(t(i, l)) + '</li>').join('');
   const colunas = PK.s5Colunas.map(c => '<li>' + esc(t(c, l)) + '</li>').join('');
   const demoVars = PK.demoVars.map(v => '<li>' + esc(t(v, l)) + '</li>').join('');
-  const spots = PK.spots.map(s => '<li>' + esc(s) + '</li>').join('');
+  /* A GALERIA DOS SPOTS
+     Cada peca e um sitio. A que tem fotografia abre um popup com o album;
+     a que nao tem fica caixa de texto, porque o nome do sitio conta na
+     mesma. E a mesma grelha para as duas. */
+  const capaDe = m => {
+    if (!m) return '';
+    if (m.imagem) return m.imagem;
+    /* Um Short e vertical, e a capa que o YouTube da por omissao
+       (maxresdefault) e 16:9 — ficaria com tarjas num molde ao alto. O
+       `oar2` e o fotograma vertical verdadeiro. Nao esta documentado, e por
+       isso leva rede no onerror. E o CMS pode sempre por uma capa propria,
+       que e o que faz sentido quando se quer escolher o fotograma. */
+    if (m.videoId) return 'https://i.ytimg.com/vi/' + encodeURIComponent(m.videoId) + '/oar2.jpg';
+    return '';
+  };
+  const spots = SPOTS.map((s, i) => {
+    const album = (s.album || []).filter(m => m && (m.imagem || m.videoId));
+    const capa = capaDe(album[0]);
+    const nome = esc(s.nome);
+    if (!capa) return '<li class="pk-spot pk-spot-so-nome"><span>' + nome + '</span></li>';
+    const alt = esc(t(album[0].alt, l));
+    const rede = album[0].videoId && !album[0].imagem
+      ? ' onerror="this.onerror=null;this.src=\'https://img.youtube.com/vi/'
+        + encodeURIComponent(album[0].videoId) + '/maxresdefault.jpg\'"'
+      : '';
+    return `<li class="pk-spot"><button type="button" class="pk-spot-b" data-spot="${i}"
+        aria-haspopup="dialog">
+        <img src="${esc(capa)}" alt="${alt}" loading="lazy" decoding="async"${rede} />
+        ${album[0].videoId ? '<span class="pk-play" aria-hidden="true"><i></i></span>' : ''}
+        <span class="pk-spot-n">${nome}</span>
+      </button></li>`;
+  }).join('');
+
+  /* os dados do album viajam num <script type="application/json">: é texto
+     inerte para o browser, e o popup lê-o quando alguém abre um spot. Assim
+     nada disto ocupa o HTML visível nem entra no que os motores de busca
+     leem como conteúdo. */
+  const dadosSpots = JSON.stringify(SPOTS.map(s => ({
+    id: s.id || '',
+    nome: s.nome,
+    desc: t(s.descricao, l) || '',
+    media: (s.album || []).filter(m => m && (m.imagem || m.videoId)).map(m => ({
+      img: m.imagem || capaDe(m),
+      alt: t(m.alt, l) || '',
+      leg: t(m.legenda, l) || '',
+      video: m.videoId || ''
+    }))
+  }))).replace(/</g, '\\u003c');
   const palavras = PK.s9Palavras.map(p => '<li>' + esc(p) + '</li>').join('');
 
   const html = `<!DOCTYPE html>
@@ -1635,13 +1688,11 @@ ${alt}
        está no ar por causa de uma arrumação interna. -->
   <section class="pk-sec pk-tema" id="voar-em-portugal">
     <h2>${esc(t(PK.spotsTit, l))}</h2>
-    <div class="pk-spots">
-      <div class="pk-spots-tx">
-        <p class="pk-nota">${esc(t(PK.spotsNota, l))}</p>
-        <p class="pk-spots-cta"><a class="pk-b" href="${esc(wa(PK.s6Msg))}" rel="noopener" target="_blank">${esc(t(PK.s6Cta, l))}</a></p>
-      </div>
-      <ul class="pk-spots-l">${spots}</ul>
+    <div class="pk-spots-cab">
+      <p class="pk-nota">${esc(t(PK.spotsNota, l))}</p>
+      <p class="pk-spots-cta"><a class="pk-b" href="${esc(wa(PK.s6Msg))}" rel="noopener" target="_blank">${esc(t(PK.s6Cta, l))}</a></p>
     </div>
+    <ul class="pk-spots-g">${spots}</ul>
   </section>
 
   <section class="pk-sec pk-papel" id="escolher">
@@ -1700,6 +1751,152 @@ ${alt}
 
   <p class="pg-voltar"><a href="${inicio}">${esc(t(PK.voltar, l))}</a></p>
 </main>
+
+<div class="pk-pop" id="pk-pop" role="dialog" aria-modal="true" aria-labelledby="pk-pop-tit" hidden>
+  <button class="pk-pop-x" id="pk-pop-x" aria-label="${esc(t(T.fechar, l))}">&#10005;</button>
+  <div class="pk-pop-cx">
+    <div class="pk-pop-img">
+      <div class="pk-pop-media" id="pk-pop-media">
+        <img id="pk-pop-img" src="" alt="" />
+        <button type="button" class="pk-play pk-pop-play" id="pk-pop-play" hidden
+                aria-label="${esc(t(T.verVideo, l))}"><i></i></button>
+      </div>
+    </div>
+    <div class="pk-pop-tx">
+      <p class="pg-eyebrow">${esc(t(PK.spotsTit, l))}</p>
+      <p class="pk-pop-tit" id="pk-pop-tit"></p>
+      <p class="pk-pop-desc" id="pk-pop-desc"></p>
+      <p class="pk-pop-conta" id="pk-pop-conta" hidden></p>
+      <p class="pk-pop-leg" id="pk-pop-leg" hidden></p>
+      <div class="pk-pop-minis" id="pk-pop-minis" hidden></div>
+      <div class="pk-pop-nav" id="pk-pop-nav" hidden>
+        <button type="button" id="pk-pop-ant">&#8592; ${esc(t(T.anterior, l))}</button>
+        <button type="button" id="pk-pop-seg">${esc(t(T.seguinte, l))} &#8594;</button>
+      </div>
+      <p class="pk-pop-nota">${esc(t(PK.spotsNota, l))}</p>
+    </div>
+  </div>
+</div>
+<script type="application/json" id="pk-spots-dados">${dadosSpots}</script>
+<script>
+(function(){
+  var el=function(id){return document.getElementById(id)};
+  var fonte=el('pk-spots-dados'); if(!fonte) return;
+  var spots; try{ spots=JSON.parse(fonte.textContent) }catch(e){ return }
+
+  var pop=el('pk-pop'), img=el('pk-pop-img'), caixa=pop.querySelector('.pk-pop-img'),
+      tit=el('pk-pop-tit'), desc=el('pk-pop-desc'), conta=el('pk-pop-conta'),
+      leg=el('pk-pop-leg'), minis=el('pk-pop-minis'), nav=el('pk-pop-nav'),
+      play=el('pk-pop-play'), media=el('pk-pop-media'),
+      fechar=el('pk-pop-x'), ant=el('pk-pop-ant'), seg=el('pk-pop-seg');
+  var iS=0, iV=0, veioDe=null;
+
+  function adianta(){
+    var m=spots[iS].media; if(m.length<2) return;
+    var p=new Image(); p.src=m[(iV+1)%m.length].img;
+  }
+  function desenhaMinis(){
+    var m=spots[iS].media;
+    minis.innerHTML='';
+    minis.hidden = m.length<2;
+    if(m.length<2) return;
+    m.forEach(function(x,i){
+      var b=document.createElement('button');
+      b.type='button';
+      b.setAttribute('aria-label',(i+1)+' / '+m.length);
+      b.setAttribute('aria-current', i===iV?'true':'false');
+      var t=document.createElement('img'); t.src=x.img; t.alt=''; t.loading='lazy';
+      b.appendChild(t);
+      b.addEventListener('click',function(){ mostra(i) });
+      minis.appendChild(b);
+    });
+  }
+  function mostra(i){
+    var s=spots[iS], m=s.media;
+    iV=(i+m.length)%m.length;
+    var x=m[iV];
+    tit.textContent=s.nome;
+    desc.textContent=s.desc||'';
+    desc.hidden=!s.desc;
+    leg.textContent=x.leg||''; leg.hidden=!x.leg;
+    conta.textContent=m.length>1 ? (iV+1)+' / '+m.length : '';
+    conta.hidden=m.length<2; nav.hidden=m.length<2;
+    var f=media.querySelector('iframe'); if(f) f.remove();
+    img.alt=x.alt||''; img.src=x.img;
+    /* O VIDEO SO ARRANCA QUANDO ALGUEM MANDA.
+       A capa fica sempre por baixo do player: e ela que da a forma a caixa
+       (nao ha racio nenhum escrito no CSS) e e ela que se ve enquanto o
+       video nao foi pedido. O YouTube so e contactado ao clique. */
+    play.hidden=!x.video;
+    Array.prototype.forEach.call(minis.children,function(b,k){
+      b.setAttribute('aria-current', k===iV?'true':'false');
+    });
+    adianta();
+  }
+  function abreVideo(){
+    var x=spots[iS].media[iV]; if(!x.video) return;
+    var f=document.createElement('iframe');
+    /* o autoplay aqui nao comeca nada sozinho: o iframe so nasce depois de
+       alguem carregar no play, e serve para o video nao exigir um segundo
+       clique. Com som, porque foi pedido. O playsinline evita que o iPhone
+       atire o video para ecra inteiro sem ninguem mandar. */
+    f.src='https://www.youtube-nocookie.com/embed/'+x.video
+         +'?autoplay=1&playsinline=1&rel=0';
+    f.title=spots[iS].nome;
+    f.allow='accelerometer; autoplay; encrypted-media; picture-in-picture';
+    f.allowFullscreen=true;
+    play.hidden=true;
+    media.appendChild(f);
+  }
+  function abrir(i,origem){
+    iS=i; iV=0; veioDe=origem||null;
+    desenhaMinis(); mostra(0);
+    pop.hidden=false; document.body.style.overflow='hidden';
+    fechar.focus();
+    /* o id do spots.json ja e um slug — nao ha nada a normalizar aqui, e
+       por isso nao ha expressao regular nenhuma para se partir a caminho */
+    if(spots[i].id){ try{ history.pushState({pk:i},'','#'+spots[i].id) }catch(e){} }
+  }
+  function fecha(voltar){
+    if(pop.hidden) return;
+    var f=media.querySelector('iframe'); if(f) f.remove();
+    pop.hidden=true; document.body.style.overflow='';
+    if(veioDe) veioDe.focus();
+    if(voltar!==false){ try{ history.back() }catch(e){} }
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.pk-spot-b'),function(b){
+    b.addEventListener('click',function(){ abrir(+b.dataset.spot,b) });
+  });
+  fechar.addEventListener('click',function(){ fecha() });
+  ant.addEventListener('click',function(){ mostra(iV-1) });
+  seg.addEventListener('click',function(){ mostra(iV+1) });
+  play.addEventListener('click',abreVideo);
+  pop.addEventListener('click',function(e){ if(e.target===pop) fecha() });
+  window.addEventListener('popstate',function(){ fecha(false) });
+  document.addEventListener('keydown',function(e){
+    if(pop.hidden) return;
+    if(e.key==='Escape'){ e.preventDefault(); fecha(); }
+    if(e.key==='ArrowLeft') mostra(iV-1);
+    if(e.key==='ArrowRight') mostra(iV+1);
+    if(e.key==='Tab'){
+      var f=Array.prototype.filter.call(pop.querySelectorAll('button'),
+        function(b){ return b.offsetParent!==null });
+      if(!f.length) return;
+      var pri=f[0], ult=f[f.length-1];
+      if(e.shiftKey && document.activeElement===pri){ e.preventDefault(); ult.focus() }
+      else if(!e.shiftKey && document.activeElement===ult){ e.preventDefault(); pri.focus() }
+    }
+  });
+  var x0=null;
+  caixa.addEventListener('touchstart',function(e){ x0=e.changedTouches[0].clientX },{passive:true});
+  caixa.addEventListener('touchend',function(e){
+    if(x0===null) return;
+    var dx=e.changedTouches[0].clientX-x0; x0=null;
+    if(Math.abs(dx)>44) mostra(iV+(dx<0?1:-1));
+  },{passive:true});
+})();
+<\/script>
 
 <footer class="pg-rodape">${esc(t(PK.rodape, l))}</footer>
 ${scriptIdiomas()}
@@ -1891,6 +2088,18 @@ const produtos = (flow.produtos || []).filter(p => p && p.nome && p.visible !== 
    um dia diz outra coisa. "Freedom 2" traduzido da "Liberdade 2", que nao e
    nenhuma asa. */
 const NOMES_ASAS = produtos.map(p => p.nome).filter(Boolean);
+
+/* OS SPOTS SAIRAM DO .mjs PARA O CMS
+   Viviam no conteudo-parakite.mjs, que e JavaScript e que a pasta scripts/
+   nem sequer publica. O CMS so le JSON dentro de content/ — por isso, para
+   se poderem acrescentar fotos e videos sem abrir codigo, tinham de mudar
+   de casa. Foi so a lista de spots: o resto da pagina fica onde estava. */
+const SPOTS = (() => {
+  try {
+    const d = JSON.parse(fs.readFileSync(path.join(RAIZ, 'content/spots.json'), 'utf8'));
+    return (d.spots || []).filter(s => s && s.nome);
+  } catch (e) { return []; }
+})();
 
 /* A LIGACAO A FOLHA DO TEMA ENTRA AQUI, E NAO NOS OITO MOLDES
    Havia seis sitios a escrever `<link href="/pagina.css">` e mais dois

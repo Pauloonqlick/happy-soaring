@@ -1616,3 +1616,20 @@ span.hs-nome{
   padding:0 !important;
   margin:0 !important;
 }
+
+/* =======================================================================
+   O `hidden` TEM DE GANHAR
+   =======================================================================
+   O atributo `hidden` vale `display:none` — mas na folha do BROWSER, e uma
+   regra do autor ganha-lhe sempre, por mais fraca que seja. Basta escrever
+   `.pk-play{display:grid}` para o `hidden` deixar de fazer alguma coisa.
+
+   Este site ja tropecou nisto duas vezes e resolveu-o duas vezes caso a
+   caso: `.pg-vento-reg[hidden]` e `.bio[hidden]`. A terceira foi a galeria
+   dos spots — o distintivo de play aparecia sobre as fotografias e a capa
+   ficava ao lado do video a tocar.
+
+   Ao terceiro, corrige-se a classe e nao o caso. O `!important` aqui nao
+   esta a ganhar uma discussao: nao ha caso nenhum em que se queira ver um
+   elemento marcado como escondido. */
+[hidden]{display:none !important}

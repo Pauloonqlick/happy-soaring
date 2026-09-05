@@ -1,0 +1,82 @@
+{
+  "spots": [
+    {
+      "id": "fonte-da-telha",
+      "nome": "Fonte da Telha",
+      "descricao": { "pt": "", "en": "", "es": "", "fr": "", "de": "" },
+      "album": []
+    },
+    {
+      "id": "lagoa-de-albufeira",
+      "nome": "Lagoa de Albufeira",
+      "descricao": { "pt": "", "en": "", "es": "", "fr": "", "de": "" },
+      "album": [
+        {
+          "imagem": "/images/spots/lagoa-de-albufeira.webp",
+          "alt": {
+            "pt": "Vista aérea da Lagoa de Albufeira: a lagoa com bancos de areia à esquerda, o pinhal, a praia extensa e o mar aberto à direita.",
+            "en": "Aerial view of Lagoa de Albufeira: the lagoon with sandbanks on the left, the pine woods, the long beach and the open sea on the right.",
+            "es": "Vista aérea de la Lagoa de Albufeira: la laguna con bancos de arena a la izquierda, el pinar, la playa extensa y el mar abierto a la derecha.",
+            "fr": "Vue aérienne de la Lagoa de Albufeira : la lagune avec ses bancs de sable à gauche, la pinède, la longue plage et la mer ouverte à droite.",
+            "de": "Luftaufnahme der Lagoa de Albufeira: links die Lagune mit Sandbänken, der Pinienwald, der lange Strand und rechts das offene Meer."
+          },
+          "legenda": { "pt": "", "en": "", "es": "", "fr": "", "de": "" }
+        }
+      ]
+    },
+    {
+      "id": "meco",
+      "nome": "Meco",
+      "descricao": { "pt": "", "en": "", "es": "", "fr": "", "de": "" },
+      "album": []
+    },
+    {
+      "id": "alfarim",
+      "nome": "Alfarim",
+      "descricao": { "pt": "", "en": "", "es": "", "fr": "", "de": "" },
+      "album": []
+    },
+    {
+      "id": "peniche",
+      "nome": "Peniche",
+      "descricao": { "pt": "", "en": "", "es": "", "fr": "", "de": "" },
+      "album": []
+    },
+    {
+      "id": "praia-da-gralha",
+      "nome": "Praia da Gralha",
+      "descricao": { "pt": "", "en": "", "es": "", "fr": "", "de": "" },
+      "album": []
+    },
+    {
+      "id": "praia-das-bicas",
+      "nome": "Praia das Bicas",
+      "descricao": { "pt": "", "en": "", "es": "", "fr": "", "de": "" },
+      "album": [
+        {
+          "imagem": "/images/spots/praia-das-bicas.webp",
+          "alt": {
+            "pt": "Parapente rosa a soarear rente à arriba verde da Praia das Bicas, com neblina do mar e rochas em baixo.",
+            "en": "Pink paraglider soaring close to the green cliff at Praia das Bicas, with sea mist and rocks below.",
+            "es": "Parapente rosa planeando junto al acantilado verde de la Praia das Bicas, con bruma marina y rocas abajo.",
+            "fr": "Parapente rose évoluant au ras de la falaise verte de la Praia das Bicas, avec la brume marine et les rochers en contrebas.",
+            "de": "Rosa Gleitschirm dicht an der grünen Steilküste der Praia das Bicas, darunter Meeresnebel und Felsen."
+          },
+          "legenda": { "pt": "", "en": "", "es": "", "fr": "", "de": "" }
+        },
+        {
+          "videoId": "nAymp6E4TuA",
+          "imagem": "",
+          "alt": {
+            "pt": "Vídeo: uma AlbatroXX vermelha vista de baixo, a voar sobre a costa.",
+            "en": "Video: a red AlbatroXX seen from below, flying over the coast.",
+            "es": "Vídeo: una AlbatroXX roja vista desde abajo, volando sobre la costa.",
+            "fr": "Vidéo : une AlbatroXX rouge vue d’en bas, en vol au-dessus de la côte.",
+            "de": "Video: eine rote AlbatroXX von unten, im Flug über der Küste."
+          },
+          "legenda": { "pt": "", "en": "", "es": "", "fr": "", "de": "" }
+        }
+      ]
+    }
+  ]
+}

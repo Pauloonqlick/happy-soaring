@@ -306,7 +306,6 @@ a.pg-video:hover .pg-video-play{background:#ff7c31}
    10px à direita do fim do trilho. A régua interior não tem padding. */
 .pg-vento-marcas{padding:0 10px 0 0 !important}
 .pg-vento-reg{position:relative;display:block;height:17px}
-.pg-vento-reg[hidden]{display:none}
 .pg-vento-reg span{
   position:absolute;top:1px;transform:translateX(-50%);
   font-size:10.5px;color:var(--tinta-fraca);font-variant-numeric:tabular-nums;
@@ -924,6 +923,18 @@ a.fl-cor-a:hover{background:#ff7c31;color:var(--sobre-laranja)}
   display:block;font-size:clamp(28px,2.4vw,40px);font-weight:900;
   letter-spacing:-1.4px;line-height:1.05;
 }
+/* A ESCALA DESTE BLOCO ESTAVA INVERTIDA
+   Medido a 1920: o h1 da pagina tem 50px, o h2 tem 41 e os h3 tem 19.
+   Aqui os quatro rotulos tinham 40 — a par do titulo da seccao — e a
+   declaracao tinha 60, MAIOR que o h1. Um paragrafo decorativo era a
+   coisa maior da pagina.
+
+   Os dois tinham escala propria, escrita a mao (`clamp(28,2.4vw,40)` e
+   `clamp(30,5vw,60)`), de antes de haver tema. Passam a usar os degraus
+   que ja existem: os rotulos sao h3 em tudo menos no nome, e a
+   declaracao e no maximo par do titulo, nunca acima dele. */
+.pg.pk .pk-eixos b{ font-size:var(--d3); letter-spacing:0 }
+.pg.pk .pk-declaracao{ font-size:var(--d2); letter-spacing:var(--tr-display) }
 .pk-eixos span{
   display:block;font-size:15px;color:var(--tinta-fraca);margin-top:6px;line-height:1.4;
 }
@@ -2288,3 +2299,184 @@ html{ scroll-padding-top:var(--h-topo, 96px) }
    precisa de tapar o que passa por baixo. O `scroll-timeline` ainda nao
    se pode usar sem JavaScript, por isso fica o fundo cheio: e o mesmo
    compromisso que o resto do site faz. */
+
+
+/* =======================================================================
+   A GALERIA DOS SPOTS — /parakite-portugal/
+   =======================================================================
+   Substituiu seis caixas com nomes de sítios. Cada peça é um spot; a que
+   tem fotografia abre um popup com o álbum, a que não tem fica caixa de
+   texto — porque o nome do sítio conta na mesma e a grelha não se pode
+   desalinhar por falta de uma foto.
+
+   O VÉU A 55% NÃO É UM GOSTO, É UMA MEDIDA
+     O nome fica ao centro da imagem, e essa imagem ainda não existe quando
+     se escreve esta regra: vem do CMS. Não se pode medir o contraste de uma
+     fotografia que alguém vai escolher amanhã, por isso garante-se um chão.
+
+     Medido nas duas primeiras fotos reais, na banda central onde as letras
+     caem, com texto branco:
+       Lagoa de Albufeira   sem véu 1,01:1   45% -> 2,90   55% -> 3,89
+       Praia das Bicas      sem véu 1,15:1   45% -> 3,21   55% -> 4,27
+
+     Os 45% chegavam ao pior caso TEÓRICO (uma imagem toda branca dá 3,35),
+     e não chegavam à primeira fotografia real: a areia ao sol é pior do que
+     branco puro parece. A 19px com peso 800 o mínimo é 3 — texto grande.
+   ==================================================================== */
+.pk-spots-cab{
+  display:flex;gap:26px;align-items:flex-start;justify-content:space-between;
+  flex-wrap:wrap;margin:0 0 22px;
+}
+.pk-spots-cab .pk-nota{margin:0;max-width:52ch}
+.pk-spots-cab .pk-spots-cta{margin:0}
+
+.pk-spots-g{
+  list-style:none;margin:0;padding:0;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;
+}
+.pk-spot{margin:0}
+.pk-spot-b,.pk-spot-so-nome{
+  position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;
+  display:grid;place-items:center;text-align:center;
+  border:1px solid var(--linha);border-radius:var(--raio);
+  background:rgba(255,255,255,.04);color:var(--tinta);
+  font:inherit;padding:0;cursor:pointer;
+}
+.pk-spot-so-nome{cursor:default}
+.pk-spot-b img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+}
+.pk-spot-b::after{
+  content:"";position:absolute;inset:0;background:rgba(7,29,58,.55);
+  transition:background .25s;
+}
+.pk-spot-b:hover::after,.pk-spot-b:focus-visible::after{background:rgba(7,29,58,.2)}
+.pk-spot-n,.pk-spot-so-nome span{
+  position:relative;z-index:2;
+  font-size:var(--d3);font-weight:var(--peso-display);
+  text-transform:uppercase;letter-spacing:.02em;line-height:1.15;padding:0 14px;
+  text-shadow:0 2px 14px rgba(0,0,0,.45);
+}
+.pk-spot-b:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+
+/* ---- distintivo de vídeo ---- */
+.pk-play{position:absolute;inset:0;z-index:3;display:grid;place-items:center;pointer-events:none}
+.pk-play i{
+  width:44px;height:44px;border-radius:50%;background:rgba(0,0,0,.5);
+  border:2px solid rgba(255,255,255,.8);display:grid;place-items:center;
+}
+.pk-play i::after{
+  content:"";border-left:12px solid #fff;border-top:7px solid transparent;
+  border-bottom:7px solid transparent;margin-left:3px;
+}
+
+/* =======================================================================
+   O POPUP
+   =======================================================================
+   A CAIXA TOMA A FORMA DO FICHEIRO
+     A imagem dimensiona-se a si própria, limitada pelo ecrã nos dois eixos,
+     e a caixa encolhe à volta dela. Não há rácio escrito em lado nenhum —
+     nem 9:16, nem outro. Uma foto ao alto dá uma coluna estreita, uma ao
+     comprido dá uma larga, e em nenhuma sobra fundo.
+
+     O `align-items:center` não é centragem por gosto: a altura da linha da
+     grelha vem do mais alto dos dois lados, e o `stretch` de omissão
+     esticava a fotografia até ao tamanho da coluna de texto.
+   ==================================================================== */
+.pk-pop{
+  position:fixed;inset:0;z-index:100;display:grid;place-items:center;
+  background:rgba(3,12,26,.88);padding:24px;
+}
+.pk-pop-cx{
+  display:grid;grid-template-columns:auto minmax(280px,360px);
+  background:var(--azul-esc,#0a2c53);border:1px solid var(--linha);
+  border-radius:var(--raio);overflow:hidden;
+}
+.pk-pop-img{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;background:#040f1e;
+}
+/* A CAIXA NAO SABE O FORMATO DO VIDEO, E NAO PRECISA DE SABER.
+   Antes o iframe trazia min(46vh,420px) por min(82vh,750px) — 9:16 escrito
+   a mao. Bastava um video 16:9 para a caixa lhe dar a forma errada. Agora
+   quem manda e a capa: o .pk-pop-media encolhe ate ao tamanho dela e o
+   player e posto por cima, exatamente no mesmo sitio. Um formato novo nao
+   pede uma linha de CSS nova. */
+.pk-pop-media{position:relative;display:block;max-width:100%}
+.pk-pop-img img{
+  display:block;width:auto;height:auto;
+  max-height:min(86vh,940px);max-width:min(54vw,820px);object-fit:contain;
+}
+.pk-pop-img iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:2}
+/* o .pk-play da grelha nao se clica; este e um botao a serio, e o unico
+   comando que abre o video — por isso tem de aceitar rato e teclado */
+.pk-pop-play{pointer-events:auto;background:none;border:0;padding:0;cursor:pointer}
+.pk-pop-play:focus-visible{outline:3px solid var(--orange);outline-offset:-3px}
+.pk-pop-tx{padding:30px 28px;overflow-y:auto;max-height:min(86vh,940px)}
+.pk-pop-tit{
+  font-size:26px;text-transform:uppercase;font-weight:var(--peso-display);
+  line-height:1.05;margin:0 0 14px;
+}
+.pk-pop-desc{font-size:15px;color:var(--tinta-fraca);margin:0 0 18px;max-width:none}
+.pk-pop-conta{
+  font-size:13px;color:var(--tinta-fraca);letter-spacing:.06em;
+  font-variant-numeric:tabular-nums;margin:0 0 8px;
+}
+.pk-pop-leg{
+  font-size:14px;color:var(--tinta-fraca);font-style:italic;
+  border-left:2px solid var(--linha);padding-left:12px;margin:0 0 18px;max-width:none;
+}
+.pk-pop-minis{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 18px}
+.pk-pop-minis button{
+  width:44px;height:56px;padding:0;border:1px solid var(--linha);
+  background:#040f1e;cursor:pointer;overflow:hidden;opacity:.5;
+  transition:opacity .2s,border-color .2s;
+}
+.pk-pop-minis button img{width:100%;height:100%;object-fit:cover;display:block}
+.pk-pop-minis button[aria-current="true"]{opacity:1;border-color:var(--orange)}
+.pk-pop-nav{display:flex;gap:8px;margin:0 0 18px}
+.pk-pop-nav button{
+  background:none;border:1px solid var(--linha);color:var(--tinta-fraca);
+  font:inherit;font-size:14px;padding:8px 16px;cursor:pointer;border-radius:var(--raio);
+}
+.pk-pop-nav button:hover{border-color:var(--orange);color:var(--tinta)}
+.pk-pop-nota{
+  font-size:13px;color:var(--tinta-fraca);border-top:1px solid var(--linha);
+  padding-top:14px;margin:0;max-width:none;
+}
+.pk-pop-x{
+  position:absolute;top:18px;right:20px;width:44px;height:44px;border:0;z-index:5;
+  background:rgba(255,255,255,.12);color:#fff;font-size:20px;cursor:pointer;line-height:1;
+  border-radius:var(--raio);
+}
+.pk-pop-x:hover{background:rgba(255,255,255,.24)}
+.pk-pop button:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+
+@media(max-width:820px){
+  /* Num ecrã estreito não se pode ter tudo: uma foto ao alto à largura toda
+     fica mais alta que o ecrã. Cortá-la contraria aquilo para que o popup
+     existe, e fundo aos lados é o que se veio tirar. Fica a rolar. */
+  .pk-pop{padding:12px}
+  .pk-pop-cx{grid-template-columns:1fr;grid-template-rows:auto auto;
+    max-height:94vh;overflow-y:auto}
+  .pk-pop-media{width:100%}
+  .pk-pop-img img{max-width:100%;max-height:none;width:100%;height:auto}
+  .pk-pop-tx{max-height:none}
+}
+
+/* =======================================================================
+   O `hidden` TEM DE GANHAR
+   =======================================================================
+   O atributo `hidden` vale `display:none` — mas na folha do BROWSER, e uma
+   regra do autor ganha-lhe sempre, por mais fraca que seja. Basta escrever
+   `.pk-play{display:grid}` para o `hidden` deixar de fazer alguma coisa.
+
+   Este site ja tropecou nisto duas vezes e resolveu-o duas vezes caso a
+   caso: `.pg-vento-reg[hidden]` e `.bio[hidden]`. A terceira foi a galeria
+   dos spots — o distintivo de play aparecia sobre as fotografias e a capa
+   ficava ao lado do video a tocar.
+
+   Ao terceiro, corrige-se a classe e nao o caso. O `!important` aqui nao
+   esta a ganhar uma discussao: nao ha caso nenhum em que se queira ver um
+   elemento marcado como escondido. */
+[hidden]{display:none !important}

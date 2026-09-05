@@ -399,7 +399,9 @@ export const PK = {
     es: 'El viento decide adónde vamos.', fr: 'Le vent décide où nous allons.',
     de: 'Der Wind entscheidet, wohin wir gehen.'
   },
-  spots: ['Fonte da Telha', 'Lagoa de Albufeira', 'Meco', 'Alfarim', 'Peniche', 'Praia da Gralha'],
+  /* Os spots mudaram-se para content/spots.json em 05/09/2026, para o CMS
+     os poder editar — aqui eram JavaScript, e a pasta scripts/ nem sequer
+     e publicada. Foi so esta lista: o resto da pagina fica onde estava. */
   spotsNota: {
     pt: 'Referências de onde se voa na região. Não são disponibilidade garantida — o dia decide.',
     en: 'References for where flying happens in the region. Not guaranteed availability — the day decides.',
