@@ -131,3 +131,168 @@
     if (aberto && !compacto()) fechar(false);
   });
 })();
+
+
+/* =======================================================================
+   MANTER A POSICAO AO MUDAR DE IDIOMA
+   =======================================================================
+   Mudar de idioma e mudar de endereco, e o browser aterra sempre no topo.
+   Quem estava a ler a meio da pagina voltava ao principio e tinha de
+   procurar outra vez onde ia.
+
+   Guarda-se a SECCAO e a distancia ao topo dela, e nao o scrollY: o mesmo
+   texto em alemao e mais comprido que em portugues, e os pixeis deixavam
+   de bater certo — aterrava-se ao lado.
+
+   A homepage ja fazia isto no app.js. Aqui usa-se a MESMA chave e o mesmo
+   formato, de proposito: sao duas execucoes da mesma convencao e nao duas
+   convencoes. O campo "via" diz de que pagina se saiu, sem o prefixo de
+   lingua, para uma posicao guardada numa pagina nunca ser reposta noutra.
+
+   Nao ha aqui expressao regular nenhuma a desmontar o caminho. Ja me
+   partiu um endereco neste ficheiro uma vez; uma lista de prefixos faz o
+   mesmo e nao tem como se partir. */
+(function () {
+  var CHAVE = 'hs-scroll';
+  var PREFIXOS = ['en', 'es', 'fr', 'de'];
+
+  function familia() {
+    var p = location.pathname;
+    for (var i = 0; i < PREFIXOS.length; i++) {
+      var pre = '/' + PREFIXOS[i];
+      if (p === pre) return '/';
+      if (p.indexOf(pre + '/') === 0) return p.slice(pre.length);
+    }
+    return p || '/';
+  }
+
+  function guarda() {
+    try {
+      var meio = window.scrollY + window.innerHeight / 2;
+      var todas = document.querySelectorAll('section[id]');
+      var alvo = null;
+      for (var i = 0; i < todas.length; i++) {
+        if (todas[i].offsetTop <= meio) alvo = todas[i];
+      }
+      if (!alvo) return;
+      sessionStorage.setItem(CHAVE, JSON.stringify({
+        id: alvo.id,
+        off: Math.round(window.scrollY - alvo.offsetTop),
+        via: familia()
+      }));
+    } catch (e) {}
+  }
+
+  /* SALTAR SEM ANIMACAO, MESMO COM scroll-behavior:smooth
+     O CSS desta pagina pede rolagem suave, e isso e bom quando alguem
+     carrega numa ancora. Aqui nao: estamos a repor uma posicao que a
+     pessoa ja tinha, e ve-la a ser percorrida do topo ate la e um efeito
+     que ninguem pediu.
+     scrollTo({behavior:'auto'}) NAO resolve — 'auto' quer dizer "usa o que
+     o CSS disser", que aqui e suave. Desligar a propriedade durante o
+     salto e o unico jeito que funciona em todos os browsers. */
+  function salta(y) {
+    var de = document.documentElement;
+    var antes = de.style.scrollBehavior;
+    de.style.scrollBehavior = 'auto';
+    window.scrollTo(0, Math.max(0, y));
+    de.style.scrollBehavior = antes;
+  }
+
+  /* PERSEGUIR A PAGINA ENQUANTO ELA AINDA MEXE
+     Repor a posicao uma vez nao chega. Assim que se salta, as imagens
+     marcadas lazy que passam a estar no ecra comecam a carregar e empurram
+     tudo para baixo — e o evento load nao espera por elas, por isso a
+     ultima correccao acontecia cedo de mais e aterrava-se ao lado.
+
+     RELOGIO SO NAO CHEGA
+     Um ciclo de setTimeout parece resolver e nao resolve: num separador que
+     nao esta a ser visto o browser trava os temporizadores para uma volta por
+     segundo, e a pagina tambem assenta mais devagar. Medi 4 voltas em 2,5
+     segundos — o prazo esgotava-se antes de a pagina parar de mexer e a
+     posicao ficava a 350px do sitio.
+
+     Por isso alem do relogio ouve-se o que CAUSA o movimento: cada imagem que
+     acaba de carregar, a pagina a mudar de tamanho, e o separador a vir para a
+     frente — ai comeca uma janela nova, porque so agora e que alguem esta
+     mesmo a olhar.
+
+     Para-se assim que a pessoa rolar, tocar ou carregar numa tecla: arrastar
+     alguem que decidiu ir para outro sitio seria pior do que o defeito que
+     isto veio resolver. Nao se ouve o pointerdown — e um clique, nao e vontade
+     de rolar, e o proprio clique que nos trouxe aqui chega a pingar no
+     documento novo e cancelava tudo antes de comecar. */
+  function persegue(ondeDevia) {
+    var parado = false, fim = Date.now() + 4000, agendado = false, ro = null;
+
+    function corrige() {
+      if (parado || Date.now() > fim) return;
+      var y = ondeDevia();
+      if (y !== null && Math.abs(window.scrollY - y) > 2) salta(y);
+    }
+    function agenda() {
+      if (agendado || parado) return;
+      agendado = true;
+      setTimeout(function () {
+        agendado = false;
+        corrige();
+        if (Date.now() < fim) agenda();
+      }, 100);
+    }
+    function desiste() {
+      parado = true;
+      document.removeEventListener('load', corrige, true);
+      document.removeEventListener('visibilitychange', acorda);
+      if (ro) ro.disconnect();
+    }
+    function acorda() {
+      if (document.hidden || parado) return;
+      fim = Date.now() + 1500;
+      corrige(); agenda();
+    }
+
+    ['wheel', 'touchstart', 'keydown'].forEach(function (ev) {
+      window.addEventListener(ev, desiste, { once: true, passive: true });
+    });
+    document.addEventListener('load', corrige, true);
+    document.addEventListener('visibilitychange', acorda);
+    /* A JANELA CONTA-SE A PARTIR DO LOAD, NAO DE AGORA.
+       Este codigo corre mal o HTML acaba de ser lido — com as imagens e os
+       tipos de letra ainda a caminho. Se o prazo comecasse aqui, numa ligacao
+       lenta esgotava-se antes de a pagina estar montada, e era exatamente
+       nesse caso que a posicao ficava ao lado. */
+    window.addEventListener('load', function () {
+      fim = Math.max(fim, Date.now() + 1500); corrige(); agenda();
+    });
+    /* trocar o tipo de letra muda a altura de todos os paragrafos */
+    if (document.fonts && document.fonts.ready && document.fonts.ready.then) {
+      document.fonts.ready.then(function () {
+        fim = Math.max(fim, Date.now() + 800); corrige(); agenda();
+      });
+    }
+    if (window.ResizeObserver) { ro = new ResizeObserver(corrige); ro.observe(document.body); }
+
+    corrige();
+    agenda();
+  }
+
+  function repoe() {
+    var p = null;
+    try {
+      p = JSON.parse(sessionStorage.getItem(CHAVE) || 'null');
+      sessionStorage.removeItem(CHAVE);
+    } catch (e) { return; }
+    /* uma ancora escrita no endereco manda mais do que a memoria */
+    if (!p || !p.id || p.via !== familia() || location.hash) return;
+    persegue(function () {
+      var s = document.getElementById(p.id);
+      return s ? Math.max(0, s.offsetTop + (p.off || 0)) : null;
+    });
+  }
+
+  var nav = document.querySelector('.pg-idiomas');
+  if (nav) nav.addEventListener('click', function (e) {
+    if (e.target.closest && e.target.closest('a[hreflang]')) guarda();
+  });
+  repoe();
+})();

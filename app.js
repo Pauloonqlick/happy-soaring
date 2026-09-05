@@ -2785,7 +2785,11 @@ function guardaPosicao() {
       if (topo <= meio) alvo = s;
     });
     if (!alvo) return;
-    sessionStorage.setItem(POSKEY, JSON.stringify({ id: alvo.id, off: Math.round(window.scrollY - alvo.offsetTop) }));
+    /* "via" identifica a familia de paginas — a homepage e sempre "/".
+       O menu.js escreve o mesmo campo, e e o que impede uma posicao
+       guardada numa pagina de ser reposta noutra. */
+    sessionStorage.setItem(POSKEY, JSON.stringify({
+      id: alvo.id, off: Math.round(window.scrollY - alvo.offsetTop), via: '/' }));
   } catch (e) { }
 }
 /* ---- ir para a secção pedida no endereço ----
@@ -2796,33 +2800,116 @@ function guardaPosicao() {
 
    Repete-se como na reposição de posição: as imagens ainda estão a carregar
    e continuam a mudar a altura da página por baixo dos pés. */
+/* SALTAR SEM ANIMACAO, MESMO COM scroll-behavior:smooth
+   O CSS desta pagina pede rolagem suave, e isso e bom quando alguem
+   carrega numa ancora. Aqui nao: estamos a repor uma posicao que a
+   pessoa ja tinha, e ve-la a ser percorrida do topo ate la e um efeito
+   que ninguem pediu.
+   scrollTo({behavior:'auto'}) NAO resolve — 'auto' quer dizer "usa o que
+   o CSS disser", que aqui e suave. Desligar a propriedade durante o
+   salto e o unico jeito que funciona em todos os browsers. */
+function salta(y) {
+  var de = document.documentElement;
+  var antes = de.style.scrollBehavior;
+  de.style.scrollBehavior = 'auto';
+  window.scrollTo(0, Math.max(0, y));
+  de.style.scrollBehavior = antes;
+}
+
+/* PERSEGUIR A PAGINA ENQUANTO ELA AINDA MEXE
+   Repor a posicao uma vez nao chega. Assim que se salta, as imagens
+   marcadas lazy que passam a estar no ecra comecam a carregar e empurram
+   tudo para baixo — e o evento load nao espera por elas, por isso a
+   ultima correccao acontecia cedo de mais e aterrava-se ao lado.
+
+   RELOGIO SO NAO CHEGA
+   Um ciclo de setTimeout parece resolver e nao resolve: num separador que
+   nao esta a ser visto o browser trava os temporizadores para uma volta por
+   segundo, e a pagina tambem assenta mais devagar. Medi 4 voltas em 2,5
+   segundos — o prazo esgotava-se antes de a pagina parar de mexer e a
+   posicao ficava a 350px do sitio.
+
+   Por isso alem do relogio ouve-se o que CAUSA o movimento: cada imagem que
+   acaba de carregar, a pagina a mudar de tamanho, e o separador a vir para a
+   frente — ai comeca uma janela nova, porque so agora e que alguem esta
+   mesmo a olhar.
+
+   Para-se assim que a pessoa rolar, tocar ou carregar numa tecla: arrastar
+   alguem que decidiu ir para outro sitio seria pior do que o defeito que
+   isto veio resolver. Nao se ouve o pointerdown — e um clique, nao e vontade
+   de rolar, e o proprio clique que nos trouxe aqui chega a pingar no
+   documento novo e cancelava tudo antes de comecar. */
+function persegue(ondeDevia) {
+  var parado = false, fim = Date.now() + 4000, agendado = false, ro = null;
+
+  function corrige() {
+    if (parado || Date.now() > fim) return;
+    var y = ondeDevia();
+    if (y !== null && Math.abs(window.scrollY - y) > 2) salta(y);
+  }
+  function agenda() {
+    if (agendado || parado) return;
+    agendado = true;
+    setTimeout(function () {
+      agendado = false;
+      corrige();
+      if (Date.now() < fim) agenda();
+    }, 100);
+  }
+  function desiste() {
+    parado = true;
+    document.removeEventListener('load', corrige, true);
+    document.removeEventListener('visibilitychange', acorda);
+    if (ro) ro.disconnect();
+  }
+  function acorda() {
+    if (document.hidden || parado) return;
+    fim = Date.now() + 1500;
+    corrige(); agenda();
+  }
+
+  ['wheel', 'touchstart', 'keydown'].forEach(function (ev) {
+    window.addEventListener(ev, desiste, { once: true, passive: true });
+  });
+  document.addEventListener('load', corrige, true);
+  document.addEventListener('visibilitychange', acorda);
+  /* A JANELA CONTA-SE A PARTIR DO LOAD, NAO DE AGORA.
+     Este codigo corre mal o HTML acaba de ser lido — com as imagens e os
+     tipos de letra ainda a caminho. Se o prazo comecasse aqui, numa ligacao
+     lenta esgotava-se antes de a pagina estar montada, e era exatamente
+     nesse caso que a posicao ficava ao lado. */
+  window.addEventListener('load', function () {
+    fim = Math.max(fim, Date.now() + 1500); corrige(); agenda();
+  });
+  /* trocar o tipo de letra muda a altura de todos os paragrafos */
+  if (document.fonts && document.fonts.ready && document.fonts.ready.then) {
+    document.fonts.ready.then(function () {
+      fim = Math.max(fim, Date.now() + 800); corrige(); agenda();
+    });
+  }
+  if (window.ResizeObserver) { ro = new ResizeObserver(corrige); ro.observe(document.body); }
+
+  corrige();
+  agenda();
+}
+
 function irParaAncora() {
   const id = (location.hash || '').replace(/^#/, '');
   if (!id || /\//.test(id)) return false;      /* #produtos/asa abre a ficha, não é âncora */
   const alvo = document.getElementById(id);
   if (!alvo) return false;
-  const ir = () => window.scrollTo({ top: Math.max(0, alvo.offsetTop), behavior: 'auto' });
-  ir();
-  requestAnimationFrame(ir);
-  window.addEventListener('load', ir, { once: true });
-  setTimeout(ir, 250);
+  persegue(() => Math.max(0, alvo.offsetTop));
   return true;
 }
 
 function reporPosicao() {
   let p;
   try { p = JSON.parse(sessionStorage.getItem(POSKEY) || 'null'); sessionStorage.removeItem(POSKEY); } catch (e) { }
-  if (!p || !p.id) return;
-  const ir = () => {
+  if (!p || !p.id || (p.via && p.via !== '/')) return;
+  persegue(() => {
     const s = document.getElementById(p.id);
-    if (!s) return;
-    window.scrollTo({ top: Math.max(0, s.offsetTop + (p.off || 0)), behavior: 'instant' in window ? 'instant' : 'auto' });
-  };
-  ir();
-  requestAnimationFrame(ir);
-  /* as imagens ainda podem estar a carregar e a mudar a altura da página */
-  window.addEventListener('load', ir, { once: true });
-  setTimeout(ir, 250);
+    return s ? Math.max(0, s.offsetTop + (p.off || 0)) : null;
+  });
 }
 
 function buildLangSwitcher(locales) {
