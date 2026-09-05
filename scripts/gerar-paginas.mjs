@@ -1509,22 +1509,45 @@ function paginaParakite(l, num) {
     if (m.videoId) return 'https://i.ytimg.com/vi/' + encodeURIComponent(m.videoId) + '/oar2.jpg';
     return '';
   };
+  /* UMA GRELHA DE BOTÕES NÃO É UMA GRELHA DE LIGAÇÕES
+     As páginas da Praia das Bicas e da Lagoa de Albufeira estiveram
+     publicadas sem um único <a href> a apontar-lhes em todo o site: o
+     endereço existia só dentro do JSON do popup, que é JavaScript. Chegavam
+     ao Google pelo sitemap, e o Google executa JavaScript — mas uma ligação
+     a sério vale muito mais do que um endereço encontrado num sitemap, e um
+     sistema de IA que leia o HTML sem o executar não encontrava nada.
+
+     Agora o mosaico de um spot com página é um <a> com o endereço lá dentro.
+     O clique continua a abrir o popup — o JavaScript trava a navegação — mas
+     o ctrl+clique abre a página noutro separador, como qualquer pessoa
+     espera de uma ligação, e sem JavaScript o mosaico leva à página em vez
+     de não fazer nada. O aria-haspopup diz a quem ouve que aquilo abre uma
+     caixa e não muda de página. */
   const spots = SPOTS.map((s, i) => {
     const album = (s.album || []).filter(m => m && (m.imagem || m.videoId));
     const capa = capaDe(album[0]);
     const nome = esc(s.nome);
-    if (!capa) return '<li class="pk-spot pk-spot-so-nome"><span>' + nome + '</span></li>';
+    const pagina = (s.publicar === true && s.id) ? esc(caminhoSpot(l, s)) : '';
+    if (!capa) {
+      /* sem álbum não há popup para abrir: se tem página, é ligação simples */
+      const dentro = '<span>' + nome + '</span>';
+      return '<li class="pk-spot pk-spot-so-nome">'
+        + (pagina ? '<a class="pk-spot-so-link" href="' + pagina + '">' + dentro + '</a>' : dentro)
+        + '</li>';
+    }
     const alt = esc(t(album[0].alt, l));
     const rede = album[0].videoId && !album[0].imagem
       ? ' onerror="this.onerror=null;this.src=\'https://img.youtube.com/vi/'
         + encodeURIComponent(album[0].videoId) + '/maxresdefault.jpg\'"'
       : '';
-    return `<li class="pk-spot"><button type="button" class="pk-spot-b" data-spot="${i}"
+    const etiqueta = pagina ? 'a' : 'button';
+    const abre = pagina ? 'href="' + pagina + '"' : 'type="button"';
+    return `<li class="pk-spot"><${etiqueta} ${abre} class="pk-spot-b" data-spot="${i}"
         aria-haspopup="dialog">
         <img src="${esc(capa)}" alt="${alt}" loading="lazy" decoding="async"${rede} />
         ${album[0].videoId ? '<span class="pk-play" aria-hidden="true"><i></i></span>' : ''}
         <span class="pk-spot-n">${nome}</span>
-      </button></li>`;
+      </${etiqueta}></li>`;
   }).join('');
 
   /* os dados do album viajam num <script type="application/json">: é texto
@@ -1871,7 +1894,15 @@ function paginaParakite(l, num) {
   }
 
   Array.prototype.forEach.call(document.querySelectorAll('.pk-spot-b'),function(b){
-    b.addEventListener('click',function(){ abrir(+b.dataset.spot,b) });
+    b.addEventListener('click',function(e){
+      /* num <a>, o ctrl/cmd/shift-clique e o clique do meio ficam a ser do
+         browser: quem quer a pagina noutro separador tem de a poder abrir */
+      if (b.tagName === 'A') {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        e.preventDefault();
+      }
+      abrir(+b.dataset.spot, b);
+    });
   });
   fechar.addEventListener('click',function(){ fecha() });
   ant.addEventListener('click',function(){ mostra(iV-1) });

@@ -138,6 +138,20 @@ tamanho dos `h2`. Ao estilar uma página de leitura, prefixar com
   `masters/`, `entregas/`, `catalogo-flow/`, `mockups/`, `_arquivo/`,
   `music/_apagados/`.
 
+## O mapa da estrutura
+
+Há um artefacto com a arquitectura do site — endereços, línguas, grafo de
+ligações, o que segura o SEO e a IA, as verificações e os buracos por tapar:
+
+https://claude.ai/code/artifact/9def0224-e27a-47d2-8f9e-3c582327875e
+
+**Actualiza-se só a pedido do Paulo.** Não amarrar à publicação nem a um
+horário — foi decisão dele a 05/09/2026.
+
+O endereço fica aqui porque, de outra sessão, republicar sem ele não actualiza
+esta página: cria uma segunda. Os números daquela página saem do repositório,
+portanto ao actualizar voltam a ser lidos e não estimados.
+
 ## O projeto em três linhas
 
 Site estático sem build. `index.html` → `app.js` (módulo) → `content/*.json`.

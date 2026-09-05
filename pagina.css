@@ -2712,3 +2712,12 @@ body.spot.papel .spot-lista{
 }
 body.spot.papel .spot-lista li{margin:0 0 5px;padding-left:.15em}
 body.spot.papel .spot-lista li::marker{color:var(--laranja-tinta)}
+
+/* o mosaico de um spot com página é um <a>, não um <button>: tem de perder o
+   sublinhado e a cor de ligação e ficar igual aos outros */
+/* sem display aqui: o .pk-spot-b e uma grelha, e e ela que poe o nome
+   por cima da fotografia. A minha primeira versao punha display:block e
+   ganhava-lhe por especificidade — o mosaico media igual e por dentro nao
+   era a mesma coisa. */
+a.pk-spot-b{text-decoration:none;color:inherit}
+.pk-spot-so-link{text-decoration:none;color:inherit;display:block;height:100%}
