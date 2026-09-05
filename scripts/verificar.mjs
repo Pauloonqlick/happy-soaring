@@ -1132,6 +1132,76 @@ titulo('16. Nenhum local aparece como autorizado ou aprovado pela ANAC');
 }
 
 /* ------------------------------------------------------------------ */
+titulo('17. Nenhuma página fica sem quem lhe aponte');
+{
+  /* A ASSIMETRIA QUE NINGUEM HAVIA NOTADO
+       A verificacao 2 confirma que as ligacoes SAEM para sitios que
+       existem. Nenhuma confirmava que as paginas sao ALCANCAVEIS.
+
+       A 05/09 publicaram-se duas paginas de spot com cerca de 800 palavras
+       cada — a Praia das Bicas e a Lagoa de Albufeira, nas cinco linguas —
+       e nenhuma pagina do site lhes apontava. O endereco existia so dentro
+       do JSON do popup, que e JavaScript. Chegavam ao Google pelo sitemap,
+       e o Google executa JavaScript, mas uma ligacao a serio vale muito
+       mais do que um endereco encontrado num sitemap, e um sistema de IA
+       que leia o HTML sem o executar nao encontrava nada.
+
+       As dezasseis verificacoes passaram todas. Dez paginas orfas e nenhuma
+       deu por isso.
+
+     O QUE CONTA COMO APONTAR
+       Um <a href> no HTML gerado, de OUTRA pagina. Nao conta o sitemap, nao
+       conta um endereco dentro de um <script>, nao conta a propria pagina
+       apontar-se a si mesma. E o que um rastejador ve sem executar nada.
+
+     E NAO CONTA O SELECTOR DE IDIOMAS
+       Esta linha nasceu com um defeito que so um teste podia apanhar. Na
+       primeira versao ela passava com o site inteiro estragado de proposito:
+       tirei as ligacoes dos cinco hubs para os spots e continuou a dizer
+       zero orfas.
+
+       A razao: cada pagina e apontada pelas suas proprias traducoes. O
+       selector de idiomas emite um <a> para cada uma das outras quatro
+       linguas, portanto TODA a pagina tem sempre quatro ligacoes de entrada
+       e nenhuma poderia alguma vez ser acusada.
+
+       Uma traducao nao torna uma pagina alcancavel — so diz que aquela
+       pagina existe noutra lingua. Se o unico caminho ate a versao alema for
+       a versao inglesa, e a inglesa tambem for orfa, as cinco estao perdidas
+       juntas. Por isso ignoram-se os <a> que trazem hreflang, que sao
+       exactamente os do selector e mais nenhum.
+
+     PORQUE E QUE A RAIZ ESTA DE FORA
+       A / de cada lingua e o ponto de entrada: e ela que aponta, e nao ha
+       nada acima dela para lhe apontar. Exigir-lhe uma ligacao de entrada
+       seria pedir uma coisa que nao existe. */
+  const apontam = new Map(vivas.map(p => [p.url, new Set()]));
+  const raizes = new Set(IDIOMAS.map(l => l === 'pt' ? '/' : '/' + l + '/'));
+
+  for (const p of vivas) {
+    const html = fs.readFileSync(p.ficheiro, 'utf8')
+      .replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ');
+    for (const m of html.matchAll(/<a\b([^>]*)\shref="(\/[^"#?]*)"([^>]*)>/g)) {
+      /* o selector de idiomas é a única coisa no site que põe hreflang num
+         <a>, e é exactamente o que não conta: ver o comentário acima */
+      if (/\bhreflang=/.test(m[1] + m[3])) continue;
+      let destino = m[2];
+      if (!destino.endsWith('/')) destino += '/';
+      /* uma pagina apontar-se a si propria nao a torna alcancavel */
+      if (destino !== p.url && apontam.has(destino)) apontam.get(destino).add(p.url);
+    }
+  }
+
+  let orfas = 0;
+  for (const [url, quem] of apontam) {
+    if (raizes.has(url) || quem.size) continue;
+    falha(url + ': nenhuma página do site lhe aponta — existe no sitemap e mais nada');
+    orfas++;
+  }
+  ok(vivas.length + ' páginas, ' + raizes.size + ' raízes dispensadas, ' + orfas + ' órfã(s)');
+}
+
+/* ------------------------------------------------------------------ */
 return problemas;
 }
 
