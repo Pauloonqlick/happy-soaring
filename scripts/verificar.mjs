@@ -887,7 +887,7 @@ titulo('15. A galeria dos spots aguenta o que o CMS lá puser');
     catch (e) { return null; }
   })();
 
-  let mau = 0, itens = 0;
+  let mau = 0, itens = 0, rascunhos = 0, prontos = 0;
   if (!spots) {
     falha('o content/spots.json não existe ou não é JSON válido');
     mau++;
@@ -904,14 +904,50 @@ titulo('15. A galeria dos spots aguenta o que o CMS lá puser');
         mau++;
       } else ids.add(s2.id);
 
-      /* a descrição: ou em todas, ou em nenhuma */
-      const d = s2.descricao || {};
-      const escritas = IDIOMAS.filter(l => String(d[l] || '').trim());
-      if (escritas.length && escritas.length < IDIOMAS.length) {
-        falha(nome + ': descrição em ' + escritas.join(', ')
-              + ' e sem ' + IDIOMAS.filter(l => !escritas.includes(l)).join(', '));
-        mau++;
+      /* RASCUNHO OU PROMESSA
+           Antes esta linha exigia: ou em todas as línguas, ou em nenhuma.
+           Isso impedia a única maneira sensata de trabalhar — escrever o
+           português primeiro, fechá-lo, e só depois traduzir. Um spot a
+           meio ficava impedido de existir no ficheiro.
+
+           O `publicar` resolve-o e não abre buraco nenhum. Enquanto está
+           a false o spot é trabalho em curso: pode ter só português, ou
+           nada. Quando passa a true torna-se uma promessa, e aí sim tem
+           de estar inteiro nas cinco — senão a página alemã mostrava
+           português sem se queixar, que é o defeito que esta verificação
+           existe para apanhar.
+
+           É o mesmo critério das páginas magras que o Paulo pôs: só vai
+           para o ar o que está pronto, e é o ficheiro que o garante. */
+      const publicado = s2.publicar === true;
+      let faltasDeRascunho = 0;
+      const nasCinco = (obj, oQue) => {
+        const escritas = IDIOMAS.filter(l => String((obj || {})[l] || '').trim());
+        if (!escritas.length) {
+          if (publicado) { falha(nome + ': publicado e com ' + oQue + ' por escrever'); mau++; }
+          return;
+        }
+        if (escritas.length === IDIOMAS.length) return;
+        const faltam = IDIOMAS.filter(l => !escritas.includes(l));
+        if (publicado) { falha(nome + ': ' + oQue + ' sem ' + faltam.join(', ')); mau++; }
+        else faltasDeRascunho++;
+      };
+
+      nasCinco(s2.descricao, 'descrição');
+      for (const [i, sec] of (s2.seccoes || []).entries()) {
+        nasCinco(sec.titulo, 'secção ' + (i + 1) + ' · título');
+        nasCinco(sec.texto, 'secção ' + (i + 1) + ' · texto');
       }
+      if (publicado) {
+        nasCinco(s2.titulo, 'título da página');
+        nasCinco(s2.aviso, 'aviso de segurança');
+        /* o aviso não é um extra: é a única parte da página que diz que a
+           página não decide nada. Sem ele não se publica. */
+        if (!s2.ficha) { falha(nome + ': publicado sem ficha de referência'); mau++; }
+        if (!(s2.seccoes || []).length) { falha(nome + ': publicado sem uma única secção'); mau++; }
+      }
+      if (faltasDeRascunho) rascunhos++;
+      if (publicado) prontos++;
 
       for (const [i, m] of (s2.album || []).entries()) {
         itens++;
@@ -925,7 +961,7 @@ titulo('15. A galeria dos spots aguenta o que o CMS lá puser');
         }
         const leg = m.legenda || {};
         const legEscritas = IDIOMAS.filter(l => String(leg[l] || '').trim());
-        if (legEscritas.length && legEscritas.length < IDIOMAS.length) {
+        if (publicado && legEscritas.length && legEscritas.length < IDIOMAS.length) {
           falha(onde + ': legenda em ' + legEscritas.join(', ') + ' e não nas outras');
           mau++;
         }
@@ -946,7 +982,129 @@ titulo('15. A galeria dos spots aguenta o que o CMS lá puser');
       }
     }
   }
-  ok((spots ? spots.length : 0) + ' spots, ' + itens + ' fotos/vídeos, ' + mau + ' problema(s)');
+  ok((spots ? spots.length : 0) + ' spots (' + prontos + ' prontos a publicar, '
+     + rascunhos + ' em rascunho), ' + itens + ' fotos/vídeos, ' + mau + ' problema(s)');
+}
+
+/* ------------------------------------------------------------------ */
+titulo('16. Nenhum local aparece como autorizado ou aprovado pela ANAC');
+{
+  /* A REGRA
+       A ANAC identifica, no seu ofício, locais onde há atividade
+       significativa de voo livre. Identificar não é autorizar. Escrever
+       "spot autorizado pela ANAC" atribui à autoridade uma garantia que
+       ela não deu, e transfere para o site uma responsabilidade que não é
+       dele: quem lesse isso podia concluir que ali se pode sempre voar.
+
+       A única formulação correcta é a que descreve o que existe mesmo:
+       "Local identificado pela ANAC como zona de atividade de voo livre."
+
+     PORQUE E QUE ISTO PRECISA DE VERIFICACAO
+       Porque a regra é conceptual e o conteúdo é editável no CMS. Uma
+       regra que vive só na cabeça de quem escreve dura até ao dia em que
+       outra pessoa escreve — ou até ao dia em que a mesma pessoa está com
+       pressa. Esta linha faz a publicação parar.
+
+     O QUE ESTA LINHA NAO PODE FAZER
+       Não pode proibir a palavra "autorização". Há usos inteiramente
+       legítimos e necessários: "este espaço aéreo pode exigir autorização
+       da ANAC" é verdade e tem de poder escrever-se.
+
+       A distinção que se procura é gramatical, e é a mesma nas cinco
+       línguas: o PARTICÍPIO aplicado a um lugar ("spot autorizado",
+       "local aprovado", "offizieller Spot") afirma que a autoridade
+       aprovou aquele sítio. O SUBSTANTIVO ("exigir autorização") descreve
+       um procedimento. Só o primeiro é bloqueado.
+
+       Do que decorre uma consequência útil: uma negação continua a poder
+       escrever-se, desde que use o substantivo. "A inclusão na lista da
+       ANAC não significa autorização para voar" passa, e é exactamente o
+       que se quer poder dizer. */
+  const APROVACAO = new RegExp('\\b(?:'
+    + 'autoriza(?:do|da|dos|das)|aprova(?:do|da|dos|das)|certifica(?:do|da|dos|das)'
+    + '|reconhecid[oa]s?|homologad[oa]s?|oficia(?:l|is)'
+    + '|authoris?ed|authorized|approved|certified|recogni[sz]ed|official'
+    + '|aprobad[oa]s?|reconocid[oa]s?|oficial(?:es)?|homologad[oa]s?'
+    + '|autoris[ée]{1,2}s?|approuv[ée]{1,2}s?|certifi[ée]{1,2}s?|reconnues?|reconnus?'
+    + '|officiel(?:le)?s?|homologu[ée]{1,2}s?'
+    + '|genehmigt|zugelassen|zertifiziert|anerkannt|offiziell(?:e[nrs]?)?'
+    + ')\\b', 'i');
+  const LUGAR = new RegExp('\\b(?:'
+    + 'spots?|locais|local|lugar(?:es)?|zonas?|s[ií]tios?|praias?'
+    + '|sites?|places?|areas?|[áa]reas?|beach(?:es)?'
+    + '|zones?|lieux|lieu|plages?'
+    + '|orte?n?|gebiete?n?|fluggebiete?n?|str[aä]nde?n?'
+    + ')\\b', 'i');
+
+  /* uma frase de cada vez: e dentro da mesma frase que a afirmacao se faz.
+     Os blocos de HTML tambem separam — um titulo nao continua no paragrafo
+     seguinte, e junta-los inventava frases que ninguem escreveu. */
+  const emFrases = txt => txt
+    .replace(/\s+/g, ' ')
+    .split(/(?:[.!?;:]|—|\||\n)+/)
+    .map(f => f.trim())
+    .filter(Boolean);
+
+  const doHtml = h => h
+    .replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(/<\/?(?:p|div|li|h[1-6]|section|br|td|tr|figcaption|main|nav)\b[^>]*>/gi, '\n')
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&[a-z]+;|&#\d+;/gi, ' ');
+
+  const acusa = (onde, texto) => {
+    let n = 0;
+    for (const frase of emFrases(texto)) {
+      if (!/\bANAC\b/i.test(frase)) continue;
+      if (!APROVACAO.test(frase) || !LUGAR.test(frase)) continue;
+      falha(onde + ': dá a entender que a ANAC autoriza um local — "'
+            + (frase.length > 120 ? frase.slice(0, 117) + '...' : frase) + '"');
+      n++;
+    }
+    return n;
+  };
+
+  let mau = 0, frases = 0;
+  for (const p of vivas) {
+    const texto = doHtml(fs.readFileSync(p.ficheiro, 'utf8'));
+    frases += emFrases(texto).filter(f => /\bANAC\b/i.test(f)).length;
+    mau += acusa(p.url, texto);
+  }
+  /* o content/ tambem, e nao so o HTML: e ali que o CMS escreve, e um texto
+     pode estar guardado sem ainda ter chegado a uma pagina */
+  const pastaContent = path.join(RAIZ, 'content');
+  const porLer = [];
+  (function anda(dir) {
+    for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+      const o = path.join(dir, e.name);
+      if (e.isDirectory()) anda(o); else if (e.name.endsWith('.json')) porLer.push(o);
+    }
+  })(pastaContent);
+  /* NO JSON, A UNIDADE E A STRING E NAO A LINHA.
+     A primeira versao desta linha lia o ficheiro em bruto e deixava o
+     divisor de frases tratar dele. Nao serve: um array JSON nao tem
+     pontos finais entre os elementos, e sete frases separadas passavam a
+     ser uma so. O teste mostrou as duas consequencias — sete afirmacoes
+     proibidas contadas como uma, e sete frases inteiramente legitimas
+     acusadas por contagio, porque um "oficial" de uma contaminava o
+     "ANAC" de outra. Parte-se o JSON como JSON. */
+  const textosDe = (v, saco) => {
+    if (typeof v === 'string') saco.push(v);
+    else if (Array.isArray(v)) v.forEach(x => textosDe(x, saco));
+    else if (v && typeof v === 'object') Object.values(v).forEach(x => textosDe(x, saco));
+    return saco;
+  };
+  for (const f of porLer) {
+    const onde = 'content/' + path.relative(pastaContent, f).split(path.sep).join('/');
+    let dados;
+    try { dados = JSON.parse(fs.readFileSync(f, 'utf8')); }
+    catch (e) { falha(onde + ': não é JSON válido — ' + e.message); mau++; continue; }
+    for (const txt of textosDe(dados, [])) {
+      frases += emFrases(txt).filter(x => /\bANAC\b/i.test(x)).length;
+      mau += acusa(onde, txt);
+    }
+  }
+  ok(frases + ' frase(s) mencionam a ANAC, ' + mau + ' problema(s)');
 }
 
 /* ------------------------------------------------------------------ */

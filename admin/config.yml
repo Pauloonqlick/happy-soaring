@@ -2781,6 +2781,17 @@ collections:
                   Sem espaços nem acentos. Vai para o endereço quando alguém
                   abre este spot — /parakite-portugal/#lagoa-de-albufeira — e
                   por isso não deve mudar depois de estar publicado.
+              - label: Pronto a publicar
+                name: publicar
+                widget: boolean
+                default: false
+                required: false
+                hint: >-
+                  Deixa em NÃO enquanto estiveres a escrever. Em NÃO podes ter
+                  só o português, ou nada — é rascunho e a verificação não te
+                  chateia. Ao pôr em SIM passa a ser uma promessa: exige o
+                  texto nas cinco línguas, a ficha e o aviso de segurança, e
+                  a publicação para se faltar alguma coisa.
               - label: Descrição
                 name: descricao
                 widget: object
@@ -2792,6 +2803,148 @@ collections:
                   uma foto: fica visível em todas as vistas do álbum. Uma ou
                   duas frases. Se escreveres numa língua, escreve nas cinco —
                   senão a página alemã mostra português sem se queixar.
+                fields:
+                  - {label: Português, name: pt, widget: text, required: false}
+                  - {label: English, name: en, widget: text, required: false}
+                  - {label: Español, name: es, widget: text, required: false}
+                  - {label: Français, name: fr, widget: text, required: false}
+                  - {label: Deutsch, name: de, widget: text, required: false}
+              # ----------------------------------------------------------
+              #  O QUE SE SEGUE SÓ FAZ FALTA A UM SPOT DOCUMENTADO
+              #  Um spot que é só um nome numa grelha não precisa de nada
+              #  disto. Estes campos existem para os sítios sobre os quais
+              #  há mesmo alguma coisa a dizer — e é isso que distingue uma
+              #  página que vale a pena de mais um endereço no sitemap.
+              - label: Título da página
+                name: titulo
+                widget: object
+                collapsed: true
+                required: false
+                summary: '{{fields.pt}}'
+                hint: >-
+                  Só quando o spot tiver página própria. Ex.: "Praia das
+                  Bicas — Parakite e parapente".
+                fields:
+                  - {label: Português, name: pt, widget: string, required: false}
+                  - {label: English, name: en, widget: string, required: false}
+                  - {label: Español, name: es, widget: string, required: false}
+                  - {label: Français, name: fr, widget: string, required: false}
+                  - {label: Deutsch, name: de, widget: string, required: false}
+              - label: Ficha de referência
+                name: ficha
+                widget: object
+                collapsed: true
+                required: false
+                hint: >-
+                  Os dados secos, que é o que um motor de pesquisa e um
+                  sistema de IA conseguem ler e reutilizar. O texto corrido
+                  vai nas secções, abaixo.
+                fields:
+                  - {label: Local, name: local, widget: string, required: false,
+                     hint: 'Ex.: Praia das Bicas, Sesimbra, Portugal'}
+                  - {label: Distância de Lisboa (km), name: distanciaLisboaKm,
+                     widget: number, value_type: int, required: false}
+                  - {label: Altitude da descolagem (m), name: altitudeDescolagemM,
+                     widget: string, required: false,
+                     hint: 'Um número ou um intervalo, ex.: 30–40'}
+                  - label: Fonte da altitude
+                    name: altitudeFonte
+                    widget: string
+                    required: false
+                    hint: >-
+                      De onde vem o valor acima. Se não souberes dizer de onde
+                      vem, é melhor deixar a altitude em branco do que
+                      publicá-la sem saber.
+                  - label: Direções de vento
+                    name: direcoes
+                    widget: list
+                    required: false
+                    hint: 'Códigos, um por linha: W, NW, N…'
+                  - label: Modalidades
+                    name: modalidades
+                    widget: list
+                    required: false
+                    hint: 'parakite, parapente'
+                  - label: Tempo de viagem
+                    name: tempoViagem
+                    widget: object
+                    collapsed: true
+                    required: false
+                    summary: '{{fields.pt}}'
+                    fields:
+                      - {label: Português, name: pt, widget: string, required: false}
+                      - {label: English, name: en, widget: string, required: false}
+                      - {label: Español, name: es, widget: string, required: false}
+                      - {label: Français, name: fr, widget: string, required: false}
+                      - {label: Deutsch, name: de, widget: string, required: false}
+                  - label: Tipo de voo
+                    name: tipoVoo
+                    widget: object
+                    collapsed: true
+                    required: false
+                    summary: '{{fields.pt}}'
+                    fields:
+                      - {label: Português, name: pt, widget: string, required: false}
+                      - {label: English, name: en, widget: string, required: false}
+                      - {label: Español, name: es, widget: string, required: false}
+                      - {label: Français, name: fr, widget: string, required: false}
+                      - {label: Deutsch, name: de, widget: string, required: false}
+                  - label: Acesso
+                    name: acesso
+                    widget: object
+                    collapsed: true
+                    required: false
+                    summary: '{{fields.pt}}'
+                    fields:
+                      - {label: Português, name: pt, widget: text, required: false}
+                      - {label: English, name: en, widget: text, required: false}
+                      - {label: Español, name: es, widget: text, required: false}
+                      - {label: Français, name: fr, widget: text, required: false}
+                      - {label: Deutsch, name: de, widget: text, required: false}
+              - label: Secções
+                name: seccoes
+                widget: list
+                required: false
+                label_singular: Secção
+                summary: '{{fields.titulo.pt}}'
+                hint: >-
+                  O texto do spot, por assuntos. A ordem aqui é a ordem na
+                  página. Cada secção vira um subtítulo — e é assim que um
+                  sistema de IA percebe que parte responde a que pergunta.
+                fields:
+                  - label: Título
+                    name: titulo
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
+                    fields:
+                      - {label: Português, name: pt, widget: string, required: false}
+                      - {label: English, name: en, widget: string, required: false}
+                      - {label: Español, name: es, widget: string, required: false}
+                      - {label: Français, name: fr, widget: string, required: false}
+                      - {label: Deutsch, name: de, widget: string, required: false}
+                  - label: Texto
+                    name: texto
+                    widget: object
+                    collapsed: true
+                    summary: '{{fields.pt}}'
+                    hint: 'Uma linha em branco separa parágrafos.'
+                    fields:
+                      - {label: Português, name: pt, widget: text, required: false}
+                      - {label: English, name: en, widget: text, required: false}
+                      - {label: Español, name: es, widget: text, required: false}
+                      - {label: Français, name: fr, widget: text, required: false}
+                      - {label: Deutsch, name: de, widget: text, required: false}
+              - label: Aviso de segurança
+                name: aviso
+                widget: object
+                collapsed: true
+                required: false
+                summary: '{{fields.pt}}'
+                hint: >-
+                  A parte que diz que a página não decide nada por ninguém.
+                  Sem isto escrito nas cinco línguas, um spot não pode ser
+                  posto como pronto a publicar.
                 fields:
                   - {label: Português, name: pt, widget: text, required: false}
                   - {label: English, name: en, widget: text, required: false}

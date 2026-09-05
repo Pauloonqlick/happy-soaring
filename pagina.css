@@ -18,6 +18,19 @@
   --papel:#071d3a; --tinta:#fff; --tinta-fraca:rgba(255,255,255,.68);
   --linha:rgba(255,255,255,.16);
   --painel:#fff; --painel-tinta:#16202c; --painel-fraca:#5b6878; --painel-linha:#dfe6ef;
+
+  /* A DISPOSICAO DE DOCUMENTACAO — TITULO A ESQUERDA, TEXTO A DIREITA
+     Estes tres numeros decidem a forma de todas as paginas que se LEEM:
+     as fichas das asas e as paginas de spot. Estavam escritos a mao no
+     .pg-papel .pg-sec e voltei a escreve-los na pagina de spot — duas
+     copias da mesma medida e a maneira segura de as ver divergir.
+
+     Sao os valores que ja la estavam, medidos na /asas/mullet-2/: coluna
+     de titulos, goteira, e uma largura util de 1020px que da 742px de
+     texto. Mudar aqui muda em todo o lado, que e o que se quer. */
+  --doc-titulos:230px;
+  --doc-goteira:48px;
+  --doc-largura:1020px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -79,8 +92,8 @@ body.pg{
    coluna que se percorre com os olhos, e o texto mantem uma coluna de
    leitura so. E o que a documentacao tecnica faz, e faz por isto. */
 .pg-papel .pg-sec{
-  display:grid;grid-template-columns:230px minmax(0,1fr);
-  column-gap:48px;max-width:none;margin:0 0 26px;
+  display:grid;grid-template-columns:var(--doc-titulos) minmax(0,1fr);
+  column-gap:var(--doc-goteira);max-width:none;margin:0 0 26px;
 }
 .pg-papel .pg-sec > h2{grid-column:1;grid-row:1;margin:0;font-size:19px;
   letter-spacing:-.3px;border-bottom:0;padding:0;line-height:1.25}
@@ -2417,7 +2430,11 @@ html{ scroll-padding-top:var(--h-topo, 96px) }
   font-size:26px;text-transform:uppercase;font-weight:var(--peso-display);
   line-height:1.05;margin:0 0 14px;
 }
-.pk-pop-desc{font-size:15px;color:var(--tinta-fraca);margin:0 0 18px;max-width:none}
+/* pre-line porque a descricao passou a ter paragrafos: o texto vem do CMS
+   e chega ao DOM por textContent, onde uma linha em branco nao e nada.
+   Sem isto, os dois paragrafos da Praia das Bicas colavam-se num bloco. */
+.pk-pop-desc{font-size:15px;color:var(--tinta-fraca);margin:0 0 18px;max-width:none;
+  white-space:pre-line}
 .pk-pop-conta{
   font-size:13px;color:var(--tinta-fraca);letter-spacing:.06em;
   font-variant-numeric:tabular-nums;margin:0 0 8px;
@@ -2480,3 +2497,209 @@ html{ scroll-padding-top:var(--h-topo, 96px) }
    esta a ganhar uma discussao: nao ha caso nenhum em que se queira ver um
    elemento marcado como escondido. */
 [hidden]{display:none !important}
+
+/* =======================================================================
+   A PÁGINA DE UM SPOT
+   =======================================================================
+   Uma coluna de leitura e mais nada. Esta página existe para ser lida por
+   quem está a decidir se vale a pena fazer 50 minutos de carro, e por
+   sistemas que respondem a "onde se voa perto de Lisboa" — nos dois casos
+   o que conta é o texto encontrar-se depressa, não a página impressionar.
+
+   Por isso não há herói, não há grelha de cartões e não há nada a mexer.
+   A fotografia grande aparece uma vez, no princípio, e o resto é tipografia. */
+/* A LARGURA E A DO SITE, NAO UMA MINHA.
+   Tinha posto 760px por minha conta, e isso estreitava esta pagina para
+   pouco mais de metade do que todas as outras usam. O container do site
+   e o .pg-cx, 1180px — esta pagina ja o tem na classe e so precisava de
+   nao lhe fugir. */
+/* a mesma largura util da ficha de asa: 1020px de conteudo. La vem de
+   um cartao de 1100 com 40 de padding; aqui vem da propria pagina. */
+.spot-cx{max-width:calc(var(--doc-largura) + 80px);padding-bottom:80px}
+.spot-h1{
+  font-size:var(--d2);line-height:1.06;font-weight:var(--peso-display);
+  text-transform:uppercase;letter-spacing:var(--track-display);margin:0 0 18px;
+}
+.spot-abre p{font-size:17px;line-height:1.62;margin:0 0 14px}
+.spot-abre p:first-child{color:var(--tinta)}
+.spot-abre p + p{color:var(--tinta-fraca)}
+
+.spot-sec{margin:0 0 34px}
+.spot-sec h2{
+  font-size:20px;font-weight:800;letter-spacing:.01em;margin:0 0 12px;
+  color:var(--tinta);
+}
+.spot-sec p{font-size:16px;line-height:1.68;color:var(--tinta-fraca);margin:0 0 12px}
+/* A MEDIDA PRECISA DE .pg.tema PARA GANHAR
+   O tema declara .pg.tema p{max-width:none} — duas classes — e isso ganha
+   a .spot-sec p, que tem uma. A medida ficava nos 90 caracteres sem nada
+   que o denunciasse a olho. E a mesma colisao que este site ja apanhou
+   nos links, e que tem uma verificacao propria. */
+/* TUDO ACABA NA MESMA MARGEM DIREITA.
+   Havia tres larguras e tres recuos a competir. O que os arruma nao e
+   darem todos a mesma largura — e acabarem todos no mesmo sitio.
+
+   A abertura comeca colada a esquerda, com o h1, e por isso corre a
+   largura util inteira. O texto das seccoes comeca depois da coluna dos
+   titulos e corre o que sobra. Larguras diferentes, mesma margem direita,
+   que e o que o olho ve.
+
+   Sem numero nenhum escrito a mao: a abertura nao tem trava, e a coluna
+   das seccoes sai da grelha. Se a grelha mudar, as duas acompanham. */
+.pg.tema .spot-abre p{max-width:none}
+
+/* A FICHA É UMA TABELA DE DADOS DISFARÇADA DE LISTA
+   É a parte da página que um sistema de IA consegue reutilizar sem
+   interpretar prosa: rótulo à esquerda, valor à direita, um facto por
+   linha. Daí ser um <dl> e não parágrafos com dois pontos. */
+.spot-ficha{margin:0;display:grid;gap:0}
+.spot-lin{
+  display:grid;grid-template-columns:minmax(150px,34%) 1fr;gap:10px 18px;
+  padding:10px 0;border-top:1px solid var(--linha);
+}
+.spot-lin:last-child{border-bottom:1px solid var(--linha)}
+.spot-lin dt{font-size:13px;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--tinta-fraca);margin:0}
+.spot-lin dd{margin:0;font-size:15px;color:var(--tinta)}
+@media (max-width:520px){
+  .spot-lin{grid-template-columns:1fr;gap:2px}
+}
+
+/* O AVISO NÃO É UM RODAPÉ LEGAL A FINGIR
+   Tem de se ler. É a única parte da página que diz que a página não
+   decide nada — quem a saltar fica com os números e sem o enquadramento
+   deles. Por isso tem a cor da casa e não cinzento de letra pequena. */
+/* SEM FUNDO LARANJA.
+   O --laranja-painel e laranja cheio, e a medicao apanhou texto branco
+   por cima dele — o mesmo defeito de contraste que este site ja corrigiu
+   uma vez. A verificacao 6 nao o via, porque a cor do texto vinha de
+   outra regra. Fica so o tracinho laranja, que ja chega para o olho
+   parar aqui, e o texto na cor normal da pagina. */
+.spot-aviso{
+  border-left:3px solid var(--orange);
+  background:transparent;
+  border-radius:0;
+  padding:20px 22px;margin:8px 0 34px;
+}
+.spot-aviso h2{font-size:15px;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--orange);margin:0 0 10px;font-weight:800}
+.spot-aviso p{font-size:15px;line-height:1.62;margin:0 0 10px;color:var(--tinta)}
+.spot-aviso p:last-child{margin-bottom:0}
+
+.pk-pop-mais{margin:-6px 0 18px}
+.pk-pop-mais a{font-size:14px;font-weight:700;color:var(--orange);text-decoration:none}
+.pk-pop-mais a:hover{text-decoration:underline}
+
+/* =======================================================================
+   A PÁGINA DE SPOT É PAPEL, NÃO É AZUL
+   =======================================================================
+   O resto do site é azul-escuro porque é vitrina: fotografias grandes,
+   asas, ofertas. Esta página não vende nada — é para ser LIDA por quem
+   está a decidir se faz cinquenta minutos de carro. Texto escuro sobre
+   claro é o que se lê durante seiscentas palavras sem cansar.
+
+   E faz-se trocando os tokens, não reescrevendo componentes. O site já
+   tem a superfície clara definida — `--painel`, usada nas ilhas de texto
+   das páginas de asa. Aqui essa superfície passa a ser a da página
+   inteira, e tudo o que lê `--papel`, `--tinta`, `--tinta-fraca` e
+   `--linha` acompanha sozinho. Quatro linhas em vez de vinte regras. */
+body.spot.papel{
+  --papel:var(--painel);
+  --tinta:var(--painel-tinta);
+  --tinta-fraca:var(--painel-fraca);
+  --linha:var(--painel-linha);
+}
+/* O TOPO CONTINUA ESCURO, E TEM DE SER À FORÇA
+   O `.pg-topo` é `rgba(0,0,0,.22)` — preto transparente, desenhado para
+   assentar sobre uma fotografia escura. Sobre branco dava cinzento claro
+   com letras brancas por cima, que é ilegível. Aqui leva fundo próprio. */
+body.spot.papel .pg-topo{background:var(--azul-esc);border-bottom-color:rgba(255,255,255,.09)}
+
+/* O LARANJA DA MARCA NÃO SE LÊ SOBRE BRANCO
+   #ff842d sobre branco dá 2,3:1 e reprova. O site já tem o laranja para
+   superfície clara — `--laranja-tinta`, #a63f00 — e é esse que serve aqui.
+   Vale para tudo o que é texto dentro da coluna de leitura. */
+body.spot.papel .spot-cx a{color:var(--laranja-tinta)}
+body.spot.papel .pg-migalhas a:hover{color:var(--laranja-tinta)}
+body.spot.papel .spot-aviso{border-left-color:var(--laranja-tinta)}
+body.spot.papel .spot-aviso h2{color:var(--laranja-tinta)}
+
+/* A HIERARQUIA DOS TÍTULOS, QUE O TEMA APAGA
+   `.pg.tema h2{font-size:var(--d2)}` — duas classes — dá 39,7px a todos os
+   h2. Numa página de vitrina está certo: há dois ou três por página e são
+   manchetes. Aqui há seis, e a 39,7px contra 50px do h1 deixa de haver
+   hierarquia nenhuma — são seis títulos a gritar por cima de um texto que
+   é para ler devagar.
+
+   Foi a terceira vez que uma regra `.pg.tema` ganhou a uma minha nesta
+   página: primeiro a medida da linha, depois a largura, agora o tamanho.
+   Quem escrever a próxima página de leitura vai bater no mesmo. */
+body.spot.papel .spot-sec h2{
+  font-size:22px;letter-spacing:.02em;margin:0 0 14px;padding-bottom:9px;
+  border-bottom:1px solid var(--linha);
+}
+body.spot.papel .spot-aviso h2{
+  font-size:14px;letter-spacing:.08em;border:0;padding:0;margin:0 0 10px;
+}
+
+/* =======================================================================
+   TÍTULO À ESQUERDA, TEXTO À DIREITA — A REGRA QUE JÁ CÁ ESTAVA
+   =======================================================================
+   Alargar o container para os 1180px do site resolveu metade: o texto
+   passou a 80 caracteres e sobraram 502px de branco só do lado direito.
+   Branco de um lado só não é margem, é sobra.
+
+   Este site já tinha resolvido exactamente isto nas páginas de asa, e o
+   comentário do `.pg-papel .pg-sec` diz-lhe o nome: a largura enche-se com
+   CONTEÚDO e não com margem — os títulos formam uma coluna que se percorre
+   com os olhos, e o texto mantém uma coluna de leitura só.
+
+   É a mesma grelha, com as mesmas medidas: 230px de títulos, 48px de
+   goteira, o texto no que sobra. Não é um desenho novo, é o desenho da
+   casa aplicado a uma página que ainda não o tinha. */
+body.spot.papel .spot-sec{
+  display:grid;grid-template-columns:var(--doc-titulos) minmax(0,1fr);
+  column-gap:var(--doc-goteira);margin:0 0 26px;padding-top:26px;
+  border-top:1px solid var(--linha);
+}
+body.spot.papel .spot-sec > h2{
+  grid-column:1;grid-row:1;margin:0;font-size:19px;letter-spacing:-.3px;
+  line-height:1.25;border-bottom:0;padding:0;
+}
+body.spot.papel .spot-sec > *:not(h2){grid-column:2}
+body.spot.papel .spot-sec > *:last-child{margin-bottom:0}
+/* DENTRO DA GRELHA QUEM DA A MEDIDA E A COLUNA.
+   E o que a ficha de asa faz: la o .pg.tema p{max-width:none} apaga o
+   74ch e o texto enche os 742px da coluna. Tinha-lhe posto uma trava
+   propria e ficava um bloco estreito com branco a sobrar la dentro —
+   diferente de todas as outras paginas do site sem razao nenhuma. */
+body.spot.papel .spot-sec p{max-width:none}
+
+/* a abertura fica larga como no resto do site, mas com medida de leitura */
+body.spot.papel .spot-abre{margin-bottom:30px}
+
+/* o aviso entra na mesma grelha das seccoes: o titulo pendurado a
+   esquerda e o texto na coluna, para nao ser o unico bloco da pagina com
+   um recuo so dele. O tracinho laranja fica a marcar o bloco todo. */
+body.spot.papel .spot-aviso{
+  display:grid;grid-template-columns:var(--doc-titulos) minmax(0,1fr);
+  column-gap:var(--doc-goteira);border-top:0;padding:20px 0 20px 22px;
+  margin-left:-25px;
+}
+body.spot.papel .spot-aviso > h2{grid-column:1;grid-row:1}
+body.spot.papel .spot-aviso > p{grid-column:2;max-width:none}
+
+/* abaixo dos 900px a coluna dos títulos não cabe, e o site já corta nesta
+   mesma largura para o `.pg-papel .pg-sec`. Mesmo ponto de quebra, para
+   não haver dois sítios a decidir a mesma coisa de maneiras diferentes. */
+@media(max-width:899px){
+  body.spot.papel .spot-sec,
+  body.spot.papel .spot-aviso{display:block}
+  body.spot.papel .spot-sec > h2,
+  body.spot.papel .spot-aviso > h2{margin:0 0 12px}
+  body.spot.papel .spot-aviso{margin-left:0}
+}
+
+/* o titulo do spot centra-se: sao duas linhas curtas e centradas leem-se
+   como um cabecalho, encostadas a esquerda leem-se como texto cortado */
+body.spot.papel .spot-h1{text-align:center;margin-bottom:26px}

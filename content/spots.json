@@ -3,12 +3,14 @@
     {
       "id": "fonte-da-telha",
       "nome": "Fonte da Telha",
+      "publicar": false,
       "descricao": { "pt": "", "en": "", "es": "", "fr": "", "de": "" },
       "album": []
     },
     {
       "id": "lagoa-de-albufeira",
       "nome": "Lagoa de Albufeira",
+      "publicar": false,
       "descricao": { "pt": "", "en": "", "es": "", "fr": "", "de": "" },
       "album": [
         {
@@ -27,31 +29,151 @@
     {
       "id": "meco",
       "nome": "Meco",
+      "publicar": false,
       "descricao": { "pt": "", "en": "", "es": "", "fr": "", "de": "" },
       "album": []
     },
     {
       "id": "alfarim",
       "nome": "Alfarim",
+      "publicar": false,
       "descricao": { "pt": "", "en": "", "es": "", "fr": "", "de": "" },
       "album": []
     },
     {
       "id": "peniche",
       "nome": "Peniche",
+      "publicar": false,
       "descricao": { "pt": "", "en": "", "es": "", "fr": "", "de": "" },
       "album": []
     },
     {
       "id": "praia-da-gralha",
       "nome": "Praia da Gralha",
+      "publicar": false,
       "descricao": { "pt": "", "en": "", "es": "", "fr": "", "de": "" },
       "album": []
     },
     {
       "id": "praia-das-bicas",
       "nome": "Praia das Bicas",
-      "descricao": { "pt": "", "en": "", "es": "", "fr": "", "de": "" },
+      "publicar": true,
+      "titulo": {
+        "pt": "Praia das Bicas — Parakite e parapente",
+        "en": "Praia das Bicas — Parakite and paragliding",
+        "es": "Praia das Bicas — Parakite y parapente",
+        "fr": "Praia das Bicas — Parakite et parapente",
+        "de": "Praia das Bicas — Parakite und Gleitschirm"
+      },
+      "descricao": {
+        "pt": "A Praia das Bicas, no concelho de Sesimbra, é um conhecido spot de voo de costa, utilizado para parapente e Parakite. Situada na costa ocidental, numa zona de falésia sobre o Atlântico, oferece condições para soaring quando a direção e a intensidade do vento são adequadas.\n\nA cerca de 40 km de Lisboa, normalmente a aproximadamente 45–55 minutos de carro, a Praia das Bicas é também um dos spots costeiros de voo relativamente próximos da capital.",
+        "en": "Praia das Bicas, in the municipality of Sesimbra, is a well-known coastal flying site used for paragliding and Parakite. Set on the west coast, on a stretch of cliff above the Atlantic, it offers soaring conditions when wind direction and strength are suitable.\n\nAbout 40 km from Lisbon, normally around 45–55 minutes by car, Praia das Bicas is also one of the coastal flying sites relatively close to the capital.",
+        "es": "La Praia das Bicas, en el municipio de Sesimbra, es un conocido spot de vuelo de costa, utilizado para parapente y Parakite. Situada en la costa occidental, en una zona de acantilado sobre el Atlántico, ofrece condiciones para soaring cuando la dirección y la intensidad del viento son adecuadas.\n\nA unos 40 km de Lisboa, normalmente a aproximadamente 45–55 minutos en coche, la Praia das Bicas es también uno de los spots costeros de vuelo relativamente cercanos a la capital.",
+        "fr": "La Praia das Bicas, dans la commune de Sesimbra, est un site de vol de côte connu, utilisé pour le parapente et le Parakite. Située sur la côte occidentale, dans une zone de falaise au-dessus de l’Atlantique, elle offre des conditions de soaring lorsque la direction et la force du vent sont adaptées.\n\nÀ environ 40 km de Lisbonne, normalement à quelque 45–55 minutes de voiture, la Praia das Bicas est aussi l’un des sites côtiers de vol relativement proches de la capitale.",
+        "de": "Die Praia das Bicas in der Gemeinde Sesimbra ist ein bekannter Küstenflugspot, der für Gleitschirm und Parakite genutzt wird. Sie liegt an der Westküste, in einem Steilküstenabschnitt über dem Atlantik, und bietet Soaring-Bedingungen, wenn Windrichtung und Windstärke passen.\n\nRund 40 km von Lissabon entfernt, normalerweise etwa 45–55 Autominuten, ist die Praia das Bicas auch einer der Küstenspots, die verhältnismäßig nah an der Hauptstadt liegen."
+      },
+      "ficha": {
+        "local": "Praia das Bicas, Sesimbra, Portugal",
+        "distanciaLisboaKm": 40,
+        "tempoViagem": {
+          "pt": "aproximadamente 45–55 minutos de carro",
+          "en": "approximately 45–55 minutes by car",
+          "es": "aproximadamente 45–55 minutos en coche",
+          "fr": "environ 45–55 minutes de voiture",
+          "de": "etwa 45–55 Autominuten"
+        },
+        "tipoVoo": {
+          "pt": "soaring costeiro / falésia",
+          "en": "coastal soaring / cliff",
+          "es": "soaring costero / acantilado",
+          "fr": "soaring de côte / falaise",
+          "de": "Küstensoaring / Steilküste"
+        },
+        "direcoes": ["W", "NW"],
+        "modalidades": ["parakite", "parapente"],
+        "altitudeDescolagemM": "30–40",
+        "altitudeFonte": "",
+        "acesso": {
+          "pt": "estacionamento na zona superior e acesso pedonal à praia, por escadaria",
+          "en": "parking on the upper area and pedestrian access to the beach, by a stairway",
+          "es": "aparcamiento en la zona superior y acceso peatonal a la playa, por una escalera",
+          "fr": "stationnement sur la partie haute et accès piéton à la plage, par un escalier",
+          "de": "Parkplatz im oberen Bereich und Fußweg zum Strand über eine Treppe"
+        }
+      },
+      "seccoes": [
+        {
+          "titulo": {
+            "pt": "Condições de voo",
+            "en": "Flying conditions",
+            "es": "Condiciones de vuelo",
+            "fr": "Conditions de vol",
+            "de": "Flugbedingungen"
+          },
+          "texto": {
+            "pt": "As direções mais favoráveis são geralmente Oeste (W) e Noroeste (NW).\n\nNo entanto, nas Bicas não basta olhar para a direção e velocidade indicadas na previsão meteorológica. A qualidade do voo pode variar com a intensidade, rajadas, componente lateral, condições atmosféricas e características locais do relevo.\n\nPor isso, uma direção normalmente favorável não significa, por si só, que as condições estejam boas para voar.",
+            "en": "The most favourable directions are generally West (W) and North-West (NW).\n\nAt Bicas, however, it is not enough to look at the direction and speed given in the forecast. Flight quality can vary with strength, gusts, cross component, atmospheric conditions and local features of the terrain.\n\nA normally favourable direction therefore does not, on its own, mean that conditions are good for flying.",
+            "es": "Las direcciones más favorables son generalmente Oeste (W) y Noroeste (NW).\n\nSin embargo, en las Bicas no basta con mirar la dirección y la velocidad indicadas en la previsión meteorológica. La calidad del vuelo puede variar con la intensidad, las rachas, la componente lateral, las condiciones atmosféricas y las características locales del relieve.\n\nPor eso, una dirección normalmente favorable no significa, por sí sola, que las condiciones sean buenas para volar.",
+            "fr": "Les directions les plus favorables sont généralement l’Ouest (W) et le Nord-Ouest (NW).\n\nAux Bicas, il ne suffit toutefois pas de regarder la direction et la vitesse indiquées par la prévision météo. La qualité du vol peut varier selon la force, les rafales, la composante latérale, les conditions atmosphériques et les caractéristiques locales du relief.\n\nUne direction normalement favorable ne signifie donc pas, à elle seule, que les conditions sont bonnes pour voler.",
+            "de": "Die günstigsten Richtungen sind in der Regel West (W) und Nordwest (NW).\n\nAn den Bicas genügt es allerdings nicht, auf Richtung und Geschwindigkeit der Wettervorhersage zu schauen. Die Flugqualität kann sich mit Stärke, Böen, Seitenkomponente, atmosphärischen Bedingungen und örtlichen Geländeeigenschaften ändern.\n\nEine normalerweise günstige Richtung bedeutet daher für sich allein noch nicht, dass die Bedingungen zum Fliegen gut sind."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Voar de Parakite nas Bicas",
+            "en": "Flying a Parakite at Bicas",
+            "es": "Volar en Parakite en las Bicas",
+            "fr": "Voler en Parakite aux Bicas",
+            "de": "Mit dem Parakite an den Bicas fliegen"
+          },
+          "texto": {
+            "pt": "O Parakite permite aproveitar uma gama relativamente ampla de condições, mas não existe um valor de vento que possa ser aplicado a todos os pilotos e a todas as asas.\n\nComo referência baseada na experiência local, cerca de 24 km/h podem já permitir soaring com Parakite em determinadas configurações. A intensidade necessária depende, entre outros fatores, do tamanho e características da asa, peso total em voo e experiência do piloto.\n\nPilotos experientes, utilizando equipamento adequado, podem também voar com condições consideravelmente mais fortes. Já foram utilizados Parakites nas Bicas com vento na ordem dos 45 km/h, mas este valor não deve ser interpretado como um limite máximo ou uma recomendação de segurança.\n\nUma asa, tamanho ou carga alar diferente pode alterar completamente aquilo que é adequado para determinado piloto.",
+            "en": "A Parakite makes it possible to use a relatively wide range of conditions, but there is no wind figure that can be applied to every pilot and every wing.\n\nAs a reference based on local experience, around 24 km/h may already allow soaring with a Parakite in certain configurations. The strength required depends, among other factors, on the size and characteristics of the wing, all-up weight and the pilot’s experience.\n\nExperienced pilots using suitable equipment can also fly in considerably stronger conditions. Parakites have been used at Bicas in winds of the order of 45 km/h, but this figure must not be read as a maximum limit or as a safety recommendation.\n\nA different wing, size or wing loading can completely change what is appropriate for a given pilot.",
+            "es": "El Parakite permite aprovechar una gama relativamente amplia de condiciones, pero no existe un valor de viento que pueda aplicarse a todos los pilotos y a todas las alas.\n\nComo referencia basada en la experiencia local, unos 24 km/h pueden ya permitir soaring con Parakite en determinadas configuraciones. La intensidad necesaria depende, entre otros factores, del tamaño y las características del ala, el peso total en vuelo y la experiencia del piloto.\n\nPilotos experimentados, utilizando equipo adecuado, pueden también volar con condiciones considerablemente más fuertes. Ya se han utilizado Parakites en las Bicas con viento del orden de los 45 km/h, pero este valor no debe interpretarse como un límite máximo ni como una recomendación de seguridad.\n\nUn ala, un tamaño o una carga alar diferentes pueden cambiar por completo lo que es adecuado para un piloto determinado.",
+            "fr": "Le Parakite permet d’exploiter une gamme de conditions relativement large, mais il n’existe pas de valeur de vent applicable à tous les pilotes et à toutes les ailes.\n\nÀ titre de référence fondée sur l’expérience locale, environ 24 km/h peuvent déjà permettre le soaring en Parakite dans certaines configurations. La force nécessaire dépend, entre autres facteurs, de la taille et des caractéristiques de l’aile, du poids total en vol et de l’expérience du pilote.\n\nDes pilotes expérimentés, avec un matériel adapté, peuvent aussi voler dans des conditions nettement plus fortes. Des Parakites ont déjà été utilisés aux Bicas par un vent de l’ordre de 45 km/h, mais cette valeur ne doit pas être interprétée comme une limite maximale ni comme une recommandation de sécurité.\n\nUne aile, une taille ou une charge alaire différentes peuvent changer complètement ce qui convient à un pilote donné.",
+            "de": "Der Parakite erlaubt es, eine verhältnismäßig breite Bandbreite an Bedingungen zu nutzen, aber es gibt keinen Windwert, der auf alle Piloten und alle Schirme angewendet werden kann.\n\nAls Anhaltspunkt aus der örtlichen Erfahrung: etwa 24 km/h können in bestimmten Konfigurationen bereits Soaring mit dem Parakite ermöglichen. Die nötige Stärke hängt unter anderem von Größe und Eigenschaften des Schirms, vom Abfluggewicht und von der Erfahrung des Piloten ab.\n\nErfahrene Piloten können mit geeignetem Material auch bei deutlich stärkeren Bedingungen fliegen. An den Bicas wurden Parakites bereits bei Wind in der Größenordnung von 45 km/h eingesetzt, dieser Wert darf jedoch nicht als Höchstgrenze oder als Sicherheitsempfehlung verstanden werden.\n\nEin anderer Schirm, eine andere Größe oder eine andere Flächenbelastung können völlig verändern, was für einen bestimmten Piloten angemessen ist."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Um spot que exige leitura das condições",
+            "en": "A site that demands reading the conditions",
+            "es": "Un spot que exige leer las condiciones",
+            "fr": "Un site qui exige de lire les conditions",
+            "de": "Ein Spot, der das Lesen der Bedingungen verlangt"
+          },
+          "texto": {
+            "pt": "Nas Bicas, pequenas alterações nas condições podem mudar significativamente o voo.\n\nA direção do vento, intensidade, rajadas, componente lateral e forma como o fluxo interage com a falésia devem ser avaliadas em conjunto. O comportamento do vento também pode variar ao longo do próprio spot.\n\nPor esse motivo, não é correto estabelecer regras simples como “com Norte acontece isto” ou “com Oeste acontece aquilo”. O resultado depende da combinação de vários fatores e das condições existentes naquele momento.",
+            "en": "At Bicas, small changes in conditions can significantly change the flight.\n\nWind direction, strength, gusts, cross component and the way the flow interacts with the cliff have to be assessed together. Wind behaviour can also vary along the site itself.\n\nFor this reason it is not correct to establish simple rules such as “with North this happens” or “with West that happens”. The outcome depends on the combination of several factors and on the conditions present at that moment.",
+            "es": "En las Bicas, pequeños cambios en las condiciones pueden modificar significativamente el vuelo.\n\nLa dirección del viento, la intensidad, las rachas, la componente lateral y la forma en que el flujo interactúa con el acantilado deben evaluarse en conjunto. El comportamiento del viento también puede variar a lo largo del propio spot.\n\nPor ese motivo, no es correcto establecer reglas simples como «con Norte pasa esto» o «con Oeste pasa aquello». El resultado depende de la combinación de varios factores y de las condiciones existentes en ese momento.",
+            "fr": "Aux Bicas, de petites variations des conditions peuvent modifier sensiblement le vol.\n\nLa direction du vent, la force, les rafales, la composante latérale et la façon dont le flux interagit avec la falaise doivent être évaluées ensemble. Le comportement du vent peut aussi varier le long du site lui-même.\n\nPour cette raison, il n’est pas correct d’établir des règles simples du type « avec du Nord il se passe ceci » ou « avec de l’Ouest il se passe cela ». Le résultat dépend de la combinaison de plusieurs facteurs et des conditions présentes à ce moment-là.",
+            "de": "An den Bicas können kleine Änderungen der Bedingungen den Flug erheblich verändern.\n\nWindrichtung, Stärke, Böen, Seitenkomponente und die Art, wie die Strömung mit der Steilküste zusammenwirkt, müssen zusammen beurteilt werden. Das Windverhalten kann auch entlang des Spots selbst unterschiedlich sein.\n\nAus diesem Grund ist es nicht richtig, einfache Regeln aufzustellen wie „bei Nord passiert dies“ oder „bei West passiert jenes“. Das Ergebnis hängt von der Kombination mehrerer Faktoren und von den Bedingungen im jeweiligen Moment ab."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "A praia e a falésia",
+            "en": "The beach and the cliff",
+            "es": "La playa y el acantilado",
+            "fr": "La plage et la falaise",
+            "de": "Der Strand und die Steilküste"
+          },
+          "texto": {
+            "pt": "A Praia das Bicas encontra-se numa zona de arribas costeiras, com acesso ao areal através de uma escadaria. A praia é também conhecida pela ondulação e pela prática de surf e bodyboard.\n\nDurante o voo devem ser considerados não apenas o vento e o relevo, mas também as condições do mar, maré, espaço disponível no areal, presença de pessoas e atividade de outros pilotos.",
+            "en": "Praia das Bicas lies in an area of coastal cliffs, with access to the sand by a stairway. The beach is also known for its swell and for surfing and bodyboarding.\n\nDuring the flight, not only wind and terrain must be considered, but also sea conditions, tide, the space available on the sand, the presence of people and the activity of other pilots.",
+            "es": "La Praia das Bicas se encuentra en una zona de acantilados costeros, con acceso a la arena por una escalera. La playa es también conocida por el oleaje y por la práctica del surf y el bodyboard.\n\nDurante el vuelo deben considerarse no solo el viento y el relieve, sino también las condiciones del mar, la marea, el espacio disponible en la arena, la presencia de personas y la actividad de otros pilotos.",
+            "fr": "La Praia das Bicas se trouve dans une zone de falaises côtières, avec un accès au sable par un escalier. La plage est aussi connue pour sa houle et pour la pratique du surf et du bodyboard.\n\nPendant le vol, il faut prendre en compte non seulement le vent et le relief, mais aussi l’état de la mer, la marée, l’espace disponible sur le sable, la présence de personnes et l’activité d’autres pilotes.",
+            "de": "Die Praia das Bicas liegt in einem Bereich von Küstenkliffs, der Zugang zum Sandstrand führt über eine Treppe. Der Strand ist außerdem für seinen Wellengang und für Surfen und Bodyboarden bekannt.\n\nWährend des Flugs sind nicht nur Wind und Gelände zu berücksichtigen, sondern auch der Seegang, die Gezeiten, der verfügbare Platz am Strand, die Anwesenheit von Menschen und die Aktivität anderer Piloten."
+          }
+        }
+      ],
+      "aviso": {
+        "pt": "As informações desta página servem para ajudar a compreender as características gerais da Praia das Bicas e não substituem a avaliação das condições no local.\n\nA decisão de descolar deve considerar as condições reais, experiência do piloto, equipamento utilizado e capacidade para avaliar vento, relevo e restantes riscos.\n\nSe não conheces o spot, procura informação local antes de voar.",
+        "en": "The information on this page is intended to help understand the general characteristics of Praia das Bicas and does not replace assessing the conditions on site.\n\nThe decision to launch must take into account the actual conditions, the pilot’s experience, the equipment used and the ability to assess wind, terrain and the remaining risks.\n\nIf you do not know the site, seek local information before flying.",
+        "es": "La información de esta página sirve para ayudar a comprender las características generales de la Praia das Bicas y no sustituye la evaluación de las condiciones en el lugar.\n\nLa decisión de despegar debe tener en cuenta las condiciones reales, la experiencia del piloto, el equipo utilizado y la capacidad para evaluar el viento, el relieve y los demás riesgos.\n\nSi no conoces el spot, busca información local antes de volar.",
+        "fr": "Les informations de cette page servent à aider à comprendre les caractéristiques générales de la Praia das Bicas et ne remplacent pas l’évaluation des conditions sur place.\n\nLa décision de décoller doit tenir compte des conditions réelles, de l’expérience du pilote, du matériel utilisé et de la capacité à évaluer le vent, le relief et les autres risques.\n\nSi tu ne connais pas le site, renseigne-toi localement avant de voler.",
+        "de": "Die Informationen auf dieser Seite sollen helfen, die allgemeinen Eigenschaften der Praia das Bicas zu verstehen, und ersetzen nicht die Beurteilung der Bedingungen vor Ort.\n\nDie Entscheidung zu starten muss die tatsächlichen Bedingungen berücksichtigen, die Erfahrung des Piloten, das verwendete Material und die Fähigkeit, Wind, Gelände und die übrigen Risiken einzuschätzen.\n\nWenn du den Spot nicht kennst, hol dir vor dem Fliegen örtliche Informationen."
+      },
       "album": [
         {
           "imagem": "/images/spots/praia-das-bicas.webp",

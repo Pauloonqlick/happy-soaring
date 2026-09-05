@@ -2,27 +2,20 @@
 
 ## Como verificar o trabalho
 
-**O Paulo tem um browser a sério, o Claude tem um painel que muitas vezes está
-escondido.** Num painel escondido o Chrome trava os temporizadores para uma
-volta por segundo, não renderiza, e o `ResizeObserver` nunca dispara — medir aí
-é medir um ambiente que nenhum visitante tem.
+Verificar antes de dizer que está feito. Uma verificação que nunca acusou nada
+não está provada: quando se escreve uma regra nova, alimentá-la com casos que
+**têm** de falhar e casos que **têm** de passar. Foi assim que se descobriu que
+a proteção da ANAC estava a acusar texto correcto, e que um bloco de YAML
+inválido teria feito o CMS deixar de carregar em silêncio.
 
-Por isso:
+Duas notas práticas sobre o painel do browser, que se pagaram caro uma vez:
 
-- Fazer a alteração e dizer em duas linhas **o que olhar e onde**. O Paulo olha.
-- Ir ao browser só quando ele pedir, ou quando for uma medição que ele não pode
-  fazer à mão: contraste, tamanhos, rácios, geometria.
-- **Uma tentativa de verificação, não quatro.** Se a primeira não concluir,
-  dizer o que se viu e passar a bola. Repetir o mesmo teste à espera de outro
-  resultado é desperdício.
-- Se o `innerHeight` der 0 ou o painel disser que está escondido: **parar já**.
-  Não há nada a medir.
-- Capturas de ecrã só quando a pergunta é mesmo visual, nunca em série, e nunca
-  à escala cheia. Medir com JavaScript custa uma fracção e dá números em vez de
-  impressões.
-
-Isto significa que fica mais coisa por confirmar do meu lado. É deliberado: é o
-preço de um pedido custar um quinto.
+- Num painel **escondido** o Chrome trava os temporizadores para uma volta por
+  segundo, não renderiza, e o `ResizeObserver` nunca dispara. Se o
+  `innerHeight` der 0, o que se está a medir não é o site — é o painel. Dizer
+  isso e medir de outra maneira.
+- Medir com JavaScript dá números; capturas de ecrã dão impressões. Preferir os
+  números, e guardar as capturas para quando a pergunta for mesmo visual.
 
 ## Como alterar ficheiros
 
@@ -37,6 +30,70 @@ e cada falha é uma ida e volta inteira desperdiçada.
 ## Respostas
 
 Curtas. Tabelas e secções só quando há mesmo várias coisas a comparar.
+
+## Como se faz uma página de spot
+
+Fechado a 05/09/2026 com a Praia das Bicas. Quando o Paulo entregar o texto de
+outro spot, é isto — não voltar a decidir nada disto do zero.
+
+**Onde vive.** Tudo em `content/spots.json`, editável no CMS em "Onde se voa
+(galeria)". O gerador lê de lá. Nada de conteúdo de spot em ficheiros `.mjs`.
+
+**Os campos, e o que cada um é:**
+
+| campo | o que é |
+|---|---|
+| `titulo` | uma linha só, com travessão: `Praia das Bicas — Parakite e parapente` |
+| `descricao` | a abertura, um ou dois parágrafos. Também é o que o popup do hub mostra |
+| `ficha` | os dados secos: local, distância, tempo, tipo de voo, direções, modalidades, acesso |
+| `seccoes` | o texto por assuntos, cada uma com título e texto. A ordem aqui é a ordem na página |
+| `aviso` | a parte que diz que a página não decide nada. Obrigatória |
+| `publicar` | `false` enquanto se escreve; `true` só quando está inteiro |
+
+**O título parte-se no travessão, mas só na página.** Guarda-se uma linha; o
+gerador corta no `—` e faz duas linhas centradas. Na aba do browser e no Google
+fica a linha inteira, porque aí o travessão separa o sítio do assunto. Nunca
+criar um segundo campo para a segunda linha: dois campos podem discordar.
+
+**Português primeiro, traduções depois.** Com `publicar:false` pode estar só em
+português — é rascunho e a verificação 15 não se queixa. Ao pôr `true` exige as
+cinco línguas, a ficha e o aviso. E é a sério: o gerador recusa uma página sem
+cinco `hreflang`, portanto ou existe nas cinco ou não existe.
+
+**Nas traduções, a força das afirmações mantém-se.** Uma referência não vira
+recomendação, um "pode" não vira "deve", um valor observado não vira limite.
+
+**Um número sem fonte não se publica.** A altitude de descolagem só aparece na
+página se `altitudeFonte` estiver preenchida. Vale como princípio para qualquer
+dado novo: sem origem declarada, fica fora.
+
+**Sem fotografias nem vídeo na página.** A galeria vive no popup do hub. A
+página é para ler; repetir lá as imagens era duplicar o mesmo conteúdo em dois
+endereços.
+
+**O endereço** é `/parakite-portugal/<id>/` — debaixo do hub, que existe, para
+quem corta o URL a meio não cair num 404. As cinco línguas levam o prefixo
+normal. Os endereços já registados em `ROTAS` para `/regras-…/` e `/spots-…/`
+ainda não têm página.
+
+**A forma da página** sai dos tokens `--doc-titulos`, `--doc-goteira` e
+`--doc-largura`, que também mandam nas 110 fichas de asa. Não voltar a escrever
+230px nem 48px à mão em lado nenhum.
+
+O que faz a página parecer arrumada não é tudo ter a mesma largura — é tudo
+acabar na mesma margem direita. A abertura encosta à esquerda e corre a largura
+toda; o texto das secções começa depois da coluna dos títulos e corre o que
+sobra. Larguras diferentes, mesma margem.
+
+**A superfície é clara**, com `body.spot.papel` a trocar os tokens `--papel`,
+`--tinta`, `--tinta-fraca` e `--linha` pelos do painel. Sobre claro o laranja da
+marca não se lê (2,3:1) — usa-se `--laranja-tinta`. E o `.pg-topo` precisa de
+fundo próprio, senão fica cinzento claro com letras brancas.
+
+**Cuidado com `.pg.tema`.** Tem duas classes e ganha a quase tudo o que se
+escreva com uma. Já apagou, nesta página, a medida da linha, a largura e o
+tamanho dos `h2`. Ao estilar uma página de leitura, prefixar com
+`body.spot.papel`.
 
 ## Regras do conteúdo que não se negoceiam
 

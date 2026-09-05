@@ -132,6 +132,9 @@ const T = {
   fechar:    { pt:'Fechar', en:'Close', es:'Cerrar', fr:'Fermer', de:'Schliessen' },
   verVideo:  { pt:'Ver o vídeo', en:'Play the video', es:'Ver el vídeo',
                fr:'Voir la vidéo', de:'Video ansehen' },
+  maisSpot:  { pt:'Saber mais sobre este spot', en:'More about this site',
+               es:'Más sobre este spot', fr:'En savoir plus sur ce spot',
+               de:'Mehr über diesen Spot' },
   anterior:  { pt:'Anterior', en:'Previous', es:'Anterior', fr:'Précédent', de:'Zurück' },
   seguinte:  { pt:'Seguinte', en:'Next', es:'Siguiente', fr:'Suivant', de:'Weiter' },
   vento:     { pt:'Gama de vento', en:'Wind range', es:'Rango de viento',
@@ -990,6 +993,72 @@ function blocoVento(p, l) {
    traduz-se a categoria, não o nome. */
 const caminhoFlow = l => (l === OMISSAO ? '' : '/' + l) + '/flow-paragliders-portugal/';
 
+/* ---- O MOLDE DE UMA PAGINA -------------------------------------------
+   O <head>, o <header> e o <footer> eram os mesmos em quatro sitios: nas
+   110 paginas de asa, na /flow-paragliders-portugal/, na /pilot2wing/ e na
+   /parakite-portugal/. Quatro copias do mesmo cabecalho. A quinta pagina
+   que se escrevesse fazia cinco, e a proxima alteracao ao topo passava a
+   ter de ser feita cinco vezes — a quinta esquece-se sempre.
+
+   Aqui esta uma vez. O que muda de pagina para pagina entra por parametro.
+
+   SOBRE OS CAPRICHOS QUE ESTAO PRESERVADOS
+   As quatro paginas nao eram byte a byte iguais nas partes que ninguem ve:
+   tres tinham uma linha em branco a seguir ao <body> e a das asas nao; a
+   das asas acabava com quebra de linha depois do </html> e as outras nao;
+   tres escrevem o ponto do rodape como &middot; e a das asas escreve-o
+   como o caracter ·. Nada disto se ve no ecra, e por isso e que sobreviveu.
+
+   Esta preservado de proposito, nos parametros linhaEmBranco, fim e
+   rodape, para que esta mudanca nao altere UM byte do HTML publicado —
+   e o Paulo o possa comprovar comparando as somas de verificacao.
+   Normalizar estes tres caprichos e uma limpeza para outro commit, onde a
+   diferenca seja so essa e se possa ver ao que se esta a dizer que sim. */
+function moldeDaPagina(o) {
+  const lg = o.lingua;
+  const ogLocale = o.ogLocale
+    ? '\n<meta property="og:locale" content="' + o.ogLocale + '" />' : '';
+  const ogImagem = o.ogImagem
+    ? '\n<meta property="og:image:width" content="' + o.ogImagem.largura + '" />'
+    + '\n<meta property="og:image:height" content="' + o.ogImagem.altura + '" />'
+    + '\n<meta property="og:image:alt" content="' + esc(o.ogImagem.alt) + '" />' : '';
+  const branco = o.linhaEmBranco === false ? '' : '\n';
+
+  return `<!DOCTYPE html>
+<html lang="${lg}">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>${esc(o.titulo)}</title>
+<meta name="description" content="${esc(o.descricao)}" />
+<link rel="canonical" href="${o.url}" />
+${o.alt}
+<meta property="og:type" content="${o.ogTipo}" />
+<meta property="og:site_name" content="Happy Soaring" />${ogLocale}
+<meta property="og:url" content="${o.url}" />
+<meta property="og:title" content="${esc(o.ogTitulo)}" />
+<meta property="og:description" content="${esc(o.descricao)}" />
+<meta property="og:image" content="${o.foto}" />${ogImagem}
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="stylesheet" href="/pagina.css" />
+<link rel="stylesheet" href="/menu.css" />
+<script src="/menu.js" defer></script>
+<script type="application/ld+json">${o.ld}</script>
+</head>
+<body class="${o.classe}">${branco}
+<header class="pg-topo">
+  <a class="pg-marca" translate="no" href="${inicioHref(lg)}">HAPPY <span>SOARING</span></a>
+  <span class="pg-dealer">${esc(t(T.dealer, lg))}</span>
+  ${menuGlobal(lg, o.url)}
+  ${seletorIdiomas(o.alts, lg)}
+</header>
+${o.corpo}
+<footer class="pg-rodape">${o.rodape}</footer>
+${scriptIdiomas()}
+</body>
+</html>${o.fim || ''}`;
+}
+
 function paginaFlow(l, num) {
   const url = DOMINIO + caminhoFlow(l);
   const foto = DOMINIO + '/images/og-happysoaring.jpg';
@@ -1044,36 +1113,15 @@ function paginaFlow(l, num) {
     ]
   });
 
-  return `<!DOCTYPE html>
-<html lang="${l}">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>${esc(t(FL.titulo, l))}</title>
-<meta name="description" content="${esc(t(FL.descricao, l))}" />
-<link rel="canonical" href="${url}" />
-${alt}
-<meta property="og:type" content="website" />
-<meta property="og:site_name" content="Happy Soaring" />
-<meta property="og:url" content="${url}" />
-<meta property="og:title" content="${esc(t(FL.h1, l))}" />
-<meta property="og:description" content="${esc(t(FL.descricao, l))}" />
-<meta property="og:image" content="${foto}" />
-<meta name="twitter:card" content="summary_large_image" />
-<link rel="stylesheet" href="/pagina.css" />
-<link rel="stylesheet" href="/menu.css" />
-<script src="/menu.js" defer></script>
-<script type="application/ld+json">${ld}</script>
-</head>
-<body class="pg fl tema">
-
-<header class="pg-topo">
-  <a class="pg-marca" translate="no" href="${inicio}">HAPPY <span>SOARING</span></a>
-  <span class="pg-dealer">${esc(t(T.dealer, l))}</span>
-  ${menuGlobal(l, url)}
-  ${seletorIdiomas(alts, l)}
-</header>
-
+  return moldeDaPagina({
+    lingua: l, url, alts, alt, foto, ld,
+    classe: 'pg fl tema',
+    titulo: t(FL.titulo, l),
+    descricao: t(FL.descricao, l),
+    ogTipo: 'website',
+    ogTitulo: t(FL.h1, l),
+    rodape: 'Happy Soaring &middot; ' + esc(t(T.dealer, l)),
+    corpo: `
 <div class="pg-cx fl-cx">
 
   <nav class="pg-migalhas"><a href="${inicio}">${esc(t(T.inicio, l))}</a> &rsaquo;
@@ -1138,11 +1186,8 @@ ${alt}
   <p class="pg-voltar"><a href="${inicio}">${esc(t(FL.voltar, l))}</a></p>
 
 </div>
-
-<footer class="pg-rodape">Happy Soaring &middot; ${esc(t(T.dealer, l))}</footer>
-${scriptIdiomas()}
-</body>
-</html>`;
+`,
+  });
 }
 
 /* a ligação contextual das 22 páginas de produto para o hub, sempre na
@@ -1232,36 +1277,15 @@ function paginaPilot2Wing(l, num) {
     </li>`;
   }).join('');
 
-  return `<!DOCTYPE html>
-<html lang="${l}">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>${esc(t(P2W.titulo, l))}</title>
-<meta name="description" content="${esc(t(P2W.descricao, l))}" />
-<link rel="canonical" href="${url}" />
-${alt}
-<meta property="og:type" content="article" />
-<meta property="og:site_name" content="Happy Soaring" />
-<meta property="og:url" content="${url}" />
-<meta property="og:title" content="${esc(t(P2W.h1a, l) + ' ' + t(P2W.h1b, l))}" />
-<meta property="og:description" content="${esc(t(P2W.descricao, l))}" />
-<meta property="og:image" content="${foto}" />
-<meta name="twitter:card" content="summary_large_image" />
-<link rel="stylesheet" href="/pagina.css" />
-<link rel="stylesheet" href="/menu.css" />
-<script src="/menu.js" defer></script>
-<script type="application/ld+json">${ld}</script>
-</head>
-<body class="pg sg tema">
-
-<header class="pg-topo">
-  <a class="pg-marca" translate="no" href="${inicio}">HAPPY <span>SOARING</span></a>
-  <span class="pg-dealer">${esc(t(T.dealer, l))}</span>
-  ${menuGlobal(l, url)}
-  ${seletorIdiomas(alts, l)}
-</header>
-
+  return moldeDaPagina({
+    lingua: l, url, alts, alt, foto, ld,
+    classe: 'pg sg tema',
+    titulo: t(P2W.titulo, l),
+    descricao: t(P2W.descricao, l),
+    ogTipo: 'article',
+    ogTitulo: t(P2W.h1a, l) + ' ' + t(P2W.h1b, l),
+    rodape: 'Happy Soaring &middot; ' + esc(t(T.dealer, l)),
+    corpo: `
 <main>
 
   <section class="sg-heroi">
@@ -1360,11 +1384,8 @@ ${alt}
   <p class="pg-voltar"><a href="${inicio}">${esc(t(P2W.voltar, l))}</a></p>
 
 </main>
-
-<footer class="pg-rodape">Happy Soaring &middot; ${esc(t(T.dealer, l))}</footer>
-${scriptIdiomas()}
-</body>
-</html>`;
+`,
+  });
 }
 
 /* ---- a página /parakite-portugal/ --------------------------------------
@@ -1514,6 +1535,10 @@ function paginaParakite(l, num) {
     id: s.id || '',
     nome: s.nome,
     desc: t(s.descricao, l) || '',
+    /* o endereço da página própria, quando existe. Sem isto a página do
+       spot ficava escrita e sem ninguém lá chegar: o popup é o único
+       sítio do site onde alguém está a olhar para aquele spot. */
+    pagina: (s.publicar === true && s.id) ? caminhoSpot(l, s) : '',
     media: (s.album || []).filter(m => m && (m.imagem || m.videoId)).map(m => ({
       img: m.imagem || capaDe(m),
       alt: t(m.alt, l) || '',
@@ -1523,40 +1548,17 @@ function paginaParakite(l, num) {
   }))).replace(/</g, '\\u003c');
   const palavras = PK.s9Palavras.map(p => '<li>' + esc(p) + '</li>').join('');
 
-  const html = `<!DOCTYPE html>
-<html lang="${l}">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>${esc(t(PK.titulo, l))}</title>
-<meta name="description" content="${esc(t(PK.descricao, l))}" />
-<link rel="canonical" href="${url}" />
-${alt}
-<meta property="og:type" content="website" />
-<meta property="og:site_name" content="Happy Soaring" />
-<meta property="og:locale" content="${IN.ogLocale[l]}" />
-<meta property="og:url" content="${url}" />
-<meta property="og:title" content="${esc(t(PK.h1, l))}" />
-<meta property="og:description" content="${esc(t(PK.descricao, l))}" />
-<meta property="og:image" content="${foto}" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="${esc(t(PK.ogAlt, l))}" />
-<meta name="twitter:card" content="summary_large_image" />
-<link rel="stylesheet" href="/pagina.css" />
-<link rel="stylesheet" href="/menu.css" />
-<script src="/menu.js" defer></script>
-<script type="application/ld+json">${ld}</script>
-</head>
-<body class="pg pk tema">
-
-<header class="pg-topo">
-  <a class="pg-marca" translate="no" href="${inicio}">HAPPY <span>SOARING</span></a>
-  <span class="pg-dealer">${esc(t(T.dealer, l))}</span>
-  ${menuGlobal(l, url)}
-  ${seletorIdiomas(alts, l)}
-</header>
-
+  const html = moldeDaPagina({
+    lingua: l, url, alts, alt, foto, ld,
+    classe: 'pg pk tema',
+    titulo: t(PK.titulo, l),
+    descricao: t(PK.descricao, l),
+    ogTipo: 'website',
+    ogLocale: IN.ogLocale[l],
+    ogTitulo: t(PK.h1, l),
+    ogImagem: { largura: 1200, altura: 630, alt: t(PK.ogAlt, l) },
+    rodape: esc(t(PK.rodape, l)),
+    corpo: `
 <main>
 
   <!-- AS MIGALHAS VIVEM DENTRO DO HEROI
@@ -1766,6 +1768,7 @@ ${alt}
       <p class="pg-eyebrow">${esc(t(PK.spotsTit, l))}</p>
       <p class="pk-pop-tit" id="pk-pop-tit"></p>
       <p class="pk-pop-desc" id="pk-pop-desc"></p>
+      <p class="pk-pop-mais"><a id="pk-pop-pag" href="">${esc(t(T.maisSpot, l))} &rarr;</a></p>
       <p class="pk-pop-conta" id="pk-pop-conta" hidden></p>
       <p class="pk-pop-leg" id="pk-pop-leg" hidden></p>
       <div class="pk-pop-minis" id="pk-pop-minis" hidden></div>
@@ -1787,7 +1790,7 @@ ${alt}
   var pop=el('pk-pop'), img=el('pk-pop-img'), caixa=pop.querySelector('.pk-pop-img'),
       tit=el('pk-pop-tit'), desc=el('pk-pop-desc'), conta=el('pk-pop-conta'),
       leg=el('pk-pop-leg'), minis=el('pk-pop-minis'), nav=el('pk-pop-nav'),
-      play=el('pk-pop-play'), media=el('pk-pop-media'),
+      play=el('pk-pop-play'), media=el('pk-pop-media'), pag=el('pk-pop-pag'),
       fechar=el('pk-pop-x'), ant=el('pk-pop-ant'), seg=el('pk-pop-seg');
   var iS=0, iV=0, veioDe=null;
 
@@ -1817,6 +1820,8 @@ ${alt}
     var x=m[iV];
     tit.textContent=s.nome;
     desc.textContent=s.desc||'';
+    /* a ligacao para a pagina do spot so aparece quando ela existe */
+    pag.parentNode.hidden=!s.pagina; if(s.pagina) pag.href=s.pagina;
     desc.hidden=!s.desc;
     leg.textContent=x.leg||''; leg.hidden=!x.leg;
     conta.textContent=m.length>1 ? (iV+1)+' / '+m.length : '';
@@ -1897,11 +1902,8 @@ ${alt}
   },{passive:true});
 })();
 <\/script>
-
-<footer class="pg-rodape">${esc(t(PK.rodape, l))}</footer>
-${scriptIdiomas()}
-</body>
-</html>`;
+`,
+  });
   return html;
 }
 
@@ -1943,35 +1945,18 @@ function pagina(p, l, num) {
   const fortes = (p.pontosFortes || []).map(x => t(x, l)).filter(Boolean);
   const wa = 'https://wa.me/' + num + '?text=' + encodeURIComponent(t(T.msg, l).replace('{n}', p.nome));
 
-  return `<!DOCTYPE html>
-<html lang="${l}">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>${esc(titulo)}</title>
-<meta name="description" content="${esc(desc)}" />
-<link rel="canonical" href="${url}" />
-${alt}
-<meta property="og:type" content="product" />
-<meta property="og:site_name" content="Happy Soaring" />
-<meta property="og:url" content="${url}" />
-<meta property="og:title" content="${esc(p.nome + ' — Flow Paragliders')}" />
-<meta property="og:description" content="${esc(desc)}" />
-<meta property="og:image" content="${foto}" />
-<meta name="twitter:card" content="summary_large_image" />
-<link rel="stylesheet" href="/pagina.css" />
-<link rel="stylesheet" href="/menu.css" />
-<script src="/menu.js" defer></script>
-<script type="application/ld+json">${jsonld(p, l, url, foto)}</script>
-</head>
-<body class="pg asa tema">
-<header class="pg-topo">
-  <a class="pg-marca" translate="no" href="${inicioHref(l)}">HAPPY <span>SOARING</span></a>
-  <span class="pg-dealer">${esc(t(T.dealer, l))}</span>
-  ${menuGlobal(l, url)}
-  ${seletorIdiomas(alts, l)}
-</header>
-
+  return moldeDaPagina({
+    lingua: l, url, alts, alt, foto,
+    ld: jsonld(p, l, url, foto),
+    classe: 'pg asa tema',
+    titulo,
+    descricao: desc,
+    ogTipo: 'product',
+    ogTitulo: p.nome + ' — Flow Paragliders',
+    rodape: 'Happy Soaring · ' + esc(t(T.dealer, l)),
+    linhaEmBranco: false,
+    fim: '\n',
+    corpo: `
 <main class="pg-cx">
   <nav class="pg-migalhas" aria-label="breadcrumb">
     <a href="${inicioHref(l)}">${esc(t(T.inicio, l))}</a> ›
@@ -2037,12 +2022,8 @@ ${alt}
 
   <p class="pg-voltar"><a href="${esc(inicioSeccao(l, 'produtos'))}">${esc(t(T.voltar, l))}</a></p>
 </main>
-
-<footer class="pg-rodape">Happy Soaring · ${esc(t(T.dealer, l))}</footer>
-${scriptIdiomas()}
-</body>
-</html>
-`;
+`,
+  });
 }
 
 /* ---------------------------------------------------------------- */
@@ -2100,6 +2081,173 @@ const SPOTS = (() => {
     return (d.spots || []).filter(s => s && s.nome);
   } catch (e) { return []; }
 })();
+
+/* ---- a página de um spot --------------------------------------------
+   SÓ EXISTE PARA OS SPOTS QUE TÊM MESMO ALGUMA COISA A DIZER
+   Os sete spots aparecem todos na grelha da /parakite-portugal/. Página
+   própria tem só quem estiver marcado `publicar` — e a verificação 15
+   não deixa marcar sem o texto nas cinco línguas, sem ficha e sem o
+   aviso de segurança.
+
+   Não é escrúpulo: sete páginas construídas à volta de um nome e uma
+   fotografia não trazem visitas nenhumas e tiram força às que estão
+   feitas. Uma página é a consequência de haver conteúdo, não a maneira
+   de arranjar um endereço.
+
+   MORA DEBAIXO DO HUB, e não numa pasta /spots/ que ainda não existe.
+   /parakite-portugal/praia-das-bicas/ tem um pai que existe hoje: quem
+   corta o endereço a meio aterra no hub, e não num 404. */
+const caminhoSpot = (l, s) =>
+  (l === OMISSAO ? '' : '/' + l) + '/parakite-portugal/' + s.id + '/';
+
+const SP = {
+  hub:        { pt:'Parakite em Portugal', en:'Parakite in Portugal',
+                es:'Parakite en Portugal', fr:'Parakite au Portugal',
+                de:'Parakite in Portugal' },
+  referencia: { pt:'Informação de referência', en:'Reference information',
+                es:'Información de referencia', fr:'Informations de référence',
+                de:'Referenzangaben' },
+  seguranca:  { pt:'Segurança', en:'Safety', es:'Seguridad',
+                fr:'Sécurité', de:'Sicherheit' },
+  fLocal:     { pt:'Local', en:'Location', es:'Lugar', fr:'Lieu', de:'Ort' },
+  fDistancia: { pt:'Distância de Lisboa', en:'Distance from Lisbon',
+                es:'Distancia de Lisboa', fr:'Distance de Lisbonne',
+                de:'Entfernung von Lissabon' },
+  fViagem:    { pt:'Tempo de viagem', en:'Travel time', es:'Tiempo de viaje',
+                fr:'Temps de trajet', de:'Fahrzeit' },
+  fTipo:      { pt:'Tipo de voo', en:'Type of flying', es:'Tipo de vuelo',
+                fr:'Type de vol', de:'Flugart' },
+  fDirecoes:  { pt:'Direções preferenciais', en:'Preferred directions',
+                es:'Direcciones preferentes', fr:'Directions favorables',
+                de:'Bevorzugte Richtungen' },
+  fModal:     { pt:'Modalidades', en:'Disciplines', es:'Modalidades',
+                fr:'Pratiques', de:'Disziplinen' },
+  fAltitude:  { pt:'Altitude da descolagem', en:'Take-off altitude',
+                es:'Altitud del despegue', fr:'Altitude du décollage',
+                de:'Starthöhe' },
+  fAcesso:    { pt:'Acesso', en:'Access', es:'Acceso', fr:'Accès', de:'Zugang' },
+  voltar:     { pt:'Voltar a Parakite em Portugal', en:'Back to Parakite in Portugal',
+                es:'Volver a Parakite en Portugal', fr:'Retour à Parakite au Portugal',
+                de:'Zurück zu Parakite in Portugal' },
+};
+const MODALIDADE = {
+  parakite:  { pt:'Parakite', en:'Parakite', es:'Parakite', fr:'Parakite', de:'Parakite' },
+  parapente: { pt:'parapente', en:'paragliding', es:'parapente',
+               fr:'parapente', de:'Gleitschirm' },
+};
+
+/* uma linha em branco no CMS é um parágrafo novo na página. É a única
+   formatação que estes campos têm, e é de propósito: quem escreve não
+   devia ter de saber HTML para separar dois parágrafos. */
+const paragrafos = txt => String(txt || '').split(/\n\s*\n/)
+  .map(p => p.trim()).filter(Boolean)
+  .map(p => '<p>' + esc(p).replace(/\n/g, '<br />') + '</p>').join('\n      ');
+
+function paginaSpot(s, l, num) {
+  const url = DOMINIO + caminhoSpot(l, s);
+  const alts = alternativas(x => caminhoSpot(x, s));
+  const alt = etiquetasAlt(alts);
+  const hub = comIdioma('/parakite-portugal/', l);
+  const h1 = t(s.titulo, l) || s.nome;
+  /* O TITULO PARTE-SE NO TRAVESSAO, MAS SO NA PAGINA.
+     'Praia das Bicas — Parakite e parapente' e uma linha na aba do
+     browser e nos resultados do Google, onde o travessao e o que separa
+     o sitio do assunto. No ecra sao duas linhas e o travessao deixa de
+     fazer falta: a quebra ja o diz.
+     Guarda-se uma vez e o travessao decide onde parte — nao ha um segundo
+     campo no CMS a poder discordar do primeiro. */
+  const h1Linhas = h1.split(/s*—s*/).filter(Boolean)
+    .map(x => esc(x)).join('<br />');
+  const resumo = t(s.descricao, l);
+  const primeiraFrase = resumo.split(/\n/)[0].trim();
+  const f = s.ficha || {};
+
+  const capa = (s.album || []).find(m => m.imagem);
+  const foto = capa ? DOMINIO + capa.imagem : DOMINIO + '/images/og-happysoaring.jpg';
+
+  const linha = (rotulo, valor) => valor
+    ? '<div class="spot-lin"><dt>' + esc(t(rotulo, l)) + '</dt><dd>' + esc(valor) + '</dd></div>'
+    : '';
+  const ficha = [
+    linha(SP.fLocal, f.local),
+    linha(SP.fDistancia, f.distanciaLisboaKm ? '≈ ' + f.distanciaLisboaKm + ' km' : ''),
+    linha(SP.fViagem, t(f.tempoViagem, l)),
+    linha(SP.fTipo, t(f.tipoVoo, l)),
+    linha(SP.fDirecoes, (f.direcoes || []).join(' · ')),
+    linha(SP.fModal, (f.modalidades || []).map(m => t(MODALIDADE[m], l) || m).join(' · ')),
+    /* a altitude só aparece com fonte declarada. Um número sobre altura
+       de descolagem que ninguém sabe de onde vem é o género de dado que
+       alguém usa e não devia — mais vale não estar. */
+    f.altitudeDescolagemM && f.altitudeFonte
+      ? linha(SP.fAltitude, f.altitudeDescolagemM + ' m (' + f.altitudeFonte + ')') : '',
+    linha(SP.fAcesso, t(f.acesso, l)),
+  ].filter(Boolean).join('\n        ');
+
+  const seccoes = (s.seccoes || []).map(sec =>
+    `  <section class="spot-sec">
+      <h2>${esc(t(sec.titulo, l))}</h2>
+      ${paragrafos(t(sec.texto, l))}
+    </section>`).join('\n');
+
+  const ld = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      { '@type': 'BreadcrumbList', itemListElement: [
+        { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + inicioHref(l) },
+        { '@type': 'ListItem', position: 2, name: t(SP.hub, l), item: DOMINIO + hub },
+        { '@type': 'ListItem', position: 3, name: s.nome, item: url },
+      ]},
+      /* Place com o que está mesmo visível na ficha, e nada mais. Sem
+         coordenadas: não as temos, e inventá-las seria pôr no schema uma
+         precisão que a página não tem. */
+      { '@type': 'Place', '@id': url + '#local', name: s.nome,
+        address: { '@type': 'PostalAddress', addressLocality: 'Sesimbra',
+                   addressCountry: 'PT' } },
+      /* sem primaryImageOfPage: a pagina deixou de mostrar fotografias, e
+         prometer uma no schema seria descrever conteudo que nao esta la.
+         A og:image fica — essa e o cartao de partilha, e nao uma afirmacao
+         sobre o que a pagina contem. */
+      { '@type': 'WebPage', url, inLanguage: l, name: h1,
+        description: primeiraFrase, about: { '@id': url + '#local' } },
+    ],
+  });
+
+  return moldeDaPagina({
+    lingua: l, url, alts, alt, foto, ld,
+    classe: 'pg spot papel tema',
+    titulo: h1 + ' | Happy Soaring',
+    descricao: primeiraFrase,
+    ogTipo: 'article',
+    ogTitulo: h1,
+    rodape: 'Happy Soaring &middot; ' + esc(t(T.dealer, l)),
+    corpo: `
+<main class="pg-cx spot-cx">
+  <nav class="pg-migalhas"><a href="${esc(inicioHref(l))}">${esc(t(T.inicio, l))}</a> &rsaquo;
+    <a href="${esc(hub)}">${esc(t(SP.hub, l))}</a> &rsaquo; ${esc(s.nome)}</nav>
+
+  <h1 class="spot-h1">${h1Linhas}</h1>
+  <div class="spot-abre">
+      ${paragrafos(resumo)}
+  </div>
+
+${seccoes}
+
+  <section class="spot-sec spot-ref">
+    <h2>${esc(t(SP.referencia, l))}</h2>
+    <dl class="spot-ficha">
+        ${ficha}
+    </dl>
+  </section>
+
+  <aside class="spot-aviso" role="note">
+    <h2>${esc(t(SP.seguranca, l))}</h2>
+    ${paragrafos(t(s.aviso, l))}
+  </aside>
+
+  <p class="pg-voltar"><a href="${esc(hub)}">${esc(t(SP.voltar, l))}</a></p>
+</main>`,
+  });
+}
 
 /* A LIGACAO A FOLHA DO TEMA ENTRA AQUI, E NAO NOS OITO MOLDES
    Havia seis sitios a escrever `<link href="/pagina.css">` e mais dois
@@ -2227,6 +2375,24 @@ if (!so && !soIdioma) {
     urls.push(DOMINIO + rel);
   }
   console.log('  Parakite Portugal: ' + IDIOMAS.length + ' páginas');
+
+  /* as páginas de spot: só as dos que estão marcados como prontos */
+  const spotsComPagina = SPOTS.filter(s => s.publicar === true && s.id);
+  for (const s of spotsComPagina) {
+    for (const l of IDIOMAS) {
+      const rel = caminhoSpot(l, s);
+      const dir = path.join(destino, rel);
+      fs.mkdirSync(dir, { recursive: true });
+      const html = paginaSpot(s, l, num);
+      confereAlternativas(html, rel);
+      escrevePagina(path.join(dir, 'index.html'), html);
+      urls.push(DOMINIO + rel);
+    }
+  }
+  if (spotsComPagina.length) {
+    console.log('  Spots: ' + spotsComPagina.length + ' × ' + IDIOMAS.length + ' páginas ('
+      + spotsComPagina.map(s => s.nome).join(', ') + ')');
+  }
 }
 
 

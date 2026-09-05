@@ -70,7 +70,30 @@ export const ROTAS = {
                 fr: '/fr/musique/', de: '/de/musik/' },
   '/o-que-e-um-parakite/': { pt: '/o-que-e-um-parakite/', en: '/en/what-is-a-parakite/',
                              es: '/es/que-es-un-parakite/', fr: '/fr/qu-est-ce-qu-un-parakite/',
-                             de: '/de/was-ist-ein-parakite/' }
+                             de: '/de/was-ist-ein-parakite/' },
+
+  /* AS DUAS SEGUINTES AINDA NAO TEM PAGINA.
+     Estao aqui desde 05/09/2026 porque um endereco decide-se ANTES de
+     existir: depois de publicado, muda-lo custa um redireccionamento e a
+     indexacao que se perde pelo caminho. Sem pagina, isto nao faz mal
+     nenhum — ninguem lhes aponta.
+
+     "Parakite" nao traduz em nenhuma delas, pela mesma razao por que nao
+     traduz na de cima: e o nome da coisa, nao uma palavra comum. O que
+     traduz e "regras" e "spots".
+
+     Em alemao a ordem inverte-se — "Parakite Regeln", nao "Regeln
+     Parakite" — porque e assim que um alemao escreve e procura. */
+  '/regras-parakite-portugal/': { pt: '/regras-parakite-portugal/',
+                                  en: '/en/parakite-rules-portugal/',
+                                  es: '/es/reglas-parakite-portugal/',
+                                  fr: '/fr/regles-parakite-portugal/',
+                                  de: '/de/parakite-regeln-portugal/' },
+  '/spots-parakite-portugal/': { pt: '/spots-parakite-portugal/',
+                                 en: '/en/parakite-spots-portugal/',
+                                 es: '/es/spots-parakite-portugal/',
+                                 fr: '/fr/spots-parakite-portugal/',
+                                 de: '/de/parakite-spots-portugal/' }
 };
 
 export function comIdioma(href, lingua) {
