@@ -819,15 +819,391 @@
     {
       "id": "praia-da-gralha",
       "nome": "Praia da Gralha",
-      "publicar": false,
-      "descricao": {
-        "pt": "",
-        "en": "",
-        "es": "",
-        "fr": "",
-        "de": ""
+      "publicar": true,
+      "titulo": {
+        "pt": "Praia da Gralha — Spot de Parakite e parapente",
+        "en": "Praia da Gralha — Parakite and paragliding site",
+        "es": "Praia da Gralha — Spot de Parakite y parapente",
+        "fr": "Praia da Gralha — Site de Parakite et parapente",
+        "de": "Praia da Gralha — Parakite- und Gleitschirmspot"
       },
-      "album": []
+      "descricao": {
+        "pt": "A Praia da Gralha, junto a São Martinho do Porto, no concelho de Alcobaça, é um conhecido spot de voo costeiro utilizado para Parakite e parapente.\n\nAberta ao Oceano Atlântico e rodeada por arribas, apresenta um ambiente muito diferente da baía protegida de São Martinho do Porto. O extenso areal e a arriba costeira criam condições para soaring quando o vento e as restantes condições são adequados.\n\nA partir de Lisboa, a viagem de carro demora aproximadamente 1 hora e 10 minutos, dependendo do trânsito.",
+        "en": "Praia da Gralha, next to São Martinho do Porto in the municipality of Alcobaça, is a well-known coastal flying site used for Parakite and paragliding.\n\nOpen to the Atlantic Ocean and framed by cliffs, it is a very different environment from the sheltered bay of São Martinho do Porto. The long stretch of sand and the coastal cliff create soaring conditions when the wind and the remaining conditions are suitable.\n\nFrom Lisbon the drive takes approximately 1 hour and 10 minutes, depending on traffic.",
+        "es": "La Praia da Gralha, junto a São Martinho do Porto, en el municipio de Alcobaça, es un conocido spot de vuelo costero utilizado para Parakite y parapente.\n\nAbierta al océano Atlántico y rodeada de acantilados, presenta un entorno muy diferente al de la bahía protegida de São Martinho do Porto. El extenso arenal y el acantilado costero crean condiciones para soaring cuando el viento y las demás condiciones son adecuados.\n\nDesde Lisboa el viaje en coche dura aproximadamente 1 hora y 10 minutos, según el tráfico.",
+        "fr": "La Praia da Gralha, à côté de São Martinho do Porto, dans la commune d’Alcobaça, est un site de vol de côte connu, utilisé pour le Parakite et le parapente.\n\nOuverte sur l’océan Atlantique et encadrée de falaises, elle offre un environnement très différent de la baie abritée de São Martinho do Porto. La longue plage et la falaise côtière créent des conditions de soaring lorsque le vent et les autres conditions sont adaptés.\n\nDepuis Lisbonne, le trajet en voiture dure environ 1 heure et 10 minutes, selon la circulation.",
+        "de": "Die Praia da Gralha bei São Martinho do Porto in der Gemeinde Alcobaça ist ein bekannter Küstenflugspot für Parakite und Gleitschirm.\n\nZum Atlantik hin offen und von Klippen gerahmt, ist sie eine ganz andere Umgebung als die geschützte Bucht von São Martinho do Porto. Der lange Sandstrand und die Küstenklippe schaffen Soaring-Bedingungen, wenn Wind und übrige Bedingungen passen.\n\nVon Lissabon aus dauert die Fahrt je nach Verkehr etwa 1 Stunde und 10 Minuten."
+      },
+      "ficha": {
+        "concelho": "Alcobaça",
+        "linhas": [
+          {
+            "rotulo": {
+              "pt": "Local",
+              "en": "Location",
+              "es": "Lugar",
+              "fr": "Lieu",
+              "de": "Ort"
+            },
+            "valor": {
+              "pt": "Praia da Gralha, São Martinho do Porto, Alcobaça, Portugal",
+              "en": "Praia da Gralha, São Martinho do Porto, Alcobaça, Portugal",
+              "es": "Praia da Gralha, São Martinho do Porto, Alcobaça, Portugal",
+              "fr": "Praia da Gralha, São Martinho do Porto, Alcobaça, Portugal",
+              "de": "Praia da Gralha, São Martinho do Porto, Alcobaça, Portugal"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Tempo desde Lisboa",
+              "en": "Time from Lisbon",
+              "es": "Tiempo desde Lisboa",
+              "fr": "Temps depuis Lisbonne",
+              "de": "Fahrzeit ab Lissabon"
+            },
+            "valor": {
+              "pt": "aproximadamente 1 hora e 10 minutos de carro",
+              "en": "approximately 1 hour 10 minutes by car",
+              "es": "aproximadamente 1 hora y 10 minutos en coche",
+              "fr": "environ 1 heure et 10 minutes de voiture",
+              "de": "etwa 1 Stunde 10 Minuten mit dem Auto"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Modalidades",
+              "en": "Disciplines",
+              "es": "Modalidades",
+              "fr": "Pratiques",
+              "de": "Disziplinen"
+            },
+            "valor": {
+              "pt": "Parakite e parapente",
+              "en": "Parakite and paragliding",
+              "es": "Parakite y parapente",
+              "fr": "Parakite et parapente",
+              "de": "Parakite und Gleitschirm"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Tipo de voo",
+              "en": "Type of flying",
+              "es": "Tipo de vuelo",
+              "fr": "Type de vol",
+              "de": "Flugart"
+            },
+            "valor": {
+              "pt": "soaring costeiro / arriba",
+              "en": "coastal soaring / cliff",
+              "es": "soaring costero / acantilado",
+              "fr": "soaring de côte / falaise",
+              "de": "Küstensoaring / Steilküste"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Direções utilizadas",
+              "en": "Directions used",
+              "es": "Direcciones utilizadas",
+              "fr": "Directions utilisées",
+              "de": "Genutzte Richtungen"
+            },
+            "valor": {
+              "pt": "W / NW",
+              "en": "W / NW",
+              "es": "W / NW",
+              "fr": "W / NW",
+              "de": "W / NW"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Descolagem",
+              "en": "Take-off",
+              "es": "Despegue",
+              "fr": "Décollage",
+              "de": "Start"
+            },
+            "valor": {
+              "pt": "topo da arriba",
+              "en": "top of the cliff",
+              "es": "parte alta del acantilado",
+              "fr": "sommet de la falaise",
+              "de": "oben an der Klippe"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Distância desde o estacionamento",
+              "en": "Distance from the car park",
+              "es": "Distancia desde el aparcamiento",
+              "fr": "Distance depuis le parking",
+              "de": "Entfernung vom Parkplatz"
+            },
+            "valor": {
+              "pt": "aproximadamente 1 minuto a pé",
+              "en": "approximately 1 minute on foot",
+              "es": "aproximadamente 1 minuto a pie",
+              "fr": "environ 1 minute à pied",
+              "de": "etwa 1 Gehminute"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Aterragem",
+              "en": "Landing",
+              "es": "Aterrizaje",
+              "fr": "Atterrissage",
+              "de": "Landung"
+            },
+            "valor": {
+              "pt": "preferencialmente no topo da arriba através de top-landing; praia como alternativa quando não é possível regressar ao topo",
+              "en": "preferably on top of the cliff by top-landing; the beach as an alternative when returning to the top is not possible",
+              "es": "preferentemente en la parte alta del acantilado mediante top-landing; la playa como alternativa cuando no es posible regresar arriba",
+              "fr": "de préférence au sommet de la falaise en top-landing ; la plage comme solution de repli lorsque le retour en haut n’est pas possible",
+              "de": "vorzugsweise oben an der Klippe per Toplanding; der Strand als Alternative, wenn die Rückkehr nach oben nicht möglich ist"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Possibilidade de voo para norte",
+              "en": "Possible flight northwards",
+              "es": "Posibilidad de vuelo hacia el norte",
+              "fr": "Vol possible vers le nord",
+              "de": "Mögliche Flugstrecke nach Norden"
+            },
+            "valor": {
+              "pt": "Praia da Gralha → Praia do Salgado",
+              "en": "Praia da Gralha → Praia do Salgado",
+              "es": "Praia da Gralha → Praia do Salgado",
+              "fr": "Praia da Gralha → Praia do Salgado",
+              "de": "Praia da Gralha → Praia do Salgado"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Ambiente",
+              "en": "Setting",
+              "es": "Entorno",
+              "fr": "Environnement",
+              "de": "Umgebung"
+            },
+            "valor": {
+              "pt": "arribas, praia e Oceano Atlântico",
+              "en": "cliffs, beach and the Atlantic Ocean",
+              "es": "acantilados, playa y océano Atlántico",
+              "fr": "falaises, plage et océan Atlantique",
+              "de": "Klippen, Strand und Atlantik"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Outras atividades",
+              "en": "Other activities",
+              "es": "Otras actividades",
+              "fr": "Autres activités",
+              "de": "Weitere Aktivitäten"
+            },
+            "valor": {
+              "pt": "pesca desportiva, caminhadas e atividades de praia",
+              "en": "recreational fishing, walking and beach activities",
+              "es": "pesca deportiva, senderismo y actividades de playa",
+              "fr": "pêche sportive, randonnée et activités de plage",
+              "de": "Sportfischen, Wandern und Strandaktivitäten"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Acesso",
+              "en": "Access",
+              "es": "Acceso",
+              "fr": "Accès",
+              "de": "Zugang"
+            },
+            "valor": {
+              "pt": "pela zona superior da arriba",
+              "en": "from the upper area of the cliff",
+              "es": "por la zona superior del acantilado",
+              "fr": "par la partie haute de la falaise",
+              "de": "über den oberen Bereich der Klippe"
+            }
+          }
+        ]
+      },
+      "seccoes": [
+        {
+          "titulo": {
+            "pt": "Condições de voo",
+            "en": "Flying conditions",
+            "es": "Condiciones de vuelo",
+            "fr": "Conditions de vol",
+            "de": "Flugbedingungen"
+          },
+          "texto": {
+            "pt": "As principais direções utilizadas para voar de Parakite e parapente na Praia da Gralha são Oeste (W) e Noroeste (NW).\n\nNo entanto, a direção indicada numa previsão meteorológica não é suficiente para determinar se existem boas condições para voar.\n\nA intensidade, rajadas, componente lateral, qualidade do fluxo e forma como o vento interage com a arriba devem ser avaliadas em conjunto.",
+            "en": "The main directions used for flying Parakite and paragliders at Praia da Gralha are West (W) and North-West (NW).\n\nHowever, the direction given in a weather forecast is not enough to determine whether conditions are good for flying.\n\nStrength, gusts, cross component, the quality of the flow and the way the wind interacts with the cliff all have to be assessed together.",
+            "es": "Las principales direcciones utilizadas para volar en Parakite y parapente en la Praia da Gralha son Oeste (W) y Noroeste (NW).\n\nSin embargo, la dirección indicada en una previsión meteorológica no basta para determinar si hay buenas condiciones para volar.\n\nLa intensidad, las rachas, la componente lateral, la calidad del flujo y la forma en que el viento interactúa con el acantilado deben evaluarse en conjunto.",
+            "fr": "Les principales directions utilisées pour voler en Parakite et en parapente à la Praia da Gralha sont l’Ouest (W) et le Nord-Ouest (NW).\n\nLa direction indiquée par une prévision météo ne suffit toutefois pas à déterminer si les conditions sont bonnes pour voler.\n\nLa force, les rafales, la composante latérale, la qualité du flux et la façon dont le vent interagit avec la falaise doivent être évaluées ensemble.",
+            "de": "Die wichtigsten Richtungen, die an der Praia da Gralha für Parakite und Gleitschirm genutzt werden, sind West (W) und Nordwest (NW).\n\nDie Richtung aus einer Wettervorhersage genügt jedoch nicht, um zu bestimmen, ob die Bedingungen zum Fliegen gut sind.\n\nStärke, Böen, Seitenkomponente, die Qualität der Strömung und die Art, wie der Wind mit der Klippe zusammenwirkt, müssen zusammen beurteilt werden."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Qual a intensidade de vento necessária?",
+            "en": "How much wind is needed?",
+            "es": "¿Qué intensidad de viento se necesita?",
+            "fr": "Quelle force de vent faut-il ?",
+            "de": "Wie viel Wind ist nötig?"
+          },
+          "texto": {
+            "pt": "Não indicamos um valor mínimo ou máximo de vento porque não existe um valor que possa ser aplicado de forma segura a todos os pilotos e equipamentos.\n\nA intensidade necessária depende de vários fatores, incluindo:\n\n- modalidade — Parakite ou parapente\n- modelo e características da asa\n- tamanho da asa\n- peso total em voo\n- experiência do piloto\n- direção do vento\n- rajadas e qualidade do fluxo\n- condições existentes no local\n\nDuas pessoas no mesmo spot e com a mesma velocidade de vento podem necessitar de equipamentos diferentes.\n\nAs diferenças entre Parakite e parapente, bem como entre modelos, tamanhos e cargas alares, podem alterar significativamente as condições adequadas para cada piloto.",
+            "en": "We do not give a minimum or maximum wind figure, because there is no figure that can be safely applied to every pilot and every piece of equipment.\n\nThe strength required depends on several factors, including:\n\n- discipline — Parakite or paragliding\n- the model and characteristics of the wing\n- wing size\n- all-up weight\n- the pilot’s experience\n- wind direction\n- gusts and the quality of the flow\n- the conditions present on site\n\nTwo people at the same site with the same wind speed may need different equipment.\n\nThe differences between Parakite and paragliding, and between models, sizes and wing loadings, can significantly change what conditions are appropriate for each pilot.",
+            "es": "No indicamos un valor mínimo ni máximo de viento porque no existe un valor que pueda aplicarse de forma segura a todos los pilotos y equipos.\n\nLa intensidad necesaria depende de varios factores, entre ellos:\n\n- modalidad — Parakite o parapente\n- modelo y características del ala\n- tamaño del ala\n- peso total en vuelo\n- experiencia del piloto\n- dirección del viento\n- rachas y calidad del flujo\n- condiciones existentes en el lugar\n\nDos personas en el mismo spot y con la misma velocidad de viento pueden necesitar equipos diferentes.\n\nLas diferencias entre Parakite y parapente, así como entre modelos, tamaños y cargas alares, pueden cambiar significativamente las condiciones adecuadas para cada piloto.",
+            "fr": "Nous n’indiquons pas de valeur minimale ou maximale de vent, parce qu’il n’existe pas de valeur applicable en toute sécurité à tous les pilotes et à tous les matériels.\n\nLa force nécessaire dépend de plusieurs facteurs, dont :\n\n- la discipline — Parakite ou parapente\n- le modèle et les caractéristiques de l’aile\n- la taille de l’aile\n- le poids total en vol\n- l’expérience du pilote\n- la direction du vent\n- les rafales et la qualité du flux\n- les conditions présentes sur le site\n\nDeux personnes sur le même site et avec la même vitesse de vent peuvent avoir besoin de matériels différents.\n\nLes différences entre Parakite et parapente, ainsi qu’entre modèles, tailles et charges alaires, peuvent modifier sensiblement les conditions qui conviennent à chaque pilote.",
+            "de": "Wir nennen keinen Mindest- oder Höchstwert für den Wind, weil es keinen Wert gibt, der sich sicher auf alle Piloten und alle Ausrüstungen anwenden lässt.\n\nDie nötige Stärke hängt von mehreren Faktoren ab, unter anderem:\n\n- Disziplin — Parakite oder Gleitschirm\n- Modell und Eigenschaften des Schirms\n- Schirmgröße\n- Abfluggewicht\n- Erfahrung des Piloten\n- Windrichtung\n- Böen und Qualität der Strömung\n- die Bedingungen vor Ort\n\nZwei Personen am selben Spot und bei derselben Windgeschwindigkeit können unterschiedliche Ausrüstung brauchen.\n\nDie Unterschiede zwischen Parakite und Gleitschirm sowie zwischen Modellen, Größen und Flächenbelastungen können deutlich verändern, welche Bedingungen für welchen Piloten angemessen sind."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Descolagem",
+            "en": "Take-off",
+            "es": "Despegue",
+            "fr": "Décollage",
+            "de": "Start"
+          },
+          "texto": {
+            "pt": "A descolagem é feita no topo da arriba, numa zona elevada sobre a Praia da Gralha.\n\nO acesso é particularmente simples, ficando a zona de descolagem a aproximadamente 1 minuto a pé do estacionamento.\n\nA configuração do local permite regressar à zona de descolagem para aterragem quando as condições o permitem.",
+            "en": "Take-off is from the top of the cliff, on high ground above Praia da Gralha.\n\nAccess is particularly straightforward: the take-off area is about 1 minute on foot from the car park.\n\nThe layout of the site makes it possible to return to the take-off area to land when conditions allow.",
+            "es": "El despegue se hace en la parte alta del acantilado, en una zona elevada sobre la Praia da Gralha.\n\nEl acceso es especialmente sencillo: la zona de despegue está a aproximadamente 1 minuto a pie del aparcamiento.\n\nLa configuración del lugar permite regresar a la zona de despegue para aterrizar cuando las condiciones lo permiten.",
+            "fr": "Le décollage se fait au sommet de la falaise, sur une zone en hauteur au-dessus de la Praia da Gralha.\n\nL’accès est particulièrement simple : la zone de décollage se trouve à environ 1 minute à pied du parking.\n\nLa configuration du site permet de revenir se poser au décollage lorsque les conditions le permettent.",
+            "de": "Gestartet wird oben an der Klippe, auf einer erhöhten Fläche über der Praia da Gralha.\n\nDer Zugang ist besonders einfach: Der Startplatz liegt etwa 1 Gehminute vom Parkplatz entfernt.\n\nDie Beschaffenheit des Geländes erlaubt es, zum Landen an den Startplatz zurückzukehren, wenn die Bedingungen es zulassen."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Voar de Parakite e parapente na Praia da Gralha",
+            "en": "Flying Parakite and paragliders at Praia da Gralha",
+            "es": "Volar en Parakite y parapente en la Praia da Gralha",
+            "fr": "Voler en Parakite et parapente à la Praia da Gralha",
+            "de": "Mit Parakite und Gleitschirm an der Praia da Gralha fliegen"
+          },
+          "texto": {
+            "pt": "A arriba da Praia da Gralha permite aproveitar a sustentação dinâmica criada pelo vento ao encontrar o relevo costeiro.\n\nQuando as condições são adequadas, é possível realizar soaring costeiro ao longo da arriba com Parakite e parapente.\n\nA configuração do relevo e as diferentes orientações ao longo da costa fazem com que o comportamento do vento possa variar dentro do próprio spot.",
+            "en": "The cliff at Praia da Gralha makes it possible to use the dynamic lift created when the wind meets the coastal terrain.\n\nWhen conditions are suitable, coastal soaring along the cliff is possible with Parakite and paragliders.\n\nThe shape of the terrain and the different orientations along the coast mean that wind behaviour can vary within the site itself.",
+            "es": "El acantilado de la Praia da Gralha permite aprovechar la sustentación dinámica creada por el viento al encontrar el relieve costero.\n\nCuando las condiciones son adecuadas, es posible hacer soaring costero a lo largo del acantilado con Parakite y parapente.\n\nLa configuración del relieve y las distintas orientaciones a lo largo de la costa hacen que el comportamiento del viento pueda variar dentro del propio spot.",
+            "fr": "La falaise de la Praia da Gralha permet d’exploiter la portance dynamique créée par le vent lorsqu’il rencontre le relief côtier.\n\nLorsque les conditions sont adaptées, le soaring de côte le long de la falaise est possible en Parakite et en parapente.\n\nLa configuration du relief et les différentes orientations le long de la côte font que le comportement du vent peut varier à l’intérieur même du site.",
+            "de": "Die Klippe der Praia da Gralha erlaubt es, den dynamischen Aufwind zu nutzen, der entsteht, wenn der Wind auf das Küstenrelief trifft.\n\nWenn die Bedingungen passen, ist Küstensoaring entlang der Klippe mit Parakite und Gleitschirm möglich.\n\nDie Form des Geländes und die unterschiedlichen Ausrichtungen entlang der Küste führen dazu, dass sich das Windverhalten innerhalb des Spots unterscheiden kann."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Voar para norte em direção à Praia do Salgado",
+            "en": "Flying north towards Praia do Salgado",
+            "es": "Volar hacia el norte en dirección a la Praia do Salgado",
+            "fr": "Voler vers le nord en direction de la Praia do Salgado",
+            "de": "Nach Norden Richtung Praia do Salgado fliegen"
+          },
+          "texto": {
+            "pt": "Quando existem condições adequadas ao longo da costa, é possível prolongar o voo para norte desde a Praia da Gralha até à Praia do Salgado.\n\nEste percurso permite continuar o soaring ao longo da costa para além da zona principal da Gralha.\n\nA possibilidade de realizar a transição depende das condições existentes e da capacidade do piloto e equipamento utilizados.",
+            "en": "When conditions along the coast are suitable, the flight can be extended north from Praia da Gralha to Praia do Salgado.\n\nThat route makes it possible to keep soaring along the coast beyond the main area at Gralha.\n\nWhether the transition can be made depends on the conditions at the time and on the capability of the pilot and the equipment being used.",
+            "es": "Cuando hay condiciones adecuadas a lo largo de la costa, es posible prolongar el vuelo hacia el norte desde la Praia da Gralha hasta la Praia do Salgado.\n\nEste recorrido permite continuar el soaring a lo largo de la costa más allá de la zona principal de la Gralha.\n\nLa posibilidad de realizar la transición depende de las condiciones existentes y de la capacidad del piloto y del equipo utilizados.",
+            "fr": "Lorsque les conditions le permettent le long de la côte, le vol peut être prolongé vers le nord depuis la Praia da Gralha jusqu’à la Praia do Salgado.\n\nCe parcours permet de poursuivre le soaring le long de la côte au-delà de la zone principale de la Gralha.\n\nLa possibilité de réaliser la transition dépend des conditions du moment et des capacités du pilote et du matériel utilisés.",
+            "de": "Wenn die Bedingungen entlang der Küste passen, lässt sich der Flug von der Praia da Gralha nach Norden bis zur Praia do Salgado verlängern.\n\nDiese Strecke erlaubt es, das Soaring entlang der Küste über den Hauptbereich der Gralha hinaus fortzusetzen.\n\nOb der Übergang gelingt, hängt von den Bedingungen und vom Können des Piloten und der eingesetzten Ausrüstung ab."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Aterragem",
+            "en": "Landing",
+            "es": "Aterrizaje",
+            "fr": "Atterrissage",
+            "de": "Landung"
+          },
+          "texto": {
+            "pt": "Sempre que possível, a aterragem é feita novamente no topo da arriba, através de top-landing.\n\nQuando não é possível regressar à zona de descolagem, o areal da Praia da Gralha pode ser utilizado como alternativa de aterragem.\n\nA utilização da praia deve ter em conta o espaço disponível, a maré, o estado do mar e a presença de pessoas.",
+            "en": "Whenever possible, landing is back on top of the cliff, by top-landing.\n\nWhen returning to the take-off area is not possible, the sand at Praia da Gralha can be used as an alternative.\n\nUsing the beach has to take into account the space available, the tide, the state of the sea and the presence of people.",
+            "es": "Siempre que es posible, el aterrizaje se hace de nuevo en la parte alta del acantilado, mediante top-landing.\n\nCuando no es posible regresar a la zona de despegue, el arenal de la Praia da Gralha puede utilizarse como alternativa.\n\nEl uso de la playa debe tener en cuenta el espacio disponible, la marea, el estado del mar y la presencia de personas.",
+            "fr": "Chaque fois que c’est possible, l’atterrissage se fait de nouveau au sommet de la falaise, en top-landing.\n\nLorsque le retour à la zone de décollage n’est pas possible, la plage de la Praia da Gralha peut servir de solution de repli.\n\nL’utilisation de la plage doit tenir compte de l’espace disponible, de la marée, de l’état de la mer et de la présence de personnes.",
+            "de": "Wann immer möglich, wird wieder oben an der Klippe gelandet, per Toplanding.\n\nWenn die Rückkehr zum Startplatz nicht möglich ist, kann der Sandstrand der Praia da Gralha als Alternative dienen.\n\nDabei sind der verfügbare Platz, die Gezeiten, der Seegang und die Anwesenheit von Menschen zu berücksichtigen."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "A praia e as arribas",
+            "en": "The beach and the cliffs",
+            "es": "La playa y los acantilados",
+            "fr": "La plage et les falaises",
+            "de": "Der Strand und die Klippen"
+          },
+          "texto": {
+            "pt": "A Praia da Gralha encontra-se junto a São Martinho do Porto, mas apresenta características muito diferentes da conhecida baía da vila.\n\nÉ uma praia aberta ao Atlântico, com um extenso areal enquadrado por arribas e um ambiente costeiro relativamente natural.\n\nA praia é também utilizada para pesca desportiva, caminhadas e outras atividades ligadas ao mar.",
+            "en": "Praia da Gralha lies next to São Martinho do Porto, but it is very different from the town’s well-known bay.\n\nIt is a beach open to the Atlantic, with a long stretch of sand framed by cliffs and a relatively natural coastal setting.\n\nThe beach is also used for recreational fishing, walking and other activities linked to the sea.",
+            "es": "La Praia da Gralha se encuentra junto a São Martinho do Porto, pero presenta características muy distintas de la conocida bahía de la villa.\n\nEs una playa abierta al Atlántico, con un extenso arenal enmarcado por acantilados y un entorno costero relativamente natural.\n\nLa playa se utiliza también para pesca deportiva, senderismo y otras actividades ligadas al mar.",
+            "fr": "La Praia da Gralha se trouve à côté de São Martinho do Porto, mais elle présente des caractéristiques très différentes de la célèbre baie du bourg.\n\nC’est une plage ouverte sur l’Atlantique, avec une longue étendue de sable encadrée de falaises et un environnement côtier relativement naturel.\n\nLa plage sert aussi à la pêche sportive, à la randonnée et à d’autres activités liées à la mer.",
+            "de": "Die Praia da Gralha liegt direkt neben São Martinho do Porto, unterscheidet sich aber deutlich von der bekannten Bucht des Ortes.\n\nSie ist ein zum Atlantik hin offener Strand, mit einem langen Sandstreifen zwischen Klippen und einer verhältnismäßig naturbelassenen Küstenlandschaft.\n\nDer Strand wird auch zum Sportfischen, zum Wandern und für andere Aktivitäten rund um das Meer genutzt."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Um espaço partilhado",
+            "en": "A shared space",
+            "es": "Un espacio compartido",
+            "fr": "Un espace partagé",
+            "de": "Ein geteilter Raum"
+          },
+          "texto": {
+            "pt": "A Praia da Gralha é utilizada por pilotos de Parakite e parapente, pescadores, caminhantes e outros utilizadores.\n\nQuando vários pilotos partilham a mesma zona de voo, as diferenças de velocidade e comportamento entre diferentes tipos e tamanhos de asa devem ser consideradas.\n\nA presença de pessoas no areal deve também ser considerada sempre que seja necessário utilizar a praia para aterragem.",
+            "en": "Praia da Gralha is used by Parakite and paragliding pilots, fishermen, walkers and others.\n\nWhen several pilots share the same flying area, the differences in speed and behaviour between types and sizes of wing have to be taken into account.\n\nThe presence of people on the sand must also be considered whenever the beach has to be used for landing.",
+            "es": "La Praia da Gralha es utilizada por pilotos de Parakite y parapente, pescadores, caminantes y otros usuarios.\n\nCuando varios pilotos comparten la misma zona de vuelo, deben considerarse las diferencias de velocidad y comportamiento entre distintos tipos y tamaños de ala.\n\nLa presencia de personas en el arenal debe considerarse también siempre que sea necesario utilizar la playa para aterrizar.",
+            "fr": "La Praia da Gralha est fréquentée par des pilotes de Parakite et de parapente, des pêcheurs, des promeneurs et d’autres usagers.\n\nLorsque plusieurs pilotes partagent la même zone de vol, les différences de vitesse et de comportement entre types et tailles d’ailes doivent être prises en compte.\n\nLa présence de personnes sur le sable doit également être considérée chaque fois qu’il faut utiliser la plage pour atterrir.",
+            "de": "Die Praia da Gralha wird von Parakite- und Gleitschirmpiloten, Fischern, Spaziergängern und anderen genutzt.\n\nWenn mehrere Piloten denselben Flugbereich teilen, sind die Unterschiede in Geschwindigkeit und Verhalten zwischen Schirmtypen und -größen zu berücksichtigen.\n\nAuch die Anwesenheit von Menschen am Strand ist zu beachten, wann immer der Strand zum Landen genutzt werden muss."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Respeito pelo spot",
+            "en": "Respect for the site",
+            "es": "Respeto por el spot",
+            "fr": "Respect du site",
+            "de": "Respekt vor dem Spot"
+          },
+          "texto": {
+            "pt": "As arribas e o ambiente costeiro da Praia da Gralha fazem parte de uma paisagem natural que deve ser preservada.\n\nA prática de Parakite e parapente deve procurar minimizar o impacto sobre o local, respeitar os acessos existentes e evitar comportamentos que possam degradar o terreno ou criar conflitos com outros utilizadores.\n\nRespeitar o spot ajuda a mantê-lo aberto para todos.",
+            "en": "The cliffs and the coastal environment at Praia da Gralha are part of a natural landscape that should be preserved.\n\nParakite and paragliding should be practised so as to minimise the impact on the site, to respect the existing accesses, and to avoid behaviour that could damage the terrain or create conflict with other users.\n\nRespecting the site helps keep it open to everyone.",
+            "es": "Los acantilados y el entorno costero de la Praia da Gralha forman parte de un paisaje natural que debe preservarse.\n\nLa práctica del Parakite y del parapente debe procurar minimizar el impacto sobre el lugar, respetar los accesos existentes y evitar comportamientos que puedan degradar el terreno o crear conflictos con otros usuarios.\n\nRespetar el spot ayuda a mantenerlo abierto para todos.",
+            "fr": "Les falaises et l’environnement côtier de la Praia da Gralha font partie d’un paysage naturel qui doit être préservé.\n\nLa pratique du Parakite et du parapente doit chercher à minimiser l’impact sur le site, à respecter les accès existants et à éviter les comportements susceptibles de dégrader le terrain ou de créer des conflits avec d’autres usagers.\n\nRespecter le site aide à le garder ouvert à tous.",
+            "de": "Die Klippen und die Küstenlandschaft der Praia da Gralha sind Teil einer Natur, die erhalten werden soll.\n\nParakite und Gleitschirmfliegen sollten so ausgeübt werden, dass die Auswirkungen auf den Ort möglichst gering bleiben, die vorhandenen Zugänge respektiert werden und Verhalten vermieden wird, das das Gelände schädigen oder Konflikte mit anderen Nutzern auslösen könnte.\n\nDen Spot zu respektieren hilft, ihn für alle offen zu halten."
+          }
+        }
+      ],
+      "aviso": {
+        "pt": "As informações desta página não substituem a avaliação das condições no local.\n\nA decisão de voar deve ter em conta a experiência do piloto, o equipamento utilizado e as condições reais do spot.\n\nSe não conheces o local, procura informação junto de pilotos locais antes de voar.",
+        "en": "The information on this page does not replace assessing the conditions on site.\n\nThe decision to fly must take into account the pilot’s experience, the equipment used and the actual conditions at the site.\n\nIf you do not know the site, seek information from local pilots before flying.",
+        "es": "La información de esta página no sustituye la evaluación de las condiciones en el lugar.\n\nLa decisión de volar debe tener en cuenta la experiencia del piloto, el equipo utilizado y las condiciones reales del spot.\n\nSi no conoces el lugar, busca información entre los pilotos locales antes de volar.",
+        "fr": "Les informations de cette page ne remplacent pas l’évaluation des conditions sur place.\n\nLa décision de voler doit tenir compte de l’expérience du pilote, du matériel utilisé et des conditions réelles du site.\n\nSi tu ne connais pas le site, renseigne-toi auprès des pilotes locaux avant de voler.",
+        "de": "Die Informationen auf dieser Seite ersetzen nicht die Beurteilung der Bedingungen vor Ort.\n\nDie Entscheidung zu fliegen muss die Erfahrung des Piloten, die verwendete Ausrüstung und die tatsächlichen Bedingungen am Spot berücksichtigen.\n\nWenn du den Ort nicht kennst, hol dir vor dem Fliegen Informationen bei örtlichen Piloten."
+      },
+      "album": [
+        {
+          "videoId": "XkkG4DAGlK8",
+          "imagem": "",
+          "alt": {
+            "pt": "Vídeo: um parakite turquesa e laranja a voar baixo sobre o areal da Praia da Gralha, entre o Atlântico à esquerda e as arribas ocres à direita.",
+            "en": "Video: a turquoise and orange parakite flying low over the sand at Praia da Gralha, with the Atlantic to the left and ochre cliffs to the right.",
+            "es": "Vídeo: un parakite turquesa y naranja volando bajo sobre el arenal de la Praia da Gralha, con el Atlántico a la izquierda y los acantilados ocres a la derecha.",
+            "fr": "Vidéo : un parakite turquoise et orange en vol bas au-dessus du sable de la Praia da Gralha, avec l’Atlantique à gauche et les falaises ocre à droite.",
+            "de": "Video: ein türkis-oranger Parakite im tiefen Flug über dem Sand der Praia da Gralha, links der Atlantik, rechts die ockerfarbenen Klippen."
+          },
+          "legenda": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          }
+        }
+      ]
     },
     {
       "id": "praia-das-bicas",
