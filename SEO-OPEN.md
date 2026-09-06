@@ -1,19 +1,6 @@
 # SEO — o que está em aberto
 
-Só o que ainda não fechou. **Nada de resolvido fica aqui**: quando um assunto
-fecha, sai deste ficheiro — o registo do que foi alterado, e porquê, está nas
-mensagens de commit, que não podem ficar desactualizadas.
-
-Um ficheiro que devia estar vazio denuncia-se quando não está. Um ficheiro que
-cresce esconde o que apodrece lá dentro.
-
-**Regra de fecho** — depende do tipo de problema:
-
-- o que a produção confirma directamente (um canonical errado que passa a
-  correcto): basta uma medição;
-- o que depende do Google (indexação): **duas observações consecutivas**
-  compatíveis com o estado desejado. Um URL que oscilou fica aberto, com nota
-  de que oscilou.
+Estado. As regras do processo estão no `SEO-WORKFLOW.md`.
 
 Última reconciliação: **06/09/2026**, contra `hs-seo-2026-09-06T135516Z.json`
 (corrida completa, 160/160, sem erros, site na versão `9ce38a1`).
@@ -29,10 +16,8 @@ cresce esconde o que apodrece lá dentro.
 ```
 aberto: 2026-09-06 · rever depois de: **2026-09-08** (recheck dirigido)
 
-Apareceram como "Enviada e indexada" na corrida das 13:55. **Uma observação
-positiva não fecha um item que depende do Google** — e estas quatro são o
-melhor argumento possível para essa regra, porque oscilaram durante o próprio
-dia em que foram medidas:
+Uma observação positiva, na corrida das 13:55. Falta a segunda. Oscilaram três
+vezes no mesmo dia:
 
 ```
                      11:00              12:56              13:55
@@ -41,10 +26,6 @@ panorama    não reconhece      não reconhece      indexada
 rpm-3       —                  não reconhece      indexada
 yoti-3      —                  não reconhece      indexada
 ```
-
-Um *recheck* dirigido a estes quatro URLs a 08/09 dá a segunda observação sem
-gastar as 160 nem esperar pela corrida semanal. Se se mantiverem, proponho o
-fecho então.
 
 ### 7 fichas de asa por indexar
 ```

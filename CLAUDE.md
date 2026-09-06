@@ -138,6 +138,13 @@ tamanho dos `h2`. Ao estilar uma página de leitura, prefixar com
   `masters/`, `entregas/`, `catalogo-flow/`, `mockups/`, `_arquivo/`,
   `music/_apagados/`.
 
+## Trabalho SEO
+
+Trabalho iniciado a partir de um `hs-seo-*.json` ou do `SEO-OPEN.md` → ler
+primeiro o `SEO-WORKFLOW.md`.
+
+Vale só para esse trabalho. Não altera nada do resto deste ficheiro.
+
 ## O mapa da estrutura
 
 Há um artefacto com a arquitectura do site — endereços, línguas, grafo de
