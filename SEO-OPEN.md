@@ -54,13 +54,6 @@ Publicadas no próprio dia. "Não reconhece" é o esperado.
 
 ## DECISÃO PAULO
 
-### "Estacionamento: geralmente fácil na zona", na Fonte da Telha
-aberto: 2026-09-06
-
-A mesma página diz três parágrafos acima que é "uma praia muito frequentada,
-particularmente durante a época balnear". Publicado como escrito, por ser texto
-do Paulo.
-
 ### O wordmark da página inicial, e só ele
 aberto: 2026-09-05 · medido outra vez: 2026-09-06
 
