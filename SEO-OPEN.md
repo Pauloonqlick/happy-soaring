@@ -76,11 +76,32 @@ A página da Fonte da Telha diz que se voa para sul até à Lagoa. A da Lagoa n�
 diz o inverso. O facto está escrito de um lado só — mas a simetria pode não ser
 verdade no vento, e isso é conhecimento do Paulo.
 
-### Os dois heróis reprovam no contraste
-aberto: 2026-09-05
+### O wordmark da página inicial, e só ele
+aberto: 2026-09-05 · medido outra vez: 2026-09-06
 
-Medido: `SOARING` a 1:1 na página inicial, o subtítulo do Parakite a 2,17:1.
-Herdado da secção da landscape quando se copiou a receita dela.
+O herói do Parakite foi corrigido e sai deste ficheiro. Na inicial mediram-se
+os cinco elementos a 1440px e a 375px: o `h1`, o `lead` e o `kicker` passam
+nos dois tamanhos. Reprova só o `HAPPY SOARING` — 2,28:1 e 1:1 em desktop,
+2,76:1 e 1,01:1 em mobile.
+
+Duas coisas que esta medição mostrou e a de 05/09 não tinha mostrado.
+
+**O laranja não é o problema.** Sobre o azul-marinho do scrim mede 5,11:1. O
+que falha é o scrim afinar por baixo da segunda metade da palavra: o
+`SOARING` chega aos 45% da largura, e aí a banda escura já vai em .30.
+
+**E não há correcção barata.** Com o scrim *totalmente opaco* à esquerda o
+`SOARING` só sobe a 2,66:1 — continua abaixo dos 3:1 exigidos a texto
+grande. Para passar era preciso azul quase opaco sobre os primeiros 45% do
+herói, que é exactamente o que se tirou do herói do Parakite por tapar a
+fotografia — está contado em `pagina.css`, no comentário acima do
+`.pk-heroi::after`.
+
+O `.wordmark` é um `<div>` com o nome da marca, e o `<h1>` é outro elemento,
+por baixo. A norma isenta logótipos e nomes de marca de requisito de
+contraste (WCAG 1.4.3), portanto isto não é uma falha numa auditoria. Fica
+aqui por ser escolha de desenho e não facto técnico: aceitar a isenção, ou
+pagar a fotografia pelo contraste.
 
 ### O cliente OAuth abandonado no Google Cloud
 aberto: 2026-09-06
