@@ -2,30 +2,13 @@
 
 Estado. As regras do processo estão no `SEO-WORKFLOW.md`.
 
-Última reconciliação: **06/09/2026**, contra `hs-seo-2026-09-06T135516Z.json`
-(corrida completa, 160/160, sem erros, site na versão `9ce38a1`).
+Última reconciliação: **06/09/2026**, contra `hs-seo-2026-09-06T162417Z.json`
+(recheck dirigido, 4/4, sem erros, site na versão `20a5b60`) e, antes dele,
+`hs-seo-2026-09-06T135516Z.json` (corrida completa, 160/160).
 
 ---
 
 ## AGUARDAR GOOGLE
-
-### 4 fichas alemãs observadas como indexadas uma única vez
-```
-/de/schirme/f2-light/    /de/schirme/panorama/
-/de/schirme/rpm-3/       /de/schirme/yoti-3/
-```
-aberto: 2026-09-06 · rever depois de: **2026-09-08** (recheck dirigido)
-
-Uma observação positiva, na corrida das 13:55. Falta a segunda. Oscilaram três
-vezes no mesmo dia:
-
-```
-                     11:00              12:56              13:55
-f2-light    não reconhece      detetada           indexada
-panorama    não reconhece      não reconhece      indexada
-rpm-3       —                  não reconhece      indexada
-yoti-3      —                  não reconhece      indexada
-```
 
 ### 7 fichas de asa por indexar
 ```
@@ -57,14 +40,15 @@ outra (`de` 6 de 12). Fica por observar em corridas seguintes.
 
 Acção manual disponível: pedir indexação no Search Console.
 
-### 10 páginas de spot publicadas hoje
+### 15 páginas de spot publicadas a 06/09
 ```
 /parakite-portugal/fonte-da-telha/     e as 4 traduções
 /parakite-portugal/praia-da-gralha/    e as 4 traduções
+/parakite-portugal/praia-do-meco/      e as 4 traduções
 ```
 aberto: 2026-09-06 · rever depois de: 2026-09-13
 
-Publicadas há horas. "Não reconhece" é o esperado.
+Publicadas no próprio dia. "Não reconhece" é o esperado.
 
 ---
 
