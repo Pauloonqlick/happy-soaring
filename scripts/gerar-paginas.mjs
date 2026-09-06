@@ -2928,14 +2928,33 @@ if (!so || so === 'musica') {
 
 
 if (!so && !soIdioma) {
-  const hoje = new Date().toISOString().slice(0, 10);
+  /* SEM `lastmod`, DE PROPÓSITO.
+     Escrevia-se aqui a data de hoje nas 165 URLs, a cada publicação. Era
+     falso para quase todas: publicar uma correcção de CSS não altera o
+     conteúdo de 164 páginas. Um sinal que diz sempre "mudou tudo" é um
+     sinal que se aprende a ignorar, e o `lastmod` só vale enquanto for
+     credível.
+
+     A alternativa seria uma data por URL, tirada do git. Não se sustenta: o
+     conteúdo de cada página está repartido entre a sua entrada no JSON
+     (`content/slides/produtos.json`, `content/spots.json`) e este gerador,
+     que traz os rótulos, a estrutura e os dados estruturados — e que já
+     leva 30 commits. Datar pelo JSON só, ignorava tudo o que muda aqui; uma
+     data velha de mais é pior do que nenhuma, porque convida a não voltar.
+     E as páginas geradas não se versionam, portanto do resultado não há
+     histórico nenhum.
+
+     O `lastmod` é opcional no protocolo. Sem data fiável, não se inventa.
+
+     O `changefreq` e a `priority` ficam: não custam nada e o Google
+     ignora-os de qualquer maneira. */
+
   /* as cinco iniciais têm a mesma prioridade: nenhuma é a tradução das
      outras, são cinco portas de entrada para cinco mercados */
   const fixas = IDIOMAS.map(l => ({ loc: DOMINIO + inicioHref(l), freq: 'weekly', pri: '1.0' }));
   const entrada = (loc, freq, pri) => [
     '  <url>',
     '    <loc>' + loc + '</loc>',
-    '    <lastmod>' + hoje + '</lastmod>',
     '    <changefreq>' + freq + '</changefreq>',
     '    <priority>' + pri + '</priority>',
     '  </url>'

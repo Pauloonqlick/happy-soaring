@@ -54,14 +54,6 @@ Publicadas no próprio dia. "Não reconhece" é o esperado.
 
 ## DECISÃO PAULO
 
-### O `lastmod` do sitemap diz que tudo mudou, sempre
-aberto: 2026-09-06
-
-O sitemap escreve a data de hoje nas 160 URLs em cada publicação. É falso para
-quase todas, e um sinal que diz sempre "mudou tudo" é um sinal que se aprende a
-ignorar. Não é causa provada de nada, mas é o único mecanismo que controlamos
-que toca no agendamento de rastreio.
-
 ### "Estacionamento: geralmente fácil na zona", na Fonte da Telha
 aberto: 2026-09-06
 
