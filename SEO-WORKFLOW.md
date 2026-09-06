@@ -74,6 +74,20 @@ pelo Google — **precisa de confirmação, normalmente uma segunda observação
 compatível com o estado desejado. Uma observação isolada não sustenta uma
 tendência.
 
+**E a segunda observação vale mais se o `lastCrawlTime` tiver avançado.** Duas
+inspeções ao mesmo crawl são o mesmo facto lido duas vezes, não duas
+observações — a segunda existe para sobreviver ao tempo, e a esse não
+sobrevive. **Quando o crawl não avançou, diz-se isso ao propor o fecho.**
+
+Não se espera indefinidamente por um novo crawl: não se pode forçar, e um item
+que só sai com uma condição que não controlamos fica preso. Fecha-se, dizendo o
+que a evidência é e o que não é — e a corrida completa seguinte serve de rede,
+porque uma regressão reabre.
+
+> Escrito a 06/09. As quatro fichas alemãs foram observadas indexadas às 13:55
+> e às 16:24, e as duas leituras vinham do mesmo crawl das 12:30. Cumpriam a
+> letra da regra sem cumprirem a intenção.
+
 **Um URL que oscilou fica aberto**, com nota de que oscilou. Oscilar é
 informação, não é resolução.
 
@@ -112,6 +126,15 @@ mesma: a app mede, não interpreta.
 
 > As duas recomendações que a app produziu a 06/09 estavam ambas erradas, e
 > ancoraram a investigação numa direcção que os dados não sustentavam.
+
+**O `referringUrls` não é exaustivo.** O Google devolve as páginas que
+encontrou, não todas as que existem. Ausência ali **não prova** ausência de
+ligações: a `/de/schirme/f2-light/` tem oito ligações de entrada no HTML e o
+Google reporta quatro — só as suas traduções.
+
+> A 05/09 li "Página de referência: nada detetado" na página da Lagoa como
+> confirmação de que estava órfã. Estava — mas provou-se pelo HTML, não por
+> aqui. A evidência que citei era mais fraca do que eu disse.
 
 **`null` não é `[]`.** `null` quer dizer *não disponível, não foi possível
 comparar*. `[]` quer dizer *comparado, e está vazio*. Confundi-los inverte a
