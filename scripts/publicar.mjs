@@ -60,6 +60,8 @@ const FICHEIROS = [
   'musica.css',      /* a loja de música: página inicial e /musica/ */
   'menu.js',         /* abre e fecha a gaveta; não constrói o menu */
   'musica.js',       /* arranca a loja de música na página própria */
+  'favicon.ico',      /* o icone que o Google mostra ao lado do nome do site */
+  'site.webmanifest', /* so os icones: sem start_url nem display, nao e PWA */
   'robots.txt',
   'sitemap.xml',     /* escrito pelo gerador, logo abaixo */
   '_redirects'       /* redireccionamentos do Pages (ver comentários lá dentro) */

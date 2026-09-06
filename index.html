@@ -46,6 +46,20 @@
 <link rel="alternate" hreflang="de" href="https://happysoaring.com/de/" />
 <link rel="alternate" hreflang="x-default" href="https://happysoaring.com/" />
 
+<!-- OS ICONES DA MARCA
+     O que o Google mostra ao lado do nome do site nos resultados e o favicon,
+     e um favicon vive a 16 ou 32 pixeis: a esse tamanho "HAPPY SOARING" em
+     duas linhas e uma mancha. Usa-se o simbolo HS com o sorriso, que ainda se
+     le. O logotipo completo fica para o `logo` da Organization, mais abaixo,
+     que aparece grande.
+
+     Gerados por scripts/gerar-icones.py a partir dos mestres. Os mestres nao
+     entram no repositorio. -->
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" type="image/png" href="/images/marca/hs-simbolo-192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="/images/marca/hs-apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+
 <!-- Partilha em redes sociais e WhatsApp. Sem isto, uma ligação partilhada
      aparece sem imagem e sem descrição — e é assim que a maior parte das
      pessoas chega cá. -->
@@ -87,6 +101,13 @@
       "@id": "https://happysoaring.com/#organizacao",
       "name": "Happy Soaring",
       "url": "https://happysoaring.com/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://happysoaring.com/images/marca/happy-soaring-logo-512.png",
+        "width": 512,
+        "height": 512,
+        "caption": "Happy Soaring"
+      },
       "description": "Revendedor oficial Flow Paragliders em Portugal, com formação através da escola parceira FelloFly.",
       "areaServed": { "@type": "Country", "name": "Portugal" },
       "knowsLanguage": ["pt", "en", "es", "fr", "de"]

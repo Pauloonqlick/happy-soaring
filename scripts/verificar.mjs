@@ -108,7 +108,7 @@ titulo('2. As ligações internas resolvem');
       let u = m[1].split('#')[0];
       if (!u) continue;                    /* href="/#algo" na própria raiz */
       n++;
-      if (/\.(css|js|json|xml|txt|webp|jpg|jpeg|png|svg|webm|mp3|ico)$/i.test(u)) {
+      if (/\.(css|js|json|xml|txt|webp|jpg|jpeg|png|svg|webm|mp3|ico|webmanifest)$/i.test(u)) {
         if (!fs.existsSync(path.join(RAIZ, u.replace(/^\//, '')))) {
           falha(p.url + ' → ' + u + ' (ficheiro não existe)'); mortas++;
         }

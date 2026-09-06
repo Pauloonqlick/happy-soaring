@@ -1029,6 +1029,10 @@ function moldeDaPagina(o) {
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" type="image/png" href="/images/marca/hs-simbolo-192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="/images/marca/hs-apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
 <title>${esc(o.titulo)}</title>
 <meta name="description" content="${esc(o.descricao)}" />
 <link rel="canonical" href="${o.url}" />
@@ -2524,6 +2528,10 @@ function paginaQueParakite(l) {
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" type="image/png" href="/images/marca/hs-simbolo-192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="/images/marca/hs-apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
 <title>${esc(t(QP.title, l))}</title>
 <meta name="description" content="${esc(t(QP.desc, l))}" />
 <meta name="robots" content="max-image-preview:large" />
@@ -2798,6 +2806,10 @@ function paginaMusica(l) {
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" type="image/png" href="/images/marca/hs-simbolo-192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="/images/marca/hs-apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
 <title>${esc(t(MU.title, l))}</title>
 <meta name="description" content="${esc(t(MU.desc, l))}" />
 <meta name="robots" content="max-image-preview:large" />
