@@ -69,13 +69,6 @@ A mesma página diz três parágrafos acima que é "uma praia muito frequentada,
 particularmente durante a época balnear". Publicado como escrito, por ser texto
 do Paulo.
 
-### A ligação de volta entre a Lagoa e a Fonte da Telha
-aberto: 2026-09-06
-
-A página da Fonte da Telha diz que se voa para sul até à Lagoa. A da Lagoa não
-diz o inverso. O facto está escrito de um lado só — mas a simetria pode não ser
-verdade no vento, e isso é conhecimento do Paulo.
-
 ### O wordmark da página inicial, e só ele
 aberto: 2026-09-05 · medido outra vez: 2026-09-06
 
