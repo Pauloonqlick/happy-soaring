@@ -81,12 +81,35 @@ contraste (WCAG 1.4.3), portanto isto não é uma falha numa auditoria. Fica
 aqui por ser escolha de desenho e não facto técnico: aceitar a isenção, ou
 pagar a fotografia pelo contraste.
 
-### O cliente OAuth abandonado no Google Cloud
-aberto: 2026-09-06
+### O cliente OAuth do Google — não é o que aqui estava escrito
+aberto: 2026-09-06 · investigado: 2026-09-06
 
-Ficou por usar quando se abandonou o OAuth, e tem uma Client Secret viva. Um
-cliente abandonado com segredo activo é uma porta que ninguém vigia. Um minuto
-no Google Cloud, e não depende de mais nada avançar.
+Estava aqui que tinha "ficado por usar quando se abandonou o OAuth" e que se
+revogava o segredo num minuto. **Não se pode revogar.** O OAuth não foi
+abandonado: está ligado e em uso.
+
+O que a busca no código mostra:
+
+- Existe **um** cliente OAuth, um só, em todo o `ParakiteLog/code` — o
+  `GOOGLE_CLIENT_ID` em `wrangler.json` (e a cópia gerada em
+  `worker-configuration.d.ts`). Não há um segundo em lado nenhum.
+- `src/worker/services/auth.ts` usa-o em `buildGoogleOAuthUrl` e em
+  `exchangeGoogleCode`, e é esta que manda o `client_secret` para
+  `oauth2.googleapis.com/token`.
+- `src/worker/routes/auth.ts` chama as duas, e `src/worker/index.ts`
+  monta-as em `/api/auth`.
+
+Revogar aquele segredo parte a entrada com Google no ParakiteLog.
+
+No repositório do site não há nada de OAuth — nem nome de variável, nem
+endereço, nem chamada. Aí a busca deu vazia, e por isso o site não está em
+causa de qualquer maneira.
+
+**Falta o que só o Paulo pode ver.** Na consola do Google Cloud: se
+aparecer mais do que um cliente no projecto, o que se revoga é o que *não*
+corresponder ao `GOOGLE_CLIENT_ID` que está em
+`ParakiteLog/code/wrangler.json`. Se só houver um, é o que está em uso, e
+não se toca em nada.
 
 ---
 
