@@ -780,13 +780,386 @@
     {
       "id": "praia-do-meco",
       "nome": "Praia do Meco",
-      "publicar": false,
+      "publicar": true,
+      "titulo": {
+        "pt": "Praia do Meco — Spot de Parakite e parapente",
+        "en": "Praia do Meco — Parakite and paragliding site",
+        "es": "Praia do Meco — Spot de Parakite y parapente",
+        "fr": "Praia do Meco — Site de Parakite et parapente",
+        "de": "Praia do Meco — Parakite- und Gleitschirmspot"
+      },
       "descricao": {
-        "pt": "",
-        "en": "",
-        "es": "",
-        "fr": "",
-        "de": ""
+        "pt": "A Praia do Meco, no concelho de Sesimbra, é um conhecido spot de voo costeiro utilizado para Parakite e parapente.\n\nSituada na costa ocidental, entre a zona da Lagoa de Albufeira e a Praia das Bicas, combina um extenso areal com dunas que permitem aproveitar a sustentação dinâmica criada pelo vento.",
+        "en": "Praia do Meco, in the municipality of Sesimbra, is a well-known coastal flying site used for Parakite and paragliding.\n\nSet on the west coast, between the Lagoa de Albufeira area and Praia das Bicas, it combines a long stretch of sand with dunes that allow the dynamic lift created by the wind to be used.",
+        "es": "La Praia do Meco, en el municipio de Sesimbra, es un conocido spot de vuelo costero utilizado para Parakite y parapente.\n\nSituada en la costa occidental, entre la zona de la Lagoa de Albufeira y la Praia das Bicas, combina un extenso arenal con dunas que permiten aprovechar la sustentación dinámica creada por el viento.",
+        "fr": "La Praia do Meco, dans la commune de Sesimbra, est un site de vol de côte connu, utilisé pour le Parakite et le parapente.\n\nSituée sur la côte occidentale, entre la zone de la Lagoa de Albufeira et la Praia das Bicas, elle associe une longue plage à des dunes qui permettent d’exploiter la portance dynamique créée par le vent.",
+        "de": "Die Praia do Meco in der Gemeinde Sesimbra ist ein bekannter Küstenflugspot für Parakite und Gleitschirm.\n\nSie liegt an der Westküste, zwischen dem Gebiet der Lagoa de Albufeira und der Praia das Bicas, und verbindet einen langen Sandstrand mit Dünen, an denen sich der dynamische Aufwind nutzen lässt."
+      },
+      "ficha": {
+        "concelho": "Sesimbra",
+        "linhas": [
+          {
+            "rotulo": {
+              "pt": "Local",
+              "en": "Location",
+              "es": "Lugar",
+              "fr": "Lieu",
+              "de": "Ort"
+            },
+            "valor": {
+              "pt": "Praia do Meco, Sesimbra, Portugal",
+              "en": "Praia do Meco, Sesimbra, Portugal",
+              "es": "Praia do Meco, Sesimbra, Portugal",
+              "fr": "Praia do Meco, Sesimbra, Portugal",
+              "de": "Praia do Meco, Sesimbra, Portugal"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Localização na costa",
+              "en": "Position on the coast",
+              "es": "Ubicación en la costa",
+              "fr": "Position sur la côte",
+              "de": "Lage an der Küste"
+            },
+            "valor": {
+              "pt": "entre a Lagoa de Albufeira e a Praia das Bicas",
+              "en": "between Lagoa de Albufeira and Praia das Bicas",
+              "es": "entre la Lagoa de Albufeira y la Praia das Bicas",
+              "fr": "entre la Lagoa de Albufeira et la Praia das Bicas",
+              "de": "zwischen Lagoa de Albufeira und Praia das Bicas"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Modalidades",
+              "en": "Disciplines",
+              "es": "Modalidades",
+              "fr": "Pratiques",
+              "de": "Disziplinen"
+            },
+            "valor": {
+              "pt": "Parakite e parapente",
+              "en": "Parakite and paragliding",
+              "es": "Parakite y parapente",
+              "fr": "Parakite et parapente",
+              "de": "Parakite und Gleitschirm"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Tipo de voo",
+              "en": "Type of flying",
+              "es": "Tipo de vuelo",
+              "fr": "Type de vol",
+              "de": "Flugart"
+            },
+            "valor": {
+              "pt": "soaring costeiro / dunas",
+              "en": "coastal soaring / dunes",
+              "es": "soaring costero / dunas",
+              "fr": "soaring de côte / dunes",
+              "de": "Küstensoaring / Dünen"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Direção utilizada",
+              "en": "Direction used",
+              "es": "Dirección utilizada",
+              "fr": "Direction utilisée",
+              "de": "Genutzte Richtung"
+            },
+            "valor": {
+              "pt": "NW",
+              "en": "NW",
+              "es": "NW",
+              "fr": "NW",
+              "de": "NW"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Descolagem",
+              "en": "Take-off",
+              "es": "Despegue",
+              "fr": "Décollage",
+              "de": "Start"
+            },
+            "valor": {
+              "pt": "duna",
+              "en": "the dune",
+              "es": "duna",
+              "fr": "la dune",
+              "de": "Düne"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Distância desde o estacionamento",
+              "en": "Distance from the car park",
+              "es": "Distancia desde el aparcamiento",
+              "fr": "Distance depuis le parking",
+              "de": "Entfernung vom Parkplatz"
+            },
+            "valor": {
+              "pt": "aproximadamente 5 minutos a pé",
+              "en": "approximately 5 minutes on foot",
+              "es": "aproximadamente 5 minutos a pie",
+              "fr": "environ 5 minutes à pied",
+              "de": "etwa 5 Gehminuten"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Aterragem",
+              "en": "Landing",
+              "es": "Aterrizaje",
+              "fr": "Atterrissage",
+              "de": "Landung"
+            },
+            "valor": {
+              "pt": "praia",
+              "en": "the beach",
+              "es": "playa",
+              "fr": "la plage",
+              "de": "Strand"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Possibilidade de voo para sul",
+              "en": "Possible flight southwards",
+              "es": "Posibilidad de vuelo hacia el sur",
+              "fr": "Vol possible vers le sud",
+              "de": "Mögliche Flugstrecke nach Süden"
+            },
+            "valor": {
+              "pt": "Praia do Meco → Praia das Bicas",
+              "en": "Praia do Meco → Praia das Bicas",
+              "es": "Praia do Meco → Praia das Bicas",
+              "fr": "Praia do Meco → Praia das Bicas",
+              "de": "Praia do Meco → Praia das Bicas"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Possibilidade de voo para norte",
+              "en": "Possible flight northwards",
+              "es": "Posibilidad de vuelo hacia el norte",
+              "fr": "Vol possible vers le nord",
+              "de": "Mögliche Flugstrecke nach Norden"
+            },
+            "valor": {
+              "pt": "não existe continuidade de voo para norte a partir deste spot",
+              "en": "there is no continuity of flight northwards from this site",
+              "es": "no existe continuidad de vuelo hacia el norte desde este spot",
+              "fr": "il n’y a pas de continuité de vol vers le nord depuis ce site",
+              "de": "von diesem Spot aus gibt es keine Fortsetzung nach Norden"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Ambiente",
+              "en": "Setting",
+              "es": "Entorno",
+              "fr": "Environnement",
+              "de": "Umgebung"
+            },
+            "valor": {
+              "pt": "praia, dunas e Oceano Atlântico",
+              "en": "beach, dunes and the Atlantic Ocean",
+              "es": "playa, dunas y océano Atlántico",
+              "fr": "plage, dunes et océan Atlantique",
+              "de": "Strand, Dünen und Atlantik"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Outras atividades",
+              "en": "Other activities",
+              "es": "Otras actividades",
+              "fr": "Autres activités",
+              "de": "Weitere Aktivitäten"
+            },
+            "valor": {
+              "pt": "surf, caminhadas e atividades de praia",
+              "en": "surfing, walking and beach activities",
+              "es": "surf, senderismo y actividades de playa",
+              "fr": "surf, randonnée et activités de plage",
+              "de": "Surfen, Wandern und Strandaktivitäten"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Estacionamento",
+              "en": "Parking",
+              "es": "Aparcamiento",
+              "fr": "Stationnement",
+              "de": "Parken"
+            },
+            "valor": {
+              "pt": "acesso fácil; estacionamento sazonal e pago",
+              "en": "easy access; seasonal, paid parking",
+              "es": "acceso fácil; aparcamiento estacional y de pago",
+              "fr": "accès facile ; stationnement saisonnier et payant",
+              "de": "einfacher Zugang; saisonaler, kostenpflichtiger Parkplatz"
+            }
+          }
+        ]
+      },
+      "seccoes": [
+        {
+          "titulo": {
+            "pt": "Condições de voo",
+            "en": "Flying conditions",
+            "es": "Condiciones de vuelo",
+            "fr": "Conditions de vol",
+            "de": "Flugbedingungen"
+          },
+          "texto": {
+            "pt": "A principal direção utilizada para voar de Parakite e parapente na Praia do Meco é Noroeste (NW).\n\nNo entanto, a direção indicada numa previsão meteorológica não é suficiente para determinar se existem boas condições para voar.\n\nA intensidade, rajadas, componente lateral, qualidade do fluxo e forma como o vento interage com as dunas devem ser avaliadas em conjunto.",
+            "en": "The main direction used for flying Parakite and paragliders at Praia do Meco is North-West (NW).\n\nHowever, the direction given in a weather forecast is not enough to determine whether conditions are good for flying.\n\nStrength, gusts, cross component, the quality of the flow and the way the wind interacts with the dunes all have to be assessed together.",
+            "es": "La principal dirección utilizada para volar en Parakite y parapente en la Praia do Meco es Noroeste (NW).\n\nSin embargo, la dirección indicada en una previsión meteorológica no basta para determinar si hay buenas condiciones para volar.\n\nLa intensidad, las rachas, la componente lateral, la calidad del flujo y la forma en que el viento interactúa con las dunas deben evaluarse en conjunto.",
+            "fr": "La principale direction utilisée pour voler en Parakite et en parapente à la Praia do Meco est le Nord-Ouest (NW).\n\nLa direction indiquée par une prévision météo ne suffit toutefois pas à déterminer si les conditions sont bonnes pour voler.\n\nLa force, les rafales, la composante latérale, la qualité du flux et la façon dont le vent interagit avec les dunes doivent être évaluées ensemble.",
+            "de": "Die wichtigste Richtung, die an der Praia do Meco für Parakite und Gleitschirm genutzt wird, ist Nordwest (NW).\n\nDie Richtung aus einer Wettervorhersage genügt jedoch nicht, um zu bestimmen, ob die Bedingungen zum Fliegen gut sind.\n\nStärke, Böen, Seitenkomponente, die Qualität der Strömung und die Art, wie der Wind mit den Dünen zusammenwirkt, müssen zusammen beurteilt werden."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Qual a intensidade de vento necessária?",
+            "en": "How much wind is needed?",
+            "es": "¿Qué intensidad de viento se necesita?",
+            "fr": "Quelle force de vent faut-il ?",
+            "de": "Wie viel Wind ist nötig?"
+          },
+          "texto": {
+            "pt": "Não indicamos um valor mínimo ou máximo de vento porque não existe um valor que possa ser aplicado de forma segura a todos os pilotos e equipamentos.\n\nA intensidade necessária depende de vários fatores, incluindo:\n\n- modalidade — Parakite ou parapente\n- modelo e características da asa\n- tamanho da asa\n- peso total em voo\n- experiência do piloto\n- direção do vento\n- rajadas e qualidade do fluxo\n- condições existentes no local\n\nDuas pessoas no mesmo spot e com a mesma velocidade de vento podem necessitar de equipamentos diferentes.\n\nAs diferenças entre Parakite e parapente, bem como entre modelos, tamanhos e cargas alares, podem alterar significativamente as condições adequadas para cada piloto.",
+            "en": "We do not give a minimum or maximum wind figure, because there is no figure that can be safely applied to every pilot and every piece of equipment.\n\nThe strength required depends on several factors, including:\n\n- discipline — Parakite or paragliding\n- the model and characteristics of the wing\n- wing size\n- all-up weight\n- the pilot’s experience\n- wind direction\n- gusts and the quality of the flow\n- the conditions present on site\n\nTwo people at the same site with the same wind speed may need different equipment.\n\nThe differences between Parakite and paragliding, and between models, sizes and wing loadings, can significantly change what conditions are appropriate for each pilot.",
+            "es": "No indicamos un valor mínimo ni máximo de viento porque no existe un valor que pueda aplicarse de forma segura a todos los pilotos y equipos.\n\nLa intensidad necesaria depende de varios factores, entre ellos:\n\n- modalidad — Parakite o parapente\n- modelo y características del ala\n- tamaño del ala\n- peso total en vuelo\n- experiencia del piloto\n- dirección del viento\n- rachas y calidad del flujo\n- condiciones existentes en el lugar\n\nDos personas en el mismo spot y con la misma velocidad de viento pueden necesitar equipos diferentes.\n\nLas diferencias entre Parakite y parapente, así como entre modelos, tamaños y cargas alares, pueden cambiar significativamente las condiciones adecuadas para cada piloto.",
+            "fr": "Nous n’indiquons pas de valeur minimale ou maximale de vent, parce qu’il n’existe pas de valeur applicable en toute sécurité à tous les pilotes et à tous les matériels.\n\nLa force nécessaire dépend de plusieurs facteurs, dont :\n\n- la discipline — Parakite ou parapente\n- le modèle et les caractéristiques de l’aile\n- la taille de l’aile\n- le poids total en vol\n- l’expérience du pilote\n- la direction du vent\n- les rafales et la qualité du flux\n- les conditions présentes sur le site\n\nDeux personnes sur le même site et avec la même vitesse de vent peuvent avoir besoin de matériels différents.\n\nLes différences entre Parakite et parapente, ainsi qu’entre modèles, tailles et charges alaires, peuvent modifier sensiblement les conditions qui conviennent à chaque pilote.",
+            "de": "Wir nennen keinen Mindest- oder Höchstwert für den Wind, weil es keinen Wert gibt, der sich sicher auf alle Piloten und alle Ausrüstungen anwenden lässt.\n\nDie nötige Stärke hängt von mehreren Faktoren ab, unter anderem:\n\n- Disziplin — Parakite oder Gleitschirm\n- Modell und Eigenschaften des Schirms\n- Schirmgröße\n- Abfluggewicht\n- Erfahrung des Piloten\n- Windrichtung\n- Böen und Qualität der Strömung\n- die Bedingungen vor Ort\n\nZwei Personen am selben Spot und bei derselben Windgeschwindigkeit können unterschiedliche Ausrüstung brauchen.\n\nDie Unterschiede zwischen Parakite und Gleitschirm sowie zwischen Modellen, Größen und Flächenbelastungen können deutlich verändern, welche Bedingungen für welchen Piloten angemessen sind."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Descolagem",
+            "en": "Take-off",
+            "es": "Despegue",
+            "fr": "Décollage",
+            "de": "Start"
+          },
+          "texto": {
+            "pt": "A descolagem é feita a partir da duna, numa zona elevada sobre a praia.\n\nA zona utilizada para descolagem fica a aproximadamente 5 minutos a pé do estacionamento.\n\nPor se tratar de um ambiente dunar, o acesso deve ser feito procurando minimizar o impacto sobre a duna e a vegetação existente.",
+            "en": "Take-off is from the dune, on high ground above the beach.\n\nThe area used for take-off is about 5 minutes on foot from the car park.\n\nBecause this is a dune environment, the approach should be made so as to minimise the impact on the dune and the vegetation on it.",
+            "es": "El despegue se hace desde la duna, en una zona elevada sobre la playa.\n\nLa zona utilizada para el despegue está a unos 5 minutos a pie del aparcamiento.\n\nAl tratarse de un entorno dunar, el acceso debe hacerse procurando minimizar el impacto sobre la duna y la vegetación existente.",
+            "fr": "Le décollage se fait depuis la dune, sur une zone en hauteur au-dessus de la plage.\n\nLa zone utilisée pour le décollage se trouve à environ 5 minutes à pied du parking.\n\nS’agissant d’un milieu dunaire, l’accès doit se faire en cherchant à minimiser l’impact sur la dune et sur la végétation qui s’y trouve.",
+            "de": "Gestartet wird von der Düne aus, auf einer erhöhten Fläche über dem Strand.\n\nDer Startbereich liegt etwa 5 Gehminuten vom Parkplatz entfernt.\n\nDa es sich um eine Dünenlandschaft handelt, sollte der Zugang so erfolgen, dass die Belastung von Düne und Vegetation möglichst gering bleibt."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Voar de Parakite e parapente na Praia do Meco",
+            "en": "Flying Parakite and paragliders at Praia do Meco",
+            "es": "Volar en Parakite y parapente en la Praia do Meco",
+            "fr": "Voler en Parakite et parapente à la Praia do Meco",
+            "de": "Mit Parakite und Gleitschirm an der Praia do Meco fliegen"
+          },
+          "texto": {
+            "pt": "As dunas do Meco permitem aproveitar a sustentação dinâmica criada pelo vento ao encontrar o relevo costeiro.\n\nQuando as condições são adequadas, é possível realizar soaring costeiro com Parakite e parapente ao longo da praia.\n\nAo contrário de outros spots desta costa, o voo não permite continuar para norte a partir da zona utilizada no Meco.\n\nPara sul, porém, existe possibilidade de prolongar o voo ao longo da costa.",
+            "en": "The dunes at Meco make it possible to use the dynamic lift created when the wind meets the coastal terrain.\n\nWhen conditions are suitable, coastal soaring along the beach is possible with Parakite and paragliders.\n\nUnlike other sites on this coast, the flight cannot be continued northwards from the area used at Meco.\n\nSouthwards, however, the flight can be extended along the coast.",
+            "es": "Las dunas del Meco permiten aprovechar la sustentación dinámica creada por el viento al encontrar el relieve costero.\n\nCuando las condiciones son adecuadas, es posible hacer soaring costero con Parakite y parapente a lo largo de la playa.\n\nA diferencia de otros spots de esta costa, el vuelo no permite continuar hacia el norte desde la zona utilizada en el Meco.\n\nHacia el sur, en cambio, existe la posibilidad de prolongar el vuelo a lo largo de la costa.",
+            "fr": "Les dunes du Meco permettent d’exploiter la portance dynamique créée par le vent lorsqu’il rencontre le relief côtier.\n\nLorsque les conditions sont adaptées, le soaring de côte le long de la plage est possible en Parakite et en parapente.\n\nContrairement à d’autres sites de cette côte, le vol ne permet pas de continuer vers le nord depuis la zone utilisée au Meco.\n\nVers le sud, en revanche, il est possible de prolonger le vol le long de la côte.",
+            "de": "Die Dünen des Meco erlauben es, den dynamischen Aufwind zu nutzen, der entsteht, wenn der Wind auf das Küstenrelief trifft.\n\nWenn die Bedingungen passen, ist Küstensoaring entlang des Strands mit Parakite und Gleitschirm möglich.\n\nAnders als an anderen Spots dieser Küste lässt sich der Flug vom genutzten Bereich am Meco aus nicht nach Norden fortsetzen.\n\nNach Süden hingegen kann der Flug entlang der Küste verlängert werden."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Voar para sul em direção à Praia das Bicas",
+            "en": "Flying south towards Praia das Bicas",
+            "es": "Volar hacia el sur en dirección a la Praia das Bicas",
+            "fr": "Voler vers le sud en direction de la Praia das Bicas",
+            "de": "Nach Süden Richtung Praia das Bicas fliegen"
+          },
+          "texto": {
+            "pt": "Quando existem condições adequadas ao longo do percurso, é possível voar desde a Praia do Meco para sul até à [Praia das Bicas](/parakite-portugal/praia-das-bicas/).\n\nEsta ligação permite prolongar o soaring para além da zona principal do Meco, acompanhando a costa em direção às Bicas.\n\nA possibilidade de realizar o percurso depende das condições existentes e da capacidade do piloto e equipamento utilizados.",
+            "en": "When conditions along the way are suitable, it is possible to fly south from Praia do Meco to [Praia das Bicas](/parakite-portugal/praia-das-bicas/).\n\nThat link makes it possible to extend the soaring beyond the main area at Meco, following the coast towards Bicas.\n\nWhether the route can be flown depends on the conditions at the time and on the capability of the pilot and the equipment being used.",
+            "es": "Cuando hay condiciones adecuadas a lo largo del recorrido, es posible volar desde la Praia do Meco hacia el sur hasta la [Praia das Bicas](/parakite-portugal/praia-das-bicas/).\n\nEsta conexión permite prolongar el soaring más allá de la zona principal del Meco, siguiendo la costa en dirección a las Bicas.\n\nLa posibilidad de realizar el recorrido depende de las condiciones existentes y de la capacidad del piloto y del equipo utilizados.",
+            "fr": "Lorsque les conditions le permettent tout au long du parcours, il est possible de voler depuis la Praia do Meco vers le sud jusqu’à la [Praia das Bicas](/parakite-portugal/praia-das-bicas/).\n\nCette liaison permet de prolonger le soaring au-delà de la zone principale du Meco, en suivant la côte en direction des Bicas.\n\nLa possibilité de réaliser le parcours dépend des conditions du moment et des capacités du pilote et du matériel utilisés.",
+            "de": "Wenn die Bedingungen auf der Strecke passen, ist ein Flug von der Praia do Meco nach Süden bis zur [Praia das Bicas](/parakite-portugal/praia-das-bicas/) möglich.\n\nDiese Verbindung erlaubt es, das Soaring über den Hauptbereich des Meco hinaus fortzusetzen, entlang der Küste Richtung Bicas.\n\nOb die Strecke geflogen werden kann, hängt von den Bedingungen und vom Können des Piloten und der eingesetzten Ausrüstung ab."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Aterragem",
+            "en": "Landing",
+            "es": "Aterrizaje",
+            "fr": "Atterrissage",
+            "de": "Landung"
+          },
+          "texto": {
+            "pt": "A aterragem é feita na praia.\n\nAo contrário de spots onde é possível regressar ao topo através de top-landing, no Meco a praia é a zona utilizada para aterragem.\n\nO espaço disponível pode variar com a maré, estado do mar e presença de outras pessoas.",
+            "en": "Landing is on the beach.\n\nUnlike sites where it is possible to return to the top by top-landing, at Meco the beach is the area used for landing.\n\nThe space available can vary with the tide, the state of the sea and the presence of other people.",
+            "es": "El aterrizaje se hace en la playa.\n\nA diferencia de spots donde es posible regresar arriba mediante top-landing, en el Meco la playa es la zona utilizada para aterrizar.\n\nEl espacio disponible puede variar con la marea, el estado del mar y la presencia de otras personas.",
+            "fr": "L’atterrissage se fait sur la plage.\n\nContrairement aux sites où il est possible de revenir en haut en top-landing, au Meco c’est la plage qui sert à l’atterrissage.\n\nL’espace disponible peut varier selon la marée, l’état de la mer et la présence d’autres personnes.",
+            "de": "Gelandet wird am Strand.\n\nAnders als an Spots, an denen die Rückkehr nach oben per Toplanding möglich ist, wird am Meco am Strand gelandet.\n\nDer verfügbare Platz kann sich mit den Gezeiten, dem Seegang und der Anwesenheit anderer Menschen ändern."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "A praia e as dunas",
+            "en": "The beach and the dunes",
+            "es": "La playa y las dunas",
+            "fr": "La plage et les dunes",
+            "de": "Der Strand und die Dünen"
+          },
+          "texto": {
+            "pt": "A Praia do Meco caracteriza-se pelo seu extenso areal, dunas e exposição ao Oceano Atlântico.\n\nA paisagem dunar que permite o voo faz também parte de um ambiente costeiro sensível.\n\nA praia é utilizada para diferentes atividades de lazer e ligadas ao mar, pelo que as condições no areal podem variar bastante ao longo do ano.",
+            "en": "Praia do Meco is characterised by its long stretch of sand, its dunes and its exposure to the Atlantic Ocean.\n\nThe dune landscape that makes the flying possible is also part of a sensitive coastal environment.\n\nThe beach is used for a range of leisure and sea-related activities, so conditions on the sand can vary considerably through the year.",
+            "es": "La Praia do Meco se caracteriza por su extenso arenal, sus dunas y su exposición al océano Atlántico.\n\nEl paisaje dunar que permite el vuelo forma también parte de un entorno costero sensible.\n\nLa playa se utiliza para distintas actividades de ocio y ligadas al mar, por lo que las condiciones en el arenal pueden variar bastante a lo largo del año.",
+            "fr": "La Praia do Meco se caractérise par sa longue plage, ses dunes et son exposition à l’océan Atlantique.\n\nLe paysage dunaire qui rend le vol possible fait aussi partie d’un environnement côtier sensible.\n\nLa plage sert à différentes activités de loisir et liées à la mer, de sorte que les conditions sur le sable peuvent varier sensiblement au fil de l’année.",
+            "de": "Die Praia do Meco ist geprägt von ihrem langen Sandstrand, den Dünen und der Lage zum offenen Atlantik.\n\nDie Dünenlandschaft, die das Fliegen ermöglicht, ist zugleich Teil einer empfindlichen Küstenlandschaft.\n\nDer Strand wird für verschiedene Freizeit- und Wassersportaktivitäten genutzt, weshalb die Verhältnisse am Sand im Jahresverlauf stark schwanken können."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Um espaço partilhado",
+            "en": "A shared space",
+            "es": "Un espacio compartido",
+            "fr": "Un espace partagé",
+            "de": "Ein geteilter Raum"
+          },
+          "texto": {
+            "pt": "A Praia do Meco é frequentada por banhistas, surfistas, caminhantes e outros utilizadores, além dos pilotos de Parakite e parapente.\n\nA presença de pessoas deve ser especialmente considerada durante o voo de proximidade e na aproximação e aterragem na praia.\n\nQuando vários pilotos partilham a mesma zona de voo, as diferenças de velocidade e comportamento entre diferentes tipos e tamanhos de asa devem também ser consideradas.",
+            "en": "Praia do Meco is used by swimmers, surfers, walkers and others, as well as by Parakite and paragliding pilots.\n\nThe presence of people must be given particular attention during proximity flying and on the approach and landing on the beach.\n\nWhen several pilots share the same flying area, the differences in speed and behaviour between types and sizes of wing also have to be taken into account.",
+            "es": "La Praia do Meco es frecuentada por bañistas, surfistas, caminantes y otros usuarios, además de los pilotos de Parakite y parapente.\n\nLa presencia de personas debe considerarse de forma especial durante el vuelo de proximidad y en la aproximación y el aterrizaje en la playa.\n\nCuando varios pilotos comparten la misma zona de vuelo, deben considerarse también las diferencias de velocidad y comportamiento entre distintos tipos y tamaños de ala.",
+            "fr": "La Praia do Meco est fréquentée par des baigneurs, des surfeurs, des promeneurs et d’autres usagers, en plus des pilotes de Parakite et de parapente.\n\nLa présence de personnes doit faire l’objet d’une attention particulière pendant le vol de proximité ainsi qu’à l’approche et à l’atterrissage sur la plage.\n\nLorsque plusieurs pilotes partagent la même zone de vol, les différences de vitesse et de comportement entre types et tailles d’ailes doivent aussi être prises en compte.",
+            "de": "Die Praia do Meco wird von Badenden, Surfern, Spaziergängern und anderen genutzt, neben den Parakite- und Gleitschirmpiloten.\n\nDie Anwesenheit von Menschen ist beim Proximityflug sowie beim Anflug und bei der Landung am Strand besonders zu berücksichtigen.\n\nWenn mehrere Piloten denselben Flugbereich teilen, sind auch die Unterschiede in Geschwindigkeit und Verhalten zwischen Schirmtypen und -größen zu beachten."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Respeito pelo spot",
+            "en": "Respect for the site",
+            "es": "Respeto por el spot",
+            "fr": "Respect du site",
+            "de": "Respekt vor dem Spot"
+          },
+          "texto": {
+            "pt": "As dunas da Praia do Meco fazem parte de um ambiente costeiro que deve ser preservado.\n\nA prática de Parakite e parapente deve procurar minimizar o impacto sobre o local, utilizar os acessos existentes sempre que possível e evitar pisar ou danificar desnecessariamente a vegetação dunar.\n\nRespeitar o spot ajuda a mantê-lo aberto para todos.",
+            "en": "The dunes at Praia do Meco are part of a coastal environment that should be preserved.\n\nParakite and paragliding should be practised so as to minimise the impact on the site, to use the existing accesses wherever possible, and to avoid needlessly treading on or damaging the dune vegetation.\n\nRespecting the site helps keep it open to everyone.",
+            "es": "Las dunas de la Praia do Meco forman parte de un entorno costero que debe preservarse.\n\nLa práctica del Parakite y del parapente debe procurar minimizar el impacto sobre el lugar, utilizar los accesos existentes siempre que sea posible y evitar pisar o dañar innecesariamente la vegetación dunar.\n\nRespetar el spot ayuda a mantenerlo abierto para todos.",
+            "fr": "Les dunes de la Praia do Meco font partie d’un environnement côtier qui doit être préservé.\n\nLa pratique du Parakite et du parapente doit chercher à minimiser l’impact sur le site, à emprunter les accès existants dans la mesure du possible et à éviter de piétiner ou d’endommager inutilement la végétation dunaire.\n\nRespecter le site aide à le garder ouvert à tous.",
+            "de": "Die Dünen der Praia do Meco gehören zu einer Küstenlandschaft, die erhalten werden soll.\n\nParakite und Gleitschirmfliegen sollten so ausgeübt werden, dass die Auswirkungen auf den Ort möglichst gering bleiben, die vorhandenen Zugänge genutzt werden und die Dünenvegetation nicht unnötig betreten oder beschädigt wird.\n\nDen Spot zu respektieren hilft, ihn für alle offen zu halten."
+          }
+        }
+      ],
+      "aviso": {
+        "pt": "As informações desta página não substituem a avaliação das condições no local.\n\nA decisão de voar deve ter em conta a experiência do piloto, o equipamento utilizado e as condições reais do spot.\n\nSe não conheces o local, procura informação junto de pilotos locais antes de voar.",
+        "en": "The information on this page does not replace assessing the conditions on site.\n\nThe decision to fly must take into account the pilot’s experience, the equipment used and the actual conditions at the site.\n\nIf you do not know the site, seek information from local pilots before flying.",
+        "es": "La información de esta página no sustituye la evaluación de las condiciones en el lugar.\n\nLa decisión de volar debe tener en cuenta la experiencia del piloto, el equipo utilizado y las condiciones reales del spot.\n\nSi no conoces el lugar, busca información entre los pilotos locales antes de volar.",
+        "fr": "Les informations de cette page ne remplacent pas l’évaluation des conditions sur place.\n\nLa décision de voler doit tenir compte de l’expérience du pilote, du matériel utilisé et des conditions réelles du site.\n\nSi tu ne connais pas le site, renseigne-toi auprès des pilotes locaux avant de voler.",
+        "de": "Die Informationen auf dieser Seite ersetzen nicht die Beurteilung der Bedingungen vor Ort.\n\nDie Entscheidung zu fliegen muss die Erfahrung des Piloten, die verwendete Ausrüstung und die tatsächlichen Bedingungen am Spot berücksichtigen.\n\nWenn du den Ort nicht kennst, hol dir vor dem Fliegen Informationen bei örtlichen Piloten."
       },
       "album": [
         {
@@ -1513,11 +1886,11 @@
             "de": "Nach Norden Richtung Meco fliegen"
           },
           "texto": {
-            "pt": "Quando as condições estão boas, é possível voar de Parakite e parapente desde a Praia das Bicas para norte até à Praia do Meco, prolongando o voo ao longo da costa.\n\nA possibilidade de realizar este percurso depende das condições existentes no momento e da capacidade do piloto e equipamento utilizados.",
-            "en": "When conditions are good, it is possible to fly Parakite and paragliders north from Praia das Bicas to Praia do Meco, extending the flight along the coast.\n\nWhether that route is possible depends on the conditions at the time and on the capability of the pilot and the equipment being used.",
-            "es": "Cuando las condiciones son buenas, es posible volar en Parakite y parapente desde la Praia das Bicas hacia el norte hasta la Praia do Meco, prolongando el vuelo a lo largo de la costa.\n\nLa posibilidad de realizar este recorrido depende de las condiciones existentes en ese momento y de la capacidad del piloto y del equipo utilizados.",
-            "fr": "Lorsque les conditions sont bonnes, il est possible de voler en Parakite et en parapente depuis la Praia das Bicas vers le nord jusqu’à la Praia do Meco, en prolongeant le vol le long de la côte.\n\nLa possibilité de réaliser ce parcours dépend des conditions du moment et des capacités du pilote et du matériel utilisés.",
-            "de": "Wenn die Bedingungen gut sind, ist es möglich, mit Parakite und Gleitschirm von der Praia das Bicas nach Norden bis zur Praia do Meco zu fliegen und den Flug entlang der Küste zu verlängern.\n\nOb diese Strecke möglich ist, hängt von den Bedingungen im jeweiligen Moment und vom Können des Piloten und der eingesetzten Ausrüstung ab."
+            "pt": "Quando as condições estão boas, é possível voar de Parakite e parapente desde a Praia das Bicas para norte até à [Praia do Meco](/parakite-portugal/praia-do-meco/), prolongando o voo ao longo da costa.\n\nA possibilidade de realizar este percurso depende das condições existentes no momento e da capacidade do piloto e equipamento utilizados.",
+            "en": "When conditions are good, it is possible to fly Parakite and paragliders north from Praia das Bicas to [Praia do Meco](/parakite-portugal/praia-do-meco/), extending the flight along the coast.\n\nWhether that route is possible depends on the conditions at the time and on the capability of the pilot and the equipment being used.",
+            "es": "Cuando las condiciones son buenas, es posible volar en Parakite y parapente desde la Praia das Bicas hacia el norte hasta la [Praia do Meco](/parakite-portugal/praia-do-meco/), prolongando el vuelo a lo largo de la costa.\n\nLa posibilidad de realizar este recorrido depende de las condiciones existentes en ese momento y de la capacidad del piloto y del equipo utilizados.",
+            "fr": "Lorsque les conditions sont bonnes, il est possible de voler en Parakite et en parapente depuis la Praia das Bicas vers le nord jusqu’à la [Praia do Meco](/parakite-portugal/praia-do-meco/), en prolongeant le vol le long de la côte.\n\nLa possibilité de réaliser ce parcours dépend des conditions du moment et des capacités du pilote et du matériel utilisés.",
+            "de": "Wenn die Bedingungen gut sind, ist es möglich, mit Parakite und Gleitschirm von der Praia das Bicas nach Norden bis zur [Praia do Meco](/parakite-portugal/praia-do-meco/) zu fliegen und den Flug entlang der Küste zu verlängern.\n\nOb diese Strecke möglich ist, hängt von den Bedingungen im jeweiligen Moment und vom Können des Piloten und der eingesetzten Ausrüstung ab."
           }
         },
         {
