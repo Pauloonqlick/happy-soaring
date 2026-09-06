@@ -3,13 +3,402 @@
     {
       "id": "fonte-da-telha",
       "nome": "Fonte da Telha",
-      "publicar": false,
+      "publicar": true,
+      "titulo": {
+        "pt": "Fonte da Telha — Spot de Parakite e parapente",
+        "en": "Fonte da Telha — Parakite and paragliding site",
+        "es": "Fonte da Telha — Spot de Parakite y parapente",
+        "fr": "Fonte da Telha — Site de Parakite et parapente",
+        "de": "Fonte da Telha — Parakite- und Gleitschirmspot"
+      },
       "descricao": {
-        "pt": "",
-        "en": "",
-        "es": "",
-        "fr": "",
-        "de": ""
+        "pt": "A Fonte da Telha, no concelho de Almada, é um conhecido spot de voo costeiro utilizado para Parakite e parapente, situado entre o Oceano Atlântico e a Paisagem Protegida da Arriba Fóssil da Costa da Caparica.\n\nA partir de Lisboa, a viagem de carro pode demorar cerca de 30 minutos sem trânsito, tornando a Fonte da Telha um dos spots de voo costeiro mais próximos da capital.",
+        "en": "Fonte da Telha, in the municipality of Almada, is a well-known coastal flying site used for Parakite and paragliding, set between the Atlantic Ocean and the Arriba Fóssil da Costa da Caparica Protected Landscape — a stretch of fossil cliff running along this coast.\n\nFrom Lisbon the drive can take around 30 minutes without traffic, making Fonte da Telha one of the coastal flying sites closest to the capital.",
+        "es": "La Fonte da Telha, en el municipio de Almada, es un conocido spot de vuelo costero utilizado para Parakite y parapente, situado entre el océano Atlántico y el Paisaje Protegido de la Arriba Fóssil da Costa da Caparica, el acantilado fósil que acompaña esta costa.\n\nDesde Lisboa el viaje en coche puede durar unos 30 minutos sin tráfico, lo que hace de la Fonte da Telha uno de los spots de vuelo costero más cercanos a la capital.",
+        "fr": "La Fonte da Telha, dans la commune d’Almada, est un site de vol de côte connu, utilisé pour le Parakite et le parapente, situé entre l’océan Atlantique et le Paysage protégé de l’Arriba Fóssil da Costa da Caparica, la falaise fossile qui borde cette côte.\n\nDepuis Lisbonne, le trajet en voiture peut prendre environ 30 minutes sans circulation, ce qui fait de la Fonte da Telha l’un des sites de vol de côte les plus proches de la capitale.",
+        "de": "Die Fonte da Telha in der Gemeinde Almada ist ein bekannter Küstenflugspot für Parakite und Gleitschirm, gelegen zwischen dem Atlantik und dem Schutzgebiet Arriba Fóssil da Costa da Caparica — der Fossilklippe, die diesen Küstenabschnitt begleitet.\n\nVon Lissabon aus dauert die Fahrt ohne Verkehr etwa 30 Minuten, womit die Fonte da Telha einer der Küstenflugspots ist, die der Hauptstadt am nächsten liegen."
+      },
+      "ficha": {
+        "concelho": "Almada",
+        "linhas": [
+          {
+            "rotulo": {
+              "pt": "Local",
+              "en": "Location",
+              "es": "Lugar",
+              "fr": "Lieu",
+              "de": "Ort"
+            },
+            "valor": {
+              "pt": "Fonte da Telha, Almada, Portugal",
+              "en": "Fonte da Telha, Almada, Portugal",
+              "es": "Fonte da Telha, Almada, Portugal",
+              "fr": "Fonte da Telha, Almada, Portugal",
+              "de": "Fonte da Telha, Almada, Portugal"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Tempo desde Lisboa",
+              "en": "Time from Lisbon",
+              "es": "Tiempo desde Lisboa",
+              "fr": "Temps depuis Lisbonne",
+              "de": "Fahrzeit ab Lissabon"
+            },
+            "valor": {
+              "pt": "cerca de 30 minutos de carro sem trânsito",
+              "en": "about 30 minutes by car without traffic",
+              "es": "unos 30 minutos en coche sin tráfico",
+              "fr": "environ 30 minutes de voiture sans circulation",
+              "de": "etwa 30 Autominuten ohne Verkehr"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Modalidades",
+              "en": "Disciplines",
+              "es": "Modalidades",
+              "fr": "Pratiques",
+              "de": "Disziplinen"
+            },
+            "valor": {
+              "pt": "Parakite e parapente",
+              "en": "Parakite and paragliding",
+              "es": "Parakite y parapente",
+              "fr": "Parakite et parapente",
+              "de": "Parakite und Gleitschirm"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Tipo de voo",
+              "en": "Type of flying",
+              "es": "Tipo de vuelo",
+              "fr": "Type de vol",
+              "de": "Flugart"
+            },
+            "valor": {
+              "pt": "soaring costeiro / arriba",
+              "en": "coastal soaring / cliff",
+              "es": "soaring costero / acantilado",
+              "fr": "soaring de côte / falaise",
+              "de": "Küstensoaring / Steilküste"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Direções utilizadas",
+              "en": "Directions used",
+              "es": "Direcciones utilizadas",
+              "fr": "Directions utilisées",
+              "de": "Genutzte Richtungen"
+            },
+            "valor": {
+              "pt": "SW / W / NW",
+              "en": "SW / W / NW",
+              "es": "SW / W / NW",
+              "fr": "SW / W / NW",
+              "de": "SW / W / NW"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Descolagem",
+              "en": "Take-off",
+              "es": "Despegue",
+              "fr": "Décollage",
+              "de": "Start"
+            },
+            "valor": {
+              "pt": "topo da arriba",
+              "en": "top of the cliff",
+              "es": "parte alta del acantilado",
+              "fr": "sommet de la falaise",
+              "de": "oben an der Steilküste"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Distância desde o estacionamento",
+              "en": "Distance from the car park",
+              "es": "Distancia desde el aparcamiento",
+              "fr": "Distance depuis le parking",
+              "de": "Entfernung vom Parkplatz"
+            },
+            "valor": {
+              "pt": "aproximadamente 5 minutos a pé",
+              "en": "approximately 5 minutes on foot",
+              "es": "aproximadamente 5 minutos a pie",
+              "fr": "environ 5 minutes à pied",
+              "de": "etwa 5 Gehminuten"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Aterragem",
+              "en": "Landing",
+              "es": "Aterrizaje",
+              "fr": "Atterrissage",
+              "de": "Landung"
+            },
+            "valor": {
+              "pt": "preferencialmente na zona de descolagem; praia como alternativa quando não é possível regressar ao topo",
+              "en": "preferably at the take-off; the beach as an alternative when returning to the top is not possible",
+              "es": "preferentemente en la zona de despegue; la playa como alternativa cuando no es posible regresar arriba",
+              "fr": "de préférence au décollage ; la plage comme solution de repli lorsque le retour en haut n’est pas possible",
+              "de": "vorzugsweise am Startplatz; der Strand als Alternative, wenn die Rückkehr nach oben nicht möglich ist"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Possibilidade de voo para norte",
+              "en": "Possible flight northwards",
+              "es": "Posibilidad de vuelo hacia el norte",
+              "fr": "Vol possible vers le nord",
+              "de": "Mögliche Flugstrecke nach Norden"
+            },
+            "valor": {
+              "pt": "Fonte da Telha → Costa da Caparica",
+              "en": "Fonte da Telha → Costa da Caparica",
+              "es": "Fonte da Telha → Costa da Caparica",
+              "fr": "Fonte da Telha → Costa da Caparica",
+              "de": "Fonte da Telha → Costa da Caparica"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Possibilidade de voo para sul",
+              "en": "Possible flight southwards",
+              "es": "Posibilidad de vuelo hacia el sur",
+              "fr": "Vol possible vers le sud",
+              "de": "Mögliche Flugstrecke nach Süden"
+            },
+            "valor": {
+              "pt": "Fonte da Telha → zona norte da Lagoa de Albufeira",
+              "en": "Fonte da Telha → the northern end of Lagoa de Albufeira",
+              "es": "Fonte da Telha → la zona norte de la Lagoa de Albufeira",
+              "fr": "Fonte da Telha → la partie nord de la Lagoa de Albufeira",
+              "de": "Fonte da Telha → nördlicher Bereich der Lagoa de Albufeira"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Ambiente",
+              "en": "Setting",
+              "es": "Entorno",
+              "fr": "Environnement",
+              "de": "Umgebung"
+            },
+            "valor": {
+              "pt": "praia, dunas, Arriba Fóssil e Oceano Atlântico",
+              "en": "beach, dunes, the fossil cliff and the Atlantic Ocean",
+              "es": "playa, dunas, acantilado fósil y océano Atlántico",
+              "fr": "plage, dunes, falaise fossile et océan Atlantique",
+              "de": "Strand, Dünen, Fossilklippe und Atlantik"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Outras atividades",
+              "en": "Other activities",
+              "es": "Otras actividades",
+              "fr": "Autres activités",
+              "de": "Weitere Aktivitäten"
+            },
+            "valor": {
+              "pt": "surf, atividades de praia, pesca e Arte Xávega",
+              "en": "surfing, beach activities, fishing and Arte Xávega, the traditional beach-seine fishery",
+              "es": "surf, actividades de playa, pesca y Arte Xávega, la pesca tradicional con red desde la playa",
+              "fr": "surf, activités de plage, pêche et Arte Xávega, la pêche traditionnelle à la senne de plage",
+              "de": "Surfen, Strandaktivitäten, Fischerei und Arte Xávega, der traditionelle Strandwadenfang"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Estacionamento",
+              "en": "Parking",
+              "es": "Aparcamiento",
+              "fr": "Stationnement",
+              "de": "Parken"
+            },
+            "valor": {
+              "pt": "geralmente fácil na zona",
+              "en": "usually easy in the area",
+              "es": "generalmente fácil en la zona",
+              "fr": "généralement facile dans le secteur",
+              "de": "in der Regel unproblematisch"
+            }
+          }
+        ]
+      },
+      "seccoes": [
+        {
+          "titulo": {
+            "pt": "Condições de voo",
+            "en": "Flying conditions",
+            "es": "Condiciones de vuelo",
+            "fr": "Conditions de vol",
+            "de": "Flugbedingungen"
+          },
+          "texto": {
+            "pt": "As principais direções utilizadas para voar de Parakite e parapente na Fonte da Telha são Sudoeste (SW), Oeste (W) e Noroeste (NW).\n\nNo entanto, a direção indicada numa previsão meteorológica não é suficiente para determinar se existem boas condições para voar.\n\nA intensidade, rajadas, componente lateral, qualidade do fluxo e forma como o vento interage com a arriba devem ser avaliadas em conjunto.",
+            "en": "The main directions used for flying Parakite and paragliders at Fonte da Telha are South-West (SW), West (W) and North-West (NW).\n\nHowever, the direction given in a weather forecast is not enough to determine whether conditions are good for flying.\n\nStrength, gusts, cross component, the quality of the flow and the way the wind interacts with the cliff all have to be assessed together.",
+            "es": "Las principales direcciones utilizadas para volar en Parakite y parapente en la Fonte da Telha son Suroeste (SW), Oeste (W) y Noroeste (NW).\n\nSin embargo, la dirección indicada en una previsión meteorológica no basta para determinar si hay buenas condiciones para volar.\n\nLa intensidad, las rachas, la componente lateral, la calidad del flujo y la forma en que el viento interactúa con el acantilado deben evaluarse en conjunto.",
+            "fr": "Les principales directions utilisées pour voler en Parakite et en parapente à la Fonte da Telha sont le Sud-Ouest (SW), l’Ouest (W) et le Nord-Ouest (NW).\n\nLa direction indiquée par une prévision météo ne suffit toutefois pas à déterminer si les conditions sont bonnes pour voler.\n\nLa force, les rafales, la composante latérale, la qualité du flux et la façon dont le vent interagit avec la falaise doivent être évaluées ensemble.",
+            "de": "Die wichtigsten Richtungen, die an der Fonte da Telha für Parakite und Gleitschirm genutzt werden, sind Südwest (SW), West (W) und Nordwest (NW).\n\nDie Richtung aus einer Wettervorhersage genügt jedoch nicht, um zu bestimmen, ob die Bedingungen zum Fliegen gut sind.\n\nStärke, Böen, Seitenkomponente, die Qualität der Strömung und die Art, wie der Wind mit der Steilküste zusammenwirkt, müssen zusammen beurteilt werden."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Qual a intensidade de vento necessária?",
+            "en": "How much wind is needed?",
+            "es": "¿Qué intensidad de viento se necesita?",
+            "fr": "Quelle force de vent faut-il ?",
+            "de": "Wie viel Wind ist nötig?"
+          },
+          "texto": {
+            "pt": "Não indicamos um valor mínimo ou máximo de vento porque não existe um valor que possa ser aplicado de forma segura a todos os pilotos e equipamentos.\n\nA intensidade necessária depende de vários fatores, incluindo:\n\n- modalidade — Parakite ou parapente\n- modelo e características da asa\n- tamanho da asa\n- peso total em voo\n- experiência do piloto\n- direção do vento\n- rajadas e qualidade do fluxo\n- condições existentes no local\n\nDuas pessoas no mesmo spot e com a mesma velocidade de vento podem necessitar de equipamentos diferentes.\n\nAs diferenças entre Parakite e parapente, bem como entre modelos, tamanhos e cargas alares, podem alterar significativamente as condições adequadas para cada piloto.",
+            "en": "We do not give a minimum or maximum wind figure, because there is no figure that can be safely applied to every pilot and every piece of equipment.\n\nThe strength required depends on several factors, including:\n\n- discipline — Parakite or paragliding\n- the model and characteristics of the wing\n- wing size\n- all-up weight\n- the pilot’s experience\n- wind direction\n- gusts and the quality of the flow\n- the conditions present on site\n\nTwo people at the same site with the same wind speed may need different equipment.\n\nThe differences between Parakite and paragliding, and between models, sizes and wing loadings, can significantly change what conditions are appropriate for each pilot.",
+            "es": "No indicamos un valor mínimo ni máximo de viento porque no existe un valor que pueda aplicarse de forma segura a todos los pilotos y equipos.\n\nLa intensidad necesaria depende de varios factores, entre ellos:\n\n- modalidad — Parakite o parapente\n- modelo y características del ala\n- tamaño del ala\n- peso total en vuelo\n- experiencia del piloto\n- dirección del viento\n- rachas y calidad del flujo\n- condiciones existentes en el lugar\n\nDos personas en el mismo spot y con la misma velocidad de viento pueden necesitar equipos diferentes.\n\nLas diferencias entre Parakite y parapente, así como entre modelos, tamaños y cargas alares, pueden cambiar significativamente las condiciones adecuadas para cada piloto.",
+            "fr": "Nous n’indiquons pas de valeur minimale ou maximale de vent, parce qu’il n’existe pas de valeur applicable en toute sécurité à tous les pilotes et à tous les matériels.\n\nLa force nécessaire dépend de plusieurs facteurs, dont :\n\n- la discipline — Parakite ou parapente\n- le modèle et les caractéristiques de l’aile\n- la taille de l’aile\n- le poids total en vol\n- l’expérience du pilote\n- la direction du vent\n- les rafales et la qualité du flux\n- les conditions présentes sur le site\n\nDeux personnes sur le même site et avec la même vitesse de vent peuvent avoir besoin de matériels différents.\n\nLes différences entre Parakite et parapente, ainsi qu’entre modèles, tailles et charges alaires, peuvent modifier sensiblement les conditions qui conviennent à chaque pilote.",
+            "de": "Wir nennen keinen Mindest- oder Höchstwert für den Wind, weil es keinen Wert gibt, der sich sicher auf alle Piloten und alle Ausrüstungen anwenden lässt.\n\nDie nötige Stärke hängt von mehreren Faktoren ab, unter anderem:\n\n- Disziplin — Parakite oder Gleitschirm\n- Modell und Eigenschaften des Schirms\n- Schirmgröße\n- Abfluggewicht\n- Erfahrung des Piloten\n- Windrichtung\n- Böen und Qualität der Strömung\n- die Bedingungen vor Ort\n\nZwei Personen am selben Spot und bei derselben Windgeschwindigkeit können unterschiedliche Ausrüstung brauchen.\n\nDie Unterschiede zwischen Parakite und Gleitschirm sowie zwischen Modellen, Größen und Flächenbelastungen können deutlich verändern, welche Bedingungen für welchen Piloten angemessen sind."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Descolagem",
+            "en": "Take-off",
+            "es": "Despegue",
+            "fr": "Décollage",
+            "de": "Start"
+          },
+          "texto": {
+            "pt": "A descolagem é feita no topo da arriba, com vista sobre a praia e o Oceano Atlântico.\n\nO acesso é relativamente simples, ficando a zona de descolagem a aproximadamente 5 minutos a pé do estacionamento.",
+            "en": "Take-off is from the top of the cliff, looking out over the beach and the Atlantic Ocean.\n\nAccess is relatively straightforward: the take-off area is about 5 minutes on foot from the car park.",
+            "es": "El despegue se hace en la parte alta del acantilado, con vistas sobre la playa y el océano Atlántico.\n\nEl acceso es relativamente sencillo: la zona de despegue está a unos 5 minutos a pie del aparcamiento.",
+            "fr": "Le décollage se fait au sommet de la falaise, avec vue sur la plage et l’océan Atlantique.\n\nL’accès est relativement simple : la zone de décollage se trouve à environ 5 minutes à pied du parking.",
+            "de": "Gestartet wird oben an der Steilküste, mit Blick über den Strand und den Atlantik.\n\nDer Zugang ist verhältnismäßig einfach: Der Startplatz liegt etwa 5 Gehminuten vom Parkplatz entfernt."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Voar de Parakite e parapente na Fonte da Telha",
+            "en": "Flying Parakite and paragliders at Fonte da Telha",
+            "es": "Volar en Parakite y parapente en la Fonte da Telha",
+            "fr": "Voler en Parakite et parapente à la Fonte da Telha",
+            "de": "Mit Parakite und Gleitschirm an der Fonte da Telha fliegen"
+          },
+          "texto": {
+            "pt": "A Fonte da Telha permite aproveitar a sustentação dinâmica criada pelo vento ao encontrar a arriba costeira.\n\nQuando as condições são adequadas, é possível realizar soaring costeiro e percorrer diferentes zonas desta faixa litoral.\n\nA extensão da arriba permite ainda prolongar o voo para norte ou para sul.",
+            "en": "Fonte da Telha makes it possible to use the dynamic lift created when the wind meets the coastal cliff.\n\nWhen conditions are suitable, coastal soaring is possible, moving along different parts of this stretch of coast.\n\nThe length of the cliff also allows the flight to be extended north or south.",
+            "es": "La Fonte da Telha permite aprovechar la sustentación dinámica creada por el viento al encontrar el acantilado costero.\n\nCuando las condiciones son adecuadas, es posible hacer soaring costero y recorrer distintas zonas de esta franja litoral.\n\nLa extensión del acantilado permite además prolongar el vuelo hacia el norte o hacia el sur.",
+            "fr": "La Fonte da Telha permet d’exploiter la portance dynamique créée par le vent lorsqu’il rencontre la falaise côtière.\n\nLorsque les conditions sont adaptées, le soaring de côte est possible, en parcourant différentes zones de cette bande littorale.\n\nLa longueur de la falaise permet en outre de prolonger le vol vers le nord ou vers le sud.",
+            "de": "An der Fonte da Telha lässt sich der dynamische Aufwind nutzen, der entsteht, wenn der Wind auf die Küstenklippe trifft.\n\nWenn die Bedingungen passen, ist Küstensoaring möglich, entlang verschiedener Abschnitte dieses Küstenstreifens.\n\nDie Länge der Klippe erlaubt es außerdem, den Flug nach Norden oder nach Süden zu verlängern."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Voar para norte em direção à Costa da Caparica",
+            "en": "Flying north towards Costa da Caparica",
+            "es": "Volar hacia el norte en dirección a la Costa da Caparica",
+            "fr": "Voler vers le nord en direction de la Costa da Caparica",
+            "de": "Nach Norden Richtung Costa da Caparica fliegen"
+          },
+          "texto": {
+            "pt": "Com condições adequadas, é possível voar desde a Fonte da Telha para norte em direção à Costa da Caparica, acompanhando a linha de costa.\n\nA possibilidade de realizar ou prolongar este percurso depende das condições existentes e da capacidade do piloto e equipamento utilizados.",
+            "en": "In suitable conditions it is possible to fly north from Fonte da Telha towards Costa da Caparica, following the coastline.\n\nWhether that route can be flown, or extended, depends on the conditions at the time and on the capability of the pilot and the equipment being used.",
+            "es": "Con condiciones adecuadas es posible volar desde la Fonte da Telha hacia el norte en dirección a la Costa da Caparica, siguiendo la línea de costa.\n\nLa posibilidad de realizar o prolongar este recorrido depende de las condiciones existentes y de la capacidad del piloto y del equipo utilizados.",
+            "fr": "Dans des conditions adaptées, il est possible de voler depuis la Fonte da Telha vers le nord en direction de la Costa da Caparica, en suivant le trait de côte.\n\nLa possibilité de réaliser ou de prolonger ce parcours dépend des conditions du moment et des capacités du pilote et du matériel utilisés.",
+            "de": "Bei passenden Bedingungen ist ein Flug von der Fonte da Telha nach Norden Richtung Costa da Caparica möglich, entlang der Küstenlinie.\n\nOb diese Strecke geflogen oder verlängert werden kann, hängt von den Bedingungen und vom Können des Piloten und der eingesetzten Ausrüstung ab."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Voar para sul em direção à Lagoa de Albufeira",
+            "en": "Flying south towards Lagoa de Albufeira",
+            "es": "Volar hacia el sur en dirección a la Lagoa de Albufeira",
+            "fr": "Voler vers le sud en direction de la Lagoa de Albufeira",
+            "de": "Nach Süden Richtung Lagoa de Albufeira fliegen"
+          },
+          "texto": {
+            "pt": "Também é possível prolongar o voo para sul, desde a Fonte da Telha até à zona norte da [Lagoa de Albufeira](/parakite-portugal/lagoa-de-albufeira/), quando existem condições adequadas ao longo do percurso.\n\nEste percurso liga dois ambientes de voo diferentes: a zona de arriba da Fonte da Telha e a zona costeira e dunar da Lagoa de Albufeira.",
+            "en": "It is also possible to extend the flight south, from Fonte da Telha to the northern end of [Lagoa de Albufeira](/parakite-portugal/lagoa-de-albufeira/), when conditions along the way are suitable.\n\nThat route joins two different flying environments: the cliff at Fonte da Telha and the coastal dune area at Lagoa de Albufeira.",
+            "es": "También es posible prolongar el vuelo hacia el sur, desde la Fonte da Telha hasta la zona norte de la [Lagoa de Albufeira](/parakite-portugal/lagoa-de-albufeira/), cuando hay condiciones adecuadas a lo largo del recorrido.\n\nEste recorrido une dos entornos de vuelo diferentes: la zona de acantilado de la Fonte da Telha y la zona costera y dunar de la Lagoa de Albufeira.",
+            "fr": "Il est aussi possible de prolonger le vol vers le sud, depuis la Fonte da Telha jusqu’à la partie nord de la [Lagoa de Albufeira](/parakite-portugal/lagoa-de-albufeira/), lorsque les conditions le permettent tout au long du parcours.\n\nCe parcours relie deux environnements de vol différents : la zone de falaise de la Fonte da Telha et la zone côtière et dunaire de la Lagoa de Albufeira.",
+            "de": "Ebenso lässt sich der Flug nach Süden verlängern, von der Fonte da Telha bis zum nördlichen Bereich der [Lagoa de Albufeira](/parakite-portugal/lagoa-de-albufeira/), wenn die Bedingungen auf der ganzen Strecke passen.\n\nDiese Strecke verbindet zwei unterschiedliche Flugumgebungen: den Steilküstenabschnitt der Fonte da Telha und das Küsten- und Dünengebiet der Lagoa de Albufeira."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Aterragem",
+            "en": "Landing",
+            "es": "Aterrizaje",
+            "fr": "Atterrissage",
+            "de": "Landung"
+          },
+          "texto": {
+            "pt": "Sempre que possível, a aterragem é feita novamente na zona de descolagem, no topo da arriba.\n\nQuando não é possível regressar e aterrar na descolagem, a praia pode ser utilizada como alternativa de aterragem.\n\nA possibilidade de utilizar a praia deve ter em conta o espaço disponível, a maré e a presença de pessoas ou outras atividades.",
+            "en": "Whenever possible, landing is back at the take-off, on top of the cliff.\n\nWhen returning to the take-off is not possible, the beach can be used as an alternative.\n\nUsing the beach has to take into account the space available, the tide and the presence of people or other activities.",
+            "es": "Siempre que es posible, el aterrizaje se hace de nuevo en la zona de despegue, en la parte alta del acantilado.\n\nCuando no es posible regresar y aterrizar en el despegue, la playa puede utilizarse como alternativa.\n\nEl uso de la playa debe tener en cuenta el espacio disponible, la marea y la presencia de personas u otras actividades.",
+            "fr": "Chaque fois que c’est possible, l’atterrissage se fait de nouveau sur le décollage, au sommet de la falaise.\n\nLorsque le retour au décollage n’est pas possible, la plage peut servir de solution de repli.\n\nL’utilisation de la plage doit tenir compte de l’espace disponible, de la marée et de la présence de personnes ou d’autres activités.",
+            "de": "Wann immer möglich, wird wieder am Startplatz oben an der Klippe gelandet.\n\nWenn die Rückkehr zum Startplatz nicht möglich ist, kann der Strand als Alternative dienen.\n\nDabei sind der verfügbare Platz, die Gezeiten und die Anwesenheit von Menschen oder anderen Aktivitäten zu berücksichtigen."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "A praia e a Arriba Fóssil",
+            "en": "The beach and the fossil cliff",
+            "es": "La playa y el acantilado fósil",
+            "fr": "La plage et la falaise fossile",
+            "de": "Der Strand und die Fossilklippe"
+          },
+          "texto": {
+            "pt": "Uma das características que define a Fonte da Telha é a sua localização entre o Oceano Atlântico e a Arriba Fóssil da Costa da Caparica.\n\nA paisagem combina um extenso areal, sistema dunar e a arriba que acompanha esta parte da costa.\n\nA Fonte da Telha mantém também uma forte ligação à atividade piscatória e à Arte Xávega, além de ser procurada para atividades de praia e desportos de ondas.",
+            "en": "One of the things that defines Fonte da Telha is its position between the Atlantic Ocean and the Arriba Fóssil da Costa da Caparica.\n\nThe landscape combines a long stretch of sand, a dune system and the cliff that runs along this part of the coast.\n\nFonte da Telha also keeps a strong link to fishing and to Arte Xávega, the traditional beach-seine fishery, as well as being sought out for beach activities and wave sports.",
+            "es": "Una de las características que define a la Fonte da Telha es su ubicación entre el océano Atlántico y la Arriba Fóssil da Costa da Caparica.\n\nEl paisaje combina un extenso arenal, un sistema dunar y el acantilado que acompaña esta parte de la costa.\n\nLa Fonte da Telha mantiene también un fuerte vínculo con la actividad pesquera y con la Arte Xávega, la pesca tradicional con red desde la playa, además de ser buscada para actividades de playa y deportes de olas.",
+            "fr": "L’un des traits qui définissent la Fonte da Telha est sa position entre l’océan Atlantique et l’Arriba Fóssil da Costa da Caparica.\n\nLe paysage associe une longue plage, un système dunaire et la falaise qui borde cette partie de la côte.\n\nLa Fonte da Telha conserve aussi un lien fort avec la pêche et l’Arte Xávega, la pêche traditionnelle à la senne de plage, et elle est recherchée pour les activités de plage et les sports de vagues.",
+            "de": "Eines der prägenden Merkmale der Fonte da Telha ist ihre Lage zwischen dem Atlantik und der Arriba Fóssil da Costa da Caparica.\n\nDie Landschaft verbindet einen langen Sandstrand, ein Dünensystem und die Klippe, die diesen Küstenabschnitt begleitet.\n\nDie Fonte da Telha hat außerdem eine enge Verbindung zur Fischerei und zur Arte Xávega, dem traditionellen Strandwadenfang, und ist zugleich für Strandaktivitäten und Wellensport gefragt."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Um espaço partilhado",
+            "en": "A shared space",
+            "es": "Un espacio compartido",
+            "fr": "Un espace partagé",
+            "de": "Ein geteilter Raum"
+          },
+          "texto": {
+            "pt": "A Fonte da Telha é uma praia muito frequentada, particularmente durante a época balnear.\n\nPilotos de Parakite e parapente partilham o espaço com banhistas, pescadores, surfistas, caminhantes e outros utilizadores.\n\nA presença de pessoas e outras atividades deve ser especialmente considerada durante o voo e sempre que seja necessário utilizar a praia para aterragem.",
+            "en": "Fonte da Telha is a busy beach, particularly during the bathing season.\n\nParakite and paragliding pilots share the space with swimmers, fishermen, surfers, walkers and others.\n\nThe presence of people and other activities must be given particular attention during the flight, and whenever the beach has to be used for landing.",
+            "es": "La Fonte da Telha es una playa muy frecuentada, sobre todo durante la temporada de baño.\n\nLos pilotos de Parakite y parapente comparten el espacio con bañistas, pescadores, surfistas, caminantes y otros usuarios.\n\nLa presencia de personas y otras actividades debe considerarse de forma especial durante el vuelo y siempre que sea necesario utilizar la playa para aterrizar.",
+            "fr": "La Fonte da Telha est une plage très fréquentée, en particulier pendant la saison balnéaire.\n\nLes pilotes de Parakite et de parapente y partagent l’espace avec des baigneurs, des pêcheurs, des surfeurs, des promeneurs et d’autres usagers.\n\nLa présence de personnes et d’autres activités doit faire l’objet d’une attention particulière pendant le vol, et chaque fois qu’il faut utiliser la plage pour atterrir.",
+            "de": "Die Fonte da Telha ist ein stark besuchter Strand, besonders in der Badesaison.\n\nParakite- und Gleitschirmpiloten teilen sich den Raum mit Badenden, Fischern, Surfern, Spaziergängern und anderen.\n\nDie Anwesenheit von Menschen und anderen Aktivitäten ist während des Flugs besonders zu berücksichtigen, und immer dann, wenn der Strand zum Landen genutzt werden muss."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Respeito pelo spot",
+            "en": "Respect for the site",
+            "es": "Respeto por el spot",
+            "fr": "Respect du site",
+            "de": "Respekt vor dem Spot"
+          },
+          "texto": {
+            "pt": "A Fonte da Telha encontra-se numa área de elevado valor natural e paisagístico associada à Arriba Fóssil da Costa da Caparica.\n\nA prática de Parakite e parapente deve procurar minimizar o impacto sobre o local, respeitar os acessos existentes e evitar a degradação das dunas, vegetação e restante ambiente costeiro.\n\nRespeitar o spot ajuda a mantê-lo aberto para todos.",
+            "en": "Fonte da Telha lies in an area of high natural and scenic value, tied to the Arriba Fóssil da Costa da Caparica.\n\nParakite and paragliding should be practised so as to minimise the impact on the site, to respect the existing accesses, and to avoid damaging the dunes, the vegetation and the rest of the coastal environment.\n\nRespecting the site helps keep it open to everyone.",
+            "es": "La Fonte da Telha se encuentra en un área de elevado valor natural y paisajístico asociada a la Arriba Fóssil da Costa da Caparica.\n\nLa práctica del Parakite y del parapente debe procurar minimizar el impacto sobre el lugar, respetar los accesos existentes y evitar la degradación de las dunas, la vegetación y el resto del entorno costero.\n\nRespetar el spot ayuda a mantenerlo abierto para todos.",
+            "fr": "La Fonte da Telha se situe dans une zone de grande valeur naturelle et paysagère, liée à l’Arriba Fóssil da Costa da Caparica.\n\nLa pratique du Parakite et du parapente doit chercher à minimiser l’impact sur le site, à respecter les accès existants et à éviter la dégradation des dunes, de la végétation et du reste de l’environnement côtier.\n\nRespecter le site aide à le garder ouvert à tous.",
+            "de": "Die Fonte da Telha liegt in einem Gebiet von hohem Natur- und Landschaftswert, das mit der Arriba Fóssil da Costa da Caparica verbunden ist.\n\nParakite und Gleitschirmfliegen sollten so ausgeübt werden, dass die Auswirkungen auf den Ort möglichst gering bleiben, die vorhandenen Zugänge respektiert werden und Dünen, Vegetation und die übrige Küstenlandschaft nicht geschädigt werden.\n\nDen Spot zu respektieren hilft, ihn für alle offen zu halten."
+          }
+        }
+      ],
+      "aviso": {
+        "pt": "As informações desta página não substituem a avaliação das condições no local.\n\nA decisão de voar deve ter em conta a experiência do piloto, o equipamento utilizado e as condições reais do spot.\n\nSe não conheces o local, procura informação junto de pilotos locais antes de voar.",
+        "en": "The information on this page does not replace assessing the conditions on site.\n\nThe decision to fly must take into account the pilot’s experience, the equipment used and the actual conditions at the site.\n\nIf you do not know the site, seek information from local pilots before flying.",
+        "es": "La información de esta página no sustituye la evaluación de las condiciones en el lugar.\n\nLa decisión de volar debe tener en cuenta la experiencia del piloto, el equipo utilizado y las condiciones reales del spot.\n\nSi no conoces el lugar, busca información entre los pilotos locales antes de volar.",
+        "fr": "Les informations de cette page ne remplacent pas l’évaluation des conditions sur place.\n\nLa décision de voler doit tenir compte de l’expérience du pilote, du matériel utilisé et des conditions réelles du site.\n\nSi tu ne connais pas le site, renseigne-toi auprès des pilotes locaux avant de voler.",
+        "de": "Die Informationen auf dieser Seite ersetzen nicht die Beurteilung der Bedingungen vor Ort.\n\nDie Entscheidung zu fliegen muss die Erfahrung des Piloten, die verwendete Ausrüstung und die tatsächlichen Bedingungen am Spot berücksichtigen.\n\nWenn du den Ort nicht kennst, hol dir vor dem Fliegen Informationen bei örtlichen Piloten."
       },
       "album": [
         {
