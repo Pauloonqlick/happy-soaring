@@ -78,13 +78,6 @@ quase todas, e um sinal que diz sempre "mudou tudo" é um sinal que se aprende a
 ignorar. Não é causa provada de nada, mas é o único mecanismo que controlamos
 que toca no agendamento de rastreio.
 
-### O nome do spot Meco, antes de haver página
-aberto: 2026-09-06
-
-Hoje o `id` é `meco`, e o endereço seria `/parakite-portugal/meco/`. Os outros
-spots usam o nome inteiro, e o texto da Praia das Bicas já escreve "Praia do
-Meco". Mudar agora é grátis; depois de publicado custa um redireccionamento.
-
 ### "Estacionamento: geralmente fácil na zona", na Fonte da Telha
 aberto: 2026-09-06
 
@@ -116,9 +109,4 @@ no Google Cloud, e não depende de mais nada avançar.
 
 ## PENDENTE
 
-### O vídeo do Meco está por commitar e publicar
-aberto: 2026-09-06
-
-Está em `content/spots.json`, com texto alternativo nas cinco línguas. O spot
-continua `publicar: false` — falta-lhe o texto. Espera pela decisão do nome,
-acima, para não se publicar um endereço que depois muda.
+(nada)

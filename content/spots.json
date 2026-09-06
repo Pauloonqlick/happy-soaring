@@ -778,8 +778,8 @@
       ]
     },
     {
-      "id": "meco",
-      "nome": "Meco",
+      "id": "praia-do-meco",
+      "nome": "Praia do Meco",
       "publicar": false,
       "descricao": {
         "pt": "",
@@ -788,7 +788,26 @@
         "fr": "",
         "de": ""
       },
-      "album": []
+      "album": [
+        {
+          "videoId": "m9qO0LaV3t0",
+          "imagem": "",
+          "alt": {
+            "pt": "Vídeo: a vista do piloto sob uma asa Flow verde-fluorescente, a voar rente à arriba da Praia do Meco sobre um areal cheio de banhistas, com outra asa ao longe.",
+            "en": "Video: the pilot’s view under a fluorescent yellow-green Flow wing, flying close to the cliff at Praia do Meco above a beach full of people, with another wing in the distance.",
+            "es": "Vídeo: la vista del piloto bajo un ala Flow verde flúor, volando junto al acantilado de la Praia do Meco sobre un arenal lleno de bañistas, con otra ala a lo lejos.",
+            "fr": "Vidéo : la vue du pilote sous une aile Flow vert fluo, en vol au ras de la falaise de la Praia do Meco au-dessus d’une plage pleine de monde, avec une autre aile au loin.",
+            "de": "Video: Blick des Piloten unter einem neongrünen Flow-Schirm, dicht an der Steilküste der Praia do Meco über einem Strand voller Menschen, in der Ferne ein weiterer Schirm."
+          },
+          "legenda": {
+            "pt": "",
+            "en": "",
+            "es": "",
+            "fr": "",
+            "de": ""
+          }
+        }
+      ]
     },
     {
       "id": "alfarim",
