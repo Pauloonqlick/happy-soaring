@@ -52,6 +52,146 @@ const OMISSAO = 'pt';
    entidade é a mesma esteja onde estiver. */
 const ORGANIZACAO = { '@id': DOMINIO + '/#organizacao' };
 
+/* ---- ...e por isso passou a ir declarada em todas ---------------------
+   10/09/2026. A referencia acima resolveu o problema certo — tres Happy
+   Soaring diferentes — mas deixou outro: 24 paginas geradas apontavam para
+   um `@id` que nao estava declarado no grafo delas. Referenciar um no que
+   ninguem declara ali nao diz nada a quem le so aquela pagina, e um
+   rastreador de IA que leia uma ficha de asa sem ter lido a inicial nao
+   fica a saber quem a publica.
+
+   O `@id` continua a ser um so, que e o que faz a entidade ser a mesma
+   esteja onde estiver. O que muda e que o no vai declarado, e declarado
+   IGUAL: estas constantes sao copia exacta do que o index.html serve,
+   incluindo a descricao em portugues nas cinco linguas — o index.html
+   tambem a serve assim nas cinco, e um no com o mesmo `@id` e propriedades
+   diferentes por lingua era voltar ao problema de origem.
+
+   Se o index.html mudar a Organization, isto muda com ele. */
+const ORG_NO = {
+  '@type': 'Organization',
+  '@id': DOMINIO + '/#organizacao',
+  name: 'Happy Soaring',
+  url: DOMINIO + '/',
+  logo: {
+    '@type': 'ImageObject',
+    url: DOMINIO + '/images/marca/happy-soaring-logo-512.png',
+    width: 512, height: 512, caption: 'Happy Soaring'
+  },
+  description: 'Revendedor oficial Flow Paragliders em Portugal, com formação através da escola parceira FelloFly.',
+  /* 10/09/2026. O contacto entra na entidade e nao so no rodape: assim o
+     Google e os motores de resposta leem-no sem terem de o extrair de prosa.
+     O telefone e o mesmo numero do WhatsApp — e um canal, dois protocolos. */
+  email: 'paulo.pereira@happysoaring.com',
+  telephone: '+351927187912',
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'sales',
+    email: 'paulo.pereira@happysoaring.com',
+    telephone: '+351927187912',
+    areaServed: 'PT',
+    availableLanguage: IDIOMAS
+  },
+  areaServed: { '@type': 'Country', name: 'Portugal' },
+  knowsLanguage: IDIOMAS
+};
+const SITE_NO = {
+  '@type': 'WebSite',
+  '@id': DOMINIO + '/#site',
+  url: DOMINIO + '/',
+  name: 'Happy Soaring',
+  publisher: ORGANIZACAO,
+  inLanguage: IDIOMAS
+};
+/* Os dois entram em todo o grafo gerado. Espalhados por sete sitios ficava
+   sempre um por esquecer; assim ha um sitio so. */
+const comEntidade = (nos) => [ORG_NO, SITE_NO, ...nos];
+
+/* ---- as FAQ, agora tambem em dados estruturados ----------------------
+   10/09/2026. Estava aqui, e por escrito, que nao havia FAQPage «mesmo
+   havendo FAQ: foi decisao do Paulo». Passou a haver, e vale registar com
+   que informacao a decisao mudou, porque nao mudou o que se pensava saber:
+
+   Desde agosto de 2023 o Google so mostra o resultado rico de FAQ a sites
+   de saude e de entidades governamentais reconhecidas. Para este site a
+   marcacao NAO produz resultado rico nenhum — nesse ponto a decisao
+   anterior estava certa e continua certa.
+
+   O que mudou e o outro leitor. Pergunta e resposta ja emparelhadas sao o
+   formato mais facil de levantar por um motor de resposta, e a FAQ deste
+   site responde a perguntas que sao exactamente as que se fazem sobre a
+   categoria. O ganho e de AI Search, nao de SERP.
+
+   A marcacao le o MESMO conteudo que o HTML visivel, da mesma fonte: se as
+   duas divergirem e porque alguem duplicou o texto, e ai o Google ignora a
+   marcacao — e com razao. */
+const semNegrito = (x) => String(x).replace(/\*\*(.+?)\*\*/g, '$1');
+
+/* ---- a description das 110 fichas de asa -----------------------------
+   10/09/2026. A description saia de «tagline OU descricao», cortada a 155.
+
+   O «OU» nunca chegava ao segundo operando, porque as 22 asas tem todas
+   tagline. E as taglines medem 18 a 71 caracteres: 106 das 110 fichas
+   serviam uma description abaixo de 70 quando o Google mostra ~155. Tres
+   quartos do espaco por usar, em todas as linguas.
+
+   O texto nunca faltou. Cada asa tem `descricao` com 146 a 303 caracteres,
+   escrita nas cinco linguas — nao estava a ser servida a ninguem. Isto nao
+   escreve nada: compoe o que ja existe.
+
+   FRASES INTEIRAS, e nao `slice`. O slice cortava a meio da palavra.
+   Enche-se com frases completas ate 160; se o resultado ficar abaixo de 100
+   e ainda houver texto, entra um pedaco da frase seguinte cortado numa
+   fronteira de oracao — virgula, ponto e virgula, dois pontos ou travessao
+   — que e a unica fronteira que existe nas cinco linguas sem ter de saber
+   gramatica de nenhuma. Sem fronteira de oracao util, corta na palavra e
+   deixa cair palavras de tres letras ou menos penduradas no fim.
+
+   Medido nas 110: minimo 90, media 133, maximo 160. Nenhuma abaixo de 70,
+   nenhuma acima de 160. */
+const emFrases = (x) => String(x || '').trim()
+  .split(/(?<=[.!?])\s+/).map(f => f.trim()).filter(Boolean);
+
+function pedacoDe(frase, espaco, minimoUtil = 40) {
+  let ped = frase.slice(0, espaco);
+  const oracao = Math.max(ped.lastIndexOf(','), ped.lastIndexOf(';'),
+                          ped.lastIndexOf(':'), ped.lastIndexOf(' — '));
+  if (oracao >= minimoUtil) return ped.slice(0, oracao).replace(/[\s,;:—-]+$/, '');
+  if (ped.includes(' ')) ped = ped.slice(0, ped.lastIndexOf(' '));
+  ped = ped.replace(/[\s,;:—-]+$/, '');
+  for (let i = 0; i < 2; i++) {
+    const m = ped.match(/\s\S{1,3}$/);
+    if (!m) break;
+    ped = ped.slice(0, m.index).replace(/[\s,;:—-]+$/, '');
+  }
+  return ped;
+}
+
+function descricaoDoProduto(p, l, lim = 160, minimo = 100) {
+  const todas = [...emFrases(t(p.tagline, l)), ...emFrases(t(p.descricao, l))];
+  let saida = '';
+  for (const f of todas) {
+    const cand = (saida + ' ' + f).trim();
+    if (cand.length <= lim) { saida = cand; continue; }
+    if (saida.length < minimo) {
+      const espaco = lim - saida.length - 2;   /* o espaco e a reticencia */
+      if (espaco > 30) {
+        const ped = pedacoDe(f, espaco);
+        if (ped) saida = (saida + ' ' + ped + '…').trim();
+      }
+    }
+    break;
+  }
+  return saida;
+}
+const perguntas = (pares) => pares
+  .filter(([q, r]) => q && r)
+  .map(([q, r]) => ({
+    '@type': 'Question',
+    name: semNegrito(q),
+    acceptedAnswer: { '@type': 'Answer', text: semNegrito(r) }
+  }));
+
 /* a categoria traduz-se — quem procura "parakite wings" clica mais depressa
    num endereço que diga wings. O nome do produto não: a Mullet 2 é Mullet 2 */
 const SEGMENTO = { pt: 'asas', en: 'wings', es: 'alas', fr: 'ailes', de: 'schirme' };
@@ -360,14 +500,17 @@ function jsonld(p, l, url, foto) {
     /* sem offers de propósito: não há preços no site, e inventá-los é
        exactamente o que não se deve fazer */
     { '@type': 'Product', name: p.nome, url,
-      description: t(p.tagline, l) || t(p.descricao, l),
+      /* a mesma composicao da <head>: um Product cuja description
+         diverge da meta da propria pagina sao duas versoes do mesmo facto */
+      description: descricaoDoProduto(p, l),
       category: rotuloFamilia(p.familia, l), image: foto,
       brand: { '@type': 'Brand', name: 'Flow Paragliders' },
       ...(p.classificacao ? { additionalProperty: {
         '@type': 'PropertyValue', name: 'Classificação', value: p.classificacao } } : {}),
       offers: undefined }
   ];
-  return JSON.stringify({ '@context': 'https://schema.org', '@graph': g }, (k, v) => v === undefined ? undefined : v);
+  return JSON.stringify({ '@context': 'https://schema.org', '@graph': comEntidade(g) },
+    (k, v) => v === undefined ? undefined : v);
 }
 
 /* ---- a asa do curso ---------------------------------------------------
@@ -1014,6 +1157,29 @@ const caminhoFlow = l => (l === OMISSAO ? '' : '/' + l) + '/flow-paragliders-por
    e o Paulo o possa comprovar comparando as somas de verificacao.
    Normalizar estes tres caprichos e uma limpeza para outro commit, onde a
    diferenca seja so essa e se possa ver ao que se esta a dizer que sim. */
+/* ---- o contacto, no rodape de todas as paginas geradas ---------------
+   10/09/2026. O site tinha 225 ligacoes de WhatsApp e zero de email ou
+   telefone: quem nao usa WhatsApp, ou esta num computador de trabalho, nao
+   tinha por onde. E um endereco de email em texto e tambem um facto que um
+   motor de resposta consegue devolver a quem pergunta como contactar.
+
+   Vai no rodape porque o rodape esta nas 160, e nao em algumas. */
+const CONTACTO = { email: 'paulo.pereira@happysoaring.com',
+                   tel: '+351927187912', telVis: '+351 927 187 912' };
+/* O `email_off` e a saida documentada do Cloudflare ao Email Address
+   Obfuscation. Sem ele, o deploy de 10/09 trocou o endereco por
+   `[email protected]` com um descodificador em JavaScript: o link morria sem
+   JS e o endereco deixava de estar no HTML como texto — que era metade da
+   razao de o por aqui. O JSON-LD passou intacto; so o link visivel foi
+   atingido. Os comentarios ficam inofensivos se a opcao for desligada. */
+const rodapeContacto = () =>
+  '<span class="pg-rodape-c">'
+  + '<!--email_off-->'
+  + '<a href="mailto:' + CONTACTO.email + '">' + CONTACTO.email + '</a>'
+  + '<!--email_on-->'
+  + '<a href="tel:' + CONTACTO.tel + '">' + CONTACTO.telVis + '</a>'
+  + '</span>';
+
 function moldeDaPagina(o) {
   const lg = o.lingua;
   const ogLocale = o.ogLocale
@@ -1057,7 +1223,7 @@ ${o.alt}
   ${seletorIdiomas(o.alts, lg)}
 </header>
 ${o.corpo}
-<footer class="pg-rodape">${o.rodape}</footer>
+<footer class="pg-rodape">${o.rodape}${rodapeContacto()}</footer>
 ${scriptIdiomas()}
 </body>
 </html>${o.fim || ''}`;
@@ -1093,7 +1259,7 @@ function paginaFlow(l, num) {
      Sem offers, sem preços, sem stock — não existem. */
   const ld = JSON.stringify({
     '@context': 'https://schema.org',
-    '@graph': [
+    '@graph': comEntidade([
       { '@type': 'BreadcrumbList', itemListElement: [
         { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + inicioHref(l) },
         { '@type': 'ListItem', position: 2, name: 'Flow Paragliders Portugal', item: url }
@@ -1114,7 +1280,7 @@ function paginaFlow(l, num) {
           '@type': 'ListItem', position: i + 1, name: p.nome, url: DOMINIO + caminho(l, p)
         }))
       }
-    ]
+    ])
   });
 
   return moldeDaPagina({
@@ -1233,7 +1399,7 @@ function paginaPilot2Wing(l, num) {
      duração nem custo — não os temos, e inventá-los é o que não se faz. */
   const ld = JSON.stringify({
     '@context': 'https://schema.org',
-    '@graph': [
+    '@graph': comEntidade([
       { '@type': 'BreadcrumbList', itemListElement: [
         { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + inicioHref(l) },
         { '@type': 'ListItem', position: 2, name: 'Pilot2Wing', item: url }
@@ -1248,7 +1414,7 @@ function paginaPilot2Wing(l, num) {
           '@type': 'HowToStep', position: i + 1, name: t(e.nome, l), text: t(e.texto, l)
         }))
       }
-    ]
+    ])
   });
 
   const cartoes = P2W.etapas.map((e, i) => {
@@ -1421,23 +1587,27 @@ function paginaParakite(l, num) {
 
   const ld = JSON.stringify({
     '@context': 'https://schema.org',
-    '@graph': [
+    '@graph': comEntidade([
       { '@type': 'BreadcrumbList', itemListElement: [
         { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + inicio },
         { '@type': 'ListItem', position: 2, name: t(PK.migalha, l), item: url }
       ]},
-      { '@type': 'WebPage',
+      { /* WebPage e FAQPage ao mesmo tempo, no mesmo no: a pagina e uma
+           coisa so, e um segundo no com outro `@id` seria uma FAQ que nao
+           pertence a pagina nenhuma. */
+        '@type': ['WebPage', 'FAQPage'],
         '@id': url,
         url,
         name: t(PK.h1, l),
         description: t(PK.descricao, l),
         inLanguage: l,
+        mainEntity: perguntas(PK.faq.map(q => [t(q.p, l), t(q.r, l)])),
         isPartOf: { '@id': DOMINIO + '/#site' },
         publisher: ORGANIZACAO,
         author: { '@type': 'Person', name: P2W.autorNome, worksFor: ORGANIZACAO },
         primaryImageOfPage: { '@type': 'ImageObject', url: foto, width: 1200, height: 630 }
       }
-    ]
+    ])
   });
 
   /* 04 — os quatro percursos */
@@ -1472,7 +1642,8 @@ function paginaParakite(l, num) {
       <span>${esc(typeof p.s === 'string' ? p.s : t(p.s, l))}</span>
     </li>`).join('');
 
-  /* 11 — o FAQ, HTML normal e não dados estruturados */
+  /* 11 — o FAQ. O HTML e o `mainEntity` do FAQPage saem os dois de
+     PK.faq: uma fonte, dois leitores. */
   const faq = PK.faq.map(q => `<div class="pk-faq-q">
       <h3>${esc(t(q.p, l))}</h3>
       <p>${forte(t(q.r, l))}</p>
@@ -1628,7 +1799,7 @@ function paginaParakite(l, num) {
         <a class="pk-b pk-b2" href="#voar-em-portugal">${esc(t(PK.heroCta2, l))}</a>
       </p>
     </div>
-    <img class="pk-heroi-piloto" src="/images/hero-pilot.png" alt="" width="844" height="1500" />
+    <img class="pk-heroi-piloto" src="/images/hero-pilot.webp" alt="" width="844" height="1500" />
   </section>
 
   <section class="pk-sec" id="o-que-e">
@@ -1961,7 +2132,7 @@ function pagina(p, l, num) {
   const foto = cor ? DOMINIO + '/images/asas/' + chave(p.nome) + '__' + cor + '.webp' : DOMINIO + '/images/og-happysoaring.jpg';
   const titulo = p.nome + ' — ' + (rotuloClasse(p.classificacao, l) || rotuloFamilia(p.familia, l)) +
     ' Flow Paragliders | Happy Soaring';
-  const desc = (t(p.tagline, l) || t(p.descricao, l) || '').slice(0, 155);
+  const desc = descricaoDoProduto(p, l);
 
   const alts = alternativas(x => caminho(x, p));
   const alt = etiquetasAlt(alts);
@@ -2228,7 +2399,7 @@ function paginaSpot(s, l, num) {
 
   const ld = JSON.stringify({
     '@context': 'https://schema.org',
-    '@graph': [
+    '@graph': comEntidade([
       { '@type': 'BreadcrumbList', itemListElement: [
         { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + inicioHref(l) },
         { '@type': 'ListItem', position: 2, name: t(SP.hub, l), item: DOMINIO + hub },
@@ -2249,7 +2420,7 @@ function paginaSpot(s, l, num) {
          sobre o que a pagina contem. */
       { '@type': 'WebPage', url, inLanguage: l, name: h1,
         description: primeiraFrase, about: { '@id': url + '#local' } },
-    ],
+    ]),
   });
 
   return moldeDaPagina({
@@ -2446,8 +2617,9 @@ if (!so && !soIdioma) {
    nem no schema. As asas concretas serviram para validar o conteúdo e
    ficaram de fora dele.
 
-   Schema: WebPage + BreadcrumbList, com a Organization por referência.
-   Sem FAQPage, mesmo havendo FAQ: foi decisão do Paulo. */
+   Schema: WebPage + FAQPage + BreadcrumbList, com a Organization e o
+   WebSite declarados no próprio grafo. O FAQPage entrou a 10/09/2026 —
+   as razões estão junto ao `perguntas()`, no topo. */
 
 function paginaQueParakite(l) {
   const url = DOMINIO + caminhoQP(l);
@@ -2460,19 +2632,23 @@ function paginaQueParakite(l) {
 
   const ld = JSON.stringify({
     '@context': 'https://schema.org',
-    '@graph': [
+    '@graph': comEntidade([
       { '@type': 'BreadcrumbList', itemListElement: [
         { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + inicio },
         { '@type': 'ListItem', position: 2, name: t(QP.migalha, l), item: url }
       ]},
-      { '@type': 'WebPage',
+      { '@type': ['WebPage', 'FAQPage'],
         '@id': url,
         url,
         name: t(QP.h1, l),
         headline: t(QP.h1, l),
         description: t(QP.desc, l),
         inLanguage: l,
-        isPartOf: { '@id': DOMINIO + '/#organizacao' },
+        mainEntity: perguntas(arr('faq')),
+        /* Era `/#organizacao`. Uma WebPage e parte de um WebSite, nao de
+           uma Organization — quem publica ja vai no `publisher`. O hub
+           Parakite sempre teve `/#site`; esta pagina divergia. */
+        isPartOf: { '@id': DOMINIO + '/#site' },
         publisher: ORGANIZACAO,
         /* a imagem principal é a fotografia, não o cartão social: é ela
            que faz sentido no Google Images e como miniatura da página */
@@ -2484,7 +2660,7 @@ function paginaQueParakite(l) {
         },
         about: { '@type': 'Thing', name: 'Parakite', description: t(QP.definicao, l) }
       }
-    ]
+    ])
   });
 
   const paras = (campo) => arr(campo).map(p => '<p class="qp-p">' + esc(p) + '</p>').join('');
@@ -2693,7 +2869,7 @@ ${alt}
 
 </main>
 
-<footer class="pg-rodape">Happy Soaring &middot; ${esc(t(T.dealer, l))}</footer>
+<footer class="pg-rodape">Happy Soaring &middot; ${esc(t(T.dealer, l))}${rodapeContacto()}</footer>
 </body>
 </html>
 `;
@@ -2758,7 +2934,7 @@ function paginaMusica(l) {
      a entidade ja existe, so ganha morada. */
   const ld = JSON.stringify({
     '@context': 'https://schema.org',
-    '@graph': [
+    '@graph': comEntidade([
       { '@type': 'BreadcrumbList', itemListElement: [
         { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + inicio },
         { '@type': 'ListItem', position: 2, name: t(MU.migalha, l), item: url }
@@ -2785,7 +2961,7 @@ function paginaMusica(l) {
           description: t(bio.abertura, l) || undefined
         }
       }
-    ]
+    ])
   });
 
   /* ---- o estático: o que fica sem JavaScript e o que os motores leem ---- */
@@ -2890,7 +3066,7 @@ ${alt}
   </div>
 </main>
 
-<footer class="pg-rodape">Happy Soaring &middot; ${esc(t(T.dealer, l))}</footer>
+<footer class="pg-rodape">Happy Soaring &middot; ${esc(t(T.dealer, l))}${rodapeContacto()}</footer>
 </body>
 </html>
 `;

@@ -230,6 +230,14 @@ body.pg{
 
 .pg-rodape{background:var(--azul-esc);color:rgba(255,255,255,.75);
   font-size:12.5px;text-align:center;padding:22px}
+/* O contacto entrou no rodape a 10/09/2026. Bloco proprio e nao a seguir ao
+   texto na mesma linha: em ecra estreito o email sozinho ja ocupa a largura
+   toda, e a seguir ao «Dealer oficial...» partia em sitios ao acaso. */
+.pg-rodape-c{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 20px;
+  margin-top:9px}
+.pg-rodape-c a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.34);
+  padding-bottom:1px}
+.pg-rodape-c a:hover,.pg-rodape-c a:focus-visible{border-bottom-color:var(--orange)}
 
 @media(max-width:600px){
   .pg-topo{padding:14px 18px}
