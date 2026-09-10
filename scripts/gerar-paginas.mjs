@@ -530,7 +530,10 @@ function blocoMetodo(p, l) {
   return `<section class="pg-sec pg-metodo">
   <p class="pg-metodo-et">${esc(t(P2W.asaKicker, l))}</p>
   <p class="pg-metodo-tx">${esc(t(P2W.asaDoCurso, l))}</p>
-  <p><a class="pg-metodo-a" href="${l === OMISSAO ? '' : '/' + l}/pilot2wing/">${esc(t(P2W.conhecer, l))}</a></p>
+  <p class="pg-metodo-ls">
+    <a class="pg-metodo-a" href="${esc(caminhoCurso(l))}">${esc(t(P2W.verCurso, l))}</a>
+    <a class="pg-metodo-a" href="${esc(caminhoP2W(l))}">${esc(t(P2W.conhecer, l))}</a>
+  </p>
 </section>`;
 }
 
@@ -2752,7 +2755,10 @@ function paginaQueParakite(l) {
   const variam = arr('s9Varia').map(v =>
     '<div class="qp-varia-it"><b>' + esc(v[0]) + '</b><span>' + esc(v[1]) + '</span></div>').join('');
 
-  const destinos = [A('/parakite-portugal/'), A('/pilot2wing/')];
+  /* a ordem tem de bater com a do QP.s10Links, e o curso entra em terceiro:
+     o endereço dele traduz-se, por isso vai pelo caminhoCurso() e não pelo
+     A(), que só prefixa a língua. */
+  const destinos = [A('/parakite-portugal/'), A('/pilot2wing/'), caminhoCurso(l)];
   const links = arr('s10Links').map((x, i) =>
     '<a class="qp-link" href="' + destinos[i] + '"><b>' + esc(x[0]) + '</b>'
     + '<span>' + esc(x[1]) + '</span></a>').join('');

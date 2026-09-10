@@ -36,6 +36,16 @@
     },
     {
       "label": {
+        "pt": "Curso",
+        "en": "Course",
+        "es": "Curso",
+        "fr": "Cours",
+        "de": "Kurs"
+      },
+      "target": "/curso-parakite-portugal/"
+    },
+    {
+      "label": {
         "pt": "Pilot2Wing",
         "en": "Pilot2Wing",
         "es": "Pilot2Wing",

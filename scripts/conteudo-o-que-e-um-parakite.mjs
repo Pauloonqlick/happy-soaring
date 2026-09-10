@@ -694,15 +694,20 @@ export const QP = {
            fr: 'Aller plus loin', de: 'Mehr erfahren' },
   s10Links: {
     pt: [['Parakite em Portugal', 'Aprender, testar e voar — por onde se começa.'],
-         ['Pilot2Wing', 'O método de formação: primeiro o piloto, depois a asa.']],
+         ['Pilot2Wing', 'O método de formação: primeiro o piloto, depois a asa.'],
+         ['Curso de Parakite', 'A formação de conversão para quem já voa de parapente.']],
     en: [['Parakite in Portugal', 'Learning, trying and flying — where to start.'],
-         ['Pilot2Wing', 'The training method: first the pilot, then the wing.']],
+         ['Pilot2Wing', 'The training method: first the pilot, then the wing.'],
+         ['Parakite Course', 'The conversion training for those who already fly a paraglider.']],
     es: [['Parakite en Portugal', 'Aprender, probar y volar — por dónde se empieza.'],
-         ['Pilot2Wing', 'El método de formación: primero el piloto, después el ala.']],
+         ['Pilot2Wing', 'El método de formación: primero el piloto, después el ala.'],
+         ['Curso de Parakite', 'La formación de conversión para quien ya vuela en parapente.']],
     fr: [['Parakite au Portugal', 'Apprendre, essayer et voler — par où commencer.'],
-         ['Pilot2Wing', 'La méthode de formation : d’abord le pilote, ensuite l’aile.']],
+         ['Pilot2Wing', 'La méthode de formation : d’abord le pilote, ensuite l’aile.'],
+         ['Cours de Parakite', 'La formation de conversion pour qui vole déjà en parapente.']],
     de: [['Parakite in Portugal', 'Lernen, testen und fliegen — wo man anfängt.'],
-         ['Pilot2Wing', 'Die Ausbildungsmethode: erst der Pilot, dann der Schirm.']]
+         ['Pilot2Wing', 'Die Ausbildungsmethode: erst der Pilot, dann der Schirm.'],
+         ['Parakite-Kurs', 'Die Umstiegsausbildung für Gleitschirmpiloten.']]
   },
 
   /* ----------------------------------------------------------------- FAQ */

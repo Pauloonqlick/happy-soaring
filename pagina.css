@@ -701,6 +701,16 @@ body.sg .pg-voltar{max-width:1440px;margin:0 auto;padding:26px 72px 60px;
 .pg-metodo a.pg-metodo-a{display:inline-block;background:#ff6a13;color:var(--sobre-laranja);font-weight:800;
   font-size:14.5px;padding:12px 24px;border-radius:100px;text-decoration:none}
 .pg-metodo a.pg-metodo-a:hover{background:#ff7c31;color:var(--sobre-laranja)}
+/* O bloco da asa do curso passou a ter dois destinos a 10/09/2026: o curso
+   primeiro, que e o assunto da frase — «e esta a asa com que se faz o Curso
+   de Parakite» —, e o metodo depois. O segundo perde o fundo laranja: dois
+   botoes cheios lado a lado dividem a decisao em vez de a ordenar. */
+.pg-metodo-ls{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin:0}
+.pg-metodo-ls a.pg-metodo-a + a.pg-metodo-a,
+.pg-metodo-ls a.pg-metodo-a:nth-child(2){background:transparent;color:#fff;
+  border:1px solid rgba(255,255,255,.34)}
+.pg-metodo-ls a.pg-metodo-a:nth-child(2):hover{background:rgba(255,255,255,.08);
+  border-color:var(--orange);color:#fff}
 
 
 /* ======================================================================
