@@ -167,8 +167,11 @@ function pedacoDe(frase, espaco, minimoUtil = 40) {
   return ped;
 }
 
-function descricaoDoProduto(p, l, lim = 160, minimo = 100) {
-  const todas = [...emFrases(t(p.tagline, l)), ...emFrases(t(p.descricao, l))];
+/* Recebe partes de texto e nao um produto: as fichas de asa dao-lhe
+   tagline + descricao, as paginas de spot dao-lhe o resumo. O problema era o
+   mesmo nos dois lados e a resposta tambem — o que mudava era so a origem. */
+function compoeDescricao(partes, lim = 160, minimo = 100) {
+  const todas = partes.filter(Boolean).flatMap(emFrases);
   let saida = '';
   for (const f of todas) {
     const cand = (saida + ' ' + f).trim();
@@ -184,6 +187,9 @@ function descricaoDoProduto(p, l, lim = 160, minimo = 100) {
   }
   return saida;
 }
+
+const descricaoDoProduto = (p, l) =>
+  compoeDescricao([t(p.tagline, l), t(p.descricao, l)]);
 const perguntas = (pares) => pares
   .filter(([q, r]) => q && r)
   .map(([q, r]) => ({
@@ -809,6 +815,7 @@ function blocoPedido(p, l, num) {
   </div>
   <a class="pg-wa pg-enviar desativado" aria-disabled="true" rel="noopener"
      target="_blank">${esc(t(T.enviarWa, l))}</a>
+  ${contactoAlt()}
 </section>
 <script type="application/json" id="pg-dados">${JSON.stringify(dados).replace(/</g, '\\u003c')}<` + `/script>
 <script>
@@ -1172,6 +1179,27 @@ const CONTACTO = { email: 'paulo.pereira@happysoaring.com',
    JS e o endereco deixava de estar no HTML como texto — que era metade da
    razao de o por aqui. O JSON-LD passou intacto; so o link visivel foi
    atingido. Os comentarios ficam inofensivos se a opcao for desligada. */
+/* ---- o segundo canal, ao lado de cada botao de WhatsApp -------------
+   10/09/2026. O contacto tinha entrado no rodape e na Organization, mas nao
+   onde a decisao se toma: quem chega ao botao de WhatsApp e nao usa WhatsApp
+   — ou esta num computador de trabalho — ficava sem alternativa no ponto
+   exacto em que ia contactar.
+
+   Sem rotulo de propria: um endereco de email e um numero de telefone dizem
+   o que sao em qualquer uma das cinco linguas, e um "ou" traduzido nao
+   acrescenta nada que a leitura nao de.
+
+   Vai nos cinco pontos de conversao das paginas, e nao nos sete sitios com
+   destino WhatsApp: os `pk-cta` sao cartoes de percurso, e um contacto
+   dentro de um cartao nao e uma alternativa, e ruido. */
+const contactoAlt = (esq) =>
+  '<p class="pg-alt' + (esq ? ' pg-alt-esq' : '') + '">'
+  + '<!--email_off-->'
+  + '<a href="mailto:' + CONTACTO.email + '">' + CONTACTO.email + '</a>'
+  + '<!--email_on-->'
+  + '<a href="tel:' + CONTACTO.tel + '">' + CONTACTO.telVis + '</a>'
+  + '</p>';
+
 const rodapeContacto = () =>
   '<span class="pg-rodape-c">'
   + '<!--email_off-->'
@@ -1303,6 +1331,7 @@ function paginaFlow(l, num) {
       <h1>${esc(t(FL.h1, l))}</h1>
       <p class="fl-entrada">${esc(t(FL.entrada, l))}</p>
       <p><a class="pg-wa" href="${wa}" rel="noopener" target="_blank">${esc(t(FL.cta, l))}</a></p>
+      ${contactoAlt(true)}
     </div>
     <div class="fl-cab-marca">
       <img src="/images/flow-marca.webp" alt="Flow Paragliders" width="900" height="179" />
@@ -1351,6 +1380,7 @@ function paginaFlow(l, num) {
   <section class="fl-fecho">
     <p>${esc(t(FL.entrada, l))}</p>
     <a class="pg-wa" href="${wa}" rel="noopener" target="_blank">${esc(t(FL.cta, l))}</a>
+    ${contactoAlt()}
   </section>
 
   <p class="pg-voltar"><a href="${inicio}">${esc(t(FL.voltar, l))}</a></p>
@@ -1547,6 +1577,7 @@ function paginaPilot2Wing(l, num) {
         <a class="sg-cta-2" href="${caminho(l, { nome: 'Mullet 2' })}">${esc(t(P2W.verAsa, l))}</a>
         <a class="sg-cta-2" href="${caminhoPK(l)}">${esc(t(PK.asaCta, l))}</a>
       </p>
+      ${contactoAlt(true)}
     </div>
     <img src="/images/asas/mullet2__maui.webp" alt="Mullet 2" width="1200" height="794" loading="lazy" />
   </section>
@@ -1891,6 +1922,7 @@ function paginaParakite(l, num) {
     <div class="pk-spots-cab">
       <p class="pk-nota">${esc(t(PK.spotsNota, l))}</p>
       <p class="pk-spots-cta"><a class="pk-b" href="${esc(wa(PK.s6Msg))}" rel="noopener" target="_blank">${esc(t(PK.s6Cta, l))}</a></p>
+      ${contactoAlt()}
     </div>
     <ul class="pk-spots-g">${spots}</ul>
   </section>
@@ -2372,7 +2404,12 @@ function paginaSpot(s, l, num) {
   const h1Linhas = h1.split(/s*—s*/).filter(Boolean)
     .map(x => esc(x)).join('<br />');
   const resumo = t(s.descricao, l);
-  const primeiraFrase = resumo.split(/\n/)[0].trim();
+  /* Era `resumo.split(/\n/)[0]` — o primeiro PARAGRAFO, e nao a primeira
+     frase. Um paragrafo de spot chega aos 319 caracteres, e o Google mostra
+     ~155: a descricao da Praia das Bicas em frances tinha metade do texto a
+     nao ser lido por ninguem. Passa pelo mesmo compositor das fichas de asa,
+     com os paragrafos achatados para as frases se poderem cortar entre eles. */
+  const descMeta = compoeDescricao([resumo.replace(/\s*\n+\s*/g, ' ')]);
   const f = s.ficha || {};
 
   const capa = (s.album || []).find(m => m.imagem);
@@ -2419,7 +2456,7 @@ function paginaSpot(s, l, num) {
          A og:image fica — essa e o cartao de partilha, e nao uma afirmacao
          sobre o que a pagina contem. */
       { '@type': 'WebPage', url, inLanguage: l, name: h1,
-        description: primeiraFrase, about: { '@id': url + '#local' } },
+        description: descMeta, about: { '@id': url + '#local' } },
     ]),
   });
 
@@ -2427,7 +2464,7 @@ function paginaSpot(s, l, num) {
     lingua: l, url, alts, alt, foto, ld,
     classe: 'pg spot papel tema',
     titulo: h1 + ' | Happy Soaring',
-    descricao: primeiraFrase,
+    descricao: descMeta,
     ogTipo: 'article',
     ogTitulo: h1,
     rodape: 'Happy Soaring &middot; ' + esc(t(T.dealer, l)),

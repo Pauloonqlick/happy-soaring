@@ -239,6 +239,37 @@ body.pg{
   padding-bottom:1px}
 .pg-rodape-c a:hover,.pg-rodape-c a:focus-visible{border-bottom-color:var(--orange)}
 
+/* O segundo canal, ao lado dos botoes de WhatsApp. Discreto de proposito: e
+   uma alternativa, nao um segundo apelo — se competisse com o botao laranja
+   dividia a decisao em vez de a facilitar.
+   As duas variantes existem porque o componente aparece em tres fundos: o
+   claro das fichas de asa, o escuro do Pilot2Wing e do hub, e a ilha clara
+   dentro do hub escuro. A cor herda-se, o alinhamento e que muda. */
+/* DUAS COISAS QUE SE CORRIGIRAM AQUI, E A RAZAO DE CADA UMA
+   A primeira versao usava `color:inherit` com `opacity:.82`, e uma classe
+   `pg-alt-claro` posta a mao para as ilhas claras. Medido nas quatro paginas,
+   falhou em duas — 1,02:1 no hub Parakite e 4,24:1 no Pilot2Wing.
+
+   O 1,02 foi erro de aplicacao: a variante clara foi posta numa seccao
+   `pk-sec pk-tema`, que e escura. Uma classe de cor posta a mao pode ir para
+   a superficie errada, e foi. Por isso saiu: a cor passa a vir da superficie,
+   como a folha ja faz em `.pk-papel X{color:var(--painel-*)}`.
+
+   O 4,24 foi especificidade. `body.sg a{color:#ff6a13}` (0,1,1) pintava estes
+   links de laranja, e `.sg-asa p{font-size:17.5px}` (0,1,1) ignorava o
+   `font-size:13px` de `.pg-alt` (0,1,0). Daqui o `.pg .pg-alt`, que e (0,2,0)
+   e (0,2,1) e ganha aos dois — a mesma conversa que o comentario do
+   `.sg-cta` mais abaixo ja teve. */
+.pg .pg-alt{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 18px;
+  margin:12px 0 0;font-size:13px;line-height:1.5}
+.pg .pg-alt-esq{justify-content:flex-start}
+.pg .pg-alt a{color:#fff;text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.34);padding-bottom:1px}
+.pg .pg-alt a:hover,.pg .pg-alt a:focus-visible{border-bottom-color:var(--orange)}
+/* nas ilhas claras a cor vem da ilha, e nao de uma classe no HTML */
+.pk-papel .pg-alt a,.pg-claro .pg-alt a{color:var(--painel-tinta);
+  border-bottom-color:rgba(0,0,0,.28)}
+
 @media(max-width:600px){
   .pg-topo{padding:14px 18px}
   .pg-cx{padding:20px 18px 44px}

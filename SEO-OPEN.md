@@ -171,24 +171,6 @@ anterior a existirem.
 
 ## PENDENTE
 
-### 22 descrições de spot acima de 160 caracteres
-aberto: 2026-09-10
-
-O inverso do problema que se resolveu nas asas. Vêm da `primeiraFrase` da
-descrição do spot, e há frases de spot muito longas:
-
-```
-319 car.  /fr/parakite-portugal/praia-das-bicas/
-313       /es/parakite-portugal/praia-das-bicas/
-288       /parakite-portugal/praia-das-bicas/  e a alemã
-265       /en/parakite-portugal/fonte-da-telha/
-```
-
-Cinco páginas distintas × 5 línguas. **Não é falha** — o Google trunca e não
-penaliza —, mas o texto depois do corte não é lido por ninguém, e o compositor
-`descricaoDoProduto()` que já existe no gerador resolve as duas pontas com o
-mesmo código. Fica para depois de publicar o que está feito.
-
 ### 2 URLs em 404, e faltam-me os endereços
 aberto: 2026-09-08
 
@@ -211,6 +193,25 @@ balde é o resultado esperado dessas decisões.
 ---
 
 ## DECISÃO PAULO
+
+### 55 títulos passam dos 60 caracteres, e encurtá-los perde algo
+aberto: 2026-09-10
+
+Um terço das páginas. As fichas de asa são longas por construção — o título é
+`nome — rótulo Flow Paragliders | Happy Soaring`, e a AlbatroXX dá 64
+caracteres. O Google corta aos ~60, e o que se perde é o fim: **o nome da
+marca desaparece da SERP.**
+
+Duas saídas, e as duas perdem algo:
+
+- tirar `| Happy Soaring` das fichas de asa dá 48 caracteres e o título
+  aparece inteiro — mas a marca deixa de aparecer nos resultados das asas,
+  que são 110 das 165 páginas;
+- tirar `Flow Paragliders` mantém a marca, mas perde um termo de pesquisa
+  que é exactamente o que quem procura uma asa escreve.
+
+**Não é defeito, é posicionamento.** Não avanço sem decisão: é escolher entre
+aparecer como Happy Soaring ou aparecer para "Flow Paragliders".
 
 ### Seis ficheiros de imagem sem quem lhes aponte, 5 397 KB
 aberto: 2026-09-10
@@ -321,6 +322,40 @@ a nenhum dos dois `GOOGLE_CLIENT_ID` acima.
 
 ## FECHADO A 10/09
 
+### As descrições dos spots, e o segundo canal ao lado dos botões
+fechado: 2026-09-10
+
+**Os spots.** A description saía de `resumo.split(/\n/)[0]`, que é o primeiro
+PARÁGRAFO e não a primeira frase — e um parágrafo de spot chega aos 319
+caracteres. Passa pelo mesmo compositor das fichas de asa, agora generalizado
+para receber partes de texto em vez de um produto: as asas dão-lhe
+tagline + descricao, os spots dão-lhe o resumo com os parágrafos achatados. As
+cinco páginas de spot ficam entre 113 e 147 caracteres.
+
+No site inteiro o máximo desceu de **319 para 191**, e as acima de 160 de 22
+para 7. As 7 que restam são as `descricao` do `/flow-paragliders-portugal/` e
+do `/parakite-portugal/`, escritas à mão nos ficheiros de conteúdo. **Ficam.**
+O compositor existe para derivar uma descrição de prosa; onde a descrição foi
+escrita *como* descrição, o comprimento é escolha de quem a escreveu.
+
+**O segundo canal ao lado dos botões.** O contacto tinha entrado no rodapé e
+na Organization, mas não onde a decisão se toma. Entra nos cinco pontos de
+conversão — o botão do formulário das 110 fichas, os dois do hub Flow, o do
+Pilot2Wing e o dos spots do hub Parakite — e não nos sete sítios com destino
+WhatsApp: os `pk-cta` são cartões de percurso, e um contacto dentro de um
+cartão é ruído, não alternativa.
+
+Sem rótulo próprio: um endereço de email e um número de telefone dizem o que
+são nas cinco línguas.
+
+Medido nas quatro páginas afectadas, e **falhou em duas à primeira** — 1,02:1
+no hub Parakite e 4,24:1 no Pilot2Wing. O 1,02 foi erro de aplicação: pus a
+variante clara numa secção escura. O 4,24 foi especificidade — o
+`body.sg a{color:#ff6a13}` pintava os links de laranja. Corrigido com cor por
+superfície em vez de classe posta à mão, e com `.pg .pg-alt`, que ganha aos
+dois. Passa agora a 14,84 · 16,86 · 16,86 · 16,86, e o gradiente do fecho do
+hub Flow passa nos dois extremos, 11,26 e 14,02.
+
 ### A fotografia do herói do curso é monocromática azul
 decidido: 2026-09-10
 
@@ -362,6 +397,14 @@ são iguais**, e os 17 dividem-se em: 10 normas EN, que são códigos e traduzi-
 tornava-os errados; 4 nomes de categoria da Flow; e 3 níveis de paramotor em
 inglês da indústria, já com chave neutra para poderem mudar um dia. Os 5 que
 traduzem são exactamente aqueles cujo rótulo é traduzível. **Nada a corrigir.**
+
+### As 40 imagens sem `width`/`height` não são risco de CLS
+Foram contadas como deslocamento de layout durante o carregamento. **Não
+são.** Testado no browser: das que não declaram dimensões, **nenhuma
+participa no layout inicial** — seis são `position:absolute` (o fundo do herói
+e as miniaturas dos cartões de spot, que enchem o cartão com `object-fit`) e
+uma está dentro de um `[hidden]`, que é o marcador do diálogo. Acrescentar os
+atributos seria cosmético. **Nada a fazer.**
 
 ### O `/reflex-lab/` não é ponta solta
 Foi listado como página gerada sem `noindex`, sem `hreflang` e sem JSON-LD.
