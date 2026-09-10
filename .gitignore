@@ -63,3 +63,10 @@ _design.html
 /musica/
 /flow-paragliders-portugal/
 /parakite-portugal/
+
+# a pagina do curso: em desenvolvimento a 10/09/2026. A pasta e a previa sao
+# saida do gerador da previa, como as de cima; o conteudo dela versiona-se no
+# scripts/conteudo-curso-parakite.mjs, que e a fonte.
+/curso-parakite-portugal/
+/_previa-curso.html
+/_dev/

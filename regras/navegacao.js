@@ -93,7 +93,21 @@ export const ROTAS = {
                                  en: '/en/parakite-spots-portugal/',
                                  es: '/es/spots-parakite-portugal/',
                                  fr: '/fr/spots-parakite-portugal/',
-                                 de: '/de/parakite-spots-portugal/' }
+                                 de: '/de/parakite-spots-portugal/' },
+
+  /* O CURSO. Reservado a 10/09/2026, pela mesma razao das duas de cima: a
+     pagina existe em previa nas cinco linguas, mas ainda nao esta ligada ao
+     gerador, e um endereco decide-se antes de existir.
+
+     O portugues foi fixado pelo Paulo. Os outros quatro seguem a regra que
+     esta tabela ja usa: "Parakite" nao traduz, porque e o nome da coisa; o
+     que traduz e "curso". E o alemao inverte a ordem e junta com hifen —
+     "Parakite-Kurs" —, como em "Parakite Regeln" acima. */
+  '/curso-parakite-portugal/': { pt: '/curso-parakite-portugal/',
+                                 en: '/en/parakite-course-portugal/',
+                                 es: '/es/curso-parakite-portugal/',
+                                 fr: '/fr/cours-parakite-portugal/',
+                                 de: '/de/parakite-kurs-portugal/' }
 };
 
 export function comIdioma(href, lingua) {

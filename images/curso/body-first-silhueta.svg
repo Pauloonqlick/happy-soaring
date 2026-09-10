@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" role="img" aria-hidden="true" focusable="false">
+  <!-- Silhueta do bloco 9 (harness split-leg). Sem asa, sem linhas, sem fundo, sem texto: os
+       unicos caracteres sao os digitos 1 a 6 das ancoras, que sao indices e
+       nao se traduzem. Um ficheiro para as cinco linguas.
+
+       Nao ha <title> nem <desc>: seriam texto em portugues dentro do
+       ficheiro, e a descricao vem do alt, que sai de harnessFiguraAlt.
+
+       Desenhada para a ilha clara `pk-papel`. O digito e escuro sobre o
+       disco laranja (5,7:1); branco sobre laranja daria 2,9:1.
+
+       DUAS COISAS QUE SE CORRIGIRAM NA SEGUNDA VERSAO
+       O tronco tinha 152 de espessura e engolia os bracos: baixou para 132 e
+       os bracos passaram a projectar-se para a frente, fora da silhueta. E
+       os mosquetoes estavam escondidos atras da massa do tronco: passaram
+       para a aresta da frente, onde se veem. -->
+  <defs>
+    <style>
+      .ink{fill:none;stroke:#16202c;stroke-linecap:round;stroke-linejoin:round}
+      .mass{fill:#16202c}
+      .strap{fill:none;stroke:#39485a;stroke-width:16;stroke-linecap:round;stroke-linejoin:round}
+      .strapW{fill:none;stroke:#39485a;stroke-width:26;stroke-linecap:butt}
+      .cut{fill:none;stroke:#f6f8fb;stroke-width:6;stroke-linecap:round}
+      .disc{fill:#ff6a13;stroke:#ffffff;stroke-width:4}
+      .num{fill:#16202c;font-family:Arial,Helvetica,sans-serif;font-size:29px;
+           font-weight:800;text-anchor:middle;dominant-baseline:central}
+    </style>
+  </defs>
+
+  <g id="piloto">
+
+    <!-- HARNESS · o assento. E a massa mais legivel da figura: e por ela que
+         se reconhece que o piloto esta sentado e nao de pe. -->
+    <path class="mass" d="M330 596h216a46 46 0 0 1 46 46v68a46 46 0 0 1-46 46H330
+      a46 46 0 0 1-46-46v-68a46 46 0 0 1 46-46z"/>
+    <path class="cut" d="M304 666h268"/>
+
+    <!-- BRACO AFASTADO · desenhado antes do tronco, para ficar por tras -->
+    <path class="ink" d="M496 392 L596 462 L640 384" stroke-width="42"/>
+
+    <!-- PERNAS · dois angulos diferentes de proposito. E o que mostra
+         independencia sem precisar de setas nem de legenda. -->
+    <path class="ink" d="M508 660 L668 754 L706 934" stroke-width="62"/>
+    <path class="ink" d="M708 936 L760 950" stroke-width="46"/>
+    <path class="ink" d="M482 682 L622 832 L602 1026" stroke-width="70"/>
+    <path class="ink" d="M602 1028 L646 1062" stroke-width="50"/>
+    <!-- PERNEIRAS INDEPENDENTES · uma banda por perna. E isto o split-leg:
+         duas perneiras separadas, e nao uma tabua a juntar as duas. -->
+    <path class="strapW" d="M556 682 L604 758"/>
+    <path class="strapW" d="M520 730 L588 774"/>
+
+    <!-- TRONCO · levemente reclinado, como quem esta sentado no harness -->
+    <path class="ink" d="M500 352 L458 596" stroke-width="132"/>
+    <!-- BACIA · banda propria, para a pelvis se ler como elemento e nao
+         como continuacao do tronco -->
+    <path class="strapW" d="M398 574 L536 548"/>
+    <!-- fita de peito, a fazer o harness ler-se tambem no corpo -->
+    <path class="strap" d="M452 452 L548 432"/>
+
+    <!-- PONTOS DE SUSPENSAO · os mosquetoes, na aresta da frente do tronco,
+         que e o unico sitio onde se veem. E onde a asa se ligaria. -->
+    <path class="strap" d="M492 600 L558 436"/>
+    <rect class="mass" x="552" y="404" width="36" height="58" rx="16"/>
+    <path class="cut" d="M570 418v30"/>
+
+    <!-- BRACO PROXIMO · ombro, cotovelo em baixo, antebraco a subir para a
+         frente. E a posicao de quem tem os manobradores nas maos. -->
+    <path class="ink" d="M516 372 L630 444 L678 356" stroke-width="46"/>
+
+    <!-- MANOBRADORES · nas maos, para o marcador 06 nao ficar sobre um
+         punho fechado -->
+    <rect class="mass" x="662" y="312" width="34" height="76" rx="16"/>
+    <rect class="mass" x="624" y="344" width="30" height="66" rx="14"/>
+    <path class="cut" d="M679 328v42M639 360v34"/>
+
+    <!-- CABECA E CAPACETE · voltada para a frente do voo -->
+    <path class="ink" d="M524 296 L508 340" stroke-width="52"/>
+    <circle class="mass" cx="552" cy="212" r="82"/>
+    <path class="cut" d="M530 184c26-16 58-16 84 4"/>
+    <path class="cut" d="M592 244c-18 10-40 12-60 6"/>
+
+  </g>
+
+  <!-- ANCORAS · a ordem e a do harnessElementos do bloco 9. Os digitos sao
+       indices e nao se traduzem. O olhar e os ombros sairam: pertencem ao
+       bloco 8, que passou a ter fotografia e nao leva marcadores. -->
+  <g id="ancoras">
+    <!-- 01 bacia -->
+    <g transform="translate(428 578)"><circle class="disc" r="26"/><text class="num">1</text></g>
+    <!-- 02 pernas · sobre a canela da perna da frente -->
+    <g transform="translate(616 868)"><circle class="disc" r="26"/><text class="num">2</text></g>
+    <!-- 03 perneiras · sobre a banda da perna -->
+    <g transform="translate(580 720)"><circle class="disc" r="26"/><text class="num">3</text></g>
+    <!-- 04 harness · dentro do assento -->
+    <g transform="translate(372 702)"><circle class="disc" r="26"/><text class="num">4</text></g>
+    <!-- 05 pontos de suspensao · junto ao mosquetao -->
+    <g transform="translate(616 478)"><circle class="disc" r="26"/><text class="num">5</text></g>
+    <!-- 06 comandos · junto ao manobrador -->
+    <g transform="translate(724 322)"><circle class="disc" r="26"/><text class="num">6</text></g>
+  </g>
+</svg>
