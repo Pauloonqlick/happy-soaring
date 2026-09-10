@@ -2793,3 +2793,138 @@ body.spot.papel .spot-lista li::marker{color:var(--laranja-tinta)}
    era a mesma coisa. */
 a.pk-spot-b{text-decoration:none;color:inherit}
 .pk-spot-so-link{text-decoration:none;color:inherit;display:block;height:100%}
+
+/* ======================================================================
+   /curso-parakite-portugal/  ·  entrou a 10/09/2026
+   ======================================================================
+   Nada aqui e desenho novo: sao todos modificadores de componentes que a
+   folha ja tinha. Viveu numa previa enquanto a pagina nao existia, e passa
+   para ca agora que ela e gerada.
+
+   PORQUE QUASE NADA PRECISA DE AMBITO
+     Os `[data-cols]` sao a chave: esse atributo so existe nesta pagina, e
+     por isso as grelhas de 6, 4, 3 e 1 coluna nao podem tocar no
+     `/pilot2wing/` nem no hub. Verificado antes de mover: `data-cols`
+     aparece em `curso-parakite-portugal/index.html` e em mais nenhuma.
+
+     As regras `.pk-papel .sg-*` tambem nao: as tres seccoes `pk-papel` do
+     `/parakite-portugal/` nao tem nenhum `sg-abord`, `sg-etapa` nem
+     `sg-trans-lista` dentro. Medido, nao presumido.
+
+   AS QUATRO QUE PRECISARAM
+     O `.sg-trans-lista` existe no `/pilot2wing/`, uma vez. As regras que o
+     tocavam sem qualificacao — o `align-items` e a cor dos `<i>` — levaram
+     `.pg.pk`, que exclui o tema `sg`. O `<i>` daquele componente nem
+     existe no Pilot2Wing, mas apostar num facto que pode mudar com o
+     proximo paragrafo escrito no CMS e apostar. */
+/* ===== PASSAR para o pagina.css quando a pagina for ligada ao gerador.
+   Todos modificadores de componentes que ja existem. Nenhum e design
+   novo. ============================================================= */
+
+/* 1. o .sg-etapas e uma grelha de 5. Precisamos de 6, 4 e 3, com os
+      mesmos pontos de corte do componente (1100px e 680px). */
+.sg-etapas[data-cols="6"]{grid-template-columns:repeat(6,minmax(0,1fr))}
+.sg-etapas[data-cols="4"]{grid-template-columns:repeat(4,minmax(0,1fr))}
+.sg-etapas[data-cols="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:1100px){.sg-etapas[data-cols="6"],.sg-etapas[data-cols="4"],.sg-etapas[data-cols="3"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){.sg-etapas[data-cols="6"],.sg-etapas[data-cols="4"],.sg-etapas[data-cols="3"]{grid-template-columns:1fr}}
+
+/* 2. o .pk-eixos e uma grelha de 4. O sistema do corpo tem 6, e 3+3
+      le-se melhor do que 4+2. */
+.pk-eixos[data-cols="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:899px){.pk-eixos[data-cols="3"]{grid-template-columns:1fr}}
+
+/* 3. a folha ja tem '.pg.sg .sg-abord-et'. Numa pagina 'pk' essa regra
+      nao se aplica e o rotulo cai a 4,25:1 (na /pilot2wing/ da 6,80). */
+.pg.pk .sg-abord-et{color:rgba(255,255,255,.62)}
+.pg.pk .sg-abord-nossa .sg-abord-et{color:var(--orange)}
+
+/* 4. componentes de texto branco numa ilha 'pk-papel'. E o mesmo padrao
+      que a folha ja usa: '.pk-papel X{color:var(--painel-*)}'. */
+.pk-papel .pk-eixos b{color:var(--painel-tinta)}
+.pk-papel .pk-eixos span{color:var(--painel-fraca)}
+.pk-papel .sg-abord{background:rgba(0,0,0,.03);border-color:var(--painel-linha)}
+.pk-papel .sg-abord-nossa{background:rgba(255,106,19,.08);border-color:var(--orange)}
+.pg.pk .pk-papel .sg-abord-et{color:var(--painel-fraca)}
+.pk-papel .sg-abord-tx{color:var(--painel-tinta)}
+.pk-papel .sg-trans-lista b{color:var(--painel-tinta);border-color:var(--painel-linha)}
+.pk-papel .sg-etapa{background:rgba(0,0,0,.03);border:1px solid var(--painel-linha)}
+.pk-papel .sg-etapa-n{color:var(--painel-fraca)}
+.pk-papel .sg-etapa h3{color:var(--painel-tinta)}
+.pk-papel .sg-etapa p{color:var(--painel-fraca)}
+/* 5. a lista numerada ao lado da figura. O numero e um contador CSS: sao
+      indices, nao texto, e por isso nao vivem no ficheiro de conteudo. */
+.pk-eixos[data-cols="1"]{grid-template-columns:1fr;gap:18px}
+/* o contador so no <ol>: o bloco 8 usa <ul> porque a fotografia nao leva
+   marcadores, e o bloco 9 usa <ol> porque a silhueta leva os seis. */
+ol.pk-eixos[data-cols="1"]{counter-reset:bf}
+ol.pk-eixos[data-cols="1"] li{counter-increment:bf;display:grid;
+  grid-template-columns:auto 1fr;gap:14px;align-items:baseline}
+ol.pk-eixos[data-cols="1"] li::before{content:counter(bf,decimal-leading-zero);
+  font:800 15px/1.2 system-ui,sans-serif;color:var(--orange);font-variant-numeric:tabular-nums}
+/* sobre a ilha clara o laranja da marca mede 2,87:1 — e o que o CLAUDE.md
+   registou. O token --laranja-tinta (#a63f00) existe para isto. */
+.pk-papel ol.pk-eixos[data-cols="1"] li::before{color:var(--laranja-tinta)}
+/* o li tem tres itens de grelha — ::before, <b> e <span> — e com duas
+   colunas o <span> caia na coluna do numero e alargava-a a 500px. A nota
+   vai para a coluna 2, debaixo do rotulo. */
+.pk-eixos[data-cols="1"] b{font-size:var(--corpo)}
+ol.pk-eixos[data-cols="1"] b{grid-column:2}
+ol.pk-eixos[data-cols="1"] span{grid-column:2;margin-top:2px}
+/* ---- HEROI · a ancora, a ponte e a assinatura --------------------
+   Tres elementos onde o molde tinha dois slots de prosa. A ancora usa o
+   pk-citacao que ja existe (25px, negrito, filete laranja); a ponte e a
+   assinatura sao novas.
+
+   A ponte alinha por baixo do filete, com o mesmo padding-left da
+   ancora e sem filete proprio: le-se como continuacao da mesma
+   afirmacao, que e exactamente a funcao dela. E por isso que a ancora
+   perde aqui a margem inferior de 22px — as duas sao um bloco. */
+/* A ancora tem tamanho proprio, e nao o clamp do pk-citacao. Duas razoes
+   medidas: a 25px ficava a 1,35 da ponte e as duas liam-se como duas
+   linhas do mesmo peso — a ancora nao se afirmava; e o teto de 30px nunca
+   chegava a acontecer, porque a 1440 o termo 2vw resolve para 28,8px e
+   limita antes do teto.
+   28px poe a ancora a 1,51 da ponte e a 1,79 do H1: separa-se sem quebrar
+   o par ancora+ponte, que e o que este bloco constroi de proposito.
+   O piso subiu de 19 para 20px porque a 375 a ancora media 1,19 da ponte,
+   perto demais para as duas se distinguirem.
+   O ANC existe so para o teste comparativo. */
+.cur-ancora{margin-bottom:9px;font-size:clamp(20px,2vw,28px)}
+.cur-ponte{
+  margin:0 0 22px;padding-left:22px;max-width:34ch;
+  font-size:clamp(16px,1.35vw,18.5px);font-weight:700;line-height:1.35;
+  color:#fff;
+}
+/* Assinatura: menor do que a tese e sem filete. Se levasse filete eram
+   dois filetes laranja no mesmo heroi, a competir. O tracinho faz o
+   trabalho de "isto e um fecho" sem pesar. */
+.cur-assin{
+  margin:18px 0 0;max-width:44ch;
+  font-size:16px;font-weight:600;line-height:1.45;
+  color:rgba(255,255,255,.93);
+}
+.cur-assin::before{
+  content:'— ';color:var(--orange);font-weight:800;
+}
+@media(max-width:760px){
+  .cur-ponte{max-width:none}
+  .cur-assin{max-width:none;font-size:15.5px}
+}
+
+.bf-duas{align-items:center;margin-top:26px}
+.bf-fig{margin:0}
+.bf-fig img{display:block;width:100%;max-width:400px;height:auto;margin:0 auto}
+/* a silhueta e desenhada para fundo claro; numa seccao escura desaparecia.
+   Ganha um cartao de papel, que e o que a folha ja chama "ilha branca". */
+.pk-sec:not(.pk-papel) .bf-fig{background:var(--painel);border-radius:18px;padding:26px}
+/* ===== fim do que passa ============================================ */
+.pg.pk .sg-trans-lista{align-items:center}
+.pg.pk .sg-trans-lista i{font-style:normal;color:rgba(255,255,255,.4)}
+.pg.pk .sg-abord-nossa .sg-trans-lista i{color:#ff8f52}
+.pg.pk .pk-papel .sg-trans-lista i{color:#5b6878}
+
+/* a fotografia de fim de bloco: era um `style=` no HTML, e um estilo escrito
+   no HTML e um estilo que ninguem encontra quando quer mudar. */
+.cur-foto{margin:26px 0 0}
+.cur-foto img{display:block;width:100%;height:auto;border-radius:16px}

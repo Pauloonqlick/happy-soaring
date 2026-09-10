@@ -318,6 +318,12 @@ export const PK = {
     fr: 'D’abord on automatise le pilote. Ensuite on ajoute l’aile.',
     de: 'Zuerst automatisieren wir den Piloten. Dann kommt der Schirm dazu.'
   },
+  /* 10/09/2026. A ligação para o curso entra na secção de aprender, ao lado
+     da do método: quem chega aqui a querer aprender tinha para onde ir
+     entender o COMO — o Pilot2Wing — e não tinha para onde ir ver O QUÊ. */
+  s5CursoCta: { pt: 'Ver o Curso de Parakite', en: 'See the Parakite Course',
+                es: 'Ver el Curso de Parakite', fr: 'Voir le Cours de Parakite',
+                de: 'Zum Parakite-Kurs' },
   s5MetodoCta: {
     pt: 'Conhecer o Pilot2Wing', en: 'Discover Pilot2Wing',
     es: 'Conocer el Pilot2Wing', fr: 'Découvrir le Pilot2Wing',

@@ -33,6 +33,7 @@ import { IN } from './conteudo-inicial.mjs';
 import { PK } from './conteudo-parakite.mjs';
 import { entradasDoMenu, ROTAS, comIdioma } from '../regras/navegacao.js';
 import { comQualificadores, protegeNomes, tiraPontosDosTitulos } from '../regras/textos.js';
+import { CURSO, PRECOS } from './conteudo-curso-parakite.mjs';
 import { folhaDoTema } from '../regras/tema.js';
 
 const RAIZ = process.cwd();   /* corre-se a partir da raiz do projecto */
@@ -1408,6 +1409,12 @@ function blocoDealer(p, l) {
    idiomas, só com o prefixo de língua à frente. */
 const caminhoP2W = l => (l === OMISSAO ? '' : '/' + l) + '/pilot2wing/';
 
+/* a rota do curso vive aqui em cima, e nao ao lado da funcao que desenha a
+   pagina: o /pilot2wing/ aponta para o curso, e o ciclo que o escreve corre
+   antes. Uma const declarada depois disso e uma const que ainda nao existe. */
+const caminhoCurso = l => ROTAS['/curso-parakite-portugal/'][l]
+  || ROTAS['/curso-parakite-portugal/'][OMISSAO];
+
 /* As rotas da pagina educativa vivem aqui em cima porque as fichas das asas
    ligam para ela e sao geradas antes: um `const` mais abaixo ficava na zona
    morta temporal e rebentava com "Cannot access before initialization". */
@@ -1573,7 +1580,7 @@ function paginaPilot2Wing(l, num) {
       <h2>${esc(t(P2W.asaA, l))}<br>${esc(t(P2W.asaB, l))}</h2>
       <p>${esc(t(P2W.asaTexto, l))}</p>
       <p class="sg-acoes">
-        <a class="sg-cta" href="${wa}" rel="noopener" target="_blank">${esc(t(P2W.cta, l))}</a>
+        <a class="sg-cta" href="${esc(caminhoCurso(l))}">${esc(t(P2W.verCurso, l))}</a>
         <a class="sg-cta-2" href="${caminho(l, { nome: 'Mullet 2' })}">${esc(t(P2W.verAsa, l))}</a>
         <a class="sg-cta-2" href="${caminhoPK(l)}">${esc(t(PK.asaCta, l))}</a>
       </p>
@@ -1873,7 +1880,10 @@ function paginaParakite(l, num) {
       <p class="pk-metodo-et">${esc(t(PK.s5MetodoKicker, l))}</p>
       <p class="pk-metodo-tit" lang="en">Body first. Controls after.</p>
       <p class="pk-metodo-tx">${esc(t(PK.s5MetodoTxt, l))}</p>
-      <p><a class="pk-b pk-b2" href="${esc(caminhoP2W(l))}">${esc(t(PK.s5MetodoCta, l))}</a></p>
+      <p class="pk-botoes">
+        <a class="pk-b" href="${esc(caminhoCurso(l))}">${esc(t(PK.s5CursoCta, l))}</a>
+        <a class="pk-b2" href="${esc(caminhoP2W(l))}">${esc(t(PK.s5MetodoCta, l))}</a>
+      </p>
     </div>
   </section>
 
@@ -3139,6 +3149,299 @@ ${alt}
    dentro daquele ficheiro. */
 
 
+/* ---- a página /curso-parakite-portugal/ -------------------------------
+   O curso de conversão, em cinco línguas. O conteúdo vive todo no
+   conteudo-curso-parakite.mjs; aqui só se desenha.
+
+   PORQUE OS PRECOS SAO PLACEHOLDERS E NAO NUMEROS
+     O texto escreve `{dias}`, `{curso}`, `{hora}` e `{pilotos}`, e o
+     `precos()` substitui-os pelo PRECOS do conteudo. Um preco que aparece
+     em nove frases e em cinco linguas nao pode estar escrito quarenta e
+     cinco vezes: mudava-se em quarenta e quatro e ficava uma errada.
+
+   PORQUE `nomes()` NAO ESTA AQUI
+     A previa tinha uma funcao a marcar Parakite, Pilot2Wing e Body First
+     com `hs-nome`. Aqui isso e feito uma vez, no `escrevePagina()`, para
+     as 165 paginas — e por isso `Body First` entrou na lista de nomes
+     intocaveis do regras/textos.js, que e onde os outros ja estavam.
+
+   O QUE FALTA A ESTA PAGINA, E ESTA ESCRITO NO SEO-OPEN.md
+     Dois diagramas, dois videos e a fotografia do heroi. Nenhum e
+     estrutural: cada bloco onde iam ja carrega o seu proprio visual. A
+     `course.jpg` do heroi e emprestada do slide dos produtos da inicial e
+     e provisoria — e sai monocromatica azul, como todo o `pk-heroi`. */
+
+function paginaCurso(l, numWa) {
+  const rel = caminhoCurso(l);
+  const url = DOMINIO + rel;
+  const foto = DOMINIO + '/images/course.jpg';
+  const alts = alternativas(x => caminhoCurso(x));
+  const alt = etiquetasAlt(alts);
+  const inicio = inicioHref(l);
+  const C = CURSO;
+
+  const precos = s => String(s).replace(/\{(\w+)\}/g, (_, k) =>
+    PRECOS[k] === undefined ? '{' + k + '}' : PRECOS[k]);
+  const tx = o => precos(esc(t(o, l)));
+  const lista = o => (t(o, l) || []).map(x => precos(esc(x)));
+
+  /* ---- componentes, todos modificadores dos que já existem ---- */
+  const sec = (cl, id, corpo) => `\n<section class="${cl}" id="${id}">${corpo}\n</section>\n`;
+  const eyebrow = o => `\n  <p class="pg-eyebrow">${tx(o)}</p>`;
+  const h2 = o => `\n  <h2>${tx(o)}</h2>`;
+  const h3 = o => `\n  <h3>${tx(o)}</h3>`;
+  const par = (o, cl) => `\n  <p${cl ? ` class="${cl}"` : ''}>${tx(o)}</p>`;
+  const cit = o => `\n  <p class="pk-cit">${tx(o)}</p>`;
+
+  const chips = o => `\n  <div class="sg-trans-lista">${
+    lista(o).map(x => `<b>${x}</b>`).join('')}</div>`;
+  const cadeia = o => `\n  <div class="sg-trans-lista">${lista(o).map((x, i) =>
+    `${i ? '<i>&rarr;</i>' : ''}<b>${x}</b>`).join('')}</div>`;
+
+  const eixos = itens => `\n  <ul class="pk-eixos">${itens.map(i =>
+    `<li><b>${precos(esc(t(i.nome || i.valor, l)))}</b><span>${
+      precos(esc(t(i.nota, l)))}</span></li>`).join('')}</ul>`;
+
+  const duas = cols => `\n  <div class="sg-duas">${cols.map(c => `
+    <div class="sg-abord${c.destaque ? ' sg-abord-nossa' : ''}">
+      <p class="sg-abord-et">${tx(c.rotulo)}</p>
+      ${c.subtitulo ? `<p class="sg-abord-tx">${tx(c.subtitulo)}</p>` : ''}
+      ${c.itens ? `<div class="sg-trans-lista">${
+        lista(c.itens).map(x => `<b>${x}</b>`).join('')}</div>` : ''}
+      ${c.etapas ? `<div class="sg-trans-lista">${lista(c.etapas).map((x, i) =>
+        `${i ? '<i>&rarr;</i>' : ''}<b>${x}</b>`).join('')}</div>` : ''}
+    </div>`).join('')}</div>`;
+
+  const grelha = (itens, cols) => `\n  <ol class="sg-etapas" data-cols="${cols}">${
+    itens.map((it, i) => `
+    <li class="sg-etapa">
+      <span class="sg-etapa-n">${String(i + 1).padStart(2, '0')}</span>
+      ${it.h3 ? `<h3>${it.h3}</h3>` : ''}
+      ${it.cadeia ? `<div class="sg-trans-lista">${it.cadeia.map((x, j) =>
+        `${j ? '<i>&rarr;</i>' : ''}<b>${x}</b>`).join('')}</div>` : ''}
+    </li>`).join('')}</ol>`;
+
+  /* figura de um lado, lista traduzível do outro. O contentor é o `sg-duas`
+     que já existe: 1fr 1fr, sem padding próprio, colapsa aos 1100px. */
+  const figuraLista = (src, altTx, itens, o = {}) => `
+  <div class="sg-duas bf-duas">
+    <figure class="bf-fig"><img src="${src}" alt="${esc(t(altTx, l))}" width="${
+      o.w || 900}" height="${o.h || 1200}" loading="lazy" /></figure>
+    <${o.numerada ? 'ol' : 'ul'} class="pk-eixos" data-cols="1">${itens.map(i =>
+      `<li><b>${esc(t(i.nome, l))}</b><span>${esc(t(i.nota, l))}</span></li>`).join('')}</${
+      o.numerada ? 'ol' : 'ul'}>
+  </div>`;
+
+  const botao2 = (o, href) => `\n  <p><a class="pk-b2" href="${esc(href)}">${tx(o)}</a></p>`;
+
+  /* os endereços das páginas irmãs passam pelos helpers de rota: na página
+     alemã o Pilot2Wing é /de/pilot2wing/ e o técnico é
+     /de/was-ist-ein-parakite/ */
+  const hrefP2W = caminhoP2W(l);
+  const hrefQP = caminhoQP(l);
+  const hrefPK = caminhoPK(l);
+  const hrefAsa = caminho(l, { nome: ASA_DO_CURSO });
+  const wa = 'https://wa.me/' + numWa + '?text=' + encodeURIComponent(t(C.ctaMsg, l));
+
+  let corpo = '';
+
+  /* ---- 1 · HERÓI --------------------------------------------------- */
+  corpo += `
+<section class="pk-heroi" id="topo">
+  <div class="pk-heroi-fundo" aria-hidden="true">
+    <img src="/images/course.jpg" alt="" />
+    <div class="pk-heroi-tinta"></div>
+  </div>
+  <div class="pk-heroi-tx">
+    <nav class="pg-migalhas"><a href="${esc(inicio)}">${esc(t(T.inicio, l))}</a> &rsaquo;
+      <a href="${esc(hrefPK)}">${tx(C.verHub)}</a> &rsaquo;
+      <span>${tx(C.migalhaCurso)}</span></nav>
+    <p class="pg-eyebrow">${tx(C.kicker)}</p>
+    <h1>${tx(C.h1)}</h1>
+    <p class="pk-citacao cur-ancora">${tx(C.ancora)}</p>
+    <p class="cur-ponte">${tx(C.ponte)}</p>
+    <p class="pk-tese">${tx(C.tese)}</p>
+    <p class="cur-assin">${tx(C.citacao)}</p>
+    <p class="pk-botoes">
+      <a class="pk-b" href="#falar">${tx(C.heroiBotao)}</a>
+      <a class="pk-b2" href="${esc(hrefP2W)}">${tx(C.metodoBotao)}</a>
+    </p>
+  </div>
+</section>`;
+
+  /* ---- 2 · O CURSO EM RESUMO · ilha clara -------------------------- */
+  corpo += sec('pk-sec pk-papel', 'resumo',
+    eyebrow(C.resumoKicker) + h2(C.resumoTitulo) + eixos(C.ficha) +
+    par(C.fichaIndividual, 'pk-lead') + par(C.fichaNota, 'pk-nota') +
+    par(C.licenca, 'pk-nota'));
+
+  /* ---- 3 · O QUE ESTE CURSO É ------------------------------------- */
+  corpo += sec('pk-sec', 'autonomia',
+    eyebrow(C.autonomiaKicker) + h2(C.autonomiaTitulo) +
+    par(C.autonomiaDef, 'pk-lead') + par(C.autonomiaLimites) +
+    h3(C.criteriosTitulo) + chips(C.criterios));
+
+  /* ---- 4 · COMO SE MEDE ------------------------------------------- */
+  corpo += sec('pk-sec', 'experiencia',
+    eyebrow(C.expKicker) + h2(C.expTitulo) + par(C.expManobra) +
+    cit(C.expCentral) + chips(C.expAtributos));
+
+  /* ---- 5 · DE ONDE VENS · ilha clara ------------------------------ */
+  corpo += sec('pk-sec pk-papel', 'conversao',
+    eyebrow(C.convKicker) + h2(C.convTitulo) +
+    h3(C.avaliacaoTitulo) + par(C.avaliacaoTexto) + chips(C.avaliacaoItens) +
+    duas(C.asasColunas) + cit(C.asasRemate) +
+    botao2(C.verTecnico, hrefQP));
+
+  /* ---- 6 · O MÉTODO ----------------------------------------------- */
+  corpo += sec('pk-sec', 'metodo',
+    eyebrow(C.metodoKicker) + h2(C.metodoTitulo) +
+    par(C.metodoDistincao, 'pk-lead') +
+    grelha(lista(C.metodoCadeia).map(x => ({ h3: x })), 6) +
+    par(C.metodoTexto) +
+    h3(C.qualidadeTitulo) + cadeia(C.qualidadeCadeia) + par(C.qualidadeTexto) +
+    botao2(C.metodoLigacao, hrefP2W));
+
+  /* ---- 7 · ERRO E AUTOMATISMO ------------------------------------- */
+  corpo += sec('pk-sec', 'erro',
+    eyebrow(C.erroKicker) + h2(C.erroTitulo) +
+    h3(C.habitoTitulo) +
+    duas([{ ...C.habitoColunas[0], destaque: true }, C.habitoColunas[1]]) +
+    par(C.habitoTexto) +
+    h3(C.tecnicaTitulo) + par(C.tecnicaTexto) +
+    h3(C.processoTitulo) + par(C.processoTexto) + cadeia(C.processoCadeia));
+
+  /* ---- 8 · BODY FIRST · ilha clara -------------------------------- */
+  corpo += sec('pk-sec pk-papel', 'body-first',
+    eyebrow(C.bodyKicker) + h2(C.bodyTitulo) + par(C.bodyTexto, 'pk-lead') +
+    h3(C.corpoAprendeTitulo) + par(C.corpoAprendeTexto) +
+    h3(C.bodyNaoTitulo) + par(C.bodyNaoTexto) + par(C.bodyComandos) +
+    par(C.bodyGestos) + cadeia(C.bodyOrdem) +
+    figuraLista('/images/curso/body-first-treino.webp', C.bodyFiguraAlt,
+                C.corpoElementos, { numerada: false, w: 900, h: 1249 }));
+
+  /* ---- 9 · O HARNESS E AS PERNAS --------------------------------- */
+  corpo += sec('pk-sec', 'harness',
+    eyebrow(C.harnessKicker) + h2(C.harnessTitulo) + par(C.harnessTexto) +
+    par(C.harnessRefTexto) +
+    h3(C.cadeiaTitulo) + cadeia(C.cadeiaElos) + par(C.cadeiaTexto) +
+    cit(C.cadeiaFrase) +
+    h3(C.sistemaTitulo) + par(C.sistemaTexto) +
+    figuraLista('/images/curso/body-first-silhueta.svg', C.harnessFiguraAlt,
+                C.harnessElementos, { numerada: true, w: 900, h: 1200 }) +
+    h3(C.sentirTitulo) + chips(C.sentirItens) +
+    h3(C.groundTitulo) + par(C.groundTexto) + chips(C.groundItens) +
+    '\n  <p class="cur-foto"><img src="/images/parakite-controlo-800.jpg" alt="" ' +
+    'width="800" height="533" loading="lazy" /></p>');
+
+  /* ---- 10 · CORRECÇÃO -------------------------------------------- */
+  corpo += sec('pk-sec', 'correcao',
+    eyebrow(C.corrKicker) + h2(C.corrTitulo) +
+    h3(C.lerTitulo) + cadeia(C.lerCadeia) + par(C.lerTexto) +
+    duas(C.reacaoColunas));
+
+  /* ---- 11 · ENERGIA · curto de propósito ------------------------- */
+  corpo += sec('pk-sec', 'energia',
+    eyebrow(C.energiaKicker) + h2(C.energiaTitulo) + par(C.energiaTexto) +
+    `\n  <p class="pk-botoes">
+    <a class="pk-b2" href="${esc(hrefQP)}">${tx(C.energiaLigacao)}</a>
+    <a class="pk-b2" href="${esc(hrefQP)}#reflex">${tx(C.reflexLigacao)}</a>
+  </p>`);
+
+  /* ---- 12 · COMO SE PROGRIDE · ilha clara ------------------------ */
+  corpo += sec('pk-sec pk-papel', 'progressao',
+    eyebrow(C.progKicker) + h2(C.progTitulo) + par(C.progTexto, 'pk-lead') +
+    h3(C.fasesTitulo) + grelha(lista(C.fases).map(x => ({ h3: x })), 4) +
+    par(C.fasesTexto) +
+    h3(C.instrutorEtapasTitulo) +
+    grelha(C.instrutorEtapas.map(e => ({ cadeia: lista(e.cadeia) })), 3) +
+    h3(C.inesperadoTitulo) + cadeia(C.inesperadoCadeia) + par(C.inesperadoTexto));
+
+  /* ---- 13 · A DECISÃO ------------------------------------------- */
+  corpo += sec('pk-sec', 'decisao',
+    eyebrow(C.decKicker) + h2(C.decTitulo) + par(C.decTexto) +
+    h3(C.factoresTitulo) + chips(C.factores));
+
+  /* ---- 14 · QUEM ENSINA E ONDE · ilha clara -------------------- */
+  corpo += sec('pk-sec pk-papel', 'quem-ensina',
+    eyebrow(C.ensinaKicker) + h2(C.ensinaTitulo) +
+    h3(C.saberTitulo) + par(C.saberTexto) + par(C.licenca, 'pk-lead') +
+    par(C.locaisTexto) + par(C.equipTexto) +
+    `\n  <p class="pk-botoes">
+    <a class="pk-b2" href="${esc(hrefPK)}">${tx(C.verSpots)}</a>
+    <a class="pk-b2" href="${esc(hrefAsa)}">${tx(C.verAsa)}</a>
+  </p>`);
+
+  /* ---- 15 · PERGUNTAS · ilha clara ----------------------------- */
+  corpo += sec('pk-sec pk-papel', 'perguntas',
+    eyebrow(C.faqKicker) + h2(C.faqTitulo) +
+    '\n  <div class="pk-faq">' + C.faq.map(f =>
+      `<div class="pk-faq-q"><h3>${precos(esc(t(f.q, l)))}</h3><p>${
+        precos(esc(t(f.a, l)))}</p></div>`).join('') + '</div>' +
+    botao2(C.reflexLigacao, hrefQP + '#reflex'));
+
+  /* ---- 16 · FALAR ---------------------------------------------- */
+  corpo += sec('pk-sec', 'falar',
+    eyebrow(C.ctaKicker) + h2(C.ctaTitulo) +
+    `\n  <p class="pk-botoes">
+    <a class="pk-b" href="${esc(wa)}" rel="noopener" target="_blank">${tx(C.cta)}</a>
+    <a class="pk-b2" href="${esc(hrefPK)}">${tx(C.verHub)}</a>
+  </p>` + contactoAlt());
+
+  /* ---- os dados estruturados ----------------------------------- */
+  const ld = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': comEntidade([
+      { '@type': 'BreadcrumbList', itemListElement: [
+        { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + inicio },
+        { '@type': 'ListItem', position: 2, name: t(C.verHub, l), item: DOMINIO + hrefPK },
+        { '@type': 'ListItem', position: 3, name: t(C.migalhaCurso, l), item: url }
+      ]},
+      { '@type': ['WebPage', 'FAQPage'],
+        '@id': url,
+        url,
+        name: t(C.h1, l),
+        description: precos(t(C.descricao, l)),
+        inLanguage: l,
+        isPartOf: { '@id': DOMINIO + '/#site' },
+        publisher: ORGANIZACAO,
+        mainEntity: perguntas(C.faq.map(f => [precos(t(f.q, l)), precos(t(f.a, l))])),
+        primaryImageOfPage: { '@type': 'ImageObject', url: foto, width: 1920, height: 1200 }
+      },
+      /* SEM `hasCourseInstance`, SEM `offers` E SEM `courseWorkload`
+         O Course pede o nome, a descricao e quem o da, e isso e verdade e
+         esta na pagina. O resto nao entra: os quatro dias sao duracao de
+         REFERENCIA e nao promessa — esta escrito assim em cinco linguas no
+         proprio conteudo —, e o schema.org nao tem forma de dizer
+         "referencia". Um `courseWorkload: P4D` endurecia numa garantia o
+         que a pagina toda tem cuidado em nao garantir. O preco esta a
+         visivel no bloco 2; nao vai para o schema enquanto nao houver
+         instancia a que ele pertenca. */
+      { '@type': 'Course',
+        '@id': url + '#curso',
+        name: t(C.h1, l),
+        description: precos(t(C.descricao, l)),
+        inLanguage: l,
+        courseMode: 'onsite',
+        provider: ORGANIZACAO,
+        teaches: lista(C.metodoCadeia).map(x => x.replace(/&[a-z]+;/g, ''))
+      }
+    ])
+  });
+
+  return moldeDaPagina({
+    lingua: l, url, alts, alt, foto, ld,
+    classe: 'pg pk tema',
+    titulo: precos(t(C.titulo, l)),
+    descricao: precos(t(C.descricao, l)),
+    ogTipo: 'article',
+    ogLocale: C.ogLocale[l],
+    ogTitulo: t(C.h1, l),
+    rodape: 'Happy Soaring &middot; ' + esc(t(T.dealer, l)),
+    corpo
+  });
+}
+
 if (!so || so === 'o-que-e-um-parakite') {
   for (const l of (soIdioma ? [soIdioma] : IDIOMAS)) {
     const rel = caminhoQP(l);
@@ -3150,6 +3453,19 @@ if (!so || so === 'o-que-e-um-parakite') {
     urls.push(DOMINIO + rel);
   }
   console.log('  O que é um Parakite: ' + IDIOMAS.length + ' páginas');
+}
+
+if (!so || so === 'curso') {
+  for (const l of (soIdioma ? [soIdioma] : IDIOMAS)) {
+    const rel = caminhoCurso(l);
+    const dir = path.join(destino, rel);
+    fs.mkdirSync(dir, { recursive: true });
+    const html = paginaCurso(l, num);
+    confereAlternativas(html, rel);
+    escrevePagina(path.join(dir, 'index.html'), html);
+    urls.push(DOMINIO + rel);
+  }
+  console.log('  Curso de Parakite: ' + IDIOMAS.length + ' páginas');
 }
 
 if (!so || so === 'musica') {

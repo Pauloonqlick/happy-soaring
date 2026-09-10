@@ -803,6 +803,31 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://happysoaring.com/curso-parakite-portugal/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://happysoaring.com/en/parakite-course-portugal/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://happysoaring.com/es/curso-parakite-portugal/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://happysoaring.com/fr/cours-parakite-portugal/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://happysoaring.com/de/parakite-kurs-portugal/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://happysoaring.com/musica/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

@@ -394,6 +394,7 @@ export const NOMES_INTOCAVEIS = [
   'Parakites',           /* antes do singular: o mais longo ganha */
   'Parakite',
   'Parawing',
+  'Body First',          /* o nome do princípio, e não uma frase em inglês */
   'SmartGround'          /* o nome antigo do Pilot2Wing, que ainda circula */
 ];
 

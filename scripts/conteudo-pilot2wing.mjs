@@ -247,8 +247,18 @@ export const P2W = {
   verAsa: { pt: 'Ver a Mullet 2', en: 'See the Mullet 2', es: 'Ver la Mullet 2',
             fr: 'Voir la Mullet 2', de: 'Die Mullet 2 ansehen' },
 
-  /* enquanto /curso-parakite-portugal/ não existir, o botão pede informações
-     por WhatsApp. Trocado pela página quando ela for feita. */
+  /* 10/09/2026. Aqui esteve escrito: «enquanto /curso-parakite-portugal/
+     não existir, o botão pede informações por WhatsApp. Trocado pela página
+     quando ela for feita.» A página foi feita, e o botão passou a apontar
+     para ela — que é um destino melhor do que uma conversa, porque responde
+     antes de haver pergunta. O WhatsApp continua lá dentro, no bloco 16.
+
+     O `cta` e o `ctaMsg` ficam: o `ctaMsg` ainda serve outros botões, e
+     apagar um texto traduzido em cinco línguas para o reescrever a seguir
+     é trabalho a dobrar. */
+  verCurso: { pt: 'Ver o Curso de Parakite', en: 'See the Parakite Course',
+              es: 'Ver el Curso de Parakite', fr: 'Voir le Cours de Parakite',
+              de: 'Zum Parakite-Kurs' },
   cta: { pt: 'Pedir informações sobre o curso', en: 'Ask about the course',
          es: 'Pedir información sobre el curso', fr: 'Demander des informations sur le cours',
          de: 'Infos zum Kurs anfragen' },

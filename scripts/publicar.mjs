@@ -81,7 +81,7 @@ const PASTAS = [
    quatro traduções de todos dentro do prefixo de cada língua */
 const PASTAS_GERADAS = ['asas', 'pilot2wing', 'flow-paragliders-portugal',
   'o-que-e-um-parakite', 'musica',
-  'parakite-portugal', 'en', 'es', 'fr', 'de'];
+  'parakite-portugal', 'curso-parakite-portugal', 'en', 'es', 'fr', 'de'];
 
 /* Nunca, em circunstância nenhuma. É a rede de segurança: mesmo que uma
    destas apareça por engano numa lista acima, a verificação pára tudo. */

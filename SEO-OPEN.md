@@ -171,6 +171,47 @@ anterior a existirem.
 
 ## PENDENTE
 
+### Os quatro visuais que a página do curso não tem
+aberto: 2026-09-10
+
+A página foi ligada e gerada a 10/09 **sem** eles, de propósito: nenhum é
+estrutural — cada bloco onde iam já carrega o seu próprio visual, e esperar
+por eles custava semanas de indexação na página que vende o curso.
+
+```
+bloco  7   diagrama · resultado certo com técnica errada e com técnica correta
+bloco  9   diagrama · a cadeia perna–bacia–harness–risers–asa
+bloco  9   vídeo    · As pernas em groundhandling
+bloco  9   vídeo    · As pernas em voo
+```
+
+Cada um foi verificado antes de sair. O do bloco 7 ia ilustrar o contraste
+que as duas colunas comparadas (`habitoColunas`) já fazem estruturalmente.
+O diagrama do 9 ia desenhar a cadeia que o componente `cadeia(C.cadeiaElos)`
+já lista, no mesmo bloco que tem ainda a silhueta SVG com seis marcadores,
+os chips e uma fotografia. Os dois vídeos ficavam no H3 do groundhandling,
+que tem texto, chips e fotografia.
+
+**Retirar do HTML não é decidir que não se fazem.** É decidir que não se
+espera por eles.
+
+### A fotografia do herói do curso
+aberto: 2026-09-10
+
+A página usa a `/images/course.jpg`, que é o fundo do slide dos produtos da
+página inicial. Não é reserva — é uma fotografia real de 1920×1200 —, mas é
+a mesma que o visitante pode acabar de ver na inicial.
+
+Foi escolhida por eliminação: o `hero-bg.jpg` é o herói do
+`/parakite-portugal/` e colidiria com uma página irmã. Um fundo de slide é a
+colisão mais barata das três.
+
+O critério da encomenda está fechado no `FECHADO A 10/09`: **tem de valer em
+monocromático azul.** Falta o resto do brief, que é decisão de imagem — um
+piloto ou dois, a asa visível e identificável como Parakite, a zona escura à
+esquerda até aos 45% da largura, e uma imagem própria para mobile porque o
+recorte de `object-fit:cover` a 375px guarda só a faixa central.
+
 ### 2 URLs em 404, e faltam-me os endereços
 aberto: 2026-09-08
 
@@ -302,6 +343,45 @@ a nenhum dos dois `GOOGLE_CLIENT_ID` acima.
 ---
 
 ## FECHADO A 10/09
+
+### A página do curso foi ligada ao site
+fechado: 2026-09-10
+
+Existia em prévia desde o início do mês, com o conteúdo editorial fechado nas
+cinco línguas, e **nada no site lhe apontava**. Está ligada:
+
+```
+paginaCurso() no gerador          5 páginas, uma por língua
+sitemap                           165 -> 170 URLs
+publicar.mjs                      curso-parakite-portugal autorizado
+pagina.css                        as 105 linhas que viviam na prévia
+ligações de entrada               10 páginas: Pilot2Wing e hub, nas 5 línguas
+```
+
+**O botão do Pilot2Wing cumpriu o que o comentário dele pedia** desde que foi
+escrito: «enquanto /curso-parakite-portugal/ não existir, o botão pede
+informações por WhatsApp. Trocado pela página quando ela for feita.» Passou a
+apontar para a página, que responde antes de haver pergunta. O WhatsApp
+continua no bloco 16 da própria página.
+
+**O CSS não precisou de âmbito quase nenhum, e isso foi medido.** Os
+`[data-cols]` são a chave: esse atributo só existe nesta página, verificado
+antes de mover. E as três secções `pk-papel` do `/parakite-portugal/` não têm
+nenhum `sg-abord`, `sg-etapa` nem `sg-trans-lista` dentro. As quatro regras
+que tocavam o `.sg-trans-lista` sem qualificação levaram `.pg.pk`, que exclui
+o tema do Pilot2Wing — o `<i>` daquele componente nem existe lá, mas apostar
+num facto que muda com o próximo parágrafo escrito no CMS é apostar.
+
+**Schema:** `Course` com nome, descrição, `provider`, `inLanguage`,
+`courseMode: onsite` e seis `teaches`. Sem `hasCourseInstance`, sem `offers` e
+sem `courseWorkload`: os quatro dias são duração de **referência** e não
+promessa — está escrito assim nas cinco línguas —, e o schema.org não tem
+forma de dizer «referência». Mais `WebPage` + `FAQPage` com 9 perguntas.
+
+**Medido:** 16 secções, 15 H2, 41 H3, 6 ilhas claras, 3 088 palavras. Zero
+falhas de contraste a 1440 e a 375, em 300 e 294 elementos medidos, pior 5,30.
+As cinco grelhas resolvem 6, 4, 3 e 1 coluna em desktop e todas a 1 em mobile.
+Sem transbordo. 170 páginas, zero órfãs.
 
 ### O sufixo « | Happy Soaring» sai de 159 títulos
 fechado: 2026-09-10
