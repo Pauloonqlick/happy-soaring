@@ -194,25 +194,6 @@ balde é o resultado esperado dessas decisões.
 
 ## DECISÃO PAULO
 
-### 55 títulos passam dos 60 caracteres, e encurtá-los perde algo
-aberto: 2026-09-10
-
-Um terço das páginas. As fichas de asa são longas por construção — o título é
-`nome — rótulo Flow Paragliders | Happy Soaring`, e a AlbatroXX dá 64
-caracteres. O Google corta aos ~60, e o que se perde é o fim: **o nome da
-marca desaparece da SERP.**
-
-Duas saídas, e as duas perdem algo:
-
-- tirar `| Happy Soaring` das fichas de asa dá 48 caracteres e o título
-  aparece inteiro — mas a marca deixa de aparecer nos resultados das asas,
-  que são 110 das 165 páginas;
-- tirar `Flow Paragliders` mantém a marca, mas perde um termo de pesquisa
-  que é exactamente o que quem procura uma asa escreve.
-
-**Não é defeito, é posicionamento.** Não avanço sem decisão: é escolher entre
-aparecer como Happy Soaring ou aparecer para "Flow Paragliders".
-
 ### Seis ficheiros de imagem sem quem lhes aponte, 5 397 KB
 aberto: 2026-09-10
 
@@ -321,6 +302,46 @@ a nenhum dos dois `GOOGLE_CLIENT_ID` acima.
 ---
 
 ## FECHADO A 10/09
+
+### O sufixo « | Happy Soaring» sai de 159 títulos
+fechado: 2026-09-10
+
+Estava aqui como decisão, com um falso dilema: ou a marca, ou o termo de
+pesquisa. **Não havia dilema**, e a pergunta que o desfez foi mais simples do
+que a análise: porque é que a Happy Soaring tem de aparecer no título de uma
+asa que é da Flow?
+
+Não tem. Três razões, e a primeira decide:
+
+**O Google já mostra o nome do site, acima do título.** Desde outubro de 2022,
+e tira-o do `WebSite` dos dados estruturados, do `og:site_name` ou do título
+da inicial. Os três estão servidos em todas as 164 páginas — o
+`WebSite.name` entrou a 10/09 com a Organization. O sufixo era duplicação de
+um sinal que o site já dá.
+
+**Era a parte que o corte levava primeiro.** Custava 15 caracteres e muitas
+vezes não chegava a aparecer: pior dos dois mundos.
+
+**E numa página dizia a marca duas vezes:** «Happy Soaring Music — música
+original para vídeos de vuelo | Happy Soaring», 74 caracteres.
+
+```
+                antes                   agora
+fichas de asa   46–77, média 54         30–61, média 38
+raiz            49–74, média 61         33–58, média 45
+spots           49–63, média 59         33–47, média 43
+acima de 60     55 páginas              1
+```
+
+A que resta é a alemã da Aura 2 Square, com 61 — um caractere, porque
+«Quadratischer Rettungsschirm» é o que a palavra mede em alemão.
+
+**A inicial mantém o nome**, porque lá faz parte da frase e não é sufixo:
+«Parakite und Gleitschirmfliegen in Portugal — Happy Soaring». E o `og:title`
+das fichas nunca teve sufixo — era já independente.
+
+Que a página é de um revendedor diz-se no conteúdo, no rodapé e na
+Organization. Não nos 60 caracteres que decidem o clique.
 
 ### As descrições dos spots, e o segundo canal ao lado dos botões
 fechado: 2026-09-10

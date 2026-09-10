@@ -49,11 +49,11 @@ export const PK = {
 
   /* ---------------------------------------------------------- cabeça */
   titulo: {
-    pt: 'Parakite Portugal — aprender, testar e voar | Happy Soaring',
-    en: 'Parakite Portugal — learn, try and fly | Happy Soaring',
-    es: 'Parakite Portugal — aprender, probar y volar | Happy Soaring',
-    fr: 'Parakite Portugal — apprendre, essayer et voler | Happy Soaring',
-    de: 'Parakite Portugal — lernen, testen und fliegen | Happy Soaring'
+    pt: 'Parakite Portugal — aprender, testar e voar',
+    en: 'Parakite Portugal — learn, try and fly',
+    es: 'Parakite Portugal — aprender, probar y volar',
+    fr: 'Parakite Portugal — apprendre, essayer et voler',
+    de: 'Parakite Portugal — lernen, testen und fliegen'
   },
   descricao: {
     pt: 'Parakite em Portugal: formação com a escola parceira FelloFly, Demo Sessions, asas Flow Paragliders e apoio pós-venda. Começa sem experiência de parapente.',

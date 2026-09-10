@@ -57,11 +57,11 @@ export const CURSO = {
      ================================================================== */
 
   titulo: {
-    pt: 'Curso de Parakite em Portugal para pilotos de parapente | Happy Soaring',
-    en: 'Parakite course in Portugal for paraglider pilots | Happy Soaring',
-    es: 'Curso de Parakite en Portugal para pilotos de parapente | Happy Soaring',
-    fr: 'Cours de Parakite au Portugal pour pilotes de parapente | Happy Soaring',
-    de: 'Parakite-Kurs in Portugal für Gleitschirmpiloten | Happy Soaring'
+    pt: 'Curso de Parakite em Portugal para pilotos de parapente',
+    en: 'Parakite course in Portugal for paraglider pilots',
+    es: 'Curso de Parakite en Portugal para pilotos de parapente',
+    fr: 'Cours de Parakite au Portugal pour pilotes de parapente',
+    de: 'Parakite-Kurs in Portugal für Gleitschirmpiloten'
   },
   descricao: {
     pt: 'Curso de conversão de parapente para Parakite pelo método Pilot2Wing: compreender a asa, preparar o corpo, gerir energia, ganhar autonomia. Duração de referência {dias} dias, máximo {pilotos} pilotos.',

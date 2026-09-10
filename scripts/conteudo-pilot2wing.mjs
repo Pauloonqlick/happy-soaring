@@ -15,11 +15,11 @@
  */
 export const P2W = {
   titulo: {
-    pt: 'Pilot2Wing — o método de formação em parakite | Happy Soaring',
-    en: 'Pilot2Wing — the parakite training method | Happy Soaring',
-    es: 'Pilot2Wing — el método de formación en parakite | Happy Soaring',
-    fr: 'Pilot2Wing — la méthode de formation parakite | Happy Soaring',
-    de: 'Pilot2Wing — die Parakite-Ausbildungsmethode | Happy Soaring'
+    pt: 'Pilot2Wing — o método de formação em parakite',
+    en: 'Pilot2Wing — the parakite training method',
+    es: 'Pilot2Wing — el método de formación en parakite',
+    fr: 'Pilot2Wing — la méthode de formation parakite',
+    de: 'Pilot2Wing — die Parakite-Ausbildungsmethode'
   },
   descricao: {
     pt: 'Primeiro automatizamos o piloto, depois acrescentamos a asa. As cinco etapas do método Pilot2Wing, do treino sem asa até ao Parakite.',

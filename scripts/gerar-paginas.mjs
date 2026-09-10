@@ -2162,8 +2162,22 @@ function pagina(p, l, num) {
   const url = DOMINIO + caminho(l, p);
   const cor = (p.cores || [])[0];
   const foto = cor ? DOMINIO + '/images/asas/' + chave(p.nome) + '__' + cor + '.webp' : DOMINIO + '/images/og-happysoaring.jpg';
+  /* SEM ` | Happy Soaring`. Saiu a 10/09/2026, e a razao e a mesma para as
+     159 paginas onde estava: desde outubro de 2022 o Google mostra o nome do
+     site ACIMA do titulo nos resultados, e tira-o do `WebSite` dos dados
+     estruturados, do `og:site_name` ou do titulo da inicial — os tres estao
+     servidos em todas as paginas. O sufixo era duplicacao, e era a parte que
+     o corte aos ~60 caracteres levava primeiro: custava 15 caracteres e
+     muitas vezes nao chegava a aparecer.
+
+     A pergunta que o fez cair foi mais simples do que isso: porque e que a
+     Happy Soaring tem de aparecer no titulo de uma asa que e da Flow? Nao
+     tem. A pagina e de um revendedor, e isso diz-se no conteudo, no rodape e
+     na Organization — nao nos 60 caracteres que decidem o clique.
+
+     A inicial mantem o nome, porque la faz parte da frase e nao e sufixo. */
   const titulo = p.nome + ' — ' + (rotuloClasse(p.classificacao, l) || rotuloFamilia(p.familia, l)) +
-    ' Flow Paragliders | Happy Soaring';
+    ' Flow Paragliders';
   const desc = descricaoDoProduto(p, l);
 
   const alts = alternativas(x => caminho(x, p));
@@ -2463,7 +2477,7 @@ function paginaSpot(s, l, num) {
   return moldeDaPagina({
     lingua: l, url, alts, alt, foto, ld,
     classe: 'pg spot papel tema',
-    titulo: h1 + ' | Happy Soaring',
+    titulo: h1,   /* sem sufixo de marca: ver o comentario em `pagina()` */
     descricao: descMeta,
     ogTipo: 'article',
     ogTitulo: h1,

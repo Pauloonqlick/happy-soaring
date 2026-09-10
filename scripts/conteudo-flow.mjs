@@ -27,11 +27,11 @@
  */
 export const FL = {
   titulo: {
-    pt: 'Flow Paragliders Portugal — Revendedor oficial | Happy Soaring',
-    en: 'Flow Paragliders Portugal — Official Dealer | Happy Soaring',
-    es: 'Flow Paragliders Portugal — Punto de venta oficial | Happy Soaring',
-    fr: 'Flow Paragliders Portugal — Revendeur officiel | Happy Soaring',
-    de: 'Flow Paragliders Portugal — Offizieller Händler | Happy Soaring'
+    pt: 'Flow Paragliders Portugal — Revendedor oficial',
+    en: 'Flow Paragliders Portugal — Official Dealer',
+    es: 'Flow Paragliders Portugal — Punto de venta oficial',
+    fr: 'Flow Paragliders Portugal — Revendeur officiel',
+    de: 'Flow Paragliders Portugal — Offizieller Händler'
   },
   descricao: {
     pt: 'A Happy Soaring é revendedor oficial Flow Paragliders em Portugal: 22 asas, arneses e reservas, ajuda a escolher modelo e tamanho, e acompanhamento depois da compra.',

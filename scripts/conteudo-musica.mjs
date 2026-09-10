@@ -16,11 +16,11 @@
 export const MU = {
 
   title: {
-    pt: 'Happy Soaring Music — música original para vídeos de voo | Happy Soaring',
-    en: 'Happy Soaring Music — original music for flight videos | Happy Soaring',
-    es: 'Happy Soaring Music — música original para vídeos de vuelo | Happy Soaring',
-    fr: 'Happy Soaring Music — musique originale pour vidéos de vol | Happy Soaring',
-    de: 'Happy Soaring Music — Originalmusik für Flugvideos | Happy Soaring'
+    pt: 'Happy Soaring Music — música original para vídeos de voo',
+    en: 'Happy Soaring Music — original music for flight videos',
+    es: 'Happy Soaring Music — música original para vídeos de vuelo',
+    fr: 'Happy Soaring Music — musique originale pour vidéos de vol',
+    de: 'Happy Soaring Music — Originalmusik für Flugvideos'
   },
   desc: {
     pt: 'Música original inspirada no vento, no mar e no voo. Ouve as faixas, filtra por género e usa-as nos teus vídeos de voo e nas redes sociais.',

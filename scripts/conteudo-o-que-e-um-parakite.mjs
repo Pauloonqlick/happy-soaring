@@ -38,11 +38,11 @@ export const QP = {
 
   /* ---------------------------------------------------------- metadata */
   title: {
-    pt: 'Parakite — o que é e como funciona | Happy Soaring',
-    en: 'Parakite — what it is and how it works | Happy Soaring',
-    es: 'Parakite — qué es y cómo funciona | Happy Soaring',
-    fr: 'Parakite — ce que c’est et comment ça marche | Happy Soaring',
-    de: 'Parakite — was es ist und wie es funktioniert | Happy Soaring'
+    pt: 'Parakite — o que é e como funciona',
+    en: 'Parakite — what it is and how it works',
+    es: 'Parakite — qué es y cómo funciona',
+    fr: 'Parakite — ce que c’est et comment ça marche',
+    de: 'Parakite — was es ist und wie es funktioniert'
   },
   desc: {
     pt: 'Descobre o que caracteriza um Parakite, como funciona o seu sistema de controlo e como risers, geometria, reflex e gestão de energia influenciam o voo.',
