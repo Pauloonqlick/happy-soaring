@@ -6,9 +6,91 @@ Estado. As regras do processo estão no `SEO-WORKFLOW.md`.
 Search Console (motivo "Detetada – atualmente não indexada", **dados até
 04/09**) cruzada com o repositório e com produção.
 
-O site está publicado em `929fba7` desde 06/09 às 21:31. **A exportação é
-anterior a isso:** não viu as 15 páginas de spot, nem o sitemap sem `lastmod`,
-nem os ícones da marca. Nada aqui mede o site actual.
+O site está publicado no deploy **`4c829982`** desde **10/09 às 19:03**, sobre
+o commit `8ec61c6` com a árvore suja — o `meta.json` regista-o. O deploy
+anterior era o `929fba7` de 06/09.
+
+**A exportação de Cobertura é de 04/09** e portanto anterior aos dois: não viu
+as 15 páginas de spot, nem o sitemap sem `lastmod`, nem os ícones da marca, nem
+nada do que entrou a 10/09. Nada aqui mede o site actual.
+
+Última auditoria completa do site: **10/09/2026**, medida no ficheiro e no
+browser. Nota global 7,2 em treze dimensões. Dela saiu a secção seguinte.
+
+---
+
+## PUBLICADO A 10/09
+
+### O que entrou no deploy 4c829982
+publicado: 2026-09-10 19:03 · 503 ficheiros, 60,6 MB · 180 novos de 502
+
+Verificado em produção: `/`, `/pilot2wing/`, `/parakite-portugal/`,
+`/o-que-e-um-parakite/`, `/asas/albatroxx/` e `/de/schirme/albatroxx/` a 200; o
+`/reflex-lab/` a 301; o `sitemap.xml` a 200.
+
+```
+Organization declarada          5 → 164 páginas
+referências penduradas          24 → 0
+FAQPage                          0 → 10 páginas, 65 perguntas
+descrições das asas             média 40 → 133 caracteres
+descrições abaixo de 70          106 → 0 páginas
+contacto (email e telefone)      0 → 164 páginas
+peso publicado                  63,2 → 60,6 MB
+```
+
+**A `Organization` passou a ir declarada e não referenciada.** O desenho
+anterior — declarar só no `index.html` e referenciar o `@id` nas geradas —
+resolvia o problema certo, que era haver três Happy Soaring diferentes. Mas 24
+páginas apontavam para um nó que não estava no grafo delas, e um rastreador de
+IA que leia uma ficha de asa sem ter lido a inicial não fica a saber quem a
+publica. O `@id` continua a ser um só; o nó é copiado igual em todas, e isso
+está verificado — o nó do `index.html` é idêntico ao de uma ficha de asa e ao
+da `/de/index.html`.
+
+**As descrições das asas nunca precisaram de texto novo.** O gerador fazia
+`t(p.tagline, l) || t(p.descricao, l)`, e o segundo operando nunca era
+alcançado porque as 22 asas têm todas tagline. A `descricao`, com 146 a 303
+caracteres escritos nas cinco línguas, não estava a ser servida a ninguém.
+Passou a compor as duas por frases inteiras até 160 caracteres.
+
+**Indexabilidade verificada, e não estava em risco.** Grafo de ligações das 164
+páginas, alcance a partir das cinco iniciais, duas passagens — HTML servido e
+DOM renderizado: **164 de 164 alcançáveis nas duas**. O caminho que o garante é
+o `/flow-paragliders-portugal/`, que liga às 22 asas, é estático, e está no
+menu de todas as páginas.
+
+---
+
+## PENDENTE DE UM SEGUNDO DEPLOY
+
+### O Cloudflare ofuscou o email do rodapé
+descoberto em produção: 2026-09-10 · corrigido no repositório, por publicar
+
+A opção **Email Address Obfuscation** do Cloudflare reescreveu o link do
+rodapé nas 159 páginas:
+
+```
+o que se publicou   <a href="mailto:paulo.pereira@happysoaring.com">paulo.pereira@…</a>
+o que o Cloudflare  <a href="/cdn-cgi/l/email-protection#c5b5a4…">
+serve               <span class="__cf_email__" data-cfemail="…">[email protected]</span>
+```
+
+Consequência: sem JavaScript o link morre, e **o endereço deixa de estar no
+HTML como texto** — que era metade da razão de o pôr ali, porque um endereço em
+texto é um facto que um motor de resposta consegue devolver.
+
+**O que NÃO foi atingido:** o JSON-LD passou intacto. Verificado em produção, a
+`Organization` da `/asas/albatroxx/` serve `email`, `telephone` e
+`contactPoint.email` corretos. O `tel:` também passou intacto. Portanto a
+camada legível por máquina — a que mais conta — está boa desde já.
+
+**Corrigido no gerador** com `<!--email_off-->` / `<!--email_on-->`, que é a
+saída documentada do Cloudflare, e fica inofensivo se a opção for desligada.
+Falta publicar.
+
+Alternativa sem deploy, e é decisão do Paulo: desligar o Email Address
+Obfuscation no painel do Cloudflare, em Scrape Shield. O site não tem outro
+endereço de email, por isso a opção não está a proteger nada.
 
 ---
 
@@ -89,6 +171,24 @@ anterior a existirem.
 
 ## PENDENTE
 
+### 22 descrições de spot acima de 160 caracteres
+aberto: 2026-09-10
+
+O inverso do problema que se resolveu nas asas. Vêm da `primeiraFrase` da
+descrição do spot, e há frases de spot muito longas:
+
+```
+319 car.  /fr/parakite-portugal/praia-das-bicas/
+313       /es/parakite-portugal/praia-das-bicas/
+288       /parakite-portugal/praia-das-bicas/  e a alemã
+265       /en/parakite-portugal/fonte-da-telha/
+```
+
+Cinco páginas distintas × 5 línguas. **Não é falha** — o Google trunca e não
+penaliza —, mas o texto depois do corte não é lido por ninguém, e o compositor
+`descricaoDoProduto()` que já existe no gerador resolve as duas pontas com o
+mesmo código. Fica para depois de publicar o que está feito.
+
 ### 2 URLs em 404, e faltam-me os endereços
 aberto: 2026-09-08
 
@@ -111,6 +211,59 @@ balde é o resultado esperado dessas decisões.
 ---
 
 ## DECISÃO PAULO
+
+### Seis ficheiros de imagem sem quem lhes aponte, 5 397 KB
+aberto: 2026-09-10
+
+```
+pilot-walk.png                   1 416 KB
+pilot-lines.png                  1 374 KB
+smartground/movimento-left.webp  1 015 KB
+pilot-stand.png                    826 KB
+glider-top.png                     411 KB
+glider-fly.png                     353 KB
+```
+
+Procurei os cinco primeiros nomes, sem extensão, em todo o `.js`, `.mjs`,
+`.json`, `.css` e `.html` do repositório: **zero ocorrências**. O sexto é
+referenciado só pelo `_smartground.html`, que não está na lista de autorização
+da publicação. E `images` está inteiro nessa lista, por isso os seis vão para
+produção em cada deploy.
+
+**Não os apaguei.** Podem ser material guardado de propósito — foi o que
+aconteceu com a pasta do `reflex-lab`. São recuperáveis com `git checkout`, mas
+apagar é decisão do Paulo.
+
+Ressalva ao número: uma auditoria completa de órfãos não se faz por varredura,
+porque as variantes de cor são construídas por concatenação
+(`/images/asas/<asa>__<cor>.webp`) e os ícones vêm do `site.webmanifest`. Os
+seis acima foram verificados um a um.
+
+### A inicial perde 21 das 22 ligações às asas quando o app.js hidrata
+aberto: 2026-09-10
+
+| | HTML servido | depois do `app.js` |
+|---|---:|---:|
+| ligações para `/asas/` | 22 | **1** |
+| H3 | 11 | 4 |
+
+O bloco estático fica dentro do `<main id="app">` e é substituído. O widget
+hidratado é um **configurador** — abas de família, tamanhos, cores — que mostra
+uma asa de cada vez, e por isso resta a ligação da asa selecionada.
+
+**Não é indexabilidade.** As 164 páginas continuam alcançáveis pelo
+`/flow-paragliders-portugal/`, que é estático e liga às 22. É distribuição de
+autoridade interna: a página com mais autoridade do site quase não passa nada
+ao catálogo — e isso cruza-se com as sete fichas por rastrear no topo deste
+ficheiro.
+
+Não é cloaking: o material sai do mesmo JSON, como o comentário do gerador
+exige. O que difere é o grafo de ligações.
+
+**Corrigir mexe no `app.js`**, no widget mais complexo da inicial, e muda o que
+se vê. Duas saídas: manter as ligações do catálogo na vista hidratada, ou tirar
+o bloco estático de dentro do `#app` para sobreviver à hidratação — e aí o
+índice do catálogo passa a ser visível na página.
 
 ### O wordmark da página inicial, e só ele
 aberto: 2026-09-05 · medido outra vez: 2026-09-06
@@ -163,3 +316,56 @@ endereço, nem chamada. O site não está em causa.
 clientes do projecto. Se forem exactamente dois, são estes e não se toca. Se
 houver um terceiro, é esse o abandonado — e identifica-se por não corresponder
 a nenhum dos dois `GOOGLE_CLIENT_ID` acima.
+
+---
+
+## FECHADO A 10/09
+
+### A fotografia do herói do curso é monocromática azul
+decidido: 2026-09-10
+
+O componente `pk-heroi` mantém-se como está: `filter:grayscale(1)` seguido de
+`mix-blend-mode:color` com o gradiente azul. **Sem exceção para a página do
+curso** — a consistência com a `/parakite-portugal/`, que usa o mesmo
+componente, ganha à cor da fotografia.
+
+O que isto quer dizer para a encomenda: **a imagem tem de funcionar em
+monocromático azul.** O valor dela está na silhueta, no contraste de tons e na
+composição, não na cor — e a progressão chão→ar é geometria, por isso sobrevive
+bem. Uma hora dourada não sobrevive: é convertida num brilho azul-acinzentado.
+
+Continua em aberto o resto do brief, que é decisão de imagem e não de CSS: um
+piloto ou dois, a asa visível e identificável como Parakite, a zona escura à
+esquerda até aos 45% da largura, e uma imagem própria para mobile porque o
+recorte de `object-fit:cover` a 375px guarda só a faixa central.
+
+---
+
+## RETIRADOS NA AUDITORIA DE 10/09
+
+Três das seis recomendações que essa auditoria fez estavam erradas ou já
+resolvidas. Ficam escritas, como o item dos clientes OAuth acima, para não
+voltarem a entrar na fila.
+
+### O FAQPage não dá resultado rico a este site
+Foi apresentado como o item de maior retorno. **Não é.** Desde agosto de 2023 o
+Google só mostra o resultado rico de FAQ a sites de saúde e a entidades
+governamentais reconhecidas. A marcação entrou mesmo assim, a 10/09, mas pelo
+outro leitor: pergunta e resposta emparelhadas são o formato mais fácil de
+levantar por um motor de resposta. **Ganho de AI Search, não de SERP.**
+
+### Os títulos das asas não estão por traduzir
+Foram contados 19 grupos de títulos idênticos nas cinco línguas e chamou-se-lhe
+defeito, sem se ter lido o `regras/taxonomia.js`. O mecanismo já é sensível à
+língua — `rotuloClasse(p.classificacao, l)`. Dos 22 títulos, **5 diferem e 17
+são iguais**, e os 17 dividem-se em: 10 normas EN, que são códigos e traduzi-los
+tornava-os errados; 4 nomes de categoria da Flow; e 3 níveis de paramotor em
+inglês da indústria, já com chave neutra para poderem mudar um dia. Os 5 que
+traduzem são exactamente aqueles cujo rótulo é traduzível. **Nada a corrigir.**
+
+### O `/reflex-lab/` não é ponta solta
+Foi listado como página gerada sem `noindex`, sem `hreflang` e sem JSON-LD.
+Está **retirado do site desde 04/09**, com a razão escrita no gerador: a pasta
+fica no disco porque o simulador e o cálculo aerodinâmico ficam guardados, não
+é publicada, não está no sitemap, ninguém lhe aponta, e o endereço antigo tem
+**301** no `_redirects` para `/o-que-e-um-parakite/#reflex`. **Nada a fazer.**
