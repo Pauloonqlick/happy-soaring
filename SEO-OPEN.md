@@ -6,14 +6,11 @@ Estado. As regras do processo estão no `SEO-WORKFLOW.md`.
 desempenho**, não só de cobertura — é a primeira vez que este ficheiro tem
 cliques e impressões reais. A secção seguinte é toda nova por isso.
 
-O site está publicado no deploy **`e9047eaf`** desde **11/09 às 14:46**, sobre
-o commit **`a7377e8`**, com `sujo: false`.
+O site está publicado no deploy **`d03577bf`** desde **11/09 às 16:17**, sobre
+o commit **`71bc4b5`**, com `sujo: false` — a árvore, o GitHub e o site estão
+os três no mesmo ponto.
 
-**NA ÁRVORE E POR PUBLICAR:** o `x-default` a apontar para inglês. Está feito
-nas 175 páginas e verificado, mas não foi commitado nem publicado — ver a
-entrada no `FECHADO` mais abaixo, que diz o que falta.
-
-**Nove deploys em 10 e 11/09**, por esta ordem:
+**Onze deploys em 10 e 11/09**, por esta ordem:
 
 ```
 4c829982  10/09 19:03  commit 8ec61c6, ÁRVORE SUJA — o schema, as FAQ, as
@@ -29,6 +26,10 @@ a2015d7b  11/09 08:51  commit 58a033f — o cartão do Pilot2Wing
 bdce4f27  11/09 14:34  commit d709615 — os locais do curso, e as 2 573
                        fronteiras de texto que colavam em 170 páginas
 e9047eaf  11/09 14:46  commit a7377e8 — o Alfarim passa a página, 175 URLs
+502fa63f  11/09 15:47  commit 32f9edc — o x-default para inglês, e os dados
+                       de desempenho no SEO-OPEN
+d03577bf  11/09 16:17  commit 71bc4b5 — as fotografias dos spots saem do
+                       popup e entram nas páginas
 ```
 
 **A exportação de Cobertura é de 04/09** e portanto anterior a todos: não viu
@@ -213,6 +214,34 @@ tem a entrada.
 ---
 
 ## AGUARDAR GOOGLE
+
+### Os cinco vídeos dos spots passaram a conteúdo indexável
+aberto: 2026-09-11 · **rever depois de: 2026-09-25**
+
+Até hoje os `videoId` dos spots viviam num `<script type="application/json">`
+atrás de um popup. Nenhum motor de busca os associava a uma página: não eram
+conteúdo, eram dados de um widget.
+
+Agora estão numa `<figure>` na página do spot, com `VideoObject` no JSON-LD —
+`thumbnailUrl`, `contentUrl`, `embedUrl` e `inLanguage`. Cinco spots, cinco
+línguas.
+
+```
+Fonte da Telha     1CAWZKhxcGM
+Praia do Meco      m9qO0LaV3t0
+Praia da Gralha    XkkG4DAGlK8
+Praia das Bicas    nAymp6E4TuA
+```
+
+**O que observar:** há uma exportação de *Video indexing* de 10/09 nos
+Downloads do Paulo, anterior a isto. Reexportar daqui a duas semanas e
+comparar. Se o Google passar a associar os vídeos aos spots, é ganho novo — e
+não estava em nenhuma lista até hoje.
+
+**Não é promessa.** Um `VideoObject` correcto é condição necessária e não
+suficiente: o Google decide se o vídeo é o conteúdo principal da página, e
+aqui não é — é uma figura dentro de um texto. Pode não resultar em nada, e
+isso também é informação.
 
 ### 7 fichas de asa por rastrear
 ```
@@ -551,6 +580,75 @@ a nenhum dos dois `GOOGLE_CLIENT_ID` acima.
 
 ## FECHADO A 10 E 11/09
 
+### As fotografias dos spots saem do popup e entram nas páginas
+fechado: 2026-09-11 · deploy `d03577bf`
+
+O popup do hub mostrava uma fotografia e um resumo — e **o resumo era
+literalmente a abertura da página para onde ele próprio ligava**, o mesmo
+campo `descricao`. A página, essa, tinha 580 palavras e nada para ver. A
+inversão era o pior dos dois lados.
+
+**E não havia carrossel.** Medido:
+
+```
+SPOT                  imagens   vídeos   total
+Fonte da Telha           0        1        1
+Lagoa de Albufeira       1        0        1
+Praia do Meco            0        1        1
+Alfarim                  1        0        1
+Praia da Gralha          0        1        1
+Praia das Bicas          1        1        2   ← o único
+```
+
+Cinco dos seis têm **uma** peça de média. O próprio código o dizia, com
+`nav.hidden = m.length < 2`: as setas, as miniaturas e o contador estavam
+escondidos em cinco dos seis casos. Havia maquinaria de carrossel — navegação
+por teclado, pré-carregamento da seguinte, contador — para mostrar uma
+fotografia.
+
+**O que entrou:** uma `<figure>` por peça, logo depois dos parágrafos de
+abertura e antes do primeiro H2. A coluna tem máximo de 280px porque as sete
+imagens são verticais: à largura útil da abertura, que é 1020px, uma delas
+teria 1813px de altura — um cartaz, não uma fotografia. Com 280 fica nos 498.
+
+Reaproveita o `.pk-play` do hub em vez de reescrever o símbolo.
+
+**O vídeo arranca ao clique, e a caixa não se move:** o iframe nasce com
+280×498, que é exactamente a da capa que substitui. Zero pedidos ao YouTube
+antes do clique, um depois.
+
+**As capas dos Shorts vieram para casa.** Eram buscadas ao `i.ytimg.com` por
+um endpoint não documentado (`oar2.jpg`) com rede no `onerror`. São agora
+quatro ficheiros locais de 1000×1779 declarados no `spots.json` — e o hub
+também deixou de chamar o YouTube. As sete imagens de spot ficaram todas com
+a mesma medida de propósito, para que um par de números sirva todas em vez de
+o código ter casos.
+
+**O que saiu do hub:**
+
+```
+HTML do hub    41 071 → 28 933 bytes   (-30%)
+pagina.css    138 968 → 136 903 bytes  (27 regras + 1 @media)
+JSON de dados   4 672 bytes por página
+```
+
+A grelha ficou, porque é ela que faz o trabalho — seis fotografias com nomes
+percorrem-se, seis linhas de texto leem-se. **O que saiu foi a interceptação
+do clique:** os mosaicos já eram `<a href>` para as páginas.
+
+E um mosaico sem página deixou de ser clicável: era um `<button>` que abria o
+álbum, e sem álbum um botão que não faz nada é pior do que uma imagem. Hoje
+nenhum spot está nesse estado, mas o CMS pode criar um.
+
+**Medido:** 2 figuras de 280×498 a 1440 e uma coluna das mesmas 280×498 a
+375; zero transbordo nas duas; zero falhas de contraste, pior 5,68:1; vídeo
+verificado a nascer com a caixa igual à capa; 17/17 verificações; zero erros
+de consola.
+
+**Uma correcção ao que eu tinha dito ao Paulo:** contei legendas em cinco dos
+seis spots. **Estão todas vazias** — contei chaves do JSON, não valores. O
+`<figcaption>` fica no código e aparece no dia em que houver uma.
+
 ### O texto colava em 2 573 fronteiras, em 170 páginas
 descoberto e resolvido: 2026-09-11 · deploy `bdce4f27`
 
@@ -625,7 +723,7 @@ dizia «no dia em que a página do Alfarim for escrita, a ligação aparece
 sozinha e ninguém volta aqui». Não se voltou.
 
 ### O `x-default` aponta para inglês
-feito: 2026-09-11 · **NA ÁRVORE, POR COMMITAR E POR PUBLICAR**
+fechado: 2026-09-11 · deploy `502fa63f` · verificado em produção
 
 ```
 antes   x-default → /curso-parakite-portugal/
@@ -644,7 +742,9 @@ a única língua que quase de certeza não lê.
 Não muda nada para quem corresponde: o alemão continua a receber `/de/`,
 porque é a etiqueta `de` que manda. E não mexeu num único endereço.
 
-**Falta commitar e publicar.**
+Verificado em produção em cada tipo de página: a inicial → `/en/`, a alemã do
+curso → `/en/parakite-course-portugal/`, a ficha da Mullet 2 →
+`/en/wings/mullet-2/`. **175 de 175.**
 
 ### O encaminhamento de idioma na raiz já existia — e eu disse que não
 registado: 2026-09-11
