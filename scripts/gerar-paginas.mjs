@@ -80,6 +80,39 @@ const ORG_NO = {
     width: 512, height: 512, caption: 'Happy Soaring'
   },
   description: 'Revendedor oficial Flow Paragliders em Portugal, com formação através da escola parceira FelloFly.',
+  /* 11/09/2026 · O SAMEAS LIGA AS TRES IDENTIDADES QUE ANDAVAM SOLTAS
+     Medida a SERP de `flow mullet 2` na Alemanha, a Happy Soaring aparece
+     tres vezes e o Google nao sabe que sao a mesma coisa:
+
+       #4   um video no Facebook do Paulo
+       #15  esta pagina, a do site
+       #20  um reel do Instagram pessoal
+
+     O video pessoal esta ONZE lugares acima da pagina do proprio produto. O
+     `sameAs` e a etiqueta que diz "esta conta E esta entidade" — sem ela, a
+     autoridade de uma nao chega a outra.
+
+     SO ENTRA A CONTA DA EMPRESA, e isso e deliberado. As contas pessoais
+     `paulo.reggae` ficam de fora: declarar uma conta pessoal como `sameAs`
+     da Organizacao e afirmar "este Instagram E a Happy Soaring", e nao e
+     verdade. O modelo correcto para essas e um `Person` ligado por
+     `founder` — e essa decisao ainda nao foi tomada.
+
+     E O SAMEAS AQUI DESAMBIGUA, NAO SO DECLARA
+     Ha dois canais de YouTube com nome confundivel, e foi verificado a
+     11/09 qual e qual:
+
+       @HappySoaringPortugal  UCKcceKOInEt7dw6SDBgrwlw  "Happy Soaring"
+                              "Parakite & Paragliding in Portugal..."
+       @happysoaring          UCCGdaV_S320U0F68EgWgrsA  "Happysoaring"
+                              descricao vazia — NAO e nosso
+
+     Sem esta etiqueta, quem tem de decidir qual dos dois e a Happy Soaring
+     e o Google, por conta propria. Com ela, decidimos nos. */
+  sameAs: [
+    'https://www.instagram.com/happysoaring/',
+    'https://www.youtube.com/@HappySoaringPortugal'
+  ],
   /* 10/09/2026. O contacto entra na entidade e nao so no rodape: assim o
      Google e os motores de resposta leem-no sem terem de o extrair de prosa.
      O telefone e o mesmo numero do WhatsApp — e um canal, dois protocolos. */
@@ -1203,7 +1236,9 @@ const caminhoFlow = l => (l === OMISSAO ? '' : '/' + l) + '/flow-paragliders-por
 
    Vai no rodape porque o rodape esta nas 160, e nao em algumas. */
 const CONTACTO = { email: 'paulo.pereira@happysoaring.com',
-                   tel: '+351927187912', telVis: '+351 927 187 912' };
+                   tel: '+351927187912', telVis: '+351 927 187 912',
+                   instagram: 'https://www.instagram.com/happysoaring/',
+                   youtube: 'https://www.youtube.com/@HappySoaringPortugal' };
 /* O `email_off` e a saida documentada do Cloudflare ao Email Address
    Obfuscation. Sem ele, o deploy de 10/09 trocou o endereco por
    `[email protected]` com um descodificador em JavaScript: o link morria sem
@@ -1231,12 +1266,24 @@ const contactoAlt = (esq) =>
   + '<a href="tel:' + CONTACTO.tel + '">' + CONTACTO.telVis + '</a>'
   + '</p>';
 
+/* O INSTAGRAM ENTRA AO LADO DO EMAIL E DO TELEFONE
+   Nao e decoracao: e o terceiro canal, e o unico dos tres onde ha
+   fotografias e video. Quem chega a uma ficha de asa e quer ver a asa a
+   voar tem ali onde ir.
+
+   `rel="me"` e o par visivel do `sameAs` do schema: diz a mesma coisa em
+   HTML. Nao leva `nofollow` — a ligacao e nossa para uma conta nossa, e
+   nao ha nada a desautorizar. */
 const rodapeContacto = () =>
   '<span class="pg-rodape-c">'
   + '<!--email_off-->'
   + '<a href="mailto:' + CONTACTO.email + '">' + CONTACTO.email + '</a>'
   + '<!--email_on-->'
   + '<a href="tel:' + CONTACTO.tel + '">' + CONTACTO.telVis + '</a>'
+  + '<a href="' + CONTACTO.instagram + '" rel="me noopener"'
+  + ' target="_blank">Instagram</a>'
+  + '<a href="' + CONTACTO.youtube + '" rel="me noopener"'
+  + ' target="_blank">YouTube</a>'
   + '</span>';
 
 function moldeDaPagina(o) {
