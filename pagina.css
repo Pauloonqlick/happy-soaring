@@ -752,15 +752,34 @@ body.sg .pg-voltar{max-width:1440px;margin:0 auto;padding:26px 72px 60px;
 }
 .fl-fam h3 span{font-size:11px;font-weight:700;color:rgba(255,255,255,.42);letter-spacing:.4px;
   text-transform:none}
+/* O CARTAO GANHOU A FOTOGRAFIA A 11/09/2026, e a folha seguiu o `pg-irmas`
+   em vez de inventar outra composicao: as duas listas fazem o mesmo trabalho
+   em sitios diferentes, e a diferenca entre elas era so o hub nao ter imagem.
+
+   DUAS COISAS TIVERAM DE MUDAR, E NAO SAO DECORATIVAS
+   O `a` era `display:block` e carregava ele proprio o peso e o tamanho do
+   nome, porque o nome era um no de texto solto. Com a imagem ao lado, o `a`
+   passa a `flex` e o nome passa a `b` — o peso vai com ele.
+
+   E a regra do rotulo era `.fl-lista a span`, que agora apanharia DOIS spans:
+   o invólucro do texto e o rotulo lá dentro. Passa a `span span`, como no
+   `pg-irmas`. Sem isto o invólucro herdava 12px e o cartao inteiro encolhia.
+
+   A largura minima da coluna subiu de 210 para 240px, que e a do `pg-irmas`:
+   com 64px de imagem mais 13 de intervalo, 210 punha o rotulo a partir. */
 .fl-lista{list-style:none;margin:0;display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
 .fl-lista li{margin:0}
 .fl-lista a{
-  display:block;font-weight:800;font-size:15px;text-decoration:none;color:var(--tinta);
-  border:1px solid var(--linha);border-radius:10px;padding:12px 15px;background:rgba(255,255,255,.05);
+  display:flex;align-items:center;gap:13px;text-decoration:none;color:var(--tinta);
+  border:1px solid var(--linha);border-radius:10px;padding:11px 14px;background:rgba(255,255,255,.05);
+  transition:border-color .18s,background .18s;
 }
 .fl-lista a:hover{border-color:var(--orange);background:rgba(255,106,19,.14);color:var(--tinta)}
-.fl-lista a span{display:block;font-size:12px;font-weight:600;color:var(--tinta-fraca);
+.fl-lista img{width:64px;height:42px;object-fit:contain;flex:none}
+.fl-lista-tx{min-width:0}
+.fl-lista b{display:block;font-size:15px;font-weight:800}
+.fl-lista a span span{display:block;font-size:12px;font-weight:600;color:var(--tinta-fraca);
   margin-top:2px}
 
 /* ---- três colunas: escolher, experimentar, apoio ---- */

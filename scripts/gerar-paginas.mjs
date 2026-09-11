@@ -1281,8 +1281,22 @@ function paginaFlow(l, num) {
       <h3>${esc(rotuloFamilia(fam, l))} <span>${asas.length} ${esc(t(FL.modelos, l))}</span></h3>
       <ul class="fl-lista">${asas.map(p => {
         const cls = rotuloClasse(p.classificacao, l);
-        return `<li><a href="${esc(caminho(l, p))}">${esc(p.nome)}${
-          cls ? `<span>${esc(cls)}</span>` : ''}</a></li>`;
+        /* A MESMA RECEITA DO `pg-irmas`, E O MESMO FICHEIRO
+           Quem percorre o catalogo reconhece a forma da asa antes de ler o
+           nome. A imagem de cartao ja existe — e a que as fichas e o
+           `pg-irmas` usam — por isso isto nao acrescenta um ficheiro nem um
+           pedido novo a quem ja visitou uma ficha.
+
+           TRES DAS 22 NAO TEM COR, E PORTANTO NAO TEM IMAGEM: o Vissta XC, a
+           Aura 2 Square e a D-Chute. Nao ha ficheiro nenhum para elas, e
+           inventar um placeholder era pior do que a falta. O `cor ?` deixa o
+           cartao so com texto, que e exactamente o que o `pg-irmas` ja faz
+           na ficha do Vissta — o comportamento e precedente, nao excepcao. */
+        const cor = (p.cores || [])[0];
+        const foto = cor ? `<img src="/images/asas/${chave(p.nome)}__${esc(cor)}-card.webp"
+          alt="" loading="lazy" width="600" height="397" />` : '';
+        return `<li><a href="${esc(caminho(l, p))}">${foto}<span class="fl-lista-tx">
+          <b>${esc(p.nome)}</b>${cls ? `<span>${esc(cls)}</span>` : ''}</span></a></li>`;
       }).join('')}</ul>
     </div>`).join('');
 
