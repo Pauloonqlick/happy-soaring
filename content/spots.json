@@ -1185,15 +1185,335 @@
     {
       "id": "alfarim",
       "nome": "Alfarim",
-      "publicar": false,
-      "descricao": {
-        "pt": "",
-        "en": "",
-        "es": "",
-        "fr": "",
-        "de": ""
+      "publicar": true,
+      "titulo": {
+        "pt": "Alfarim — Local de groundhandling de Parakite e parapente",
+        "en": "Alfarim — Parakite and paragliding groundhandling site",
+        "es": "Alfarim — Lugar de groundhandling de Parakite y parapente",
+        "fr": "Alfarim — Site de groundhandling de Parakite et parapente",
+        "de": "Alfarim — Groundhandling-Gelände für Parakite und Gleitschirm"
       },
-      "album": []
+      "descricao": {
+        "pt": "Alfarim, no concelho de Sesimbra, é um dos locais utilizados para groundhandling de Parakite e parapente e para sessões práticas dos cursos disponíveis.\n\nAo contrário dos spots costeiros utilizados para soaring, a utilização deste local está sobretudo associada ao treino no solo, aproveitando as extensas zonas de areia e pequenas dunas para trabalhar o controlo da asa e desenvolver técnica.",
+        "en": "Alfarim, in the municipality of Sesimbra, is one of the sites used for Parakite and paragliding groundhandling and for the practical sessions of the courses available.\n\nUnlike the coastal sites used for soaring, this place is mostly associated with ground training, making use of the wide stretches of sand and small dunes to work on wing control and build technique.",
+        "es": "Alfarim, en el municipio de Sesimbra, es uno de los lugares utilizados para groundhandling de Parakite y parapente y para las sesiones prácticas de los cursos disponibles.\n\nA diferencia de los spots costeros utilizados para soaring, el uso de este lugar está sobre todo asociado al entrenamiento en el suelo, aprovechando las extensas zonas de arena y pequeñas dunas para trabajar el control del ala y desarrollar técnica.",
+        "fr": "Alfarim, dans la commune de Sesimbra, est l’un des sites utilisés pour le groundhandling de Parakite et de parapente et pour les séances pratiques des cours disponibles.\n\nContrairement aux sites côtiers utilisés pour le soaring, ce lieu est surtout associé à l’entraînement au sol, en profitant des vastes étendues de sable et des petites dunes pour travailler le contrôle de l’aile et développer la technique.",
+        "de": "Alfarim in der Gemeinde Sesimbra ist einer der Orte für Groundhandling mit Parakite und Gleitschirm und für die Praxiseinheiten der angebotenen Kurse.\n\nAnders als die Küstenspots zum Soaren ist dieser Ort vor allem mit dem Training am Boden verbunden: Die weiten Sandflächen und kleinen Dünen dienen dazu, die Schirmkontrolle zu üben und Technik aufzubauen."
+      },
+      "ficha": {
+        "concelho": "Sesimbra",
+        "linhas": [
+          {
+            "rotulo": {
+              "pt": "Local",
+              "en": "Location",
+              "es": "Lugar",
+              "fr": "Lieu",
+              "de": "Ort"
+            },
+            "valor": {
+              "pt": "Alfarim, Sesimbra, Portugal",
+              "en": "Alfarim, Sesimbra, Portugal",
+              "es": "Alfarim, Sesimbra, Portugal",
+              "fr": "Alfarim, Sesimbra, Portugal",
+              "de": "Alfarim, Sesimbra, Portugal"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Utilização principal",
+              "en": "Main use",
+              "es": "Uso principal",
+              "fr": "Utilisation principale",
+              "de": "Haupt­nutzung"
+            },
+            "valor": {
+              "pt": "groundhandling / treino no solo",
+              "en": "groundhandling / ground training",
+              "es": "groundhandling / entrenamiento en el suelo",
+              "fr": "groundhandling / entraînement au sol",
+              "de": "Groundhandling / Bodentraining"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Modalidades",
+              "en": "Disciplines",
+              "es": "Modalidades",
+              "fr": "Disciplines",
+              "de": "Disziplinen"
+            },
+            "valor": {
+              "pt": "Parakite e parapente",
+              "en": "Parakite and paragliding",
+              "es": "Parakite y parapente",
+              "fr": "Parakite et parapente",
+              "de": "Parakite und Gleitschirm"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Atividade",
+              "en": "Activity",
+              "es": "Actividad",
+              "fr": "Activité",
+              "de": "Aktivität"
+            },
+            "valor": {
+              "pt": "treino técnico e formação",
+              "en": "technical training and instruction",
+              "es": "entrenamiento técnico y formación",
+              "fr": "entraînement technique et formation",
+              "de": "technisches Training und Ausbildung"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Terreno utilizado",
+              "en": "Terrain used",
+              "es": "Terreno utilizado",
+              "fr": "Terrain utilisé",
+              "de": "Genutztes Gelände"
+            },
+            "valor": {
+              "pt": "areia e pequenas dunas",
+              "en": "sand and small dunes",
+              "es": "arena y pequeñas dunas",
+              "fr": "sable et petites dunes",
+              "de": "Sand und kleine Dünen"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Direção do vento",
+              "en": "Wind direction",
+              "es": "Dirección del viento",
+              "fr": "Direction du vent",
+              "de": "Windrichtung"
+            },
+            "valor": {
+              "pt": "sem direção específica para groundhandling",
+              "en": "no specific direction required for groundhandling",
+              "es": "sin dirección específica para groundhandling",
+              "fr": "pas de direction particulière pour le groundhandling",
+              "de": "keine bestimmte Richtung fürs Groundhandling"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Utilização nos cursos",
+              "en": "Use in the courses",
+              "es": "Uso en los cursos",
+              "fr": "Utilisation dans les cours",
+              "de": "Nutzung in den Kursen"
+            },
+            "valor": {
+              "pt": "sim, de acordo com as condições e os objetivos da sessão",
+              "en": "yes, according to the conditions and the goals of the session",
+              "es": "sí, de acuerdo con las condiciones y los objetivos de la sesión",
+              "fr": "oui, selon les conditions et les objectifs de la séance",
+              "de": "ja, je nach Bedingungen und Zielen der Einheit"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Distância desde o estacionamento",
+              "en": "Distance from the parking",
+              "es": "Distancia desde el aparcamiento",
+              "fr": "Distance depuis le stationnement",
+              "de": "Entfernung vom Parkplatz"
+            },
+            "valor": {
+              "pt": "aproximadamente 5 minutos a pé",
+              "en": "about a 5-minute walk",
+              "es": "aproximadamente 5 minutos a pie",
+              "fr": "environ 5 minutes à pied",
+              "de": "etwa 5 Gehminuten"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Estacionamento",
+              "en": "Parking",
+              "es": "Aparcamiento",
+              "fr": "Stationnement",
+              "de": "Parken"
+            },
+            "valor": {
+              "pt": "fácil e sazonal",
+              "en": "easy, and seasonal",
+              "es": "fácil y estacional",
+              "fr": "facile et saisonnier",
+              "de": "einfach und saisonabhängig"
+            }
+          },
+          {
+            "rotulo": {
+              "pt": "Voo",
+              "en": "Flying",
+              "es": "Vuelo",
+              "fr": "Vol",
+              "de": "Fliegen"
+            },
+            "valor": {
+              "pt": "não é o objetivo deste local de treino",
+              "en": "not the purpose of this training site",
+              "es": "no es el objetivo de este lugar de entrenamiento",
+              "fr": "ce n’est pas l’objectif de ce site d’entraînement",
+              "de": "nicht das Ziel dieses Trainingsgeländes"
+            }
+          }
+        ]
+      },
+      "seccoes": [
+        {
+          "titulo": {
+            "pt": "Groundhandling",
+            "en": "Groundhandling",
+            "es": "Groundhandling",
+            "fr": "Groundhandling",
+            "de": "Groundhandling"
+          },
+          "texto": {
+            "pt": "O groundhandling permite trabalhar o controlo da asa no solo sem que o objetivo da sessão seja voar.\n\nEm Alfarim, a combinação de praia, areia e pequenas dunas permite realizar diferentes exercícios, repetir movimentos e desenvolver progressivamente coordenação, posicionamento e controlo da asa.\n\nOs exercícios podem ser adaptados ao nível do piloto, ao equipamento utilizado e aos objetivos de cada sessão.",
+            "en": "Groundhandling is about working on wing control on the ground, without flying being the aim of the session.\n\nAt Alfarim, the combination of beach, sand and small dunes allows for different exercises, repeating movements and progressively building coordination, positioning and wing control.\n\nThe exercises can be adapted to the pilot’s level, to the equipment being used and to the goals of each session.",
+            "es": "El groundhandling permite trabajar el control del ala en el suelo sin que el objetivo de la sesión sea volar.\n\nEn Alfarim, la combinación de playa, arena y pequeñas dunas permite realizar diferentes ejercicios, repetir movimientos y desarrollar progresivamente coordinación, posicionamiento y control del ala.\n\nLos ejercicios pueden adaptarse al nivel del piloto, al equipamiento utilizado y a los objetivos de cada sesión.",
+            "fr": "Le groundhandling permet de travailler le contrôle de l’aile au sol sans que l’objectif de la séance soit de voler.\n\nÀ Alfarim, la combinaison de plage, de sable et de petites dunes permet de faire différents exercices, de répéter des mouvements et de développer progressivement la coordination, le placement et le contrôle de l’aile.\n\nLes exercices peuvent être adaptés au niveau du pilote, au matériel utilisé et aux objectifs de chaque séance.",
+            "de": "Beim Groundhandling geht es um die Schirmkontrolle am Boden, ohne dass Fliegen das Ziel der Einheit ist.\n\nIn Alfarim erlaubt die Kombination aus Strand, Sand und kleinen Dünen verschiedene Übungen, das Wiederholen von Bewegungen und den schrittweisen Aufbau von Koordination, Position und Schirmkontrolle.\n\nDie Übungen lassen sich an das Niveau des Piloten, an das eingesetzte Material und an die Ziele der jeweiligen Einheit anpassen."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Parakite e parapente",
+            "en": "Parakite and paragliding",
+            "es": "Parakite y parapente",
+            "fr": "Parakite et parapente",
+            "de": "Parakite und Gleitschirm"
+          },
+          "texto": {
+            "pt": "Alfarim é utilizado para treino no solo tanto com Parakite como com parapente.\n\nEmbora existam princípios comuns no controlo da asa, os diferentes tipos de equipamento, tamanhos e características de cada asa influenciam o seu comportamento.\n\nO treino deve, por isso, ser adaptado ao piloto e ao equipamento utilizado.",
+            "en": "Alfarim is used for ground training with both Parakite and paraglider.\n\nAlthough there are principles of wing control that are common to both, the different types of equipment, sizes and characteristics of each wing shape how it behaves.\n\nTraining therefore has to be adapted to the pilot and to the equipment being used.",
+            "es": "Alfarim se utiliza para el entrenamiento en el suelo tanto con Parakite como con parapente.\n\nAunque existen principios comunes en el control del ala, los diferentes tipos de equipamiento, tamaños y características de cada ala influyen en su comportamiento.\n\nPor eso el entrenamiento debe adaptarse al piloto y al equipamiento utilizado.",
+            "fr": "Alfarim est utilisé pour l’entraînement au sol aussi bien en Parakite qu’en parapente.\n\nMême s’il existe des principes communs dans le contrôle de l’aile, les différents types de matériel, les tailles et les caractéristiques de chaque aile influencent son comportement.\n\nL’entraînement doit donc être adapté au pilote et au matériel utilisé.",
+            "de": "Alfarim wird für das Bodentraining sowohl mit Parakite als auch mit Gleitschirm genutzt.\n\nZwar gibt es gemeinsame Prinzipien in der Schirmkontrolle, doch Materialart, Größe und Eigenschaften jedes Schirms prägen sein Verhalten.\n\nDas Training muss deshalb an den Piloten und an das eingesetzte Material angepasst werden."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Alfarim nos cursos",
+            "en": "Alfarim in the courses",
+            "es": "Alfarim en los cursos",
+            "fr": "Alfarim dans les cours",
+            "de": "Alfarim in den Kursen"
+          },
+          "texto": {
+            "pt": "Alfarim é um dos locais utilizados nas sessões práticas dos cursos disponíveis.\n\nA escolha do local para cada sessão depende das condições existentes, do nível dos participantes, do equipamento utilizado e dos objetivos do treino.\n\nAo longo de um curso podem ser utilizados diferentes locais, permitindo escolher as condições e o terreno mais adequados ao exercício que se pretende realizar.",
+            "en": "Alfarim is one of the sites used for the practical sessions of the courses available.\n\nThe choice of site for each session depends on the conditions at the time, on the level of the participants, on the equipment being used and on the goals of the training.\n\nOver the course of a programme different sites may be used, so that the conditions and the terrain can be matched to the exercise at hand.",
+            "es": "Alfarim es uno de los lugares utilizados en las sesiones prácticas de los cursos disponibles.\n\nLa elección del lugar para cada sesión depende de las condiciones existentes, del nivel de los participantes, del equipamiento utilizado y de los objetivos del entrenamiento.\n\nA lo largo de un curso pueden utilizarse diferentes lugares, lo que permite elegir las condiciones y el terreno más adecuados al ejercicio que se pretende realizar.",
+            "fr": "Alfarim est l’un des sites utilisés lors des séances pratiques des cours disponibles.\n\nLe choix du site pour chaque séance dépend des conditions du moment, du niveau des participants, du matériel utilisé et des objectifs de l’entraînement.\n\nAu fil d’un cours, différents sites peuvent être utilisés, ce qui permet de choisir les conditions et le terrain les mieux adaptés à l’exercice prévu.",
+            "de": "Alfarim ist einer der Orte, die in den Praxiseinheiten der angebotenen Kurse genutzt werden.\n\nWelcher Ort für eine Einheit gewählt wird, hängt von den vorhandenen Bedingungen ab, vom Niveau der Teilnehmer, vom eingesetzten Material und von den Zielen des Trainings.\n\nIm Verlauf eines Kurses können verschiedene Orte genutzt werden, damit Bedingungen und Gelände zur jeweiligen Übung passen."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Condições para groundhandling",
+            "en": "Conditions for groundhandling",
+            "es": "Condiciones para groundhandling",
+            "fr": "Conditions pour le groundhandling",
+            "de": "Bedingungen fürs Groundhandling"
+          },
+          "texto": {
+            "pt": "Ao contrário de um spot de soaring, não existe uma direção de vento específica necessária para utilizar Alfarim para groundhandling.\n\nO que importa é avaliar as condições existentes no momento e perceber se são adequadas ao exercício, ao piloto e ao equipamento utilizado.\n\nA intensidade do vento, rajadas e qualidade do fluxo devem ser consideradas em conjunto com o modelo e tamanho da asa, experiência do piloto e tipo de exercício.\n\nPor esse motivo, também não indicamos valores mínimos ou máximos de vento aplicáveis a todas as situações.",
+            "en": "Unlike a soaring site, there is no specific wind direction required to use Alfarim for groundhandling.\n\nWhat matters is assessing the conditions at the time and judging whether they suit the exercise, the pilot and the equipment being used.\n\nWind strength, gusts and the quality of the flow have to be considered together with the model and size of the wing, the pilot’s experience and the type of exercise.\n\nFor that reason we also give no minimum or maximum wind figures that would apply to every situation.",
+            "es": "A diferencia de un spot de soaring, no existe una dirección de viento específica necesaria para utilizar Alfarim para groundhandling.\n\nLo que importa es evaluar las condiciones existentes en el momento y entender si son adecuadas al ejercicio, al piloto y al equipamiento utilizado.\n\nLa intensidad del viento, las ráfagas y la calidad del flujo deben considerarse junto con el modelo y el tamaño del ala, la experiencia del piloto y el tipo de ejercicio.\n\nPor ese motivo, tampoco indicamos valores mínimos o máximos de viento aplicables a todas las situaciones.",
+            "fr": "Contrairement à un site de soaring, il n’y a pas de direction de vent particulière nécessaire pour utiliser Alfarim en groundhandling.\n\nCe qui compte, c’est d’évaluer les conditions du moment et de juger si elles conviennent à l’exercice, au pilote et au matériel utilisé.\n\nLa force du vent, les rafales et la qualité du flux doivent être considérées avec le modèle et la taille de l’aile, l’expérience du pilote et le type d’exercice.\n\nPour cette raison, nous n’indiquons pas non plus de valeurs de vent minimales ou maximales valables dans toutes les situations.",
+            "de": "Anders als an einem Soaring-Spot ist für Groundhandling in Alfarim keine bestimmte Windrichtung nötig.\n\nEntscheidend ist, die Bedingungen im Moment zu beurteilen und einzuschätzen, ob sie zur Übung, zum Piloten und zum eingesetzten Material passen.\n\nWindstärke, Böen und die Qualität der Strömung sind zusammen mit Modell und Größe des Schirms, der Erfahrung des Piloten und der Art der Übung zu betrachten.\n\nDeshalb nennen wir auch keine Mindest- oder Höchstwerte für den Wind, die für alle Situationen gelten würden."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Zona de treino",
+            "en": "The training area",
+            "es": "Zona de entrenamiento",
+            "fr": "Zone d’entraînement",
+            "de": "Trainingsbereich"
+          },
+          "texto": {
+            "pt": "O treino é realizado na areia e nas pequenas dunas, escolhendo a zona mais adequada às condições e aos exercícios previstos.\n\nA praia oferece áreas amplas para trabalhar a asa no solo, enquanto as pequenas variações do terreno podem ser utilizadas em exercícios específicos à medida que o treino evolui.\n\nA zona utilizada fica a aproximadamente 5 minutos a pé do estacionamento.",
+            "en": "Training takes place on the sand and on the small dunes, choosing whichever area best suits the conditions and the exercises planned.\n\nThe beach offers wide areas for working the wing on the ground, while the small variations in the terrain can be used for specific exercises as the training progresses.\n\nThe area used is about a 5-minute walk from the parking.",
+            "es": "El entrenamiento se realiza en la arena y en las pequeñas dunas, eligiendo la zona más adecuada a las condiciones y a los ejercicios previstos.\n\nLa playa ofrece áreas amplias para trabajar el ala en el suelo, mientras que las pequeñas variaciones del terreno pueden utilizarse en ejercicios específicos a medida que el entrenamiento evoluciona.\n\nLa zona utilizada está a aproximadamente 5 minutos a pie del aparcamiento.",
+            "fr": "L’entraînement se fait sur le sable et sur les petites dunes, en choisissant la zone la plus adaptée aux conditions et aux exercices prévus.\n\nLa plage offre de vastes espaces pour travailler l’aile au sol, tandis que les petites variations du terrain peuvent servir à des exercices spécifiques à mesure que l’entraînement progresse.\n\nLa zone utilisée se trouve à environ 5 minutes à pied du stationnement.",
+            "de": "Trainiert wird auf dem Sand und auf den kleinen Dünen — je nachdem, welcher Bereich zu den Bedingungen und den geplanten Übungen passt.\n\nDer Strand bietet weite Flächen, um den Schirm am Boden zu arbeiten, während die kleinen Geländeunterschiede mit fortschreitendem Training für bestimmte Übungen genutzt werden können.\n\nDer genutzte Bereich liegt etwa 5 Gehminuten vom Parkplatz entfernt."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Aprender através da repetição",
+            "en": "Learning through repetition",
+            "es": "Aprender a través de la repetición",
+            "fr": "Apprendre par la répétition",
+            "de": "Lernen durch Wiederholung"
+          },
+          "texto": {
+            "pt": "O treino no solo permite repetir movimentos e desenvolver progressivamente a relação entre piloto e asa.\n\nO objetivo não é apenas conseguir executar determinado movimento, mas compreender o que acontece, executar corretamente e repetir até que o controlo se torne progressivamente mais natural.\n\nPara quem está a aprender, esta prática ajuda a construir bases para a evolução futura. Para pilotos com experiência, permite continuar a aperfeiçoar controlo, precisão e resposta da asa.",
+            "en": "Ground training makes it possible to repeat movements and to build up the relationship between pilot and wing.\n\nThe aim is not only to manage a given movement, but to understand what is happening, to do it correctly and to repeat it until the control becomes progressively more natural.\n\nFor someone who is learning, this practice helps build the foundations for what comes later. For experienced pilots, it is a way to keep refining control, precision and the wing’s response.",
+            "es": "El entrenamiento en el suelo permite repetir movimientos y desarrollar progresivamente la relación entre piloto y ala.\n\nEl objetivo no es solo conseguir ejecutar determinado movimiento, sino comprender lo que ocurre, ejecutarlo correctamente y repetir hasta que el control se vuelva progresivamente más natural.\n\nPara quien está aprendiendo, esta práctica ayuda a construir bases para la evolución futura. Para pilotos con experiencia, permite seguir perfeccionando control, precisión y respuesta del ala.",
+            "fr": "L’entraînement au sol permet de répéter des mouvements et de développer progressivement la relation entre le pilote et l’aile.\n\nL’objectif n’est pas seulement de réussir un mouvement donné, mais de comprendre ce qui se passe, de l’exécuter correctement et de répéter jusqu’à ce que le contrôle devienne peu à peu plus naturel.\n\nPour qui apprend, cette pratique aide à construire les bases de la progression à venir. Pour les pilotes expérimentés, elle permet de continuer à affiner le contrôle, la précision et la réponse de l’aile.",
+            "de": "Das Bodentraining erlaubt es, Bewegungen zu wiederholen und die Beziehung zwischen Pilot und Schirm nach und nach aufzubauen.\n\nZiel ist nicht nur, eine bestimmte Bewegung zu schaffen, sondern zu verstehen, was passiert, sie richtig auszuführen und so lange zu wiederholen, bis die Kontrolle immer natürlicher wird.\n\nWer lernt, legt damit die Grundlage für die spätere Entwicklung. Erfahrene Piloten können Kontrolle, Präzision und die Reaktion des Schirms weiter verfeinern."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Um espaço partilhado",
+            "en": "A shared space",
+            "es": "Un espacio compartido",
+            "fr": "Un espace partagé",
+            "de": "Ein geteilter Raum"
+          },
+          "texto": {
+            "pt": "Alfarim é também uma zona frequentada por outras pessoas, especialmente durante os períodos de maior utilização da praia.\n\nA preparação das asas e os exercícios devem ter em consideração a presença de outros utilizadores e o espaço disponível.\n\nÉ importante manter margem suficiente para realizar os exercícios sem interferir com quem utiliza a praia.",
+            "en": "Alfarim is also an area used by other people, especially during the busier periods on the beach.\n\nLaying out wings and running exercises has to take into account the presence of other users and the space available.\n\nIt matters to keep enough margin to do the exercises without getting in the way of those using the beach.",
+            "es": "Alfarim es también una zona frecuentada por otras personas, especialmente durante los periodos de mayor uso de la playa.\n\nLa preparación de las alas y los ejercicios deben tener en cuenta la presencia de otros usuarios y el espacio disponible.\n\nEs importante mantener margen suficiente para realizar los ejercicios sin interferir con quien usa la playa.",
+            "fr": "Alfarim est aussi une zone fréquentée par d’autres personnes, surtout pendant les périodes de forte affluence sur la plage.\n\nLa préparation des ailes et les exercices doivent tenir compte de la présence des autres usagers et de l’espace disponible.\n\nIl est important de garder une marge suffisante pour faire les exercices sans gêner ceux qui profitent de la plage.",
+            "de": "Alfarim wird auch von anderen Menschen genutzt, besonders in den Zeiten, in denen am Strand viel los ist.\n\nDas Auslegen der Schirme und die Übungen müssen die anderen Nutzer und den verfügbaren Platz berücksichtigen.\n\nWichtig ist, genug Abstand zu halten, um die Übungen zu machen, ohne jene zu stören, die den Strand nutzen."
+          }
+        },
+        {
+          "titulo": {
+            "pt": "Respeito pelo local",
+            "en": "Respect for the place",
+            "es": "Respeto por el lugar",
+            "fr": "Respect du lieu",
+            "de": "Respekt vor dem Ort"
+          },
+          "texto": {
+            "pt": "A praia e as pequenas dunas fazem parte de um ambiente costeiro que deve ser preservado.\n\nA prática de groundhandling deve procurar minimizar o impacto sobre o local, respeitar os acessos existentes e evitar danificar a vegetação dunar.\n\nSempre que exista espaço adequado na areia, deve privilegiar-se a utilização dessas zonas, deixando as pequenas dunas para os exercícios em que o terreno tenha uma função específica.\n\nRespeitar o local ajuda a mantê-lo disponível para todos.",
+            "en": "The beach and the small dunes are part of a coastal environment that has to be looked after.\n\nGroundhandling should aim to keep its impact on the place to a minimum, to respect the existing access paths and to avoid damaging the dune vegetation.\n\nWhenever there is suitable space on the sand, those areas should be preferred, leaving the small dunes for exercises where the terrain has a specific role.\n\nRespecting the place helps keep it available to everyone.",
+            "es": "La playa y las pequeñas dunas forman parte de un ambiente costero que debe preservarse.\n\nLa práctica de groundhandling debe procurar minimizar el impacto sobre el lugar, respetar los accesos existentes y evitar dañar la vegetación dunar.\n\nSiempre que exista espacio adecuado en la arena, debe privilegiarse el uso de esas zonas, dejando las pequeñas dunas para los ejercicios en los que el terreno tenga una función específica.\n\nRespetar el lugar ayuda a mantenerlo disponible para todos.",
+            "fr": "La plage et les petites dunes font partie d’un milieu côtier qu’il faut préserver.\n\nLa pratique du groundhandling doit chercher à limiter son impact sur le lieu, à respecter les accès existants et à éviter d’abîmer la végétation dunaire.\n\nDès qu’il y a un espace adapté sur le sable, il faut privilégier ces zones et laisser les petites dunes aux exercices où le terrain a un rôle précis.\n\nRespecter le lieu aide à le garder accessible à tous.",
+            "de": "Der Strand und die kleinen Dünen gehören zu einer Küstenlandschaft, die es zu bewahren gilt.\n\nGroundhandling sollte die Auswirkungen auf den Ort möglichst gering halten, die vorhandenen Zugänge respektieren und die Dünenvegetation nicht beschädigen.\n\nWo immer auf dem Sand genug geeigneter Platz ist, sollten diese Flächen bevorzugt werden — die kleinen Dünen bleiben den Übungen vorbehalten, bei denen das Gelände eine bestimmte Rolle spielt.\n\nDen Ort zu respektieren hilft, ihn für alle offen zu halten."
+          }
+        }
+      ],
+      "aviso": {
+        "pt": "As informações desta página destinam-se a explicar as características gerais da utilização de Alfarim para groundhandling e não substituem a avaliação das condições no local.\n\nO exercício, equipamento e condições devem ser adequados à experiência do piloto e aos objetivos da sessão.\n\nSe estás a aprender, o treino deve ser realizado com acompanhamento adequado.",
+        "en": "The information on this page is there to explain the general characteristics of using Alfarim for groundhandling, and does not replace assessing the conditions on site.\n\nThe exercise, the equipment and the conditions have to suit the pilot’s experience and the goals of the session.\n\nIf you are learning, the training should be done with proper supervision.",
+        "es": "La información de esta página sirve para explicar las características generales del uso de Alfarim para groundhandling y no sustituye la evaluación de las condiciones en el lugar.\n\nEl ejercicio, el equipamiento y las condiciones deben ser adecuados a la experiencia del piloto y a los objetivos de la sesión.\n\nSi estás aprendiendo, el entrenamiento debe realizarse con el acompañamiento adecuado.",
+        "fr": "Les informations de cette page servent à expliquer les caractéristiques générales de l’utilisation d’Alfarim pour le groundhandling et ne remplacent pas l’évaluation des conditions sur place.\n\nL’exercice, le matériel et les conditions doivent être adaptés à l’expérience du pilote et aux objectifs de la séance.\n\nSi tu es en apprentissage, l’entraînement doit se faire avec un encadrement adapté.",
+        "de": "Die Informationen auf dieser Seite erklären die allgemeinen Eigenschaften der Nutzung von Alfarim fürs Groundhandling und ersetzen nicht die Beurteilung der Bedingungen vor Ort.\n\nÜbung, Material und Bedingungen müssen zur Erfahrung des Piloten und zu den Zielen der Einheit passen.\n\nWer noch lernt, sollte das Training mit geeigneter Begleitung machen."
+      },
+      "album": [
+        {
+          "imagem": "/images/spots/alfarim.webp",
+          "alt": {
+            "pt": "Praia de Alfarim vista do alto de uma duna com tufos de estorno; ao fundo, na areia, um piloto com uma asa verde e azul inflada acima da cabeça, o mar à esquerda e a linha de dunas à direita, sob um céu de nuvens altas.",
+            "en": "Alfarim beach seen from the top of a dune with tufts of marram grass; further off, on the sand, a pilot with a green and blue wing inflated overhead, the sea on the left and the dune line on the right, under a sky of high cloud.",
+            "es": "Playa de Alfarim vista desde lo alto de una duna con matas de barrón; al fondo, en la arena, un piloto con un ala verde y azul inflada sobre la cabeza, el mar a la izquierda y la línea de dunas a la derecha, bajo un cielo de nubes altas.",
+            "fr": "Plage d’Alfarim vue du haut d’une dune avec des touffes d’oyat ; plus loin, sur le sable, un pilote avec une aile verte et bleue gonflée au-dessus de la tête, la mer à gauche et la ligne de dunes à droite, sous un ciel de nuages élevés.",
+            "de": "Strand von Alfarim, von einer Düne mit Strandhaferbüscheln aus gesehen; weiter hinten auf dem Sand ein Pilot mit einem grün-blauen Schirm über dem Kopf, links das Meer und rechts die Dünenlinie, unter einem Himmel mit hohen Wolken."
+          }
+        }
+      ]
     },
     {
       "id": "peniche",

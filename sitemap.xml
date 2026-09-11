@@ -728,6 +728,31 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://happysoaring.com/parakite-portugal/alfarim/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://happysoaring.com/en/parakite-portugal/alfarim/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://happysoaring.com/es/parakite-portugal/alfarim/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://happysoaring.com/fr/parakite-portugal/alfarim/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://happysoaring.com/de/parakite-portugal/alfarim/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://happysoaring.com/parakite-portugal/praia-da-gralha/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
