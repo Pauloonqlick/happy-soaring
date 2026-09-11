@@ -36,15 +36,20 @@
 
 <!-- As cinco páginas iniciais, cada uma com o seu endereço. O bloco é igual
      nas cinco — reciprocidade a sério, que é o que o Google exige para as
-     aceitar. O x-default aponta para a portuguesa, a mesma convenção que as
-     110 páginas das asas já usam; muda-se em todo o site de uma vez, se se
-     mudar. O gerador copia estas linhas tal como estão. -->
+     aceitar. O gerador copia estas linhas tal como estão.
+
+     O X-DEFAULT APONTA PARA /en/ DESDE 11/09/2026.
+     Apontava para a portuguesa, e aqui estava escrito que se mudava "em todo
+     o site de uma vez, se se mudar". Mudou-se: o x-default é o que o Google
+     serve a quem não corresponde a nenhuma das cinco línguas, e 95% dos
+     clientes são estrangeiros. A razão longa está no `etiquetasAlt` do
+     gerador, que faz o mesmo para as outras 170 páginas. -->
 <link rel="alternate" hreflang="pt" href="https://happysoaring.com/" />
 <link rel="alternate" hreflang="en" href="https://happysoaring.com/en/" />
 <link rel="alternate" hreflang="es" href="https://happysoaring.com/es/" />
 <link rel="alternate" hreflang="fr" href="https://happysoaring.com/fr/" />
 <link rel="alternate" hreflang="de" href="https://happysoaring.com/de/" />
-<link rel="alternate" hreflang="x-default" href="https://happysoaring.com/" />
+<link rel="alternate" hreflang="x-default" href="https://happysoaring.com/en/" />
 
 <!-- OS ICONES DA MARCA
      O que o Google mostra ao lado do nome do site nos resultados e o favicon,

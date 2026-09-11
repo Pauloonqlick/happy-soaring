@@ -2,15 +2,18 @@
 
 Estado. As regras do processo estão no `SEO-WORKFLOW.md`.
 
-Última reconciliação: **08/09/2026**, contra a exportação de Cobertura do
-Search Console (motivo "Detetada – atualmente não indexada", **dados até
-04/09**) cruzada com o repositório e com produção.
+Última reconciliação: **11/09/2026**, e desta vez contra **dados de
+desempenho**, não só de cobertura — é a primeira vez que este ficheiro tem
+cliques e impressões reais. A secção seguinte é toda nova por isso.
 
-O site está publicado no deploy **`a2015d7b`** desde **11/09 às 08:51**, sobre
-o commit **`58a033f`**, com `sujo: false` — o `meta.json` regista-o, e a
-árvore, o GitHub e o site estão os três no mesmo ponto.
+O site está publicado no deploy **`e9047eaf`** desde **11/09 às 14:46**, sobre
+o commit **`a7377e8`**, com `sujo: false`.
 
-**Seis deploys em 10 e 11/09**, por esta ordem:
+**NA ÁRVORE E POR PUBLICAR:** o `x-default` a apontar para inglês. Está feito
+nas 175 páginas e verificado, mas não foi commitado nem publicado — ver a
+entrada no `FECHADO` mais abaixo, que diz o que falta.
+
+**Nove deploys em 10 e 11/09**, por esta ordem:
 
 ```
 4c829982  10/09 19:03  commit 8ec61c6, ÁRVORE SUJA — o schema, as FAQ, as
@@ -22,6 +25,10 @@ c3efacc4  10/09 19:33  commit 602f7d9 — os títulos sem sufixo de marca, o
 135c8f42  10/09 20:11  commit c77986e — a página do curso, 5 línguas
 28b85f49  10/09 22:07  commit 546edbf — os acessos à página do curso
 a2015d7b  11/09 08:51  commit 58a033f — o cartão do Pilot2Wing
+27235924  11/09 10:12  commit eaa546c — as fotografias nos cartões do hub Flow
+bdce4f27  11/09 14:34  commit d709615 — os locais do curso, e as 2 573
+                       fronteiras de texto que colavam em 170 páginas
+e9047eaf  11/09 14:46  commit a7377e8 — o Alfarim passa a página, 175 URLs
 ```
 
 **A exportação de Cobertura é de 04/09** e portanto anterior a todos: não viu
@@ -35,6 +42,123 @@ costumam oscilar antes de estabilizar.
 Última auditoria completa do site: **10/09/2026**, medida no ficheiro e no
 browser. Nota global 7,2 em treze dimensões. Dela saiu quase tudo o que se
 segue.
+
+---
+
+## DESEMPENHO — a primeira medição real
+exportado a 11/09 · Search Console, pesquisa Web, **últimos 3 meses**
+
+```
+TOTAL          88 cliques · 680 impressões · CTR 12,9%
+
+               impressões        cliques          CTR
+Portugal       206  (30%)        59  (67%)       28,6%
+Estrangeiro    474  (70%)        29  (33%)        6,1%
+```
+
+**Setenta por cento das impressões já são estrangeiras.** O Google mostra o
+site lá fora, e muito. O que falha é o clique — e essa é a distinção que
+muda a estratégia toda.
+
+### O idioma não é a barreira, e são os próprios dados que o dizem
+
+```
+Áustria          38 impr   11 cliques   CTR 28,9%   pos 5,5
+Alemanha         80 impr    2 cliques   CTR  2,5%   pos 8,4
+França           53 impr    3 cliques   CTR  5,7%   pos 9,4
+Estados Unidos   42 impr    1 clique    CTR  2,4%   pos 11,9
+Espanha          34 impr    0 cliques   CTR  0,0%   pos 9,3
+Suíça            27 impr    0 cliques   CTR  0,0%   pos 10,1
+```
+
+**A Áustria converte melhor do que Portugal**, em alemão, com exactamente a
+mesma arquitectura que a Alemanha tem. Se a língua base fosse o problema, a
+Áustria não fazia 28,9%.
+
+Isto responde à pergunta do Paulo — *«95% dos meus clientes são estrangeiros
+e eu cometi o erro de ter o idioma base em português»*. **Não foi esse o
+erro.** A arquitectura multilingue está certa e mede-se a funcionar.
+
+### O que os estrangeiros estão mesmo a ver
+
+As consultas com mais impressões de fora são todas de catálogo:
+
+```
+flow mullet 2  18    albatroxx  12    flow albatroxx   10
+flow vissta xc  7    flow yoti 3 7    flow mystic       5
+```
+
+E aterram nas fichas, que não convertem:
+
+```
+/en/wings/albatroxx/       44 impr   1 clique   2,3%
+/de/schirme/mulletx/       20 impr   0 cliques  0%
+/en/wings/future-power/    16 impr   0 cliques  0%
+/en/wings/yoti-3-light/    15 impr   0 cliques  0%
+```
+
+**A procura estrangeira é gente a investigar modelos Flow**, de qualquer
+parte do mundo, que aterra na ficha de um revendedor português — e que quer
+um revendedor no país dela. Não é procura de curso.
+
+**A procura de curso é minúscula e é portuguesa:**
+
+```
+parakite portugal  24 impressões
+parakite kurs      14              ← a única estrangeira com volume
+parakite lessons    1
+parakite course     1
+```
+
+Os 95% de clientes estrangeiros e os 67% de cliques portugueses **não se
+contradizem**: descrevem dois canais diferentes. A pesquisa traz catálogo
+Flow; os clientes de curso vêm do Instagram, da FelloFly e do boca-a-boca.
+
+### O que converte
+
+```
+/en/                    20 cliques   66,7% CTR   pos 1,8   ← 23% de tudo
+/pilot2wing/             3 cliques   30,0% CTR   pos 2,5
+/o-que-e-um-parakite/    5 cliques   22,7% CTR   pos 4,2
+/parakite-portugal/      6 cliques   20,0% CTR   pos 5,9
+```
+
+**As páginas de conceito e de método convertem. O catálogo não** — e é assim
+que tem de ser. O trabalho das 110 fichas é fazer a Happy Soaring existir
+para a Flow, que é como um revendedor é encontrado. **Não se julgam por CTR.**
+
+### O que fazer com isto
+
+1. **Não mexer na arquitectura de idiomas.** Migrar 175 URLs seria pagar caro
+   por um problema que os dados dizem não existir.
+2. **`parakite kurs` é a oportunidade real** — única consulta estrangeira de
+   curso com volume, posição 7,79, e a página alemã do curso nasceu a 10/09.
+3. **Perceber a Áustria.** 11 dos 29 cliques estrangeiros vêm de lá com o
+   melhor CTR do site. Se for um contacto ou um cliente, é o modelo do que
+   funciona.
+
+### Duas ressalvas, e a segunda é séria
+
+**88 cliques em três meses são poucos.** A diferença entre a Alemanha a 2,5%
+e a Áustria a 28,9% pode ser real ou pode ser ruído a esta escala. Isto é
+direcção, não certeza.
+
+**Os dados param a 08/09.** Não incluem os títulos sem sufixo, a página do
+curso, os locais, o Alfarim, nem a correcção do snippet. **Nada do que se fez
+a 10 e 11/09 está medido aqui.**
+
+### O `www` ainda aparece como página à parte
+
+```
+https://www.happysoaring.com/   127 impressões   7 cliques   5,5%   pos 8,2
+https://happysoaring.com/        77 impressões  14 cliques  18,2%   pos 5,5
+```
+
+O `www` tem **mais impressões do que o apex** e metade do CTR. Verificado a
+11/09: **o 301 existe e funciona** (`www` → apex, ao nível do Cloudflare, não
+do `_redirects`). Logo isto é consolidação por terminar, não defeito aberto.
+Vale a pena reconfirmar na próxima exportação — se as impressões do `www` não
+descerem, aí sim há o que investigar.
 
 ---
 
@@ -100,7 +224,8 @@ tem a entrada.
 /fr/ailes/rpm-3/             4
 /fr/ailes/yoti-3/            3
 ```
-aberto: 2026-09-06 · auditado: 2026-09-08 · rever depois de: 2026-09-13
+aberto: 2026-09-06 · auditado: 2026-09-08 · **corroborado: 2026-09-11**
+rever depois de: 2026-09-25, com a remedição da AI Overview
 
 **Mudou o nome do problema.** Não é "por indexar" — é **por rastrear**. Todas
 aparecem na Cobertura com `1970-01-01` em "Último rastreado", que é a época
@@ -135,6 +260,36 @@ agendamento de rastreio.
 
 Acção manual disponível: pedir indexação no Search Console.
 
+**CORROBORADO A 11/09 POR UMA SEGUNDA FONTE, E O CONTROLO É LIMPO**
+
+A exportação de Desempenho (últimos 3 meses, até 08/09) é um relatório
+diferente do de Cobertura e foi feito com outro propósito. Cruzadas as duas,
+dizem o mesmo:
+
+```
+ASA          AFECTADA                impr    IRMÃ DE CONTROLO      impr
+fusion       /de/schirme/fusion/        0    /asas/fusion/            6
+rpm-3        /en/wings/rpm-3/           0    /asas/rpm-3/            14
+vissta-xc    /en/wings/vissta-xc/       0    /asas/vissta-xc/         3
+albatroxx    /es/alas/albatroxx/        0    /asas/albatroxx/         4
+mohawk       /fr/ailes/mohawk/          0    /asas/mohawk/            6
+rpm-3 fr     /fr/ailes/rpm-3/           0    /asas/rpm-3/            14
+yoti-3       /fr/ailes/yoti-3/          0    /en/wings/yoti-3/        2
+```
+
+**Sete em sete: a afectada a zero, a irmã com impressões.** Uma página não
+rastreada não pode ter impressões, por isso isto não é surpresa — o que vale
+é a limpeza do controlo. Nenhuma das sete teve **uma única** impressão em três
+meses, enquanto todas as irmãs tiveram.
+
+Isto fecha a dúvida sobre se a Cobertura estava a relatar mal: não estava. E
+mantém a condição viva até **08/09**, quatro dias depois do que a exportação
+de Cobertura via.
+
+**Não muda a recomendação** — continua a não haver alteração a fazer nas
+páginas, porque continuam indistinguíveis das irmãs. Muda a confiança no
+diagnóstico, que passa a ter duas fontes independentes.
+
 ### As quatro fichas alemãs fechadas a 06/09 aparecem nesta exportação
 ```
 /de/schirme/f2-light/   /de/schirme/panorama/
@@ -164,6 +319,64 @@ anterior a existirem.
 ---
 
 ## PENDENTE
+
+### A AI Overview do Google cita sete fontes, e nenhuma é nossa
+medido: 2026-09-11 · **o achado mais importante do dia**
+
+Medição própria, via DataForSEO, da SERP de `curso parakite` em **Portugal,
+em português, desktop, profundidade 100**. Três chamadas, $0,06.
+
+**A posição orgânica é boa** — e desmente o que eu tinha escrito antes de
+medir:
+
+```
+#7   /curso-parakite-portugal/     5.º resultado orgânico
+#15  /pilot2wing/
+#68  /  (a inicial)
+```
+
+Acima dela, só **um concorrente real**: o `flywithbehrooz.com/pt/parakite-week.html`
+em #2. Os outros que a antecedem são o Chile e os Pirenéus, que não competem
+por um piloto português. E a Happy Soaring **supera as oito escolas** que eu
+tinha listado — duas delas nem estão no Top 100.
+
+**Mas a AI Overview está no lugar 1, cita sete fontes, e nenhuma é nossa:**
+
+```
+flywithbehrooz.com/pt/parakite-week.html        citada — E COM LIGAÇÃO
+                                                dentro da frase
+valledebenasque.es/cursos-go-flare-moustache…   citada
+paravidaparapente.cl/parakite/                  citada
+flyparakite.com/en/parakite-course-dune-du-pilat/ citada
+3 vídeos de YouTube (FlySpain, go.FLARE ×2)     citados
+──────────────────────────────────────────────────────────
+happysoaring.com                                zero
+```
+
+Na secção «Requisitos comuns» escreve, em português: *«Em Portugal, existem
+opções de formação e adaptação com escolas e instrutores especializados (por
+exemplo, em locais como Sesimbra através do **Fly with Behrooz**)»* — com
+hiperligação no meio do texto.
+
+**A citação não depende da posição:** o `flyparakite.com` está em #11, abaixo
+de nós, e é citado.
+
+**O que as quatro citadas têm e nós não tínhamos:** uma frase em prosa a
+dizer o que o curso ensina. O que o Google tinha de nós era a tabela de
+preços com as palavras coladas — `«4 diasduração de referência»` — que era o
+excerto que ele punha a **negrito** no snippet.
+
+**Duas hipóteses, e nenhuma descartada:**
+
+1. **A extracção partida.** Corrigida a 11/09 no deploy `bdce4f27`.
+2. **A idade.** A página tinha 17 horas quando foi medida.
+
+Só uma remedição as separa. **Remedir a 25/09**, com os mesmos parâmetros. Se
+a citação aparecer, confirma-se a hipótese 1.
+
+**Uma terceira, contributiva e agora tratada:** a página não dizia onde o
+curso acontece — zero locais em 2 905 palavras — e a resposta da IA
+organizou-se por *requisitos e locais*. Fechado a 11/09.
 
 ### Os quatro visuais que a página do curso não tem
 aberto: 2026-09-10
@@ -337,6 +550,127 @@ a nenhum dos dois `GOOGLE_CLIENT_ID` acima.
 ---
 
 ## FECHADO A 10 E 11/09
+
+### O texto colava em 2 573 fronteiras, em 170 páginas
+descoberto e resolvido: 2026-09-11 · deploy `bdce4f27`
+
+`<b>4 dias</b><span>duração de referência</span>` sem nada pelo meio dá, em
+`textContent`, **«4 diasduração de referência»**. Foi assim que o Google
+mostrou a página do curso na SERP de Portugal — com a parte colada a negrito,
+por ser o excerto que escolheu.
+
+Varridas as 170 páginas: **2 573 fronteiras**, em uns quinze componentes —
+fichas de asa, spots, música, chips do Pilot2Wing, cartões do hub Flow. **Não
+era um sítio, era um hábito de escrita de templates.**
+
+Por isso a correcção é uma função no `escrevePagina`, pelo mesmo argumento
+que já lá estava para os pontos nos títulos: quinze chamadas são catorze.
+
+A lista de tags é **fechada por medição**. O `<button>` ficou de fora porque
+no `/musica/` há dois botões irmãos a `inline-block`, e ali um espaço vê-se.
+O `<b>`, o `<span>` e o `<i>` ficaram dentro apesar de serem em linha por
+omissão, porque neste site são sempre `display:block` quando aparecem colados.
+
+**Prova de que não mexeu num pixel:** caixa de todos os elementos, antes e
+depois, em oito tipos de página — 383, 142, 705, 252, 152, 248, 331 e 492
+elementos. Os oito digests batem. Peso: 2,5 KB no site inteiro.
+
+### Os locais da formação entram na página do curso
+fechado: 2026-09-11 · deploy `bdce4f27`
+
+A página não tinha **um único nome de lugar** em 2 905 palavras. Dizia «os
+spots da zona de Lisboa e da Península de Setúbal», que é verdade e não
+responde à pergunta — e foi por aí que a AI Overview respondeu, nomeando um
+lugar e o concorrente que o tem no título.
+
+```
+menos de 35 minutos de Lisboa, sem local fixo, escolhido pelo vento do
+dia e pelo nível do piloto
+
+Alfarim              groundhandling
+Fonte da Telha       primeiros voos
+Lagoa de Albufeira   voo, conforme as condições
+Praia do Meco        voo, conforme as condições
+```
+
+A ordem é pedagógica, não geográfica: chão, primeiros voos, voo. É a tese da
+página aplicada ao mapa. **Só dois papéis foram dados** — os outros dois
+dizem «depende do vento e do nível do piloto», que foi a resposta literal, em
+vez de lhes inventar uma função.
+
+Reaproveita o `pk-eixos`, que já é uma grelha de quatro: zero CSS de
+maquetação. Precisou de uma regra de cor — os links herdavam o laranja da
+página e davam **2,87:1** sobre a ilha branca contra um limiar de 3:1. O
+`--laranja-tinta` já existia para isto, documentado na folha com este mesmo
+2,87. Passa a **6,3:1**.
+
+### O Alfarim passa a página
+fechado: 2026-09-11 · deploy `e9047eaf` · **sitemap 170 → 175 URLs**
+
+Estava no `spots.json` com `publicar: false` e sem uma linha de conteúdo
+desde que o ficheiro existe — e é o local do groundhandling, a base do
+método, o único dos quatro locais do curso sem página própria.
+
+Texto do Paulo, arrumado no molde do CMS e traduzido: 8 secções, 10 linhas de
+ficha, aviso de segurança, ~580 palavras em PT e o equivalente nas outras
+quatro. **Sem coordenadas e sem valores de vento** — a própria página explica
+porque não os dá, e essa recusa é conteúdo, não lacuna.
+
+Fotografia 1725×3072 → **1000×1779 WebP, 107 KB**, que é a convenção dos
+outros spots e mais leve do que os dois existentes.
+
+**A ligação na página do curso apareceu sozinha.** O helper `grelhaLocais`,
+escrito nessa manhã, liga só os spots com `publicar: true`, e o comentário
+dizia «no dia em que a página do Alfarim for escrita, a ligação aparece
+sozinha e ninguém volta aqui». Não se voltou.
+
+### O `x-default` aponta para inglês
+feito: 2026-09-11 · **NA ÁRVORE, POR COMMITAR E POR PUBLICAR**
+
+```
+antes   x-default → /curso-parakite-portugal/
+agora   x-default → /en/parakite-course-portugal/
+```
+
+Nas **175 páginas**, cada uma para a sua própria variante inglesa — a alemã
+do curso aponta para a inglesa do curso, não para a raiz.
+
+**Não é correcção de bug: é decisão de negócio.** O `x-default` é o que o
+Google serve a quem **não corresponde a nenhuma das cinco línguas** — a
+Holanda, a Polónia, a Suécia, a Chéquia, que aparecem todas na exportação com
+impressões e zero cliques. Com ele em português, essa pessoa era mandada para
+a única língua que quase de certeza não lê.
+
+Não muda nada para quem corresponde: o alemão continua a receber `/de/`,
+porque é a etiqueta `de` que manda. E não mexeu num único endereço.
+
+**Falta commitar e publicar.**
+
+### O encaminhamento de idioma na raiz já existia — e eu disse que não
+registado: 2026-09-11
+
+Recomendei ao Paulo «corrigir» a falta de negociação de idioma na raiz, com
+base num teste de `curl` que devolvia 200 em português para qualquer
+`Accept-Language`. **O `curl` não executa JavaScript.**
+
+Testado no browser com o `localStorage` limpo, a caixa aparece:
+*«View Happy Soaring in English? · Switch to English · No, thanks»*
+
+E está melhor construída do que o redireccionamento que eu ia propor:
+
+```
+sugere, não redirecciona      quem quer ler em PT não é arrastado
+só na raiz                    quem escreveu /de/ já disse o que quer
+data-nosnippet                o Google não põe o botão no resumo
+hs-idioma-nao                 fechar é «não a esta», não é escolher
+Googlebot nunca encaminhado   não tem localStorage
+```
+
+Fica registado porque é a quarta vez no mesmo dia que **medir através do
+instrumento errado** me deu uma conclusão falsa: o `curl` sem JS, a
+ferramenta de pesquisa em vez do Google, o iframe em vez do documento, e uma
+regex que inseria os espaços que devia estar a procurar. **Sempre que um
+número vier por um intermediário, confirmar na fonte.**
 
 ### O Cloudflare ofuscava o email do rodapé
 descoberto em produção: 2026-09-10 · **resolvido e publicado** no `9af9b2d7`

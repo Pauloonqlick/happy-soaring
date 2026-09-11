@@ -357,10 +357,37 @@ const inicioSeccao = (l, id) => inicioHref(l) + '#' + id;
    caminho() e o SEGMENTO. */
 const alternativas = ondeFica => IDIOMAS.map(x => ({ lang: x, url: ondeFica(x) }));
 
+/* O X-DEFAULT APONTA PARA O INGLES, E NAO PARA A LINGUA DA CASA
+   ============================================================
+   11/09/2026. Apontava para portugues, que e a escolha por omissao de quem
+   escreve um site portugues — e estava errada para este negocio.
+
+   O x-default nao e "a lingua principal". E o que o Google serve a quem NAO
+   corresponde a nenhuma das cinco: um holandes, um polaco, um sueco, um
+   checo. Com ele em portugues, essa pessoa era mandada para a unica lingua
+   que quase de certeza nao le.
+
+   95% DOS CLIENTES SAO ESTRANGEIROS, e a medicao de hoje diz o mesmo sobre
+   o mercado: "curso parakite" da 5 400 resultados em portugues e 274 000 em
+   ingles, e o topico do Reddit onde dois pilotos procuram um curso EM
+   PORTUGAL esta escrito em ingles.
+
+   O QUE ISTO NAO MUDA
+   Nao muda nada para quem corresponde a uma das cinco: o alemao continua a
+   receber /de/, porque a etiqueta `de` e que manda. O x-default so entra em
+   cena quando nenhuma bate certo. E nao mexe nos URLs: as paginas
+   portuguesas continuam na raiz, e migrar isso seria redireccionar 175
+   enderecos por um ganho que o hreflang ja da.
+
+   O OMISSAO continua a ser 'pt' — e a lingua em que o site se escreve e a
+   que vive sem prefixo. Sao duas coisas diferentes, e era confundi-las que
+   punha aqui o OMISSAO. */
+const IDIOMA_SEM_CORRESPONDENCIA = 'en';
+
 const etiquetasAlt = alts =>
   alts.map(a => '<link rel="alternate" hreflang="' + a.lang + '" href="' + DOMINIO + a.url + '" />')
     .concat('<link rel="alternate" hreflang="x-default" href="' +
-      DOMINIO + alts.find(a => a.lang === OMISSAO).url + '" />').join('\n');
+      DOMINIO + alts.find(a => a.lang === IDIOMA_SEM_CORRESPONDENCIA).url + '" />').join('\n');
 
 /* o nome de cada língua na própria língua: é o nome acessível de cada
    ligação. "FR" não diz nada a quem ouve a página; "Français" diz. */
