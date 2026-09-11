@@ -403,7 +403,7 @@
       "album": [
         {
           "videoId": "1CAWZKhxcGM",
-          "imagem": "",
+          "imagem": "/images/spots/fonte-da-telha-video.webp",
           "alt": {
             "pt": "Vídeo: a vista do piloto sob um parakite Flow turquesa, em voo baixo sobre a vegetação das dunas da Fonte da Telha, com a praia e o Atlântico ao fundo.",
             "en": "Video: the pilot’s view under a turquoise Flow parakite, flying low over the dune vegetation at Fonte da Telha, with the beach and the Atlantic behind.",
@@ -1164,7 +1164,7 @@
       "album": [
         {
           "videoId": "m9qO0LaV3t0",
-          "imagem": "",
+          "imagem": "/images/spots/praia-do-meco-video.webp",
           "alt": {
             "pt": "Vídeo: a vista do piloto sob uma asa Flow verde-fluorescente, a voar rente à arriba da Praia do Meco sobre um areal cheio de banhistas, com outra asa ao longe.",
             "en": "Video: the pilot’s view under a fluorescent yellow-green Flow wing, flying close to the cliff at Praia do Meco above a beach full of people, with another wing in the distance.",
@@ -1899,7 +1899,7 @@
       "album": [
         {
           "videoId": "XkkG4DAGlK8",
-          "imagem": "",
+          "imagem": "/images/spots/praia-da-gralha-video.webp",
           "alt": {
             "pt": "Vídeo: um parakite turquesa e laranja a voar baixo sobre o areal da Praia da Gralha, entre o Atlântico à esquerda e as arribas ocres à direita.",
             "en": "Video: a turquoise and orange parakite flying low over the sand at Praia da Gralha, with the Atlantic to the left and ochre cliffs to the right.",
@@ -2305,7 +2305,7 @@
         },
         {
           "videoId": "nAymp6E4TuA",
-          "imagem": "",
+          "imagem": "/images/spots/praia-das-bicas-video.webp",
           "alt": {
             "pt": "Vídeo: uma AlbatroXX vermelha vista de baixo, a voar sobre a costa.",
             "en": "Video: a red AlbatroXX seen from below, flying over the coast.",
