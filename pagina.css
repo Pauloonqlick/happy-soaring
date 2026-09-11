@@ -2872,6 +2872,24 @@ a.pk-spot-b{text-decoration:none;color:inherit}
       que a folha ja usa: '.pk-papel X{color:var(--painel-*)}'. */
 .pk-papel .pk-eixos b{color:var(--painel-tinta)}
 .pk-papel .pk-eixos span{color:var(--painel-fraca)}
+/* 11/09/2026 · OS LOCAIS DA FORMAÇÃO LEVARAM LIGAÇÕES PARA DENTRO DO `b`
+   E o `body.sg a{color:#ff6a13}` apanhou-as, o que dá 2,87:1 sobre a ilha
+   branca contra um limiar de 3:1 — medido, e falha por pouco, que é a pior
+   maneira de falhar porque não salta à vista.
+
+   O `--laranja-tinta` existe exactamente para isto e está documentado umas
+   centenas de linhas abaixo com este mesmo 2,87. Não é cor nova: é o mesmo
+   laranja escurecido até passar sobre claro. Dá 6,3:1 — mais do dobro.
+
+   A especificidade tem de bater o `body.sg a`, que é (0,1,1). Esta é (0,2,2).
+
+   O sublinhado aparece só no hover, como no `pk-b2` da mesma ilha: o laranja
+   escuro já distingue das que NÃO têm ligação — o Alfarim fica em tinta
+   normal, e essa diferença de cor é informação, não decoração. */
+.pk-papel .pk-eixos b a{color:var(--laranja-tinta);text-decoration:none}
+.pk-papel .pk-eixos b a:hover,
+.pk-papel .pk-eixos b a:focus-visible{text-decoration:underline;
+  text-underline-offset:3px}
 .pk-papel .sg-abord{background:rgba(0,0,0,.03);border-color:var(--painel-linha)}
 .pk-papel .sg-abord-nossa{background:rgba(255,106,19,.08);border-color:var(--orange)}
 .pg.pk .pk-papel .sg-abord-et{color:var(--painel-fraca)}

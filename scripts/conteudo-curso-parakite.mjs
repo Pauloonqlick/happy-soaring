@@ -1223,13 +1223,54 @@ export const CURSO = {
     fr: 'Savoir voler et savoir enseigner sont deux compétences différentes. Enseigner exige d’observer, de diagnostiquer, de corriger et d’adapter la progression au pilote — et de savoir quand ne pas intervenir.',
     de: 'Fliegen können und unterrichten können sind verschiedene Fähigkeiten. Unterrichten verlangt beobachten, einordnen, korrigieren und die Progression an den Piloten anpassen — und wissen, wann man nicht eingreift.'
   },
+  /* 11/09/2026 · AQUI NÃO ESTAVA UM ÚNICO NOME DE LUGAR
+     O texto anterior dizia «os spots da zona de Lisboa e da Península de
+     Setúbal», o que é verdade e não responde à pergunta. As 2 905 palavras
+     da página não tinham Caparica, nem Meco, nem duna, nem praia — medido.
+
+     E foi por aí que a AI Overview do Google respondeu à query «curso
+     parakite» em Portugal: nomeou um lugar («em locais como Sesimbra») e o
+     concorrente que o tem no título. Quem não diz onde não é citado a
+     propósito de onde.
+
+     OS 35 MINUTOS SÃO O FACTO QUE MAIS TRABALHA: um piloto de Lisboa que
+     pesa a viagem tem a resposta antes de perguntar, e é uma distância
+     verificável em vez de um adjectivo. */
   locaisTexto: {
-    pt: 'A formação decorre nos spots da zona de Lisboa e da Península de Setúbal onde a Happy Soaring voa, e o local de cada sessão escolhe-se pelas condições do dia — não pelo calendário.',
-    en: 'The training takes place at the sites around Lisbon and the Setúbal Peninsula where Happy Soaring flies, and each session’s site is chosen by the day’s conditions — not by the calendar.',
-    es: 'La formación se realiza en los spots de la zona de Lisboa y de la Península de Setúbal donde vuela Happy Soaring, y el lugar de cada sesión se elige por las condiciones del día — no por el calendario.',
-    fr: 'La formation se déroule sur les sites de la région de Lisbonne et de la péninsule de Setúbal où vole Happy Soaring, et le site de chaque séance est choisi selon les conditions du jour — pas selon le calendrier.',
-    de: 'Die Ausbildung findet an den Spots im Raum Lissabon und auf der Halbinsel Setúbal statt, an denen Happy Soaring fliegt. Der Ort jeder Einheit richtet sich nach den Bedingungen des Tages — nicht nach dem Kalender.'
+    pt: 'A formação decorre em spots a menos de 35 minutos de Lisboa, na Península de Setúbal. Não há um local fixo: o sítio de cada sessão escolhe-se pelo vento do dia e pelo nível do piloto — não pelo calendário.',
+    en: 'The training takes place at sites less than 35 minutes from Lisbon, on the Setúbal Peninsula. There is no fixed location: each session’s site is chosen by the day’s wind and the pilot’s level — not by the calendar.',
+    es: 'La formación se realiza en spots a menos de 35 minutos de Lisboa, en la Península de Setúbal. No hay un lugar fijo: el sitio de cada sesión se elige por el viento del día y por el nivel del piloto — no por el calendario.',
+    fr: 'La formation se déroule sur des sites à moins de 35 minutes de Lisbonne, sur la péninsule de Setúbal. Il n’y a pas de lieu fixe : le site de chaque séance est choisi selon le vent du jour et le niveau du pilote — pas selon le calendrier.',
+    de: 'Die Ausbildung findet an Spots weniger als 35 Minuten von Lissabon entfernt statt, auf der Halbinsel Setúbal. Es gibt keinen festen Ort: Der Spot jeder Einheit richtet sich nach dem Wind des Tages und dem Niveau des Piloten — nicht nach dem Kalender.'
   },
+
+  /* OS QUATRO LOCAIS, E A ORDEM É A DO MÉTODO
+     O Paulo deu dois papéis e não deu os outros dois: o Alfarim é o do
+     groundhandling, a Fonte da Telha é a dos primeiros voos. Para a Lagoa e
+     o Meco a resposta dele foi «depende do vento e do nível do piloto» — e
+     é isso que está escrito, em vez de lhes inventar uma função.
+
+     A ordem não é geográfica, é pedagógica: chão, primeiros voos, voo. É a
+     tese da página — «Tudo começa no chão» — aplicada ao mapa.
+
+     OS TOPÓNIMOS NÃO SE TRADUZEM e por isso `nome` é uma string e não um
+     objecto de cinco línguas. O que se traduz é o papel. */
+  locais: [
+    { id: 'alfarim', nome: 'Alfarim', papel: {
+        pt: 'groundhandling', en: 'groundhandling', es: 'groundhandling',
+        fr: 'groundhandling', de: 'Groundhandling' } },
+    { id: 'fonte-da-telha', nome: 'Fonte da Telha', papel: {
+        pt: 'primeiros voos', en: 'first flights', es: 'primeros vuelos',
+        fr: 'premiers vols', de: 'erste Flüge' } },
+    { id: 'lagoa-de-albufeira', nome: 'Lagoa de Albufeira', papel: {
+        pt: 'voo, conforme as condições', en: 'flying, as conditions allow',
+        es: 'vuelo, según las condiciones', fr: 'vol, selon les conditions',
+        de: 'Fliegen, je nach Bedingungen' } },
+    { id: 'praia-do-meco', nome: 'Praia do Meco', papel: {
+        pt: 'voo, conforme as condições', en: 'flying, as conditions allow',
+        es: 'vuelo, según las condiciones', fr: 'vol, selon les conditions',
+        de: 'Fliegen, je nach Bedingungen' } }
+  ],
   equipTexto: {
     pt: 'O Parakite e o harness necessários à formação estão incluídos, e o curso é realizado com a Mullet 2. Levas o que levarias para um dia de voo: capacete, calçado que aguente areia, e roupa para o vento que houver.',
     en: 'The Parakite and harness needed for the training are included, and the course is run on the Mullet 2. You bring what you would bring for a day of flying: helmet, footwear that copes with sand, and clothing for whatever wind there is.',

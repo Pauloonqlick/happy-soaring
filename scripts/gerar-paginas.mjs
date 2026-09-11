@@ -2553,6 +2553,51 @@ ${seccoes}
    So entra se ainda nao la estiver: o `index.html` e lido do disco, e
    sem esta condicao ganhava uma ligacao nova a cada geracao. */
 const LIGACAO_TEMA = '<link rel="stylesheet" href="/tema.css" />';
+/* AS FRONTEIRAS ONDE O TEXTO COLA
+   =================================
+   `<b>4 dias</b><span>duração de referência</span>` sem nada pelo meio dá,
+   em `textContent`, «4 diasduração de referência». Foi assim que o Google
+   mostrou a página do curso na SERP de Portugal a 11/09/2026 — e com a parte
+   colada a negrito, por ser o excerto que ele escolheu.
+
+   Varrido o site: **2 573 fronteiras** assim, em 170 páginas e uns quinze
+   componentes. Não é um defeito de um sítio, é um hábito de escrita de
+   templates — e por isso a correção vive aqui, no mesmo sítio e pela mesma
+   razão que a regra dos pontos nos títulos: quarenta chamadas são trinta e
+   nove, e a quadragésima é a que fica por fazer.
+
+   PORQUE É QUE ISTO NÃO MEXE NA MAQUETAÇÃO
+   Uma mudança de linha é espaço. Entre dois elementos de BLOCO não produz
+   caixa nenhuma, e em grelha ou flex um nó de texto só com espaços também
+   não gera item. Entre dois elementos EM LINHA produziria um espaço visível
+   — e é por isso que a lista abaixo é fechada em vez de aberta.
+
+   O QUE FICA DE FORA, E NÃO É POR TIMIDEZ
+   O `<button>` está fora porque foi medido: no `/musica/` o `music-cart-ask`
+   tem dois botões irmãos a `inline-block`, e ali um espaço abre um intervalo
+   que se vê. O `<a>` está fora porque é em linha por natureza e os únicos
+   pares `</a><a>` do site são o menu — que os motores já tratam como
+   entidades separadas e nunca colam num snippet.
+
+   O `<b>`, o `<span>` e o `<i>` estão DENTRO apesar de serem em linha por
+   omissão, porque neste site são sempre `display:block` por CSS quando
+   aparecem colados — verificado no DOM em oito tipos de página, e a prova
+   é a geometria: as caixas de todos os elementos, antes e depois, batem. */
+const TAGS_SEPARAVEIS = new Set([
+  'li', 'dt', 'dd', 'tr', 'td', 'th', 'table', 'thead', 'tbody', 'tfoot',
+  'caption', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'article',
+  'section', 'details', 'summary', 'figure', 'figcaption', 'blockquote',
+  'ul', 'ol', 'dl', 'b', 'span', 'i', 'strong'
+]);
+
+const separaFronteiras = (html) => html.replace(
+  /<\/([a-z][a-z0-9]*)><([a-z][a-z0-9]*)(?=[\s>])/g,
+  (tudo, fim, ini) =>
+    (TAGS_SEPARAVEIS.has(fim) && TAGS_SEPARAVEIS.has(ini))
+      ? '</' + fim + '>\n<' + ini
+      : tudo
+);
+
 function escrevePagina(caminho, html) {
   /* A REGRA DOS TITULOS APLICA-SE AQUI, E NAO NOS QUARENTA SITIOS
      Ha mais de quarenta pontos no ficheiro a emitir um <h1>, <h2> ou <h3>.
@@ -2560,7 +2605,7 @@ function escrevePagina(caminho, html) {
      quadragesimo esquece-se, e essa pagina fica com um ponto que as outras
      nao tem. Aqui e um sitio so, e cobre tambem os titulos que ainda nao
      existem. */
-  let h = tiraPontosDosTitulos(protegeNomes(html, NOMES_ASAS));
+  let h = separaFronteiras(tiraPontosDosTitulos(protegeNomes(html, NOMES_ASAS)));
   if (h.indexOf('href="/tema.css"') < 0) {
     h = h.replace('</head>', LIGACAO_TEMA + '\n</head>');
   }
@@ -3218,9 +3263,61 @@ function paginaCurso(l, numWa) {
   const cadeia = o => `\n  <div class="sg-trans-lista">${lista(o).map((x, i) =>
     `${i ? '<i>&rarr;</i>' : ''}<b>${x}</b>`).join('')}</div>`;
 
+  /* 11/09/2026 · O ESPAÇO ENTRE `</b>` E `<span>` NÃO É FORMATAÇÃO
+     Sem ele, o `textContent` deste `li` dá «4 diasduração de referência», e
+     foi exactamente isso que o Google mostrou na SERP de Portugal a 11/09 —
+     com a parte colada a NEGRITO, por ser o excerto que ele escolheu:
+
+       «4 diasduração de referência ; 800 €o curso completo ;
+        60 €/horaformação flexível ; Parakite e harnessincluídos»
+
+     Três das quatro fontes que a AI Overview citou nessa mesma SERP dão ao
+     Google uma frase em prosa sobre o que o curso ensina. Isto dava-lhe uma
+     tabela de preços com as palavras coladas.
+
+     O `<span>` é `display:block` por CSS, logo o espaço no código-fonte não
+     muda um pixel — medido a 1440 e a 375. Só muda o texto que sai.
+
+     ERA MAIOR DO QUE ISTO, E EU ESCREVI AQUI QUE NÃO ERA
+     Este comentário dizia, antes, que «era só aqui que o `pk-eixos` colava as
+     palavras». Varridas as 170 páginas, eram **2 573 fronteiras** em uns
+     quinze componentes — as fichas de asa, os spots, a música, os chips do
+     Pilot2Wing, os cartões do hub Flow. Não era um sítio: era um hábito.
+
+     Por isso a correção de verdade está no `separaFronteiras`, no
+     `escrevePagina`, que é o ponto por onde passam todas as páginas. Este
+     espaço aqui ficou: é redundante com a função central, colapsa com a
+     mudança de linha dela, e não custa nada. Quem escrever o próximo helper
+     não precisa de se lembrar — mas se se lembrar, também não estraga. */
   const eixos = itens => `\n  <ul class="pk-eixos">${itens.map(i =>
-    `<li><b>${precos(esc(t(i.nome || i.valor, l)))}</b><span>${
-      precos(esc(t(i.nota, l)))}</span></li>`).join('')}</ul>`;
+    `<li><b>${precos(esc(t(i.nome || i.valor, l)))}</b> <span>${
+      precos(esc(t(i.nota, l)))}</span></li>`).join('\n    ')}</ul>`;
+
+  /* A GRELHA DOS LOCAIS
+     Reaproveita o `pk-eixos` do bloco 2 — nome a negrito, papel por baixo —
+     e o componente já é uma grelha de quatro, que é exactamente o número de
+     locais. Zero CSS novo, e nada de `data-cols`: esse atributo pertence ao
+     `sg-etapas`, não a este.
+
+     TRÊS DOS QUATRO LEVAM LIGAÇÃO e um não. O Alfarim está no spots.json com
+     `publicar: false` e sem uma linha de conteúdo — ligar para uma página
+     que não existe era um 404, e inventar-lhe conteúdo era pior. Sai como
+     texto, e a decisão fica na própria condição: no dia em que a página do
+     Alfarim for escrita, a ligação aparece sozinha e ninguém volta aqui.
+
+     O ESPAÇO ENTRE `</b>` E `<span>` NÃO É DECORATIVO. Sem ele o Google
+     extrai «Alfarimgroundhandling», que é o mesmo defeito que hoje põe
+     «4 diasduração de referência» a negrito na SERP. O `eixos` acima ainda
+     o tem; este não nasce com ele. */
+  const grelhaLocais = () => `\n  <ul class="pk-eixos">${
+    C.locais.map(x => {
+      const s = SPOTS.find(y => y.id === x.id);
+      const nome = esc(x.nome);
+      const alvo = (s && s.publicar === true)
+        ? `<a href="${esc(caminhoSpot(l, s))}">${nome}</a>`
+        : nome;
+      return `<li><b>${alvo}</b> <span>${esc(t(x.papel, l))}</span></li>`;
+    }).join('\n    ')}</ul>`;
 
   const duas = cols => `\n  <div class="sg-duas">${cols.map(c => `
     <div class="sg-abord${c.destaque ? ' sg-abord-nossa' : ''}">
@@ -3386,7 +3483,7 @@ function paginaCurso(l, numWa) {
   corpo += sec('pk-sec pk-papel', 'quem-ensina',
     eyebrow(C.ensinaKicker) + h2(C.ensinaTitulo) +
     h3(C.saberTitulo) + par(C.saberTexto) + par(C.licenca, 'pk-lead') +
-    par(C.locaisTexto) + par(C.equipTexto) +
+    par(C.locaisTexto) + grelhaLocais() + par(C.equipTexto) +
     `\n  <p class="pk-botoes">
     <a class="pk-b2" href="${esc(hrefPK)}">${tx(C.verSpots)}</a>
     <a class="pk-b2" href="${esc(hrefAsa)}">${tx(C.verAsa)}</a>
