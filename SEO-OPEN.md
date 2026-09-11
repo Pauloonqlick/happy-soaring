@@ -6,16 +6,35 @@ Estado. As regras do processo estão no `SEO-WORKFLOW.md`.
 Search Console (motivo "Detetada – atualmente não indexada", **dados até
 04/09**) cruzada com o repositório e com produção.
 
-O site está publicado no deploy **`4c829982`** desde **10/09 às 19:03**, sobre
-o commit `8ec61c6` com a árvore suja — o `meta.json` regista-o. O deploy
-anterior era o `929fba7` de 06/09.
+O site está publicado no deploy **`a2015d7b`** desde **11/09 às 08:51**, sobre
+o commit **`58a033f`**, com `sujo: false` — o `meta.json` regista-o, e a
+árvore, o GitHub e o site estão os três no mesmo ponto.
 
-**A exportação de Cobertura é de 04/09** e portanto anterior aos dois: não viu
-as 15 páginas de spot, nem o sitemap sem `lastmod`, nem os ícones da marca, nem
-nada do que entrou a 10/09. Nada aqui mede o site actual.
+**Seis deploys em 10 e 11/09**, por esta ordem:
+
+```
+4c829982  10/09 19:03  commit 8ec61c6, ÁRVORE SUJA — o schema, as FAQ, as
+                       descrições, as imagens e o contacto
+9af9b2d7  10/09 19:09  commit aa463ba — o email_off do Cloudflare, e a
+                       primeira vez que o meta.json saiu limpo
+c3efacc4  10/09 19:33  commit 602f7d9 — os títulos sem sufixo de marca, o
+                       contacto ao lado dos botões, as descrições dos spots
+135c8f42  10/09 20:11  commit c77986e — a página do curso, 5 línguas
+28b85f49  10/09 22:07  commit 546edbf — os acessos à página do curso
+a2015d7b  11/09 08:51  commit 58a033f — o cartão do Pilot2Wing
+```
+
+**A exportação de Cobertura é de 04/09** e portanto anterior a todos: não viu
+as 15 páginas de spot, nem o sitemap sem `lastmod`, nem os ícones da marca,
+nem nada do que entrou nestes seis deploys. **Nada aqui mede o site actual.**
+
+E há uma razão nova para contar com oscilação na próxima medição: **159
+títulos mudaram de uma vez** e entraram **5 páginas novas**. Títulos que mudam
+costumam oscilar antes de estabilizar.
 
 Última auditoria completa do site: **10/09/2026**, medida no ficheiro e no
-browser. Nota global 7,2 em treze dimensões. Dela saiu a secção seguinte.
+browser. Nota global 7,2 em treze dimensões. Dela saiu quase tudo o que se
+segue.
 
 ---
 
@@ -53,44 +72,19 @@ alcançado porque as 22 asas têm todas tagline. A `descricao`, com 146 a 303
 caracteres escritos nas cinco línguas, não estava a ser servida a ninguém.
 Passou a compor as duas por frases inteiras até 160 caracteres.
 
-**Indexabilidade verificada, e não estava em risco.** Grafo de ligações das 164
-páginas, alcance a partir das cinco iniciais, duas passagens — HTML servido e
-DOM renderizado: **164 de 164 alcançáveis nas duas**. O caminho que o garante é
-o `/flow-paragliders-portugal/`, que liga às 22 asas, é estático, e está no
-menu de todas as páginas.
+**Indexabilidade verificada, e não estava em risco.** Grafo de ligações,
+alcance a partir das cinco iniciais, duas passagens — HTML servido e DOM
+renderizado: **164 de 164 alcançáveis nas duas** quando isto se mediu. O
+caminho que o garante é o `/flow-paragliders-portugal/`, que liga às 22 asas,
+é estático, e está no menu de todas as páginas.
 
----
-
-## PENDENTE DE UM SEGUNDO DEPLOY
-
-### O Cloudflare ofuscou o email do rodapé
-descoberto em produção: 2026-09-10 · corrigido no repositório, por publicar
-
-A opção **Email Address Obfuscation** do Cloudflare reescreveu o link do
-rodapé nas 159 páginas:
-
-```
-o que se publicou   <a href="mailto:paulo.pereira@happysoaring.com">paulo.pereira@…</a>
-o que o Cloudflare  <a href="/cdn-cgi/l/email-protection#c5b5a4…">
-serve               <span class="__cf_email__" data-cfemail="…">[email protected]</span>
-```
-
-Consequência: sem JavaScript o link morre, e **o endereço deixa de estar no
-HTML como texto** — que era metade da razão de o pôr ali, porque um endereço em
-texto é um facto que um motor de resposta consegue devolver.
-
-**O que NÃO foi atingido:** o JSON-LD passou intacto. Verificado em produção, a
-`Organization` da `/asas/albatroxx/` serve `email`, `telephone` e
-`contactPoint.email` corretos. O `tel:` também passou intacto. Portanto a
-camada legível por máquina — a que mais conta — está boa desde já.
-
-**Corrigido no gerador** com `<!--email_off-->` / `<!--email_on-->`, que é a
-saída documentada do Cloudflare, e fica inofensivo se a opção for desligada.
-Falta publicar.
-
-Alternativa sem deploy, e é decisão do Paulo: desligar o Email Address
-Obfuscation no painel do Cloudflare, em Scrape Shield. O site não tem outro
-endereço de email, por isso a opção não está a proteger nada.
+*Actualização de 11/09:* o site tem agora **170 páginas** e a verificação
+`17` do `verificar.mjs` confirma **zero órfãs**. As cinco páginas do curso
+foram verificadas uma a uma em produção — sem `noindex`, canonical
+auto-referencial, no sitemap — e são alcançáveis de **160 das 165** páginas,
+porque a entrada entrou no menu. As cinco que faltam são as iniciais, cujo
+menu é construído pelo `app.js`: verificado no browser que a versão hidratada
+tem a entrada.
 
 ---
 
@@ -342,7 +336,62 @@ a nenhum dos dois `GOOGLE_CLIENT_ID` acima.
 
 ---
 
-## FECHADO A 10/09
+## FECHADO A 10 E 11/09
+
+### O Cloudflare ofuscava o email do rodapé
+descoberto em produção: 2026-09-10 · **resolvido e publicado** no `9af9b2d7`
+
+A opção **Email Address Obfuscation** do Cloudflare reescreveu o link do
+rodapé nas 159 páginas:
+
+```
+o que se publicou   <a href="mailto:paulo.pereira@happysoaring.com">paulo.pereira@…</a>
+o que o Cloudflare  <a href="/cdn-cgi/l/email-protection#c5b5a4…">
+serve               <span class="__cf_email__" data-cfemail="…">[email protected]</span>
+```
+
+Consequência: sem JavaScript o link morre, e **o endereço deixa de estar no
+HTML como texto** — que era metade da razão de o pôr ali, porque um endereço em
+texto é um facto que um motor de resposta consegue devolver.
+
+**O que NÃO foi atingido:** o JSON-LD passou intacto. Verificado em produção, a
+`Organization` da `/asas/albatroxx/` serve `email`, `telephone` e
+`contactPoint.email` corretos. O `tel:` também passou intacto. Portanto a
+camada legível por máquina — a que mais conta — está boa desde já.
+
+**Corrigido no gerador** com `<!--email_off-->` / `<!--email_on-->`, que é a
+saída documentada do Cloudflare, e fica inofensivo se a opção for desligada.
+
+Publicado no `9af9b2d7` e **verificado em produção**: zero `__cf_email__` em
+quatro páginas, incluindo uma traduzida, e o `mailto:` a chegar em texto. A
+alternativa — desligar o Email Address Obfuscation no Scrape Shield do
+Cloudflare — deixou de ser necessária, mas continua a ser a opção mais robusta
+se algum dia se acrescentar outro endereço ao site.
+
+### O cartão do Pilot2Wing na página inicial
+fechado: 2026-09-11
+
+Era a versão posterizada em laranja da mesma fotografia que o bloco 8 do curso
+usa. Passou à natural, e **não por cópia do ficheiro**: a
+`body-first-treino.webp` tinha 18% de margem à esquerda e 13% à direita, e a
+laranja estava cortada ao osso — sem cortar ao alfa primeiro, a figura
+aparecia 22% mais pequena no mesmo espaço. Cortada dá 615×1223, e o recorte
+mede 133×264 no cartão contra os 119×264 de antes. Três KB mais leve.
+
+A figura atravessa duas superfícies — a secção é branca, o cartão é
+`rgb(27,34,42)` — e mediu-se em cada banda. Sobre o branco: **5,98:1** contra
+os 4,13 da laranja. Dentro do cartão: 4,45:1, com **23% dos pixéis abaixo de
+1,6:1** contra 4% da laranja.
+
+**Esse 23% pareceu problema e não é.** Montou-se a composição exacta para ver
+em vez de deduzir: os 23% são os calções escuros, e ficam na linha em que a
+figura entra no cartão. É ali que o recorte se deve dissolver, e é para isso
+que o gradiente do `::before` existe. Lê melhor do que a laranja, que tinha a
+camisola e os calções a competir os dois com a cor do cartão.
+
+Não é item de SEO. Fica registado porque mudou um activo publicado.
+
+
 
 ### A página do curso foi ligada ao site
 fechado: 2026-09-10
