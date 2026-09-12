@@ -654,6 +654,15 @@ export const QP = {
     es: 'Lo que puede variar entre proyectos', fr: 'Ce qui peut varier d’un projet à l’autre',
     de: 'Was zwischen Konstruktionen variieren kann'
   },
+  /* O rotulo do bloco que nomeia os projectos. Deliberadamente factual e
+     nao comercial: sao os Parakites da gama, e a pagina continua a ser de
+     explicacao. O que distingue cada um vem do `tagline` de cada ficha,
+     que e dado e nao texto escrito para aqui. */
+  s9Asas: {
+    pt: 'Os Parakites da gama Flow', en: 'The Parakites in the Flow range',
+    es: 'Los Parakites de la gama Flow', fr: 'Les Parakites de la gamme Flow',
+    de: 'Die Parakites im Flow-Programm'
+  },
   s9Varia: {
     pt: [['Geometria dos risers', 'Como os grupos de linhas se relacionam entre si.'],
          ['Relações mecânicas', 'Quanto se move cada grupo para um dado input.'],

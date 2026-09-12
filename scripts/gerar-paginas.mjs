@@ -2849,6 +2849,24 @@ function paginaQueParakite(l) {
   const variam = arr('s9Varia').map(v =>
     '<div class="qp-varia-it"><b>' + esc(v[0]) + '</b><span>' + esc(v[1]) + '</span></div>').join('');
 
+  /* AS ASAS QUE A SECCAO 9 PROMETE E NAO NOMEAVA
+     O teste e o MESMO que decide, na ficha de asa, se ela ganha o link
+     para esta pagina: `/Parakite/` sobre a classificacao do catalogo. Uma
+     regra para as duas direccoes — e se a Flow acrescentar um parakite a
+     gama, aparece aqui sozinho, sem lista escrita a mao.
+
+     Hoje sao quatro: Mullet 2 e MulletX ("Parakite"), AlbatroXX
+     ("Performance Parakite") e Mohawk ("Parakite speed flying"). Os
+     parapentes, os arneses, a reserva, o paraquedas de arrasto e a D-Wing
+     ("Parawing") ficam de fora, que e o correcto: uma asa que nao e
+     parakite nao deve aparecer numa pagina a explicar o que e um. */
+  const asasQP = produtos
+    .filter(p => /Parakite/.test(String(p.classificacao || '')))
+    .map(p => '<a class="qp-link" href="' + esc(caminho(l, p)) + '">'
+      + '<b>' + esc(p.nome) + '</b>'
+      + '<span>' + esc(t(p.tagline, l) || rotuloClasse(p.classificacao, l)) + '</span></a>')
+    .join('');
+
   /* a ordem tem de bater com a do QP.s10Links, e o curso entra em terceiro:
      o endereço dele traduz-se, por isso vai pelo caminhoCurso() e não pelo
      A(), que só prefixa a língua. */
@@ -3026,6 +3044,8 @@ ${alt}
       <p class="qp-p">${esc(t(QP.s9P, l))}</p>
       <p class="qp-varia-t">${esc(t(QP.s9VariaTit, l))}</p>
       <div class="qp-varia">${variam}</div>
+      <p class="qp-varia-t">${esc(t(QP.s9Asas, l))}</p>
+      <div class="qp-links">${asasQP}</div>
     </div>
   </section>
 
