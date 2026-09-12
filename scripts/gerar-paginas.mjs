@@ -22,6 +22,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';   /* o resumo de cada página, para o lastmod */
 import { ofertasDaAsa } from '../regras/avisos.js';
 import { rotuloFamilia, rotuloClasse } from '../regras/taxonomia.js';
 import { KN_PARA_KMH, PAISES_NOS, CHAVE_UNIDADE } from '../regras/unidades.js';
@@ -3675,26 +3676,88 @@ if (!so || so === 'musica') {
 
 
 if (!so && !soIdioma) {
-  /* SEM `lastmod`, DE PROPÓSITO.
-     Escrevia-se aqui a data de hoje nas 165 URLs, a cada publicação. Era
-     falso para quase todas: publicar uma correcção de CSS não altera o
-     conteúdo de 164 páginas. Um sinal que diz sempre "mudou tudo" é um
-     sinal que se aprende a ignorar, e o `lastmod` só vale enquanto for
-     credível.
+  /* O `lastmod`, POR PÁGINA E OBSERVADO — 12/09/2026
+     Aqui esteve escrito, e com razão, que não havia data fiável. O
+     comentário antigo rejeitava duas alternativas:
 
-     A alternativa seria uma data por URL, tirada do git. Não se sustenta: o
-     conteúdo de cada página está repartido entre a sua entrada no JSON
-     (`content/slides/produtos.json`, `content/spots.json`) e este gerador,
-     que traz os rótulos, a estrutura e os dados estruturados — e que já
-     leva 30 commits. Datar pelo JSON só, ignorava tudo o que muda aqui; uma
-     data velha de mais é pior do que nenhuma, porque convida a não voltar.
-     E as páginas geradas não se versionam, portanto do resultado não há
-     histórico nenhum.
+       1. a data de hoje em todas — falso para quase todas a cada
+          publicação, e um sinal que diz sempre "mudou tudo" aprende-se a
+          ignorar;
+       2. uma data por URL tirada do git — não se sustenta, porque o
+          conteúdo está repartido entre o JSON e este gerador, e as
+          páginas geradas não se versionam.
 
-     O `lastmod` é opcional no protocolo. Sem data fiável, não se inventa.
+     As duas objecções continuam de pé. O que faltava era a terceira via:
+     **as páginas geradas não se versionam, mas os seus resumos podem.**
+     O `sitemap-datas.json` guarda um SHA-1 por URL; na passagem seguinte,
+     comparar diz exactamente quais mudaram, e a data é a do dia em que a
+     mudança foi observada. Nenhuma data é inventada.
+
+     O QUE AUTORIZA ISTO É A GERAÇÃO SER DETERMINISTA
+     Medido a 12/09: duas passagens seguidas deram 175 de 175 páginas com
+     hash idêntico. Se não fosse, o resumo mudava sozinho, o `lastmod`
+     mentia a cada publicação, e então não se fazia.
+
+     ATENÇÃO A QUEM MEXER AQUI: introduzir algo variável — uma data, um
+     número aleatório, uma ordem de iteração instável — quebra isto sem
+     dar por ela, e o sintoma é o sitemap passar a dizer que as 175
+     mudaram em cada publicação. A verificação 18 do `verificar.mjs` NÃO
+     apanha esse caso: ela confirma que o estado bate com o disco, o que
+     é outra coisa. O teste do determinismo é gerar duas vezes seguidas e
+     confirmar que a segunda passagem diz «0 mudada(s)».
+
+     A PRIMEIRA PASSAGEM NÃO ESCREVE DATA NENHUMA
+     Não há com que comparar, logo não se sabe quando mudou. Fica só o
+     resumo, e o `lastmod` aparece a partir da primeira mudança observada.
+     É a regra antiga — «sem data fiável, não se inventa» — aplicada por
+     página em vez de ao ficheiro todo.
 
      O `changefreq` e a `priority` ficam: não custam nada e o Google
-     ignora-os de qualquer maneira. */
+     ignora-os de qualquer maneira. O `lastmod` é o único dos três que ele
+     usa, e era o único que faltava. */
+
+  const FICHEIRO_DATAS = path.join(RAIZ, 'sitemap-datas.json');
+  const hoje = new Date().toISOString().slice(0, 10);
+
+  /* o ficheiro de uma URL: / -> index.html, /en/x/ -> en/x/index.html */
+  const ficheiroDe = (loc) => {
+    const rel = loc.replace(DOMINIO, '').replace(/^\//, '');
+    return path.join(RAIZ, rel, 'index.html');
+  };
+
+  const estadoAntigo = (() => {
+    try { return JSON.parse(fs.readFileSync(FICHEIRO_DATAS, 'utf8')); }
+    catch (e) { return null; }          /* primeira passagem */
+  })();
+
+  const estadoNovo = {};
+  const datas = {};
+  let mudadas = 0, novas = 0;
+
+  for (const loc of [...IDIOMAS.map(l => DOMINIO + inicioHref(l)), ...urls]) {
+    let resumo;
+    try {
+      resumo = crypto.createHash('sha1')
+        .update(fs.readFileSync(ficheiroDe(loc))).digest('hex');
+    } catch (e) { continue; }           /* sem ficheiro, sem entrada */
+    const antes = estadoAntigo && estadoAntigo[loc];
+    if (!estadoAntigo) {
+      estadoNovo[loc] = { resumo, data: null };        /* semeia, sem datar */
+    } else if (!antes) {
+      estadoNovo[loc] = { resumo, data: hoje }; novas++;
+    } else if (antes.resumo !== resumo) {
+      estadoNovo[loc] = { resumo, data: hoje }; mudadas++;
+    } else {
+      estadoNovo[loc] = { resumo, data: antes.data };  /* mantém a que havia */
+    }
+    if (estadoNovo[loc].data) datas[loc] = estadoNovo[loc].data;
+  }
+
+  fs.writeFileSync(FICHEIRO_DATAS, JSON.stringify(estadoNovo, null, 1) + '\n');
+  console.log('  sitemap-datas.json: ' + Object.keys(estadoNovo).length + ' URLs, '
+    + Object.keys(datas).length + ' com lastmod'
+    + (estadoAntigo ? '  (' + mudadas + ' mudada(s), ' + novas + ' nova(s))'
+      : '  (primeira passagem: semeado, sem datas)'));
 
   /* as cinco iniciais têm a mesma prioridade: nenhuma é a tradução das
      outras, são cinco portas de entrada para cinco mercados */
@@ -3702,6 +3765,7 @@ if (!so && !soIdioma) {
   const entrada = (loc, freq, pri) => [
     '  <url>',
     '    <loc>' + loc + '</loc>',
+    ...(datas[loc] ? ['    <lastmod>' + datas[loc] + '</lastmod>'] : []),
     '    <changefreq>' + freq + '</changefreq>',
     '    <priority>' + pri + '</priority>',
     '  </url>'

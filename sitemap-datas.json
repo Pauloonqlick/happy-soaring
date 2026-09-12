@@ -1,0 +1,702 @@
+{
+ "https://happysoaring.com/": {
+  "resumo": "c8a6ed0f98073903dee1061aa1b8f698bf9bd017",
+  "data": null
+ },
+ "https://happysoaring.com/en/": {
+  "resumo": "0fe7b5e9628093e03cc5e432de7e31fd90b89216",
+  "data": null
+ },
+ "https://happysoaring.com/es/": {
+  "resumo": "0936bfd8c4efb85662577aa5cdb8ce34f324f7f5",
+  "data": null
+ },
+ "https://happysoaring.com/fr/": {
+  "resumo": "f50f0157ea643f7654e2147c150f8f071fcb4f1f",
+  "data": null
+ },
+ "https://happysoaring.com/de/": {
+  "resumo": "6dfbd8a02b6b695a93daf8bcd430966ee77d0ec3",
+  "data": null
+ },
+ "https://happysoaring.com/asas/mullet-2/": {
+  "resumo": "bbd6102a08f77d11989f489b9dd6890304612896",
+  "data": null
+ },
+ "https://happysoaring.com/en/wings/mullet-2/": {
+  "resumo": "d9eed6b65172ffdc06dcb7496ff49ca2d701bb24",
+  "data": null
+ },
+ "https://happysoaring.com/es/alas/mullet-2/": {
+  "resumo": "b7563ed316c7cddf06a763ce07698cfddc63abd1",
+  "data": null
+ },
+ "https://happysoaring.com/fr/ailes/mullet-2/": {
+  "resumo": "6462d3c6b11b1f50abe0641ea20cb601ae7e75f0",
+  "data": null
+ },
+ "https://happysoaring.com/de/schirme/mullet-2/": {
+  "resumo": "5e6574e73bc439476d26c8141c669de271aa3f1f",
+  "data": null
+ },
+ "https://happysoaring.com/asas/mulletx/": {
+  "resumo": "5742b6815f8e811123f9e3c4ae7cae8f51f3128c",
+  "data": null
+ },
+ "https://happysoaring.com/en/wings/mulletx/": {
+  "resumo": "f854ba3c7c02bc85cbed3a0fd5187d187aff8e6f",
+  "data": null
+ },
+ "https://happysoaring.com/es/alas/mulletx/": {
+  "resumo": "97f17211233ff7ccd70a8558643d8bfcfb892a15",
+  "data": null
+ },
+ "https://happysoaring.com/fr/ailes/mulletx/": {
+  "resumo": "cbd5eadc2e0a811431d0349ad70190c53ec04d3b",
+  "data": null
+ },
+ "https://happysoaring.com/de/schirme/mulletx/": {
+  "resumo": "eedff7c8e3e61e316d0e8e9a977b2f9fbf1dc2d6",
+  "data": null
+ },
+ "https://happysoaring.com/asas/albatroxx/": {
+  "resumo": "651cbfc820f7aaaff41defd4a169df07b7f8dd0b",
+  "data": null
+ },
+ "https://happysoaring.com/en/wings/albatroxx/": {
+  "resumo": "7ab6cdb67f9d5a7a4246ad8d47cbe9d370d91010",
+  "data": null
+ },
+ "https://happysoaring.com/es/alas/albatroxx/": {
+  "resumo": "b9463c8b6006312f6944c008509c78e2b6a188d5",
+  "data": null
+ },
+ "https://happysoaring.com/fr/ailes/albatroxx/": {
+  "resumo": "c0dca41eaa7ca9c81f52d69a7d14e4bc24bceb53",
+  "data": null
+ },
+ "https://happysoaring.com/de/schirme/albatroxx/": {
+  "resumo": "c199fea6fa03dd3fe2524f2289e5cd9b7fe6f2d2",
+  "data": null
+ },
+ "https://happysoaring.com/asas/mohawk/": {
+  "resumo": "8fcbc746a33b024df5a67c8cff40f32f5a98ae6a",
+  "data": null
+ },
+ "https://happysoaring.com/en/wings/mohawk/": {
+  "resumo": "b2dae0676db28f98d981474bfe9b9d3ba6136a00",
+  "data": null
+ },
+ "https://happysoaring.com/es/alas/mohawk/": {
+  "resumo": "bb050574d5a50ff749019f58813f3ba4464be1ca",
+  "data": null
+ },
+ "https://happysoaring.com/fr/ailes/mohawk/": {
+  "resumo": "86515f4c55a4ad6c53f589a29cbd860ab95f24cf",
+  "data": null
+ },
+ "https://happysoaring.com/de/schirme/mohawk/": {
+  "resumo": "24755e4850f07543501f9fc6c7558c492c961583",
+  "data": null
+ },
+ "https://happysoaring.com/asas/future-2/": {
+  "resumo": "5c06497e01017b93b972250e5b0544238bf903aa",
+  "data": null
+ },
+ "https://happysoaring.com/en/wings/future-2/": {
+  "resumo": "a7018f1a207f6224faf7bb219b71c88d71e840a9",
+  "data": null
+ },
+ "https://happysoaring.com/es/alas/future-2/": {
+  "resumo": "93147da30c2048d08c79e75d474e4f2f3e4ae814",
+  "data": null
+ },
+ "https://happysoaring.com/fr/ailes/future-2/": {
+  "resumo": "bf00dbbb319459cd9ccd226c82ca5d82b38bfa14",
+  "data": null
+ },
+ "https://happysoaring.com/de/schirme/future-2/": {
+  "resumo": "006d941f50f51dafe38e490bd587820904864a93",
+  "data": null
+ },
+ "https://happysoaring.com/asas/freedom-2/": {
+  "resumo": "c47d92806250484efa3ae5c34dc93123a9b7d7ae",
+  "data": null
+ },
+ "https://happysoaring.com/en/wings/freedom-2/": {
+  "resumo": "d6b109356c3f47181c6205701afd03d62e9db3c0",
+  "data": null
+ },
+ "https://happysoaring.com/es/alas/freedom-2/": {
+  "resumo": "682dfefc0833ea8be615b5cd5197c801b07f1843",
+  "data": null
+ },
+ "https://happysoaring.com/fr/ailes/freedom-2/": {
+  "resumo": "f0fb813e7557c50b2d744d700377244d1c1bf77f",
+  "data": null
+ },
+ "https://happysoaring.com/de/schirme/freedom-2/": {
+  "resumo": "031740f36dbc8a20bc62c87fa53d17e33bc03485",
+  "data": null
+ },
+ "https://happysoaring.com/asas/f2-light/": {
+  "resumo": "d492aa1ea54bcc1b0fe2911e6a2c0876acb52eef",
+  "data": null
+ },
+ "https://happysoaring.com/en/wings/f2-light/": {
+  "resumo": "47fb292b1ab47c9f1cd1af7a692ca3aaa4dba028",
+  "data": null
+ },
+ "https://happysoaring.com/es/alas/f2-light/": {
+  "resumo": "f95ad6333ea692b5267b9658505a6874aa6480a2",
+  "data": null
+ },
+ "https://happysoaring.com/fr/ailes/f2-light/": {
+  "resumo": "c5d6a9863bd6d939ee412a71d2de5bcad78e2877",
+  "data": null
+ },
+ "https://happysoaring.com/de/schirme/f2-light/": {
+  "resumo": "8515bfed1b2ab3ad7946c9fa2b376d0689ffdad2",
+  "data": null
+ },
+ "https://happysoaring.com/asas/fusion-light/": {
+  "resumo": "96cf0f87ffaa4939b61220af9dcda32e2cfc6fe0",
+  "data": null
+ },
+ "https://happysoaring.com/en/wings/fusion-light/": {
+  "resumo": "4d9206eee8c7aa6934637fb3b3070444d708fba3",
+  "data": null
+ },
+ "https://happysoaring.com/es/alas/fusion-light/": {
+  "resumo": "1c65646351da9245095b7af14ea3e8687a55ed68",
+  "data": null
+ },
+ "https://happysoaring.com/fr/ailes/fusion-light/": {
+  "resumo": "dad1ae1b8c7012cf27e8f6fbdfe0c0d7b193cb3c",
+  "data": null
+ },
+ "https://happysoaring.com/de/schirme/fusion-light/": {
+  "resumo": "caa01dc68d6878ea1c3ca4c5532d1a6506645cd1",
+  "data": null
+ },
+ "https://happysoaring.com/asas/mystic/": {
+  "resumo": "485d977e830c06c5fba92aea601eff266ada6fdd",
+  "data": null
+ },
+ "https://happysoaring.com/en/wings/mystic/": {
+  "resumo": "5e12752065f8dd34e228b8a372de8faf5d5d8f69",
+  "data": null
+ },
+ "https://happysoaring.com/es/alas/mystic/": {
+  "resumo": "02471b4e134a458cc184d9aa6b0120dc10f64553",
+  "data": null
+ },
+ "https://happysoaring.com/fr/ailes/mystic/": {
+  "resumo": "146ed792a9ba86854820e35160ca0f782d2cfe89",
+  "data": null
+ },
+ "https://happysoaring.com/de/schirme/mystic/": {
+  "resumo": "ad299a85f2f435a32fa5d47b5bb3ed217b412f38",
+  "data": null
+ },
+ "https://happysoaring.com/asas/xcracer-2/": {
+  "resumo": "cb82dd93137f3d79dd1efdd3149ef070e8ce0664",
+  "data": null
+ },
+ "https://happysoaring.com/en/wings/xcracer-2/": {
+  "resumo": "ef2eade3740d8867a3da035e0ae6e948ff7b687b",
+  "data": null
+ },
+ "https://happysoaring.com/es/alas/xcracer-2/": {
+  "resumo": "b6c94204d45d9dfde129535079c2b45d5c1e8736",
+  "data": null
+ },
+ "https://happysoaring.com/fr/ailes/xcracer-2/": {
+  "resumo": "4be57b1036b43eeaeea2c6e3f50f5e2beb95ea8e",
+  "data": null
+ },
+ "https://happysoaring.com/de/schirme/xcracer-2/": {
+  "resumo": "2d13a315c9245603be661c0d06c072f4651bdc6b",
+  "data": null
+ },
+ "https://happysoaring.com/asas/yoti-3/": {
+  "resumo": "06a658d0745a2dbc4678fc4e1ccf553a0b70a2b0",
+  "data": null
+ },
+ "https://happysoaring.com/en/wings/yoti-3/": {
+  "resumo": "447f70f75e91866e87f608da8b02a0339596fff6",
+  "data": null
+ },
+ "https://happysoaring.com/es/alas/yoti-3/": {
+  "resumo": "04af5e72f164aa270177545bba9030ad4c40dca0",
+  "data": null
+ },
+ "https://happysoaring.com/fr/ailes/yoti-3/": {
+  "resumo": "850525cefbe7491de30014dec78748913588715f",
+  "data": null
+ },
+ "https://happysoaring.com/de/schirme/yoti-3/": {
+  "resumo": "f374d8b806b69e1376fce0254512bc4e67228238",
+  "data": null
+ },
+ "https://happysoaring.com/asas/rpm-3/": {
+  "resumo": "91e84405e34a0a499e0d81aabf3a2adef5a78ce8",
+  "data": null
+ },
+ "https://happysoaring.com/en/wings/rpm-3/": {
+  "resumo": "b22dc962806ca020b5f9c030608251f5977d39ee",
+  "data": null
+ },
+ "https://happysoaring.com/es/alas/rpm-3/": {
+  "resumo": "6f15b7521171c26d394b66b2ed59b29fd00cc4d4",
+  "data": null
+ },
+ "https://happysoaring.com/fr/ailes/rpm-3/": {
+  "resumo": "b6cca0dcb02af3beec6da32f363857c8a38b29fe",
+  "data": null
+ },
+ "https://happysoaring.com/de/schirme/rpm-3/": {
+  "resumo": "215f41bfb41d22ff0809f3c25b82c7674aae7909",
+  "data": null
+ },
+ "https://happysoaring.com/asas/cosmos-power-2/": {
+  "resumo": "38a545b0598515a78b44e2a97ef05368feb53fbc",
+  "data": null
+ },
+ "https://happysoaring.com/en/wings/cosmos-power-2/": {
+  "resumo": "fa1aa4cb5c3a9d44987ca3101744d4d4be473f0f",
+  "data": null
+ },
+ "https://happysoaring.com/es/alas/cosmos-power-2/": {
+  "resumo": "4e5f8665b2db0a5efb04d557b0cef7de749bd78b",
+  "data": null
+ },
+ "https://happysoaring.com/fr/ailes/cosmos-power-2/": {
+  "resumo": "a2a396e3e586464a013d1d51d08e3fcea46fbf1e",
+  "data": null
+ },
+ "https://happysoaring.com/de/schirme/cosmos-power-2/": {
+  "resumo": "895159903c76e7b3fc260da0b0a900f452ab7234",
+  "data": null
+ },
+ "https://happysoaring.com/asas/fusion/": {
+  "resumo": "87447c1b5fcb5c00475743fb98be87259da48319",
+  "data": null
+ },
+ "https://happysoaring.com/en/wings/fusion/": {
+  "resumo": "334e3f9c1579e42572c5adbeb6cebc6069905479",
+  "data": null
+ },
+ "https://happysoaring.com/es/alas/fusion/": {
+  "resumo": "fba6be3db7a6782131ad5b56eff42e812476491c",
+  "data": null
+ },
+ "https://happysoaring.com/fr/ailes/fusion/": {
+  "resumo": "5dab9270e9fa37dd48e77e2b007ac9b4550ecb89",
+  "data": null
+ },
+ "https://happysoaring.com/de/schirme/fusion/": {
+  "resumo": "af19dfc88ff568ec2366866192365686662e3814",
+  "data": null
+ },
+ "https://happysoaring.com/asas/yoti-3-light/": {
+  "resumo": "e2648b4ce88c8701ad74137e3e50d12f70d52446",
+  "data": null
+ },
+ "https://happysoaring.com/en/wings/yoti-3-light/": {
+  "resumo": "245014c3ea6e474fba27f7049c95c83e9b630ba0",
+  "data": null
+ },
+ "https://happysoaring.com/es/alas/yoti-3-light/": {
+  "resumo": "a812d624906a8fdfd03ac1f88ea4c4570b4c082d",
+  "data": null
+ },
+ "https://happysoaring.com/fr/ailes/yoti-3-light/": {
+  "resumo": "31a35a49a7f834a5a7d4774347d786ef4911693c",
+  "data": null
+ },
+ "https://happysoaring.com/de/schirme/yoti-3-light/": {
+  "resumo": "5241ac2aedc4f4b8d451fd3f6315affc234ba6d0",
+  "data": null
+ },
+ "https://happysoaring.com/asas/panorama/": {
+  "resumo": "16fb28b1d72b971d9a51acd76a7a932d94cc4090",
+  "data": null
+ },
+ "https://happysoaring.com/en/wings/panorama/": {
+  "resumo": "2a7cdc23979265bc0f959bd3ce4d5deb849d1a01",
+  "data": null
+ },
+ "https://happysoaring.com/es/alas/panorama/": {
+  "resumo": "55e37ba4d86a511cefeb6cb455d8f5d886f6bb1e",
+  "data": null
+ },
+ "https://happysoaring.com/fr/ailes/panorama/": {
+  "resumo": "20d7416cb9133a8b76a6b557c128a00e4a1f2d57",
+  "data": null
+ },
+ "https://happysoaring.com/de/schirme/panorama/": {
+  "resumo": "548dfbc5c48c11710efedd78c71e735f01c3f749",
+  "data": null
+ },
+ "https://happysoaring.com/asas/future-power/": {
+  "resumo": "367b8b761f63a8b076e8e5e8bc00589c425a45b0",
+  "data": null
+ },
+ "https://happysoaring.com/en/wings/future-power/": {
+  "resumo": "fd3214181235d38ff175b27c97ad04b70070a4d6",
+  "data": null
+ },
+ "https://happysoaring.com/es/alas/future-power/": {
+  "resumo": "bd3902b1ae4b00cb76bca8ab8c6cc03089d3fb77",
+  "data": null
+ },
+ "https://happysoaring.com/fr/ailes/future-power/": {
+  "resumo": "d81228a3ad9d49e697b109f451a6b5affe05340d",
+  "data": null
+ },
+ "https://happysoaring.com/de/schirme/future-power/": {
+  "resumo": "1a6faa4b85fc707cfacae43f7eed0c658d4f229d",
+  "data": null
+ },
+ "https://happysoaring.com/asas/vissta/": {
+  "resumo": "60ff61b86644e4b161a67f1366246eb752d2840f",
+  "data": null
+ },
+ "https://happysoaring.com/en/wings/vissta/": {
+  "resumo": "75486a08d5bf4bcadd601610ef9dd7b6354b0399",
+  "data": null
+ },
+ "https://happysoaring.com/es/alas/vissta/": {
+  "resumo": "a11fb4f041bf7bb6092a1ca6ede53969042cd7fc",
+  "data": null
+ },
+ "https://happysoaring.com/fr/ailes/vissta/": {
+  "resumo": "947950be5afc989a7cee2d83b9943e307c1fb386",
+  "data": null
+ },
+ "https://happysoaring.com/de/schirme/vissta/": {
+  "resumo": "ed3341df565111603e3876d7e096e61ede829df6",
+  "data": null
+ },
+ "https://happysoaring.com/asas/vissta-xc/": {
+  "resumo": "2c37a9271169f9ce3a8b063ea220961dab0df5ed",
+  "data": null
+ },
+ "https://happysoaring.com/en/wings/vissta-xc/": {
+  "resumo": "cd693383deb7bf0b90f38399539cb4e525dd62f2",
+  "data": null
+ },
+ "https://happysoaring.com/es/alas/vissta-xc/": {
+  "resumo": "f8a1bb2d168da6373e0efe867cce1c6803024bf1",
+  "data": null
+ },
+ "https://happysoaring.com/fr/ailes/vissta-xc/": {
+  "resumo": "919c4716197b2659032eaf9eeae4f9b5eedcd509",
+  "data": null
+ },
+ "https://happysoaring.com/de/schirme/vissta-xc/": {
+  "resumo": "e86833ebb7aa6197171124ee7a743c6aed1ebc44",
+  "data": null
+ },
+ "https://happysoaring.com/asas/aura-2-square/": {
+  "resumo": "2475ccc7c6d60e2289b743d76eb287b4bffbac3d",
+  "data": null
+ },
+ "https://happysoaring.com/en/wings/aura-2-square/": {
+  "resumo": "a497c224193b5cdb930d0cc75e83c9da97c12c40",
+  "data": null
+ },
+ "https://happysoaring.com/es/alas/aura-2-square/": {
+  "resumo": "42eaa9624942bc63c76f93d2ff2654a781f87319",
+  "data": null
+ },
+ "https://happysoaring.com/fr/ailes/aura-2-square/": {
+  "resumo": "966ba85e3251e33e476ae4f17c0dfc18c6676eef",
+  "data": null
+ },
+ "https://happysoaring.com/de/schirme/aura-2-square/": {
+  "resumo": "730ab35401155de9cd88b419947949e25020d816",
+  "data": null
+ },
+ "https://happysoaring.com/asas/d-chute/": {
+  "resumo": "4fce6da12aec5cbfc1b31fc4b6e8df4ed2c4e99c",
+  "data": null
+ },
+ "https://happysoaring.com/en/wings/d-chute/": {
+  "resumo": "5a93c3cde9faa8c7e1d5d39699d4b6454e128a74",
+  "data": null
+ },
+ "https://happysoaring.com/es/alas/d-chute/": {
+  "resumo": "4b0c177c222b083aff5b3fe8c4011d0651f88fe8",
+  "data": null
+ },
+ "https://happysoaring.com/fr/ailes/d-chute/": {
+  "resumo": "f5fe0bf344d86e6de2b418daf7a68ec3152456a4",
+  "data": null
+ },
+ "https://happysoaring.com/de/schirme/d-chute/": {
+  "resumo": "5f8aa1d69f96bb27e57416024bf849c9e35ec091",
+  "data": null
+ },
+ "https://happysoaring.com/asas/d-wing-v2/": {
+  "resumo": "46c64de902596cf2f65cdb36508da4a0a3a12a9f",
+  "data": null
+ },
+ "https://happysoaring.com/en/wings/d-wing-v2/": {
+  "resumo": "2b95ccab1121ddeb07be3c93c8bdb28fa0d710d7",
+  "data": null
+ },
+ "https://happysoaring.com/es/alas/d-wing-v2/": {
+  "resumo": "a1783facfda08d17823ad26e5a9f842e2648fb8b",
+  "data": null
+ },
+ "https://happysoaring.com/fr/ailes/d-wing-v2/": {
+  "resumo": "ddfe83c0a150f27947518e02b4f4c3ce10d119f5",
+  "data": null
+ },
+ "https://happysoaring.com/de/schirme/d-wing-v2/": {
+  "resumo": "3d69ee416122fbfc92281a7e683d77601255ab2d",
+  "data": null
+ },
+ "https://happysoaring.com/pilot2wing/": {
+  "resumo": "e421cc9b657901a273611e87218e553bba416a9f",
+  "data": null
+ },
+ "https://happysoaring.com/en/pilot2wing/": {
+  "resumo": "debc8993e2d4acf98e93ab7f3dfa698d6541f475",
+  "data": null
+ },
+ "https://happysoaring.com/es/pilot2wing/": {
+  "resumo": "9f8a2e95f7b985b9de513563ef13297a9e168968",
+  "data": null
+ },
+ "https://happysoaring.com/fr/pilot2wing/": {
+  "resumo": "00426606e725cd6c6acd5784d3bdd07a7e73f9ba",
+  "data": null
+ },
+ "https://happysoaring.com/de/pilot2wing/": {
+  "resumo": "bf6278a26f9543253907e4e9fd5f1d2b1282f74c",
+  "data": null
+ },
+ "https://happysoaring.com/flow-paragliders-portugal/": {
+  "resumo": "d066c7e527ff58c2397288c250e9707fea44aa41",
+  "data": null
+ },
+ "https://happysoaring.com/en/flow-paragliders-portugal/": {
+  "resumo": "f67551d1acc1a21c8d61b448c92d8a742db3d7e6",
+  "data": null
+ },
+ "https://happysoaring.com/es/flow-paragliders-portugal/": {
+  "resumo": "56f0fd8a9d50569798719bb21d9127888c140508",
+  "data": null
+ },
+ "https://happysoaring.com/fr/flow-paragliders-portugal/": {
+  "resumo": "8232f5e536e817c9590ea67aafc05428972e3d68",
+  "data": null
+ },
+ "https://happysoaring.com/de/flow-paragliders-portugal/": {
+  "resumo": "99bd283841ccf7767430435426d710f594b2fd68",
+  "data": null
+ },
+ "https://happysoaring.com/parakite-portugal/": {
+  "resumo": "c9dbb851b0e7992a723742c58d6ee76bac7aa535",
+  "data": null
+ },
+ "https://happysoaring.com/en/parakite-portugal/": {
+  "resumo": "6094823022eb692e8e55294f72df3ea6d5a31f21",
+  "data": null
+ },
+ "https://happysoaring.com/es/parakite-portugal/": {
+  "resumo": "147ca35f95d848c653fa2035f14be120f4d99143",
+  "data": null
+ },
+ "https://happysoaring.com/fr/parakite-portugal/": {
+  "resumo": "e78004d51308ec1536c2a6c21e382414e5a58bbd",
+  "data": null
+ },
+ "https://happysoaring.com/de/parakite-portugal/": {
+  "resumo": "b290e6895e3c066db10333fac7b20f9a4644f31b",
+  "data": null
+ },
+ "https://happysoaring.com/parakite-portugal/fonte-da-telha/": {
+  "resumo": "099de6c6f70df3f1d57f9fad9d7af98b53965da3",
+  "data": null
+ },
+ "https://happysoaring.com/en/parakite-portugal/fonte-da-telha/": {
+  "resumo": "0c84d07035983e9c1092d928ed5a961172500e82",
+  "data": null
+ },
+ "https://happysoaring.com/es/parakite-portugal/fonte-da-telha/": {
+  "resumo": "bf23fc0dfd8930280e982c250639108b42361e5a",
+  "data": null
+ },
+ "https://happysoaring.com/fr/parakite-portugal/fonte-da-telha/": {
+  "resumo": "964200ce64cd212e46386e4a8d5d330815b793a4",
+  "data": null
+ },
+ "https://happysoaring.com/de/parakite-portugal/fonte-da-telha/": {
+  "resumo": "fb95500260ab456d47c47d56da7d1a68ff2ade06",
+  "data": null
+ },
+ "https://happysoaring.com/parakite-portugal/lagoa-de-albufeira/": {
+  "resumo": "7eb0ff3be2c3134150fc3ab5f31aa52d17d981b1",
+  "data": null
+ },
+ "https://happysoaring.com/en/parakite-portugal/lagoa-de-albufeira/": {
+  "resumo": "2501b5eabcf9eb7f9a4c3d5f4b581f75f5845018",
+  "data": null
+ },
+ "https://happysoaring.com/es/parakite-portugal/lagoa-de-albufeira/": {
+  "resumo": "669d3bc011c833dfdff53aaa3508b545bac78b0e",
+  "data": null
+ },
+ "https://happysoaring.com/fr/parakite-portugal/lagoa-de-albufeira/": {
+  "resumo": "e7459384447822f6e071fc8efdc3cf84f59f8350",
+  "data": null
+ },
+ "https://happysoaring.com/de/parakite-portugal/lagoa-de-albufeira/": {
+  "resumo": "54f17146b019162381b837da772105450b2750d5",
+  "data": null
+ },
+ "https://happysoaring.com/parakite-portugal/praia-do-meco/": {
+  "resumo": "7f1caaa34cb3cb5adb0ebb8329a205781aab5066",
+  "data": null
+ },
+ "https://happysoaring.com/en/parakite-portugal/praia-do-meco/": {
+  "resumo": "9bbee040b64cc7121028eb2af2865a4f67c98e99",
+  "data": null
+ },
+ "https://happysoaring.com/es/parakite-portugal/praia-do-meco/": {
+  "resumo": "6271d582ca70d1d42749ba747bdab1688e1d726a",
+  "data": null
+ },
+ "https://happysoaring.com/fr/parakite-portugal/praia-do-meco/": {
+  "resumo": "9c908a94de326a3329bb1c322ff477d78f9a803b",
+  "data": null
+ },
+ "https://happysoaring.com/de/parakite-portugal/praia-do-meco/": {
+  "resumo": "ff225702f106eb2d034ce46579e7a27cb69cbe24",
+  "data": null
+ },
+ "https://happysoaring.com/parakite-portugal/alfarim/": {
+  "resumo": "fff19a6ff5420b6c44e205a7f2aa0f879da86650",
+  "data": null
+ },
+ "https://happysoaring.com/en/parakite-portugal/alfarim/": {
+  "resumo": "b51759fc740df07ab166dc5df1f4241fb0927c29",
+  "data": null
+ },
+ "https://happysoaring.com/es/parakite-portugal/alfarim/": {
+  "resumo": "c4a0a513aa5303dcd61f1b2392b6fa57bc034cce",
+  "data": null
+ },
+ "https://happysoaring.com/fr/parakite-portugal/alfarim/": {
+  "resumo": "0195a0b1984ad13581f9c0da75b95b7da499e8e2",
+  "data": null
+ },
+ "https://happysoaring.com/de/parakite-portugal/alfarim/": {
+  "resumo": "8e74b283a138065137b249db48a8fa653fe46e45",
+  "data": null
+ },
+ "https://happysoaring.com/parakite-portugal/praia-da-gralha/": {
+  "resumo": "57520ccd508c0a12c086499a65b9a0073eca5649",
+  "data": null
+ },
+ "https://happysoaring.com/en/parakite-portugal/praia-da-gralha/": {
+  "resumo": "2498b162d1102cf1dd2626a95caf2f7b36834ece",
+  "data": null
+ },
+ "https://happysoaring.com/es/parakite-portugal/praia-da-gralha/": {
+  "resumo": "3acb7085226b6381b3f859dee0dd31b78063a924",
+  "data": null
+ },
+ "https://happysoaring.com/fr/parakite-portugal/praia-da-gralha/": {
+  "resumo": "1aacb6e5185bc2a02e5b5c808667eacf551666f7",
+  "data": null
+ },
+ "https://happysoaring.com/de/parakite-portugal/praia-da-gralha/": {
+  "resumo": "6d3c1b34013b82583de9597f171a2d262b7eb54d",
+  "data": null
+ },
+ "https://happysoaring.com/parakite-portugal/praia-das-bicas/": {
+  "resumo": "b8e86b4c26ceeb1d6241b225b431964be4ae51e5",
+  "data": null
+ },
+ "https://happysoaring.com/en/parakite-portugal/praia-das-bicas/": {
+  "resumo": "2064754dd2ebfe9e80958efa8a53aa95387bdc6e",
+  "data": null
+ },
+ "https://happysoaring.com/es/parakite-portugal/praia-das-bicas/": {
+  "resumo": "4e1eb590a4967770819a4b6261ba92db92ffcd8f",
+  "data": null
+ },
+ "https://happysoaring.com/fr/parakite-portugal/praia-das-bicas/": {
+  "resumo": "6b0da9332f5549ef198637c3c3404e1a143fd6a7",
+  "data": null
+ },
+ "https://happysoaring.com/de/parakite-portugal/praia-das-bicas/": {
+  "resumo": "522aa04ad8880587d11dd72dd89baa0c2accad8f",
+  "data": null
+ },
+ "https://happysoaring.com/o-que-e-um-parakite/": {
+  "resumo": "4e571796383e1b7e5e715802c03f4f3c506a6fc1",
+  "data": null
+ },
+ "https://happysoaring.com/en/what-is-a-parakite/": {
+  "resumo": "4331de6353d5a4d43cfce103a5157802a55dd714",
+  "data": null
+ },
+ "https://happysoaring.com/es/que-es-un-parakite/": {
+  "resumo": "28db2536e4d4fc52dda892b1e85dc4959e8a36d9",
+  "data": null
+ },
+ "https://happysoaring.com/fr/qu-est-ce-qu-un-parakite/": {
+  "resumo": "c65f300713242266b189879aafbd72c6f3601ad6",
+  "data": null
+ },
+ "https://happysoaring.com/de/was-ist-ein-parakite/": {
+  "resumo": "bc73889253be70d331979e7e6dd125c707573b69",
+  "data": null
+ },
+ "https://happysoaring.com/curso-parakite-portugal/": {
+  "resumo": "9fe778162304c535feb35a9a2b661787a3c9c427",
+  "data": null
+ },
+ "https://happysoaring.com/en/parakite-course-portugal/": {
+  "resumo": "6dea5e2545a1af35f8c00c5f69401699edd87147",
+  "data": null
+ },
+ "https://happysoaring.com/es/curso-parakite-portugal/": {
+  "resumo": "006e6d3701b5b353ddb53aa7a52b67296cc407c5",
+  "data": null
+ },
+ "https://happysoaring.com/fr/cours-parakite-portugal/": {
+  "resumo": "f2b5e3d00849bb92d6278bec96b73320c7bde4ef",
+  "data": null
+ },
+ "https://happysoaring.com/de/parakite-kurs-portugal/": {
+  "resumo": "5b724ed007877557983bd76d4918d8240cd42d4a",
+  "data": null
+ },
+ "https://happysoaring.com/musica/": {
+  "resumo": "4f0d2f0cefc921208ad49df3d21ca7479cb08a8b",
+  "data": null
+ },
+ "https://happysoaring.com/en/music/": {
+  "resumo": "53956c252b32c6fb88be24d962177c8ce763b6ab",
+  "data": null
+ },
+ "https://happysoaring.com/es/musica/": {
+  "resumo": "43fcb4fd5255df9f7a8f3e49c3028494e81fdf18",
+  "data": null
+ },
+ "https://happysoaring.com/fr/musique/": {
+  "resumo": "16daf97bcbb584217aa8993e68b4c96f4515b1eb",
+  "data": null
+ },
+ "https://happysoaring.com/de/musik/": {
+  "resumo": "b839a09fecf45cca8b00d822079fb3d332501f96",
+  "data": null
+ }
+}

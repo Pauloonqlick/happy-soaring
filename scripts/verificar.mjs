@@ -34,6 +34,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';   /* os resumos do sitemap-datas.json */
 import { execFileSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 import { QUALIFICADORES, protegeNomes, semPontoFinal } from '../regras/textos.js';
@@ -1199,6 +1200,61 @@ titulo('17. Nenhuma página fica sem quem lhe aponte');
     orfas++;
   }
   ok(vivas.length + ' páginas, ' + raizes.size + ' raízes dispensadas, ' + orfas + ' órfã(s)');
+}
+
+/* ------------------------------------------------------------------ */
+titulo('18. As datas do sitemap batem com as páginas que estão no disco');
+{
+  /* O `lastmod` SÓ VALE ENQUANTO FOR VERDADE
+     As datas saem de resumos SHA-1 guardados no `sitemap-datas.json`: a
+     data de uma página é o dia em que o resumo dela mudou. Se o estado
+     deixar de corresponder ao disco — geração interrompida, uma página
+     editada à mão, o ficheiro perdido num merge — as datas passam a dizer
+     o que não é. E um `lastmod` errado é pior do que nenhum, que foi a
+     razão pela qual ele não existiu durante meses.
+
+     Confirma-se: toda a URL do sitemap tem entrada; todo o resumo bate com
+     o ficheiro; nenhuma entrada sobrou de uma página que já não existe. */
+  const FICHEIRO = path.join(RAIZ, 'sitemap-datas.json');
+  let estado = null;
+  try { estado = JSON.parse(fs.readFileSync(FICHEIRO, 'utf8')); }
+  catch (e) { estado = null; }
+
+  if (!estado) {
+    falha('sitemap-datas.json não existe ou não se lê — o lastmod do sitemap '
+      + 'sai deste ficheiro, e sem ele as datas ficam sem base');
+  } else {
+    let semEntrada = 0, resumoErrado = 0;
+    for (const p of vivas) {
+      const chave = DOMINIO + p.url;   /* o estado guarda o endereço completo */
+    const e = estado[chave];
+      if (!e) {
+        falha(p.url + ': está no sitemap e não tem entrada no sitemap-datas.json');
+        semEntrada++;
+        continue;
+      }
+      const resumo = crypto.createHash('sha1')
+        .update(fs.readFileSync(p.ficheiro)).digest('hex');
+      if (e.resumo !== resumo) {
+        falha(p.url + ': o resumo guardado não bate com o ficheiro — a data '
+          + (e.data || '(nenhuma)') + ' deixou de ser fiável');
+        resumoErrado++;
+      }
+    }
+    const urlsVivas = new Set(vivas.map(p => DOMINIO + p.url));
+    let sobra = 0;
+    for (const url of Object.keys(estado)) {
+      if (urlsVivas.has(url)) continue;
+      /* as cinco iniciais podem não estar em `vivas` se não forem geradas */
+      if (/^https:\/\/happysoaring\.com\/(|en\/|es\/|fr\/|de\/)$/.test(url)) continue;
+      falha(url + ': está no sitemap-datas.json e já não é uma página do site');
+      sobra++;
+    }
+    const comData = Object.values(estado).filter(e => e && e.data).length;
+    ok(Object.keys(estado).length + ' entradas, ' + comData + ' com data, '
+      + semEntrada + ' sem entrada, ' + resumoErrado + ' com resumo errado, '
+      + sobra + ' a sobrar');
+  }
 }
 
 /* ------------------------------------------------------------------ */
