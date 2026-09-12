@@ -1419,7 +1419,14 @@ function paginaFlow(l, num) {
 
   <header class="fl-cab">
     <div class="fl-cab-txt">
-      <p class="pg-eyebrow">${esc(t(FL.kicker, l))}</p>
+      <p class="pg-eyebrow">${esc(t(FL.kicker, l))}${
+        /* A pagina diz "Parakite" nove vezes e nao explicava o que e.
+           Mesma composicao das fichas de asa: o eyebrow leva a pergunta
+           ao lado, e o `.pg-eyebrow a.pg-saibamais` ja trata da margem.
+           Aqui nao ha condicao a cumprir — esta pagina e da gama toda,
+           parakites incluidos, portanto a pergunta cabe sempre. */
+        ''} <a class="pg-saibamais" href="${esc(caminhoQP(l))}">${
+        esc(t(QP.ancoraOque, l))}</a></p>
       <h1>${esc(t(FL.h1, l))}</h1>
       <p class="fl-entrada">${esc(t(FL.entrada, l))}</p>
       <p><a class="pg-wa" href="${wa}" rel="noopener" target="_blank">${esc(t(FL.cta, l))}</a></p>
@@ -2161,8 +2168,19 @@ function pagina(p, l, num) {
   <div class="pg-cab">
     <div class="pg-cab-txt">
       <p class="pg-eyebrow">${esc(rotuloClasse(p.classificacao, l) || rotuloFamilia(p.familia, l))}${
-        /* só nas asas que o catálogo classifica como Parakite. O Mohawk é
-           "Speed flying" e a D-Wing "Parawing": não entram. */
+        /* Só nas asas que o catálogo classifica como Parakite. Medido a
+           12/09/2026, dá quatro das vinte e duas:
+
+             Mullet 2, MulletX    "Parakite"
+             AlbatroXX            "Performance Parakite"
+             Mohawk               "Parakite speed flying"
+
+           O Mohawk ENTRA, e este comentário dizia o contrário: dizia que
+           era "Speed flying" e ficava de fora. A classificação dele no
+           catálogo tem "Parakite" no início, portanto o teste apanha-o.
+           A D-Wing V2, essa, é "Parawing" e fica de fora — essa metade
+           estava certa. As outras dezoito são parapentes (EN-A a EN-D),
+           arneses, uma reserva e um paraquedas de arrasto. */
         /Parakite/.test(String(p.classificacao || ''))
           ? ` <a class="pg-saibamais" href="${esc(caminhoQP(l))}">${esc(t(QP.ancoraOque, l))}</a>`
           : ''}</p>
@@ -2499,6 +2517,17 @@ function paginaSpot(s, l, num) {
   <h1 class="spot-h1">${h1Linhas}</h1>
   <div class="spot-abre">
       ${paragrafos(resumo, l)}
+      ${/* QUEM CHEGA A UM SPOT POR UMA PESQUISA PODE NAO SABER O QUE E
+            A pagina do Alfarim diz "Parakite" nove vezes e nao tinha uma
+            saida para a definicao. Entra aqui, depois da abertura e antes
+            das fotografias, porque e nesse ponto que a pergunta aparece:
+            leu o que se faz no local, ainda nao sabe com o que.
+
+            Sem classe nova: o `.spot-abre p` ja da o tamanho do corpo e
+            o `body.spot.papel .spot-cx a` ja da o laranja escuro, que e
+            o que se le sobre fundo claro. */
+        ''}<p><a class="pg-saibamais" href="${esc(caminhoQP(l))}">${
+        esc(t(QP.ancoraOque, l))}</a></p>
   </div>
 ${blocoMedia}
 
@@ -2881,6 +2910,21 @@ ${alt}
 
 <main>
 
+  <!-- AS FAIXAS: com "qp-claro" e papel, sem classe e azul.
+       (Sem acentos e sem plicas invertidas: isto vive dentro de um
+       template literal, e uma plica invertida fecharia a string.)
+       A alternancia e por registo e nao seccao a seccao: o papel onde se
+       le, o azul onde se navega.
+
+         heroi                                          azul
+         control system -> reflex   (6 seccoes)          PAPEL
+         comparacao e variacao                           azul
+         perguntas frequentes                            PAPEL
+         learn more                                      azul
+
+       O CSS diz o que uma faixa clara e; esta lista diz quais sao. Trocar
+       uma seccao de faixa e acrescentar ou tirar a classe aqui, e o fio
+       entre seccoes acerta-se sozinho. -->
   <section class="qp-hero">
     <div class="qp-cx">
       <p class="qp-kicker">${esc(t(QP.eyebrow, l))}</p>
@@ -2899,7 +2943,7 @@ ${alt}
       alt="${esc(t(QP.fotoAlt, l))}" />
   </figure>
 
-  <section class="qp-sec">
+  <section class="qp-sec qp-claro">
     <div class="qp-cx">
       <p class="qp-kicker">${esc(t(QP.s1Kicker, l))}</p>
       <h2>${esc(t(QP.s1H2, l))}</h2>
@@ -2909,7 +2953,7 @@ ${alt}
     </div>
   </section>
 
-  <section class="qp-sec">
+  <section class="qp-sec qp-claro">
     <div class="qp-cx">
       <p class="qp-kicker">${esc(t(QP.s2Kicker, l))}</p>
       <h2>${esc(t(QP.s2H2, l))}</h2>
@@ -2922,7 +2966,7 @@ ${alt}
     </div>
   </section>
 
-  <section class="qp-sec">
+  <section class="qp-sec qp-claro">
     <div class="qp-cx">
       <p class="qp-kicker">${esc(t(QP.s3Kicker, l))}</p>
       <h2>${esc(t(QP.s3H2, l))}</h2>
@@ -2931,7 +2975,7 @@ ${alt}
     </div>
   </section>
 
-  <section class="qp-sec">
+  <section class="qp-sec qp-claro">
     <div class="qp-cx">
       <p class="qp-kicker">${esc(t(QP.s4Kicker, l))}</p>
       <h2>${esc(t(QP.s4H2, l))}</h2>
@@ -2943,7 +2987,7 @@ ${alt}
     </div>
   </section>
 
-  <section class="qp-sec">
+  <section class="qp-sec qp-claro">
     <div class="qp-cx">
       <p class="qp-kicker">${esc(t(QP.s6Kicker, l))}</p>
       <h2>${esc(t(QP.s6H2, l))}</h2>
@@ -2954,7 +2998,7 @@ ${alt}
     </div>
   </section>
 
-  <section class="qp-sec" id="reflex">
+  <section class="qp-sec qp-claro" id="reflex">
     <div class="qp-cx">
       <p class="qp-kicker">${esc(t(QP.s7Kicker, l))}</p>
       <h2>${esc(t(QP.s7H2, l))}</h2>
@@ -2985,7 +3029,7 @@ ${alt}
     </div>
   </section>
 
-  <section class="qp-sec">
+  <section class="qp-sec qp-claro">
     <div class="qp-cx">
       <h2>${esc(t(QP.faqH2, l))}</h2>
       <div class="qp-faq">${faq}</div>

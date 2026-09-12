@@ -1497,27 +1497,150 @@ a.fl-cor-a:hover{background:#ff7c31;color:var(--sobre-laranja)}
      leem `--papel` e `--tinta` e adaptam-se sozinhos. Uma linha em vez de
      um ficheiro.
 
-   O AZUL
-     Fica, mas só a marcar: a barra do lado das definições e o contorno do
-     bloco de rigor. É a única cor que não é preto, branco ou laranja, e é
-     de propósito que quase não aparece. */
+     O AZUL VOLTOU, E AGORA ALTERNA COM PAPEL — 12/09/2026
+     Estava aqui escrito que esta página trocava o azul do site por
+     quase-preto, porque «é para se ler e para ser citada». O argumento
+     mantém-se; a conclusão é que se inverteu. Um fundo branco lê-se melhor
+     do que um quase-preto, sobretudo em 2 183 palavras — e o azul deixa de
+     ser ausência para passar a pontuação: marca onde o registo muda.
+
+     A ALTERNÂNCIA É POR REGISTO, NÃO SECÇÃO A SECÇÃO
+     Onze listras num documento de 11 000px cansam e cortam a explicação
+     exactamente onde ela devia correr. Cinco faixas:
+
+       herói                                            azul
+       control system → reflex   (6 secções, ~1 400 palavras)   PAPEL
+       as fronteiras: comparação e variação             azul
+       perguntas frequentes                             PAPEL
+       learn more                                       azul
+
+     PORQUE É O #071d3a E NÃO O #0e3b6d
+     Medido: o laranja da marca dá 5,88:1 sobre o #071d3a e passa como
+     texto corrido; sobre o #0e3b6d dá 3,93:1 e fica limitado a título
+     grande. A página tem laranja em rótulos de 11,5px. Não há escolha.
+     É também o azul que a /pilot2wing/ já usa — não é um valor novo.
+
+     O AZUL PONTUAL
+     O `--qp-azul` fica como filete do bloco de rigor. Mede 4,15:1 sobre o
+     azul e 4,06:1 sobre o papel: passa os 3:1 de elemento não-textual nas
+     duas faixas, e por isso é o único valor que não precisa de flectir. */
 .pg.qp{
-  --papel:#0b0c0e;
+  --papel:#071d3a;          /* o azul do site, o mesmo da /pilot2wing/ */
   --tinta:#fff;
   --tinta-fraca:rgba(255,255,255,.62);
   --linha:rgba(255,255,255,.13);
-  --qp-cx:#141619;          /* as superfícies que sobem do fundo */
-  --qp-cx2:#1b1e23;
-  --qp-azul:#3b82c4;        /* o azul pontual */
+  --qp-cx:#0d2a4d;          /* as superfícies que sobem do fundo: 1,17:1 */
+  --qp-cx2:#123255;         /* o degrau seguinte: 1,29:1 */
+  --qp-azul:#3b82c4;        /* o filete do bloco de rigor */
+
+  /* A CONTA DO ALINHAMENTO DAS FAIXAS, A MESMA DO PILAR
+     Estes três são os valores do `.pk` — o `/parakite-portugal/` — e estão
+     aqui outra vez de propósito, não por descuido. O comentário do
+     `--margem-faixa` lá em baixo explica porquê: uma propriedade
+     personalizada resolve os `var()` que tem dentro no sítio onde é
+     DECLARADA, e o `--pk-cx` e o `--pk-pad` vivem no `.pk`. Esta página
+     não é `.pk`; herdava-os vazios e o padding das faixas dava zero.
+     Mudar a medida das faixas é mudar estes dois números. */
+  --pk-cx:1440px;
+  --pk-pad:72px;
+  --margem-faixa:max(var(--pk-pad), calc((100% - var(--pk-cx))/2 + var(--pk-pad)));
 }
 
-.qp-cx{max-width:1080px;margin:0 auto;padding:0 40px}
-.qp-sec{padding:96px 0;border-top:1px solid var(--linha)}
+/* ---- a faixa de papel -----------------------------------------------
+   Quatro tokens trocados e a folha adapta-se: as 34 regras que leem
+   `--tinta`, `--papel`, `--tinta-fraca` e `--linha` mudam de cor sem
+   saber que existe uma faixa. As superfícies dos cartões descem para
+   near-white porque numa faixa clara um cartão escuro seria um buraco.
+
+   E O LARANJA TEM DE MUDAR DE SIGNIFICADO AQUI
+   O `#ff6a13` mede 2,87:1 sobre branco — está registado neste ficheiro
+   com este número. O `--laranja-tinta` (#a63f00) mede 6,30:1 e existe
+   precisamente para isto. Redefinir `--orange` dentro da faixa apanha o
+   rótulo, o `em` da frase-âncora e o número do passo de uma só vez, em
+   vez de caçar cada sítio onde o laranja aparece. */
+.qp-sec.qp-claro{
+  --papel:var(--painel);
+  --tinta:var(--painel-tinta);
+  --tinta-fraca:var(--painel-fraca);
+  --linha:var(--painel-linha);
+  --qp-cx:#eff4f9;          /* 1,11:1 sobre o papel — vê-se sem pesar */
+  --qp-cx2:#eaf0f7;
+  --orange:var(--laranja-tinta);
+  background:var(--painel);
+  color:var(--painel-tinta);
+}
+
+/* A FAIXA DE PAPEL TEM A GEOMETRIA DO /parakite-portugal/
+   O tecto próprio saiu e entrou a conta de alinhamento do pilar, que é a
+   mesma que o `.pk-papel` usa: o conteúdo de uma faixa que sangra fica
+   exactamente onde as secções normais o põem. Dá 1281px de conteúdo a
+   1440 de viewport e 1296px em ecrãs largos, com o `--pk-pad` a descer
+   para 26px abaixo dos 899px, como no pilar.
+
+   O QUE ISTO CUSTA, MEDIDO A 12/09/2026
+   A caixa é a mesma do pilar; a leitura não. As páginas-pilar têm
+   parágrafos curtos que não chegam ao fim da linha — medido, mediana de
+   66 caracteres numa caixa de 1281px. Os desta página têm 32 palavras de
+   média e enchem-na: a mediana vai aos ~150. O conforto tipográfico são
+   45–75.
+
+   Foi uma escolha do Paulo, depois de ver as duas lado a lado: a coluna
+   estreita deixava branco a sobrar à direita e não batia com o resto do
+   site. Fica escrito para que a decisão se reconheça como decisão, e para
+   que quem a quiser inverter saiba que basta pôr um tecto aqui.
+
+   E ISTO VALE PARA A PÁGINA TODA, não só para o papel: a conta subiu para
+   o `.qp-cx` logo abaixo, porque o pilar alinha tudo no mesmo sítio e ter
+   a faixa clara num alinhamento e a azul noutro dava um degrau de 100px
+   em cada fronteira. */
+
+/* A COLUNA DA PÁGINA É A DO /parakite-portugal/
+   Tinha 1080px centrados com 40px de `padding`, o que punha o conteúdo em
+   `left:212`. O pilar põe tudo em `left:72` — migalhas, secções e faixas
+   — e é esse o alinhamento único que o Paulo pediu. Medido a 1440:
+
+     antes   migalhas 172 · secção 212 · faixa clara 72   (três)
+     agora   72 em tudo, conteúdo de 1281px               (um)
+
+   `max-width` já não é preciso: é o `--margem-faixa` que trava, porque
+   acima de 1584px passa a crescer com o ecrã e mantém o conteúdo nos
+   1296px centrados. Um valor, não dois. */
+.qp-cx{margin:0 auto;padding-inline:var(--margem-faixa)}
+/* O FIO SÓ SEPARA SECÇÕES DA MESMA FAIXA
+   Onde a cor de fundo muda, a fronteira já está desenhada — um fio por
+   cima dela é uma risca a mais. Onde a cor não muda, o fio continua a ser
+   o que separa duas secções. A regra diz isso e nada mais, portanto
+   acertar a alternância no HTML não obriga a voltar aqui. */
+.qp-sec{padding:96px 0}
+.qp-claro + .qp-claro,
+.qp-sec:not(.qp-claro) + .qp-sec:not(.qp-claro){
+  border-top:1px solid var(--linha);
+}
 
 .qp-kicker{
   display:block;font-size:11.5px;font-weight:800;letter-spacing:2.6px;
   text-transform:uppercase;color:var(--orange);margin-bottom:18px;
 }
+/* ATENÇÃO: ESTA REGRA ESTÁ MORTA, E FICA DOCUMENTADA EM VEZ DE APAGADA
+   Medido a 12/09/2026: `.pg.tema h2` tem a mesma especificidade (0,2,1) e
+   vem depois neste ficheiro, portanto ganha TODAS as seis propriedades:
+
+     aqui declarado            o que o tema impõe
+     font-size clamp(…,52px) → var(--d2)          = 41px
+     font-weight 900         → var(--peso-display) = 800
+     letter-spacing -1.4px   → var(--tr-display)   = normal
+     line-height 1.04        → var(--lh-display)   = 1.02
+     max-width 16ch          → none  (o H2 corre os 1000px da coluna)
+                             + text-transform:uppercase
+
+   É a mesma colisão do `max-width` do `.qp-p`, logo acima. A diferença é
+   que ali a intenção valia recuperar — uma medida de 68ch é melhor do que
+   1000px — e aqui não: a escala de títulos é do tema, que é a fonte única
+   declarada (content/tema.json -> CMS -> Tema), e fazer esta página fugir
+   dela punha-a diferente das outras 174 sem razão.
+
+   Fica escrito para ninguém voltar a medir o valor declarado e concluir,
+   como eu concluí, que o H2 desta página tem 52px. Tem 41. */
 .pg.qp h2{
   font-size:clamp(30px,4.6vw,52px);font-weight:900;letter-spacing:-1.4px;
   line-height:1.04;margin-bottom:28px;max-width:16ch;
@@ -1526,6 +1649,36 @@ a.fl-cor-a:hover{background:#ff7c31;color:var(--sobre-laranja)}
   font-size:clamp(19px,2.2vw,24px);font-weight:800;letter-spacing:-.4px;
   margin:44px 0 16px;
 }
+/* O `max-width:68ch` DESTA REGRA NÃO SE APLICA, E É ASSIM QUE DEVE SER
+   Três regras disputam o `max-width` de um `.qp-p`:
+
+     .pg p       {max-width:68ch}   (0,1,1)
+     .qp-p       {max-width:68ch}   (0,1,0)
+     .pg.tema p  {max-width:none}   (0,2,1)   ← ganha
+
+   É a mesma colisão documentada mais abaixo para a `.spot-sec p`. A 12/09
+   tentei recuperá-la com um `.pg.tema .qp-p{max-width:68ch}` e o resultado
+   foi pior do que o problema: o filete do H2, a frase-âncora e os cartões
+   ficaram nos 1000px da coluna e só o texto corrido parou aos 623px,
+   encostado à esquerda, com o branco todo de um lado. Três medidas na
+   mesma secção.
+
+   A folha já dizia como se faz, em dois sítios:
+
+     «a 92ch encostado à esquerda sobrava o branco todo de um lado só.
+      Centrado fica margem simétrica.»
+     «DENTRO DA GRELHA QUEM DÁ A MEDIDA É A COLUNA. Tinha-lhe posto uma
+      trava própria e ficava um bloco estreito com branco a sobrar lá
+      dentro — diferente de todas as outras páginas do site sem razão
+      nenhuma.»
+
+   Então a medida passou para a coluna: é a `.qp-claro .qp-cx` que a dá,
+   mais abaixo. Assim o título, o filete, a frase, os cartões e o texto
+   partilham a mesma margem esquerda e a mesma direita, e a coluna é
+   centrada — margem simétrica, uma só medida.
+
+   O `68ch` fica escrito porque é a intenção e porque volta a valer se o
+   `.pg.tema p` algum dia sair. Não se apaga o que documenta a intenção. */
 .qp-p{font-size:17px;line-height:1.72;color:var(--tinta-fraca);max-width:68ch;margin-bottom:18px}
 .qp-p:last-child{margin-bottom:0}
 .qp-p strong{color:var(--tinta);font-weight:700}
@@ -1545,7 +1698,7 @@ a.fl-cor-a:hover{background:#ff7c31;color:var(--sobre-laranja)}
 }
 .qp-hero-nota{
   margin-top:30px;font-size:13.5px;line-height:1.6;
-  color:rgba(255,255,255,.42);max-width:52ch;
+  color:var(--tinta-fraca);max-width:52ch;
 }
 .pg.qp a.qp-cta{
   display:inline-flex;align-items:center;gap:9px;margin-top:34px;
@@ -1553,7 +1706,9 @@ a.fl-cor-a:hover{background:#ff7c31;color:var(--sobre-laranja)}
   text-decoration:none;padding:13px 22px;border-radius:100px;
   border:1px solid rgba(255,255,255,.22);transition:border-color .18s,background .18s;
 }
-.pg.qp a.qp-cta:hover{background:rgba(255,255,255,.07);border-color:var(--orange);color:var(--tinta)}
+/* o hover era um clarear de 7% de branco: sobre papel não existia.
+   O `--qp-cx` é a superfície que já sobe do fundo nas duas faixas. */
+.pg.qp a.qp-cta:hover{background:var(--qp-cx);border-color:var(--orange);color:var(--tinta)}
 .pg.qp a.qp-cta::after{content:'\2192';color:var(--orange)}
 
 /* ---- a frase grande ---- */
@@ -1564,7 +1719,12 @@ a.fl-cor-a:hover{background:#ff7c31;color:var(--sobre-laranja)}
 .qp-frase em{font-style:normal;color:var(--orange)}
 
 /* ---- cartões ---- */
-.qp-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:40px}
+/* `repeat(4,1fr)` contava com uma coluna de 1000px, e o corte para dois
+   está numa media query de VIEWPORT — que não sabe nada da largura da
+   coluna. Numa coluna de 620px dava quatro cartões de 140px. O `auto-fit`
+   com `minmax` reflecte o espaço que existe e não o tamanho do ecrã: é o
+   mesmo idioma que o `.qp-links` já usa aqui ao lado. */
+.qp-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:40px}
 .qp-card{background:var(--qp-cx);border:1px solid var(--linha);border-radius:14px;padding:22px 20px}
 .qp-card b{display:block;font-size:14.5px;font-weight:800;margin-bottom:8px}
 .qp-card span{font-size:13.5px;line-height:1.55;color:var(--tinta-fraca)}
@@ -1575,7 +1735,7 @@ a.fl-cor-a:hover{background:#ff7c31;color:var(--sobre-laranja)}
    pior do que uma lista honesta. */
 .qp-fluxo{margin:44px 0 0;background:var(--qp-cx);border:1px solid var(--linha);border-radius:18px;padding:30px 26px}
 .qp-fluxo-t{font-size:11.5px;font-weight:800;letter-spacing:2.2px;text-transform:uppercase;
-  color:rgba(255,255,255,.4);margin-bottom:22px}
+  color:var(--tinta-fraca);margin-bottom:22px}
 .qp-passos{display:flex;flex-direction:column;gap:0}
 .qp-passo{
   display:flex;align-items:center;gap:16px;
@@ -1590,7 +1750,7 @@ a.fl-cor-a:hover{background:#ff7c31;color:var(--sobre-laranja)}
 }
 .qp-passo:last-child{border-color:rgba(255,106,19,.42);background:rgba(255,106,19,.07)}
 .qp-seta{height:22px;display:flex;align-items:center;justify-content:center;
-  color:rgba(255,255,255,.28);font-size:15px;line-height:1}
+  color:var(--tinta-fraca);font-size:15px;line-height:1}
 
 /* ---- mãos altas / mãos baixas ---- */
 .qp-maos{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:34px}
@@ -1648,7 +1808,7 @@ a.fl-cor-a:hover{background:#ff7c31;color:var(--sobre-laranja)}
    A mesma informacao, apresentada como aquilo que e. */
 .qp-varia-t{
   margin-top:38px;font-size:11.5px;font-weight:800;letter-spacing:2.2px;
-  text-transform:uppercase;color:rgba(255,255,255,.4);
+  text-transform:uppercase;color:var(--tinta-fraca);
 }
 .qp-varia{margin-top:16px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .qp-varia-it{
@@ -1669,7 +1829,9 @@ a.fl-cor-a:hover{background:#ff7c31;color:var(--sobre-laranja)}
 
    `eager` + `fetchpriority=high` porque a esta altura da pagina e quase
    sempre a maior imagem visivel — e o LCP agradece que nao espere. */
-.qp-foto{margin:0;border-bottom:1px solid var(--linha)}
+/* o fio de baixo saiu: a fotografia sangra e a seguir vem a faixa de
+   papel, portanto a fronteira já está desenhada pela mudança de cor. */
+.qp-foto{margin:0}
 .qp-foto img{
   display:block;width:100%;height:auto;
   max-height:min(62vh,620px);object-fit:cover;object-position:60% 40%;
@@ -1712,7 +1874,10 @@ a.fl-cor-a:hover{background:#ff7c31;color:var(--sobre-laranja)}
 
 /* ------------------------------------------------------------- estreito */
 @media(max-width:899px){
-  .qp-cx{padding:0 20px}
+  /* o mesmo passo que o `.pk` dá no mesmo ponto: ver `--pk-pad` no .pk.
+     O `padding:0 20px` que aqui estava saiu: era a mesma coisa dita com
+     outro número, e agora quem manda é o token. */
+  .pg.qp{ --pk-pad:26px }
   .qp-sec{padding:60px 0}
   .qp-hero{padding:46px 0 54px}
   .qp-cards{grid-template-columns:1fr 1fr;gap:10px}
@@ -2179,10 +2344,15 @@ a.fl-cor-a:hover{background:#ff7c31;color:var(--sobre-laranja)}
    /o-que-e-um-parakite/ — as setas transportam sentido
    ======================================================================
    Mostram o caminho do input pelo sistema de controlo. A 2,51:1 nao se
-   viam. Os rotulos dos diagramas estavam a 3,8. */
-.pg.qp .qp-seta{color:rgba(255,255,255,.5)}
-.pg.qp .qp-fluxo-t,
-.pg.qp .qp-varia-t{color:rgba(255,255,255,.56)}
+   viam. Os rotulos dos diagramas estavam a 3,8.
+
+   12/09/2026 · ESTES TRES VALORES PASSARAM A TOKEN
+   Eram .5 e .56 de branco, levantados daqui por medicao. Com as faixas de
+   papel deixam de poder ser brancos: sobre branco desapareciam. Agora leem
+   `--tinta-fraca`, que vale .62 de branco na faixa azul — acima dos .5/.56
+   que este comentario corrigiu, portanto no mesmo sentido — e #5b6878 na
+   faixa de papel, medido a 5,68:1. A regra abaixo ficaria a repetir o que
+   a base ja diz, e saiu. */
 
 
 /* ======================================================================
