@@ -2,15 +2,14 @@
 
 Estado. As regras do processo estão no `SEO-WORKFLOW.md`.
 
-Última reconciliação: **11/09/2026**, e desta vez contra **dados de
-desempenho**, não só de cobertura — é a primeira vez que este ficheiro tem
-cliques e impressões reais. A secção seguinte é toda nova por isso.
+Última reconciliação: **12/09/2026**. Os dados de desempenho que abrem este
+ficheiro continuam a ser os de 11/09 — não houve exportação nova.
 
-O site está publicado no deploy **`d03577bf`** desde **11/09 às 16:17**, sobre
-o commit **`71bc4b5`**, com `sujo: false` — a árvore, o GitHub e o site estão
+O site está publicado no deploy **`d69485da`** desde **12/09 às 10:05**, sobre
+o commit **`9eda1c7`**, com `sujo: false` — a árvore, o GitHub e o site estão
 os três no mesmo ponto.
 
-**Onze deploys em 10 e 11/09**, por esta ordem:
+**Treze deploys entre 10 e 12/09**, por esta ordem:
 
 ```
 4c829982  10/09 19:03  commit 8ec61c6, ÁRVORE SUJA — o schema, as FAQ, as
@@ -30,6 +29,10 @@ e9047eaf  11/09 14:46  commit a7377e8 — o Alfarim passa a página, 175 URLs
                        de desempenho no SEO-OPEN
 d03577bf  11/09 16:17  commit 71bc4b5 — as fotografias dos spots saem do
                        popup e entram nas páginas
+a0c649a8  11/09 17:37  commit 12fd86a — o Instagram e o YouTube no grafo
+                       de entidades e no rodapé
+d69485da  12/09 10:05  commit 9eda1c7 — a página do conceito passa a azul
+                       e papel, e ganha 35 acessos
 ```
 
 **A exportação de Cobertura é de 04/09** e portanto anterior a todos: não viu
@@ -349,6 +352,43 @@ anterior a existirem.
 
 ## PENDENTE
 
+### A página do conceito não liga a uma única ficha de asa
+aberto: 2026-09-12
+
+Medido: **18 ligações internas para 12 destinos, e zero para fichas de asa.**
+A página explica geometria, incidência, reflex e sistema de comando — e não
+manda ninguém para uma asa que tenha isso. O `/en/#produtos` que lá está é
+uma âncora para a secção da página inicial, não uma ficha.
+
+No sentido que já foi tratado a 12/09, 55 páginas passaram a ter caminho
+**para** o conceito. Falta o inverso, e o inverso é o que tem valor
+comercial: é a página com mais procura internacional das cinco famílias
+(94 impressões nas cinco línguas, 14% do site) a não passar autoridade
+nenhuma às fichas que estão em **15.º na Alemanha**.
+
+**O que é preciso:** em cada conceito, a asa que o exemplifica. É trabalho de
+dados no gerador, não código novo.
+
+### Sete conceitos espaciais e uma fotografia
+aberto: 2026-09-12
+
+A página tem **2 183 palavras, 1 imagem, 0 figuras com legenda, 0 vídeos, 0
+diagramas e 0 tabelas.** Explica geometria, incidência, pitch, ângulo de
+ataque, reflex, comandos e gestão de energia — sete conceitos espaciais,
+todos por palavras.
+
+É a maior lacuna da página e é a mesma para as duas audiências: um piloto que
+não visualiza não entende, e um motor de resposta que quer ilustrar não tem
+nada para mostrar.
+
+**Quatro diagramas resolvem os sete:** o sistema de comando com as mãos em
+cima e em baixo; o perfil com reflex e sem; o triângulo
+incidência/ângulo de ataque; a curva de energia no picado e na subida.
+
+E a secção «Parakite, parapente, speedwing e miniwing» é uma comparação de
+quatro categorias **sem tabela** — que é o formato que uma AI Overview
+extrai para uma pergunta «X vs Y».
+
 ### A AI Overview do Google cita sete fontes, e nenhuma é nossa
 medido: 2026-09-11 · **o achado mais importante do dia**
 
@@ -578,7 +618,221 @@ a nenhum dos dois `GOOGLE_CLIENT_ID` acima.
 
 ---
 
+## FECHADO A 12/09
+
+### A página do conceito passa a azul e papel, com um só alinhamento
+fechado: 2026-09-12 · deploy `d69485da` · verificado em produção
+
+O fundo de `/o-que-e-um-parakite/` era quase-preto (`#0b0c0e`) por decisão
+documentada no `pagina.css`: «esta é outra coisa — é para se ler e para ser
+citada». O argumento mantém-se e a conclusão inverteu-se, porque um fundo
+branco lê-se melhor do que um quase-preto em 2 183 palavras. O azul deixa de
+ser ausência e passa a pontuação.
+
+**A alternância é por registo, não secção a secção.** Onze listras num
+documento de 11 000px cortam a explicação onde ela devia correr:
+
+```
+herói                                          azul
+control system → reflex   (6 secções)         PAPEL
+comparação e variação                          azul
+perguntas frequentes                          PAPEL
+learn more                                     azul
+```
+
+**O `#071d3a` e não o `#0e3b6d`, e a razão é medida:** o laranja da marca dá
+**5,88:1** sobre o primeiro e passa como texto corrido; sobre o segundo dá
+**3,93:1** e ficava limitado a título grande. A página tem laranja em rótulos
+de 11,5px. É também o azul que a `/pilot2wing/` já usava.
+
+**O mecanismo foi a troca de tokens, não uma segunda folha.** A folha tinha
+dois padrões para ilha clara: o do curso (`.pk-papel`) recolore cada
+componente à mão, cerca de 20 regras; o dos spots (`body.spot.papel`) troca
+quatro tokens e deixa a folha adaptar-se. Contadas as regras `.qp-*` que
+pintam cor: **45, e 34 leem tokens** — essas adaptaram-se sem uma linha
+escrita para elas. **Sete** escreviam branco com transparência e
+desapareciam sobre papel; passaram a `--tinta-fraca`. Dentro da faixa clara
+o `--orange` passa a valer `--laranja-tinta`: **6,30:1** contra os 2,87:1 do
+laranja vivo sobre branco, numa linha que apanha o rótulo, o `em` da
+frase-âncora e o número do passo de uma vez.
+
+**O fio entre secções acerta-se sozinho.** A regra diz que o fio separa
+secções da mesma faixa e nada mais, portanto uma fronteira de cor não leva
+risca por cima: medido 0px nas cinco fronteiras e 0,67px entre irmãs da
+mesma cor. Mudar a alternância no gerador não obriga a voltar ao CSS.
+
+#### E a medida deu duas voltas, das quais uma foi minha a mais
+
+Havia uma colisão de especificidade real, a mesma que já estava documentada
+neste ficheiro para a `.spot-sec p`:
+
+```
+.pg p       {max-width:68ch}   (0,1,1)
+.qp-p       {max-width:68ch}   (0,1,0)
+.pg.tema p  {max-width:none}   (0,2,1)   ← ganhava
+```
+
+Dois autores escreveram 68ch e a terceira regra apagou-os: o texto corria os
+1000px da coluna, medido em **121 caracteres por linha**, justificado e com
+hifenização — o pior caso possível.
+
+Recuperei-a com um `.pg.tema .qp-p{max-width:68ch}` e **o resultado foi pior
+do que o problema**: o filete do H2, a frase-âncora e os cartões ficaram nos
+1000px e só o texto parou aos 623px, encostado à esquerda, com o branco todo
+de um lado. Três medidas na mesma secção. A folha já avisava disto em dois
+sítios — «centrado fica margem simétrica» e «dentro da grelha quem dá a
+medida é a coluna» — e eu reintroduzi exactamente o que esses comentários
+tinham resolvido.
+
+**A saída foi a geometria do `/parakite-portugal/`, escolhida pelo Paulo
+depois de ver as duas lado a lado.** E aí apareceu uma terceira incoerência,
+que só se vê medindo as três de uma vez:
+
+```
+                        /parakite-portugal/    esta página, a meio
+migalhas                       72                    172
+secção normal / azul           72                    212
+faixa clara                    72                     72
+```
+
+O pilar tem **um** alinhamento; esta ficava com três e um degrau de 100px na
+margem esquerda em cada fronteira. A conta subiu do `.qp-claro` para o
+`.qp-cx`: **em produção, o conjunto das margens esquerdas de todos os filhos
+de todas as secções tem um só valor, 72.**
+
+**O que isto custa, e fica escrito porque é uma escolha e não um descuido:**
+
+```
+                  produção anterior   coluna estreita     agora
+coluna                  1000px             620px         1281px
+mediana caracteres         121                74            138
+acima de 85            23 de 31           0 de 49       22 de 31
+altura                 11 342px          12 754px       10 740px
+```
+
+**E a razão pela qual o pilar aguenta 1281px e esta página não é o conteúdo,
+não a caixa:** medidos os parágrafos do `/parakite-portugal/` na mesma caixa,
+a mediana é de **66 caracteres** — são curtos e não chegam ao fim da linha.
+Os desta página têm 32 palavras de média e enchem-na.
+
+#### Dois comentários que mentiam, corrigidos
+
+**O `.pg.qp h2` está morto desde que a família do tema existe.** O
+`.pg.tema h2` tem a mesma especificidade (0,2,1), vem depois, e ganha-lhe as
+seis propriedades: o H2 tem **41px** e não os 52px declarados, peso 800 e não
+900, sem `letter-spacing`, e o `max-width:16ch` não se aplica. Eu tinha
+relatado ao Paulo que o H2 tinha 52px — li o valor declarado. Fica
+documentado em vez de apagado, e a escala continua a ser do tema, que é a
+fonte única.
+
+**O comentário do Mohawk dizia o contrário do que o código faz.** Dizia que
+ele era «Speed flying» e ficava de fora do link para o conceito; a
+classificação no catálogo é «Parakite speed flying», o teste `/Parakite/`
+apanha-a, e o Mohawk **entra**. A metade da D-Wing estava certa.
+
+**Medido em produção:** 0 falhas de contraste em 191 elementos a 1440 e a
+375, pior 5,13:1; zero transbordo a 375, 800 e 1440; zero scroll lateral;
+7 faixas de papel nas cinco línguas; 17/17 verificações.
+
+---
+
+### Os acessos à página do conceito: 20 → 55 páginas
+fechado: 2026-09-12 · deploy `d69485da` · verificado em produção
+
+**O que já existia, e estava certo.** Quatro das 22 fichas de asa ligam ao
+conceito, e são exactamente as que o catálogo classifica com «Parakite» no
+nome da classe:
+
+```
+Mullet 2, MulletX    Parakite
+AlbatroXX            Performance Parakite
+Mohawk               Parakite speed flying
+```
+
+As outras 18 não ligam e **nenhuma devia**: são parapentes (EN-A a EN-D),
+arneses, uma reserva, um paraquedas de arrasto e a D-Wing V2 (Parawing).
+**Zero falsos negativos** — uma asa de speedflying não deve reclamar ser um
+parakite. Não se tocou nesta regra.
+
+**O que faltava eram as páginas que falam de parakite e nunca explicavam o
+que é:**
+
+```
+/parakite-portugal/alfarim/     diz "Parakite" 9 vezes   ligava? NÃO
+/flow-paragliders-portugal/     diz "Parakite" 9 vezes   ligava? NÃO
+```
+
+Seis páginas de spot e a da Flow, nas cinco línguas: **35 páginas**.
+
+**Zero CSS novo.** As duas reutilizam o `.pg-saibamais`, que já existia e já
+estava estilizado. Na página da Flow entra no `pg-eyebrow` que já lá estava
+— a mesma composição das fichas de asa, e a regra da margem já existia. Nas
+páginas de spot entra no fim da abertura e antes das fotografias, que é o
+ponto onde a pergunta nasce: leu-se o que se faz no local, ainda não se sabe
+com o quê.
+
+**O risco de contraste resolveu-se sozinho, e vale registar porquê.** A
+página do Alfarim é `body class="pg spot papel tema"` — fundo branco — e o
+`.pg-saibamais` é laranja vivo, que ali daria 2,87:1. Mas a folha já tinha
+`body.spot.papel .spot-cx a{color:var(--laranja-tinta)}`, com especificidade
+superior. Medido:
+
+```
+spot (papel)   #a63f00 sobre #ffffff    6,30:1   ✓
+Flow (azul)    #ff6a13 sobre #071d3a    5,88:1   ✓
+```
+
+**As cinco línguas apontam para a versão certa**, verificado em produção:
+
+```
+/parakite-portugal/alfarim/            → /o-que-e-um-parakite/
+/en/parakite-portugal/fonte-da-telha/  → /en/what-is-a-parakite/
+/de/parakite-portugal/praia-do-meco/   → /de/was-ist-ein-parakite/
+/flow-paragliders-portugal/            → /o-que-e-um-parakite/
+/fr/flow-paragliders-portugal/         → /fr/qu-est-ce-qu-un-parakite/
+```
+
+---
+
 ## FECHADO A 10 E 11/09
+
+### O Instagram e o YouTube entram no grafo de entidades e no rodapé
+fechado: 2026-09-11 · deploy `a0c649a8`
+
+Medida a SERP de `flow mullet 2` na Alemanha, a Happy Soaring aparecia três
+vezes e o Google não sabia que eram a mesma coisa:
+
+```
+#4   um vídeo no Facebook do Paulo
+#15  a página do produto, no site
+#20  um reel do Instagram pessoal
+```
+
+O vídeo pessoal estava **onze lugares acima** da página do próprio produto. O
+`sameAs` é a etiqueta que diz «esta conta É esta entidade» — sem ela, a
+autoridade de uma não chega à outra. Entrou nas 175 páginas e no `index.html`,
+com os dois endereços verificados por comparação de objectos e não por
+inspecção, mais as ligações no rodapé com `rel="me noopener"`.
+
+**E o `sameAs` aqui desambigua, não só declara.** Há dois canais de YouTube
+com nome confundível, e foi verificado a 11/09 qual é qual:
+
+```
+@HappySoaringPortugal  UCKcceKOInEt7dw6SDBgrwlw   é o nosso
+@happysoaring          UCCGdaV_S320U0F68EgWgrsA   NÃO é nosso
+```
+
+Sem a etiqueta, quem decide qual dos dois é a Happy Soaring é o Google, por
+conta própria.
+
+**Só entra a conta da empresa**, e é deliberado: declarar uma conta pessoal
+como `sameAs` da Organização é afirmar «este Instagram É a Happy Soaring», e
+não é verdade. O modelo correcto para as contas `paulo.reggae` é um `Person`
+ligado por `founder` — e essa decisão continua em aberto, na secção
+`DECISÃO PAULO` do que se segue.
+
+**Medido:** rodapé a 14,02:1, 1009×95 a 1024 e 375×122 a 375, zero
+transbordo, `sameAs` com 2 entradas nas 175 páginas, 17/17.
 
 ### As fotografias dos spots saem do popup e entram nas páginas
 fechado: 2026-09-11 · deploy `d03577bf`
@@ -968,10 +1222,23 @@ voltarem a entrar na fila.
 
 ### O FAQPage não dá resultado rico a este site
 Foi apresentado como o item de maior retorno. **Não é.** Desde agosto de 2023 o
-Google só mostra o resultado rico de FAQ a sites de saúde e a entidades
+Google só mostrava o resultado rico de FAQ a sites de saúde e a entidades
 governamentais reconhecidas. A marcação entrou mesmo assim, a 10/09, mas pelo
 outro leitor: pergunta e resposta emparelhadas são o formato mais fácil de
 levantar por um motor de resposta. **Ganho de AI Search, não de SERP.**
+
+**Actualizado a 12/09/2026, e agora é definitivo:** o Google **retirou os
+resultados ricos de FAQ a 7 de Maio de 2026**, e em Junho removeu o filtro de
+aspecto da pesquisa, o relatório e o suporte no Rich Results Test. Não é uma
+restrição por tipo de site — deixou de existir.
+
+**E há medição a confirmá-lo neste site:** o relatório «Aspeto da Pesquisa»
+da exportação de desempenho de 11/09 está **completamente vazio**. Quinze
+páginas com `FAQPage`, nove perguntas na do conceito, zero aparições.
+
+A marcação fica, porque o motivo pelo qual entrou não era o resultado rico.
+Mas **nenhum plano deve assentar nela**, e validar no Rich Results Test já
+não é possível.
 
 ### Os títulos das asas não estão por traduzir
 Foram contados 19 grupos de títulos idênticos nas cinco línguas e chamou-se-lhe
