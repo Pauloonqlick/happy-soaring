@@ -2901,6 +2901,20 @@ function paginaQueParakite(l) {
     '<a class="qp-link" href="' + destinos[i] + '"><b>' + esc(x[0]) + '</b>'
     + '<span>' + esc(x[1]) + '</span></a>').join('\n');   /* ver o \n acima */
 
+  /* AS LIGACOES AOS SPOTS ENTRAM ONDE A SECCAO AS PEDE
+     Medido a 12/09: a pagina tinha 7 destinos internos e ZERO para
+     paginas de spot. Poe-las soltas noutro sitio seria decoracao; aqui
+     entregam o que o «para que serve» promete, como as ligacoes as asas
+     entregam o que a seccao 9 promete.
+
+     Sai da mesma lista que gera as paginas, com a mesma condicao
+     `publicar === true` — se o CMS publicar um spot novo, aparece aqui
+     sozinho. */
+  const spotsLigados = SPOTS.filter(x => x.publicar === true && x.id)
+    .map(x => '<a class="qp-link" href="' + esc(caminhoSpot(l, x)) + '">'
+      + '<b>' + esc(x.nome) + '</b></a>')
+    .join('\n');
+
   const faq = arr('faq').map(f =>
     '<details><summary>' + esc(f[0]) + '</summary><p>' + esc(f[1]) + '</p></details>').join('');
 
@@ -3072,6 +3086,16 @@ ${alt}
       <div class="qp-varia">${variam}</div>
       <p class="qp-varia-t">${esc(t(QP.s9Asas, l))}</p>
       <div class="qp-links">${asasQP}</div>
+    </div>
+  </section>
+
+  <section class="qp-sec qp-claro" id="para-que-serve">
+    <div class="qp-cx">
+      <p class="qp-kicker">${esc(t(QP.s11Kicker, l))}</p>
+      <h2>${esc(t(QP.s11H2, l))}</h2>
+      ${paras('s11P')}
+      <p class="qp-varia-t">${esc(t(QP.s11Locais, l))}</p>
+      <div class="qp-links">${spotsLigados}</div>
     </div>
   </section>
 

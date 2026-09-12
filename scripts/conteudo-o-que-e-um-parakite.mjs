@@ -729,6 +729,43 @@ export const QP = {
   },
 
   /* ----------------------------------------------------------------- FAQ */
+  /* «PARA QUE SERVE» — acrescentado a 12/09/2026
+     A pagina explicava a maquina e nao o uso: 2 183 palavras e zero
+     mencoes a costa, duna, praia, areia, soaring, vento ou terreno. Cada
+     frase desta seccao vem das proprias paginas de spot; nenhuma afirmacao
+     aerodinamica nova foi acrescentada. */
+  s11Kicker: {
+    pt: 'Onde estas asas voam', en: 'Where these wings fly',
+    es: 'Dónde vuelan estas alas', fr: 'Où volent ces ailes',
+    de: 'Wo diese Schirme geflogen werden'
+  },
+  s11H2: {
+    pt: 'Para que serve um Parakite', en: 'What a Parakite is for',
+    es: 'Para qué sirve un Parakite', fr: 'À quoi sert un Parakite',
+    de: 'Wofür ein Parakite da ist'
+  },
+  s11P: {
+    pt: ['Um sistema de controlo existe para ser usado em algum sítio. Estas asas são utilizadas em spots costeiros, onde o vento ao encontrar a arriba ou o relevo das dunas cria sustentação dinâmica, e em zonas de areal, para treino no solo.',
+         'São dois tipos de local com finalidades diferentes. Um spot de falésia ou de duna permite soaring costeiro ao longo do relevo, quando a direção, a intensidade e a qualidade do vento são adequadas. Uma zona de areia permite trabalhar o controlo da asa no solo, sem que o objetivo da sessão seja voar.',
+         'Não indicamos um valor mínimo ou máximo de vento para nenhum destes locais, porque não existe um valor que possa ser aplicado de forma segura a todos os pilotos e a todos os equipamentos. O que conta é avaliar as condições existentes no momento.'],
+    en: ['A control system exists to be used somewhere. These wings are flown at coastal sites, where wind meeting a cliff or the relief of the dunes creates dynamic lift, and on stretches of sand, for ground training.',
+         'They are two kinds of place with different purposes. A cliff or dune site allows coastal soaring along the relief, when the direction, the strength and the quality of the wind are suitable. A stretch of sand allows the pilot to work on wing control on the ground, without flying being the objective of the session.',
+         'We do not give a minimum or maximum wind figure for any of these sites, because there is no single figure that can be applied safely to every pilot and every wing. What counts is assessing the conditions as they are at the time.'],
+    es: ['Un sistema de control existe para usarse en algún sitio. Estas alas se utilizan en spots costeros, donde el viento al encontrar el acantilado o el relieve de las dunas crea sustentación dinámica, y en zonas de arena, para entrenamiento en el suelo.',
+         'Son dos tipos de lugar con finalidades diferentes. Un spot de acantilado o de duna permite soaring costero a lo largo del relieve, cuando la dirección, la intensidad y la calidad del viento son adecuadas. Una zona de arena permite trabajar el control del ala en el suelo, sin que el objetivo de la sesión sea volar.',
+         'No indicamos un valor mínimo ni máximo de viento para ninguno de estos lugares, porque no existe un valor que pueda aplicarse de forma segura a todos los pilotos y a todos los equipos. Lo que cuenta es evaluar las condiciones existentes en el momento.'],
+    fr: ['Un système de commande existe pour être utilisé quelque part. Ces ailes sont volées sur des sites côtiers, où le vent rencontrant la falaise ou le relief des dunes crée une portance dynamique, et sur des étendues de sable, pour le travail au sol.',
+         'Ce sont deux types de lieu aux finalités différentes. Un site de falaise ou de dune permet le soaring côtier le long du relief, lorsque la direction, l’intensité et la qualité du vent sont adaptées. Une étendue de sable permet de travailler le contrôle de l’aile au sol, sans que voler soit l’objectif de la séance.',
+         'Nous n’indiquons pas de valeur minimale ni maximale de vent pour aucun de ces sites, car il n’existe pas de valeur applicable en sécurité à tous les pilotes et à tous les équipements. Ce qui compte est d’évaluer les conditions du moment.'],
+    de: ['Ein Steuersystem existiert, um irgendwo benutzt zu werden. Diese Schirme werden an Küstenspots geflogen, wo der Wind auf die Steilküste oder das Relief der Dünen trifft und dynamischen Aufwind erzeugt, und auf Sandflächen, für das Bodentraining.',
+         'Es sind zwei Arten von Ort mit unterschiedlichem Zweck. Ein Steilküsten- oder Dünenspot erlaubt Küstensoaring entlang des Reliefs, wenn Richtung, Stärke und Qualität des Windes passen. Eine Sandfläche erlaubt es, die Schirmkontrolle am Boden zu arbeiten, ohne dass Fliegen das Ziel der Einheit ist.',
+         'Wir nennen für keinen dieser Spots einen Mindest- oder Höchstwert für den Wind, denn es gibt keinen Wert, der sich sicher auf alle Piloten und alle Geräte anwenden lässt. Was zählt, ist die Beurteilung der Bedingungen im Augenblick.']
+  },
+  s11Locais: {
+    pt: 'Os locais que utilizamos', en: 'The sites we use',
+    es: 'Los lugares que utilizamos', fr: 'Les sites que nous utilisons',
+    de: 'Die Spots, die wir nutzen'
+  },
   faqH2: { pt: 'Perguntas frequentes', en: 'Frequently asked questions',
            es: 'Preguntas frecuentes', fr: 'Questions fréquentes',
            de: 'Häufige Fragen' },
