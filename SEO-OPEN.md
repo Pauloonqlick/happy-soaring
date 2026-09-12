@@ -5,11 +5,11 @@ Estado. As regras do processo estão no `SEO-WORKFLOW.md`.
 Última reconciliação: **12/09/2026**. Os dados de desempenho que abrem este
 ficheiro continuam a ser os de 11/09 — não houve exportação nova.
 
-O site está publicado no deploy **`d69485da`** desde **12/09 às 10:05**, sobre
-o commit **`9eda1c7`**, com `sujo: false` — a árvore, o GitHub e o site estão
+O site está publicado no deploy **`2d37e72b`** desde **12/09 às 10:17**, sobre
+o commit **`f9c9464`**, com `sujo: false` — a árvore, o GitHub e o site estão
 os três no mesmo ponto.
 
-**Treze deploys entre 10 e 12/09**, por esta ordem:
+**Catorze deploys entre 10 e 12/09**, por esta ordem:
 
 ```
 4c829982  10/09 19:03  commit 8ec61c6, ÁRVORE SUJA — o schema, as FAQ, as
@@ -33,6 +33,8 @@ a0c649a8  11/09 17:37  commit 12fd86a — o Instagram e o YouTube no grafo
                        de entidades e no rodapé
 d69485da  12/09 10:05  commit 9eda1c7 — a página do conceito passa a azul
                        e papel, e ganha 35 acessos
+2d37e72b  12/09 10:17  commit f9c9464 — a página do conceito passa a ligar
+                       às quatro asas que explica
 ```
 
 **A exportação de Cobertura é de 04/09** e portanto anterior a todos: não viu
@@ -352,42 +354,132 @@ anterior a existirem.
 
 ## PENDENTE
 
-### A página do conceito não liga a uma única ficha de asa
-aberto: 2026-09-12
+### Os quatro diagramas: o que cada um mostra, e o que não pode mostrar
+aberto: 2026-09-12 · especificado a 12/09 · **por construir**
 
-Medido: **18 ligações internas para 12 destinos, e zero para fichas de asa.**
-A página explica geometria, incidência, reflex e sistema de comando — e não
-manda ninguém para uma asa que tenha isso. O `/en/#produtos` que lá está é
-uma âncora para a secção da página inicial, não uma ficha.
+A página tem **2 183 palavras, 1 fotografia, 0 figuras com legenda e 0
+tabelas**, para explicar geometria, incidência, pitch, ângulo de ataque,
+reflex, comandos e gestão de energia.
 
-No sentido que já foi tratado a 12/09, 55 páginas passaram a ter caminho
-**para** o conceito. Falta o inverso, e o inverso é o que tem valor
-comercial: é a página com mais procura internacional das cinco famílias
-(94 impressões nas cinco línguas, 14% do site) a não passar autoridade
-nenhuma às fichas que estão em **15.º na Alemanha**.
+#### Uma correcção ao número que aqui estava primeiro
 
-**O que é preciso:** em cada conceito, a asa que o exemplifica. É trabalho de
-dados no gerador, não código novo.
+Estava escrito «0 diagramas». Isso contava `<svg>` e imagens. **A página já
+tem dois esquemas**, construídos em HTML e CSS:
 
-### Sete conceitos espaciais e uma fotografia
-aberto: 2026-09-12
+```
+qp-fluxo    Input do piloto → Comandos → Risers + linhas
+            → Configuração da asa → Velocidade · pitch · trajetória · energia
+qp-tri      Altura ⇆ Velocidade ⇆ Trajetória
+```
 
-A página tem **2 183 palavras, 1 imagem, 0 figuras com legenda, 0 vídeos, 0
-diagramas e 0 tabelas.** Explica geometria, incidência, pitch, ângulo de
-ataque, reflex, comandos e gestão de energia — sete conceitos espaciais,
-todos por palavras.
+A página **já sabe** exprimir **sequência** e **relação**. O que não
+consegue exprimir em HTML é **forma**: um perfil, um ângulo, uma diferença
+de comprimento entre grupos de linhas, uma trajetória no espaço. É essa a
+lacuna, e assim dita é muito mais precisa do que «faltam diagramas».
 
-É a maior lacuna da página e é a mesma para as duas audiências: um piloto que
-não visualiza não entende, e um motor de resposta que quer ilustrar não tem
-nada para mostrar.
+#### E um dos quatro já existe, sem quem lhe aponte
 
-**Quatro diagramas resolvem os sete:** o sistema de comando com as mãos em
-cima e em baixo; o perfil com reflex e sem; o triângulo
-incidência/ângulo de ataque; a curva de energia no picado e na subida.
+```
+images/reflex-profile.svg   192 KB · viewBox 420×300
+                            linhas de corrente, pontos de separação
+em produção                 http 200
+referenciado por            NENHUMA página gerada
+```
 
-E a secção «Parakite, parapente, speedwing e miniwing» é uma comparação de
-quatro categorias **sem tabela** — que é o formato que uma AI Overview
-extrai para uma pergunta «X vs Y».
+É quase certamente um dos «seis ficheiros de imagem sem quem lhes aponte»
+que está no `DECISÃO PAULO`. Veio do `/reflex-lab/`, retirado a 04/09.
+
+**E não serve como está, por duas razões medidas:** as cores estão escritas
+à mão — `#ffffff` a 0,35 de opacidade, mais um verde, um azul e um vermelho
+do simulador, nenhum deles da paleta — e a secção do Reflex é agora uma
+**faixa branca**. Traços brancos sobre branco não se vêem.
+
+#### 1 · Mãos em cima, mãos em baixo
+
+**Ancora em:** «Com as mãos mais altas, a asa assume uma configuração mais
+acelerada» e «Ao baixar progressivamente as mãos, a configuração muda e a
+velocidade diminui».
+
+**Mostra:** dois estados lado a lado — a mesma asa, o mesmo piloto, com os
+grupos de linhas em posições relativas diferentes e a atitude que disso
+resulta. Dois estados, não uma animação.
+
+**NÃO pode mostrar** uma solução mecânica concreta. O `s3Aviso` da própria
+página diz: «Não existe uma solução mecânica universal. Consoante o projeto
+podem existir polias, mixers, cascatas… Nenhuma delas, isoladamente, define
+um Parakite.» Desenhar uma polia específica contradiria a página.
+
+**É o mais importante dos quatro:** é a definição da página tornada visível.
+**E é o único que precisa do Paulo** — o esquema tem de ser fiel sem
+insinuar o projeto de um fabricante.
+
+#### 2 · Os quatro que não são sinónimos
+
+**Ancora em:** as quatro definições do `s4Defs` e, sobretudo, na frase que
+faz o trabalho todo — «Mesmo que a configuração geométrica da asa não
+mudasse, o ângulo de ataque poderia variar por causa de uma rajada, de uma
+mudança de trajetória…»
+
+**Mostra:** dois painéis. No primeiro, uma asa com quatro coisas marcadas —
+a corda, a geometria de suspensão, o eixo lateral de rotação, e o ângulo
+entre a corda e o fluxo relativo. No segundo, **a mesma geometria com o
+fluxo a vir de outra direcção**, e portanto outro ângulo de ataque.
+
+**É o que carrega mais peso explicativo**, porque é exactamente aqui que se
+confunde incidência com ângulo de ataque. **E não depende do Paulo** — o
+texto já diz tudo o que o desenho tem de dizer. É por aqui que se começa.
+
+#### 3 · O perfil com reflex e sem
+
+**Ancora em:** «a zona posterior apresenta uma curvatura que modifica o
+momento de pitch da asa».
+
+O `reflex-profile.svg` pode servir de base, depois de recolorido para a
+paleta e de passar a funcionar sobre fundo claro.
+
+**NÃO pode sugerir que o reflex protege.** O `s7Limite` é explícito: «não
+torna a asa impossível de colapsar». O desenho fica neutro e o limite fica
+na legenda.
+
+#### 4 · A conversão de energia
+
+**Ancora em:** «a perda de altura pode ser convertida em aumento de
+velocidade… pode então ser usada para… realizar uma trajetória ascendente».
+
+**Mostra:** uma trajetória no espaço — a descida a ganhar velocidade, depois
+a subida. **E tem de mostrar a perda:** o texto diz «A conversão nunca é
+perfeita. O arrasto dissipa continuamente parte da energia», portanto **a
+segunda subida fica mais baixa do que o ponto de partida.** É o detalhe que
+quase todos os diagramas deste tipo erram.
+
+**NÃO pode mostrar energia a transformar-se em sustentação.** O `s6Rigor`
+existe precisamente para matar essa ideia: «a energia não se transforma em
+sustentação. A sustentação é uma força aerodinâmica.»
+
+#### Duas coisas que não são diagramas — são tabelas
+
+A comparação das quatro categorias («Parakite, parapente, speedwing e
+miniwing») está em blocos de prosa. **Quatro categorias × quatro
+propriedades numa tabela** é o formato que uma AI Overview extrai para uma
+pergunta «X vs Y». O «o que pode variar entre projetos» já é uma grelha de
+termo + definição e está bem como está.
+
+#### Como têm de ser construídos, e isto decide tudo
+
+**SVG em linha, não `<img>`.** A página tem agora duas faixas. Uma imagem
+externa não consegue ler `currentColor` nem os tokens — o
+`reflex-profile.svg` é a prova do problema. Em linha, os traços herdam
+`--tinta` e adaptam-se à faixa como todo o resto.
+
+**E em linha as legendas são texto a sério** — selecionável, traduzível e
+legível por um motor de resposta. Numa imagem as legendas são pixéis. Como a
+razão de ser disto é precisamente a extração por IA, não é detalhe.
+
+**Cinco línguas**, portanto as legendas vêm do módulo de conteúdo como todo
+o resto: os diagramas são **gerados, não ficheiros estáticos**.
+
+**São código, não ilustração.** Não precisam de fotógrafo nem de designer
+externo.
 
 ### A AI Overview do Google cita sete fontes, e nenhuma é nossa
 medido: 2026-09-11 · **o achado mais importante do dia**
@@ -735,6 +827,51 @@ apanha-a, e o Mohawk **entra**. A metade da D-Wing estava certa.
 7 faixas de papel nas cinco línguas; 17/17 verificações.
 
 ---
+
+### A página do conceito passa a ligar às asas que explica
+fechado: 2026-09-12 · deploy `2d37e72b` · verificado em produção
+
+Metade do trabalho dos acessos estava a faltar, e era a metade com valor
+comercial. Medido antes: **18 ligações internas para 12 destinos, e zero
+para fichas de asa.** A página explicava geometria, incidência, reflex e
+sistema de comando e não mandava ninguém para uma asa que os tenha — sendo
+a família com mais procura internacional das cinco (94 impressões nas cinco
+línguas, 14% do site) a não passar autoridade nenhuma às fichas que estão em
+**15.º na Alemanha**.
+
+Agora: **22 ligações, 16 destinos, 4 para fichas de asa.**
+
+**Porque na secção 9 e não noutra.** A secção diz, com estas palavras, «Não
+existe uma única arquitetura que represente todos os Parakites» e lista o
+que pode variar entre projetos — e não nomeava um único projeto. Prometia os
+projetos e não os entregava. É o único sítio da página onde nomear asas é o
+que o texto já pedia, em vez de ser um anúncio no meio de uma explicação.
+
+**A mesma regra nas duas direcções.** O teste é o mesmo que decide, na ficha
+de asa, se ela ganha o link para o conceito: `/Parakite/` sobre a
+classificação do catálogo. Dá quatro — Mullet 2 e MulletX («Parakite»),
+AlbatroXX («Performance Parakite») e Mohawk («Parakite speed flying») — e se
+a Flow acrescentar um parakite à gama, aparece sozinho. Uma regra, duas
+direcções, nenhuma lista escrita à mão. O que distingue cada uma vem do
+`tagline` da própria ficha, que é dado e não texto escrito para aqui.
+
+**Zero CSS novo:** reutiliza o `.qp-varia-t` para o rótulo e o `.qp-links`
+com `a.qp-link` para a grelha.
+
+**Medido:** as cinco línguas com o slug traduzido (`asas`, `wings`, `alas`,
+`ailes`, `schirme`), 4 asas em cada; 0 falhas de contraste em 202 elementos,
+pior 5,13:1; o conjunto das margens esquerdas continua a ser `{72}`; grelha
+de 4 cartões a 310×126 ao lado da de «Aprender mais» com 3 a 418×126; zero
+transbordo a 375, 800 e 1440; 17/17.
+
+**Nota sobre redundância, para quem vier depois:** o pilar
+`/parakite-portugal/` já ligava às mesmas quatro asas, num bloco com título
+próprio («The four Parakites», em chips de texto sem fotografia), e a página
+da Flow tem um bloco «Parakites — 4 models» com fotografias. São agora três
+páginas a ligar às mesmas quatro fichas. **Não é duplicação a corrigir** — o
+contexto de cada uma é diferente — mas é a razão pela qual uma quarta página
+só para asas parakite foi considerada e **recusada**: ver a entrada em
+`RETIRADOS`.
 
 ### Os acessos à página do conceito: 20 → 55 páginas
 fechado: 2026-09-12 · deploy `d69485da` · verificado em produção
@@ -1214,11 +1351,82 @@ recorte de `object-fit:cover` a 375px guarda só a faixa central.
 
 ---
 
-## RETIRADOS NA AUDITORIA DE 10/09
+## RETIRADOS — O QUE FOI PROPOSTO E NÃO SE FAZ
 
-Três das seis recomendações que essa auditoria fez estavam erradas ou já
-resolvidas. Ficam escritas, como o item dos clientes OAuth acima, para não
-voltarem a entrar na fila.
+Ficam escritos, como o item dos clientes OAuth acima, para não voltarem a
+entrar na fila. **Três vêm da auditoria de 10/09**, onde estavam errados ou
+já resolvidos; **três são de 12/09** e dois desses são correcções a coisas
+que eu próprio propus e que não sobreviveram à medição.
+
+### Uma página só para as asas parakite — considerada e recusada
+2026-09-12
+
+A pergunta foi posta depois de se ver que a secção 9 prometia projetos e não
+os nomeava. **Não se faz**, por quatro razões medidas:
+
+**Três páginas já ligam às mesmas quatro asas:** o pilar
+`/parakite-portugal/` (num bloco com título próprio, «The four Parakites»,
+em chips sem fotografia), a página do conceito (desde 12/09) e a página da
+Flow (bloco «Parakites — 4 models», com fotografias). Uma quarta seria a
+quarta página para os mesmos quatro produtos.
+
+**Já há canibalização no termo de cabeça.** `parakite` é a maior consulta do
+site — 29 impressões, 4 cliques, posição 15,45 — e três páginas deste grupo
+têm cerca de 30 impressões cada (`/parakite-portugal/` 6/30,
+`/en/what-is-a-parakite/` 1/30, `/o-que-e-um-parakite/` 5/22). As
+exportações não cruzam consulta com página, portanto não se pode provar qual
+responde ao termo; mas três páginas a disputá-lo já é a situação.
+
+**A intenção de compra está no modelo, não na categoria.** Medido:
+`flow mullet 2` 18 impressões, `albatroxx` 12, `flow albatroxx` 10,
+`mullet 2` 6, `mullet 2 parakite` 6. E nas 43 consultas do trimestre **não
+há uma única** «parakite wings», «parakites for sale», «buy parakite» ou
+«parakite price». Bate com a SERP alemã: um mercado de revendedores onde 5
+dos 14 mostram preço, e quem compra pesquisa o nome do modelo.
+
+**E a categoria não pode crescer:** a gama Flow tem 27 modelos, 4 são
+parakites, e nenhum dos 5 que ainda não têm página é parakite.
+
+**O que se faz em vez disso:** dar `id` às oito famílias da página da Flow,
+que hoje não têm âncora nenhuma — um `#parakites` dá um endereço que se pode
+enviar no email à Flow, no Reddit ou na bio do Instagram. **Não é ganho de
+ranking** (o Google não indexa fragmentos como endereços próprios), é ganho
+de utilidade e de destino de ligação, e custa uma linha porque o `h3` já tem
+o nome da família.
+
+**Rever se:** uma chamada ao DataForSEO mostrar volume real em consultas de
+categoria (`parakite wing`, `parakites for sale`, `flow parakite`), ou se a
+gama passar dos oito modelos.
+
+### O `offers` nas fichas de asa não é uma lacuna de schema
+2026-09-12
+
+Foi apresentado por mim como a lacuna técnica a fechar, com o argumento de
+que «o preço está publicado na página». **Está errado, e a correcção
+importa.** Medido:
+
+```
+en/wings/mullet-2      0 preços no texto visível
+en/wings/albatroxx     0
+en/wings/mohawk        0
+```
+
+O botão das fichas diz, literalmente, «Pedir preço» / «Ask for a price», e o
+banner `oferta-parakites-2026` está `ativo: false`. **O modelo é preço sob
+consulta.** O preço publicado que eu tinha em mente é o do **curso** — 800 €
+e 60 €/hora — e transportei-o indevidamente para as asas.
+
+E tecnicamente não há saída: o resultado enriquecido de produto do Google
+**exige** `offers.price` ou `offers.priceSpecification`, e não existe valor
+válido para «preço sob consulta». Um `offers` sem preço é inválido e não faz
+nada; um `offers` com preço não publicado é inventar dados, e a fonte seria
+a lista de revendedor da Flow, que não pode chegar ao site.
+
+**A lacuna não é de schema, é de política de preço** — e essa continua em
+`DECISÃO PAULO`. O que fica verdadeiro: enquanto não houver preço publicado,
+as fichas não podem ganhar o snippet com preço que 5 dos 14 concorrentes da
+SERP alemã têm. Eles mostram-no porque o publicam. É uma troca de negócio,
+não um defeito.
 
 ### O FAQPage não dá resultado rico a este site
 Foi apresentado como o item de maior retorno. **Não é.** Desde agosto de 2023 o
