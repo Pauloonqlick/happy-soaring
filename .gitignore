@@ -70,3 +70,25 @@ _design.html
 /curso-parakite-portugal/
 /_previa-curso.html
 /_dev/
+
+# =====================================================================
+# SEGREDOS — NADA DAQUI ENTRA NUM COMMIT
+# =====================================================================
+# Acrescentado a 12/09/2026, e a razao e concreta: o `.env` estava na
+# lista FICHEIROS_PROIBIDOS do publicar.mjs, portanto nunca chegava ao
+# site — mas NAO estava aqui. Quem corre `git add -A`, e eu corro,
+# commitava-o para o GitHub.
+#
+# A regra do projecto e que as credenciais do DataForSEO nao se escrevem
+# em codigo, commits, logs nem documentacao, e vivem so em variaveis de
+# ambiente ou secrets. Isto fecha o caminho do commit.
+#
+# Fica em duas camadas de proposito: uma impede a publicacao, esta
+# impede o commit. Nenhuma das duas depende de alguem se lembrar.
+.env
+.env.*
+!.env.example
+credenciais/
+*.secret
+*.pem
+*.key
