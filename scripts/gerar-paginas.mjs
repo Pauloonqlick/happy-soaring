@@ -3524,8 +3524,19 @@ function paginaCurso(l, numWa) {
                 C.harnessElementos, { numerada: true, w: 900, h: 1200 }) +
     h3(C.sentirTitulo) + chips(C.sentirItens) +
     h3(C.groundTitulo) + par(C.groundTexto) + chips(C.groundItens) +
-    '\n  <p class="cur-foto"><img src="/images/parakite-controlo-800.jpg" alt="" ' +
-    'width="800" height="533" loading="lazy" /></p>');
+    /* O ALT VEM DO QP E NÃO É ESCRITO AQUI — 12/09/2026
+       Estava `alt=""`, que diz ao leitor de ecrã «esta imagem é
+       decoração». É uma fotografia de conteúdo, a seguir à lista de
+       groundhandling, e a irmã dela nesta mesma página tem alt escrito —
+       logo era inconsistência e não política.
+
+       É a MESMA fotografia que abre a /o-que-e-um-parakite/, onde já tem
+       descrição nas cinco línguas. Reutilizar o `QP.fotoAlt` em vez de
+       escrever um segundo texto garante que as duas nunca divergem: uma
+       foto, uma descrição. */
+    '\n  <p class="cur-foto"><img src="/images/parakite-controlo-800.jpg"' +
+    ' alt="' + esc(t(QP.fotoAlt, l)) + '"' +
+    ' width="800" height="533" loading="lazy" /></p>');
 
   /* ---- 10 · CORRECÇÃO -------------------------------------------- */
   corpo += sec('pk-sec', 'correcao',

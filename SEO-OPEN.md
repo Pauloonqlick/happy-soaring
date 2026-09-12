@@ -391,7 +391,7 @@ e um `disavow` sem evidência de dano faz mais mal do que bem. Fica registado
 para que ninguém as conte como activo, e para que «tens 27 backlinks» nunca
 seja lido como boa notícia.
 
-### Seis hipóteses mortas, e o que sobra
+### Sete hipóteses mortas, e o que sobra
 medido: 2026-09-12
 
 ```
@@ -401,6 +401,7 @@ não é o conteúdo        a tua página tem o dobro do texto do #1 e perde
 não é o dispositivo     ausente em computador E telemóvel
 não é o país            ausente no RU, EUA e Alemanha
 não são as ligações     tens mais do que ele, ambos a rank 0
+não é o visual          temos 3 imagens de conteúdo, ele tem 1
 ```
 
 **Não sei o que explica o #1 dele contra o teu #8**, e prefiro escrevê-lo a
@@ -464,7 +465,8 @@ medido: 2026-09-12
                     BEHROOZ #1        HAPPY SOARING #8
 palavras               1 264               2 189
 h2 / h3                  1 / 1            15 / 41
-imagens                   16                   4
+etiquetas <img>           16                   4
+  das quais conteúdo       1                   3
 preço visível         nenhum          800 € e 60 €
 hreflang                   6                  11
 ```
@@ -473,9 +475,43 @@ hreflang                   6                  11
 lugares abaixo.** Isto mata a hipótese do conteúdo: a nossa página é
 objectivamente mais completa.
 
-A única diferença de conteúdo que resta é **as 16 imagens contra 4**, e o
-enquadramento: ele vende «uma semana guiada em Sesimbra» (`TouristTrip`,
-`duration: P7D`, um sítio nomeado); nós descrevemos um método (`Course`).
+#### A LINHA DAS IMAGENS ESTAVA INVERTIDA, E O ERRO É MEU
+
+Escrevi aqui, e disse-o ao Paulo, que ele tinha «quatro vezes o material
+visual» e que era «a única diferença de conteúdo real, accionável sem esperar
+por ninguém». **Contei etiquetas `<img>` sem olhar para o que elas eram.**
+Descompostas:
+
+```
+AS 16 DELE
+   2  o logótipo                       54×54 e 68×68
+  10  bandeirinhas de idioma           38×26 e 33×22, cinco duas vezes
+   2  o ícone do Instagram
+   1  o selo do Livro de Reclamações   260×108
+   1  UMA fotografia                   parakite.webp 1440×960
+
+AS 4 NOSSAS
+   course.jpg                  só no og:image, não no corpo
+   body-first-treino.webp      900×1249  fotografia
+   body-first-silhueta.svg     900×1200  DIAGRAMA
+   parakite-controlo-800.jpg   800×533   fotografia
+```
+
+**Quinze das dezesseis dele são decoração de interface.** Ele tem uma
+fotografia; nós temos três imagens de conteúdo no corpo, uma delas um
+diagrama. **Temos três vezes o material visual dele, não um quarto.**
+
+E isto elimina a última hipótese de conteúdo: **também não é o material
+visual.** A nossa página é mais completa em todas as dimensões mensuráveis —
+texto, estrutura, imagens, diagramas, hreflang, preço publicado — e está sete
+lugares abaixo. O que sobra é o enquadramento (ele vende «uma semana guiada em
+Sesimbra» com `TouristTrip` e `duration: P7D`; nós descrevemos um método com
+`Course`) e o que não foi medido.
+
+**A lição, que já tem irmãs neste ficheiro:** contar o proxy em vez da coisa.
+Foi o mesmo erro do `<li` que apanhou `<link`, do detector de colagens que
+apanhou `MulletX`, e do `.p` de `paulo.pereira@`. Quando um número surpreende,
+olhar para os itens antes de o escrever.
 
 **O schema dele declara um preço que não está na página.** Varrido o texto
 visível: zero preços. E o JSON-LD diz `Offer` com `price: 80` EUR para sete
