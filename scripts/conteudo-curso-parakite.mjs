@@ -57,18 +57,18 @@ export const CURSO = {
      ================================================================== */
 
   titulo: {
-    pt: 'Curso de Parakite em Portugal para pilotos de parapente',
-    en: 'Parakite course in Portugal for paraglider pilots',
-    es: 'Curso de Parakite en Portugal para pilotos de parapente',
-    fr: 'Cours de Parakite au Portugal pour pilotes de parapente',
-    de: 'Parakite-Kurs in Portugal für Gleitschirmpiloten'
+    pt: 'Curso de Parakite perto de Lisboa, para pilotos de parapente',
+    en: 'Parakite course near Lisbon, Portugal, for paraglider pilots',
+    es: 'Curso de Parakite cerca de Lisboa, para pilotos de parapente',
+    fr: 'Cours de Parakite près de Lisbonne, pour pilotes de parapente',
+    de: 'Parakite-Kurs bei Lissabon, Portugal, für Gleitschirmpiloten'
   },
   descricao: {
-    pt: 'Curso de conversão de parapente para Parakite pelo método Pilot2Wing: compreender a asa, preparar o corpo, gerir energia, ganhar autonomia. Duração de referência {dias} dias, máximo {pilotos} pilotos.',
-    en: 'Conversion course from paragliding to Parakite by the Pilot2Wing method: understand the wing, prepare the body, manage energy, build autonomy. Reference duration {dias} days, maximum {pilotos} pilots.',
-    es: 'Curso de conversión de parapente a Parakite por el método Pilot2Wing: comprender el ala, preparar el cuerpo, gestionar la energía, ganar autonomía. Duración de referencia {dias} días, máximo {pilotos} pilotos.',
-    fr: 'Cours de conversion du parapente au Parakite par la méthode Pilot2Wing : comprendre l’aile, préparer le corps, gérer l’énergie, gagner en autonomie. Durée de référence {dias} jours, maximum {pilotos} pilotes.',
-    de: 'Umstiegskurs vom Gleitschirm zum Parakite nach der Pilot2Wing-Methode: den Schirm verstehen, den Körper vorbereiten, Energie verwalten, Autonomie aufbauen. Richtdauer {dias} Tage, maximal {pilotos} Piloten.'
+    pt: 'Curso de conversão de parapente para Parakite na costa atlântica de Sesimbra, a 35 minutos de Lisboa. Método Pilot2Wing: compreender a asa, preparar o corpo, gerir energia. {dias} dias, máximo {pilotos} pilotos.',
+    en: 'Conversion course from paragliding to Parakite on the Atlantic coast of Sesimbra, 35 minutes from Lisbon. Pilot2Wing method: understand the wing, prepare the body, manage energy. {dias} days, maximum {pilotos} pilots.',
+    es: 'Curso de conversión de parapente a Parakite en la costa atlántica de Sesimbra, a 35 minutos de Lisboa. Método Pilot2Wing: comprender el ala, preparar el cuerpo, gestionar la energía. {dias} días, máximo {pilotos} pilotos.',
+    fr: 'Cours de conversion du parapente au Parakite sur la côte atlantique de Sesimbra, à 35 minutes de Lisbonne. Méthode Pilot2Wing : comprendre l’aile, préparer le corps, gérer l’énergie. {dias} jours, maximum {pilotos} pilotes.',
+    de: 'Umstiegskurs vom Gleitschirm zum Parakite an der Atlantikküste von Sesimbra, 35 Minuten von Lissabon. Pilot2Wing-Methode: den Schirm verstehen, den Körper vorbereiten, Energie verwalten. {dias} Tage, maximal {pilotos} Piloten.'
   },
   ogLocale: { pt: 'pt_PT', en: 'en_GB', es: 'es_ES', fr: 'fr_FR', de: 'de_DE' },
   ogAlt: {
@@ -1237,11 +1237,11 @@ export const CURSO = {
      pesa a viagem tem a resposta antes de perguntar, e é uma distância
      verificável em vez de um adjectivo. */
   locaisTexto: {
-    pt: 'A formação decorre em spots a menos de 35 minutos de Lisboa, na Península de Setúbal. Não há um local fixo: o sítio de cada sessão escolhe-se pelo vento do dia e pelo nível do piloto — não pelo calendário.',
-    en: 'The training takes place at sites less than 35 minutes from Lisbon, on the Setúbal Peninsula. There is no fixed location: each session’s site is chosen by the day’s wind and the pilot’s level — not by the calendar.',
-    es: 'La formación se realiza en spots a menos de 35 minutos de Lisboa, en la Península de Setúbal. No hay un lugar fijo: el sitio de cada sesión se elige por el viento del día y por el nivel del piloto — no por el calendario.',
-    fr: 'La formation se déroule sur des sites à moins de 35 minutes de Lisbonne, sur la péninsule de Setúbal. Il n’y a pas de lieu fixe : le site de chaque séance est choisi selon le vent du jour et le niveau du pilote — pas selon le calendrier.',
-    de: 'Die Ausbildung findet an Spots weniger als 35 Minuten von Lissabon entfernt statt, auf der Halbinsel Setúbal. Es gibt keinen festen Ort: Der Spot jeder Einheit richtet sich nach dem Wind des Tages und dem Niveau des Piloten — nicht nach dem Kalender.'
+    pt: 'A formação decorre em spots a menos de 35 minutos de Lisboa, na Península de Setúbal — Alfarim, a Lagoa de Albufeira e a Praia do Meco no concelho de Sesimbra, a Fonte da Telha em Almada. Não há um local fixo: o sítio de cada sessão escolhe-se pelo vento do dia e pelo nível do piloto — não pelo calendário.',
+    en: 'The training takes place at sites less than 35 minutes from Lisbon, on the Setúbal Peninsula — Alfarim, Lagoa de Albufeira and Praia do Meco in the municipality of Sesimbra, Fonte da Telha in Almada. There is no fixed location: each session’s site is chosen by the day’s wind and the pilot’s level — not by the calendar.',
+    es: 'La formación se realiza en spots a menos de 35 minutos de Lisboa, en la Península de Setúbal — Alfarim, la Lagoa de Albufeira y la Praia do Meco en el municipio de Sesimbra, la Fonte da Telha en Almada. No hay un lugar fijo: el sitio de cada sesión se elige por el viento del día y por el nivel del piloto — no por el calendario.',
+    fr: 'La formation se déroule sur des sites à moins de 35 minutes de Lisbonne, sur la péninsule de Setúbal — Alfarim, la Lagoa de Albufeira et la Praia do Meco dans la commune de Sesimbra, la Fonte da Telha à Almada. Il n’y a pas de lieu fixe : le site de chaque séance est choisi selon le vent du jour et le niveau du pilote — pas selon le calendrier.',
+    de: 'Die Ausbildung findet an Spots weniger als 35 Minuten von Lissabon entfernt statt, auf der Halbinsel Setúbal — Alfarim, die Lagoa de Albufeira und die Praia do Meco in der Gemeinde Sesimbra, die Fonte da Telha in Almada. Es gibt keinen festen Ort: Der Spot jeder Einheit richtet sich nach dem Wind des Tages und dem Niveau des Piloten — nicht nach dem Kalender.'
   },
 
   /* OS QUATRO LOCAIS, E A ORDEM É A DO MÉTODO
