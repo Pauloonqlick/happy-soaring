@@ -319,6 +319,142 @@ recuperados aqui.**
 
 ---
 
+## SOLUÇÕES — o que fazer, e com que mecanismo
+escrito a 12/09 depois de 24 SERPs medidas
+
+Esta secção existe porque medir não resolve. Cada entrada tem o mecanismo
+pelo qual se espera que funcione, quem a executa, e — onde não há mecanismo
+defensável — fica escrito que não há.
+
+### 1 · PUBLICAR O PREÇO DE RETALHO NAS FICHAS DE ASA
+**o de maior alavanca, e eu estava errado sobre o obstáculo**
+
+**O mecanismo.** As SERPs de modelo de asa são transaccionais: medido a 12/09,
+mostram preço em
+
+```
+flow mullet 2 · Reino Unido    11 de 18
+albatroxx · Reino Unido         8 de 17
+flow albatroxx · Alemanha       8 de 17
+albatroxx · Reino Unido · tel   7 de 17
+flow vissta xc · Alemanha       6 de 16
+flow mystic · Alemanha          6 de 17
+```
+
+E nas SERPs de conceito e de curso: **zero**. A Happy Soaring está **ausente
+de todas as seis** de modelo e presente nas de conceito. As fichas dizem
+«Pedir preço» — são páginas informativas numa SERP transaccional.
+
+**O OBSTÁCULO QUE EU INVENTEI.** Escrevi em `RETIRADOS` que declarar `offers`
+seria inventar dados, porque o preço teria de vir da lista de revendedor da
+Flow, que não pode chegar ao site. **Isso confunde duas coisas.** A lista
+proibida é o **preço de revenda — o que a Happy Soaring paga.** O preço de
+**retalho** é público, e medido a 12/09:
+
+```
+AlbatroXX
+  flowparagliders.fr      € 3 400     ← o site da própria Flow
+  parakiting.com          € 3 250
+  para-motoparts.de       € 3 250
+  shop.parapente66.com    € 2 904 – € 3 036
+  gingernomad.co.uk       £ 3 405 – £ 3 495
+
+Mullet 2
+  shop.mosailes.com       € 3 400
+  flybubble.com           £ 2 720,83
+  sickandwrong.co.uk      £ 3 495
+```
+
+Três dos sete publicam um **intervalo** (`is_price_range: true`), portanto
+«a partir de X €» é prática normal neste mercado e não uma meia-medida.
+
+**O que o Paulo decide:** se publica, e que número — preço fixo, intervalo por
+tamanho, ou «a partir de». **A decisão é de negócio e é dele.** O que deixa de
+ser verdade é que não haja fonte legítima.
+
+**O que eu faço, depois de ele decidir:** o bloco de preço nas 22 fichas × 5
+línguas, e o `offers` dentro do `Product` que já existe — com `price`,
+`priceCurrency` e `availability`, tudo a corresponder ao que está visível na
+página. Sem preço visível não se declara: essa regra mantém-se.
+
+### 2 · APONTAR AS BIOS DO INSTAGRAM E DO FACEBOOK A PÁGINAS CONCRETAS
+**custo zero, um minuto, e captura um #1 que já existe**
+
+**O mecanismo.** Medido a 12/09, para `parakite portugal`:
+
+```
+Países Baixos    #1 o Instagram do Happy Soaring    #6 o site
+Alemanha         #2 o Instagram    #3 o Facebook    #8 o site
+```
+
+**As posições #1 e #2 já são nossas.** Quem clica aterra no Instagram — e o
+que estiver na bio decide se chega ao site ou se fica lá. Não é uma posição a
+conquistar: é uma que já existe e não está a ser usada.
+
+**O que o Paulo faz:** muda o endereço na bio do Instagram e na do Facebook,
+da página inicial para a página que responde à intenção da consulta — o curso
+para quem procura curso, o pilar para quem procura onde voar.
+
+```
+Instagram / Facebook  →  https://happysoaring.com/en/parakite-course-portugal/
+```
+
+**Porque o inglês e não o português:** 70% das impressões são estrangeiras, a
+bio é uma só, e o `x-default` do site já aponta para inglês.
+
+### 3 · OS DOIS EMAILS — FLOW E FELLOFLY
+**a única via para uma ligação legítima**
+
+**O mecanismo, e com a ressalva que a medição impôs.** A 12/09 ficou provado
+que as ligações **não explicam** a diferença face ao concorrente: temos 27
+domínios a apontar contra os 21 dele, e ambos os perfis têm rank 0 e são 100%
+spam. **Não se promete ranking com isto.**
+
+O que se promete é outra coisa: **não existe uma única ligação legítima para
+este site**, e estas seriam as primeiras. A Flow escreve `www.happysoaring.com`
+na página de revendedores **como texto simples** — medido: 191 âncoras naquela
+página, nenhuma para nós. E a FelloFly, escola parceira, não nos menciona uma
+vez.
+
+**O que o Paulo faz:** envia. **O que eu faço:** escrevo os dois.
+
+### 4 · OS DOZE PEDIDOS DE INDEXAÇÃO
+**para o Google ver nove dias de trabalho**
+
+O último rastreio da página do conceito é de **03/09** — antes das faixas, do
+alinhamento, dos 55 acessos, das ligações às asas e das colagens corrigidas. O
+`lastmod` que entrou a 12/09 resolve as alterações **futuras**; estas ficam
+por pedir à mão.
+
+As doze URLs estão na conversa de 12/09, por ordem de valor medido.
+
+---
+
+### O QUE NÃO TEM SOLUÇÃO QUE EU SAIBA
+**fica escrito para não voltar a ser prometido**
+
+**Ranquear para `parakite`.** É o termo de cabeça da categoria, 29 impressões,
+e estamos **ausentes** dos 16 orgânicos em Portugal e dos 17 nos Países
+Baixos. O #1 em Portugal é a **Niviuk** — um fabricante concorrente. Não tenho
+mecanismo para mover isto.
+
+**Ser citado pela AI Overview.** Das 17 SERPs com AI Overview, em cinco o
+DataForSEO devolveu as fontes e em nenhuma aparecemos. Mas a citação segue a
+presença no top 10, e estamos ausentes dessas SERPs — **a citação é
+consequência do ranking, não caminho para ele.** Não se engenha uma citação
+para uma página que não está nas primeiras dezassete.
+
+**Bater o Fly with Behrooz.** Ele é #1 em três das cinco consultas onde
+aparecemos. Sete hipóteses caíram — idioma, arquitectura, conteúdo,
+dispositivo, país, ligações, material visual — e **não sei o que o explica.**
+Fica escrito por ser mais útil do que uma teoria nova.
+
+**E os diagramas não são solução de SEO.** Estão em `PENDENTE` e valem pelo
+leitor humano: sete conceitos espaciais explicados só por palavras. Não
+prometo que movam uma posição.
+
+---
+
 ## MEDIÇÃO DATAFORSEO — 12/09
 nove SERPs e quatro consultas de backlinks · **custo total $0,136**
 
@@ -341,6 +477,65 @@ tarefa por chamada**. Enviar quatro num array devolve «You can set only one
 task at a time» para as três últimas, e não as cobra.
 
 ---
+
+### A linha de base: 24 SERPs, 12/09
+medido: 2026-09-12 · **repetir depois de: 2026-10-12**
+
+```
+CONSULTA                    PAÍS  NÓS       #1                      PREÇO
+─────────────────────────────────────────────────────────────────────────
+flow paragliders portugal   PT    #3        flowparagliders.com.au   1/18
+parakite portugal           PT    #5        flywithbehrooz.com       1/17
+parakite kurs portugal      DE    #5        flywithbehrooz.com       4/19
+parakite portugal           NL    #6        instagram.com (nosso)    1/17
+parakite portugal           DE    #8        flywithbehrooz.com       0/17
+mullet 2                    DE    #10       flowparagliders.com.au   5/16
+parakite kurs               DE    #11       papillon.de              0/19
+flow mullet 2               DE    #15       para-motoparts.de        5/17
+flow yoti 3                 DE    #17       flowparagliders.de       4/17
+─────────────────────────────────────────────────────────────────────────
+parakite                    PT    AUSENTE   niviuk.com               0/16
+parakite                    NL    AUSENTE   versusshop.nl            0/17
+what is a parakite          UK    AUSENTE   reddit.com               0/17
+was ist ein parakite        DE    AUSENTE   rc-paragliding…          0/17
+parakite course             UK    AUSENTE   flyparakite.com          0/18
+parakite lessons            UK    AUSENTE   flyparakite.com          0/18
+parakite kurs               AT    AUSENTE   ridair.com               1/19
+steuerleinen                DE    AUSENTE   dhv.de                   3/18
+albatroxx                   UK    AUSENTE   flowparagliders.com.au   8/17
+albatroxx                   UK·t  AUSENTE   flowparagliders.com.au   7/17
+albatroxx                   US    AUSENTE   flowparagliders.com.au   4/17
+flow albatroxx              DE    AUSENTE   para-motoparts.de        8/17
+flow mullet 2               UK    AUSENTE   speedflyingschool.com   11/18
+flow vissta xc              DE    AUSENTE   flowparagliders.com.au   6/16
+flow mystic                 DE    AUSENTE   para-motoparts.de        6/17
+```
+
+```
+presentes            9 de 24      posição orgânica média   8,9
+AI Overview          17 de 24 SERPs
+   com fontes         5 · citações nossas 0
+   sem fontes        12 · desconhecido, e não se inventa
+com preço            75 de 416 orgânicos (18%)
+```
+
+**O padrão é geográfico, e é o achado central.** Cinco das nove presenças são
+em consultas que contêm a palavra «Portugal». Tira-se a palavra e
+desaparecemos: `parakite`, `parakite course`, `what is a parakite`,
+`was ist ein parakite`, `albatroxx`. **O site ranqueia como «aquilo que fica
+em Portugal», não como «parakite».**
+
+**E o Fly with Behrooz é o #1 em três das cinco** consultas onde aparecemos —
+`parakite portugal` em PT e DE, e `parakite kurs portugal` em DE. Não é um
+concorrente entre vários; é o concorrente.
+
+**Sobre a baseline de 30 queries da app HS SEO Intelligence**, analisada a
+12/09 contra estes dados: **10 das 30 são de voo biplace/tandem, que não é
+serviço nosso** — verificado, «Tandem» no site refere-se só à asa Flow
+Panorama, e nenhuma das 175 páginas oferece um voo. Falta a maior consulta de
+todas (`parakite`, 29 impressões) e faltam os modelos de asa, que somam ~121
+impressões contra ~51 dos seis conceitos medidos. E `what is parakite` devia
+ser `what is a parakite`, que é a forma real.
 
 ### A hipótese das ligações externas caiu, e era a minha principal
 medido: 2026-09-12
@@ -1831,11 +2026,28 @@ e 60 €/hora — e transportei-o indevidamente para as asas.
 E tecnicamente não há saída: o resultado enriquecido de produto do Google
 **exige** `offers.price` ou `offers.priceSpecification`, e não existe valor
 válido para «preço sob consulta». Um `offers` sem preço é inválido e não faz
-nada; um `offers` com preço não publicado é inventar dados, e a fonte seria
-a lista de revendedor da Flow, que não pode chegar ao site.
+nada; e um `offers` com preço que a página não mostra é inventar dados,
+qualquer que seja a fonte.
 
-**A lacuna não é de schema, é de política de preço** — e essa continua em
-`DECISÃO PAULO`. O que fica verdadeiro: enquanto não houver preço publicado,
+**CORRIGIDO A 12/09, E ERA UM ERRO MEU DE RACIOCÍNIO.** Aqui estava escrito
+que «a fonte seria a lista de revendedor da Flow, que não pode chegar ao
+site». Isso confunde duas coisas diferentes:
+
+```
+preço de REVENDA    o que a Happy Soaring paga    PROIBIDO, e continua
+preço de RETALHO    o que o cliente paga          PÚBLICO
+```
+
+Medido a 12/09 nas SERPs de modelo: o preço de retalho da AlbatroXX está
+publicado pelo **site francês da própria Flow** (€ 3 400), pelo
+`parakiting.com` e pelo `para-motoparts.de` (€ 3 250 cada), pelo
+`shop.parapente66.com` (€ 2 904 – € 3 036) e por três revendedores
+anglófonos. O da Mullet 2 por outros quatro. **Há fonte legítima, e é pública.**
+
+Logo a lacuna **é de política de preço e só disso** — se a Happy Soaring
+quer publicar o preço de retalho — e não de falta de fonte. Continua em
+`DECISÃO PAULO`, agora sem o obstáculo inventado, e a solução está escrita
+na secção `SOLUÇÕES`. O que fica verdadeiro: enquanto não houver preço publicado,
 as fichas não podem ganhar o snippet com preço que 5 dos 14 concorrentes da
 SERP alemã têm. Eles mostram-no porque o publicam. É uma troca de negócio,
 não um defeito.
