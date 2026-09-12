@@ -61,6 +61,42 @@ que ele *pensa*. Nenhuma substitui a outra.
 **"Sem alteração recomendada" é um resultado válido**, e às vezes é o correcto.
 Não se altera o site para dar a sensação de que se agiu.
 
+**O CONCORRENTE DIRECTO VERIFICA-SE EM TODA A MEDIÇÃO DE SERP** — pedido do
+Paulo a 12/09, e é agora rotina e não excepção.
+
+O `flywithbehrooz.com` é o único concorrente com páginas comparáveis: mesmo
+país, mesmo mercado, mesma língua nos cinco idiomas, e Sesimbra fica a 30
+minutos dos spots usados nos cursos. Em toda a série de SERPs:
+
+```
+1  listar onde ele aparece e a que distância de nós
+2  onde estiver ACIMA, comparar as duas páginas:
+      title · h1 · description
+      contagem de topónimos no corpo E na cabeça
+      palavras · h2/h3 · imagens de CONTEÚDO (não etiquetas <img>)
+      JSON-LD: que tipos, e se o schema corresponde ao visível
+3  escrever o mecanismo — ou escrever que não se encontrou
+```
+
+**O passo 3 é o que importa.** A 12/09 sete hipóteses caíram antes de
+aparecer uma que se sustenta: idioma, arquitectura, conteúdo, dispositivo,
+país, ligações externas e material visual. Escrever «não sei» foi o
+resultado correcto em cada uma delas, e foi o que permitiu chegar à oitava.
+
+**O mecanismo encontrado a 12/09, para referência de como se parece um que
+se sustenta:** a página dele é sobre um SÍTIO e a nossa sobre um MÉTODO.
+Medido — Sesimbra 8x no corpo dele e no title e na description, zero na
+nossa; «Küste» 9x e na cabeça dele, zero na nossa; Portugal 17x contra 7x.
+E a consulta `parakite kurs portugal` é de viagem: quem procura quer saber
+ONDE. A informação existia no nosso site, mas na família errada de páginas —
+nas fichas de spot, não na página que compete.
+
+**A armadilha a evitar:** contar o proxy em vez da coisa. A primeira
+comparação de imagens deu «16 dele contra 4 nossas» e concluiu-se que ele
+tinha quatro vezes o material visual. Eram 2 logótipos, 10 bandeirinhas de
+idioma, 2 ícones e um selo — **uma** fotografia. Nós tínhamos três imagens
+de conteúdo e um diagrama. Ver os itens antes de escrever o número.
+
 ## Quando se fecha um item
 
 Depende do tipo de problema:
