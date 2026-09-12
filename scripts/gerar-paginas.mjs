@@ -2843,9 +2843,29 @@ function paginaQueParakite(l) {
   const tri = arr('s6Tri').map((x, i) =>
     (i ? '<i aria-hidden="true">&#8646;</i>' : '') + '<b>' + esc(x) + '</b>').join('');
 
-  const comps = arr('s8Blocos').map(b =>
-    '<article class="qp-comp"><h3>' + esc(b[0]) + '</h3>'
-    + '<p>' + esc(b[1]) + '</p><p class="qp-vs">' + esc(b[2]) + '</p></article>').join('');
+  /* A COMPARACAO E A CONSULTA — 12/09/2026
+     Seis das fontes citadas pelas AI Overviews medidas sao comparacoes, e o
+     #1 organico de `what is a parakite` no Reino Unido e um topico do Reddit
+     chamado «Parakite vs. Paraglider». O conteudo do `s8Blocos` ja era
+     tabular — categoria, o que ela faz, o que o Parakite faz — e estava em
+     prosa dentro de tres `article`.
+
+     Reutiliza o `.pg-tabela` das fichas de asa. O comentario dele diz o que
+     se quer aqui: ilha clara sobre o azul, e rola dentro da propria caixa em
+     vez de fazer a pagina rolar de lado. Zero CSS novo.
+
+     A legenda e o proprio h2 da seccao: o `.pg-tabela caption` esconde-a do
+     ecra e deixa-a para o leitor de ecra, que e onde ela serve. */
+  const cab = arr('s8Cab');
+  const tabela = '<div class="pg-tabela"><table>'
+    + '<caption>' + esc(t(QP.s8H2, l)) + '</caption>'
+    + '<thead><tr>'
+    + cab.map(x => '<th scope="col">' + esc(x) + '</th>').join('')
+    + '</tr></thead><tbody>'
+    + arr('s8Blocos').map(b => '\n      <tr><th scope="row">' + esc(b[0]) + '</th>'
+      + '<td>' + esc(b[1]) + '</td><td>' + esc(b[2]) + '</td></tr>').join('')
+    + '\n    </tbody></table></div>';
+
 
   const variam = arr('s9Varia').map(v =>
     '<div class="qp-varia-it"><b>' + esc(v[0]) + '</b><span>' + esc(v[1]) + '</span></div>').join('');
@@ -3032,12 +3052,12 @@ ${alt}
     </div>
   </section>
 
-  <section class="qp-sec">
+  <section class="qp-sec" id="comparacao">
     <div class="qp-cx">
       <p class="qp-kicker">${esc(t(QP.s8Kicker, l))}</p>
       <h2>${esc(t(QP.s8H2, l))}</h2>
       <p class="qp-p">${esc(t(QP.s8Intro, l))}</p>
-      <div class="qp-comps">${comps}</div>
+      ${tabela}
       <div class="qp-destaque">${esc(t(QP.s8Speed, l))}</div>
     </div>
   </section>

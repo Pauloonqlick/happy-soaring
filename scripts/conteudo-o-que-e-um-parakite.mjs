@@ -567,6 +567,15 @@ export const QP = {
     fr: 'Ces catégories partagent des principes de base : aile souple mise en pression par l’air, suspentes, élévateurs et commandes. Ce qui les sépare tient surtout à l’architecture du système de commande et à la façon dont la configuration de l’aile est modifiée en vol.',
     de: 'Diese Kategorien teilen dieselben Grundlagen: ein luftgefüllter flexibler Schirm, Leinen, Tragegurte und Steuerleinen. Was sie trennt, ist vor allem die Architektur des Steuersystems und die Art, wie die Konfiguration im Flug verändert wird.'
   },
+  /* Os rotulos da tabela da comparacao. Sao ETIQUETAS, nao afirmacoes:
+     o conteudo das celulas vem todo do `s8Blocos`, que ja existia. */
+  s8Cab: {
+    pt: ['Categoria', 'Como se controla', 'No Parakite'],
+    en: ['Category', 'How it is controlled', 'On a Parakite'],
+    es: ['Categoría', 'Cómo se controla', 'En un Parakite'],
+    fr: ['Catégorie', 'Comment elle se pilote', 'Sur un Parakite'],
+    de: ['Kategorie', 'Wie gesteuert wird', 'Beim Parakite']
+  },
   s8Blocos: {
     pt: [
       ['Parapente',

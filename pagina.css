@@ -1789,12 +1789,25 @@ a.fl-cor-a:hover{background:#ff7c31;color:var(--sobre-laranja)}
 }
 
 /* ---- comparações ---- */
-.qp-comps{display:grid;gap:16px;margin-top:40px}
-.qp-comp{background:var(--qp-cx);border:1px solid var(--linha);border-radius:16px;padding:26px 28px}
-.qp-comp h3{margin:0 0 14px;font-size:20px}
-.qp-comp p{font-size:15px;line-height:1.68;color:var(--tinta-fraca);margin-bottom:12px}
-.qp-comp p:last-child{margin-bottom:0}
-.qp-comp p.qp-vs{color:var(--tinta);border-left:2px solid var(--orange);padding-left:14px}
+/* OS CARTOES DA COMPARACAO SAIRAM A 12/09/2026 — E PORQUE
+   Aqui viviam tres cartoes, um por categoria, cada um com a prosa dessa
+   categoria e a do Parakite ao lado com um filete laranja.
+
+   O conteudo nao mudou uma palavra: mudou de forma. Medidas cinco AI
+   Overviews a 12/09, seis das fontes citadas sao comparacoes — «Parakiting
+   vs. Paragliding», «Parakite vs. Gleitschirm» — e o #1 organico de
+   `what is a parakite` no Reino Unido e um topico do Reddit chamado
+   «Parakite vs. Paraglider». A comparacao E a consulta, e o formato que uma
+   maquina de resposta levanta e uma tabela.
+
+   Os dados ja eram tabulares — categoria, o que ela faz, o que o Parakite
+   faz — e passaram a `<table>` dentro do `.pg-tabela`, que e a tabela de
+   especificacoes das fichas de asa. Ver o comentario dela mais acima: ilha
+   clara sobre o azul, e rola dentro da propria caixa em vez de fazer a
+   pagina rolar de lado. Zero CSS novo para isto.
+
+   Medido antes de apagar: zero ocorrencias de `qp-comp`, `qp-comps` e
+   `qp-vs` nas 175 paginas geradas. */
 .qp-destaque{
   margin-top:26px;padding:24px 26px;border-radius:14px;
   background:var(--qp-cx2);border:1px solid var(--linha);
@@ -1891,7 +1904,6 @@ a.fl-cor-a:hover{background:#ff7c31;color:var(--sobre-laranja)}
      o contexto — a imagem e a mesma, muda o enquadramento. */
   .qp-foto img{aspect-ratio:4/3;max-height:none;object-position:92% 50%}
   .qp-def{padding-left:16px}
-  .qp-comp{padding:22px 20px}
   .qp-tri{flex-direction:column;gap:6px;padding:24px 16px}
   .qp-tri b{padding:0}
   .qp-tri i{transform:rotate(90deg)}
