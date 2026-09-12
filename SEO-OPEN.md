@@ -2,14 +2,14 @@
 
 Estado. As regras do processo estão no `SEO-WORKFLOW.md`.
 
-Última reconciliação: **12/09/2026**. Os dados de desempenho que abrem este
-ficheiro continuam a ser os de 11/09 — não houve exportação nova.
+Última reconciliação: **12/09/2026**, com **segunda exportação de desempenho**
+no mesmo dia — a primeira comparação entre duas medições que este ficheiro tem.
 
-O site está publicado no deploy **`2d37e72b`** desde **12/09 às 10:17**, sobre
-o commit **`f9c9464`**, com `sujo: false` — a árvore, o GitHub e o site estão
+O site está publicado no deploy **`600ac3d4`** desde **12/09 às 15:25**, sobre
+o commit **`cd3ab27`**, com `sujo: false` — a árvore, o GitHub e o site estão
 os três no mesmo ponto.
 
-**Catorze deploys entre 10 e 12/09**, por esta ordem:
+**Dezasseis deploys entre 10 e 12/09**, por esta ordem:
 
 ```
 4c829982  10/09 19:03  commit 8ec61c6, ÁRVORE SUJA — o schema, as FAQ, as
@@ -35,6 +35,9 @@ d69485da  12/09 10:05  commit 9eda1c7 — a página do conceito passa a azul
                        e papel, e ganha 35 acessos
 2d37e72b  12/09 10:17  commit f9c9464 — a página do conceito passa a ligar
                        às quatro asas que explica
+0b3a18a4  12/09 14:46  commit 249a958 — as cinco colagens nos cartões-âncora
+600ac3d4  12/09 15:25  commit cd3ab27 — o lastmod do sitemap, por página e
+                       observado
 ```
 
 **A exportação de Cobertura é de 04/09** e portanto anterior a todos: não viu
@@ -48,6 +51,126 @@ costumam oscilar antes de estabilizar.
 Última auditoria completa do site: **10/09/2026**, medida no ficheiro e no
 browser. Nota global 7,2 em treze dimensões. Dela saiu quase tudo o que se
 segue.
+
+---
+
+## DESEMPENHO — segunda medição, 12/09
+exportado a 12/09 · Search Console, pesquisa Web, filtro «3 meses»
+
+**A janela são 19 dias, não três meses.** Os dados vão de **23/08 a 10/09** —
+é toda a história deste site na pesquisa. O filtro diz três meses porque é o
+que está seleccionado; antes de 23/08 não há nada.
+
+```
+                 11/09        12/09
+cliques            88          103     (+15)
+impressões        680          755     (+75)
+CTR             12,9%        13,6%
+posição média      —           8,7
+```
+
+### Os quinze cliques novos são todos de Portugal
+
+```
+Portugal     +34 impressões    +15 cliques
+Alemanha      +8                +0
+Espanha       +7                +0
+França        +6                +0
+Áustria       +5                +0
+EUA           +4                +0
+```
+
+As **+41 impressões estrangeiras deram zero cliques.** O retrato do
+trimestre mantém a forma:
+
+```
+                 cliques   impressões      CTR
+Portugal            74        240        30,83%
+Estrangeiro         29        515         5,63%
+```
+
+### O ritmo mais do que duplicou, e o melhor dia é o último
+
+```
+                        cliques  impressões    CTR    por dia
+23–29/08   (7 dias)        20       162      12,3%      2,9
+30/08–05/09 (7 dias)       50       337      14,8%      7,1
+06–10/09   (5 dias)        33       256      12,9%      6,6
+```
+
+**10/09: 11 cliques em 38 impressões — 28,95% de CTR na posição 6,3.** O
+melhor dia dos dezanove, e é o último.
+
+E um dia estranho a guardar: **07/09 teve 92 impressões**, o dobro da média,
+com 4 cliques (4,35%). Não sei o que foi e não invento — fica anotado para
+cruzar com a próxima exportação.
+
+### A `/en/` é um quarto dos cliques do site, e é marca
+
+```
+/en/    25 cliques / 36 impressões / 69,44% / posição 1,69
+```
+
+Posição 1,69 com 69% de CTR é o padrão de uma consulta de marca: gente que
+escreve «happy soaring» e clica. **Não é descoberta — é quem já te conhece.**
+Vale saber porque separa duas coisas que o total confunde: dos 103 cliques,
+25 são pessoas que já te procuravam pelo nome.
+
+### A AlbatroXX tem procura e não converte
+**rever depois de: 2026-09-25**
+
+```
+/en/wings/albatroxx/   1 clique / 46 impressões / 2,17% / posição 7,59
+```
+
+**A ficha de asa mais vista do site.** A posição 7,59 devia dar 3–5% de CTR e
+dá 2,17%. E a procura está no nome, não na categoria: `albatroxx` 14
+impressões, `flow albatroxx` 11, `albatroxx flow` 5 — **30 impressões só no
+modelo**.
+
+Bate com a SERP americana medida a 11/09, onde a Happy Soaring está ausente
+de 20 posições para `albatroxx` e os que estão acima são marketplaces com
+preço. **É o argumento mais forte que há para a pergunta do preço** — é gente
+a ver-te e a escolher quem mostra quanto custa. A decisão continua em
+`DECISÃO PAULO`; isto acrescenta-lhe um número.
+
+### A Alemanha e a Áustria, confirmado numa segunda medição
+
+```
+Alemanha   2 cliques /  88 impressões /  2,27% / pos 8,27
+Áustria   11 /  43                    / 25,58% / pos 5,77
+```
+
+Mesma língua, mesma arquitectura, **onze vezes o CTR** — e agora medido duas
+vezes. A Alemanha é o segundo país em impressões e o pior em conversão dos
+grandes. A ressalva da escala mantém-se, mas a segunda medição reduz a
+probabilidade de ser ruído.
+
+### O curso apareceu, e em posição 2,75
+
+```
+/curso-parakite-portugal/       1 clique / 4 impressões / pos 2,75  ← novo
+/en/parakite-course-portugal/   0 / 1 / pos 2
+```
+
+Publicado a 10/09 e já com dados. E há consultas a chegar que ele devia
+responder: **`parakite lessons` em posição 4** com 2 impressões e zero
+cliques, `parakite course` em 18,5.
+
+### «Aspeto da pesquisa» vazia, terceira vez
+
+Terceira exportação seguida sem uma única linha. É a confirmação, nos dados
+do próprio site, do que está no `RETIRADOS` sobre o `FAQPage`.
+
+### O que esta exportação NÃO pode dizer
+
+Termina a **10/09**. As faixas, o alinhamento único, os 55 acessos, as
+ligações às asas, as colagens corrigidas e o `lastmod` são de **11 e 12/09**.
+E o rastreio da página do conceito é de **03/09**.
+
+**Este é o retrato do site antes de nove dias de trabalho.** A próxima
+exportação é a primeira que pode medir alguma coisa disso — e só depois de o
+Google rastrear.
 
 ---
 
@@ -165,6 +288,34 @@ O `www` tem **mais impressões do que o apex** e metade do CTR. Verificado a
 do `_redirects`). Logo isto é consolidação por terminar, não defeito aberto.
 Vale a pena reconfirmar na próxima exportação — se as impressões do `www` não
 descerem, aí sim há o que investigar.
+
+**O GATILHO DISPAROU — 12/09.** Não desceram; subiram.
+
+```
+                          11/09              12/09
+www.happysoaring.com/   127 impr · 7 cli   141 impr · 8 cli ·  5,67% · pos 7,88
+happysoaring.com/        77 impr · 14 cli   87 impr · 14 cli · 16,09% · pos 5,47
+```
+
+As 141 impressões do `www` são **19% de todas as do site**. Reverifiquei a
+12/09 e não há nada de errado na configuração: `https://www.happysoaring.com/`
+devolve **301** para o apex, `/en/` também, e o canonical que serve é o do
+apex. Está correcto.
+
+**A explicação provável, que não posso confirmar:** a propriedade do Search
+Console é de **domínio** e não de prefixo de URL. Uma propriedade de domínio
+agrega todos os anfitriões, e por isso mostra como «página» o endereço `www`
+que o Google tinha indexado antes do 301 — que é relatório do passado, não
+tráfego a perder-se. Numa propriedade de prefixo `https://happysoaring.com/`
+estas linhas não apareciam.
+
+**Verifica-o num clique** nas definições da propriedade. Se for de domínio,
+isto é ruído de relatório e fecha-se. Se for de prefixo, então o `www` está a
+ser indexado apesar do 301 e há o que investigar a sério.
+
+E há uma ressalva a não esquecer: a posição do `www` é **7,88** contra 5,47 do
+apex, e isso explica boa parte da diferença de CTR. **Não se prometem cliques
+recuperados aqui.**
 
 ---
 
@@ -1357,6 +1508,37 @@ Ficam escritos, como o item dos clientes OAuth acima, para não voltarem a
 entrar na fila. **Três vêm da auditoria de 10/09**, onde estavam errados ou
 já resolvidos; **três são de 12/09** e dois desses são correcções a coisas
 que eu próprio propus e que não sobreviveram à medição.
+
+### O nome «SmartGround» não tem presença — errado, e corrigido
+2026-09-12
+
+Ao analisar o plano de outro modelo, que propunha pôr «SmartGround Method» no
+menu e nas meta descriptions, respondi que o nome aparecia **uma vez em todo o
+site, como nome de uma pasta** (`/images/smartground/…`) e que não tinha
+presença. A primeira parte é verdade. **A segunda estava errada.**
+
+A exportação de 12/09 mostra:
+
+```
+/smartground/       3 cliques / 15 impressões   pos 5,53
+/de/smartground/    2 / 16                      pos 8,12
+/en/smartground/    0 /  3
+/es/smartground/    0 /  3
+/fr/smartground/    0 /  1
+                    5 cliques / 38 impressões
+```
+
+**Era o nome antigo do Pilot2Wing**, renomeado a 31/08/2026, com 301 nas cinco
+línguas no `_redirects` — duas linhas por língua, porque a barra final conta.
+Os redireccionamentos foram reconfirmados a 12/09 e funcionam.
+
+E o nome novo faz 7 cliques / 42 impressões. **O nome antigo ainda carrega 42%
+do tráfego do método.**
+
+**A conclusão sobre o plano não muda:** renomear a navegação para SmartGround
+seria desfazer uma decisão deliberada de há duas semanas, e o Google já está a
+transferir a autoridade pelos 301. Mas a prova que eu dei era mais fraca do
+que eu afirmei, e isso fica escrito.
 
 ### Uma página só para as asas parakite — considerada e recusada
 2026-09-12
