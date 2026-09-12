@@ -5,11 +5,11 @@ Estado. As regras do processo estão no `SEO-WORKFLOW.md`.
 Última reconciliação: **12/09/2026**, com **segunda exportação de desempenho**
 no mesmo dia — a primeira comparação entre duas medições que este ficheiro tem.
 
-O site está publicado no deploy **`600ac3d4`** desde **12/09 às 15:25**, sobre
-o commit **`cd3ab27`**, com `sujo: false` — a árvore, o GitHub e o site estão
+O site está publicado no deploy **`76941893`** desde **12/09 às 17:02**, sobre
+o commit **`902c73f`**, com `sujo: false` — a árvore, o GitHub e o site estão
 os três no mesmo ponto.
 
-**Dezasseis deploys entre 10 e 12/09**, por esta ordem:
+**Dezoito deploys entre 10 e 12/09**, por esta ordem:
 
 ```
 4c829982  10/09 19:03  commit 8ec61c6, ÁRVORE SUJA — o schema, as FAQ, as
@@ -38,6 +38,9 @@ d69485da  12/09 10:05  commit 9eda1c7 — a página do conceito passa a azul
 0b3a18a4  12/09 14:46  commit 249a958 — as cinco colagens nos cartões-âncora
 600ac3d4  12/09 15:25  commit cd3ab27 — o lastmod do sitemap, por página e
                        observado
+8c998618  12/09 16:26  commit 5f41d9e — o alt da fotografia do curso
+76941893  12/09 17:02  commit 902c73f — o sítio entra no título e na
+                       descrição do curso
 ```
 
 **A exportação de Cobertura é de 04/09** e portanto anterior a todos: não viu
@@ -416,7 +419,42 @@ na página de revendedores **como texto simples** — medido: 191 âncoras naque
 página, nenhuma para nós. E a FelloFly, escola parceira, não nos menciona uma
 vez.
 
-**O que o Paulo faz:** envia. **O que eu faço:** escrevo os dois.
+**Os dois estão escritos** desde 12/09, e os factos foram verificados nesse
+dia — não em Setembro passado.
+
+**A FLOW.** A entrada existe e está correcta, em
+`flowparagliders.com.au/flow-paragliders-dealers-portugal/`:
+
+```
+Contact Name.  Paulo Pereira        Website.  www.happysoaring.com
+Company Name.  Happy Soaring        Email.    paulo.pereira@happysoaring.com
+Contact No.    +351 927 187 912     Address.  Costa de Caparica, Portugal
+```
+
+O `Website` e o `Email` são **texto simples**. E o essencial para o tom do
+pedido: a página tem **191 âncoras e ZERO externas** — não liga nenhum
+revendedor. **Não é descuido com a Happy Soaring; é o template.** Logo o
+pedido enquadra-se como «isto ajuda-vos a todos», e não como queixa.
+
+Fica também para confirmar: o campo `Address` diz «Costa de Caparica». Se já
+não for exacto, corrige-se no mesmo email.
+
+**A FELLOFLY, e aqui o pedido inverteu-se.** O site tem **64 páginas** e
+nenhuma é de cursos ou de parakite. Zero menções a Happy Soaring, ao Paulo
+ou a parakite — **incluindo** em «A nossa equipa» e «Os nossos locais de
+voo». E a página «Fale connosco» ainda tem **texto Lorem ipsum** onde devia
+estar a morada, o telefone e o email: não há endereço público, e o contacto
+tem de ser o directo do Paulo.
+
+Isso ajusta a expectativa: **não se conta com movimento rápido no site
+deles.** Razão a mais para o email começar pelo que está mesmo a bloquear —
+**o que se pode dizer publicamente sobre o curso e as credenciais** — e só
+depois pela ligação. Essa é a restrição que mantém a página do curso
+deliberadamente vaga, e custa mais do que um backlink.
+
+**O que o Paulo faz:** envia. Os textos estão em
+`Downloads/EMAILS-flow-fellofly.md`, e o da Flow também como atalho
+`enviar-email-flow.url`, que abre o cliente de email já preenchido.
 
 ### 4 · OS DOZE PEDIDOS DE INDEXAÇÃO
 **para o Google ver nove dias de trabalho**
@@ -1287,6 +1325,66 @@ a nenhum dos dois `GOOGLE_CLIENT_ID` acima.
 ---
 
 ## FECHADO A 12/09
+
+### O sítio entra no título e na descrição do curso
+fechado: 2026-09-12 · deploy `76941893` · **rever depois de: 2026-09-26**
+
+**É a primeira alteração deste projecto feita a partir de um mecanismo
+isolado num concorrente**, e por isso é também a primeira que se pode dar
+por falhada com dados.
+
+O mecanismo, medido nas cinco SERPs em que o `flywithbehrooz.com` está
+acima:
+
+```
+              BEHROOZ          HAPPY SOARING
+Sesimbra    8x no corpo,           zero
+            e no title E
+            na description
+Küste       9x, e na cabeça        zero
+Portugal   17x                     7x
+```
+
+**A página dele é sobre um SÍTIO; a nossa era sobre um MÉTODO.** E
+`parakite kurs portugal` é consulta de **viagem**: quem procura quer saber
+ONDE. A description dele abre com «Bodennahes Fliegen mit kleinen Schirmen
+an der Atlantikküste von Sesimbra»; a nossa abria com «Umstiegskurs …nach
+der Pilot2Wing-Methode».
+
+**Sete hipóteses caíram antes desta** — idioma, arquitectura, conteúdo,
+dispositivo, país, ligações externas e material visual. É a oitava, e é a
+única que se sustenta.
+
+**Não se inventou nada.** A página do Alfarim já dizia «no concelho de
+Sesimbra». A informação existia no site, **na família errada de páginas** —
+nas fichas de spot, não na que compete.
+
+**Lisboa no título, Sesimbra na descrição.** Três dos quatro spots são
+Sesimbra; a Fonte da Telha é Almada. «Perto de Lisboa» é exacto para os
+quatro, e Lisboa é o nome que um estrangeiro reconhece.
+
+```
+                     ANTES                          DEPOIS
+title pt   …em Portugal para pilotos    …perto de Lisboa, para pilotos
+title de   …in Portugal für Gleits…     …bei Lissabon, Portugal, für…
+```
+
+**E mantém-se o que nos distingue:** o «para pilotos de parapente» fica no
+título. O curso dele é para qualquer pessoa; o nosso é de conversão, e isso
+filtra o cliente certo. **O `h1` não se tocou** — um é para a SERP, o outro
+para a página.
+
+**Medido:** títulos a 60·60·60·61·60 caracteres (o dele tem 35); Sesimbra na
+`description` das cinco e uma vez no corpo de cada; Almada uma vez em cada;
+`h1` inalterado; 18/18 verificações. E o `lastmod` datou exactamente as
+cinco páginas do curso e nenhuma das outras 170.
+
+**O TESTE.** Isto é hipótese aplicada, não facto provado. A 26/09
+remedem-se as cinco SERPs — `parakite portugal` em PT, DE e NL, e
+`parakite kurs` e `parakite kurs portugal` em DE, **$0,020**. Se as posições
+melhorarem, o mecanismo é real e aplica-se ao resto do site. Se não
+mexerem, **escreve-se que falhou** e a oitava hipótese cai como as outras
+sete.
 
 ### A página do conceito passa a azul e papel, com um só alinhamento
 fechado: 2026-09-12 · deploy `d69485da` · verificado em produção
