@@ -319,6 +319,200 @@ recuperados aqui.**
 
 ---
 
+## MEDIÇÃO DATAFORSEO — 12/09
+nove SERPs e quatro consultas de backlinks · **custo total $0,136**
+
+A partir de 12/09 as credenciais do DataForSEO estão em variáveis de ambiente
+do utilizador do Windows (`DATAFORSEO_LOGIN`, `DATAFORSEO_PASSWORD`), lidas do
+registo e usadas para construir o cabeçalho `Basic` em memória. **Nunca são
+impressas, nem entram em ficheiro, commit, log ou nesta documentação.** O
+`.gitignore` passou a fechar o caminho do commit a `.env` e afins — verificado
+com `git check-ignore`, e o histórico foi varrido antes: zero ocorrências.
+
+```
+SERP, profundidade 20           $0,004 por chamada
+SERP com AI Overview            $0,006
+backlinks/summary/live          $0,024   ← seis vezes uma SERP
+backlinks/referring_domains     $0,025
+```
+
+**Nota de operação:** o `serp/google/organic/live/advanced` aceita **uma
+tarefa por chamada**. Enviar quatro num array devolve «You can set only one
+task at a time» para as três últimas, e não as cobra.
+
+---
+
+### A hipótese das ligações externas caiu, e era a minha principal
+medido: 2026-09-12
+
+Durante todo o dia 11 e 12/09 escrevi e repeti que a barreira do site eram as
+ligações externas, e que os dois emails — Flow e FelloFly — eram «a acção com
+melhor relação esforço/efeito de tudo o que foi medido». **A medição diz que
+isso não explica o problema.**
+
+```
+                        HAPPY SOARING    FLY WITH BEHROOZ
+rank do domínio                0                0
+domínios que apontam          27               21
+spam score do perfil          54               61
+primeiro visto          2025-02-06       2026-08-03
+posição em `parakite kurs` DE   #11              #6
+```
+
+**Tens MAIS domínios a apontar do que o concorrente que te ganha por cinco a
+sete posições, e os dois têm rank 0.**
+
+E o detalhe que fecha a questão: **nenhum dos dois perfis tem uma única
+ligação legítima.**
+
+Os 27 do Happy Soaring são encurtadores de URL (`anchorurl.cloud`, `bye.fyi`,
+`urls-shortener.eu`, `shortenurls.eu`, `buzzshrink.website`), directórios de
+spam (`australianwebdirectory.pro` e `.shop`, `simplewebdirectory.com`),
+sites de «quanto vale o teu site» (`getwebsiteworth.com`, `websiterace.com`),
+raspadores (`screenshots.wiki`, `archive-hu.com`) e SEO-spam declarado
+(`webseodigital.com`, `profitsurgeseo.com`). Pontuações de spam de 35 a 80,
+zero `nofollow`, zero rank. **Acumularam-se sozinhos desde Fevereiro de 2025 —
+ninguém os pediu.**
+
+Os 21 do Behrooz são visivelmente comprados: todos `.com`, **todos aparecidos
+entre 3 de Agosto e 11 de Setembro de 2026** — cinco semanas —, com nomes como
+`forbesstories.com`, `theforbestimes.com`, `bestnz-poker-casinoslot.com`,
+`betwinnermirror.com`, `ufabettererm4.com` e `uncledspizza.com`. Isto não se
+acumula: compra-se.
+
+**O que isto muda:** os dois emails continuam a ser a acção certa, mas por uma
+razão diferente e melhor. Não porque as ligações sejam a barreira provada —
+não são —, mas porque **não existe uma única ligação legítima para este site**,
+e essas duas seriam as primeiras. Um dealer oficial sem ligação do fabricante
+é uma anomalia, independentemente do ranking.
+
+**E as 27 de spam: não fazer nada.** O Google declara que ignora este género,
+e um `disavow` sem evidência de dano faz mais mal do que bem. Fica registado
+para que ninguém as conte como activo, e para que «tens 27 backlinks» nunca
+seja lido como boa notícia.
+
+### Seis hipóteses mortas, e o que sobra
+medido: 2026-09-12
+
+```
+não é o idioma          medido a 11/09 — a Áustria converte a 25,58%
+não é a arquitectura    a Áustria usa a mesma
+não é o conteúdo        a tua página tem o dobro do texto do #1 e perde
+não é o dispositivo     ausente em computador E telemóvel
+não é o país            ausente no RU, EUA e Alemanha
+não são as ligações     tens mais do que ele, ambos a rank 0
+```
+
+**Não sei o que explica o #1 dele contra o teu #8**, e prefiro escrevê-lo a
+substituir uma explicação errada por outra. Sobra a diferença de
+enquadramento e o que não foi medido: profundidade temática do domínio,
+histórico, comportamento dos utilizadores.
+
+### A AlbatroXX está ausente de quatro SERPs do próprio nome
+medido: 2026-09-12 · **rever depois de: 2026-09-26**
+
+```
+albatroxx · Reino Unido · computador     AUSENTE de 20
+albatroxx · Reino Unido · telemóvel      AUSENTE de 24
+albatroxx · Estados Unidos · computador  AUSENTE de 23
+flow albatroxx · Alemanha · computador   AUSENTE de 22
+```
+
+E o Search Console diz que a `/en/wings/albatroxx/` tem **46 impressões na
+posição média 7,59** — a ficha de asa mais vista do site.
+
+**As duas coisas não podem ser ambas o retrato de hoje.** As impressões vêm de
+outra coisa: consultas mais longas, ou dias do início da janela de dezanove
+dias. Não foi medido qual, e não se inventa.
+
+**O padrão do preço repete-se:** `albatroxx` no Reino Unido tem **8 dos 17
+orgânicos a mostrar preço**, e `flow albatroxx` na Alemanha outros 8 de 17 —
+com o `kleinanzeigen.de`, classificados de usados, em #7 e #17. O #1 nos dois
+casos é o fabricante ou um revendedor alemão (`para-motoparts.de`).
+
+### O concorrente directo tem uma página alemã sobre Portugal, e ganha
+medido: 2026-09-12
+
+```
+parakite kurs · Alemanha
+  #6   flywithbehrooz.com   «Parakite-Kurs in Portugal, Sesimbra»
+  #11  happysoaring.com     «Parakite-Kurs in Portugal für Gleitschirmpiloten»
+
+parakite portugal · Alemanha
+  #1   flywithbehrooz.com
+  #2   o Instagram do Happy Soaring
+  #3   o Facebook do Happy Soaring
+  #8   happysoaring.com
+  #11  flywithbehrooz.com  (segunda página dele na mesma SERP)
+```
+
+**Mesmo país, mesmo mercado, mesma língua — e Sesimbra fica a 30 minutos dos
+spots usados nos cursos.** Não é «aparece em pesquisas de IA e nós não»: é uma
+página comparável a bater a nossa numa consulta comercial.
+
+**E o padrão das redes sociais repete-se, agora mais forte.** Na Alemanha o
+Instagram está em #2 e o Facebook em #3, com o site em #8. Nos Países Baixos o
+Instagram é **#1**, o Facebook #2, o site #6, o Threads #8 e a versão
+portuguesa #17 — cinco das dezassete posições são propriedades nossas, e as
+duas melhores não são o site. É exactamente o problema que o `sameAs` de 11/09
+existe para resolver, e esta é a segunda medição independente dele.
+
+### A comparação página a página, e o resultado é contra-intuitivo
+medido: 2026-09-12
+
+```
+                    BEHROOZ #1        HAPPY SOARING #8
+palavras               1 264               2 189
+h2 / h3                  1 / 1            15 / 41
+imagens                   16                   4
+preço visível         nenhum          800 € e 60 €
+hreflang                   6                  11
+```
+
+**Mais do dobro do texto, quinze vezes a estrutura, o preço publicado — e sete
+lugares abaixo.** Isto mata a hipótese do conteúdo: a nossa página é
+objectivamente mais completa.
+
+A única diferença de conteúdo que resta é **as 16 imagens contra 4**, e o
+enquadramento: ele vende «uma semana guiada em Sesimbra» (`TouristTrip`,
+`duration: P7D`, um sítio nomeado); nós descrevemos um método (`Course`).
+
+**O schema dele declara um preço que não está na página.** Varrido o texto
+visível: zero preços. E o JSON-LD diz `Offer` com `price: 80` EUR para sete
+dias. Isso contraria a política de dados estruturados do Google, que exige que
+o schema represente o conteúdo visível. **Fica registado como facto medido e
+não como coisa a copiar** — a recusa do `offers` sem preço publicado, no
+`RETIRADOS`, mantém-se.
+
+**E uma concessão:** ao analisar o plano de outro modelo recusei o
+`SportsActivityLocation`. O concorrente no #1 usa-o — mas aninhado como
+`provider` dentro de um `TouristTrip`, que é a forma correcta, e não solto no
+`<head>` como o plano propunha. A objecção era à implementação e mantém-se; o
+tipo de schema não é o disparate que eu impliquei.
+
+### As AI Overviews: três medidas, quinze fontes, nenhuma nossa
+medido: 2026-09-12 · **rever depois de: 2026-09-26**
+
+```
+parakite kurs · Alemanha         AI Overview na posição 1   6 fontes
+what is a parakite · Reino Unido AI Overview na posição 1   9 fontes
+```
+
+Fontes citadas: `youtube.com` ×3, `paraglidingshop.com.au` ×2,
+`flyparakite.com`, `xcmag.com`, `freedom-parapente.fr`,
+`touchandgoadventures.com`, `papillon.de` ×2, `ridair.com`, `freewings.ch`,
+`birdwing.ch`.
+
+E a resposta inglesa **nomeia um concorrente dentro do texto**: «You can read
+more about the discipline on the Paragliding Shop overview guide.»
+
+**A alemã é pior do que não citar.** O texto dela diz que os parakites são
+«como o Flare Moustache ou o Niviuk Jester». **A Flow não existe na resposta
+que o Google dá a quem pergunta por um curso de parakite em alemão** — e o
+Happy Soaring é o dealer oficial dela em Portugal.
+
+---
+
 ## PUBLICADO A 10/09
 
 ### O que entrou no deploy 4c829982
