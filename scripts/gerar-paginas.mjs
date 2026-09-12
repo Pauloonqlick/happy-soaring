@@ -2865,7 +2865,12 @@ function paginaQueParakite(l) {
     .map(p => '<a class="qp-link" href="' + esc(caminho(l, p)) + '">'
       + '<b>' + esc(p.nome) + '</b>'
       + '<span>' + esc(t(p.tagline, l) || rotuloClasse(p.classificacao, l)) + '</span></a>')
-    .join('');
+    /* O \n NAO E ESTETICA: e o que impede a frase de um cartao de colar ao
+       nome do cartao seguinte na extracao de texto. O `separaFronteiras`
+       nao chega aqui porque exclui `a`, e exclui-o com razao — ver o
+       comentario dele. Estes sao `display:block`, logo a quebra e invisivel
+       no ecra e decisiva fora dele. NAO APAGAR. */
+    .join('\n');
 
   /* a ordem tem de bater com a do QP.s10Links, e o curso entra em terceiro:
      o endereço dele traduz-se, por isso vai pelo caminhoCurso() e não pelo
@@ -2873,7 +2878,7 @@ function paginaQueParakite(l) {
   const destinos = [A('/parakite-portugal/'), A('/pilot2wing/'), caminhoCurso(l)];
   const links = arr('s10Links').map((x, i) =>
     '<a class="qp-link" href="' + destinos[i] + '"><b>' + esc(x[0]) + '</b>'
-    + '<span>' + esc(x[1]) + '</span></a>').join('');
+    + '<span>' + esc(x[1]) + '</span></a>').join('\n');   /* ver o \n acima */
 
   const faq = arr('faq').map(f =>
     '<details><summary>' + esc(f[0]) + '</summary><p>' + esc(f[1]) + '</p></details>').join('');
