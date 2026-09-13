@@ -277,6 +277,8 @@ async function passoDados(env, r, d) {
     .bind(ant?.id ?? null, new Date().toISOString(), d.id));
   /* a última alteração de cada página que ESTA publicação mudou (Fase 4) */
   stmts.push(env.DB.prepare(SQL_ALTERACOES_DE_UMA_PUBLICACAO).bind(d.id));
+  /* um pacote aprovado fica ligado à primeira publicação posterior que alterou a sua página (Fase 5) */
+  stmts.push(env.DB.prepare(SQL_PACOTES_DE_UMA_PUBLICACAO).bind(d.id, d.id, d.id, d.id));
   await r.lote(stmts);
   return 'FIM';
 }
@@ -310,6 +312,13 @@ WHERE tipo IS NOT NULL
 ON CONFLICT(caminho) DO UPDATE SET
   ultima_alteracao_em = excluded.ultima_alteracao_em, deployment_id = excluded.deployment_id, tipo = excluded.tipo
 WHERE excluded.ultima_alteracao_em > paginas_alteracao.ultima_alteracao_em`;
+
+export const SQL_PACOTES_DE_UMA_PUBLICACAO = `
+UPDATE pacotes_trabalho
+SET deployment_id = ?, publicado_em = (SELECT criado_em_cf FROM deployments WHERE id = ?)
+WHERE deployment_id IS NULL
+  AND criado_em < (SELECT criado_em_cf FROM deployments WHERE id = ?)
+  AND caminho IN (SELECT caminho FROM paginas_alteracao WHERE deployment_id = ?)`;
 
 const PASSOS = { META: passoMeta, SITEMAP: passoSitemap, PAGINAS: passoPaginas, DADOS: passoDados };
 

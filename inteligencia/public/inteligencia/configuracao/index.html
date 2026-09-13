@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Configuração — Inteligência Happy Soaring</title>
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="stylesheet" href="/tema.css">
+<link rel="stylesheet" href="/inteligencia/estilo.css">
+<script src="/inteligencia/comum.js" defer></script>
+<script src="/inteligencia/configuracao.js" defer></script>
+</head>
+<body>
+
+<header class="topo">
+  <a class="marca" href="/" translate="no">HAPPY <span>SOARING</span></a>
+  <p class="modulo">Inteligência</p>
+  <nav class="topo-nav" aria-label="Módulo">
+    <a href="/inteligencia/">Hoje</a>
+    <a href="/inteligencia/indexacao/">Fila de indexação</a>
+    <a href="/inteligencia/alteracoes/">Alterações</a>
+    <a href="/inteligencia/conhecimento/">Conhecimento</a>
+    <a href="/inteligencia/contactos/">Contactos</a>
+    <a href="/inteligencia/configuracao/" aria-current="page">Configuração</a>
+    <a href="/">Site</a>
+  </nav>
+  <p class="quem" id="quem" aria-live="polite"></p>
+</header>
+
+<main class="corpo corpo-uma">
+  <section aria-labelledby="t-cfg">
+    <h1 id="t-cfg">Configuração</h1>
+    <p class="nota">A importância de cada objectivo de negócio e, por página, o nível e os objectivos que serve.
+      São factores de prioridade da porta «Vale a pena agir agora?». Nada vem pré-definido.</p>
+    <h2 class="titulo-seccao">Objectivos de negócio</h2>
+    <div class="tabela-cx">
+      <table class="tabela tabela-estreita">
+        <caption class="so-leitor">Importância dos objectivos</caption>
+        <thead><tr><th scope="col">Objectivo</th><th scope="col">Importância</th><th scope="col"></th></tr></thead>
+        <tbody id="objectivos"></tbody>
+      </table>
+    </div>
+    <h2 class="titulo-seccao">Páginas</h2>
+    <p class="nota">Nível 1 = prioritária, 2 = secundária, 3 = restante. As páginas aparecem aqui depois de inspeccionadas ou alteradas.</p>
+    <p class="vazio" id="estado">A carregar…</p>
+    <div class="tabela-cx" id="caixa" hidden>
+      <table class="tabela">
+        <caption class="so-leitor">Nível e objectivos por página</caption>
+        <thead id="cab-paginas"></thead>
+        <tbody id="paginas"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>

@@ -72,13 +72,15 @@ test('migração 0001: aplica-se do zero numa base SQLite limpa', async (t) => {
 });
 
 test('interface: sem scripts nem estilos em linha, sem recursos de terceiros', () => {
-  for (const h of [['index.html'], ['alteracoes', 'index.html'], ['indexacao', 'index.html']]) {
+  const PAGINAS = [['index.html'], ['alteracoes', 'index.html'], ['indexacao', 'index.html'], ['assunto', 'index.html'],
+    ['conhecimento', 'index.html'], ['contactos', 'index.html'], ['configuracao', 'index.html']];
+  for (const h of PAGINAS) {
     const html = ler(path.join(MODULO, 'public', 'inteligencia', ...h));
     assert.doesNotMatch(html, /<script(?![^>]*\bsrc=)[^>]*>/i, 'script em linha violaria a CSP');
     assert.doesNotMatch(html, /<style|style="/i);
     assert.doesNotMatch(html, /(src|href)="https?:\/\//i);
   }
-  for (const f of ['app.js', 'alteracoes.js', 'indexacao.js']) {
+  for (const f of fs.readdirSync(path.join(MODULO, 'public', 'inteligencia')).filter(f => f.endsWith('.js'))) {
     const js = ler(path.join(MODULO, 'public', 'inteligencia', f));
     assert.doesNotMatch(js, /innerHTML|insertAdjacentHTML|document\.write/, f);
   }
@@ -87,10 +89,9 @@ test('interface: sem scripts nem estilos em linha, sem recursos de terceiros', (
 test('o módulo não depende do CMS: nenhuma rota, ligação, script ou login do /admin/', () => {
   const fontes = [
     path.join(MODULO, 'wrangler.toml'),
-    ...['index.js', 'acesso.js', 'seguranca.js', 'estado.js', 'publicacoes.js', 'search-console.js', 'google.js', 'linguas.js', 'inspeccao.js'].map(f => path.join(MODULO, 'src', f)),
-    ...['index.html', 'app.js', 'estilo.css', 'alteracoes.js', 'indexacao.js'].map(f => path.join(MODULO, 'public', 'inteligencia', f)),
-    path.join(MODULO, 'public', 'inteligencia', 'alteracoes', 'index.html'),
-    path.join(MODULO, 'public', 'inteligencia', 'indexacao', 'index.html')
+    ...fs.readdirSync(path.join(MODULO, 'src')).map(f => path.join(MODULO, 'src', f)),
+    ...fs.readdirSync(path.join(MODULO, 'public', 'inteligencia'), { recursive: true })
+      .filter(f => /\.(html|js|css)$/.test(f)).map(f => path.join(MODULO, 'public', 'inteligencia', f))
   ];
   for (const f of fontes) {
     const s = ler(f).replace(/\/\*[\s\S]*?\*\/|<!--[\s\S]*?-->|^\s*#.*$/gm, '');

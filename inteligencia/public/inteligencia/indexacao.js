@@ -73,7 +73,8 @@
       if (p.canonico_divergente) { tdP.appendChild(document.createTextNode(' ')); tdP.appendChild(el('span', 'canónico diferente', 'chip chip-sujo')); }
       tr.appendChild(tdP);
 
-      const [rotulo, classe] = ESTADOS[p.estado] || [p.estado, 'chip'];
+      const [rotulo, classe] = p.nunca_rastreada && p.estado === 'PENDENTE' ? ['Nunca rastreada — por pedir', 'chip chip-conteudo']
+        : ESTADOS[p.estado] || [p.estado, 'chip'];
       const tdE = el('td');
       tdE.appendChild(el('span', rotulo, classe));
       if (p.atraso_horas != null) tdE.appendChild(el('div', 'rastreado ' + p.atraso_horas + ' h depois do pedido', 'sub'));

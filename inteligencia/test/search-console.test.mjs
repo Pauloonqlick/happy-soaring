@@ -185,20 +185,22 @@ test('sem permissão na propriedade: limitação, nada gravado', async () => {
   assert.equal((await db.prepare('SELECT COUNT(*) AS n FROM gsc_dias').first()).n, 0);
 });
 
-test('tarefa agendada: minuto 0 Search Console, minuto 4 inspecção, os outros publicações', async () => {
+test('tarefa agendada: minuto 0 Search Console, minuto 4 inspecção, 18/38/58 assuntos, os outros publicações', async () => {
   const chamadas = [];
   const env = {
     DB: { prepare: () => ({ bind() { return this; }, first: async () => null, all: async () => ({ results: [] }), run: async () => ({ meta: {} }) }), batch: async () => [] },
     GSC_PROPRIEDADE: '', CF_API_TOKEN_PAGES: ''
   };
-  const logOriginal = console.log;
+  const logOriginal = console.log, fetchOriginal = globalThis.fetch;
   console.log = m => chamadas.push(JSON.parse(m).evento);
+  globalThis.fetch = async () => { throw new Error('rede proibida'); };
   try {
-    for (const minuto of [0, 2, 4, 10, 16, 24]) {
+    for (const minuto of [0, 2, 4, 10, 16, 18, 24, 38, 48]) {
       const esperas = [];
       await worker.scheduled({ scheduledTime: Date.UTC(2026, 8, 13, 12, minuto) }, env, { waitUntil: p => esperas.push(p) });
       await Promise.all(esperas);
     }
-  } finally { console.log = logOriginal; }
-  assert.deepEqual(chamadas, ['ciclo_search_console', 'ciclo_publicacoes', 'ciclo_inspeccao', 'ciclo_search_console', 'ciclo_publicacoes', 'ciclo_inspeccao']);
+  } finally { console.log = logOriginal; globalThis.fetch = fetchOriginal; }
+  assert.deepEqual(chamadas, ['ciclo_search_console', 'ciclo_publicacoes', 'ciclo_inspeccao', 'ciclo_search_console',
+    'ciclo_publicacoes', 'ciclo_assuntos', 'ciclo_inspeccao', 'ciclo_assuntos', 'ciclo_publicacoes']);
 });

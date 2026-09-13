@@ -19,6 +19,7 @@
   --rotulo-tr:var(--tr-rotulo, .139em);
 }
 *,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--papel);color:var(--tinta);font-family:var(--letra);
   font-size:16px;line-height:1.55}
@@ -96,7 +97,7 @@ h1{margin:0;font-size:clamp(30px,4.4vw,46px);font-weight:800;line-height:1.05}
 .detalhe h4{margin:12px 0 4px;font-size:13px}
 .detalhe ul{margin:0;padding-left:18px;columns:2 280px;font-size:13px;color:var(--painel-fraca)}
 .nota{color:var(--tinta-fraca);max-width:72ch;margin:10px 0 22px}
-.corpo-uma{grid-template-columns:1fr}
+.corpo-uma{grid-template-columns:minmax(0,1fr)}
 .nota-painel{margin:12px 0 0;font-size:12px;color:var(--painel-fraca)}
 
 /* ---- fila de indexação ---- */
@@ -111,3 +112,55 @@ h1{margin:0;font-size:clamp(30px,4.4vw,46px);font-weight:800;line-height:1.05}
 #limitacoes:empty{display:none}
 #limitacoes{margin:0 0 18px}
 .so-leitor{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---- fase 5: «Hoje», fichas e formulários ---- */
+.bloco-critico{border-left:3px solid var(--destaque)}
+.fraco{color:var(--tinta-fraca)}
+.painel .fraco{color:var(--painel-fraca)}
+.chip-escuro{border-color:var(--linha);color:var(--tinta)}
+.painel .chip-escuro{border-color:var(--painel-linha);color:var(--painel-tinta)}
+.chip-critico{border-color:var(--destaque);color:var(--destaque);font-weight:700}
+.painel .chip-critico{color:var(--destaque-tinta);border-color:var(--destaque-tinta)}
+.sub-titulo{margin:14px 0 4px;font-size:13px;font-weight:600;color:var(--tinta-fraca)}
+.linha-assunto+.linha-assunto{margin-top:8px}
+.linha-assunto strong{color:var(--tinta)}
+.migalha{margin:0 0 8px;font-size:14px}
+.migalha a{color:var(--tinta-fraca)}
+.ficha{display:grid;gap:14px;max-width:960px}
+.ficha .painel h2{margin-top:18px}
+.ficha .painel h2:first-child{margin-top:0}
+.ficha .painel p{margin:0 0 6px;max-width:72ch}
+.painel h3{color:var(--painel-tinta)}
+.painel a{color:var(--painel-tinta)}
+.porta{font-weight:700;font-size:17px}
+.porta-agir_agora{color:var(--destaque-tinta)}
+.passos{margin:10px 0 0;padding-left:20px;font-size:14px;color:var(--painel-fraca)}
+.passos li+li{margin-top:4px}
+.passos b{color:var(--painel-tinta);font-weight:600}
+.formulario{display:grid;gap:10px;max-width:640px;margin-top:10px}
+.campo{display:grid;gap:4px;font-size:13px;color:var(--painel-fraca)}
+.campo input,.campo select,.campo textarea,.tabela select{font:inherit;font-size:15px;color:var(--painel-tinta);background:#fff;
+  border:1px solid var(--painel-linha);padding:7px 9px;border-radius:0}
+.campo textarea{resize:vertical}
+.campo input:focus-visible,.campo select:focus-visible,.campo textarea:focus-visible,.tabela select:focus-visible,
+.escolhas input:focus-visible,.tabela input:focus-visible{outline:2px solid var(--destaque-tinta);outline-offset:1px}
+.escolhas{border:0;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px 18px;font-size:15px}
+.escolhas label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.botoes{display:flex;gap:10px;flex-wrap:wrap}
+.botao{font:inherit;font-size:14px;font-weight:600;justify-self:start;background:var(--papel);color:#fff;border:0;padding:9px 16px;cursor:pointer}
+.botao:hover{background:var(--papel-2)}
+.botao:focus-visible{outline:2px solid var(--destaque-tinta);outline-offset:2px}
+.botao:disabled{opacity:.6;cursor:progress}
+.botao-secundario{background:none;color:var(--painel-tinta);border:1px solid var(--painel-linha)}
+.botao-secundario:hover{background:#f4f7fb}
+button.botao-link{background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;font:inherit;font-size:13px}
+.secoes{display:grid;gap:14px;max-width:960px}
+.secao-conhecimento .botao{margin:4px 0 8px}
+.registos{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:12px}
+.registos>li{border-top:1px solid var(--painel-linha);padding-top:10px}
+.registos>li>div{margin:2px 0}
+.vazio-claro{color:var(--painel-fraca)}
+.duas{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-bottom:22px}
+.titulo-seccao{font-size:var(--rotulo-tam);letter-spacing:var(--rotulo-tr);text-transform:uppercase;color:var(--tinta-fraca);margin:26px 0 10px}
+.tabela-estreita{min-width:0}
+.tabela td input[type=checkbox]{width:18px;height:18px}

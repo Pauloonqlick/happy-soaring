@@ -32,7 +32,17 @@ const t = s => (s ? Date.parse(s) : NaN);
 export function derivarEstado({ alteracao, rastreio, inspeccao, pedido }) {
   const A = t(alteracao), R = t(rastreio), I = t(inspeccao), P = t(pedido);
   const base = { atraso_horas: null };
-  if (!alteracao) return { ...base, estado: null, rastreio_posterior: null };
+  if (!alteracao) {
+    /* sem alteração observada, só entra na fila a página que o Google nunca rastreou */
+    if (Number.isNaN(I)) return { ...base, estado: null, rastreio_posterior: null };
+    if (Number.isNaN(R)) {
+      return { ...base, estado: Number.isNaN(P) ? 'PENDENTE' : 'PEDIDO', rastreio_posterior: 'NAO', nunca_rastreada: true };
+    }
+    if (!Number.isNaN(P) && P <= R) {
+      return { estado: 'RASTREADO_DEPOIS_DO_PEDIDO', rastreio_posterior: 'SIM', atraso_horas: Math.round((R - P) / 36e5 * 10) / 10, nunca_rastreada: false };
+    }
+    return { ...base, estado: null, rastreio_posterior: null };
+  }
   if (Number.isNaN(I)) return { ...base, estado: 'SEM_INSPECCAO', rastreio_posterior: 'DESCONHECIDO' };
   if (!Number.isNaN(R) && R > A) {
     const pediuNoEpisodio = !Number.isNaN(P) && P > A && P <= R;
@@ -60,8 +70,9 @@ export function escolherParaInspeccionar(universo, google, alteracoes, agora, li
   for (const c of universo) {
     const g = G.get(c), a = Al.get(c);
     const ultInsp = t(g?.ultima_inspeccao_em);
-    if (a && !(t(g?.ultimo_rastreio) > t(a.ultima_alteracao_em))) {
-      if (Number.isNaN(ultInsp) || agoraMs - ultInsp > REINSPECCIONAR_EPISODIO_H * 36e5) aberto.push([t(a.ultima_alteracao_em), c]);
+    const nuncaRastreada = g && !g.ultimo_rastreio;
+    if ((a && !(t(g?.ultimo_rastreio) > t(a.ultima_alteracao_em))) || nuncaRastreada) {
+      if (Number.isNaN(ultInsp) || agoraMs - ultInsp > REINSPECCIONAR_EPISODIO_H * 36e5) aberto.push([a ? t(a.ultima_alteracao_em) : 0, c]);
       continue;
     }
     if (!g) nunca.push(c);

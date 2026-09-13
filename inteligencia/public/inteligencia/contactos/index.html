@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Contactos — Inteligência Happy Soaring</title>
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="stylesheet" href="/tema.css">
+<link rel="stylesheet" href="/inteligencia/estilo.css">
+<script src="/inteligencia/comum.js" defer></script>
+<script src="/inteligencia/contactos.js" defer></script>
+</head>
+<body>
+
+<header class="topo">
+  <a class="marca" href="/" translate="no">HAPPY <span>SOARING</span></a>
+  <p class="modulo">Inteligência</p>
+  <nav class="topo-nav" aria-label="Módulo">
+    <a href="/inteligencia/">Hoje</a>
+    <a href="/inteligencia/indexacao/">Fila de indexação</a>
+    <a href="/inteligencia/alteracoes/">Alterações</a>
+    <a href="/inteligencia/conhecimento/">Conhecimento</a>
+    <a href="/inteligencia/contactos/" aria-current="page">Contactos</a>
+    <a href="/inteligencia/configuracao/">Configuração</a>
+    <a href="/">Site</a>
+  </nav>
+  <p class="quem" id="quem" aria-live="polite"></p>
+</header>
+
+<main class="corpo corpo-uma">
+  <section aria-labelledby="t-cont">
+    <h1 id="t-cont">Origem dos contactos</h1>
+    <p class="nota">Como encontrou a Happy Soaring, de que país, e o que procurava. <b>Sem nomes, emails ou telefones.</b></p>
+    <div class="duas">
+      <section class="painel">
+        <h2>Registar um contacto</h2>
+        <form id="novo" class="formulario" novalidate>
+          <label class="campo">Recebido em <input type="date" name="recebido_em" required></label>
+          <label class="campo">Como encontrou <select name="como_encontrou" required></select></label>
+          <label class="campo">País (código de duas letras) <input name="pais" maxlength="2" placeholder="PT" autocomplete="off"></label>
+          <label class="campo">O que procurava <select name="objectivo_id"></select></label>
+          <button type="submit" class="botao">Registar</button>
+          <p class="sub" id="resultado" role="status"></p>
+        </form>
+      </section>
+      <section class="painel">
+        <h2>Últimos 90 dias</h2>
+        <div id="resumo"></div>
+      </section>
+    </div>
+    <h2 class="titulo-seccao">Registados</h2>
+    <p class="vazio" id="estado">A carregar…</p>
+    <div class="tabela-cx" id="caixa" hidden>
+      <table class="tabela">
+        <caption class="so-leitor">Contactos registados</caption>
+        <thead><tr><th scope="col">Recebido</th><th scope="col">Como encontrou</th><th scope="col">País</th><th scope="col">O que procurava</th></tr></thead>
+        <tbody id="linhas"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>

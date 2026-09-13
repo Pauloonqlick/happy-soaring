@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Assunto — Inteligência Happy Soaring</title>
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="stylesheet" href="/tema.css">
+<link rel="stylesheet" href="/inteligencia/estilo.css">
+<script src="/inteligencia/comum.js" defer></script>
+<script src="/inteligencia/assunto.js" defer></script>
+</head>
+<body>
+
+<header class="topo">
+  <a class="marca" href="/" translate="no">HAPPY <span>SOARING</span></a>
+  <p class="modulo">Inteligência</p>
+  <nav class="topo-nav" aria-label="Módulo">
+    <a href="/inteligencia/">Hoje</a>
+    <a href="/inteligencia/indexacao/">Fila de indexação</a>
+    <a href="/inteligencia/alteracoes/">Alterações</a>
+    <a href="/inteligencia/conhecimento/">Conhecimento</a>
+    <a href="/inteligencia/contactos/">Contactos</a>
+    <a href="/inteligencia/configuracao/">Configuração</a>
+    <a href="/">Site</a>
+  </nav>
+  <p class="quem" id="quem" aria-live="polite"></p>
+</header>
+
+<main class="corpo corpo-uma">
+  <section aria-labelledby="t-assunto">
+    <p class="migalha"><a href="/inteligencia/">← Hoje</a></p>
+    <h1 id="t-assunto">A carregar…</h1>
+    <p class="aviso" id="cabeca"></p>
+    <p class="vazio" id="erro" hidden></p>
+
+    <div class="ficha" id="ficha" hidden>
+      <section class="painel">
+        <h2>Vale a pena agir agora?</h2>
+        <p class="porta" id="porta"></p>
+        <ol class="passos" id="passos"></ol>
+      </section>
+
+      <section class="painel">
+        <h2>Evidência</h2>
+        <dl class="pares" id="evidencia"></dl>
+        <p class="nota-painel" id="nota-rastreio"></p>
+      </section>
+
+      <section class="painel">
+        <h2>Diagnóstico</h2>
+        <p id="diagnostico"></p>
+        <h2>Solução</h2>
+        <p id="solucao"></p>
+        <h2>Não fazer</h2>
+        <ul class="lista" id="nao-fazer"></ul>
+        <h2>Riscos</h2>
+        <ul class="lista" id="riscos"></ul>
+        <h2>Medição</h2>
+        <p id="medicao"></p>
+        <dl class="pares" id="resumo-ficha"></dl>
+      </section>
+
+      <section class="painel">
+        <h2>Regras aplicáveis</h2>
+        <div id="regras"></div>
+      </section>
+
+      <section class="painel" id="caixa-decisao" hidden>
+        <h2>Decisão</h2>
+        <form id="decidir" class="formulario" novalidate>
+          <fieldset class="escolhas">
+            <legend class="so-leitor">Decisão</legend>
+            <label id="rotulo-aprovar"><input type="radio" name="decisao" value="APROVAR"> Aprovar</label>
+            <label><input type="radio" name="decisao" value="IGNORAR"> Ignorar, com razão</label>
+            <label><input type="radio" name="decisao" value="ADIAR"> Adiar até uma data</label>
+            <label><input type="radio" name="decisao" value="PEDIR_EVIDENCIA"> Pedir mais evidência</label>
+          </fieldset>
+          <p class="sub" id="nota-operacional" hidden></p>
+          <label class="campo">Razão <textarea name="razao" rows="2" maxlength="1000"></textarea></label>
+          <label class="campo" id="campo-data" hidden>Adiar até <input type="date" name="adiar_ate"></label>
+          <label class="campo">Nota para o pacote de trabalho <textarea name="nota" rows="2" maxlength="2000"></textarea></label>
+          <p class="sub" id="lembrete-aprovar" hidden>Ao aprovar, o pacote leva as regras aplicáveis acima: factos verificados, afirmações proibidas, decisões activas e termos de marca.</p>
+          <button type="submit" class="botao">Registar decisão</button>
+          <p class="sub" id="resultado-decisao" role="status"></p>
+        </form>
+      </section>
+
+      <section class="painel" id="caixa-pacote" hidden>
+        <h2>Pacote de trabalho</h2>
+        <dl class="pares" id="pacote"></dl>
+      </section>
+
+      <section class="painel" id="caixa-historico" hidden>
+        <h2>Histórico</h2>
+        <ul class="lista" id="historico"></ul>
+      </section>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>

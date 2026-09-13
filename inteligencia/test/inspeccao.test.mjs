@@ -342,7 +342,7 @@ test('API: a fila lê-se atrás do Access; registar um pedido exige JSON, cabeç
     assert.equal((await pedir({ 'x-hs-inteligencia': '' })).status, 403, 'sem o cabeçalho do módulo');
     assert.equal((await pedir({ origin: 'https://outro-site.example' })).status, 403, 'outra origem');
     assert.equal((await pedir({ 'content-type': 'text/plain' })).status, 403, 'formulário simples');
-    assert.equal((await pedir({}, null, 'GET')).status, 405);
+    assert.equal((await pedir({}, null, 'GET')).status, 404, 'não é uma leitura');
     assert.equal((await pedir({}, { caminho: '/../admin/' })).status, 400);
     assert.equal((await pedir({}, { caminho: 'https://x.example/' })).status, 400);
     assert.equal((await pedir({}, { caminho: '/a/', pedido_em: '2026-01-01T00:00:00Z' })).status, 400, 'data antiga');

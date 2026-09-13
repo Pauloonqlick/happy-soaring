@@ -10,6 +10,7 @@
      que o CMS escreve: a identidade fica sempre igual à do site. -->
 <link rel="stylesheet" href="/tema.css">
 <link rel="stylesheet" href="estilo.css">
+<script src="comum.js" defer></script>
 <script src="app.js" defer></script>
 </head>
 <body>
@@ -21,6 +22,9 @@
     <a href="/inteligencia/" aria-current="page">Hoje</a>
     <a href="/inteligencia/indexacao/">Fila de indexação</a>
     <a href="/inteligencia/alteracoes/">Alterações</a>
+    <a href="/inteligencia/conhecimento/">Conhecimento</a>
+    <a href="/inteligencia/contactos/">Contactos</a>
+    <a href="/inteligencia/configuracao/">Configuração</a>
     <a href="/">Site</a>
   </nav>
   <p class="quem" id="quem" aria-live="polite"></p>
@@ -36,18 +40,20 @@
     <p class="aviso" id="aviso">A verificar as fontes…</p>
 
     <ol class="blocos">
-      <li class="bloco">
+      <li class="bloco" id="bloco1">
         <h2><span class="n">1</span> Está tudo bem?</h2>
-        <p class="vazio">Ainda não há verificação de problemas — o módulo só recolhe dados, por agora. Isto não quer dizer que esteja tudo bem.</p>
+        <p class="vazio" id="b1">A carregar…</p>
+        <ul class="lista" id="b1-lista" hidden></ul>
       </li>
       <li class="bloco">
         <h2><span class="n">2</span> O que mudou desde a última visita</h2>
         <p class="vazio" id="mudou">A carregar…</p>
         <ul class="lista" id="mudou-lista" hidden></ul>
+        <ul class="lista" id="mudou-assuntos" hidden></ul>
       </li>
       <li class="bloco bloco-accoes">
         <h2><span class="n">3</span> O que fazer hoje <small>no máximo 3</small></h2>
-        <p class="vazio" id="accoes">Nenhuma acção.</p>
+        <p class="vazio" id="accoes">A carregar…</p>
         <ul class="lista" id="accoes-lista" hidden></ul>
       </li>
       <li class="bloco">
@@ -58,15 +64,21 @@
       </li>
       <li class="bloco">
         <h2><span class="n">5</span> Resultados</h2>
-        <p class="vazio">Nenhum resultado.</p>
+        <p class="vazio" id="resultados">A carregar…</p>
+        <ul class="lista" id="resultados-lista" hidden></ul>
       </li>
       <li class="bloco">
         <h2><span class="n">6</span> O que ainda não sabemos</h2>
         <ul class="lista" id="nao-sabemos">
           <li id="ns-publicacoes">Publicações do site — a verificar…</li>
           <li id="ns-gsc">Search Console — a verificar…</li>
-          <li id="ns-inspeccao">Inspecção de URL e rastreios — a verificar…</li>
         </ul>
+        <ul class="lista" id="limitacoes"></ul>
+        <h3 class="sub-titulo" id="t-hipoteses" hidden>Hipóteses em teste</h3>
+        <ul class="lista" id="hipoteses" hidden></ul>
+        <h3 class="sub-titulo" id="t-pendentes" hidden>Decisões pendentes</h3>
+        <ul class="lista" id="pendentes" hidden></ul>
+        <p class="sub" id="nao-verificado"></p>
       </li>
     </ol>
   </section>
@@ -87,6 +99,7 @@
       <p class="vazio" id="mercados"></p>
       <h3>Concorrentes</h3>
       <p class="vazio" id="concorrentes"></p>
+      <p class="nota-painel"><a href="configuracao/">Editar importância, níveis e objectivos das páginas</a></p>
     </section>
 
     <section class="painel" aria-labelledby="t-gsc">

@@ -131,7 +131,7 @@ test('token válido: /api/estado devolve identidade, sistema e configuração', 
   assert.equal(r.status, 200);
   const d = await r.json();
   assert.equal(d.identidade, EMAIL);
-  assert.equal(d.fase, 4);
+  assert.equal(d.fase, 5);
   assert.equal(d.sistema.base.ok, true);
   assert.equal(d.sistema.armazenamento_bruto.ok, true);
   assert.equal(d.configuracao.objectivos[0].importancia, null);
@@ -207,10 +207,15 @@ test('caminhos fora do prefixo nunca são servidos', async () => {
   }
 });
 
-test('nesta fase não há escrita: POST é recusado', async () => {
+test('escrita sem o cabeçalho do módulo é recusada; leitura não aceita escrita; outros métodos 405', async () => {
   const token = await assinar(chaveBoa.privada, 'k1', cargaValida());
   const r = await worker.fetch(pedido('/api/estado', token, { method: 'POST' }), envFalso());
-  assert.equal(r.status, 405);
+  assert.equal(r.status, 403);
+  const semRota = await worker.fetch(pedido('/api/estado', token, { method: 'POST', body: '{}',
+    headers: { 'content-type': 'application/json', 'x-hs-inteligencia': '1' } }), envFalso());
+  assert.equal(semRota.status, 404);
+  const put = await worker.fetch(pedido('/api/estado', token, { method: 'PUT' }), envFalso());
+  assert.equal(put.status, 405);
 });
 
 test('API inexistente dá 404, não cai na interface', async () => {

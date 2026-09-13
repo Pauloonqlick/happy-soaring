@@ -29,7 +29,7 @@ export async function lerEstado(env, email) {
 
   return {
     modulo: 'hs-inteligencia',
-    fase: 4,
+    fase: 5,
     identidade: email,
     agora: new Date().toISOString(),
     sistema: {
