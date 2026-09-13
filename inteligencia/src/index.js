@@ -1,6 +1,6 @@
 /* hs-inteligencia — o esqueleto seguro (Fase 1).
    Ordem fixa para TODOS os pedidos:
-     1. só o prefixo /admin/inteligencia
+     1. só o prefixo /inteligencia
      2. identidade do Access validada aqui dentro — falha fechado
      3. só depois: API ou ficheiros da interface
    Não há recolha, nem tarefas agendadas, nem escrita nesta fase. */
@@ -8,7 +8,7 @@ import { validarAcesso } from './acesso.js';
 import { comSeguranca, json, paginaRecusa } from './seguranca.js';
 import { lerEstado } from './estado.js';
 
-export const PREFIXO = '/admin/inteligencia';
+export const PREFIXO = '/inteligencia';
 
 export default {
   async fetch(request, env) {

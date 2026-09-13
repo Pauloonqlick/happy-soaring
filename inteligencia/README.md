@@ -1,11 +1,12 @@
 # Módulo de Inteligência Happy Soaring
 
 Worker próprio (`hs-inteligencia`), separado do site público. Serve a interface
-e a API em `happysoaring.com/admin/inteligencia/`, atrás do Cloudflare Access.
+e a API em `happysoaring.com/inteligencia/`, atrás do Cloudflare Access.
 
 - **O site continua estático** no Cloudflare Pages. Esta pasta nunca entra na
   publicação do site (`inteligencia` está nas `PROIBIDAS` do `scripts/publicar.mjs`).
-- **O CMS** (`/admin/`) é outra coisa e não é tocado por este módulo.
+- **O CMS** (`/admin/`) é um sistema independente. O módulo não usa o seu código, o seu
+  login nem as suas rotas, e o desenvolvimento do módulo não mexe no CMS.
 
 ## Estrutura
 
@@ -15,7 +16,7 @@ src/index.js                  ordem fixa: prefixo → Access → API ou interfac
 src/acesso.js                 validação do token do Access em todos os pedidos (falha fechado)
 src/seguranca.js              cabeçalhos de segurança de todas as respostas
 src/estado.js                 estado do módulo e configuração base
-public/admin/inteligencia/    interface (sem código de terceiros)
+public/inteligencia/          interface (sem código de terceiros)
 migrations/                   esquema D1, só se acrescenta
 test/                         testes sem rede
 scripts/publicar.mjs          publicação do módulo, com --publicar
@@ -32,5 +33,5 @@ node inteligencia/scripts/publicar.mjs --publicar   # migrações + publicação
 ## Acesso
 
 `ACCESS_TEAM_DOMAIN` e `ACCESS_AUD` (em `wrangler.toml`) vêm da aplicação criada no
-Cloudflare Access para `happysoaring.com/admin/inteligencia`. Enquanto estiverem vazios,
+Cloudflare Access para `happysoaring.com/inteligencia`. Enquanto estiverem vazios,
 o Worker responde 503 a tudo. Não são segredos.

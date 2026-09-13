@@ -1,6 +1,6 @@
 # MÓDULO DE INTELIGÊNCIA HAPPY SOARING — Worker próprio, separado do site público.
 # O site continua estático no Cloudflare Pages; este Worker só apanha
-# happysoaring.com/admin/inteligencia e o que está por baixo.
+# happysoaring.com/inteligencia e o que está por baixo.
 #
 # NUNCA vai para a publicação do site: `inteligencia` está nas PROIBIDAS
 # do scripts/publicar.mjs. Publica-se só com inteligencia/scripts/publicar.mjs.
@@ -13,11 +13,11 @@ compatibility_date = "2026-09-01"
 workers_dev = false
 preview_urls = false
 
-# Duas rotas e não um prefixo solto: `happysoaring.com/admin/inteligencia*`
-# apanharia também /admin/inteligencia-qualquer-coisa.
+# Duas rotas e não um prefixo solto: `happysoaring.com/inteligencia*`
+# apanharia também /inteligencia-qualquer-coisa.
 routes = [
-  { pattern = "happysoaring.com/admin/inteligencia", zone_name = "happysoaring.com" },
-  { pattern = "happysoaring.com/admin/inteligencia/*", zone_name = "happysoaring.com" }
+  { pattern = "happysoaring.com/inteligencia", zone_name = "happysoaring.com" },
+  { pattern = "happysoaring.com/inteligencia/*", zone_name = "happysoaring.com" }
 ]
 
 # A interface. `run_worker_first`: nenhum ficheiro é servido sem passar

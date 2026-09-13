@@ -15,7 +15,7 @@ test('wrangler.toml: sem workers.dev, sem pré-visualizações, só as duas rota
   assert.match(t, /^workers_dev\s*=\s*false\s*$/m);
   assert.match(t, /^preview_urls\s*=\s*false\s*$/m);
   const padroes = [...t.matchAll(/pattern\s*=\s*"([^"]+)"/g)].map(m => m[1]);
-  assert.deepEqual(padroes.sort(), ['happysoaring.com/admin/inteligencia', 'happysoaring.com/admin/inteligencia/*']);
+  assert.deepEqual(padroes.sort(), ['happysoaring.com/inteligencia', 'happysoaring.com/inteligencia/*']);
   assert.match(t, /run_worker_first\s*=\s*true/);
   assert.doesNotMatch(t, /crons|\[triggers\]/, 'a Fase 1 não tem tarefas agendadas');
 });
@@ -65,10 +65,24 @@ test('migração 0001: aplica-se do zero numa base SQLite limpa', async (t) => {
 });
 
 test('interface: sem scripts nem estilos em linha, sem recursos de terceiros', () => {
-  const html = ler(path.join(MODULO, 'public', 'admin', 'inteligencia', 'index.html'));
+  const html = ler(path.join(MODULO, 'public', 'inteligencia', 'index.html'));
   assert.doesNotMatch(html, /<script(?![^>]*\bsrc=)[^>]*>/i, 'script em linha violaria a CSP');
   assert.doesNotMatch(html, /<style|style="/i);
   assert.doesNotMatch(html, /(src|href)="https?:\/\//i);
-  const js = ler(path.join(MODULO, 'public', 'admin', 'inteligencia', 'app.js'));
+  const js = ler(path.join(MODULO, 'public', 'inteligencia', 'app.js'));
   assert.doesNotMatch(js, /innerHTML|insertAdjacentHTML|document\.write/);
+});
+
+test('o módulo não depende do CMS: nenhuma rota, ligação, script ou login do /admin/', () => {
+  const fontes = [
+    path.join(MODULO, 'wrangler.toml'),
+    ...['index.js', 'acesso.js', 'seguranca.js', 'estado.js'].map(f => path.join(MODULO, 'src', f)),
+    ...['index.html', 'app.js', 'estilo.css'].map(f => path.join(MODULO, 'public', 'inteligencia', f))
+  ];
+  for (const f of fontes) {
+    const s = ler(f).replace(/\/\*[\s\S]*?\*\/|<!--[\s\S]*?-->|^\s*#.*$/gm, '');
+    assert.doesNotMatch(s, /\/admin\b/, f + ' refere /admin');
+    assert.doesNotMatch(s, /sveltia|decap|netlify-cms/i, f + ' refere o CMS');
+  }
+  assert.ok(!fs.existsSync(path.join(MODULO, 'public', 'admin')), 'não pode haver ficheiros do módulo debaixo de /admin');
 });

@@ -1,5 +1,5 @@
 /* Testes da Fase 1 — sem rede, sem Cloudflare.
-   Correr a partir da raiz do repositório:  node --test inteligencia/test/ */
+   Correr a partir da raiz do repositório:  node --test "inteligencia/test/*.test.mjs" */
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import worker from '../src/index.js';
@@ -8,7 +8,7 @@ import { limparCacheChaves } from '../src/acesso.js';
 const EQUIPA = 'https://happysoaring-teste.cloudflareaccess.com';
 const AUD = 'aud-de-teste-123';
 const EMAIL = 'paulo.pereira@happysoaring.com';
-const BASE = 'https://happysoaring.com/admin/inteligencia';
+const BASE = 'https://happysoaring.com/inteligencia';
 
 const b64url = bytes => Buffer.from(bytes).toString('base64url');
 
@@ -188,19 +188,19 @@ test('se as chaves do Access não estão disponíveis, falha fechado (503)', asy
 
 /* ---- rotas ------------------------------------------------------------- */
 
-test('/admin/inteligencia sem barra redirecciona para /admin/inteligencia/, depois de validar', async () => {
-  const semToken = await worker.fetch(new Request('https://happysoaring.com/admin/inteligencia'), envFalso());
+test('/inteligencia sem barra redirecciona para /inteligencia/, depois de validar', async () => {
+  const semToken = await worker.fetch(new Request('https://happysoaring.com/inteligencia'), envFalso());
   assert.equal(semToken.status, 403);
   const token = await assinar(chaveBoa.privada, 'k1', cargaValida());
-  const r = await worker.fetch(new Request('https://happysoaring.com/admin/inteligencia', {
+  const r = await worker.fetch(new Request('https://happysoaring.com/inteligencia', {
     headers: { 'Cf-Access-Jwt-Assertion': token } }), envFalso());
   assert.equal(r.status, 308);
-  assert.equal(r.headers.get('location'), '/admin/inteligencia/');
+  assert.equal(r.headers.get('location'), '/inteligencia/');
 });
 
 test('caminhos fora do prefixo nunca são servidos', async () => {
   const token = await assinar(chaveBoa.privada, 'k1', cargaValida());
-  for (const c of ['https://happysoaring.com/admin/', 'https://happysoaring.com/admin/inteligencia-outra/',
+  for (const c of ['https://happysoaring.com/admin/', 'https://happysoaring.com/admin/inteligencia/', 'https://happysoaring.com/inteligencia-outra/',
     'https://happysoaring.com/']) {
     const r = await worker.fetch(new Request(c, { headers: { 'Cf-Access-Jwt-Assertion': token } }), envFalso());
     assert.equal(r.status, 404, c);

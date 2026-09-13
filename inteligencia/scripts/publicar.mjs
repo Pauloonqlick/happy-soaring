@@ -51,4 +51,4 @@ corre([WRANGLER, 'd1', 'migrations', 'apply', 'hs-inteligencia', '--remote']);
 
 passo('Publicar o Worker');
 corre([WRANGLER, 'deploy']);
-console.log('\n✔ https://happysoaring.com/admin/inteligencia/\n');
+console.log('\n✔ https://happysoaring.com/inteligencia/\n');
