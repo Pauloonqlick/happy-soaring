@@ -37,6 +37,9 @@ EMAILS_AUTORIZADOS = "paulo.pereira@happysoaring.com"
 # O token (só leitura do Pages) é um SEGREDO — CF_API_TOKEN_PAGES — e nunca vive aqui.
 CF_ACCOUNT_ID = "50cc980221a29087fe0413f4bf9cbbb1"
 CF_PAGES_PROJECT = "happy-soaring"
+# Search Console: a propriedade de domínio. As credenciais Google são SEGREDOS
+# (GOOGLE_OAUTH_CLIENT_ID, GOOGLE_OAUTH_CLIENT_SECRET, GSC_REFRESH_TOKEN) e nunca vivem aqui.
+GSC_PROPRIEDADE = "sc-domain:happysoaring.com"
 
 # UMA tarefa agendada, gratuita: o plano Free tem 5 por conta, partilhadas.
 # De 2 em 2 minutos avança a observação das publicações, dentro dos limites

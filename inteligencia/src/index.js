@@ -9,6 +9,7 @@ import { validarAcesso } from './acesso.js';
 import { comSeguranca, json, paginaRecusa } from './seguranca.js';
 import { lerEstado } from './estado.js';
 import { executarCiclo, listarPublicacoes, detalhePublicacao } from './publicacoes.js';
+import { executarCicloGsc, resumoSearchConsole } from './search-console.js';
 
 export const PREFIXO = '/inteligencia';
 
@@ -46,18 +47,26 @@ export default {
       return d ? json(d) : json({ erro: 'Publicação desconhecida' }, 404);
     }
 
+    if (p === PREFIXO + '/api/search-console') return json(await resumoSearchConsole(env.DB));
+
     if (p.startsWith(PREFIXO + '/api/')) return json({ erro: 'Não encontrado' }, 404);
 
     return comSeguranca(await env.ASSETS.fetch(request));
   },
 
+  /* UMA tarefa agendada (o limite de 5 é da conta), repartida por minuto:
+     aos minutos múltiplos de 10 é a vez do Search Console; nos outros, das
+     publicações. Cada uma tem o orçamento inteiro da sua execução. */
   async scheduled(evento, env, ctx) {
+    const minuto = new Date(evento.scheduledTime || Date.now()).getUTCMinutes();
+    const vezDoGsc = minuto % 10 === 0;
     ctx.waitUntil((async () => {
+      const nome = vezDoGsc ? 'ciclo_search_console' : 'ciclo_publicacoes';
       try {
-        const r = await executarCiclo(env);
-        console.log(JSON.stringify({ evento: 'ciclo_publicacoes', ...r }));
+        const r = vezDoGsc ? await executarCicloGsc(env) : await executarCiclo(env);
+        console.log(JSON.stringify({ evento: nome, ...r }));
       } catch (e) {
-        console.log(JSON.stringify({ evento: 'ciclo_publicacoes_falhou', erro: String(e && e.message || e).slice(0, 300) }));
+        console.log(JSON.stringify({ evento: nome + '_falhou', erro: String(e && e.message || e).slice(0, 300) }));
       }
     })());
   }

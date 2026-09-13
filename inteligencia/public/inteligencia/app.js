@@ -59,6 +59,27 @@
       .catch(() => { $('mudou').textContent = 'Não foi possível ler as publicações.'; });
   }
 
+  const num = n => new Intl.NumberFormat('pt-PT').format(n);
+  function mostrarSearchConsole() {
+    return fetch('api/search-console', { credentials: 'same-origin', headers: { accept: 'application/json' } })
+      .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(s => {
+        const dl = $('gsc');
+        dl.textContent = '';
+        if (!s.periodo) { par(dl, 'Estado', 'Ainda sem dias recolhidos.'); return; }
+        par(dl, 'Período', s.periodo.inicio + ' a ' + s.periodo.fim + ' (' + s.periodo.dias_com_dados + ' dias)');
+        par(dl, 'Cliques', num(s.totais.cliques));
+        par(dl, 'Impressões', num(s.totais.impressoes));
+        const m = s.marca;
+        par(dl, 'Marca', num(m.marca.impressoes) + ' impr. · ' + num(m.marca.cliques) + ' cl.');
+        par(dl, 'Não-marca', num(m.nao_marca.impressoes) + ' impr. · ' + num(m.nao_marca.cliques) + ' cl.');
+        par(dl, 'Desconhecido', num(m.desconhecido.impressoes) + ' impr. · ' + num(m.desconhecido.cliques) + ' cl.');
+        par(dl, 'Visível por pesquisa', s.cobertura_queries == null ? '—' : s.cobertura_queries + '% das impressões');
+        if (s.paises.length) par(dl, 'Países', s.paises.slice(0, 5).map(p => p.pais.toUpperCase() + ' ' + num(p.impressoes)).join(' · '));
+      })
+      .catch(() => { const dl = $('gsc'); dl.textContent = ''; par(dl, 'Estado', 'Não foi possível ler.', 'falha'); });
+  }
+
   fetch('api/estado', { credentials: 'same-origin', headers: { accept: 'application/json' } })
     .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(d => {
@@ -105,7 +126,15 @@
       if (pub && pub.processadas) $('aviso').textContent =
         'O módulo observa as publicações do site. Search Console e inspecção ainda não estão ligados.';
 
-      return mostrarMudancas();
+      const g = d.fontes && d.fontes.search_console;
+      $('ns-gsc').textContent = !g ? 'Search Console — não foi possível ler o estado.'
+        : !g.credencial ? 'Search Console — falta a autorização Google (só leitura).'
+        : g.dias && g.completos < g.dias ? 'Search Console — a recolher o histórico: ' + g.completos + ' de ' + g.dias + ' dias.'
+        : g.dias ? 'Search Console — ligado · dados até ' + g.ultima + '.'
+        : 'Search Console — ligado, à espera da primeira recolha.';
+      if (g && g.credencial && g.dias && g.completos === g.dias) $('ns-gsc').hidden = true;
+
+      return Promise.all([mostrarMudancas(), mostrarSearchConsole()]);
     })
     .catch(e => mostrarErro('Não foi possível ler o estado (' + e.message + ').'));
 })();

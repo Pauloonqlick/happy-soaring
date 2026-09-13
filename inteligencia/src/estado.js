@@ -1,6 +1,7 @@
 /* O estado do módulo e a configuração base, tal como estão na base.
    Nada aqui é inventado: o que não está configurado diz-se que não está. */
 import { estadoPublicacoes } from './publicacoes.js';
+import { estadoSearchConsole } from './search-console.js';
 
 async function tentar(fn) {
   try { return { ok: true, valor: await fn() }; }
@@ -22,12 +23,13 @@ export async function lerEstado(env, email) {
   const concorrentes = await tentar(async () => (await db.prepare(
     'SELECT COUNT(*) AS n FROM concorrentes').first())?.n ?? 0);
   const publicacoes = await tentar(() => estadoPublicacoes(db, env));
+  const searchConsole = await tentar(() => estadoSearchConsole(db, env));
 
   const bruto = await tentar(async () => { await r2.list({ limit: 1 }); return true; });
 
   return {
     modulo: 'hs-inteligencia',
-    fase: 2,
+    fase: 3,
     identidade: email,
     agora: new Date().toISOString(),
     sistema: {
@@ -35,7 +37,8 @@ export async function lerEstado(env, email) {
       armazenamento_bruto: { ok: bruto.ok }
     },
     fontes: {
-      publicacoes: publicacoes.ok ? publicacoes.valor : null
+      publicacoes: publicacoes.ok ? publicacoes.valor : null,
+      search_console: searchConsole.ok ? searchConsole.valor : null
     },
     configuracao: {
       objectivos: objectivos.ok ? objectivos.valor : null,

@@ -321,7 +321,7 @@ test('API: /api/alteracoes e /api/alteracoes/<id> atrás do Access; tarefa agend
 
     for (let i = 0; i < 30; i++) {
       const esperas = [];
-      await worker.scheduled({}, env, { waitUntil: p => esperas.push(p) });
+      await worker.scheduled({ scheduledTime: Date.UTC(2026, 8, 13, 12, 2) }, env, { waitUntil: p => esperas.push(p) });
       await Promise.all(esperas);
     }
 

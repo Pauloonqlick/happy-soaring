@@ -17,6 +17,9 @@ src/acesso.js                 validação do token do Access em todos os pedidos
 src/seguranca.js              cabeçalhos de segurança de todas as respostas
 src/estado.js                 estado do módulo e configuração base
 src/publicacoes.js            observação das publicações do site (Fase 2)
+src/google.js                 acesso só de leitura à API do Google
+src/search-console.js         recolha e resumo do Search Console (Fase 3)
+src/linguas.js                marca/não-marca e língua inferida (ou UNKNOWN)
 public/inteligencia/          interface (sem código de terceiros)
 migrations/                   esquema D1, só se acrescenta
 test/                         testes sem rede
@@ -56,3 +59,22 @@ que retomam onde ficaram.
 permissão *Account › Cloudflare Pages › Read*. Configura-se no painel do Worker
 (*Settings › Variables and Secrets*), nunca no `wrangler.toml` nem no git.
 Sem ele, a tarefa regista a limitação uma vez por hora e não faz mais nada.
+
+## Search Console (Fase 3)
+
+Pesquisa Web da propriedade `sc-domain:happysoaring.com`, **só dados finais**: cada
+dia é gravado uma vez e nunca é reescrito. Por dia guardam-se os totais sem
+dimensões e os conjuntos `query`, `page`, `country`, `device` e o combinado.
+
+A soma das linhas **não é** o total: o Google esconde pesquisas anónimas. Por isso
+o resumo mostra marca, não-marca e **desconhecido** (= total − visível), e a
+percentagem visível. A língua da pesquisa é inferida do texto só com evidência;
+sem ela é `UNKNOWN`. Nunca se deduz do país.
+
+A tarefa agendada é a mesma: aos minutos múltiplos de 10 é a vez do Search
+Console, nos outros das publicações.
+
+**Segredos necessários** (guardados por `scripts/autorizar-google.mjs`, que nunca
+mostra os valores): `GOOGLE_OAUTH_CLIENT_ID`, `GOOGLE_OAUTH_CLIENT_SECRET`,
+`GSC_REFRESH_TOKEN` — cliente OAuth dedicado a este Worker, âmbito
+`webmasters.readonly`.
