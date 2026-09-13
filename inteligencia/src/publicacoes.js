@@ -103,17 +103,26 @@ async function listarDeployments(env, r, todas) {
   const token = String(env.CF_API_TOKEN_PAGES || '').trim();
   if (!conta || !projecto || !token) return { ok: false, motivo: 'SEM_CREDENCIAL_PAGES' };
 
+  /* A primeira página vai só com `env`, como faz o próprio wrangler: com
+     `page=1` a API responde 400 (verificado em produção a 13/09/2026).
+     `page` só se acrescenta para as páginas seguintes, se a API disser que existem. */
   const lista = [];
+  const base = 'https://api.cloudflare.com/client/v4/accounts/' + encodeURIComponent(conta) +
+    '/pages/projects/' + encodeURIComponent(projecto) + '/deployments?env=production';
   for (let pagina = 1; pagina <= (todas ? 20 : 1); pagina++) {
-    const u = 'https://api.cloudflare.com/client/v4/accounts/' + encodeURIComponent(conta) +
-      '/pages/projects/' + encodeURIComponent(projecto) + '/deployments?env=production&page=' + pagina;
+    const u = pagina === 1 ? base : base + '&page=' + pagina;
     const resp = await r.buscar(u, { headers: { authorization: 'Bearer ' + token, accept: 'application/json' } });
-    if (!resp.ok) return { ok: false, motivo: 'API_PAGES_HTTP_' + resp.status };
+    if (!resp.ok) {
+      let detalhe = '';
+      try { const e = await resp.json(); detalhe = (e.errors || []).map(x => x.code + ' ' + x.message).join('; '); } catch (e) { detalhe = ''; }
+      if (pagina === 1) return { ok: false, motivo: 'API_PAGES_HTTP_' + resp.status, detalhe };
+      return { ok: true, lista, parcial: 'PAGINA_' + pagina + '_HTTP_' + resp.status + (detalhe ? ' ' + detalhe : '') };
+    }
     const j = await resp.json();
     if (!j.success || !Array.isArray(j.result)) return { ok: false, motivo: 'API_PAGES_RESPOSTA_INVALIDA' };
     lista.push(...j.result);
     const info = j.result_info || {};
-    if (!j.result.length || (info.total_pages && pagina >= info.total_pages)) break;
+    if (!j.result.length || !info.total_pages || pagina >= info.total_pages) break;
   }
   return { ok: true, lista };
 }
@@ -125,7 +134,8 @@ async function listarDeployments(env, r, todas) {
 async function descobrir(env, r) {
   const completa = (await r.q("SELECT valor FROM esquema_meta WHERE chave='publicacoes_descoberta_completa'").first())?.valor === '1';
   const res = await listarDeployments(env, r, !completa);
-  if (!res.ok) { await evento(r, 'PUBLICACOES_' + res.motivo, null); return { novos: 0, motivo: res.motivo }; }
+  if (!res.ok) { await evento(r, 'PUBLICACOES_' + res.motivo, res.detalhe); return { novos: 0, motivo: res.motivo }; }
+  if (res.parcial) await evento(r, 'PUBLICACOES_LISTAGEM_PARCIAL', res.parcial);
 
   let novos = 0, interrompida = false;
   for (const d of res.lista) {
@@ -147,7 +157,7 @@ async function descobrir(env, r) {
       if (chave) { r.c.pedidos++; await env.BRUTO.put(chave, JSON.stringify(d), { httpMetadata: { contentType: 'application/json' } }); }
     }
   }
-  if (!completa && !interrompida) {
+  if (!completa && !interrompida && !res.parcial) {
     await r.q("INSERT OR REPLACE INTO esquema_meta (chave, valor) VALUES ('publicacoes_descoberta_completa', '1')").run();
   }
   return { novos };

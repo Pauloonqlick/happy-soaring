@@ -347,3 +347,12 @@ test('API: /api/alteracoes e /api/alteracoes/<id> atrás do Access; tarefa agend
     globalThis.fetch = original;
   }
 });
+
+test('API do Pages: a primeira página vai sem `page` (com page=1 a API responde 400)', async () => {
+  const db = await d1Falsa();
+  const f = fetchFalso();
+  await executarCiclo(envCom(db), { fetchImpl: f });
+  const pedidosApi = f.log.filter(u => u.startsWith('https://api.cloudflare.com/'));
+  assert.equal(pedidosApi.length, 1);
+  assert.match(pedidosApi[0], /\/deployments\?env=production$/);
+});
