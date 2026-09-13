@@ -142,6 +142,9 @@ const SITE_NO = {
    sempre um por esquecer; assim ha um sitio so. */
 const comEntidade = (nos) => [ORG_NO, SITE_NO, ...nos];
 
+/* datas reais de publicação dos vídeos do YouTube (ver o VideoObject dos spots) */
+const VIDEOS_YOUTUBE = JSON.parse(fs.readFileSync(path.join(RAIZ, 'scripts/dados/videos-youtube.json'), 'utf8'));
+
 /* ---- as FAQ, agora tambem em dados estruturados ----------------------
    10/09/2026. Estava aqui, e por escrito, que nao havia FAQPage «mesmo
    havendo FAQ: foi decisao do Paulo». Passou a haver, e vale registar com
@@ -565,17 +568,14 @@ function jsonld(p, l, url, foto) {
       { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + inicioHref(l) },
       { '@type': 'ListItem', position: 2, name: p.nome, item: url }
     ]},
-    /* sem offers de propósito: não há preços no site, e inventá-los é
-       exactamente o que não se deve fazer */
-    { '@type': 'Product', name: p.nome, url,
-      /* a mesma composicao da <head>: um Product cuja description
-         diverge da meta da propria pagina sao duas versoes do mesmo facto */
-      description: descricaoDoProduto(p, l),
-      category: rotuloFamilia(p.familia, l), image: foto,
-      brand: { '@type': 'Brand', name: 'Flow Paragliders' },
-      ...(p.classificacao ? { additionalProperty: {
-        '@type': 'PropertyValue', name: 'Classificação', value: p.classificacao } } : {}),
-      offers: undefined }
+    /* SEM `Product`, DE PROPÓSITO.
+       Um Product sem preço (offers) nem avaliações é inválido para o Google:
+       nunca dá resultado enriquecido e fica a dar erro no Search Console
+       («Deve ser especificada a propriedade offers, review ou aggregateRating»).
+       O site não mostra preços e inventá-los é exactamente o que não se deve
+       fazer — por isso a asa não se marca como Product. O que ela é chega ao
+       Google pelo próprio conteúdo da página.
+       Lição do módulo de inteligência: dados-estruturados/product-sem-preco. */
   ];
   return JSON.stringify({ '@context': 'https://schema.org', '@graph': comEntidade(g) },
     (k, v) => v === undefined ? undefined : v);
@@ -2439,13 +2439,18 @@ function paginaSpot(s, l, num) {
 
   /* o `VideoObject` só existe se houver vídeo na página, e descreve o que
      está mesmo lá: a capa é a que se vê, e o embed é o que o clique abre. */
-  const nosVideo = media.filter(m => m.videoId).map(m => ({
+  /* A data de publicação é obrigatória no VideoObject. Vem da própria página
+     do vídeo no YouTube, guardada em scripts/dados/videos-youtube.json; sem
+     data conhecida, o VideoObject não se escreve — nunca com uma data
+     inventada. Lição do módulo de inteligência: dados-estruturados/video-sem-data. */
+  const nosVideo = media.filter(m => m.videoId && VIDEOS_YOUTUBE[m.videoId]?.uploadDate).map(m => ({
     '@type': 'VideoObject',
     name: s.nome + (t(m.legenda, l) ? ' — ' + t(m.legenda, l) : ''),
     description: t(m.alt, l) || t(m.legenda, l) || s.nome,
     thumbnailUrl: DOMINIO + (m.imagem || capaDe(m)),
     contentUrl: 'https://www.youtube.com/watch?v=' + m.videoId,
     embedUrl: 'https://www.youtube-nocookie.com/embed/' + m.videoId,
+    uploadDate: VIDEOS_YOUTUBE[m.videoId].uploadDate,
     inLanguage: l,
   }));
 

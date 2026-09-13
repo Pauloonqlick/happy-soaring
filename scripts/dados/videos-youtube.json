@@ -1,0 +1,7 @@
+{
+  "_nota": "Data real de publicação de cada vídeo do YouTube usado no site, lida na própria página do vídeo (itemprop uploadDate). Obrigatória para o VideoObject: sem data aqui, o gerador não escreve o VideoObject. Nunca inventar uma data.",
+  "1CAWZKhxcGM": { "uploadDate": "2026-09-05T09:25:30-07:00", "lido_em": "2026-09-13" },
+  "m9qO0LaV3t0": { "uploadDate": "2026-09-06T04:44:12-07:00", "lido_em": "2026-09-13" },
+  "XkkG4DAGlK8": { "uploadDate": "2026-09-05T07:45:07-07:00", "lido_em": "2026-09-13" },
+  "nAymp6E4TuA": { "uploadDate": "2025-12-31T12:59:09-08:00", "lido_em": "2026-09-13" }
+}
