@@ -76,3 +76,25 @@ h1{margin:0;font-size:clamp(30px,4.4vw,46px);font-weight:800;line-height:1.05}
 .etiquetas li{font-size:13px;border:1px solid var(--painel-linha);padding:2px 8px}
 .etiquetas li em{font-style:normal;color:var(--painel-fraca);font-size:11px;margin-left:4px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ---- navegação do módulo e página de alterações ---- */
+.topo-nav a[aria-current="page"]{color:var(--tinta);text-decoration:underline;text-underline-offset:6px;
+  text-decoration-color:var(--destaque);text-decoration-thickness:2px}
+.lista a{color:var(--tinta)}
+.tabela-cx{overflow-x:auto;background:var(--painel);color:var(--painel-tinta)}
+.tabela{width:100%;border-collapse:collapse;font-size:14px;min-width:760px}
+.tabela th,.tabela td{padding:10px 12px;border-bottom:1px solid var(--painel-linha);text-align:left;vertical-align:top}
+.tabela th{font-size:var(--rotulo-tam);letter-spacing:var(--rotulo-tr);text-transform:uppercase;color:var(--painel-fraca);font-weight:600}
+.tabela td.num{font-variant-numeric:tabular-nums;text-align:right}
+.tabela tr.aberta td{background:#f4f7fb}
+.tabela button.abrir{font:inherit;background:none;border:1px solid var(--painel-linha);padding:3px 10px;cursor:pointer;color:var(--painel-tinta)}
+.tabela button.abrir:focus-visible{outline:2px solid var(--destaque-tinta);outline-offset:2px}
+.chip{display:inline-block;font-size:12px;padding:1px 7px;border:1px solid var(--painel-linha);white-space:nowrap}
+.chip-conteudo{border-color:var(--destaque-tinta);color:var(--destaque-tinta);font-weight:600}
+.chip-sujo{border-color:var(--destaque-tinta);color:var(--destaque-tinta)}
+.detalhe{padding:6px 4px 14px}
+.detalhe h4{margin:12px 0 4px;font-size:13px}
+.detalhe ul{margin:0;padding-left:18px;columns:2 280px;font-size:13px;color:var(--painel-fraca)}
+.nota{color:var(--tinta-fraca);max-width:72ch;margin:10px 0 22px}
+.corpo-uma{grid-template-columns:1fr}
+.so-leitor{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}

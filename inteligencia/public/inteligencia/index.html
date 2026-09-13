@@ -17,7 +17,9 @@
 <header class="topo">
   <a class="marca" href="/" translate="no">HAPPY <span>SOARING</span></a>
   <p class="modulo">Inteligência</p>
-  <nav class="topo-nav" aria-label="Navegação">
+  <nav class="topo-nav" aria-label="Módulo">
+    <a href="/inteligencia/" aria-current="page">Hoje</a>
+    <a href="/inteligencia/alteracoes/">Alterações</a>
     <a href="/">Site</a>
   </nav>
   <p class="quem" id="quem" aria-live="polite"></p>
@@ -30,7 +32,7 @@
       <p class="data" id="data"></p>
     </div>
 
-    <p class="aviso">O módulo ainda não recolhe dados. Os blocos abaixo dizem o que se sabe — e, por agora, isso é nada.</p>
+    <p class="aviso" id="aviso">O módulo só observa, por agora, as publicações do site. O resto ainda não está ligado.</p>
 
     <ol class="blocos">
       <li class="bloco">
@@ -39,7 +41,8 @@
       </li>
       <li class="bloco">
         <h2><span class="n">2</span> O que mudou desde a última visita</h2>
-        <p class="vazio">Sem observações.</p>
+        <p class="vazio" id="mudou">A carregar…</p>
+        <ul class="lista" id="mudou-lista" hidden></ul>
       </li>
       <li class="bloco bloco-accoes">
         <h2><span class="n">3</span> O que fazer hoje <small>no máximo 3</small></h2>
@@ -55,8 +58,8 @@
       </li>
       <li class="bloco">
         <h2><span class="n">6</span> O que ainda não sabemos</h2>
-        <ul class="lista">
-          <li>Publicações do site — por ligar</li>
+        <ul class="lista" id="nao-sabemos">
+          <li id="ns-publicacoes">Publicações do site — a verificar…</li>
           <li>Search Console — por ligar</li>
           <li>Inspecção de URL e rastreios — por ligar</li>
         </ul>

@@ -1,12 +1,14 @@
-/* hs-inteligencia — o esqueleto seguro (Fase 1).
-   Ordem fixa para TODOS os pedidos:
+/* hs-inteligencia
+   Ordem fixa para TODOS os pedidos HTTP:
      1. só o prefixo /inteligencia
      2. identidade do Access validada aqui dentro — falha fechado
      3. só depois: API ou ficheiros da interface
-   Não há recolha, nem tarefas agendadas, nem escrita nesta fase. */
+   A interface só lê. A recolha corre na tarefa agendada, que não passa por
+   HTTP e não expõe nada. */
 import { validarAcesso } from './acesso.js';
 import { comSeguranca, json, paginaRecusa } from './seguranca.js';
 import { lerEstado } from './estado.js';
+import { executarCiclo, listarPublicacoes, detalhePublicacao } from './publicacoes.js';
 
 export const PREFIXO = '/inteligencia';
 
@@ -30,12 +32,33 @@ export default {
     }
 
     if (request.method !== 'GET' && request.method !== 'HEAD') {
-      return json({ erro: 'Método não permitido nesta fase.' }, 405);
+      return json({ erro: 'Método não permitido.' }, 405);
     }
 
     if (p === PREFIXO + '/api/estado') return json(await lerEstado(env, acesso.email));
+
+    if (p === PREFIXO + '/api/alteracoes') {
+      return json({ publicacoes: await listarPublicacoes(env.DB) });
+    }
+    const m = p.match(/^\/inteligencia\/api\/alteracoes\/([0-9a-f-]{8,36})$/);
+    if (m) {
+      const d = await detalhePublicacao(env.DB, m[1]);
+      return d ? json(d) : json({ erro: 'Publicação desconhecida' }, 404);
+    }
+
     if (p.startsWith(PREFIXO + '/api/')) return json({ erro: 'Não encontrado' }, 404);
 
     return comSeguranca(await env.ASSETS.fetch(request));
+  },
+
+  async scheduled(evento, env, ctx) {
+    ctx.waitUntil((async () => {
+      try {
+        const r = await executarCiclo(env);
+        console.log(JSON.stringify({ evento: 'ciclo_publicacoes', ...r }));
+      } catch (e) {
+        console.log(JSON.stringify({ evento: 'ciclo_publicacoes_falhou', erro: String(e && e.message || e).slice(0, 300) }));
+      }
+    })());
   }
 };

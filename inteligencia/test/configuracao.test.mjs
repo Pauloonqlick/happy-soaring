@@ -10,19 +10,22 @@ const MODULO = path.join(AQUI, '..');
 const RAIZ = path.join(MODULO, '..');
 const ler = f => fs.readFileSync(f, 'utf8');
 
-test('wrangler.toml: sem workers.dev, sem pré-visualizações, só as duas rotas do prefixo', () => {
+test('wrangler.toml: sem workers.dev, sem pré-visualizações, só as duas rotas e uma tarefa agendada', () => {
   const t = ler(path.join(MODULO, 'wrangler.toml'));
   assert.match(t, /^workers_dev\s*=\s*false\s*$/m);
   assert.match(t, /^preview_urls\s*=\s*false\s*$/m);
   const padroes = [...t.matchAll(/pattern\s*=\s*"([^"]+)"/g)].map(m => m[1]);
   assert.deepEqual(padroes.sort(), ['happysoaring.com/inteligencia', 'happysoaring.com/inteligencia/*']);
   assert.match(t, /run_worker_first\s*=\s*true/);
-  assert.doesNotMatch(t, /crons|\[triggers\]/, 'a Fase 1 não tem tarefas agendadas');
+  const crons = [...t.matchAll(/crons\s*=\s*\[([^\]]*)\]/g)].map(m => m[1]);
+  assert.equal(crons.length, 1, 'uma só declaração de tarefas agendadas');
+  assert.deepEqual([...crons[0].matchAll(/"([^"]+)"/g)].map(m => m[1]), ['*/2 * * * *'], 'uma só tarefa agendada — o limite de 5 é partilhado pela conta');
 });
 
 test('wrangler.toml: nenhum segredo escrito no ficheiro', () => {
   const t = ler(path.join(MODULO, 'wrangler.toml'));
   assert.doesNotMatch(t, /GOCSPX|refresh_token|DATAFORSEO_PASSWORD\s*=|client_secret/i);
+  assert.doesNotMatch(t, /^\s*CF_API_TOKEN_PAGES\s*=/m, 'o token do Pages é segredo, não variável');
 });
 
 test('publicar.mjs do site: `inteligencia` está nas PROIBIDAS e fora das listas de autorizados', () => {
@@ -65,19 +68,24 @@ test('migração 0001: aplica-se do zero numa base SQLite limpa', async (t) => {
 });
 
 test('interface: sem scripts nem estilos em linha, sem recursos de terceiros', () => {
-  const html = ler(path.join(MODULO, 'public', 'inteligencia', 'index.html'));
-  assert.doesNotMatch(html, /<script(?![^>]*\bsrc=)[^>]*>/i, 'script em linha violaria a CSP');
-  assert.doesNotMatch(html, /<style|style="/i);
-  assert.doesNotMatch(html, /(src|href)="https?:\/\//i);
-  const js = ler(path.join(MODULO, 'public', 'inteligencia', 'app.js'));
-  assert.doesNotMatch(js, /innerHTML|insertAdjacentHTML|document\.write/);
+  for (const h of [['index.html'], ['alteracoes', 'index.html']]) {
+    const html = ler(path.join(MODULO, 'public', 'inteligencia', ...h));
+    assert.doesNotMatch(html, /<script(?![^>]*\bsrc=)[^>]*>/i, 'script em linha violaria a CSP');
+    assert.doesNotMatch(html, /<style|style="/i);
+    assert.doesNotMatch(html, /(src|href)="https?:\/\//i);
+  }
+  for (const f of ['app.js', 'alteracoes.js']) {
+    const js = ler(path.join(MODULO, 'public', 'inteligencia', f));
+    assert.doesNotMatch(js, /innerHTML|insertAdjacentHTML|document\.write/, f);
+  }
 });
 
 test('o módulo não depende do CMS: nenhuma rota, ligação, script ou login do /admin/', () => {
   const fontes = [
     path.join(MODULO, 'wrangler.toml'),
-    ...['index.js', 'acesso.js', 'seguranca.js', 'estado.js'].map(f => path.join(MODULO, 'src', f)),
-    ...['index.html', 'app.js', 'estilo.css'].map(f => path.join(MODULO, 'public', 'inteligencia', f))
+    ...['index.js', 'acesso.js', 'seguranca.js', 'estado.js', 'publicacoes.js'].map(f => path.join(MODULO, 'src', f)),
+    ...['index.html', 'app.js', 'estilo.css', 'alteracoes.js'].map(f => path.join(MODULO, 'public', 'inteligencia', f)),
+    path.join(MODULO, 'public', 'inteligencia', 'alteracoes', 'index.html')
   ];
   for (const f of fontes) {
     const s = ler(f).replace(/\/\*[\s\S]*?\*\/|<!--[\s\S]*?-->|^\s*#.*$/gm, '');

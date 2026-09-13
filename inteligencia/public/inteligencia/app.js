@@ -1,4 +1,4 @@
-/* Interface da Fase 1: lê o estado e a configuração base.
+/* Ecrã «Hoje»: estado, configuração base e publicações observadas.
    Tudo o que vem da API é escrito com textContent — nunca como HTML. */
 (function () {
   'use strict';
@@ -24,6 +24,39 @@
     const dl = $('estado');
     dl.textContent = '';
     par(dl, 'Estado', texto, 'falha');
+  }
+
+  /* bloco 2 — «desde a última visita» é deste browser: guarda-se aqui, e só aqui */
+  const CHAVE_VISITA = 'hs-inteligencia-ultima-visita';
+  let ultimaVisita = null;
+  try { ultimaVisita = localStorage.getItem(CHAVE_VISITA); } catch (e) { ultimaVisita = null; }
+
+  function mostrarMudancas() {
+    return fetch('api/alteracoes', { credentials: 'same-origin', headers: { accept: 'application/json' } })
+      .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(j => {
+        const feitas = j.publicacoes.filter(x => x.processamento === 'PROCESSADO');
+        const novas = ultimaVisita ? feitas.filter(x => x.criado_em_cf > ultimaVisita) : [];
+        const p = $('mudou'), ul = $('mudou-lista');
+        ul.textContent = '';
+        if (!ultimaVisita) {
+          p.textContent = 'Primeira visita neste browser. A partir de agora, este bloco mostra o que mudou entre visitas.';
+        } else if (!novas.length) {
+          p.textContent = 'Nenhuma publicação nova desde ' + new Date(ultimaVisita).toLocaleString('pt-PT') + '.';
+        } else {
+          p.textContent = novas.length === 1 ? '1 publicação nova do site:' : novas.length + ' publicações novas do site:';
+          for (const x of novas.slice(0, 5)) {
+            const li = el('li');
+            const a = el('a', (x.short_id || x.id.slice(0, 8)) + ' · ' + new Date(x.criado_em_cf).toLocaleString('pt-PT'));
+            a.href = 'alteracoes/#' + x.id;
+            li.appendChild(a);
+            ul.appendChild(li);
+          }
+          ul.hidden = false;
+        }
+        try { localStorage.setItem(CHAVE_VISITA, new Date().toISOString()); } catch (e) { /* sem armazenamento: não faz mal */ }
+      })
+      .catch(() => { $('mudou').textContent = 'Não foi possível ler as publicações.'; });
   }
 
   fetch('api/estado', { credentials: 'same-origin', headers: { accept: 'application/json' } })
@@ -60,6 +93,19 @@
         : c.mercados.length ? c.mercados.length + ' configurados' : 'Por configurar.';
       $('concorrentes').textContent = c.concorrentes == null ? 'Não foi possível ler.'
         : c.concorrentes ? c.concorrentes + ' configurados' : 'Por configurar.';
+
+      /* bloco 6 — o estado da fonte, dito como é */
+      const pub = d.fontes && d.fontes.publicacoes;
+      $('ns-publicacoes').textContent = !pub ? 'Publicações do site — não foi possível ler o estado.'
+        : !pub.credencial ? 'Publicações do site — falta a credencial de leitura do Cloudflare Pages.'
+        : pub.pendentes ? 'Publicações do site — ' + pub.pendentes + ' por processar (' + pub.processadas + ' já observadas).'
+        : pub.processadas ? 'Publicações do site — ligado · ' + pub.processadas + ' observadas.'
+        : 'Publicações do site — ligado, à espera da primeira observação.';
+      if (pub && pub.credencial && !pub.pendentes && pub.processadas) $('ns-publicacoes').hidden = true;
+      if (pub && pub.processadas) $('aviso').textContent =
+        'O módulo observa as publicações do site. Search Console e inspecção ainda não estão ligados.';
+
+      return mostrarMudancas();
     })
     .catch(e => mostrarErro('Não foi possível ler o estado (' + e.message + ').'));
 })();
