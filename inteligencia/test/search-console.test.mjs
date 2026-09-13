@@ -185,7 +185,7 @@ test('sem permissão na propriedade: limitação, nada gravado', async () => {
   assert.equal((await db.prepare('SELECT COUNT(*) AS n FROM gsc_dias').first()).n, 0);
 });
 
-test('tarefa agendada: minutos múltiplos de 10 são do Search Console, os outros das publicações', async () => {
+test('tarefa agendada: minuto 0 Search Console, minuto 4 inspecção, os outros publicações', async () => {
   const chamadas = [];
   const env = {
     DB: { prepare: () => ({ bind() { return this; }, first: async () => null, all: async () => ({ results: [] }), run: async () => ({ meta: {} }) }), batch: async () => [] },
@@ -194,11 +194,11 @@ test('tarefa agendada: minutos múltiplos de 10 são do Search Console, os outro
   const logOriginal = console.log;
   console.log = m => chamadas.push(JSON.parse(m).evento);
   try {
-    for (const minuto of [0, 2, 10, 14]) {
+    for (const minuto of [0, 2, 4, 10, 16, 24]) {
       const esperas = [];
       await worker.scheduled({ scheduledTime: Date.UTC(2026, 8, 13, 12, minuto) }, env, { waitUntil: p => esperas.push(p) });
       await Promise.all(esperas);
     }
   } finally { console.log = logOriginal; }
-  assert.deepEqual(chamadas, ['ciclo_search_console', 'ciclo_publicacoes', 'ciclo_search_console', 'ciclo_publicacoes']);
+  assert.deepEqual(chamadas, ['ciclo_search_console', 'ciclo_publicacoes', 'ciclo_inspeccao', 'ciclo_search_console', 'ciclo_publicacoes', 'ciclo_inspeccao']);
 });

@@ -131,7 +131,7 @@ test('token válido: /api/estado devolve identidade, sistema e configuração', 
   assert.equal(r.status, 200);
   const d = await r.json();
   assert.equal(d.identidade, EMAIL);
-  assert.equal(d.fase, 3);
+  assert.equal(d.fase, 4);
   assert.equal(d.sistema.base.ok, true);
   assert.equal(d.sistema.armazenamento_bruto.ok, true);
   assert.equal(d.configuracao.objectivos[0].importancia, null);

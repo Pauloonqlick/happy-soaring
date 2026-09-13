@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Alterações — Inteligência Happy Soaring</title>
+<title>Fila de indexação — Inteligência Happy Soaring</title>
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="stylesheet" href="/tema.css">
 <link rel="stylesheet" href="/inteligencia/estilo.css">
-<script src="/inteligencia/alteracoes.js" defer></script>
+<script src="/inteligencia/indexacao.js" defer></script>
 </head>
 <body>
 
@@ -17,31 +17,33 @@
   <p class="modulo">Inteligência</p>
   <nav class="topo-nav" aria-label="Módulo">
     <a href="/inteligencia/">Hoje</a>
-    <a href="/inteligencia/indexacao/">Fila de indexação</a>
-    <a href="/inteligencia/alteracoes/" aria-current="page">Alterações</a>
+    <a href="/inteligencia/indexacao/" aria-current="page">Fila de indexação</a>
+    <a href="/inteligencia/alteracoes/">Alterações</a>
     <a href="/">Site</a>
   </nav>
   <p class="quem" id="quem" aria-live="polite"></p>
 </header>
 
 <main class="corpo corpo-uma">
-  <section aria-labelledby="t-alt">
-    <h1 id="t-alt">Alterações</h1>
-    <p class="nota">Cada linha é uma publicação de produção, tal como a Cloudflare a regista, comparada com a publicação anterior.
-      <b>Conteúdo</b> = o texto ou o HTML mudou. <b>Dados</b> = mudou o conteúdo que a inicial carrega do CMS.
-      <b>Técnica</b> = só mudaram os bytes publicados, por exemplo uma folha de estilo.
-      Isto diz o que foi publicado — não diz se o Google já o rastreou.</p>
+  <section aria-labelledby="t-fila">
+    <h1 id="t-fila">Fila de indexação</h1>
+    <p class="nota" id="nota"></p>
+    <ul class="lista" id="limitacoes"></ul>
+
+    <div class="resumo-fila" id="resumo" aria-live="polite"></div>
+
     <p class="vazio" id="estado">A carregar…</p>
     <div class="tabela-cx" id="caixa" hidden>
       <table class="tabela">
-        <caption class="so-leitor">Publicações do site e alterações face à anterior</caption>
+        <caption class="so-leitor">Páginas, última alteração, último rastreio e estado do pedido de indexação</caption>
         <thead>
           <tr>
-            <th scope="col">Publicação</th>
-            <th scope="col">Data</th>
-            <th scope="col">Commit</th>
+            <th scope="col">Página</th>
             <th scope="col">Estado</th>
-            <th scope="col">Páginas</th>
+            <th scope="col">Última alteração</th>
+            <th scope="col">Último rastreio</th>
+            <th scope="col">Inspecção</th>
+            <th scope="col">Pedido</th>
             <th scope="col"></th>
           </tr>
         </thead>

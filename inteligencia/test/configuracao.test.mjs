@@ -72,13 +72,13 @@ test('migração 0001: aplica-se do zero numa base SQLite limpa', async (t) => {
 });
 
 test('interface: sem scripts nem estilos em linha, sem recursos de terceiros', () => {
-  for (const h of [['index.html'], ['alteracoes', 'index.html']]) {
+  for (const h of [['index.html'], ['alteracoes', 'index.html'], ['indexacao', 'index.html']]) {
     const html = ler(path.join(MODULO, 'public', 'inteligencia', ...h));
     assert.doesNotMatch(html, /<script(?![^>]*\bsrc=)[^>]*>/i, 'script em linha violaria a CSP');
     assert.doesNotMatch(html, /<style|style="/i);
     assert.doesNotMatch(html, /(src|href)="https?:\/\//i);
   }
-  for (const f of ['app.js', 'alteracoes.js']) {
+  for (const f of ['app.js', 'alteracoes.js', 'indexacao.js']) {
     const js = ler(path.join(MODULO, 'public', 'inteligencia', f));
     assert.doesNotMatch(js, /innerHTML|insertAdjacentHTML|document\.write/, f);
   }
@@ -87,9 +87,10 @@ test('interface: sem scripts nem estilos em linha, sem recursos de terceiros', (
 test('o módulo não depende do CMS: nenhuma rota, ligação, script ou login do /admin/', () => {
   const fontes = [
     path.join(MODULO, 'wrangler.toml'),
-    ...['index.js', 'acesso.js', 'seguranca.js', 'estado.js', 'publicacoes.js'].map(f => path.join(MODULO, 'src', f)),
-    ...['index.html', 'app.js', 'estilo.css', 'alteracoes.js'].map(f => path.join(MODULO, 'public', 'inteligencia', f)),
-    path.join(MODULO, 'public', 'inteligencia', 'alteracoes', 'index.html')
+    ...['index.js', 'acesso.js', 'seguranca.js', 'estado.js', 'publicacoes.js', 'search-console.js', 'google.js', 'linguas.js', 'inspeccao.js'].map(f => path.join(MODULO, 'src', f)),
+    ...['index.html', 'app.js', 'estilo.css', 'alteracoes.js', 'indexacao.js'].map(f => path.join(MODULO, 'public', 'inteligencia', f)),
+    path.join(MODULO, 'public', 'inteligencia', 'alteracoes', 'index.html'),
+    path.join(MODULO, 'public', 'inteligencia', 'indexacao', 'index.html')
   ];
   for (const f of fontes) {
     const s = ler(f).replace(/\/\*[\s\S]*?\*\/|<!--[\s\S]*?-->|^\s*#.*$/gm, '');

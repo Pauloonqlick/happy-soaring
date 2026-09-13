@@ -10,6 +10,7 @@ import { comSeguranca, json, paginaRecusa } from './seguranca.js';
 import { lerEstado } from './estado.js';
 import { executarCiclo, listarPublicacoes, detalhePublicacao } from './publicacoes.js';
 import { executarCicloGsc, resumoSearchConsole } from './search-console.js';
+import { executarCicloInspeccao, lerIndexacao, registarPedido } from './inspeccao.js';
 
 export const PREFIXO = '/inteligencia';
 
@@ -32,6 +33,29 @@ export default {
       return comSeguranca(new Response(null, { status: 308, headers: { location: PREFIXO + '/' } }));
     }
 
+    /* A ÚNICA ESCRITA: registar que o Paulo pediu indexação no Search Console.
+       Além do Access, exige JSON, o cabeçalho próprio do módulo e — se o browser
+       o enviar — a mesma origem. Um formulário de outro site não passa. */
+    if (p === PREFIXO + '/api/indexacao/pedido') {
+      if (request.method !== 'POST') return json({ erro: 'Método não permitido.' }, 405);
+      const origem = request.headers.get('Origin');
+      if (request.headers.get('X-HS-Inteligencia') !== '1' || (origem && origem !== url.origin) ||
+          !String(request.headers.get('Content-Type') || '').startsWith('application/json')) {
+        return json({ erro: 'Pedido recusado.' }, 403);
+      }
+      let corpo;
+      try { corpo = await request.json(); } catch (e) { return json({ erro: 'JSON inválido.' }, 400); }
+      const caminho = String(corpo?.caminho || '');
+      if (!/^\/[a-z0-9\/._-]{0,250}$/i.test(caminho) || caminho.includes('..')) return json({ erro: 'Caminho inválido.' }, 400);
+      const agora = Date.now();
+      const pedidoEm = corpo?.pedido_em ? Date.parse(corpo.pedido_em) : agora;
+      if (Number.isNaN(pedidoEm) || pedidoEm > agora + 5 * 60000 || pedidoEm < agora - 14 * 864e5) {
+        return json({ erro: 'Data do pedido inválida: tem de ser dos últimos 14 dias.' }, 400);
+      }
+      await registarPedido(env.DB, caminho, new Date(pedidoEm).toISOString());
+      return json(await lerIndexacao(env.DB));
+    }
+
     if (request.method !== 'GET' && request.method !== 'HEAD') {
       return json({ erro: 'Método não permitido.' }, 405);
     }
@@ -48,6 +72,7 @@ export default {
     }
 
     if (p === PREFIXO + '/api/search-console') return json(await resumoSearchConsole(env.DB));
+    if (p === PREFIXO + '/api/indexacao') return json(await lerIndexacao(env.DB));
 
     if (p.startsWith(PREFIXO + '/api/')) return json({ erro: 'Não encontrado' }, 404);
 
@@ -55,15 +80,18 @@ export default {
   },
 
   /* UMA tarefa agendada (o limite de 5 é da conta), repartida por minuto:
-     aos minutos múltiplos de 10 é a vez do Search Console; nos outros, das
-     publicações. Cada uma tem o orçamento inteiro da sua execução. */
+       minuto terminado em 0  → Search Console
+       minuto terminado em 4  → inspecção de URL
+       os outros              → publicações
+     Cada uma tem o orçamento inteiro da sua execução. */
   async scheduled(evento, env, ctx) {
     const minuto = new Date(evento.scheduledTime || Date.now()).getUTCMinutes();
-    const vezDoGsc = minuto % 10 === 0;
+    const vez = minuto % 10 === 0 ? 'search_console' : minuto % 10 === 4 ? 'inspeccao' : 'publicacoes';
     ctx.waitUntil((async () => {
-      const nome = vezDoGsc ? 'ciclo_search_console' : 'ciclo_publicacoes';
+      const nome = 'ciclo_' + vez;
       try {
-        const r = vezDoGsc ? await executarCicloGsc(env) : await executarCiclo(env);
+        const r = vez === 'search_console' ? await executarCicloGsc(env)
+          : vez === 'inspeccao' ? await executarCicloInspeccao(env) : await executarCiclo(env);
         console.log(JSON.stringify({ evento: nome, ...r }));
       } catch (e) {
         console.log(JSON.stringify({ evento: nome + '_falhou', erro: String(e && e.message || e).slice(0, 300) }));

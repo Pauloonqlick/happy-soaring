@@ -59,6 +59,71 @@
       .catch(() => { $('mudou').textContent = 'Não foi possível ler as publicações.'; });
   }
 
+  /* blocos 3 e 4 — a partir da fila de indexação */
+  function mostrarIndexacao() {
+    return fetch('api/indexacao', { credentials: 'same-origin', headers: { accept: 'application/json' } })
+      .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(d => {
+        /* bloco 3: os pedidos de indexação agrupam-se numa só acção */
+        const ul = $('accoes-lista');
+        ul.textContent = '';
+        const n = d.resumo.por_pedir;
+        if (n) {
+          const li = el('li');
+          const a = el('a', 'Pedir indexação de ' + n + (n === 1 ? ' página alterada' : ' páginas alteradas') +
+            ' que o Google ainda não voltou a rastrear');
+          a.href = 'indexacao/';
+          li.appendChild(a);
+          ul.appendChild(li);
+          ul.hidden = false;
+          $('accoes').hidden = true;
+        }
+
+        /* bloco 4: episódios — páginas alteradas e se houve rastreio depois */
+        const obs = d.paginas.filter(p => p.ultima_alteracao && p.estado && p.estado !== 'SEM_INSPECCAO')
+          .sort((x, y) => String(y.ultima_alteracao.em).localeCompare(String(x.ultima_alteracao.em)));
+        const ol = $('observacao-lista');
+        ol.textContent = '';
+        if (!obs.length) {
+          $('observacao').textContent = d.limitacoes.historico_publicacoes_em_curso
+            ? 'Nenhum episódio ainda — o histórico de publicações está a ser processado.'
+            : 'Nenhum episódio.';
+        } else {
+          $('observacao').textContent = obs.length + (obs.length === 1 ? ' página alterada' : ' páginas alteradas') + ' em observação:';
+          for (const p of obs.slice(0, 5)) {
+            const dias = Math.max(0, Math.floor((Date.now() - Date.parse(p.ultima_alteracao.em)) / 864e5));
+            ol.appendChild(el('li', p.caminho + ' · alterada há ' + dias + (dias === 1 ? ' dia' : ' dias') +
+              ' · rastreio posterior: ' + (p.rastreio_posterior === 'SIM'
+                ? 'sim, ' + new Date(p.ultimo_rastreio).toLocaleDateString('pt-PT') : 'ainda não')));
+          }
+          if (obs.length > 5) {
+            const li = el('li');
+            const a = el('a', 'mais ' + (obs.length - 5) + ' na fila de indexação');
+            a.href = 'indexacao/';
+            li.appendChild(a);
+            ol.appendChild(li);
+          }
+          ol.hidden = false;
+          $('nota-rastreio').textContent = d.nota;
+          $('nota-rastreio').hidden = false;
+        }
+
+        /* bloco 6 */
+        const ns = $('ns-inspeccao');
+        ns.textContent = d.limitacoes.quota_esgotada_hoje
+          ? 'Inspecção de URL — a quota diária esgotou; retoma sozinha.'
+          : d.resumo.sem_inspeccao ? 'Inspecção de URL — ' + d.resumo.inspeccionadas + ' páginas inspeccionadas, ' +
+            d.resumo.sem_inspeccao + ' alteradas ainda por inspeccionar.'
+          : d.resumo.inspeccionadas ? 'Inspecção de URL — ligada · ' + d.resumo.inspeccionadas + ' páginas inspeccionadas.'
+          : 'Inspecção de URL — ligada, à espera da primeira execução.';
+        if (d.resumo.inspeccionadas && !d.resumo.sem_inspeccao && !d.limitacoes.quota_esgotada_hoje) ns.hidden = true;
+      })
+      .catch(() => {
+        $('observacao').textContent = 'Não foi possível ler a fila de indexação.';
+        $('ns-inspeccao').textContent = 'Inspecção de URL — não foi possível ler o estado.';
+      });
+  }
+
   const num = n => new Intl.NumberFormat('pt-PT').format(n);
   function mostrarSearchConsole() {
     return fetch('api/search-console', { credentials: 'same-origin', headers: { accept: 'application/json' } })
@@ -139,11 +204,12 @@
       const ligadas = [], porLigar = [];
       (pub && pub.credencial ? ligadas : porLigar).push('as publicações do site');
       (g && g.credencial ? ligadas : porLigar).push('o Search Console');
-      porLigar.push('a inspecção de URL');
-      $('aviso').textContent = (ligadas.length ? 'O módulo recolhe ' + ligadas.join(' e ') + '. ' : '') +
-        'Ainda por ligar: ' + porLigar.join(' e ') + '. A verificação de problemas vem depois.';
+      ligadas.push('a inspecção de URL');
+      const juntar = l => l.length > 1 ? l.slice(0, -1).join(', ') + ' e ' + l[l.length - 1] : l.join('');
+      $('aviso').textContent = (ligadas.length ? 'O módulo recolhe ' + juntar(ligadas) + '. ' : '') +
+        (porLigar.length ? 'Ainda por ligar: ' + juntar(porLigar) + '. ' : '') + 'A verificação de problemas vem depois.';
 
-      return Promise.all([mostrarMudancas(), mostrarSearchConsole()]);
+      return Promise.all([mostrarMudancas(), mostrarSearchConsole(), mostrarIndexacao()]);
     })
     .catch(e => mostrarErro('Não foi possível ler o estado (' + e.message + ').'));
 })();

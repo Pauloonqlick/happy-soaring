@@ -98,4 +98,16 @@ h1{margin:0;font-size:clamp(30px,4.4vw,46px);font-weight:800;line-height:1.05}
 .nota{color:var(--tinta-fraca);max-width:72ch;margin:10px 0 22px}
 .corpo-uma{grid-template-columns:1fr}
 .nota-painel{margin:12px 0 0;font-size:12px;color:var(--painel-fraca)}
+
+/* ---- fila de indexação ---- */
+.resumo-fila{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 18px}
+.resumo-n{background:var(--papel-2);border:1px solid var(--linha);padding:10px 14px;min-width:130px}
+.resumo-n b{display:block;font-size:26px;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.resumo-n span{font-size:13px;color:var(--tinta-fraca)}
+.chip-ok{border-color:#1d6b3a;color:#1d6b3a}
+.sub{margin:4px 0 0;font-size:12px;color:var(--painel-fraca)}
+.bloco .sub{color:var(--tinta-fraca)}
+.botao-link{display:inline-block;margin:0 10px 4px 0;font-size:13px;color:var(--painel-tinta)}
+#limitacoes:empty{display:none}
+#limitacoes{margin:0 0 18px}
 .so-leitor{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}

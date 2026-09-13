@@ -390,3 +390,20 @@ test('publicação antiga sem sitemap nem meta.json (o Pages responde 200 com HT
   assert.equal(b.publicacao.anterior_id, null, 'a seguinte não se compara com uma publicação sem sitemap');
   assert.equal(b.alteracoes, null);
 });
+
+test('fase 4: cada publicação processada actualiza a última alteração de cada página — nunca as só técnicas', async () => {
+  const db = await d1Falsa();
+  const env = envCom(db);
+  const f = fetchFalso();
+  for (let i = 0; i < 30; i++) {
+    await executarCiclo(env, { fetchImpl: f });
+    if (!(await db.prepare("SELECT COUNT(*) AS n FROM deployments WHERE processamento='PENDENTE'").first()).n) break;
+  }
+  const linhas = db.sqlite.prepare('SELECT caminho, ultima_alteracao_em, deployment_id, tipo FROM paginas_alteracao ORDER BY caminho').all()
+    .map(r => ({ ...r }));
+  assert.deepEqual(linhas, [
+    { caminho: '/', ultima_alteracao_em: B.created_on, deployment_id: B.id, tipo: 'dados' },
+    { caminho: '/a/', ultima_alteracao_em: B.created_on, deployment_id: B.id, tipo: 'conteudo' },
+    { caminho: '/d/', ultima_alteracao_em: B.created_on, deployment_id: B.id, tipo: 'nova' }
+  ], '/b/ e as extra só mudaram o carimbo; /c/ saiu');
+});

@@ -275,9 +275,41 @@ async function passoDados(env, r, d) {
   }
   stmts.push(env.DB.prepare(`UPDATE deployments SET processamento='PROCESSADO', passo='FIM', anterior_id=?, processado_em=? WHERE id=?`)
     .bind(ant?.id ?? null, new Date().toISOString(), d.id));
+  /* a última alteração de cada página que ESTA publicação mudou (Fase 4) */
+  stmts.push(env.DB.prepare(SQL_ALTERACOES_DE_UMA_PUBLICACAO).bind(d.id));
   await r.lote(stmts);
   return 'FIM';
 }
+
+/* As páginas que uma publicação alterou face à anterior — conteúdo, dados do
+   CMS (páginas SPA) ou página nova; nunca as só técnicas — gravadas como
+   última alteração se forem mais recentes. A mesma regra da migração 0004. */
+export const SQL_ALTERACOES_DE_UMA_PUBLICACAO = `
+INSERT INTO paginas_alteracao (caminho, ultima_alteracao_em, deployment_id, tipo)
+SELECT caminho, criado_em_cf, id, tipo FROM (
+  SELECT p.caminho, d.criado_em_cf, d.id,
+    CASE
+      WHEN a.caminho IS NULL THEN 'nova'
+      WHEN a.estado <> 'LIDA' THEN NULL
+      WHEN p.resumo_conteudo <> a.resumo_conteudo THEN 'conteudo'
+      WHEN p.spa = 1 AND (
+        EXISTS (SELECT 1 FROM deployment_dados x
+                LEFT JOIN deployment_dados y ON y.deployment_id = d.anterior_id AND y.ficheiro = x.ficheiro
+                WHERE x.deployment_id = d.id AND (y.ficheiro IS NULL OR COALESCE(x.resumo, '') <> COALESCE(y.resumo, '')))
+        OR EXISTS (SELECT 1 FROM deployment_dados y
+                   WHERE y.deployment_id = d.anterior_id
+                     AND NOT EXISTS (SELECT 1 FROM deployment_dados x WHERE x.deployment_id = d.id AND x.ficheiro = y.ficheiro))
+      ) THEN 'dados'
+    END AS tipo
+  FROM deployments d
+  JOIN deployment_paginas p ON p.deployment_id = d.id AND p.estado = 'LIDA'
+  LEFT JOIN deployment_paginas a ON a.deployment_id = d.anterior_id AND a.caminho = p.caminho
+  WHERE d.id = ? AND d.processamento = 'PROCESSADO' AND d.anterior_id IS NOT NULL
+)
+WHERE tipo IS NOT NULL
+ON CONFLICT(caminho) DO UPDATE SET
+  ultima_alteracao_em = excluded.ultima_alteracao_em, deployment_id = excluded.deployment_id, tipo = excluded.tipo
+WHERE excluded.ultima_alteracao_em > paginas_alteracao.ultima_alteracao_em`;
 
 const PASSOS = { META: passoMeta, SITEMAP: passoSitemap, PAGINAS: passoPaginas, DADOS: passoDados };
 

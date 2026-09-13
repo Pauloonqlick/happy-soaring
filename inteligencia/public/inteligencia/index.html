@@ -19,6 +19,7 @@
   <p class="modulo">Inteligência</p>
   <nav class="topo-nav" aria-label="Módulo">
     <a href="/inteligencia/" aria-current="page">Hoje</a>
+    <a href="/inteligencia/indexacao/">Fila de indexação</a>
     <a href="/inteligencia/alteracoes/">Alterações</a>
     <a href="/">Site</a>
   </nav>
@@ -46,11 +47,14 @@
       </li>
       <li class="bloco bloco-accoes">
         <h2><span class="n">3</span> O que fazer hoje <small>no máximo 3</small></h2>
-        <p class="vazio">Nenhuma acção.</p>
+        <p class="vazio" id="accoes">Nenhuma acção.</p>
+        <ul class="lista" id="accoes-lista" hidden></ul>
       </li>
       <li class="bloco">
         <h2><span class="n">4</span> Em observação</h2>
-        <p class="vazio">Nenhum episódio.</p>
+        <p class="vazio" id="observacao">A carregar…</p>
+        <ul class="lista" id="observacao-lista" hidden></ul>
+        <p class="sub" id="nota-rastreio" hidden></p>
       </li>
       <li class="bloco">
         <h2><span class="n">5</span> Resultados</h2>
@@ -61,7 +65,7 @@
         <ul class="lista" id="nao-sabemos">
           <li id="ns-publicacoes">Publicações do site — a verificar…</li>
           <li id="ns-gsc">Search Console — a verificar…</li>
-          <li>Inspecção de URL e rastreios — por ligar</li>
+          <li id="ns-inspeccao">Inspecção de URL e rastreios — a verificar…</li>
         </ul>
       </li>
     </ol>

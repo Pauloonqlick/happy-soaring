@@ -20,6 +20,7 @@ src/publicacoes.js            observação das publicações do site (Fase 2)
 src/google.js                 acesso só de leitura à API do Google
 src/search-console.js         recolha e resumo do Search Console (Fase 3)
 src/linguas.js                marca/não-marca e língua inferida (ou UNKNOWN)
+src/inspeccao.js              inspecção de URL, rastreios e fila de indexação (Fase 4)
 public/inteligencia/          interface (sem código de terceiros)
 migrations/                   esquema D1, só se acrescenta
 test/                         testes sem rede
@@ -71,10 +72,33 @@ o resumo mostra marca, não-marca e **desconhecido** (= total − visível), e a
 percentagem visível. A língua da pesquisa é inferida do texto só com evidência;
 sem ela é `UNKNOWN`. Nunca se deduz do país.
 
-A tarefa agendada é a mesma: aos minutos múltiplos de 10 é a vez do Search
-Console, nos outros das publicações.
+A tarefa agendada é a mesma: aos minutos terminados em 0 é a vez do Search
+Console, aos terminados em 4 a da inspecção de URL, nos outros das publicações.
 
 **Segredos necessários** (guardados por `scripts/autorizar-google.mjs`, que nunca
 mostra os valores): `GOOGLE_OAUTH_CLIENT_ID`, `GOOGLE_OAUTH_CLIENT_SECRET`,
 `GSC_REFRESH_TOKEN` — cliente OAuth dedicado a este Worker, âmbito
 `webmasters.readonly`.
+
+## Inspecção de URL e fila de indexação (Fase 4)
+
+A pergunta: **houve um rastreio do Google posterior à última alteração da página?**
+Responde-se cruzando a última alteração observada nas publicações (conteúdo, dados
+do CMS ou página nova — nunca alterações só técnicas) com o último rastreio que a
+inspecção de URL devolve. Um rastreio posterior confirma que o Google voltou à
+página; **não** confirma que a nova versão já foi processada ou indexada.
+
+- De 10 em 10 minutos (minuto terminado em 4), no máximo 30 inspecções: primeiro as
+  páginas alteradas ainda sem rastreio posterior (no máximo uma vez por dia cada),
+  depois as nunca inspeccionadas, depois as de há mais de uma semana.
+- A quota (2 000/dia) é partilhada com o Search Console e outros clientes. Um 429
+  pausa a inspecção 60 minutos e fica registado como limitação — nunca é problema SEO.
+- A resposta original vai para o R2 (`inspecoes/`); as observações ficam em
+  `inspecoes` e `pedidos_indexacao`. `paginas_google` e `paginas_alteracao` são
+  estado derivado, reconstruível (a migração 0004 reconstrói o segundo).
+- `/inteligencia/indexacao/` mostra a fila. O pedido de indexação continua a ser feito
+  à mão no Search Console; o botão «Já pedi» só regista que foi feito
+  (`POST /inteligencia/api/indexacao/pedido` — exige Access, JSON, o cabeçalho
+  `X-HS-Inteligencia: 1` e a mesma origem). É a única escrita da interface.
+
+Usa os mesmos segredos Google da Fase 3; o âmbito `webmasters.readonly` basta.
