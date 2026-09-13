@@ -26,9 +26,10 @@ test('wrangler.toml: nenhum segredo escrito no ficheiro', () => {
   const t = ler(path.join(MODULO, 'wrangler.toml'));
   const semComentarios = t.replace(/^\s*#.*$/gm, '');
   assert.doesNotMatch(t, /GOCSPX|1\/\/0[0-9A-Za-z_-]{20,}/, 'valores com a forma de uma chave ou refresh token Google');
-  assert.doesNotMatch(semComentarios, /^\s*(GOOGLE_OAUTH_CLIENT_ID|GOOGLE_OAUTH_CLIENT_SECRET|GSC_REFRESH_TOKEN|DATAFORSEO_LOGIN|DATAFORSEO_PASSWORD)\s*=/m,
+  assert.doesNotMatch(semComentarios, /^\s*(GOOGLE_OAUTH_CLIENT_ID|GOOGLE_OAUTH_CLIENT_SECRET|GSC_REFRESH_TOKEN|DATAFORSEO_LOGIN|DATAFORSEO_PASSWORD|RESEND_API_KEY)\s*=/m,
     'credenciais são segredos do Worker, nunca variáveis no ficheiro');
   assert.doesNotMatch(semComentarios, /refresh_token|client_secret/i);
+  assert.doesNotMatch(t, /\bre_[A-Za-z0-9]{20,}/, 'valores com a forma de uma chave do Resend');
   assert.doesNotMatch(t, /^\s*CF_API_TOKEN_PAGES\s*=/m, 'o token do Pages é segredo, não variável');
 });
 

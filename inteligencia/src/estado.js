@@ -2,6 +2,7 @@
    Nada aqui é inventado: o que não está configurado diz-se que não está. */
 import { estadoPublicacoes } from './publicacoes.js';
 import { estadoSearchConsole } from './search-console.js';
+import { estadoAvisos } from './avisos.js';
 
 async function tentar(fn) {
   try { return { ok: true, valor: await fn() }; }
@@ -24,6 +25,7 @@ export async function lerEstado(env, email) {
     'SELECT COUNT(*) AS n FROM concorrentes').first())?.n ?? 0);
   const publicacoes = await tentar(() => estadoPublicacoes(db, env));
   const searchConsole = await tentar(() => estadoSearchConsole(db, env));
+  const avisos = await tentar(() => estadoAvisos(db, env));
 
   const bruto = await tentar(async () => { await r2.list({ limit: 1 }); return true; });
 
@@ -38,7 +40,8 @@ export async function lerEstado(env, email) {
     },
     fontes: {
       publicacoes: publicacoes.ok ? publicacoes.valor : null,
-      search_console: searchConsole.ok ? searchConsole.valor : null
+      search_console: searchConsole.ok ? searchConsole.valor : null,
+      avisos: avisos.ok ? avisos.valor : null
     },
     configuracao: {
       objectivos: objectivos.ok ? objectivos.valor : null,

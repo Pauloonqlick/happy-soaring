@@ -164,3 +164,4 @@ button.botao-link{background:none;border:0;padding:0;cursor:pointer;text-decorat
 .titulo-seccao{font-size:var(--rotulo-tam);letter-spacing:var(--rotulo-tr);text-transform:uppercase;color:var(--tinta-fraca);margin:26px 0 10px}
 .tabela-estreita{min-width:0}
 .tabela td input[type=checkbox]{width:18px;height:18px}
+.botao-painel{margin-top:12px}

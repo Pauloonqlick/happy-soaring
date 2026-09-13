@@ -23,6 +23,7 @@ src/linguas.js                marca/não-marca e língua inferida (ou UNKNOWN)
 src/inspeccao.js              inspecção de URL, rastreios e fila de indexação (Fase 4)
 src/assuntos.js               assuntos, porta «Vale a pena agir agora?», «Hoje», pacotes (Fase 5)
 src/conhecimento.js           decisões activas, factos, hipóteses, contactos, configuração (Fase 5)
+src/avisos.js                 avisos críticos por email, pelo Resend (Fase 5)
 public/inteligencia/          interface (sem código de terceiros)
 migrations/                   esquema D1, só se acrescenta
 test/                         testes sem rede
@@ -77,7 +78,7 @@ sem ela é `UNKNOWN`. Nunca se deduz do país.
 
 A tarefa agendada é a mesma: aos minutos terminados em 0 é a vez do Search
 Console, aos terminados em 4 a da inspecção de URL, aos minutos 18, 38 e 58 a
-dos assuntos, nos outros das publicações.
+dos assuntos, ao minuto 08 de cada hora a dos avisos, nos outros das publicações.
 
 **Segredos necessários** (guardados por `scripts/autorizar-google.mjs`, que nunca
 mostra os valores): `GOOGLE_OAUTH_CLIENT_ID`, `GOOGLE_OAUTH_CLIENT_SECRET`,
@@ -143,3 +144,17 @@ claro, piorou ou inconclusivo — nunca atribui causa.
 origem): pedido de indexação marcado, decisão sobre um assunto, conhecimento (cada
 versão guardada em `conhecimento_historico`), contacto (sem dados pessoais) e
 configuração.
+
+## Avisos críticos por email (fim da Fase 5)
+
+Minuto 08 de cada hora. Só problemas críticos ainda por decidir (propostos,
+detectados ou regressões); nunca o que foi ignorado, adiado, aprovado, bloqueado ou
+retirado. No máximo um aviso agregado por dia; excepção imediata para um crítico numa
+página de nível 1 ou três ou mais críticos novos; nunca mais de 3 envios em 24 horas.
+Cada envio (ou falha, só com o código) fica em `avisos`.
+
+Envio pelo **Resend**, a partir do subdomínio `avisos.happysoaring.com` — o email
+Google do domínio principal não é tocado. Variáveis: `AVISOS_DE`, `AVISOS_PARA`.
+**Segredo:** `RESEND_API_KEY` (chave só de envio, limitada a esse domínio), posto no
+painel do Worker. Sem ele nada é enviado. O botão «Enviar aviso de teste» no «Hoje»
+confirma a ligação (no máximo um a cada 10 minutos).

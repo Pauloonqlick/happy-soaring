@@ -40,6 +40,11 @@ CF_PAGES_PROJECT = "happy-soaring"
 # Search Console: a propriedade de domínio. As credenciais Google são SEGREDOS
 # (GOOGLE_OAUTH_CLIENT_ID, GOOGLE_OAUTH_CLIENT_SECRET, GSC_REFRESH_TOKEN) e nunca vivem aqui.
 GSC_PROPRIEDADE = "sc-domain:happysoaring.com"
+# Avisos críticos por email, enviados pelo Resend a partir de um subdomínio próprio
+# (o email Google do domínio principal não é tocado). A chave é um SEGREDO —
+# RESEND_API_KEY — e nunca vive aqui. Sem ela, nenhum aviso é enviado.
+AVISOS_DE = "Inteligência Happy Soaring <alertas@avisos.happysoaring.com>"
+AVISOS_PARA = "paulo.pereira@happysoaring.com"
 
 # UMA tarefa agendada, gratuita: o plano Free tem 5 por conta, partilhadas.
 # De 2 em 2 minutos avança a observação das publicações, dentro dos limites

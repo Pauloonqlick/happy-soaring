@@ -2,7 +2,7 @@
    Tudo o que vem da API é escrito com textContent — nunca como HTML. */
 (function () {
   'use strict';
-  const { $, el, obter, dia, RESULTADOS, linhaAssunto } = window.HS;
+  const { $, el, obter, enviar, data, dia, RESULTADOS, linhaAssunto } = window.HS;
 
   $('data').textContent = new Intl.DateTimeFormat('pt-PT', { dateStyle: 'full' }).format(new Date());
 
@@ -190,6 +190,13 @@
       const base = d.sistema.base, bruto = d.sistema.armazenamento_bruto;
       par(dl, 'Base de dados', base.ok ? 'ligada · esquema ' + base.versao_esquema : 'indisponível', base.ok ? 'ok' : 'falha');
       par(dl, 'Armazenamento bruto', bruto.ok ? 'ligado' : 'indisponível', bruto.ok ? 'ok' : 'falha');
+      const av = d.fontes && d.fontes.avisos;
+      par(dl, 'Avisos por email', !av ? 'não foi possível ler'
+        : !av.configurado ? 'por ligar'
+        : av.ultima_falha ? 'falhou em ' + data(av.ultima_falha.em) + ' (' + av.ultima_falha.erro + ')'
+        : 'ligados · ' + av.destino + (av.ultimo_envio ? ' · último em ' + data(av.ultimo_envio.em) : ''),
+        !av ? 'falha' : !av.configurado || av.ultima_falha ? 'falha' : 'ok');
+      $('teste-aviso').hidden = !(av && av.configurado);
       par(dl, 'Lido em', new Date(d.agora).toLocaleString('pt-PT'));
 
       const c = d.configuracao;
@@ -233,9 +240,19 @@
       const juntar = l => l.length > 1 ? l.slice(0, -1).join(', ') + ' e ' + l[l.length - 1] : l.join('');
       $('aviso').textContent = (ligadas.length ? 'O módulo recolhe ' + juntar(ligadas) + ' e detecta problemas de indexação e técnicos. ' : '') +
         (porLigar.length ? 'Ainda por ligar: ' + juntar(porLigar) + '. ' : '') +
-        'Avisos por email ainda não ligados.';
+        (av && av.configurado ? 'Os problemas críticos também chegam por email.' : 'Avisos por email ainda não ligados.');
     })
     .catch(e => { const dl = $('estado'); dl.textContent = ''; par(dl, 'Estado', 'Não foi possível ler o estado (' + e.message + ').', 'falha'); });
+
+  $('teste-aviso').addEventListener('click', () => {
+    const b = $('teste-aviso');
+    b.disabled = true;
+    $('teste-resultado').textContent = 'A enviar…';
+    enviar('api/avisos/teste', {})
+      .then(() => { $('teste-resultado').textContent = 'Enviado. Confirma se chegou ao teu email.'; })
+      .catch(e => { $('teste-resultado').textContent = e.message; })
+      .finally(() => { b.disabled = false; });
+  });
 
   /* o «Hoje» lê a última visita antes de a mudança de publicações a actualizar */
   mostrarHoje().then(mostrarMudancas);
