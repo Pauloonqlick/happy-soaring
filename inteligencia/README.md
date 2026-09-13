@@ -25,6 +25,8 @@ src/assuntos.js               assuntos, porta «Vale a pena agir agora?», «Hoj
 src/conhecimento.js           decisões activas, factos, hipóteses, contactos, configuração (Fase 5)
 src/avisos.js                 avisos críticos por email, pelo Resend (Fase 5)
 src/aprendizagem.js           decisões automáticas, lições e manual de boas práticas
+src/agenda.js                 a repartição da tarefa agendada por minuto (corre e mostra-se)
+src/evolucao.js               painel «Evolução»: operação, indexação, página × língua, visão geral
 public/inteligencia/          interface (sem código de terceiros)
 migrations/                   esquema D1, só se acrescenta
 test/                         testes sem rede
@@ -197,3 +199,26 @@ as que não resultaram — para este site e para os próximos.
 Fluxo do Claude: `pacotes.mjs` → corrigir no site → commit → `registar.mjs implementacao
 <lição> <commit>` → publicar → o módulo liga a publicação, espera o rastreio posterior,
 avalia e actualiza a lição → `manual.mjs`.
+
+## Painel «Evolução»
+
+`/inteligencia/evolucao/`, só leitura, quatro secções (cada uma com o seu pedido à API,
+para caber no limite de consultas por pedido):
+
+1. **Operação** — cada tarefa agendada: regra, última execução (duração, ok ou falhou),
+   execuções e falhas em 24 h, próxima execução; filas (publicações e ritmo, Search
+   Console, inspecção e quota partilhada, problemas por decidir, trabalho do Claude,
+   avisos); limitações das últimas 24 h. As execuções ficam em `execucoes` (14 dias).
+2. **Indexação** — por língua e por família: indexadas, nunca rastreadas, dias desde o
+   último rastreio, rastreios por página; percentagem indexada por semana; tempo entre a
+   alteração e o rastreio posterior (por língua e nível); problemas por semana e regressões.
+3. **Página × língua** — as versões linguísticas de cada página conceptual lado a lado
+   (impressões, cliques, posição, estado no Google), com os sinais: não indexada, atrás
+   das irmãs, indexada sem impressões, queda ou subida confirmadas. O agrupamento vem do
+   **hreflang que cada página publica** (lido pelas publicações para `deployment_paginas.versoes`);
+   até haver uma publicação lida com hreflang, a tabela mostra uma linha por página.
+4. **Visão geral** — semanas completas de cliques, impressões, CTR e posição; marca, sem
+   marca e desconhecido; publicações, rastreios e correcções publicadas como anotações.
+
+Tendências só confirmadas com 4 semanas completas: as 2 últimas ambas 20% abaixo (ou
+acima) da média das 2 anteriores, com amostra mínima. Com menos, diz «histórico insuficiente».

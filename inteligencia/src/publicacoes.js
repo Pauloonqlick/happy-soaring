@@ -39,6 +39,22 @@ export function caminhosDoSitemap(xml) {
 
 export const eSpa = html => /<script[^>]+src="\/?app\.js/i.test(html);
 
+/* As versões linguísticas que a própria página declara (hreflang), só as do
+   próprio domínio: {"pt": "/asas/x/", "en": "/en/wings/x/", "x-default": …}. */
+export function versoesDaPagina(html) {
+  const v = {};
+  for (const m of html.matchAll(/<link\b[^>]*\brel=["']alternate["'][^>]*>/gi)) {
+    const lingua = (m[0].match(/\bhreflang=["']([a-zA-Z-]{2,12})["']/) || [])[1];
+    const href = (m[0].match(/\bhref=["']([^"']+)["']/) || [])[1];
+    if (!lingua || !href) continue;
+    try {
+      const u = new URL(href, 'https://happysoaring.com');
+      if (u.hostname === 'happysoaring.com') v[lingua.toLowerCase()] = u.pathname;
+    } catch (e) { /* endereço inválido: ignorado */ }
+  }
+  return Object.keys(v).length ? v : null;
+}
+
 /* Os ficheiros de dados que a inicial carrega em execução, pela mesma ordem
    que o loadSite() e o carregaCatalogo() do app.js. Um teste de contrato
    falha se o app.js deixar de os carregar assim. */
@@ -227,7 +243,7 @@ async function passoPaginas(env, r, d) {
   const agora = new Date().toISOString();
   const stmts = [];
   for (const { caminho } of porLer) {
-    let http = null, rc = null, rp = null, spa = 0, estado = 'ERRO';
+    let http = null, rc = null, rp = null, spa = 0, estado = 'ERRO', versoes = null;
     try {
       const resp = await r.buscar(d.url + caminho);
       http = resp.status;
@@ -237,12 +253,13 @@ async function passoPaginas(env, r, d) {
         rc = await sha1(normalizarHtml(html));
         rp = await sha256(bytes);
         spa = eSpa(html) ? 1 : 0;
+        versoes = versoesDaPagina(html);
         estado = 'LIDA';
       }
     } catch (e) { http = null; }
-    stmts.push(env.DB.prepare(`UPDATE deployment_paginas SET estado=?, http=?, resumo_conteudo=?, resumo_publicado=?, spa=?, lida_em=?
+    stmts.push(env.DB.prepare(`UPDATE deployment_paginas SET estado=?, http=?, resumo_conteudo=?, resumo_publicado=?, spa=?, lida_em=?, versoes=?
                                WHERE deployment_id=? AND caminho=?`)
-      .bind(estado, http, rc, rp, spa, agora, d.id, caminho));
+      .bind(estado, http, rc, rp, spa, agora, versoes ? JSON.stringify(versoes) : null, d.id, caminho));
   }
   await r.lote(stmts);
   return 'PAGINAS';

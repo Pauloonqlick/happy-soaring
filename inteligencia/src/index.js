@@ -15,6 +15,8 @@ import { executarCicloInspeccao, lerIndexacao, registarPedido } from './inspecca
 import { executarCicloAssuntos, lerHoje, lerAssunto, decidirAssunto, lerPacote } from './assuntos.js';
 import { executarCicloAvisos, enviarAvisoTeste } from './avisos.js';
 import { executarCicloDecisoes, lerAprendizagem, gravarLicao } from './aprendizagem.js';
+import { vezDoMinuto } from './agenda.js';
+import { lerOperacao, lerIndexacaoEvolucao, lerPaginas, lerGeral } from './evolucao.js';
 import {
   lerConhecimento, gravarConhecimento, historicoConhecimento, TABELAS_CONHECIMENTO,
   lerContactos, registarContacto, lerConfiguracao, gravarImportancia, gravarPagina
@@ -94,6 +96,10 @@ async function leitura(env, p, url, email) {
   if (p === API + '/contactos') return json(await lerContactos(env.DB));
   if (p === API + '/configuracao') return json(await lerConfiguracao(env.DB));
   if (p === API + '/aprendizagem') return json(await lerAprendizagem(env.DB));
+  if (p === API + '/evolucao/operacao') return json(await lerOperacao(env));
+  if (p === API + '/evolucao/indexacao') return json(await lerIndexacaoEvolucao(env.DB));
+  if (p === API + '/evolucao/paginas') return json(await lerPaginas(env.DB, { dias: [7, 28, 90].includes(Number(url.searchParams.get('dias'))) ? Number(url.searchParams.get('dias')) : 28 }));
+  if (p === API + '/evolucao/geral') return json(await lerGeral(env.DB));
   return null;
 }
 
@@ -141,10 +147,21 @@ export default {
      Cada uma tem o orçamento inteiro da sua execução. */
   async scheduled(evento, env, ctx) {
     const minuto = new Date(evento.scheduledTime || Date.now()).getUTCMinutes();
-    const vez = minuto % 10 === 0 ? 'search_console' : minuto % 10 === 4 ? 'inspeccao'
-      : minuto % 20 === 18 ? 'assuntos' : minuto === 8 ? 'avisos' : minuto === 28 || minuto === 48 ? 'decisoes' : 'publicacoes';
+    const vez = vezDoMinuto(minuto);
     ctx.waitUntil((async () => {
       const nome = 'ciclo_' + vez;
+      const inicio = new Date();
+      /* cada execução fica registada (14 dias) para o painel de operação; nunca impede a tarefa */
+      const registar = async (ok, resumo, erro) => {
+        try {
+          const stmts = [env.DB.prepare('INSERT INTO execucoes (vez, inicio, duracao_ms, ok, resumo, erro) VALUES (?, ?, ?, ?, ?, ?)')
+            .bind(vez, inicio.toISOString(), Date.now() - inicio.getTime(), ok ? 1 : 0, resumo ? JSON.stringify(resumo).slice(0, 1000) : null, erro)];
+          if (vez === 'search_console') {
+            stmts.push(env.DB.prepare("DELETE FROM execucoes WHERE inicio < strftime('%Y-%m-%dT%H:%M:%fZ', 'now', '-14 days')"));
+          }
+          await env.DB.batch(stmts);
+        } catch (e) { /* sem registo: não faz mal */ }
+      };
       try {
         const r = vez === 'search_console' ? await executarCicloGsc(env)
           : vez === 'inspeccao' ? await executarCicloInspeccao(env)
@@ -152,8 +169,11 @@ export default {
           : vez === 'avisos' ? await executarCicloAvisos(env)
           : vez === 'decisoes' ? await executarCicloDecisoes(env) : await executarCiclo(env);
         console.log(JSON.stringify({ evento: nome, ...r }));
+        await registar(true, r, null);
       } catch (e) {
-        console.log(JSON.stringify({ evento: nome + '_falhou', erro: String(e && e.message || e).slice(0, 300) }));
+        const erro = String(e && e.message || e).slice(0, 300);
+        console.log(JSON.stringify({ evento: nome + '_falhou', erro }));
+        await registar(false, null, erro);
       }
     })());
   }

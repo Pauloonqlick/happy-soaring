@@ -74,7 +74,7 @@ test('migração 0001: aplica-se do zero numa base SQLite limpa', async (t) => {
 
 test('interface: sem scripts nem estilos em linha, sem recursos de terceiros', () => {
   const PAGINAS = [['index.html'], ['alteracoes', 'index.html'], ['indexacao', 'index.html'], ['assunto', 'index.html'],
-    ['conhecimento', 'index.html'], ['contactos', 'index.html'], ['configuracao', 'index.html'], ['aprendizagem', 'index.html']];
+    ['conhecimento', 'index.html'], ['contactos', 'index.html'], ['configuracao', 'index.html'], ['aprendizagem', 'index.html'], ['evolucao', 'index.html']];
   for (const h of PAGINAS) {
     const html = ler(path.join(MODULO, 'public', 'inteligencia', ...h));
     assert.doesNotMatch(html, /<script(?![^>]*\bsrc=)[^>]*>/i, 'script em linha violaria a CSP');
