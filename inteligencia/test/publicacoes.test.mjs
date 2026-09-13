@@ -376,3 +376,17 @@ test('muitas publicações já conhecidas: a descoberta não gasta o orçamento,
   assert.ok(meta.length >= 1, 'o processamento avança: leu pelo menos um meta.json');
   assert.ok(r.orcamento.consultas <= ORCAMENTO.consultas + 2);
 });
+
+test('publicação antiga sem sitemap nem meta.json (o Pages responde 200 com HTML): limitação, fora das comparações', async () => {
+  const db = await d1Falsa();
+  const recursos = site();
+  recursos.set(A.url + '/meta.json', { corpo: '<!doctype html><title>Happy Soaring</title>', estado: 200 });
+  recursos.set(A.url + '/sitemap.xml', { corpo: '<!doctype html><title>Happy Soaring</title>', estado: 200 });
+  const f = fetchFalso({ recursos });
+  for (let i = 0; i < 30; i++) await executarCiclo(envCom(db), { fetchImpl: f });
+  const a = await db.prepare('SELECT processamento, erro, meta_estado FROM deployments WHERE id=?').bind(A.id).first();
+  assert.deepEqual({ ...a }, { processamento: 'FALHOU', erro: 'SEM_SITEMAP', meta_estado: 'AUSENTE' });
+  const b = await detalhePublicacao(db, B.id);
+  assert.equal(b.publicacao.anterior_id, null, 'a seguinte não se compara com uma publicação sem sitemap');
+  assert.equal(b.alteracoes, null);
+});

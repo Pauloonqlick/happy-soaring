@@ -174,9 +174,16 @@ async function descobrir(env, r) {
 
 async function passoMeta(env, r, d) {
   const resp = await r.buscar(d.url + '/meta.json', { headers: { accept: 'application/json' } });
+  /* O Pages responde 200 com uma página HTML a caminhos que não existem.
+     As publicações anteriores ao meta.json (julho de 2026) caem aqui:
+     é AUSENTE, não ERRO. */
   let estado = 'ERRO', m = {};
   if (resp.status === 404) estado = 'AUSENTE';
-  else if (resp.ok) { try { m = await resp.json(); estado = 'OK'; } catch (e) { estado = 'ERRO'; } }
+  else if (resp.ok) {
+    const texto = await resp.text();
+    if (/^\s*</.test(texto)) estado = 'AUSENTE';
+    else { try { m = JSON.parse(texto); estado = m && typeof m === 'object' ? 'OK' : 'ERRO'; } catch (e) { estado = 'ERRO'; } }
+  }
   await r.q(`UPDATE deployments SET meta_estado=?, meta_commit=?, meta_sujo=?, meta_publicado=?, meta_impressao=?, passo='SITEMAP'
              WHERE id=?`)
     .bind(estado, m.commit ?? null, typeof m.sujo === 'boolean' ? (m.sujo ? 1 : 0) : null,
@@ -186,13 +193,16 @@ async function passoMeta(env, r, d) {
 
 async function passoSitemap(env, r, d) {
   const resp = await r.buscar(d.url + '/sitemap.xml');
-  if (!resp.ok) {
-    await r.q(`UPDATE deployments SET processamento='FALHOU', passo='FIM', erro=? WHERE id=?`)
-      .bind('SITEMAP_HTTP_' + resp.status, d.id).run();
-    await evento(r, 'PUBLICACAO_SEM_SITEMAP', d.id + ' HTTP ' + resp.status);
+  const texto = resp.ok ? await resp.text() : '';
+  const caminhos = resp.ok && /<urlset[\s>]/i.test(texto) ? caminhosDoSitemap(texto) : [];
+  /* Sem sitemap verdadeiro não se sabe que páginas a publicação tinha. Fica
+     como limitação e NUNCA entra nas comparações: se entrasse com 0 páginas,
+     a publicação seguinte mostraria o site inteiro como «novo». */
+  if (!caminhos.length) {
+    const erro = !resp.ok ? 'SITEMAP_HTTP_' + resp.status : 'SEM_SITEMAP';
+    await r.q(`UPDATE deployments SET processamento='FALHOU', passo='FIM', erro=? WHERE id=?`).bind(erro, d.id).run();
     return 'FIM';
   }
-  const caminhos = caminhosDoSitemap(await resp.text());
   const stmts = [];
   for (let i = 0; i < caminhos.length; i += 40) {             /* 40 × 2 parâmetros < 100 (limite D1) */
     const parte = caminhos.slice(i, i + 40);
