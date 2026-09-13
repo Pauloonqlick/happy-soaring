@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Inteligência — Happy Soaring</title>
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<!-- Os tokens do site (cor, letra, pesos) vêm do próprio /tema.css,
+     que o CMS escreve: a identidade fica sempre igual à do site. -->
+<link rel="stylesheet" href="/tema.css">
+<link rel="stylesheet" href="estilo.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+
+<header class="topo">
+  <a class="marca" href="/" translate="no">HAPPY <span>SOARING</span></a>
+  <p class="modulo">Inteligência</p>
+  <nav class="topo-nav" aria-label="Área administrativa">
+    <a href="/">Site</a>
+    <a href="/admin/">Gestão de conteúdos</a>
+  </nav>
+  <p class="quem" id="quem" aria-live="polite"></p>
+</header>
+
+<main class="corpo">
+  <section class="hoje" aria-labelledby="t-hoje">
+    <div class="hoje-cab">
+      <h1 id="t-hoje">Hoje</h1>
+      <p class="data" id="data"></p>
+    </div>
+
+    <p class="aviso">O módulo ainda não recolhe dados. Os blocos abaixo dizem o que se sabe — e, por agora, isso é nada.</p>
+
+    <ol class="blocos">
+      <li class="bloco">
+        <h2><span class="n">1</span> Está tudo bem?</h2>
+        <p class="vazio">Sem recolha de dados, não há verificações feitas. Isto não quer dizer que esteja tudo bem.</p>
+      </li>
+      <li class="bloco">
+        <h2><span class="n">2</span> O que mudou desde a última visita</h2>
+        <p class="vazio">Sem observações.</p>
+      </li>
+      <li class="bloco bloco-accoes">
+        <h2><span class="n">3</span> O que fazer hoje <small>no máximo 3</small></h2>
+        <p class="vazio">Nenhuma acção.</p>
+      </li>
+      <li class="bloco">
+        <h2><span class="n">4</span> Em observação</h2>
+        <p class="vazio">Nenhum episódio.</p>
+      </li>
+      <li class="bloco">
+        <h2><span class="n">5</span> Resultados</h2>
+        <p class="vazio">Nenhum resultado.</p>
+      </li>
+      <li class="bloco">
+        <h2><span class="n">6</span> O que ainda não sabemos</h2>
+        <ul class="lista">
+          <li>Publicações do site — por ligar</li>
+          <li>Search Console — por ligar</li>
+          <li>Inspecção de URL e rastreios — por ligar</li>
+        </ul>
+      </li>
+    </ol>
+  </section>
+
+  <aside class="lado">
+    <section class="painel" aria-labelledby="t-estado">
+      <h2 id="t-estado">Estado do módulo</h2>
+      <dl class="pares" id="estado"><dt>A carregar…</dt><dd></dd></dl>
+    </section>
+
+    <section class="painel" aria-labelledby="t-config">
+      <h2 id="t-config">Configuração base</h2>
+      <h3>Objectivos de negócio</h3>
+      <ul class="lista" id="objectivos"></ul>
+      <h3>Termos de marca</h3>
+      <ul class="etiquetas" id="marca"></ul>
+      <h3>Mercados</h3>
+      <p class="vazio" id="mercados"></p>
+      <h3>Concorrentes</h3>
+      <p class="vazio" id="concorrentes"></p>
+    </section>
+  </aside>
+</main>
+
+</body>
+</html>

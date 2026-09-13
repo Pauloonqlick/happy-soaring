@@ -88,7 +88,8 @@ const PASTAS_GERADAS = ['asas', 'pilot2wing', 'flow-paragliders-portugal',
 const PROIBIDAS = [
   'masters', 'entregas', 'catalogo-flow', 'mockups', '_arquivo',
   'editor', 'scripts', 'docs', 'node_modules', '__pycache__',
-  '.git', 'music/_apagados'
+  '.git', 'music/_apagados',
+  'inteligencia'     /* o módulo de inteligência: Worker próprio, publica-se à parte */
 ];
 const FICHEIROS_PROIBIDOS = [
   '_design.html', 'server.js', 'MODELO-LICENCA.txt',

@@ -1,0 +1,78 @@
+/* Interface do módulo de inteligência.
+   Os azuis e os painéis são os do site (pagina.css); a cor de destaque, a
+   letra e os pesos vêm do /tema.css carregado antes deste ficheiro. Os
+   valores de recurso só entram se o /tema.css falhar. */
+:root{
+  --papel:#071d3a;
+  --papel-2:#0d2a4d;
+  --tinta:#fff;
+  --tinta-fraca:rgba(255,255,255,.68);
+  --linha:rgba(255,255,255,.16);
+  --painel:#fff;
+  --painel-tinta:#16202c;
+  --painel-fraca:#5b6878;
+  --painel-linha:#dfe6ef;
+  --destaque:var(--orange, #ff6a13);
+  --destaque-tinta:var(--laranja-tinta, #a63f00);
+  --letra:var(--fonte, 'Segoe UI', system-ui, -apple-system, sans-serif);
+  --rotulo-tam:var(--rotulo, 11.5px);
+  --rotulo-tr:var(--tr-rotulo, .139em);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--papel);color:var(--tinta);font-family:var(--letra);
+  font-size:16px;line-height:1.55}
+a{color:inherit}
+a:focus-visible{outline:2px solid var(--destaque);outline-offset:3px}
+
+/* ---- cabeçalho: o mesmo desenho da marca do site ---- */
+.topo{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 24px;
+  padding:22px clamp(18px,4vw,56px);border-bottom:1px solid var(--linha)}
+.marca{font-weight:800;letter-spacing:.02em;text-decoration:none;font-size:20px}
+.marca span{color:var(--destaque)}
+.modulo{margin:0;font-size:var(--rotulo-tam);letter-spacing:var(--rotulo-tr);
+  text-transform:uppercase;color:var(--tinta-fraca)}
+.topo-nav{display:flex;gap:18px;margin-left:auto}
+.topo-nav a{font-size:14px;color:var(--tinta-fraca);text-decoration:none}
+.topo-nav a:hover{color:var(--tinta);text-decoration:underline}
+.quem{margin:0;font-size:13px;color:var(--tinta-fraca);flex-basis:100%;text-align:right}
+
+/* ---- corpo ---- */
+.corpo{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,360px);
+  gap:clamp(20px,3vw,40px);padding:clamp(22px,3vw,40px) clamp(18px,4vw,56px) 64px;
+  max-width:1440px;margin:0 auto}
+@media (max-width:900px){.corpo{grid-template-columns:1fr}}
+
+.hoje-cab{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+h1{margin:0;font-size:clamp(30px,4.4vw,46px);font-weight:800;line-height:1.05}
+.data{margin:0;color:var(--tinta-fraca);font-variant-numeric:tabular-nums}
+.aviso{margin:14px 0 26px;max-width:68ch;color:var(--tinta-fraca)}
+
+.blocos{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.bloco{background:var(--papel-2);border:1px solid var(--linha);padding:18px 20px}
+.bloco h2{margin:0 0 8px;font-size:17px;font-weight:700;display:flex;align-items:baseline;gap:10px}
+.bloco h2 small{font-weight:400;font-size:12px;color:var(--tinta-fraca);letter-spacing:.04em}
+.n{display:inline-grid;place-items:center;min-width:24px;height:24px;font-size:12px;font-weight:800;
+  color:var(--papel);background:var(--tinta-fraca)}
+.bloco-accoes{border-left:3px solid var(--destaque)}
+.vazio{margin:0;color:var(--tinta-fraca)}
+
+.lista{margin:0;padding-left:18px;color:var(--tinta-fraca)}
+.lista li+li{margin-top:4px}
+
+/* ---- lado: ilhas claras, como as tabelas do site ---- */
+.lado{display:grid;gap:14px;align-content:start}
+.painel{background:var(--painel);color:var(--painel-tinta);padding:18px 20px}
+.painel h2{margin:0 0 12px;font-size:var(--rotulo-tam);letter-spacing:var(--rotulo-tr);
+  text-transform:uppercase;color:var(--painel-fraca)}
+.painel h3{margin:16px 0 6px;font-size:14px}
+.painel .vazio,.painel .lista{color:var(--painel-fraca)}
+.pares{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px}
+.pares dt{color:var(--painel-fraca)}
+.pares dd{margin:0;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.ok{color:#1d6b3a;font-weight:600}
+.falha{color:var(--destaque-tinta);font-weight:600}
+.etiquetas{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.etiquetas li{font-size:13px;border:1px solid var(--painel-linha);padding:2px 8px}
+.etiquetas li em{font-style:normal;color:var(--painel-fraca);font-size:11px;margin-left:4px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}

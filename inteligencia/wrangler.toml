@@ -1,0 +1,45 @@
+# MÓDULO DE INTELIGÊNCIA HAPPY SOARING — Worker próprio, separado do site público.
+# O site continua estático no Cloudflare Pages; este Worker só apanha
+# happysoaring.com/admin/inteligencia e o que está por baixo.
+#
+# NUNCA vai para a publicação do site: `inteligencia` está nas PROIBIDAS
+# do scripts/publicar.mjs. Publica-se só com inteligencia/scripts/publicar.mjs.
+
+name = "hs-inteligencia"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+# Sem endereço público fora do domínio: só a rota abaixo, atrás do Access.
+workers_dev = false
+preview_urls = false
+
+# Duas rotas e não um prefixo solto: `happysoaring.com/admin/inteligencia*`
+# apanharia também /admin/inteligencia-qualquer-coisa.
+routes = [
+  { pattern = "happysoaring.com/admin/inteligencia", zone_name = "happysoaring.com" },
+  { pattern = "happysoaring.com/admin/inteligencia/*", zone_name = "happysoaring.com" }
+]
+
+# A interface. `run_worker_first`: nenhum ficheiro é servido sem passar
+# primeiro pela validação do Access no Worker.
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = true
+
+[vars]
+# Preenchidos depois de criar a aplicação no Cloudflare Access.
+# Vazios = o Worker recusa tudo (503). Não são segredos.
+ACCESS_TEAM_DOMAIN = ""
+ACCESS_AUD = ""
+EMAILS_AUTORIZADOS = "paulo.pereira@happysoaring.com"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "hs-inteligencia"
+database_id = "00000000-0000-0000-0000-000000000000"   # substituído ao criar a base
+migrations_dir = "migrations"
+
+[[r2_buckets]]
+binding = "BRUTO"
+bucket_name = "hs-inteligencia-bruto"

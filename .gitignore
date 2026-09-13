@@ -92,3 +92,8 @@ credenciais/
 *.secret
 *.pem
 *.key
+
+# Módulo de inteligência — ficheiros locais do wrangler e variáveis de desenvolvimento
+inteligencia/.wrangler/
+inteligencia/.dev.vars
+inteligencia/dist/
