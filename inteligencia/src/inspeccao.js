@@ -87,7 +87,13 @@ export function lerResultado(caminho, j, agora) {
   const i = j?.inspectionResult || {};
   const s = i.indexStatusResult || {};
   const ricos = i.richResultsResult
-    ? { veredicto: i.richResultsResult.verdict || null, tipos: (i.richResultsResult.detectedItems || []).map(x => x.richResultType) }
+    ? {
+      veredicto: i.richResultsResult.verdict || null,
+      tipos: (i.richResultsResult.detectedItems || []).map(x => x.richResultType),
+      /* as mensagens do Google, sem repetições: dizem o que falta corrigir */
+      problemas: [...new Set((i.richResultsResult.detectedItems || []).flatMap(x => (x.items || []).flatMap(it =>
+        (it.issues || []).filter(q => q.severity === 'ERROR').map(q => x.richResultType + ': ' + q.issueMessage))))].slice(0, 10)
+    }
     : null;
   return {
     caminho, inspeccionado_em: agora,

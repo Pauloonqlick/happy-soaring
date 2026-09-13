@@ -16,7 +16,7 @@
     alteracao_em: 'Alterada em', tipo_alteracao: 'Tipo de alteração', publicacao: 'Publicação', pedido_em: 'Pedido de indexação',
     ultima_inspeccao: 'Última inspecção', url: 'URL', impressoes_28d: 'Impressões (28 dias)',
     semanas_com_impressoes: 'Semanas com impressões', http: 'Resposta HTTP agora', destino: 'Redirecciona para',
-    verificado_em: 'Verificado em', pagina_nova: 'Página nova'
+    verificado_em: 'Verificado em', pagina_nova: 'Página nova', erros_dados_estruturados: 'Erros indicados pelo Google'
   };
   const DATAS = new Set(['inspeccionado_em', 'ultimo_rastreio', 'alteracao_em', 'pedido_em', 'ultima_inspeccao']);
   const DECISOES = { APROVAR: 'Aprovado', IGNORAR: 'Ignorado', ADIAR: 'Adiado', PEDIR_EVIDENCIA: 'Pedida mais evidência' };
@@ -24,7 +24,7 @@
   function valor(k, v) {
     if (v === true) return 'sim';
     if (v === false) return 'não';
-    if (Array.isArray(v)) return v.join(', ');
+    if (Array.isArray(v)) return v.join(k === 'erros_dados_estruturados' ? ' · ' : ', ');
     if (DATAS.has(k)) return data(v);
     return String(v);
   }

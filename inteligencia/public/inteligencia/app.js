@@ -147,9 +147,13 @@
         for (const d of b6.decisoes_a_rever) lim.push(el('li', 'Decisão activa a rever desde ' + dia(d.revisao_em) + ': ' + d.titulo));
         mostrarLista($('limitacoes'), lim);
         $('limitacoes').hidden = false;
-        mostrarLista($('hipoteses'), b6.hipoteses_em_teste.map(a => linhaAssunto(a, '')));
+        const hip = b6.hipoteses_em_teste.slice(0, 5).map(a => linhaAssunto(a, ''));
+        if (b6.hipoteses_em_teste.length > 5) hip.push(el('li', 'e mais ' + (b6.hipoteses_em_teste.length - 5) + '.'));
+        mostrarLista($('hipoteses'), hip);
         $('t-hipoteses').hidden = !b6.hipoteses_em_teste.length;
-        mostrarLista($('pendentes'), b6.decisoes_pendentes.map(a => linhaAssunto(a, '')));
+        const pend = b6.decisoes_pendentes.slice(0, 5).map(a => linhaAssunto(a, ''));
+        if (b6.decisoes_pendentes.length > 5) pend.push(el('li', 'e mais ' + (b6.decisoes_pendentes.length - 5) + ' à espera de lugar nas acções de hoje.'));
+        mostrarLista($('pendentes'), pend);
         $('t-pendentes').hidden = !b6.decisoes_pendentes.length;
         $('nao-verificado').textContent = 'O módulo ainda não verifica: ' + b6.ainda_nao_verificado.join('; ') + '.';
       })

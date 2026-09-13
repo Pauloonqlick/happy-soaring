@@ -156,7 +156,7 @@ test('resultado: lê o que o Google devolve, sem inventar o que falta', () => {
   assert.equal(l.veredicto, 'NEUTRAL');
   assert.equal(l.ultimo_rastreio, '2026-09-01T00:00:00Z');
   assert.equal(JSON.parse(l.referencias).length, 20);
-  assert.deepEqual(JSON.parse(l.resultados_ricos), { veredicto: 'PASS', tipos: ['FAQ'] });
+  assert.deepEqual(JSON.parse(l.resultados_ricos), { veredicto: 'PASS', tipos: ['FAQ'], problemas: [] });
   assert.equal(l.canonico_google, null);
   const vazio = lerResultado('/b/', {}, '2026-09-13T12:00:00Z');
   assert.equal(vazio.ultimo_rastreio, null);
@@ -357,4 +357,13 @@ test('API: a fila lê-se atrás do Access; registar um pedido exige JSON, cabeç
   } finally {
     globalThis.fetch = original;
   }
+});
+
+test('resultados enriquecidos: guardam-se as mensagens de erro do Google, sem repetições', () => {
+  const l = lerResultado('/asas/x/', { inspectionResult: { indexStatusResult: {}, richResultsResult: { verdict: 'FAIL', detectedItems: [
+    { richResultType: 'Fragmentos do produto', items: [{ name: 'X', issues: [{ issueMessage: 'Falta offers.', severity: 'ERROR' }, { issueMessage: 'Aviso.', severity: 'WARNING' }] },
+      { name: 'Y', issues: [{ issueMessage: 'Falta offers.', severity: 'ERROR' }] }] },
+    { richResultType: 'Guias de navegação', items: [{ name: 'Item sem nome' }] }
+  ] } } }, '2026-09-13T12:00:00Z');
+  assert.deepEqual(JSON.parse(l.resultados_ricos).problemas, ['Fragmentos do produto: Falta offers.']);
 });

@@ -119,9 +119,12 @@ export const TIPOS = {
     titulo: 'Dados estruturados com erros', categoria: 'Apresentação e técnica', acao: 'DECISAO', esforco: 'BAIXO',
     confianca: ['ALTA', 'erro reportado pela validação do Google'],
     diagnostico: ev => 'Observado: o Google reporta erros nos dados estruturados' +
-      (ev.tipos_resultado && ev.tipos_resultado.length ? ' (' + ev.tipos_resultado.join(', ') + ')' : '') + '. O resultado enriquecido pode não aparecer.',
-    solucao: () => 'Correcção técnica: corrigir os dados estruturados que o Google indica.',
-    nao_fazer: ['Não acrescentar tipos novos de dados estruturados na mesma alteração.'],
+      (ev.erros_dados_estruturados ? ': ' + ev.erros_dados_estruturados.join('; ')
+        : (ev.tipos_resultado && ev.tipos_resultado.length ? ' (' + ev.tipos_resultado.join(', ') + '); o detalhe chega na próxima inspecção' : '')) +
+      '. O resultado enriquecido pode não aparecer.',
+    solucao: () => 'Correcção técnica: corrigir os dados estruturados que o Google indica — ou retirar o tipo, se o campo em falta não puder ser preenchido com informação verdadeira.',
+    nao_fazer: ['Não acrescentar tipos novos de dados estruturados na mesma alteração.',
+      'Não preencher campos em falta com informação inventada (preços, avaliações, datas).'],
     riscos: [],
     medicao: 'Veredicto dos resultados enriquecidos depois de um rastreio posterior.'
   },
@@ -164,12 +167,17 @@ const ricosComErro = i => { try { return JSON.parse(i.resultados_ricos || 'null'
 
 function resumoInspeccao(i) {
   if (!i) return null;
-  let tipos = null;
-  try { tipos = JSON.parse(i.resultados_ricos || 'null')?.tipos || null; } catch (e) { tipos = null; }
+  let tipos = null, problemas = null;
+  try {
+    const r = JSON.parse(i.resultados_ricos || 'null');
+    tipos = r?.tipos || null;
+    problemas = r?.problemas?.length ? r.problemas : null;
+  } catch (e) { tipos = null; }
   return {
     inspeccionado_em: i.inspeccionado_em, veredicto: i.veredicto, cobertura: i.cobertura, estado_obtencao: i.estado_obtencao,
     estado_indexacao: i.estado_indexacao, estado_robots: i.estado_robots, ultimo_rastreio: i.ultimo_rastreio,
-    canonico_google: i.canonico_google, canonico_declarado: i.canonico_declarado, tipos_resultado: tipos
+    canonico_google: i.canonico_google, canonico_declarado: i.canonico_declarado, tipos_resultado: tipos,
+    ...(problemas ? { erros_dados_estruturados: problemas } : {})
   };
 }
 
