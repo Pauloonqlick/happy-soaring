@@ -14,6 +14,7 @@ import { executarCicloGsc, resumoSearchConsole } from './search-console.js';
 import { executarCicloInspeccao, lerIndexacao, registarPedido } from './inspeccao.js';
 import { executarCicloAssuntos, lerHoje, lerAssunto, decidirAssunto, lerPacote } from './assuntos.js';
 import { executarCicloAvisos, enviarAvisoTeste } from './avisos.js';
+import { executarCicloDecisoes, lerAprendizagem, gravarLicao } from './aprendizagem.js';
 import {
   lerConhecimento, gravarConhecimento, historicoConhecimento, TABELAS_CONHECIMENTO,
   lerContactos, registarContacto, lerConfiguracao, gravarImportancia, gravarPagina
@@ -56,6 +57,7 @@ async function escrita(request, env, p) {
   if (p === API + '/configuracao/objectivo') return resposta(await gravarImportancia(env.DB, corpo));
   if (p === API + '/configuracao/pagina') return resposta(await gravarPagina(env.DB, corpo));
   if (p === API + '/avisos/teste') return resposta(await enviarAvisoTeste(env));
+  if (p === API + '/aprendizagem/licao') return resposta(await gravarLicao(env.DB, corpo, { origem: 'PAULO' }));
   return json({ erro: 'Não encontrado' }, 404);
 }
 
@@ -91,6 +93,7 @@ async function leitura(env, p, url, email) {
   }
   if (p === API + '/contactos') return json(await lerContactos(env.DB));
   if (p === API + '/configuracao') return json(await lerConfiguracao(env.DB));
+  if (p === API + '/aprendizagem') return json(await lerAprendizagem(env.DB));
   return null;
 }
 
@@ -133,19 +136,21 @@ export default {
        minuto terminado em 4          → inspecção de URL
        minutos 18, 38 e 58            → assuntos (detecção e avaliações)
        minuto 08 de cada hora         → avisos críticos por email
+       minutos 28 e 48                → decisões automáticas
        os outros                      → publicações
      Cada uma tem o orçamento inteiro da sua execução. */
   async scheduled(evento, env, ctx) {
     const minuto = new Date(evento.scheduledTime || Date.now()).getUTCMinutes();
     const vez = minuto % 10 === 0 ? 'search_console' : minuto % 10 === 4 ? 'inspeccao'
-      : minuto % 20 === 18 ? 'assuntos' : minuto === 8 ? 'avisos' : 'publicacoes';
+      : minuto % 20 === 18 ? 'assuntos' : minuto === 8 ? 'avisos' : minuto === 28 || minuto === 48 ? 'decisoes' : 'publicacoes';
     ctx.waitUntil((async () => {
       const nome = 'ciclo_' + vez;
       try {
         const r = vez === 'search_console' ? await executarCicloGsc(env)
           : vez === 'inspeccao' ? await executarCicloInspeccao(env)
           : vez === 'assuntos' ? await executarCicloAssuntos(env)
-          : vez === 'avisos' ? await executarCicloAvisos(env) : await executarCiclo(env);
+          : vez === 'avisos' ? await executarCicloAvisos(env)
+          : vez === 'decisoes' ? await executarCicloDecisoes(env) : await executarCiclo(env);
         console.log(JSON.stringify({ evento: nome, ...r }));
       } catch (e) {
         console.log(JSON.stringify({ evento: nome + '_falhou', erro: String(e && e.message || e).slice(0, 300) }));

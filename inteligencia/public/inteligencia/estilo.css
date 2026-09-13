@@ -165,3 +165,7 @@ button.botao-link{background:none;border:0;padding:0;cursor:pointer;text-decorat
 .tabela-estreita{min-width:0}
 .tabela td input[type=checkbox]{width:18px;height:18px}
 .botao-painel{margin-top:12px}
+details#mudar{margin-top:10px}
+details#mudar summary{cursor:pointer;font-size:14px;color:var(--painel-fraca)}
+.manual{white-space:pre-wrap;background:var(--painel);color:var(--painel-tinta);padding:18px 20px;font:14px/1.6 ui-monospace,Consolas,monospace;overflow-x:auto;max-width:960px}
+.licao-estado{margin-left:8px}

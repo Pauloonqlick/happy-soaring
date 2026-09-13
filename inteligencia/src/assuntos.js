@@ -377,7 +377,7 @@ export async function carregarContexto(db, agora) {
   const [ass, dec, pac, ava, decAct, hip, factos, niveis, pobj, objs, termos, meta, fila, imp] = await Promise.all([
     db.prepare('SELECT * FROM assuntos WHERE resolvido_em IS NULL OR resolvido_em > ?').bind(antes60).all(),
     db.prepare('SELECT * FROM assunto_decisoes ORDER BY decidido_em, id').all(),
-    db.prepare('SELECT id, assunto_chave, decisao_id, caminho, criado_em, deployment_id, publicado_em FROM pacotes_trabalho ORDER BY id').all(),
+    db.prepare('SELECT id, assunto_chave, decisao_id, caminho, criado_em, deployment_id, publicado_em, licao_chave, implementacao FROM pacotes_trabalho ORDER BY id').all(),
     db.prepare('SELECT * FROM avaliacoes').all(),
     db.prepare("SELECT * FROM decisoes_activas WHERE estado = 'ACTIVA'").all(),
     db.prepare("SELECT * FROM hipoteses_eliminadas WHERE estado = 'ELIMINADA'").all(),
@@ -623,28 +623,39 @@ export async function lerHoje(db, { agora = new Date().toISOString(), desde = nu
   /* 1 */
   const criticos = activos.filter(v => v.critico && v.estado !== 'RETIRADO' && v.estado !== 'BLOQUEADO');
 
-  /* 3 — só AGIR AGORA; as acções operacionais agrupadas num só lugar */
-  const decisoes = activos.filter(v => v.estado === 'PROPOSTO' && v.acao === 'DECISAO');
-  const pacotesPorPublicar = ctx.pacotes.filter(p => !p.publicado_em &&
-    activos.some(v => v.pacote && v.pacote.id === p.id));
-  const operacional = {
-    pedir_indexacao: ctx.fila.resumo.por_pedir,
-    pacotes_por_implementar: pacotesPorPublicar.length
-  };
-  const temOperacional = operacional.pedir_indexacao + operacional.pacotes_por_implementar > 0;
-  const accoes = [];
-  const criticasDec = decisoes.filter(v => v.critico), restoDec = decisoes.filter(v => !v.critico);
-  for (const v of criticasDec) accoes.push({ tipo: 'DECISAO', ...linha(v) });
-  if (temOperacional) accoes.push({ tipo: 'OPERACIONAL', ...operacional });
-  for (const v of restoDec) accoes.push({ tipo: 'DECISAO', ...linha(v) });
+  /* 3 — O QUE PRECISA DO PAULO. O módulo decide por regras e o Claude implementa;
+     aqui só fica o que nenhuma regra decide há mais de uma hora, e as decisões
+     activas cuja data de revisão chegou. */
+  const semRegra = activos.filter(v => v.estado === 'PROPOSTO' && v.acao === 'DECISAO' && t(agora) - t(v.detectado_em) > 36e5);
+  const accoes = semRegra.map(v => ({ tipo: 'DECISAO', ...linha(v) }));
   const accoesHoje = accoes.slice(0, MAX_ACCOES);
-  const decisoesPendentes = accoes.slice(MAX_ACCOES).filter(a => a.tipo === 'DECISAO');
+  const decisoesPendentes = accoes.slice(MAX_ACCOES);
+
+  /* trabalho do Claude: pacotes aprovados por implementar, agrupados pela lição ou pelo tipo */
+  const porImplementar = new Map();
+  for (const v of activos) {
+    if (!v.pacote || v.pacote.publicado_em || v.estado !== 'DECIDIDO') continue;
+    const g = v.pacote.licao_chave || v.tipo;
+    if (!porImplementar.has(g)) porImplementar.set(g, { grupo: g, titulo: v.titulo, paginas: 0 });
+    porImplementar.get(g).paginas++;
+  }
 
   /* 2 */
   const mudou = desde ? {
     desde,
     assuntos_novos: vistos.filter(v => !v.resolvido_em && depois(v.detectado_em, desde)).map(linha),
     resolvidos: vistos.filter(v => v.resolvido_em && depois(v.resolvido_em, desde) && v.estado === 'FECHADO').map(linha),
+    decisoes_tomadas: (() => {
+      const c = {};
+      for (const lista of ctx.decisoesPorChave.values()) {
+        for (const d of lista) {
+          if (!depois(d.decidido_em, desde)) continue;
+          const k = (d.decidido_por || 'PAULO') + ' ' + d.decisao;
+          c[k] = (c[k] || 0) + 1;
+        }
+      }
+      return Object.entries(c).map(([k, n]) => ({ por: k.split(' ')[0], decisao: k.split(' ')[1], n }));
+    })(),
     rastreios: ctx.fila.paginas.filter(p => depois(p.ultimo_rastreio, desde))
       .sort((x, y) => String(y.ultimo_rastreio).localeCompare(String(x.ultimo_rastreio)))
       .map(p => ({ caminho: p.caminho, ultimo_rastreio: p.ultimo_rastreio }))
@@ -697,16 +708,18 @@ export async function lerHoje(db, { agora = new Date().toISOString(), desde = nu
     ultimo_ciclo: ctx.ultimoCiclo,
     bloco1: { criticos: criticos.map(linha), verificadas: ctx.ultimoCiclo ? ctx.ultimoCiclo.inspeccionadas : 0 },
     bloco2: mudou,
-    bloco3: { accoes: accoesHoje, maximo: MAX_ACCOES },
-    bloco4: { episodios, em_observacao: emObservacao },
+    bloco3: {
+      accoes: accoesHoje, maximo: MAX_ACCOES,
+      decisoes_a_rever: ctx.decisoesActivas.filter(d => d.revisao_em && d.revisao_em <= agora.slice(0, 10))
+        .map(d => ({ id: d.id, titulo: d.titulo, revisao_em: d.revisao_em }))
+    },
+    bloco4: { episodios, em_observacao: emObservacao, trabalho_claude: [...porImplementar.values()] },
     bloco5: { resultados, desde: limiteResultados },
     bloco6: {
       limitacoes,
       hipoteses_em_teste: activos.filter(v => v.porta && v.porta.saida === 'INVESTIGAR').map(linha),
       factos_por_confirmar: ctx.factos.filter(f => f.estado === 'POR_CONFIRMAR').length,
       decisoes_pendentes: decisoesPendentes,
-      decisoes_a_rever: ctx.decisoesActivas.filter(d => d.revisao_em && d.revisao_em <= agora.slice(0, 10))
-        .map(d => ({ id: d.id, titulo: d.titulo, revisao_em: d.revisao_em })),
       ainda_nao_verificado: AINDA_NAO_VERIFICADO
     }
   };
@@ -725,7 +738,7 @@ export function regrasAplicaveis(v, ctx) {
   };
 }
 
-function textosDe(v) {
+export function textosDe(v) {
   const def = TIPOS[v.tipo];
   if (!def) return null;
   return {
@@ -763,6 +776,24 @@ export async function lerPacote(db, id) {
   return p;
 }
 
+/* O pacote de trabalho para o Claude: o que alterar, porquê, o que respeitar, o que não tocar. */
+export function conteudoPacote(ficha, nota) {
+  const f = ficha.ficha;
+  return {
+    versao: 1,
+    assunto: ficha.titulo,
+    pagina: ficha.caminho.startsWith('/') ? 'https://happysoaring.com' + ficha.caminho : ficha.caminho,
+    objectivos: ficha.objectivos.map(o => o.nome),
+    o_que_alterar: f.solucao,
+    porque: { diagnostico: f.diagnostico, evidencia: ficha.evidencia },
+    nao_tocar: f.nao_fazer,
+    riscos: f.riscos,
+    medicao: f.medicao,
+    respeitar: ficha.regras,
+    nota_do_paulo: nota
+  };
+}
+
 const DATA = /^\d{4}-\d{2}-\d{2}$/;
 const texto = (s, max) => (typeof s === 'string' ? s.trim().slice(0, max) : '');
 
@@ -788,23 +819,10 @@ export async function decidirAssunto(db, id, corpo, { agora = new Date().toISOSt
     if (ficha.pacote && !ficha.avaliacao && ficha.decisao?.decisao === 'APROVAR') return { estado: 409, erro: 'Já está aprovado.' };
   }
 
-  const stmts = [db.prepare('INSERT INTO assunto_decisoes (assunto_chave, decisao, razao, adiar_ate, nota, decidido_em) VALUES (?, ?, ?, ?, ?, ?)')
+  const stmts = [db.prepare("INSERT INTO assunto_decisoes (assunto_chave, decisao, razao, adiar_ate, nota, decidido_em, decidido_por) VALUES (?, ?, ?, ?, ?, ?, 'PAULO')")
     .bind(ficha.chave, decisao, razao, adiar, nota, agora)];
   if (decisao === 'APROVAR') {
-    const f = ficha.ficha;
-    const conteudo = {
-      versao: 1,
-      assunto: ficha.titulo,
-      pagina: ficha.caminho.startsWith('/') ? 'https://happysoaring.com' + ficha.caminho : ficha.caminho,
-      objectivos: ficha.objectivos.map(o => o.nome),
-      o_que_alterar: f.solucao,
-      porque: { diagnostico: f.diagnostico, evidencia: ficha.evidencia },
-      nao_tocar: f.nao_fazer,
-      riscos: f.riscos,
-      medicao: f.medicao,
-      respeitar: ficha.regras,
-      nota_do_paulo: nota
-    };
+    const conteudo = conteudoPacote(ficha, nota);
     stmts.push(db.prepare(`INSERT INTO pacotes_trabalho (assunto_chave, decisao_id, caminho, conteudo, criado_em)
       VALUES (?, last_insert_rowid(), ?, ?, ?)`).bind(ficha.chave, ficha.caminho, JSON.stringify(conteudo), agora));
   }

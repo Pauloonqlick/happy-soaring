@@ -219,12 +219,10 @@ test('percurso completo: detectar → porta → aprovar → pacote → publicaç
   const hoje = await lerHoje(db, { agora: AGORA, desde: '2026-09-13T00:00:00.000Z' });
   assert.ok(db.cont.consultas - antesHoje <= 40, 'consultas do «Hoje»: ' + (db.cont.consultas - antesHoje));
   assert.deepEqual(hoje.bloco1.criticos.map(x => x.caminho), ['/b/'], 'só o crítico no bloco 1');
-  assert.equal(hoje.bloco3.accoes.length, 3);
-  assert.deepEqual(hoje.bloco3.accoes.map(x => x.tipo), ['DECISAO', 'OPERACIONAL', 'DECISAO'], 'crítico, operacionais agrupadas, depois o resto');
-  assert.equal(hoje.bloco3.accoes[0].caminho, '/b/');
-  assert.equal(hoje.bloco3.accoes[1].pedir_indexacao, 1, '/c/ nunca rastreada');
-  assert.equal(hoje.bloco3.accoes[2].caminho, '/a/');
-  assert.deepEqual(hoje.bloco3.accoes[2].objectivos, ['Cursos e formação'], 'cada linha mostra o objectivo');
+  assert.equal(hoje.bloco3.accoes.length, 0, 'acabado de detectar: primeiro decide o módulo');
+  const maisTarde = await lerHoje(db, { agora: '2026-09-13T14:00:00.000Z' });
+  assert.deepEqual(maisTarde.bloco3.accoes.map(x => x.caminho), ['/b/', '/a/', '/velha/'], 'sem decisão há mais de uma hora: precisa do Paulo, crítico primeiro');
+  assert.deepEqual(maisTarde.bloco3.accoes[1].objectivos, ['Cursos e formação'], 'cada linha mostra o objectivo');
   assert.equal(hoje.bloco2.assuntos_novos.length, 4);
   assert.ok(hoje.bloco6.ainda_nao_verificado.length > 0, 'o que não se verifica diz-se às claras');
   assert.ok(hoje.bloco6.limitacoes.every(l => typeof l === 'string'));
@@ -252,8 +250,8 @@ test('percurso completo: detectar → porta → aprovar → pacote → publicaç
   assert.ok(pacote.nao_tocar.length && pacote.o_que_alterar && pacote.medicao);
   assert.equal((await decidirAssunto(db, idB, { decisao: 'APROVAR' }, { agora: AGORA })).estado, 409, 'não se aprova duas vezes');
   const hoje2 = await lerHoje(db, { agora: AGORA });
-  assert.equal(hoje2.bloco3.accoes.find(x => x.tipo === 'OPERACIONAL').pacotes_por_implementar, 1);
-  assert.ok(!hoje2.bloco3.accoes.some(x => x.caminho === '/b/'), 'aprovado sai das decisões de hoje');
+  assert.deepEqual(hoje2.bloco4.trabalho_claude.map(x => [x.grupo, x.paginas]), [['BLOQUEADA_NOINDEX', 1]], 'aprovado passa a trabalho do Claude');
+  assert.ok(!hoje2.bloco3.accoes.some(x => x.caminho === '/b/'), 'aprovado sai do que precisa do Paulo');
 
   /* o Claude implementa; a publicação é observada e liga-se ao pacote */
   s.exec(`INSERT INTO deployments (id, url, criado_em_cf, processamento) VALUES ('d0', 'x', '2026-09-01T00:00:00Z', 'PROCESSADO'),

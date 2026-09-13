@@ -20,6 +20,7 @@
   };
   const DATAS = new Set(['inspeccionado_em', 'ultimo_rastreio', 'alteracao_em', 'pedido_em', 'ultima_inspeccao']);
   const DECISOES = { APROVAR: 'Aprovado', IGNORAR: 'Ignorado', ADIAR: 'Adiado', PEDIR_EVIDENCIA: 'Pedida mais evidência' };
+  const QUEM = { MODULO: 'pelo módulo', CLAUDE: 'pelo Claude', PAULO: 'por ti' };
 
   function valor(k, v) {
     if (v === true) return 'sim';
@@ -115,9 +116,12 @@
     grupo('Termos de marca', r.termos_de_marca, 'Nenhum.');
 
     /* decisão */
-    const podeDecidir = !a.resolvido_em && a.estado !== 'RETIRADO' && a.estado !== 'BLOQUEADO' &&
-      !(a.decisao && a.decisao.decisao === 'APROVAR' && a.pacote && !a.avaliacao);
-    $('caixa-decisao').hidden = !podeDecidir;
+    $('caixa-decisao').hidden = a.resolvido_em || a.estado === 'RETIRADO' || a.estado === 'BLOQUEADO';
+    $('decisao-actual').textContent = a.decisao
+      ? (DECISOES[a.decisao.decisao] || a.decisao.decisao) + ' ' + (QUEM[a.decisao.decidido_por] || '') + ' em ' + data(a.decisao.decidido_em) +
+        (a.decisao.adiar_ate ? ', até ' + dia(a.decisao.adiar_ate) : '') + (a.decisao.razao ? ' — ' + a.decisao.razao : '')
+      : 'Ainda sem decisão: o módulo decide quando houver evidência suficiente.';
+    $('mudar').hidden = !!a.resolvido_em;
     const operacional = a.acao === 'OPERACIONAL';
     $('rotulo-aprovar').hidden = operacional;
     $('nota-operacional').hidden = !operacional;
@@ -147,7 +151,7 @@
     /* histórico */
     const h = a.historico_decisoes;
     $('caixa-historico').hidden = !h.length;
-    lista($('historico'), h.slice().reverse().map(d => data(d.decidido_em) + ' · ' + (DECISOES[d.decisao] || d.decisao) +
+    lista($('historico'), h.slice().reverse().map(d => data(d.decidido_em) + ' · ' + (DECISOES[d.decisao] || d.decisao) + ' ' + (QUEM[d.decidido_por] || '') +
       (d.adiar_ate ? ' até ' + dia(d.adiar_ate) : '') + (d.razao ? ' — ' + d.razao : '') + (d.nota ? ' (nota: ' + d.nota + ')' : '')), '—');
 
     $('ficha').hidden = false;

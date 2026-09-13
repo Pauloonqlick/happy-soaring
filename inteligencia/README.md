@@ -24,11 +24,14 @@ src/inspeccao.js              inspecção de URL, rastreios e fila de indexaçã
 src/assuntos.js               assuntos, porta «Vale a pena agir agora?», «Hoje», pacotes (Fase 5)
 src/conhecimento.js           decisões activas, factos, hipóteses, contactos, configuração (Fase 5)
 src/avisos.js                 avisos críticos por email, pelo Resend (Fase 5)
+src/aprendizagem.js           decisões automáticas, lições e manual de boas práticas
 public/inteligencia/          interface (sem código de terceiros)
 migrations/                   esquema D1, só se acrescenta
 test/                         testes sem rede
 scripts/publicar.mjs          publicação do módulo, com --publicar
 scripts/pacotes.mjs           pacotes de trabalho aprovados, só leitura (para o Claude implementar)
+scripts/registar.mjs          o Claude regista lições e implementações
+scripts/manual.mjs            gera manual/boas-praticas.md a partir das lições
 ```
 
 ## Testar e publicar
@@ -78,7 +81,8 @@ sem ela é `UNKNOWN`. Nunca se deduz do país.
 
 A tarefa agendada é a mesma: aos minutos terminados em 0 é a vez do Search
 Console, aos terminados em 4 a da inspecção de URL, aos minutos 18, 38 e 58 a
-dos assuntos, ao minuto 08 de cada hora a dos avisos, nos outros das publicações.
+dos assuntos, ao minuto 08 de cada hora a dos avisos, aos minutos 28 e 48 a das decisões,
+nos outros das publicações.
 
 **Segredos necessários** (guardados por `scripts/autorizar-google.mjs`, que nunca
 mostra os valores): `GOOGLE_OAUTH_CLIENT_ID`, `GOOGLE_OAUTH_CLIENT_SECRET`,
@@ -158,3 +162,38 @@ Google do domínio principal não é tocado. Variáveis: `AVISOS_DE`, `AVISOS_PA
 **Segredo:** `RESEND_API_KEY` (chave só de envio, limitada a esse domínio), posto no
 painel do Worker. Sem ele nada é enviado. O botão «Enviar aviso de teste» no «Hoje»
 confirma a ligação (no máximo um a cada 10 minutos).
+
+## Decisões automáticas e aprendizagem
+
+**O Paulo não gere assuntos.** Desde 13/09/2026, o módulo decide por regras e o Claude
+implementa; o Paulo pode contrariar qualquer decisão na ficha («Mudar a decisão»).
+O bloco 3 do «Hoje» passou a «O que precisa de ti»: só o que nenhuma regra decide há
+mais de uma hora e as decisões activas a rever.
+
+| Assunto (confirmado ou crítico) | Decisão do módulo |
+|---|---|
+| correcções técnicas (bloqueios, erros, canónico, dados estruturados, desindexação) | aprovar → pacote para o Claude |
+| nunca rastreada, alteração sem rastreio | aguardar 14 dias o rastreio natural |
+| URL fora do sitemap que já redirecciona 301/308 | arquivar |
+| rastreada e não indexada | análise pelo Claude |
+| lição que não resultou | análise pelo Claude, nunca a mesma correcção sozinha |
+
+Nunca decide o que está por confirmar, bloqueado por decisão activa, retirado por
+hipótese eliminada, ou decidido pelo Paulo. Cada decisão guarda quem a tomou.
+O Claude publica sozinho **correcções técnicas** do site (autorização do Paulo de
+13/09/2026); o que muda texto, preços ou afirmações sobre o negócio precisa do «publica».
+
+**Lições.** Cada lição (`licoes`) descreve um erro real — sintoma, causa, correcção e a
+boa prática que o evita — e reconhece-o na evidência por uma expressão regular. O pacote
+aprovado leva a lição. Os resultados não se escrevem à mão: contam-se das avaliações dos
+pacotes (e, para lições de «não fazer nada», dos casos que se resolveram sozinhos).
+Estado: **confirmada** com 2 ou mais resultados positivos e nenhum pior; **não resultou**
+com uma piora ou duas avaliações sem efeito; **em teste** no resto.
+
+**Manual.** A página «Aprendizagem» e `node inteligencia/scripts/manual.mjs`
+(→ `inteligencia/manual/boas-praticas.md`) mostram as práticas confirmadas, em teste e
+as que não resultaram — para este site e para os próximos.
+
+Fluxo do Claude: `pacotes.mjs` → corrigir no site → commit → `registar.mjs implementacao
+<lição> <commit>` → publicar → o módulo liga a publicação, espera o rastreio posterior,
+avalia e actualiza a lição → `manual.mjs`.

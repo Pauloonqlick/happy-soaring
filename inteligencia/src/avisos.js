@@ -82,7 +82,10 @@ async function historico(db, agora) {
   return { avisados, ultimoEnvio: results.length ? results[results.length - 1].criado_em : null, enviados24h: conta?.n ?? 0 };
 }
 
-const AVISAVEIS = new Set(['PROPOSTO', 'DETETADO', 'REGRESSAO']);
+/* avisa-se o que é crítico, mesmo que o módulo já tenha decidido corrigir;
+   não se avisa o que o Paulo ignorou ou adiou, nem o que está bloqueado ou retirado */
+const avisavel = v => v.estado !== 'RETIRADO' && v.estado !== 'BLOQUEADO' &&
+  !(v.decisao && v.decisao.decidido_por === 'PAULO' && ['IGNORAR', 'ADIAR'].includes(v.decisao.decisao));
 
 export async function executarCicloAvisos(env, { fetchImpl = fetch, agora = new Date().toISOString() } = {}) {
   const relatorio = { enviado: false, motivo: null, assuntos: 0 };
@@ -91,7 +94,7 @@ export async function executarCicloAvisos(env, { fetchImpl = fetch, agora = new 
   const ctx = await carregarContexto(db, agora);
   const criticos = ctx.assuntos.filter(a => !a.resolvido_em && a.critico)
     .map(a => verAssunto(a, ctx))
-    .filter(v => AVISAVEIS.has(v.estado))
+    .filter(avisavel)
     .map(v => ({ id: v.id, chave: v.chave, titulo: v.titulo, caminho: v.caminho, detectado_em: v.detectado_em,
       nivel: v.nivel, objectivos: v.objectivos.map(o => o.nome) }));
   const h = await historico(db, agora);

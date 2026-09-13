@@ -68,6 +68,10 @@
         if (m) {
           for (const a of m.assuntos_novos.slice(0, 5)) { const li = linhaAssunto(a, ''); li.prepend(el('span', 'Novo: ', 'fraco')); extra.push(li); }
           for (const a of m.resolvidos.slice(0, 5)) { const li = linhaAssunto(a, ''); li.prepend(el('span', 'Resolvido: ', 'fraco')); extra.push(li); }
+          const QUEM = { MODULO: 'pelo módulo', CLAUDE: 'pelo Claude', PAULO: 'por ti' };
+          const DEC = { APROVAR: 'aprovado(s) para corrigir', IGNORAR: 'arquivado(s)', ADIAR: 'em espera', PEDIR_EVIDENCIA: 'em análise' };
+          const tomadas = m.decisoes_tomadas.map(d => d.n + ' ' + (DEC[d.decisao] || d.decisao) + ' ' + (QUEM[d.por] || ''));
+          if (tomadas.length) extra.push(el('li', 'Decisões: ' + tomadas.join(' · ') + '.'));
           if (m.rastreios.length) {
             extra.push(el('li', plural(m.rastreios.length, 'página rastreada', 'páginas rastreadas') + ' pelo Google: ' +
               m.rastreios.slice(0, 4).map(r => r.caminho).join(', ') + (m.rastreios.length > 4 ? '…' : '')));
@@ -76,28 +80,17 @@
         mostrarLista($('mudou-assuntos'), extra);
 
         /* 3 */
-        const accoes = h.bloco3.accoes;
+        const accoes = h.bloco3.accoes.map(a => linhaAssunto(a, ''));
+        for (const d of h.bloco3.decisoes_a_rever) {
+          const li = el('li');
+          const a = el('a', 'Rever a decisão activa «' + d.titulo + '» (data de revisão: ' + dia(d.revisao_em) + ')');
+          a.href = 'conhecimento/';
+          li.appendChild(a);
+          accoes.push(li);
+        }
         $('accoes').hidden = accoes.length > 0;
-        $('accoes').textContent = 'Nenhuma acção.';
-        mostrarLista($('accoes-lista'), accoes.map(a => {
-          if (a.tipo === 'DECISAO') return linhaAssunto(a, '');
-          const li = el('li', null, 'linha-assunto');
-          li.appendChild(el('strong', 'Acções operacionais'));
-          const ul = el('ul', null, 'lista');
-          if (a.pedir_indexacao) {
-            const i = el('li');
-            const link = el('a', 'Pedir indexação de ' + plural(a.pedir_indexacao, 'página', 'páginas'));
-            link.href = 'indexacao/';
-            i.appendChild(link);
-            ul.appendChild(i);
-          }
-          if (a.pacotes_por_implementar) {
-            ul.appendChild(el('li', plural(a.pacotes_por_implementar, 'pacote aprovado', 'pacotes aprovados') +
-              ' à espera de implementação — passar ao Claude'));
-          }
-          li.appendChild(ul);
-          return li;
-        }));
+        $('accoes').textContent = 'Nada precisa de ti. O módulo decide e o Claude implementa.';
+        mostrarLista($('accoes-lista'), accoes);
 
         /* 4 */
         const obs = h.bloco4.episodios, emObs = h.bloco4.em_observacao;
@@ -121,6 +114,9 @@
           itens4.push(li);
         }
         $('observacao').textContent = itens4.length ? 'Episódios abertos:' : 'Nenhum episódio.';
+        const trab = h.bloco4.trabalho_claude.map(g => el('li', g.titulo + ' — ' + plural(g.paginas, 'página', 'páginas') + ' por corrigir'));
+        mostrarLista($('trabalho-claude'), trab);
+        $('t-trabalho').hidden = !trab.length;
         mostrarLista($('observacao-lista'), itens4);
         $('nota-rastreio').textContent = h.nota_rastreio;
         $('nota-rastreio').hidden = !itens4.length;
@@ -144,7 +140,6 @@
           li.appendChild(a);
           lim.push(li);
         }
-        for (const d of b6.decisoes_a_rever) lim.push(el('li', 'Decisão activa a rever desde ' + dia(d.revisao_em) + ': ' + d.titulo));
         mostrarLista($('limitacoes'), lim);
         $('limitacoes').hidden = false;
         const hip = b6.hipoteses_em_teste.slice(0, 5).map(a => linhaAssunto(a, ''));

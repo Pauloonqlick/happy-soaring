@@ -195,12 +195,12 @@ test('tarefa agendada: minuto 0 Search Console, minuto 4 inspecção, 18/38/58 a
   console.log = m => chamadas.push(JSON.parse(m).evento);
   globalThis.fetch = async () => { throw new Error('rede proibida'); };
   try {
-    for (const minuto of [0, 2, 4, 8, 10, 16, 18, 24, 38, 48]) {
+    for (const minuto of [0, 2, 4, 8, 10, 16, 18, 24, 28, 38, 46]) {
       const esperas = [];
       await worker.scheduled({ scheduledTime: Date.UTC(2026, 8, 13, 12, minuto) }, env, { waitUntil: p => esperas.push(p) });
       await Promise.all(esperas);
     }
   } finally { console.log = logOriginal; globalThis.fetch = fetchOriginal; }
   assert.deepEqual(chamadas, ['ciclo_search_console', 'ciclo_publicacoes', 'ciclo_inspeccao', 'ciclo_avisos', 'ciclo_search_console',
-    'ciclo_publicacoes', 'ciclo_assuntos', 'ciclo_inspeccao', 'ciclo_assuntos', 'ciclo_publicacoes']);
+    'ciclo_publicacoes', 'ciclo_assuntos', 'ciclo_inspeccao', 'ciclo_decisoes', 'ciclo_assuntos', 'ciclo_publicacoes']);
 });

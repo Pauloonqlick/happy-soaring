@@ -20,7 +20,7 @@ if (id !== undefined && !/^\d{1,9}$/.test(id)) { console.error('Uso: node inteli
 
 const sql = id
   ? `SELECT id, assunto_chave, caminho, criado_em, deployment_id, publicado_em, conteudo FROM pacotes_trabalho WHERE id = ${Number(id)}`
-  : 'SELECT id, assunto_chave, caminho, criado_em, conteudo FROM pacotes_trabalho WHERE deployment_id IS NULL ORDER BY id';
+  : 'SELECT id, assunto_chave, caminho, criado_em, licao_chave, conteudo FROM pacotes_trabalho WHERE deployment_id IS NULL AND implementacao IS NULL ORDER BY id';
 const saida = execFileSync(process.execPath, [WRANGLER, 'd1', 'execute', 'hs-inteligencia', '--remote', '--json', '--command', sql],
   { cwd: MODULO, encoding: 'utf8', stdio: ['ignore', 'pipe', 'inherit'] });
 const linhas = JSON.parse(saida)[0]?.results || [];
@@ -29,7 +29,22 @@ if (!linhas.length) {
   console.log(id ? 'Pacote desconhecido.' : 'Nenhum pacote à espera de implementação.');
   process.exit(0);
 }
-for (const p of linhas) {
+/* sem número: um grupo por lição (ou tipo de assunto), com as páginas e o pacote exemplo */
+let mostrar = linhas;
+if (!id) {
+  const grupos = new Map();
+  for (const p of linhas) {
+    const g = p.licao_chave || p.assunto_chave.split(' ')[0];
+    if (!grupos.has(g)) grupos.set(g, []);
+    grupos.get(g).push(p);
+  }
+  for (const [g, ps] of grupos) {
+    console.log(`\n■ ${g} — ${ps.length} página(s): ` + ps.map(p => p.caminho).slice(0, 40).join(' ') + (ps.length > 40 ? ' …' : ''));
+  }
+  mostrar = [...grupos.values()].map(ps => ps[0]);
+  console.log('\nExemplo de cada grupo:');
+}
+for (const p of mostrar) {
   const c = JSON.parse(p.conteudo);
   console.log(`\n══ Pacote ${p.id} — ${c.assunto}`);
   console.log(`Página: ${c.pagina}   Objectivos: ${c.objectivos.join(', ') || 'sem objectivo configurado'}   Aprovado: ${p.criado_em}`);

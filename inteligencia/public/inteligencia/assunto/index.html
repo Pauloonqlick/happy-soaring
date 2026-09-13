@@ -23,6 +23,7 @@
     <a href="/inteligencia/conhecimento/">Conhecimento</a>
     <a href="/inteligencia/contactos/">Contactos</a>
     <a href="/inteligencia/configuracao/">Configuração</a>
+    <a href="/inteligencia/aprendizagem/">Aprendizagem</a>
     <a href="/">Site</a>
   </nav>
   <p class="quem" id="quem" aria-live="polite"></p>
@@ -69,6 +70,9 @@
 
       <section class="painel" id="caixa-decisao" hidden>
         <h2>Decisão</h2>
+        <p id="decisao-actual"></p>
+        <details id="mudar">
+        <summary>Mudar a decisão</summary>
         <form id="decidir" class="formulario" novalidate>
           <fieldset class="escolhas">
             <legend class="so-leitor">Decisão</legend>
@@ -85,6 +89,7 @@
           <button type="submit" class="botao">Registar decisão</button>
           <p class="sub" id="resultado-decisao" role="status"></p>
         </form>
+        </details>
       </section>
 
       <section class="painel" id="caixa-pacote" hidden>
