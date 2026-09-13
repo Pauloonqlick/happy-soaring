@@ -137,9 +137,16 @@ async function descobrir(env, r) {
   if (!res.ok) { await evento(r, 'PUBLICACOES_' + res.motivo, res.detalhe); return { novos: 0, motivo: res.motivo, detalhe: res.detalhe || null }; }
   if (res.parcial) await evento(r, 'PUBLICACOES_LISTAGEM_PARCIAL', res.parcial);
 
+  /* Uma só consulta para saber o que já é conhecido. Gravar de novo, uma a
+     uma, publicações já registadas esgotava o orçamento de consultas em
+     cada execução e nada chegava a ser processado (visto em produção a
+     13/09/2026, com 41 publicações). */
+  const { results: jaConhecidos } = await r.q('SELECT id FROM deployments').all();
+  const conhecidos = new Set(jaConhecidos.map(x => x.id));
+
   let novos = 0, interrompida = false;
   for (const d of res.lista) {
-    if (!d || !d.id || !d.url) continue;
+    if (!d || !d.id || !d.url || conhecidos.has(d.id)) continue;
     if (!r.sobra()) { interrompida = true; break; }
     const sucesso = d.latest_stage?.status === 'success';
     const prod = (d.environment || 'production') === 'production';

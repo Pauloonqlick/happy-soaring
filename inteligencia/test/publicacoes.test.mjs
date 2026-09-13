@@ -356,3 +356,23 @@ test('API do Pages: a primeira página vai sem `page` (com page=1 a API responde
   assert.equal(pedidosApi.length, 1);
   assert.match(pedidosApi[0], /\/deployments\?env=production$/);
 });
+
+test('muitas publicações já conhecidas: a descoberta não gasta o orçamento, e o processamento avança', async () => {
+  const db = await d1Falsa();
+  const muitas = Array.from({ length: 60 }, (_, i) => ({
+    id: 'dddddddd-0000-4000-8000-' + String(i).padStart(12, '0'), short_id: 'd' + i,
+    url: 'https://d' + i + '.happy-soaring.pages.dev', environment: 'production',
+    created_on: new Date(Date.UTC(2026, 8, 1, 0, i)).toISOString(), latest_stage: { name: 'deploy', status: 'success' }
+  }));
+  const f = fetchFalso({ deployments: muitas });
+  for (let i = 0; i < 4; i++) await executarCiclo(envCom(db), { fetchImpl: f });
+  assert.equal((await db.prepare('SELECT COUNT(*) AS n FROM deployments').first()).n, 60, 'todas descobertas');
+  const flag = await db.prepare("SELECT valor FROM esquema_meta WHERE chave='publicacoes_descoberta_completa'").first();
+  assert.equal(flag?.valor, '1', 'descoberta marcada como completa');
+
+  const antes = f.log.length;
+  const r = await executarCiclo(envCom(db), { fetchImpl: f });
+  const meta = f.log.slice(antes).filter(u => u.endsWith('/meta.json'));
+  assert.ok(meta.length >= 1, 'o processamento avança: leu pelo menos um meta.json');
+  assert.ok(r.orcamento.consultas <= ORCAMENTO.consultas + 2);
+});
