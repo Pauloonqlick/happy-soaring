@@ -295,7 +295,7 @@ async function passoDados(env, r, d) {
   /* a última alteração de cada página que ESTA publicação mudou (Fase 4) */
   stmts.push(env.DB.prepare(SQL_ALTERACOES_DE_UMA_PUBLICACAO).bind(d.id));
   /* um pacote aprovado fica ligado à primeira publicação posterior que alterou a sua página (Fase 5) */
-  stmts.push(env.DB.prepare(SQL_PACOTES_DE_UMA_PUBLICACAO).bind(d.id, d.id, d.id, d.id));
+  stmts.push(env.DB.prepare(SQL_PACOTES_DE_UMA_PUBLICACAO).bind(d.id));
   await r.lote(stmts);
   return 'FIM';
 }
@@ -330,12 +330,17 @@ ON CONFLICT(caminho) DO UPDATE SET
   ultima_alteracao_em = excluded.ultima_alteracao_em, deployment_id = excluded.deployment_id, tipo = excluded.tipo
 WHERE excluded.ultima_alteracao_em > paginas_alteracao.ultima_alteracao_em`;
 
+/* Um pacote liga-se à publicação que alterou a sua página e que veio depois da
+   aprovação — ou, se o Claude já registou a implementação, à publicação do commit
+   registado (a correcção pode ter ido para o ar antes de o módulo acabar de decidir). */
 export const SQL_PACOTES_DE_UMA_PUBLICACAO = `
 UPDATE pacotes_trabalho
-SET deployment_id = ?, publicado_em = (SELECT criado_em_cf FROM deployments WHERE id = ?)
+SET deployment_id = ?1, publicado_em = (SELECT criado_em_cf FROM deployments WHERE id = ?1)
 WHERE deployment_id IS NULL
-  AND criado_em < (SELECT criado_em_cf FROM deployments WHERE id = ?)
-  AND caminho IN (SELECT caminho FROM paginas_alteracao WHERE deployment_id = ?)`;
+  AND caminho IN (SELECT caminho FROM paginas_alteracao WHERE deployment_id = ?1)
+  AND (criado_em < (SELECT criado_em_cf FROM deployments WHERE id = ?1)
+    OR (implementacao IS NOT NULL AND length(json_extract(implementacao, '$.commit')) >= 7
+      AND (SELECT meta_commit FROM deployments WHERE id = ?1) LIKE json_extract(implementacao, '$.commit') || '%'))`;
 
 const PASSOS = { META: passoMeta, SITEMAP: passoSitemap, PAGINAS: passoPaginas, DADOS: passoDados };
 

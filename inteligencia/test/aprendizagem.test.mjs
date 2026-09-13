@@ -150,3 +150,25 @@ test('lição: validação, versões e manual gerado só com o que foi observado
   assert.doesNotMatch(a.manual, /Práticas confirmadas/, 'sem resultados, nada aparece como confirmado');
   assert.match(gerarManual([], AGORA), /Ainda não há lições/);
 });
+
+test('pacote aprovado depois de a correcção já estar publicada: liga-se pela implementação registada com o commit', async () => {
+  const { SQL_ALTERACOES_DE_UMA_PUBLICACAO, SQL_PACOTES_DE_UMA_PUBLICACAO } = await import('../src/publicacoes.js');
+  const { DatabaseSync } = await import('node:sqlite');
+  const s = new DatabaseSync(':memory:');
+  for (const f of MIGRACOES) s.exec(fs.readFileSync(f, 'utf8'));
+  s.exec(`INSERT INTO deployments (id, url, criado_em_cf, processamento, meta_commit) VALUES
+      ('d0', 'x', '2026-09-01T00:00:00Z', 'PROCESSADO', 'aaaaaaa0000000000000000000000000000000000'),
+      ('d1', 'x', '2026-09-13T18:15:00Z', 'PROCESSADO', '1d2ddcb0000000000000000000000000000000000');
+    UPDATE deployments SET anterior_id = 'd0' WHERE id = 'd1';
+    INSERT INTO deployment_paginas (deployment_id, caminho, estado, resumo_conteudo) VALUES
+      ('d0', '/a/', 'LIDA', 'x'), ('d1', '/a/', 'LIDA', 'y'), ('d0', '/b/', 'LIDA', 'x'), ('d1', '/b/', 'LIDA', 'y'), ('d0', '/c/', 'LIDA', 'x'), ('d1', '/c/', 'LIDA', 'y');
+    INSERT INTO assunto_decisoes (id, assunto_chave, decisao, decidido_em) VALUES (1, 'X /a/', 'APROVAR', '2026-09-13T18:28:00Z'), (2, 'X /b/', 'APROVAR', '2026-09-13T18:28:00Z'), (3, 'X /c/', 'APROVAR', '2026-09-13T18:00:00Z');
+    INSERT INTO pacotes_trabalho (assunto_chave, decisao_id, caminho, conteudo, criado_em, implementacao) VALUES
+      ('X /a/', 1, '/a/', '{}', '2026-09-13T18:28:00Z', '{"commit":"1d2ddcb"}'),
+      ('X /b/', 2, '/b/', '{}', '2026-09-13T18:28:00Z', NULL),
+      ('X /c/', 3, '/c/', '{}', '2026-09-13T18:00:00Z', NULL);`);
+  s.prepare(SQL_ALTERACOES_DE_UMA_PUBLICACAO).run('d1');
+  s.prepare(SQL_PACOTES_DE_UMA_PUBLICACAO).run('d1');
+  const r = Object.fromEntries(s.prepare('SELECT caminho, deployment_id FROM pacotes_trabalho').all().map(x => [x.caminho, x.deployment_id]));
+  assert.deepEqual(r, { '/a/': 'd1', '/b/': null, '/c/': 'd1' }, 'pelo commit registado, ou por ter sido aprovado antes; sem nenhum dos dois, não se liga');
+});

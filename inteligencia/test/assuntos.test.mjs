@@ -258,7 +258,7 @@ test('percurso completo: detectar → porta → aprovar → pacote → publicaç
     ('d1', 'x', '2026-09-14T10:00:00Z', 'PROCESSADO');
     UPDATE deployments SET anterior_id = 'd0' WHERE id = 'd1';
     INSERT INTO deployment_paginas (deployment_id, caminho, estado, resumo_conteudo) VALUES ('d0', '/b/', 'LIDA', 'x1'), ('d1', '/b/', 'LIDA', 'x2')`);
-  await db.batch([db.prepare(SQL_ALTERACOES_DE_UMA_PUBLICACAO).bind('d1'), db.prepare(SQL_PACOTES_DE_UMA_PUBLICACAO).bind('d1', 'd1', 'd1', 'd1')]);
+  await db.batch([db.prepare(SQL_ALTERACOES_DE_UMA_PUBLICACAO).bind('d1'), db.prepare(SQL_PACOTES_DE_UMA_PUBLICACAO).bind('d1')]);
   assert.equal(s.prepare('SELECT deployment_id FROM pacotes_trabalho').get().deployment_id, 'd1');
   assert.equal((await lerAssunto(db, idB, { agora: '2026-09-14T12:00:00Z' })).estado, 'PUBLICADO');
 
