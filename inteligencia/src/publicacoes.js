@@ -134,7 +134,7 @@ async function listarDeployments(env, r, todas) {
 async function descobrir(env, r) {
   const completa = (await r.q("SELECT valor FROM esquema_meta WHERE chave='publicacoes_descoberta_completa'").first())?.valor === '1';
   const res = await listarDeployments(env, r, !completa);
-  if (!res.ok) { await evento(r, 'PUBLICACOES_' + res.motivo, res.detalhe); return { novos: 0, motivo: res.motivo }; }
+  if (!res.ok) { await evento(r, 'PUBLICACOES_' + res.motivo, res.detalhe); return { novos: 0, motivo: res.motivo, detalhe: res.detalhe || null }; }
   if (res.parcial) await evento(r, 'PUBLICACOES_LISTAGEM_PARCIAL', res.parcial);
 
   let novos = 0, interrompida = false;
@@ -273,6 +273,7 @@ export async function executarCiclo(env, { fetchImpl = fetch, descobrirAgora = t
     const d = await descobrir(env, r);
     relatorio.descobertos = d.novos;
     relatorio.motivo = d.motivo ?? null;
+    if (d.detalhe) relatorio.detalhe = d.detalhe;   /* a mensagem da API; nunca contém o token */
   }
   while (r.sobra()) {
     const d = await r.q(`SELECT id, url, criado_em_cf, passo FROM deployments WHERE processamento='PENDENTE'
