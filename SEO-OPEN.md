@@ -5,11 +5,11 @@ Estado. As regras do processo estão no `SEO-WORKFLOW.md`.
 Última reconciliação: **12/09/2026**, com **segunda exportação de desempenho**
 no mesmo dia — a primeira comparação entre duas medições que este ficheiro tem.
 
-O site está publicado no deploy **`76941893`** desde **12/09 às 17:02**, sobre
-o commit **`902c73f`**, com `sujo: false` — a árvore, o GitHub e o site estão
+O site está publicado no deploy **`58efdd20`** desde **12/09 às 19:11**, sobre
+o commit **`7c9fb7d`**, com `sujo: false` — a árvore, o GitHub e o site estão
 os três no mesmo ponto.
 
-**Dezoito deploys entre 10 e 12/09**, por esta ordem:
+**Vinte deploys entre 10 e 12/09**, por esta ordem:
 
 ```
 4c829982  10/09 19:03  commit 8ec61c6, ÁRVORE SUJA — o schema, as FAQ, as
@@ -41,6 +41,10 @@ d69485da  12/09 10:05  commit 9eda1c7 — a página do conceito passa a azul
 8c998618  12/09 16:26  commit 5f41d9e — o alt da fotografia do curso
 76941893  12/09 17:02  commit 902c73f — o sítio entra no título e na
                        descrição do curso
+a2fde484  12/09 17:31  commit cda349c — a comparação das categorias passa
+                       a tabela
+58efdd20  12/09 19:11  commit 7c9fb7d — a página do conceito diz para que
+                       serve, e liga aos seis spots
 ```
 
 **A exportação de Cobertura é de 04/09** e portanto anterior a todos: não viu
@@ -320,6 +324,22 @@ E há uma ressalva a não esquecer: a posição do `www` é **7,88** contra 5,47
 apex, e isso explica boa parte da diferença de CTR. **Não se prometem cliques
 recuperados aqui.**
 
+**MEDIDO A 13/09 PELA API — a propriedade é de domínio, e isso NÃO fecha o
+item.** A API devolve `sc-domain:happysoaring.com`. Pela regra acima, devia
+fechar-se como ruído de relatório. **Mas a série diária desmente a
+explicação:** o `www` teve impressões **todos os dias** de 23/08 a 10/09,
+entre 2 e 12 por dia, sem descer. Não é relatório do passado — o Google
+esteve a mostrar o endereço `www` durante todo o período.
+
+A inspecção de URL diz o resto: o `www` foi rastreado a **10/09 06:40 UTC**,
+estado *Página com redirecionamento*, e o **canónico escolhido pelo Google é
+já o apex**. A leitura que os dados suportam é consolidação que o Google só
+fechou por volta de 10/09 — o último dia com dados.
+
+**Confirma-se nos próximos dias, pela API e sem custo:** se as impressões do
+`www` caírem para zero a partir de 11/09, fecha. Se continuarem, há o que
+investigar.
+
 ---
 
 ## SOLUÇÕES — o que fazer, e com que mecanismo
@@ -456,15 +476,74 @@ deliberadamente vaga, e custa mais do que um backlink.
 `Downloads/EMAILS-flow-fellofly.md`, e o da Flow também como atalho
 `enviar-email-flow.url`, que abre o cliente de email já preenchido.
 
-### 4 · OS DOZE PEDIDOS DE INDEXAÇÃO
-**para o Google ver nove dias de trabalho**
+### 4 · OS PEDIDOS DE INDEXAÇÃO — agora medidos, não adivinhados
+**medido a 13/09 pela API do Search Console (inspecção de URL)**
 
-O último rastreio da página do conceito é de **03/09** — antes das faixas, do
-alinhamento, dos 55 acessos, das ligações às asas e das colagens corrigidas. O
-`lastmod` que entrou a 12/09 resolve as alterações **futuras**; estas ficam
-por pedir à mão.
+**A lista de 12/09 estava errada, e só a API o podia mostrar.** O Google
+rastreou TODAS as páginas do conceito e do curso a **12/09 entre 14:49 e
+14:57 UTC** — num lote de oito minutos. Isso foi depois das faixas, dos
+acessos, das ligações às asas e das colagens (14:46), e **antes** de tudo o
+que veio a seguir:
 
-As doze URLs estão na conversa de 12/09, por ordem de valor medido.
+```
+                                    rastreio      o que NÃO viu
+conceito  pt en es fr de            12/09 14:49–51  a tabela (17:31)
+                                                    o «para que serve» (19:11)
+curso     pt en es fr               12/09 14:53–57  Sesimbra no título (17:02)
+curso     de                        11/09 05:47     os locais (11/09 14:34)
+                                                    e Sesimbra no título
+alfarim   fr de                     12/09 14:53     nada — viu tudo
+```
+
+**Pedir hoje, por esta ordem (10, cabe na quota do dia):**
+
+```
+/en/parakite-course-portugal/
+/curso-parakite-portugal/
+/de/parakite-kurs-portugal/
+/en/what-is-a-parakite/
+/o-que-e-um-parakite/
+/es/curso-parakite-portugal/
+/fr/cours-parakite-portugal/
+/es/que-es-un-parakite/
+/fr/qu-est-ce-qu-un-parakite/
+/de/was-ist-ein-parakite/
+```
+
+As páginas do curso vêm primeiro por uma razão concreta: **a re-medição de
+26/09 testa o Sesimbra no título, e o Google ainda não viu esse título.** Sem
+novo rastreio, a medição de 26/09 não mede o mecanismo.
+
+**Saem da lista** `/fr/parakite-portugal/alfarim/` e `/de/parakite-portugal/alfarim/`
+— já viram a versão actual.
+
+**Não foi o `lastmod` que provocou o lote** — o lote é de 14:49 e o `lastmod`
+entrou às 15:25. O sitemap foi lido pela última vez a **12/09 14:07 UTC**,
+também antes. Ou seja, **o Google ainda não leu nenhum sitemap com `lastmod`**:
+o mecanismo continua por observar. Verifica-se pela API, sem custo.
+
+**13/09 — A QUOTA ESGOTOU AO PRIMEIRO PEDIDO, E O SITEMAP FOI REENVIADO.**
+O Paulo pediu `/en/parakite-course-portugal/` (o teste ao vivo das 09:16 UTC
+já mostra o título com Lisboa e a descrição com Sesimbra) e a quota acabou aí.
+Os outros nove ficam para 14/09.
+
+Confirmado no sitemap publicado: tem `lastmod` em **exactamente 10 URLs** — as
+10 desta lista, todas `2026-09-12` — e em nenhuma das outras 165.
+
+```
+reenviado   13/09 09:28:52 UTC
+lido        13/09 09:28:54 UTC    0 erros · 0 avisos · 175 URLs
+```
+
+**Fica montada uma experiência sem querer:** o curso em inglês teve pedido
+manual; os outros nove só têm o sinal do `lastmod`. Se forem rastreados antes
+de 14/09, o `lastmod` funciona e as próximas alterações não precisam de
+pedidos à mão. **Ressalva:** a data só tem o dia, e o último rastreio também
+foi a 12/09 — o Google pode não a ler como posterior. Se os nove não se
+mexerem, a correcção a propor é o `lastmod` com hora.
+
+Antes de gastar a quota de 14/09, inspeccionar os nove pela API e pedir só os
+que não foram rastreados depois de 13/09 09:28 UTC.
 
 ---
 
@@ -486,6 +565,16 @@ para uma página que não está nas primeiras dezassete.
 aparecemos. Sete hipóteses caíram — idioma, arquitectura, conteúdo,
 dispositivo, país, ligações, material visual — e **não sei o que o explica.**
 Fica escrito por ser mais útil do que uma teoria nova.
+
+O que se apurou a 12/09 não é a causa do ranking, mas muda o que se deve
+fazer: **ele exige 150 horas documentadas, licença válida e uma conversa de
+triagem**, e escreve «not a training paddock». Está verificado na fonte, em
+alemão e inglês. Ou seja, ele fala a um público mais estreito e mais
+qualificado do que o nosso — e a nossa vantagem é o público que ele recusa.
+Está tratado na entrada própria em `MEDIÇÃO DATAFORSEO`. A re-medição das
+cinco SERPs está marcada para **26/09**, $0,020 — **mas só se gasta depois de
+confirmar pela API que o Google rastreou as páginas do curso depois de 12/09
+17:02 UTC.** A 13/09 ainda não tinha.
 
 **E os diagramas não são solução de SEO.** Estão em `PENDENTE` e valem pelo
 leitor humano: sete conceitos espaciais explicados só por palavras. Não
@@ -574,6 +663,100 @@ Panorama, e nenhuma das 175 páginas oferece um voo. Falta a maior consulta de
 todas (`parakite`, 29 impressões) e faltam os modelos de asa, que somam ~121
 impressões contra ~51 dos seis conceitos medidos. E `what is parakite` devia
 ser `what is a parakite`, que é a forma real.
+
+### O ChatGPT cita-nos em 5 de 5, e a AI Overview em 0 de 5
+medido: 2026-09-12 · **repetir com o GEMINI, que continua não medido**
+
+O Paulo correu no ChatGPT um prompt de cinco perguntas, neutro — sem nomear
+a Happy Soaring, para não contaminar a medição.
+
+```
+                            citado?     a frase escolhida é nossa?
+ChatGPT (5 perguntas)        5 / 5              2 / 5
+AI Overview (5 SERPs)        0 / 5                —
+```
+
+As duas frases escolhidas:
+
+```
+Q4  «Official training is delivered through our partner school FelloFly.»
+    /en/parakite-portugal/
+Q5  «Alfarim is used for ground training with both Parakite and paraglider.»
+    /en/parakite-portugal/alfarim/   ← e aqui somos a ÚNICA fonte
+```
+
+**E o padrão replica exactamente o da manhã:**
+
+```
+Q1–Q3  conceito e mecanismo   →  somos fonte, nunca a frase
+Q4–Q5  sítio e Portugal       →  SOMOS a frase
+```
+
+Dois métodos independentes, o mesmo resultado: ranqueia-se quando a consulta
+diz Portugal. E as Q4 e Q5 foram acrescentadas de propósito para testar o
+Sesimbra que entrou no título nesse dia — **as duas aterraram**.
+
+**UMA CORRECÇÃO DE RACIOCÍNIO, IMPORTANTE.** Escrevi primeiro «duas
+superfícies do mesmo Google, respostas opostas», e que a divergência
+«aponta a causa». **Não aponta nada sobre o Google.** A resposta veio do
+ChatGPT, que tem recuperação própria e não usa o índice do Google. Comparar
+5/5 dele com 0/5 da AI Overview é comparar duas empresas, não dois produtos
+da mesma. O prompt tinha sido escrito para o Gemini precisamente porque o
+Gemini é fundeado em pesquisa Google — **e o Gemini continua não medido.**
+
+O que fica de pé, e é melhor do que parecia: **há um canal de distribuição
+inteiro onde já se ganha**, e era invisível. E os 74% também ficam: foram
+medidos na AI Overview do Google, e um sistema com recuperação diferente não
+os contradiz.
+
+### O Google diz, por escrito, que não há boas práticas próprias de AI Overview
+verificado a 2026-09-12 · documentação Google Search Central
+
+A pergunta «quais são as boas práticas para a AI Overview» tem resposta
+oficial: **não existem.** A documentação diz que não há requisitos
+adicionais para aparecer nestas funcionalidades, e que **não é preciso criar
+ficheiros legíveis por máquina, ficheiros de texto para IA, nem marcação
+nova — não há schema.org especial.** O que conta é o normal: ser indexável,
+ter elegibilidade de snippet, conteúdo útil, o texto em forma textual, e
+dados estruturados que correspondam ao que está visível.
+
+Três consequências directas:
+
+```
+morre a ideia do llms.txt        o Google di-lo explicitamente
+morre «schema para IA»           não existe
+confirma a medição de 12/09      74% das citações vêm do top orgânico
+```
+
+**Logo não se pergunta isto a um modelo** — daria conselho genérico ou uma
+reescrita disto. O que um modelo faz e mais nada faz é mostrar **qual frase
+levantaria**, e é essa a pergunta que vale (ver a entrada acima).
+
+### O concorrente exige 150 horas documentadas, e a barra dele é mais alta
+medido: 2026-09-12 · verificado na fonte em alemão e inglês
+
+O ChatGPT afirmou-o e foi confirmado nas páginas dele, nas duas línguas:
+
+```
+«For experienced paraglider pilots with 150+ hours airtime»
+«A valid paragliding licence, a minimum of 150 hours airtime, and a
+ brief conversation with Behrooz before confirming»
+«Real Coastal Sites — Actual Atlantic launches in Portugal —
+ not a training paddock»
+```
+
+**A barra dele é mais alta, não mais baixa.** 150 horas documentadas, licença
+válida, e uma conversa de triagem antes de confirmar. E «not a training
+paddock» é uma farpa deliberada a cursos de campo de treino.
+
+A nossa página não põe barra nenhuma e diz explicitamente que «experiência
+não é só acumular horas». **Isso é uma posição, não uma omissão**, e é
+defensável — mas fica registado que ele filtra e nós não.
+
+**E uma nota de conformidade:** a página do curso diz «Formação ministrada
+por instrutores licenciados através de escola parceira». Está dentro da
+regra — não nomeia quem emite nem o que o curso dá — mas **é uma afirmação
+sobre a FelloFly**, e entrou na lista de coisas a confirmar no email deles.
 
 ### A hipótese das ligações externas caiu, e era a minha principal
 medido: 2026-09-12
@@ -863,6 +1046,27 @@ aqui não é — é uma figura dentro de um texto. Pode não resultar em nada, e
 isso também é informação.
 
 ### 7 fichas de asa por rastrear
+
+**INSPECCIONADAS UMA A UMA A 13/09, PELA API — o quadro mudou:**
+
+```
+/en/wings/rpm-3/        INDEXADA                        rastreio 11/09 08:47
+/fr/ailes/yoti-3/       rastreada, não indexada         rastreio 11/09 15:59
+/es/alas/albatroxx/     detetada, não indexada          nunca
+/fr/ailes/mohawk/       detetada, não indexada          nunca
+/de/schirme/fusion/     o Google não reconhece o URL    nunca
+/en/wings/vissta-xc/    o Google não reconhece o URL    nunca
+/fr/ailes/rpm-3/        o Google não reconhece o URL    nunca
+```
+
+Uma fechou-se sozinha. **A `/fr/ailes/yoti-3/` mudou de natureza:** foi
+buscada e o Google decidiu não a indexar — já não é fila. E três dizem
+«não reconhece o URL», o que **contradiz a Cobertura de 04/09**, que as
+listava. São duas superfícies do Google a discordar, e não sei qual está
+certa; a acção é a mesma nas duas leituras. As seis pedem-se **amanhã**,
+depois dos dez da página do conceito e do curso.
+
+Estado a 04/09, que fica para comparação:
 ```
 /de/schirme/fusion/          8 ligações de entrada
 /en/wings/rpm-3/             4
@@ -1325,6 +1529,90 @@ a nenhum dos dois `GOOGLE_CLIENT_ID` acima.
 ---
 
 ## FECHADO A 12/09
+
+### A página do conceito diz para que serve, e liga aos seis spots
+fechado: 2026-09-12 · deploy `58efdd20`
+
+**A lacuna foi apontada por três vias independentes**, o que é raro o
+suficiente para valer a pena registar:
+
+```
+1  contagem de palavras (nossa): 2 183 palavras a explicar o que é um
+   parakite e ZERO menções a costa, duna, praia, areia, soaring, vento
+   ou terreno. A página do Alfarim, com 787, diz-nas 29 vezes.
+2  a leitura comparativa do ChatGPT contra as seis fontes que a AI
+   Overview cita: «explica a máquina extremamente bem, mas diz
+   comparativamente pouco sobre porque é que esta máquina existe».
+3  a comparação com o concorrente: a página dele é sobre um SÍTIO, a
+   nossa sobre um MÉTODO.
+```
+
+**É a terceira vez no mesmo dia que este padrão aparece** — o facto existe
+no site, na família errada de páginas.
+
+E a página não ligava a uma única ficha de spot: 7 destinos internos, zero
+para spots.
+
+**O texto é conteúdo do próprio site.** Cada frase vem das fichas de spot:
+«sustentação dinâmica criada pelo vento ao encontrar a arriba», «soaring
+costeiro», «sem que o objetivo da sessão seja voar», e a recusa de dar
+valores de vento — repetida nas seis fichas e **sem equivalente em
+concorrente nenhum**, incluindo os seis que a AI Overview cita. É o tipo de
+frase que é levantada.
+
+**Nenhuma afirmação aerodinâmica nova.** A secção diz ONDE e PARA QUÊ; a
+mecânica continua a ser a das secções anteriores, e a página continua a ser
+a fonte única dos conceitos.
+
+**As ligações entraram onde a secção as pede**, e não soltas: pô-las noutro
+sítio seria decoração, porque a página não tinha secção que falasse de
+lugares. Saem da mesma lista que gera as páginas, com `publicar === true` —
+um spot novo no CMS aparece sozinho.
+
+```
+                      antes   depois
+coast                    0       2
+dune                     0       2
+sand                     0       2
+soar                     0       1
+wind                     0       3
+relief                   0       2
+destinos internos        7      13   (6 para spots)
+palavras             2 180   2 346
+```
+
+**Medido:** faixa de papel, margem esquerda única `{72}`, 6 ligações a
+245×84 a 1440 e 323×84 em coluna a 375; 0 falhas de contraste em 221 e 218
+elementos, pior 5,13:1; zero scroll lateral; 18/18.
+
+### A comparação das categorias passa a tabela
+fechado: 2026-09-12 · deploy `a2fde484`
+
+**A comparação É a consulta**, e isso mediu-se. Seis das 38 fontes citadas
+pelas cinco AI Overviews são comparações — «Parakiting vs. Paragliding»,
+«Parakite vs. Gleitschirm», «Para-Kite Comparison» — e o **#1 orgânico de
+`what is a parakite` no Reino Unido é um tópico do Reddit chamado «Parakite
+vs. Paraglider»**.
+
+O conteúdo já era tabular: três blocos com a categoria, o que ela faz e o
+que o Parakite faz. Linha e duas colunas, em prosa dentro de três
+`<article>`. **Não se escreveu uma afirmação nova** — três rótulos de coluna,
+e a legenda reutiliza o próprio h2.
+
+**Zero CSS novo:** reutiliza o `.pg-tabela` das fichas de asa, cujo
+comentário diz exactamente o que se quer aqui — «a tabela é a ilha clara da
+página… e rola dentro da sua caixa».
+
+**Medido:** a 1440 a tabela tem 1279px numa caixa de 1281, colunas
+101/606/572, 0 falhas de contraste em 12, pior 5,32:1. A 375 a caixa tem
+323px visíveis e a tabela 520 — **a caixa rola de lado e a página não.**
+
+E limpo atrás: medidas zero ocorrências de `qp-comp`, `qp-comps` e `qp-vs`
+nas 175 páginas antes de apagar o construtor morto e as seis regras de CSS.
+
+**Nota de método:** o detector de transbordo marca `TABLE/THEAD/TR/TH` a
+375px. Estão dentro do rolador, que é onde devem estar — o teste decisivo é
+a página não rolar de lado, e não rola.
 
 ### O sítio entra no título e na descrição do curso
 fechado: 2026-09-12 · deploy `76941893` · **rever depois de: 2026-09-26**

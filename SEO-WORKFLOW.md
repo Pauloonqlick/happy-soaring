@@ -182,6 +182,39 @@ posição são outra pergunta, com outra cadência, e vêm noutro relatório.
 Indexação mede-se em dias e é binária; desempenho mede-se em semanas e é
 tendência.
 
+## A API do Search Console
+
+Ligada a 13/09/2026. **Só leitura** (`webmasters.readonly`), por OAuth de
+aplicação para computador, app **interna** da organização `happysoaring.com` —
+a autorização não caduca ao fim de 7 dias.
+
+```
+scripts/gsc.mjs            o cliente: gsc(), analitica(), inspecciona()
+scripts/gsc-autorizar.mjs  corre-se só se a autorização for revogada
+credenciais/               FORA do repositório, em C:\Users\Paulo Pereira\
+  gsc-oauth-client.json    o cliente OAuth (projecto Happy Soaring Search Console)
+  gsc-token.json           o refresh token
+```
+
+**Nenhum destes valores aparece no ecrã, em logs ou em commits.** O cliente
+imprime resultados, nunca credenciais.
+
+Substitui as exportações CSV à mão, e acrescenta o que elas não davam:
+
+- **inspecção de URL** — último rastreio, estado, canónico escolhido pelo
+  Google. Quota 2 000/dia. É o que diz se uma alteração **já foi vista**.
+- **o sitemap** — quando foi lido pela última vez.
+- **séries diárias por URL** — o que separa «relatório do passado» de
+  «está a acontecer».
+
+**Regra que nasce disto:** antes de uma re-medição paga no DataForSEO que testa
+uma alteração, confirma-se pela inspecção que o Google rastreou a página
+**depois** do deploy dessa alteração. Se não rastreou, a medição não mede o
+mecanismo e não se gasta.
+
+**O que a API não faz:** pedir indexação. A Indexing API do Google só aceita
+`JobPosting` e `BroadcastEvent`; os pedidos continuam à mão.
+
 ## Os exports não se commitam
 
 `hs-seo-*.json` fica na pasta de transferências e é descartável. São ~230 KB por
