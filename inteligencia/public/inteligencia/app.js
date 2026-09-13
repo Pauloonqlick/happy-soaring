@@ -67,7 +67,10 @@
         const dl = $('gsc');
         dl.textContent = '';
         if (!s.periodo) { par(dl, 'Estado', 'Ainda sem dias recolhidos.'); return; }
-        par(dl, 'Período', s.periodo.inicio + ' a ' + s.periodo.fim + ' (' + s.periodo.dias_com_dados + ' dias)');
+        const dataPt = d => d.split('-').reverse().join('/');
+        par(dl, 'Dados', dataPt(s.periodo.primeiro_dia_com_dados) + ' a ' + dataPt(s.periodo.fim) + ' · ' +
+          s.periodo.dias_com_dados + (s.periodo.dias_com_dados === 1 ? ' dia completo' : ' dias completos'));
+        if (s.periodo.dias_por_completar) par(dl, 'Recolha', 'em curso — faltam ' + s.periodo.dias_por_completar + ' dias', 'falha');
         par(dl, 'Cliques', num(s.totais.cliques));
         par(dl, 'Impressões', num(s.totais.impressoes));
         const m = s.marca;
@@ -123,8 +126,6 @@
         : pub.processadas ? 'Publicações do site — ligado · ' + pub.processadas + ' observadas.'
         : 'Publicações do site — ligado, à espera da primeira observação.';
       if (pub && pub.credencial && !pub.pendentes && pub.processadas) $('ns-publicacoes').hidden = true;
-      if (pub && pub.processadas) $('aviso').textContent =
-        'O módulo observa as publicações do site. Search Console e inspecção ainda não estão ligados.';
 
       const g = d.fontes && d.fontes.search_console;
       $('ns-gsc').textContent = !g ? 'Search Console — não foi possível ler o estado.'
@@ -133,6 +134,14 @@
         : g.dias ? 'Search Console — ligado · dados até ' + g.ultima + '.'
         : 'Search Console — ligado, à espera da primeira recolha.';
       if (g && g.credencial && g.dias && g.completos === g.dias) $('ns-gsc').hidden = true;
+
+      /* o aviso do topo diz o que está mesmo ligado, a partir do estado real das fontes */
+      const ligadas = [], porLigar = [];
+      (pub && pub.credencial ? ligadas : porLigar).push('as publicações do site');
+      (g && g.credencial ? ligadas : porLigar).push('o Search Console');
+      porLigar.push('a inspecção de URL');
+      $('aviso').textContent = (ligadas.length ? 'O módulo recolhe ' + ligadas.join(' e ') + '. ' : '') +
+        'Ainda por ligar: ' + porLigar.join(' e ') + '. A verificação de problemas vem depois.';
 
       return Promise.all([mostrarMudancas(), mostrarSearchConsole()]);
     })

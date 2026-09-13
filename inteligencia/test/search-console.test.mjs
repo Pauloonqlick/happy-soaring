@@ -144,6 +144,8 @@ test('resumo: marca + não-marca + desconhecido = total do Google; países; cobe
   for (let i = 0; i < 6; i++) await executarCicloGsc(envGsc(db), { fetchImpl: googleFalso(), hoje: HOJE });
   const s = await resumoSearchConsole(db, { dias: 28 });
   assert.deepEqual(s.totais, { cliques: 40, impressoes: 800 });
+  assert.equal(s.periodo.primeiro_dia_com_dados, '2026-08-23', 'o intervalo com dados, não a janela de 28 dias');
+  assert.equal(s.periodo.dias_por_completar, 0);
   assert.deepEqual(s.marca.marca, { cliques: 24, impressoes: 160 });
   assert.deepEqual(s.marca.nao_marca, { cliques: 8, impressoes: 400 });
   assert.deepEqual(s.marca.desconhecido, { cliques: 8, impressoes: 240 }, 'o que o Google não mostra por pesquisa');

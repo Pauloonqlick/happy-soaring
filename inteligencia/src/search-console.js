@@ -154,8 +154,9 @@ export async function resumoSearchConsole(db, { dias = 28 } = {}) {
   if (!ultima) return { periodo: null };
   const inicio = new Date(Date.parse(ultima + 'T00:00:00Z') - (dias - 1) * 864e5).toISOString().slice(0, 10);
 
-  const tot = await db.prepare(`SELECT COUNT(*) AS dias, SUM(cliques) AS cliques, SUM(impressoes) AS impressoes
+  const tot = await db.prepare(`SELECT COUNT(*) AS dias, MIN(data) AS primeiro, SUM(cliques) AS cliques, SUM(impressoes) AS impressoes
     FROM gsc_dias WHERE completo = 1 AND data BETWEEN ? AND ?`).bind(inicio, ultima).first();
+  const porCompletar = (await db.prepare('SELECT COUNT(*) AS n FROM gsc_dias WHERE completo = 0').first())?.n ?? 0;
   const { results: termosLinhas } = await db.prepare('SELECT termo FROM termos_marca').all();
   const termos = termosLinhas.map(t => t.termo);
 
@@ -182,7 +183,8 @@ export async function resumoSearchConsole(db, { dias = 28 } = {}) {
   }
   const total = { cliques: tot?.cliques ?? 0, impressoes: tot?.impressoes ?? 0 };
   return {
-    periodo: { inicio, fim: ultima, dias_com_dados: tot?.dias ?? 0 },
+    /* janela pedida (inicio–fim) e o intervalo que tem de facto dados completos */
+    periodo: { inicio, fim: ultima, primeiro_dia_com_dados: tot?.primeiro ?? null, dias_com_dados: tot?.dias ?? 0, dias_por_completar: porCompletar },
     totais: total,
     marca: {
       marca: marca.BRANDED,
