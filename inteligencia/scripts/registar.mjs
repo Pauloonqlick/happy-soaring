@@ -7,6 +7,10 @@
  *       prioridade, sintoma, causa, correccao, prevencao, generica)
  *   node inteligencia/scripts/registar.mjs implementacao <licao-ou-tipo> <commit> [nota]
  *       marca como implementados os pacotes ainda por publicar dessa lição ou tipo
+ *   node inteligencia/scripts/registar.mjs hipotese <ficheiro.json>
+ *       regista uma hipótese eliminada (hipotese, evidencia, eliminada_em, caminho,
+ *       tipo_assunto). ATENÇÃO: com tipo_assunto, os assuntos desse tipo nesse caminho
+ *       ficam RETIRADOS; sem ele, fica só como conhecimento — o normal numa análise.
  *
  * Escreve na base remota pelo wrangler já autenticado. Nunca mexe em
  * observações: a ligação à publicação e a avaliação fazem-nas as tarefas do
@@ -58,6 +62,21 @@ FROM licoes WHERE chave = ${q(l.chave)};`);
 WHERE publicado_em IS NULL AND implementacao IS NULL
   AND (licao_chave = ${q(grupo)} OR assunto_chave LIKE ${q(grupo + ' %')});`);
   console.log('✔ pacotes marcados como implementados: ' + grupo + ' @ ' + commit);
+} else if (accao === 'hipotese') {
+  if (!args[0]) erro('falta o ficheiro JSON da hipótese');
+  const h = JSON.parse(fs.readFileSync(args[0], 'utf8'));
+  for (const k of ['hipotese', 'evidencia', 'eliminada_em']) if (!h[k]) erro('falta ' + k);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(h.eliminada_em)) erro('eliminada_em tem de ser AAAA-MM-DD');
+  if (h.caminho && !/^\/[a-z0-9\/._-]*$/i.test(h.caminho)) erro('caminho inválido');
+  if (h.tipo_assunto && !/^[A-Z_]{3,60}$/.test(h.tipo_assunto)) erro('tipo_assunto inválido');
+  const cols = ['hipotese', 'evidencia', 'eliminada_em', 'tipo_assunto', 'caminho', 'objectivo_id', 'estado'];
+  const val = { ...h, tipo_assunto: h.tipo_assunto || null, caminho: h.caminho || null, objectivo_id: h.objectivo_id || null, estado: 'ELIMINADA' };
+  /* o mesmo registo e o mesmo histórico que a página «Conhecimento» escreve (src/conhecimento.js) */
+  executar(`INSERT INTO hipoteses_eliminadas (${cols.join(', ')}, alterado_em) VALUES (${cols.map(k => q(val[k])).join(', ')}, ${q(agora)});
+INSERT INTO conhecimento_historico (tabela, registo_id, versao, dados, gravado_em)
+SELECT 'hipoteses_eliminadas', id, versao, json_object('id', id, 'versao', versao, 'alterado_em', alterado_em, ${cols.map(k => `'${k}', ${k}`).join(', ')}), ${q(agora)}
+FROM hipoteses_eliminadas WHERE id = (SELECT MAX(id) FROM hipoteses_eliminadas);`);
+  console.log('✔ hipótese eliminada registada' + (val.tipo_assunto ? ' — RETIRA assuntos ' + val.tipo_assunto + ' em ' + (val.caminho || 'todo o site') : ' (só conhecimento)'));
 } else {
-  erro('acção desconhecida — usa «licao» ou «implementacao»');
+  erro('acção desconhecida — usa «licao», «implementacao» ou «hipotese»');
 }

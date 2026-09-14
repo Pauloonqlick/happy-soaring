@@ -32,7 +32,7 @@ migrations/                   esquema D1, só se acrescenta
 test/                         testes sem rede
 scripts/publicar.mjs          publicação do módulo, com --publicar
 scripts/pacotes.mjs           pacotes de trabalho aprovados, só leitura (para o Claude implementar)
-scripts/registar.mjs          o Claude regista lições e implementações
+scripts/registar.mjs          o Claude regista lições, implementações e hipóteses eliminadas
 scripts/manual.mjs            gera manual/boas-praticas.md a partir das lições
 ```
 
@@ -199,6 +199,12 @@ as que não resultaram — para este site e para os próximos.
 Fluxo do Claude: `pacotes.mjs` → corrigir no site → commit → `registar.mjs implementacao
 <lição> <commit>` → publicar → o módulo liga a publicação, espera o rastreio posterior,
 avalia e actualiza a lição → `manual.mjs`.
+
+Quando uma análise descarta uma explicação (por exemplo, «a página não está indexada por
+ter pouco texto»), o Claude regista-a com `registar.mjs hipotese <ficheiro.json>` e ela
+aparece em «Conhecimento». **Sem `tipo_assunto` fica só como conhecimento**; com ele, os
+assuntos desse tipo nesse caminho passam a retirados — só se usa quando a hipótese
+eliminada é mesmo a razão para não agir.
 
 ## Painel «Evolução»
 
