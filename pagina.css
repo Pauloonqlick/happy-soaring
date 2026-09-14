@@ -3620,10 +3620,11 @@ html.pk-assist-bloqueio,html.pk-assist-bloqueio body{overflow:hidden}
 .pk-heroi-curso .pk-botoes{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
 .pk-heroi-curso .pk-botoes .pk-b{margin:0}
 .pk-heroi-foto{position:relative;margin:0}
-/* a fotografia é vertical e o céu por cima da asa sobrava: em 1:1, com o recorte
-   descido, cabem ainda a asa inteira e o piloto até aos pés, e o cartão dos factos
-   só tapa areia (medido sobre o original de 1725x3072; era 4:5 e ocupava mais 25%) */
-.pk-heroi-foto img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;object-position:50% 72%}
+/* 14/09/2026 · O HERÓI PASSA A RECORTE (asa e piloto com transparência)
+   Já não há caixa nem corte: a imagem aparece inteira, com a proporção dela,
+   sobre o azul-claro. O original foi aparado com folga em baixo, e é essa folga
+   vazia que o cartão dos factos tapa — os pés ficam à vista. */
+.pk-heroi-foto img{display:block;width:auto;max-width:100%;height:auto;max-height:min(64vh,600px);margin:0 auto}
 .pk-heroi-foto .pk-factos{position:relative;z-index:1;margin:-56px 20px 0;padding:6px 20px 10px;background:rgba(7,29,58,.94);
   border:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(255,255,255,.14);row-gap:0}
 .pk-heroi-foto .pk-factos li{border-top:0;padding:10px 0}
@@ -3823,3 +3824,262 @@ body.pg.sg .pg-topo{background:rgba(7,29,58,.92);border-bottom-color:rgba(255,25
 .pg .mu-foto{filter:drop-shadow(0 16px 26px rgba(14,59,109,.2))}
 .pg.pk .sg-abord-et{color:var(--tinta-fraca)}
 .pg.pk .sg-abord-nossa .sg-abord-et{color:var(--laranja-tinta)}
+
+/* ======================================================================
+   CURSO · BODY FIRST — A FIGURA COM LEGENDAS (14/09/2026)
+   A fotografia passa de 400px a metade de uma figura de 1200 × 830 com
+   proporção fixa; as linhas (SVG com o mesmo viewBox) ligam cada ponto no
+   corpo à sua legenda. Ver o comentário de `figuraLegendada` no gerador.
+   ====================================================================== */
+.bf-anot{position:relative;margin:40px auto 8px;max-width:1200px;aspect-ratio:var(--bf-ar,1200/830)}
+.bf-anot-img{position:absolute;left:0;top:0;width:var(--bf-iw,49.833%);height:100%}
+.bf-anot-img img{display:block;width:100%;height:100%;object-fit:contain}
+.bf-ponto{position:absolute;z-index:2;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;
+  background:#ff6a13;box-shadow:0 0 0 3px #fff,0 2px 8px rgba(14,59,109,.35);font-size:0;color:transparent;line-height:1}
+.bf-anot-linhas{position:absolute;z-index:1;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.bf-anot-linhas polyline{fill:none;stroke:#0e3b6d;stroke-width:1.5;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.bf-anot-linhas polyline.bf-halo{stroke:#fff;stroke-width:4.5}
+.pg .bf-anot-l{list-style:none;margin:0;padding:0}
+.pg .bf-anot-l li{position:absolute;left:var(--bf-lx,61.667%);right:0;top:var(--y);transform:translateY(-13px);margin:0}
+.bf-anot-l b{display:block;font-size:clamp(18px,1.7vw,22px);font-weight:800;letter-spacing:-.3px;line-height:26px;color:#14212f}
+.bf-anot-l span{display:block;margin-top:4px;font-size:clamp(15px,1.3vw,17px);line-height:1.45;color:#4d5c6e;max-width:40ch}
+@media (max-width:900px){
+  .bf-anot{aspect-ratio:auto;max-width:560px}
+  .bf-anot-img{position:relative;width:100%;height:auto}
+  .bf-anot-img img{height:auto}
+  .bf-anot-linhas{display:none}
+  .bf-ponto{width:26px;height:26px;margin:-13px 0 0 -13px;display:grid;place-items:center;font-size:13px;font-weight:800;color:#231000}
+  .pg .bf-anot-l{counter-reset:bf;margin-top:20px;display:grid;gap:14px}
+  .pg .bf-anot-l li{position:static;transform:none;display:grid;grid-template-columns:26px minmax(0,1fr);column-gap:12px;counter-increment:bf}
+  .bf-anot-l li::before{content:counter(bf);grid-row:span 2;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+    background:#ff6a13;color:#231000;font-size:13px;font-weight:800}
+  .bf-anot-l b{font-size:18px;line-height:26px}
+}
+/* no telemóvel o ponto do olhar leva número e tapava a cara: passa para a frente dos olhos */
+@media (max-width:900px){ .bf-anot-corpo .bf-anot-img span.bf-ponto:nth-of-type(1){left:58%!important;top:14%!important} }
+/* a asa amarela (14/09/2026) é muito alta e estreita: a altura fica limitada e a
+   imagem centra-se na coluna; o cartão dos factos vem logo por baixo, sem a tapar */
+.pk-heroi-curso .pk-heroi-foto .pk-factos{margin-top:18px}
+@media (max-width:900px){ .pk-heroi-curso .pk-heroi-foto img{max-height:460px} .pk-heroi-curso .pk-heroi-foto .pk-factos{margin-top:14px} }
+
+/* ======================================================================
+   CURSO · ERRO E AUTOMATISMO — os caminhos, as fotografias do instrutor
+   (14/09/2026). Ver o comentário no gerador, junto de B['erro'].
+   ====================================================================== */
+/* 1. os dois caminhos numa tabela: cada passo por cima do seu par */
+.pk-caminhos{display:grid;gap:10px;margin:16px 0 0}
+.pk-caminho{display:grid;grid-template-columns:minmax(170px,1.1fr) minmax(0,3fr);align-items:center;gap:8px 22px;
+  padding:18px 22px;background:#fff;border:1px solid #cbd8e5;border-left:4px solid #ff6a13}
+.pk-caminho-nao{background:rgba(255,255,255,.55);border-left-color:#8a9bb0}
+.pg.pk .pk-caminho p{margin:0;max-width:none;text-align:left}
+.pk-caminho-rot{display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:var(--tr-rotulo);text-transform:uppercase;color:#a63f00}
+.pk-caminho-nao .pk-caminho-rot{color:#4d5c6e}
+.pk-caminho-rot::before{content:'\2713';font-size:16px;letter-spacing:0}
+.pk-caminho-nao .pk-caminho-rot::before{content:'\2715';font-size:13px}
+.pk-caminho ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;align-items:center}
+.pk-caminho li{position:relative;margin:0;padding:6px 12px 6px 34px;font-size:15.5px;font-weight:700;line-height:1.3;color:#14212f}
+.pk-caminho li:first-child{padding-left:0}
+.pk-caminho li + li::before{content:'\2192';position:absolute;left:8px;top:50%;transform:translateY(-50%);font-weight:400;color:#ff6a13}
+.pk-caminho-nao li{color:#4d5c6e;font-weight:600}
+.pk-caminho-nao li + li::before{color:#6f8196}
+/* o resultado de cada caminho, destacado */
+.pk-caminho-sim li:last-child{color:#a63f00}
+.pg.pk .pk-caminhos-nota{margin:14px 0 0;max-width:72ch;font-size:16px;color:#4d5c6e;text-align:left}
+
+/* 2 e 3. texto ao lado da fotografia; no segundo bloco a fotografia vem à esquerda */
+.pk-erro-par{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:clamp(24px,4vw,64px);align-items:center;margin:56px 0 0}
+.pk-erro-par-inv{grid-template-columns:minmax(0,4fr) minmax(0,8fr)}
+.pk-erro-tx > h3:first-child{margin-top:0}
+.pg.pk .pk-erro-tx p{max-width:none}
+.pk-erro-fig{margin:0}
+.pk-erro-fig img{display:block;width:auto;max-width:100%;height:auto;max-height:560px;margin:0 auto}
+.pk-erro-tx .pk-passos{grid-template-columns:repeat(4,minmax(0,1fr));margin:24px 0 0}
+.pk-erro-tx .pk-comparar{grid-template-columns:minmax(0,1fr);gap:12px;margin-top:20px}
+
+@media (max-width:1100px){
+  .pk-caminho{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:900px){
+  .pk-erro-par,.pk-erro-par-inv{grid-template-columns:minmax(0,1fr);margin-top:40px}
+  .pk-erro-par-inv .pk-erro-fig{order:2}
+  .pk-erro-fig img{max-height:420px}
+  .pk-erro-tx .pk-passos{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:640px){
+  .pk-caminho ol{grid-template-columns:minmax(0,1fr)}
+  .pk-caminho li,.pk-caminho li:first-child{padding:4px 0 4px 22px}
+  .pk-caminho li:first-child::before{content:'';position:absolute;left:4px;top:50%;width:8px;height:8px;margin-top:-4px;background:#ff6a13}
+  .pk-caminho-nao li:first-child::before{background:#8a9bb0}
+  .pk-caminho li + li::before{content:'\2193';left:4px}
+}
+
+/* ======================================================================
+   OS TÍTULOS DAS SECÇÕES SÃO TODOS AZUIS (14/09/2026)
+   O Paulo: «todos os títulos das secções devem ficar em azul», como o h1
+   do curso. Até aqui só os h2 das faixas azul-claras o eram; nas ilhas
+   brancas saíam quase pretos. #0e3b6d dá 11,6:1 no branco e 9,9:1 no
+   azul-claro. Ficam brancos só os que estão sobre fotografia (herói do
+   /parakite-portugal/ e a faixa .pk-resp), com as regras mais específicas
+   que já existem.
+   ====================================================================== */
+.pg h1,.pg h2,.pg .pg-papel h2,.pg .pk-papel h2,.pg .qp-sec h2{color:#0e3b6d}
+/* o aviso de segurança dos spots também: o filete laranja à esquerda continua a dizer que é um aviso */
+body.spot.papel .spot-aviso h2,.pg .spot-aviso h2{color:#0e3b6d}
+
+/* ======================================================================
+   CURSO · QUEM ENSINA E ONDE — equipa, locais e equipamento (14/09/2026)
+   ====================================================================== */
+.pk-ensina-cab{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:clamp(20px,4vw,56px);align-items:center;margin:4px 0 0}
+.pk-ensina-cab h3{margin-top:0}
+.pg.pk .pk-ensina-cab p{max-width:none;margin-bottom:0}
+.pg.pk .pk-ensina-licenca{padding:20px 22px;background:#e9f0f7;border-left:4px solid #0e3b6d;
+  font-size:17px;font-weight:700;line-height:1.45;color:#0e3b6d;text-align:left}
+
+.pk-equipa{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px clamp(24px,4vw,56px);margin:44px 0 0}
+.pk-equipa-g h3{margin:0 0 14px;padding-top:12px;border-top:3px solid #0e3b6d;color:#0e3b6d}
+.pk-equipa-g:last-child h3{border-top-color:#ff6a13}
+.pg.pk .pk-equipa ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.pg.pk .pk-equipa li{margin:0;background:#fff;border:1px solid #dfe6ef}
+.pk-equipa img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover}
+.pk-equipa b{display:block;padding:12px 14px;font-size:18px;font-weight:800;letter-spacing:-.2px;color:#0e3b6d;border-top:1px solid #dfe6ef}
+
+.pk-ensina-onde{margin:48px 0 0}
+.pg.pk .pk-ensina-onde > p{max-width:none}
+.pg.pk .pk-locais{list-style:none;margin:16px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.pg.pk .pk-locais li{position:relative;margin:0;padding:16px 16px 16px 40px;background:#f4f7fb;border:1px solid #dfe6ef}
+/* o marcador de mapa, desenhado: uma gota laranja com o centro branco */
+.pk-locais li::before{content:'';position:absolute;left:14px;top:19px;width:14px;height:14px;border-radius:50% 50% 50% 0;
+  transform:rotate(-45deg);background:#ff6a13}
+.pk-locais li::after{content:'';position:absolute;left:19px;top:24px;width:4px;height:4px;border-radius:50%;background:#fff}
+.pk-locais b{display:block;font-size:17px;font-weight:800;line-height:1.25;color:#0e3b6d}
+.pg .pk-locais b a{color:#0e3b6d;text-decoration:none;border-bottom:2px solid #ff6a13}
+.pg .pk-locais b a:hover{color:#a63f00}
+.pk-locais span{display:block;margin-top:4px;font-size:14.5px;color:#4d5c6e}
+
+.pk-ensina-equip{margin:28px 0 0;padding:22px 24px;background:#e9f0f7;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px 32px;align-items:center}
+.pg.pk .pk-ensina-equip p{max-width:none;margin:0}
+.pk-ensina-equip .pk-botoes{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end}
+.pk-ensina-equip .pk-b{margin:0}
+
+@media (max-width:1100px){
+  .pk-ensina-cab,.pk-equipa,.pk-ensina-equip{grid-template-columns:minmax(0,1fr)}
+  .pg.pk .pk-locais{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pk-ensina-equip .pk-botoes{justify-content:flex-start}
+}
+@media (max-width:560px){
+  .pg.pk .pk-locais{grid-template-columns:minmax(0,1fr)}
+}
+
+/* ======================================================================
+   O TEXTO A NEGRITO É AZUL, NÃO PRETO (14/09/2026)
+   O Paulo: «todos os textos que estejam a bold e a preto devem ficar a
+   azul», o mesmo #0e3b6d dos títulos. A lista saiu de uma medição no
+   browser, página a página (texto com peso ≥ 600 e cor quase preta sobre
+   fundo claro), e cobre títulos h3–h6, b/strong, cabeçalhos de tabela,
+   perguntas, fluxos, passos, citações e botões secundários.
+
+   PORQUE :root body.pg
+   Várias regras de componente têm três classes (.pg .pk-papel .pk-conv h4).
+   O :root soma uma pseudo-classe e o body um elemento, e o :is() vale o seu
+   argumento mais específico: esta regra ganha a todas sem !important —
+   também aos :hover de cor destes elementos, que ficam azuis (o sublinhado
+   e a borda continuam a marcar o hover). O .on do seletor de tamanho está
+   excluído de propósito: é texto escuro sobre laranja.
+
+   O QUE NÃO MUDA
+   O texto dos botões laranja e verdes (continua o preto-sobre-laranja: o
+   azul não passa no laranja), o último passo e o resultado final que já
+   são laranja, e tudo o que está sobre fundo escuro — cabeçalho, rodapé,
+   leitor de música e a biografia escura da /musica/, fotografias, painel da marca Flow, números em círculo
+   azul — que a segunda regra devolve à cor do contentor.
+   ====================================================================== */
+:root body.pg :is(
+  h3,
+  h4,
+  h5,
+  h6,
+  b:not(.pk-quem-p):not(.pk-quem-i),
+  strong,
+  th,
+  summary,
+  dt,
+  .pk-citacao,
+  .pk-cit,
+  .pk-opcao-preco,
+  .pk-avaliar li,
+  .pk-ponte-verbo,
+  .pk-passos li:not(:last-child),
+  .pk-fluxo li,
+  .pk-caminho-sim li:not(:last-child),
+  .pk-trilhos-legenda,
+  .pk-faixa span,
+  .pk-declaracao,
+  .pk-remate,
+  .pk-tres li,
+  .pk-metodo-tit,
+  .pk-sub,
+  .pk-dealer-nome,
+  .pk-incluido li,
+  .pk-asas a,
+  .pk-cta-tit,
+  .pk-indice a,
+  .pk-criterio-fim span,
+  a.pk-b2,
+  .sg-tese,
+  .sg-abord-nossa .sg-abord-tx,
+  a.sg-cta-2,
+  .pg-tsel-b:not(.on),
+  .pg-esq-b span,
+  .pg-vento-val,
+  .qp-frase,
+  .qp-passo,
+  a.qp-cta,
+  .pg-alt a
+){color:#0e3b6d}
+:root body.pg :is(.pg-topo,.pg-rodape,.music-panel,.pk-spot-b,.fl-cab-marca,.pk-resp,.pk-heroi:not(.pk-heroi-curso),.pk-quem-i,.pk-habito-n) :is(
+  h3,
+  h4,
+  h5,
+  h6,
+  b:not(.pk-quem-p):not(.pk-quem-i),
+  strong,
+  th,
+  summary,
+  dt,
+  .pk-citacao,
+  .pk-cit,
+  .pk-opcao-preco,
+  .pk-avaliar li,
+  .pk-ponte-verbo,
+  .pk-passos li:not(:last-child),
+  .pk-fluxo li,
+  .pk-caminho-sim li:not(:last-child),
+  .pk-trilhos-legenda,
+  .pk-faixa span,
+  .pk-declaracao,
+  .pk-remate,
+  .pk-tres li,
+  .pk-metodo-tit,
+  .pk-sub,
+  .pk-dealer-nome,
+  .pk-incluido li,
+  .pk-asas a,
+  .pk-cta-tit,
+  .pk-indice a,
+  .pk-criterio-fim span,
+  a.pk-b2,
+  .sg-tese,
+  .sg-abord-nossa .sg-abord-tx,
+  a.sg-cta-2,
+  .pg-tsel-b:not(.on),
+  .pg-esq-b span,
+  .pg-vento-val,
+  .qp-frase,
+  .qp-passo,
+  a.qp-cta,
+  .pg-alt a
+){color:inherit}
+/* a biografia da /musica/ é escura e o título tem o seu branco próprio (musica.css), que o «inherit» de cima apagava */
+/* a classe repetida é de propósito: a regra azul vale (0,5,2) por causa do :is();
+   a biografia só tem este texto a negrito (medido), por isso não entra na lista dos escuros */
+:root body.pg .bio .bio-nome.bio-nome.bio-nome{color:#fff}

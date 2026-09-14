@@ -3369,7 +3369,8 @@ function paginaCurso(l, numWa) {
   const rel = caminhoCurso(l);
   const url = DOMINIO + rel;
   /* a fotografia do curso, do Paulo (14/09/2026); a `course.jpg` emprestada sai.
-     No herói usa-se a VERTICAL (curso-heroi-v-*.webp, recortada em 4:5);
+     No herói usa-se desde 14/09/2026 o RECORTE do Paulo (curso-heroi-asa-*.webp: a asa
+     amarela vista de baixo com o piloto, com transparência, sobre o azul-claro);
      esta horizontal, da mesma sessão, fica para as partilhas, que cortam mal
      uma imagem vertical. */
   const foto = DOMINIO + '/images/curso/curso-heroi-1600.jpg';
@@ -3452,7 +3453,8 @@ function paginaCurso(l, numWa) {
      extrai «Alfarimgroundhandling», que é o mesmo defeito que hoje põe
      «4 diasduração de referência» a negrito na SERP. O `eixos` acima ainda
      o tem; este não nasce com ele. */
-  const grelhaLocais = () => `\n  <ul class="pk-eixos">${
+  /* 14/09/2026: passa a cartões com o marcador de mapa (`pk-locais`) */
+  const grelhaLocais = () => `\n  <ul class="pk-locais">${
     C.locais.map(x => {
       const s = SPOTS.find(y => y.id === x.id);
       const nome = esc(x.nome);
@@ -3485,16 +3487,63 @@ function paginaCurso(l, numWa) {
         `${j ? '<i>&rarr;</i>' : ''}<b>${x}</b>`).join('')}</div>` : ''}
     </li>`).join('')}</ol>`;
 
-  /* figura de um lado, lista traduzível do outro. O contentor é o `sg-duas`
-     que já existe: 1fr 1fr, sem padding próprio, colapsa aos 1100px. */
-  const figuraLista = (src, altTx, itens, o = {}) => `
-  <div class="sg-duas bf-duas">
-    <figure class="bf-fig"><img src="${src}" alt="${esc(t(altTx, l))}" width="${
-      o.w || 900}" height="${o.h || 1200}" loading="lazy" /></figure>
-    <${o.numerada ? 'ol' : 'ul'} class="pk-eixos" data-cols="1">${itens.map(i =>
-      `<li><b>${esc(t(i.nome, l))}</b><span>${esc(t(i.nota, l))}</span></li>`).join('')}</${
-      o.numerada ? 'ol' : 'ul'}>
-  </div>`;
+  /* 14/09/2026 · A FIGURA DO BODY FIRST PASSA A ESQUEMA COM LEGENDAS
+     O Paulo pediu a imagem bem maior e o texto legível. As cinco partes da
+     lista são cinco sítios do corpo na fotografia: cada uma ganha um ponto no
+     sítio certo e uma linha até à sua legenda, à direita.
+
+     A GEOMETRIA
+     A figura tem proporção fixa, 1200 × 830 unidades: a fotografia (900 × 1249)
+     ocupa as primeiras 598, as legendas começam nas 740. As linhas são um SVG
+     com o mesmo viewBox, por isso nunca se desalinham ao mudar a largura.
+     Os pontos estão em % da fotografia, medidos sobre o original: olhos,
+     ombro, cintura, calções, joelho. As legendas descem a espaços iguais e a
+     linha faz um cotovelo no intervalo — nunca passa por cima de texto.
+     Abaixo dos 900px não há linhas: os pontos levam o número e a lista vem
+     por baixo, numerada. */
+  /* Cada figura diz a sua geometria: tamanho da fotografia, pontos (em % da
+     fotografia, pela ordem dos itens), onde as legendas começam e descem. A
+     largura da fotografia na figura sai da proporção. A figura tem 1200 de largo e
+     `alto` de altura (830 por omissão); o harness é mais alto para o piloto,
+     que é estreito na fotografia, sair grande. */
+  const FIG_CORPO = {
+    classe: 'bf-anot-corpo', w: 900, h: 1249,
+    pontos: [[49.5, 14.4], [33.3, 21.6], [40, 37.6], [41.1, 49.6], [60, 65.7]],
+    ly0: 100, passo: 130, cotovelo: [640, 690], lx: 740
+  };
+  /* 14/09/2026 · O HARNESS COM A FOTOGRAFIA DO PAULO (a silhueta em SVG sai)
+     Os pontos foram medidos sobre o original de 2160 × 3840: a bacia na anca,
+     o joelho, a perneira debaixo da coxa, as costas do harness, o mosquetão
+     do ponto de suspensão e a mão no comando. Seis legendas pela ordem do
+     conteúdo cruzavam as linhas; a figura mostra-as de cima para baixo, pela
+     altura do ponto no corpo, e a lista numerada segue essa ordem para os
+     números baterem com os pontos. */
+  const FIG_HARNESS = {
+    classe: 'bf-anot-harness', w: 900, h: 1600,
+    pontos: [[35.6, 53], [65.8, 66], [38.5, 60.5], [21, 43], [48.9, 35], [76.5, 47.8]],
+    alto: 1000, ly0: 172, passo: 135, cotovelo: [600, 720], lx: 760
+  };
+  const figuraLegendada = (src, altTx, itens, g) => {
+    const H = g.alto || 830, IW = Math.round(H * g.w / g.h);
+    const ordem = itens.map((_, i) => i).sort((a, b) => g.pontos[a][1] - g.pontos[b][1]);
+    const ly = k => g.ly0 + k * g.passo;
+    const linhas = ordem.map((i, k) => {
+      const [x, y] = g.pontos[i];
+      const px = +(IW * x / 100).toFixed(1), py = +(H * y / 100).toFixed(1);
+      const p = `${px},${py} ${g.cotovelo[0]},${py} ${g.cotovelo[1]},${ly(k)} ${g.lx - 14},${ly(k)}`;
+      /* duas vezes: um halo branco por baixo, para a linha se ver sobre o escuro da fotografia */
+      return `<polyline class="bf-halo" points="${p}" /><polyline points="${p}" />`;
+    }).join('');
+    const pct = v => (v / 1200 * 100).toFixed(3) + '%';
+    return `
+  <figure class="bf-anot ${g.classe}" style="--bf-iw:${pct(IW)};--bf-lx:${pct(g.lx)};--bf-ar:1200/${H}">
+    <div class="bf-anot-img"><img src="${src}" alt="${esc(t(altTx, l))}" width="${g.w}" height="${g.h}" loading="lazy" />${
+      ordem.map((i, k) => `<span class="bf-ponto" style="left:${g.pontos[i][0]}%;top:${g.pontos[i][1]}%" aria-hidden="true">${k + 1}</span>`).join('')}</div>
+    <svg class="bf-anot-linhas" viewBox="0 0 1200 ${H}" preserveAspectRatio="none" aria-hidden="true" focusable="false">${linhas}</svg>
+    <ol class="bf-anot-l">${ordem.map((i, k) =>
+      `<li style="--y:${(ly(k) / H * 100).toFixed(2)}%"><b>${esc(t(itens[i].nome, l))}</b><span>${esc(t(itens[i].nota, l))}</span></li>`).join('')}</ol>
+  </figure>`;
+  };
 
   /* `pk-b2` é uma VARIANTE do `pk-b`: sozinha não tem forma de botão e saía
      como texto sublinhado. Leva as duas, como o resto do site. */
@@ -3530,8 +3579,8 @@ function paginaCurso(l, numWa) {
     </p>
   </div>
   <figure class="pk-heroi-foto">
-    <img src="/images/curso/curso-heroi-v-1200.webp" srcset="/images/curso/curso-heroi-v-700.webp 700w, /images/curso/curso-heroi-v-1200.webp 1200w"
-      sizes="(max-width: 900px) 100vw, 50vw" width="1200" height="2137" alt="${esc(t(C.ogAlt, l))}" fetchpriority="high" />
+    <img src="/images/curso/curso-heroi-asa-1000.webp" srcset="/images/curso/curso-heroi-asa-600.webp 600w, /images/curso/curso-heroi-asa-1000.webp 1000w"
+      sizes="(max-width: 900px) 60vw, 360px" width="1000" height="1873" alt="${esc(t(C.ogAlt, l))}" fetchpriority="high" />
     <ul class="pk-factos">${[C.ficha[0], C.ficha[1], C.ficha[2], C.ficha[3], C.local].map(x =>
       `<li><b>${tx(x.valor)}</b> <span>${tx(x.nota)}</span></li>`).join('')}</ul>
   </figure>
@@ -3684,13 +3733,29 @@ function paginaCurso(l, numWa) {
     botao2(C.metodoLigacao, hrefP2W));
 
   /* ---- 7 · ERRO E AUTOMATISMO ------------------------------------- */
+  /* 14/09/2026 · A SECÇÃO DO ERRO GANHA RITMO E AS FOTOGRAFIAS DO INSTRUTOR
+     Era uma coluna de títulos, parágrafos e fluxos iguais. Passa a três tempos:
+       1. os dois caminhos numa só tabela — cada passo do caminho certo por cima
+          do seu par errado, e o resultado final destacado;
+       2. «resultado certo, técnica errada» + «o instrutor observa o processo»
+          ao lado da fotografia do instrutor a observar, com o ciclo em passos;
+       3. «corrigir cedo» ao lado da fotografia da asa já estabilizada, com a
+          reação precoce e a tardia empilhadas.
+     O texto é o mesmo; só muda a disposição. */
+  const caminhos = cols => `\n  <div class="pk-caminhos">${cols.map((c, i) => `
+    <div class="pk-caminho ${i ? 'pk-caminho-nao' : 'pk-caminho-sim'}"><p class="pk-caminho-rot">${tx(c.rotulo)}</p><ol>${
+      lista(c.etapas).map(x => `<li>${x}</li>`).join('')}</ol></div>`).join('')}
+  </div>`;
+  const fotoLado = (src, altTx, w, h) => `<figure class="pk-erro-fig"><img src="${src}" alt="${esc(t(altTx, l))}" width="${w}" height="${h}" loading="lazy" /></figure>`;
   B['erro'] = sec('pk-sec', 'erro',
     eyebrow(C.erroKicker) + h2(C.erroTitulo) +
-    h3(C.habitoTitulo) +
-    duas([{ ...C.habitoColunas[0], destaque: true }, { ...C.habitoColunas[1], evitar: true }], 'habito') +
-    par(C.habitoTexto) +
-    h3(C.tecnicaTitulo) + par(C.tecnicaTexto) +
-    h3(C.processoTitulo) + par(C.processoTexto) + cadeia(C.processoCadeia));
+    h3(C.habitoTitulo) + caminhos(C.habitoColunas) +
+    par(C.habitoTexto, 'pk-caminhos-nota') +
+    `\n  <div class="pk-erro-par">
+    <div class="pk-erro-tx">${h3(C.tecnicaTitulo)}${par(C.tecnicaTexto)}${h3(C.processoTitulo)}${par(C.processoTexto)}${passos(C.processoCadeia)}
+    </div>
+    ${fotoLado('/images/curso/erro-instrutor-observa-640.webp', C.erroFigObservaAlt, 640, 1407)}
+  </div>`);
 
   /* ---- 8 · BODY FIRST · ilha clara -------------------------------- */
   B['body-first'] = sec('pk-sec pk-papel', 'body-first',
@@ -3698,8 +3763,7 @@ function paginaCurso(l, numWa) {
     h3(C.corpoAprendeTitulo) + par(C.corpoAprendeTexto) +
     h3(C.bodyNaoTitulo) + par(C.bodyNaoTexto) + par(C.bodyComandos) +
     par(C.bodyGestos) + cadeia(C.bodyOrdem) +
-    figuraLista('/images/curso/body-first-treino.webp', C.bodyFiguraAlt,
-                C.corpoElementos, { numerada: false, w: 900, h: 1249 }));
+    figuraLegendada('/images/curso/body-first-treino.webp', C.bodyFiguraAlt, C.corpoElementos, FIG_CORPO));
 
   /* ---- 9 · O HARNESS E AS PERNAS --------------------------------- */
   B['harness'] = sec('pk-sec', 'harness',
@@ -3708,8 +3772,7 @@ function paginaCurso(l, numWa) {
     h3(C.cadeiaTitulo) + cadeia(C.cadeiaElos) + par(C.cadeiaTexto) +
     cit(C.cadeiaFrase) +
     h3(C.sistemaTitulo) + par(C.sistemaTexto) +
-    figuraLista('/images/curso/body-first-silhueta.svg', C.harnessFiguraAlt,
-                C.harnessElementos, { numerada: true, w: 900, h: 1200 }) +
+    figuraLegendada('/images/curso/harness-piloto-900.webp', C.harnessFiguraAlt, C.harnessElementos, FIG_HARNESS) +
     h3(C.sentirTitulo) + chips(C.sentirItens) +
     h3(C.groundTitulo) + par(C.groundTexto) + chips(C.groundItens, 'curtas') +
     /* O ALT VEM DO QP E NÃO É ESCRITO AQUI — 12/09/2026
@@ -3728,9 +3791,12 @@ function paginaCurso(l, numWa) {
 
   /* ---- 10 · CORRECÇÃO -------------------------------------------- */
   /* 14/09/2026: com 75 palavras não era secção — é o fim de «o corpo aprende o que repete» */
-  const blocoCorrecao = h3(C.corrTitulo) +
-    h4(C.lerTitulo) + cadeia(C.lerCadeia) + par(C.lerTexto) +
-    duas([{ ...C.reacaoColunas[0], destaque: true }, C.reacaoColunas[1]], 'reacao');
+  const blocoCorrecao = `\n  <div class="pk-erro-par pk-erro-par-inv">
+    ${fotoLado('/images/curso/erro-instrutor-corrige-640.webp', C.erroFigCorrigeAlt, 640, 1269)}
+    <div class="pk-erro-tx">${h3(C.corrTitulo)}${h4(C.lerTitulo)}${cadeia(C.lerCadeia)}${par(C.lerTexto)}${
+      duas([{ ...C.reacaoColunas[0], destaque: true }, C.reacaoColunas[1]], 'reacao')}
+    </div>
+  </div>`;
 
   /* ---- 11 · ENERGIA · curto de propósito ------------------------- */
   /* 14/09/2026: curta de propósito, fecha o capítulo do método depois do harness */
@@ -3813,14 +3879,32 @@ function paginaCurso(l, numWa) {
     h4(C.factoresTitulo) + chips(C.factores);
 
   /* ---- 14 · QUEM ENSINA E ONDE · ilha clara -------------------- */
+  /* 14/09/2026 · QUEM ENSINA, ONDE E COM QUÊ, EM TRÊS BLOCOS
+     1. o princípio (saber fazer ≠ saber ensinar) com a licença ao lado;
+     2. a equipa com os retratos: instrutores e auxiliares, cada grupo com o
+        seu título — o nome da função está no título, não em cada cartão;
+     3. os locais em cartões com a ligação para a página do spot, e o
+        equipamento numa caixa própria com os dois botões. */
+  const equipa = () => `\n  <div class="pk-equipa">${C.equipa.map(g => `
+    <div class="pk-equipa-g">${h3(g.titulo)}
+      <ul>${g.pessoas.map(p => `<li><img src="/images/curso/${p.foto}-480.webp" alt="${esc(p.nome)} — ${tx(g.titulo)}" width="480" height="480" loading="lazy" /><b>${esc(p.nome)}</b></li>`).join('')}</ul>
+    </div>`).join('')}
+  </div>`;
   B['quem-ensina'] = sec('pk-sec pk-papel', 'quem-ensina',
     eyebrow(C.ensinaKicker) + h2(C.ensinaTitulo) +
-    h3(C.saberTitulo) + par(C.saberTexto) + par(C.licenca, 'pk-lead') +
-    par(C.locaisTexto) + grelhaLocais() + par(C.equipTexto) +
-    `\n  <p class="pk-botoes">
-    <a class="pk-b pk-b2" href="${esc(hrefPK)}">${tx(C.verSpots)}</a>
-    <a class="pk-b pk-b2" href="${esc(hrefAsa)}">${tx(C.verAsa)}</a>
-  </p>`);
+    `\n  <div class="pk-ensina-cab">
+    <div>${h3(C.saberTitulo)}${par(C.saberTexto)}</div>
+    <p class="pk-ensina-licenca">${tx(C.licenca)}</p>
+  </div>` +
+    equipa() +
+    `\n  <div class="pk-ensina-onde">${par(C.locaisTexto)}${grelhaLocais()}
+  </div>
+  <div class="pk-ensina-equip">${par(C.equipTexto)}
+    <p class="pk-botoes">
+      <a class="pk-b pk-b2" href="${esc(hrefPK)}">${tx(C.verSpots)}</a>
+      <a class="pk-b pk-b2" href="${esc(hrefAsa)}">${tx(C.verAsa)}</a>
+    </p>
+  </div>`);
 
   /* ---- 15 · PERGUNTAS · ilha clara ----------------------------- */
   B['perguntas'] = sec('pk-sec pk-papel', 'perguntas',

@@ -993,6 +993,21 @@ export const CURSO = {
     fr: 'L’erreur répétée devient une habitude',
     de: 'Der wiederholte Fehler wird zur Gewohnheit'
   },
+  /* 14/09/2026 · as duas fotografias do Paulo na secção do erro (recortes) */
+  erroFigObservaAlt: {
+    pt: 'Instrutor a observar um piloto enquanto a asa de Parakite se inclina durante um exercício no chão',
+    en: 'Instructor watching a pilot as the Parakite wing leans over during a ground exercise',
+    es: 'Instructor observando a un piloto mientras el ala de Parakite se inclina durante un ejercicio en el suelo',
+    fr: 'Instructeur observant un pilote pendant que l’aile de Parakite s’incline lors d’un exercice au sol',
+    de: 'Ausbilder beobachtet einen Piloten, während sich der Parakite-Schirm bei einer Bodenübung neigt'
+  },
+  erroFigCorrigeAlt: {
+    pt: 'Instrutor ao lado de um piloto com a asa de Parakite estabilizada por cima da cabeça',
+    en: 'Instructor next to a pilot with the Parakite wing stabilised overhead',
+    es: 'Instructor junto a un piloto con el ala de Parakite estabilizada sobre la cabeza',
+    fr: 'Instructeur à côté d’un pilote, l’aile de Parakite stabilisée au-dessus de sa tête',
+    de: 'Ausbilder neben einem Piloten mit stabilisiertem Parakite-Schirm über dem Kopf'
+  },
   habitoColunas: [
     {
       rotulo: { pt: 'O caminho que queremos', en: 'The path we want',
@@ -1244,13 +1259,14 @@ export const CURSO = {
     de: 'Keiner dieser Teile funktioniert isoliert: Körper, Harness und Steuerung werden beim Fliegen koordiniert.'
   },
   harnessFiguraAlt: {
-    pt: 'Diagrama de um piloto num harness split-leg com pontos assinalados na bacia, pernas, perneiras, harness, pontos de suspensão e comandos',
-    en: 'Diagram of a pilot in a split-leg harness with points marked at the hips, legs, leg straps, harness, suspension points and controls',
-    es: 'Diagrama de un piloto en un harness split-leg con puntos señalados en la pelvis, piernas, perneras, harness, puntos de suspensión y mandos',
-    fr: 'Schéma d’un pilote dans un harness split-leg avec des points repérés au bassin, aux jambes, aux cuissardes, au harness, aux points de suspension et aux commandes',
-    de: 'Diagramm eines Piloten in einem Split-leg-Harness mit markierten Punkten an Becken, Beinen, Beinschlaufen, Harness, Aufhängepunkten und Steuerung'
+    pt: 'Piloto de Parakite suspenso num harness split-leg com pontos assinalados na bacia, pernas, perneiras, harness, pontos de suspensão e comandos',
+    en: 'Parakite pilot suspended in a split-leg harness with points marked at the hips, legs, leg straps, harness, suspension points and controls',
+    es: 'Piloto de Parakite suspendido en un harness split-leg con puntos señalados en la pelvis, piernas, perneras, harness, puntos de suspensión y mandos',
+    fr: 'Pilote de Parakite suspendu dans un harness split-leg avec des points repérés au bassin, aux jambes, aux cuissardes, au harness, aux points de suspension et aux commandes',
+    de: 'Parakite-Pilot hängend in einem Split-leg-Harness mit markierten Punkten an Becken, Beinen, Beinschlaufen, Harness, Aufhängepunkten und Steuerung'
   },
-  /* A ordem e a dos marcadores 01 a 06 do SVG. Bacia e Pernas repetem os
+  /* A ordem era a dos marcadores 01 a 06 do SVG; desde 14/09/2026 a figura é a
+     fotografia do Paulo e mostra-os pela altura no corpo (ver FIG_HARNESS). Bacia e Pernas repetem os
      nomes do bloco 8 de proposito: la sao partes do corpo, aqui sao elos da
      cadeia de carga. E a articulacao entre os dois blocos, nao repeticao. */
   harnessElementos: [
@@ -1886,6 +1902,18 @@ export const CURSO = {
 
      OS TOPÓNIMOS NÃO SE TRADUZEM e por isso `nome` é uma string e não um
      objecto de cinco línguas. O que se traduz é o papel. */
+  /* 14/09/2026 · A EQUIPA — nomes e funções dados pelo Paulo. Instrutores:
+     Miguel e Cardoso; auxiliares de instrutor: Paulo e Bea. Só o nome e a
+     função: nada de percursos, horas ou licenças que ele não tenha dado. */
+  equipa: [
+    { titulo: { pt: 'Instrutores de Parakite', en: 'Parakite instructors', es: 'Instructores de Parakite',
+                fr: 'Instructeurs de Parakite', de: 'Parakite-Ausbilder' },
+      pessoas: [{ nome: 'Miguel', foto: 'equipa-miguel' }, { nome: 'Cardoso', foto: 'equipa-cardoso' }] },
+    { titulo: { pt: 'Auxiliares de instrutor de Parakite', en: 'Parakite instructor assistants',
+                es: 'Auxiliares de instructor de Parakite', fr: 'Assistants instructeurs de Parakite',
+                de: 'Parakite-Ausbildungsassistenten' },
+      pessoas: [{ nome: 'Paulo', foto: 'equipa-paulo' }, { nome: 'Bea', foto: 'equipa-bea' }] }
+  ],
   locais: [
     { id: 'alfarim', nome: 'Alfarim', papel: {
         pt: 'groundhandling', en: 'groundhandling', es: 'groundhandling',
