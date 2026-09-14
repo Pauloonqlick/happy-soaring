@@ -16,6 +16,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { lerHoje } from '../src/assuntos.js';
 import { lerSemana, gerarSemana } from '../src/leitura.js';
+import { lerFaltaAprender } from '../src/aprendizagem.js';
 
 const MODULO = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const RAIZ = path.join(MODULO, '..');
@@ -91,4 +92,14 @@ else {
     if (!s.frases.length) console.log(`- ${s.vazio || 'Nada a dizer.'}`);
     for (const f of s.frases) console.log(`- ${f.texto}`);
   }
+}
+
+/* 14/09/2026 · o que ainda não deixou lição — para que nada se perda por esquecimento */
+const ESTADOS_FALTA = { FALTA_LICAO: 'falta lição', CAUSA_POR_DESCOBRIR: 'causa por descobrir', CAUSA_POR_CONFIRMAR: 'causa por confirmar' };
+const falta = await lerFaltaAprender(db, { agora }).catch(e => { console.log('\nO QUE FALTA APRENDER: não foi possível ler (' + e.message + ')'); return null; });
+if (falta) {
+  console.log('\nO QUE FALTA APRENDER' + (falta.length ? ' (' + falta.length + ')' : ''));
+  if (!falta.length) console.log('- Nada: todos os problemas e incidentes já deixaram lição ou foram dispensados com motivo.');
+  for (const x of falta) console.log('- [' + ESTADOS_FALTA[x.estado] + '] ' + x.titulo + ' — ' + x.detalhe +
+    (x.hipoteses_eliminadas ? ' (' + x.hipoteses_eliminadas + ' hipóteses eliminadas)' : '') + ' · ' + x.referencia);
 }

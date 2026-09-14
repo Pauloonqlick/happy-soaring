@@ -97,3 +97,7 @@ credenciais/
 inteligencia/.wrangler/
 inteligencia/.dev.vars
 inteligencia/dist/
+
+# Manual de boas práticas: não se guarda cópia (uma só fonte — as lições do módulo).
+# Gera-se a pedido com `node inteligencia/scripts/manual.mjs --ficheiro F`.
+inteligencia/manual/

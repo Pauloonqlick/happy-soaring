@@ -147,6 +147,24 @@ Indexação, rastreio, dados estruturados e desempenho: a fonte oficial é o mó
 de inteligência (`inteligencia/`, ver o `inteligencia/README.md`) desde
 14/09/2026. O `SEO-OPEN.md` é histórico nessa parte.
 
+**Boas práticas de SEO: uma só fonte de verdade** (decisão do Paulo, 14/09/2026).
+Vivem só nas lições do módulo — página https://happysoaring.com/inteligencia/aprendizagem/.
+
+- Antes de criar ou alterar páginas do site, ler o manual:
+  `node inteligencia/scripts/manual.mjs`, e aplicá-lo (incluindo juntar alterações
+  numa só publicação em vez de publicar a mesma página várias vezes).
+- Uma prática nova ou corrigida regista-se no módulo (`registar.mjs licao`). Não se
+  escreve neste ficheiro, no `SEO-WORKFLOW.md`, no `SEO-OPEN.md`, numa cópia .md
+  nem em memórias — esses sítios apontam para o módulo, não repetem o que ele diz.
+- Se algum documento contradisser uma lição do módulo, manda a lição; corrige-se o
+  documento para apontar para ela.
+- **Nada do que se aprende se perde.** Ao fechar um problema, um incidente ou um erro,
+  antes do commit: registar a lição (`registar.mjs licao`; uma regra de trabalho é
+  `natureza: PROCESSO` com as `referencias` do caso), ou as hipóteses eliminadas se a
+  causa ainda não se sabe, ou dispensar com o motivo escrito (`registar.mjs dispensar`).
+  `node inteligencia/scripts/falta-aprender.mjs` lista o que está pendente; as duas
+  publicações e a leitura de 2 em 2 dias mostram-no também.
+
 Vale só para esse trabalho. Não altera nada do resto deste ficheiro.
 
 ## O mapa da estrutura

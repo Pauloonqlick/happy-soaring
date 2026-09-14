@@ -369,3 +369,10 @@ execFileSync(process.execPath, [WRANGLER, 'pages', 'deploy', '_publicar',
   '--project-name=happy-soaring', '--branch=master'],
   { cwd: RAIZ, stdio: 'inherit' });
 console.log('\n✔ https://happysoaring.com\n');
+
+/* 14/09/2026 · o que ainda não deixou lição no módulo de inteligência (a única fonte das
+   boas práticas). Nunca bloqueia a publicação: lembra que se regista antes de fechar. */
+console.log('▸ O que falta aprender');
+try {
+  execFileSync(process.execPath, [path.join(RAIZ, 'inteligencia', 'scripts', 'falta-aprender.mjs'), '--aviso'], { cwd: RAIZ, stdio: 'inherit', timeout: 60000 });
+} catch (e) { console.log('  (não foi possível ler)'); }

@@ -1,12 +1,19 @@
 /**
- * Manual de boas práticas — gerado a partir das lições do módulo (só leitura).
+ * Manual de boas práticas — lido das lições do módulo (só leitura).
  *
  * USO (a partir da raiz do repositório)
- *   node inteligencia/scripts/manual.mjs     escreve inteligencia/manual/boas-praticas.md
+ *   node inteligencia/scripts/manual.mjs                 mostra o manual no terminal
+ *   node inteligencia/scripts/manual.mjs --ficheiro F    escreve uma cópia datada em F
  *
- * O manual serve para este site e para os próximos. É o mesmo texto que a
- * página «Aprendizagem» mostra; guardá-lo no repositório deixa-o disponível
- * mesmo sem o módulo.
+ * UMA SÓ FONTE DE VERDADE (decisão do Paulo, 14/09/2026)
+ * As boas práticas vivem só nas lições do módulo (tabela `licoes`, página «Aprendizagem»).
+ * Este script LÊ-AS; não as guarda. Deixou de haver uma cópia no repositório
+ * (inteligencia/manual/boas-praticas.md): uma cópia commitada desactualiza-se assim que o
+ * módulo aprende algo e passa a ser uma segunda verdade. Quando for preciso levar o manual
+ * para outro site, gera-se com --ficheiro nesse dia, e o cabeçalho diz de quando é.
+ *
+ * O Claude corre isto antes de mexer no site. Uma prática nova regista-se no módulo
+ * (`registar.mjs licao`), nunca num .md, no CLAUDE.md ou numa memória.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -26,7 +33,14 @@ const pacotes = ler('SELECT id, licao_chave FROM pacotes_trabalho');
 const avaliacoes = ler('SELECT pacote_id, resultado FROM avaliacoes');
 
 const texto = gerarManual(resultadosDasLicoes(licoes, { assuntos, pacotes, avaliacoes }));
-const destino = path.join(MODULO, 'manual', 'boas-praticas.md');
-fs.mkdirSync(path.dirname(destino), { recursive: true });
-fs.writeFileSync(destino, texto + '\n');
-console.log('✔ ' + path.relative(path.join(MODULO, '..'), destino) + ' — ' + licoes.length + ' lição(ões)');
+const i = process.argv.indexOf('--ficheiro');
+if (i > 0 && process.argv[i + 1]) {
+  const destino = path.resolve(process.argv[i + 1]);
+  const aviso = '> Cópia de ' + new Date().toISOString().slice(0, 10) + '. A fonte é o módulo de inteligência ' +
+    '(https://happysoaring.com/inteligencia/aprendizagem/). Não se edita: fica desactualizada assim que o módulo aprende algo novo.\n\n';
+  fs.mkdirSync(path.dirname(destino), { recursive: true });
+  fs.writeFileSync(destino, aviso + texto + '\n');
+  console.log('✔ cópia escrita em ' + destino + ' — ' + licoes.length + ' lição(ões)');
+} else {
+  console.log(texto);
+}

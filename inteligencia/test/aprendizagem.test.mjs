@@ -142,7 +142,7 @@ test('lição: validação, versões e manual gerado só com o que foi observado
   assert.equal((await gravarLicao(db, { ...LICAO, prevencao: '' })).estado, 400);
   await gravarLicao(db, LICAO, { agora: AGORA });
   await gravarLicao(db, { ...LICAO, titulo: 'Título revisto' }, { agora: AGORA });
-  assert.deepEqual(db.sqlite.prepare('SELECT versao FROM licoes_historico ORDER BY versao').all().map(x => x.versao), [1, 2]);
+  assert.deepEqual(db.sqlite.prepare('SELECT versao FROM licoes_historico WHERE chave = ? ORDER BY versao').all(LICAO.chave).map(x => x.versao), [1, 2]);
   const a = await lerAprendizagem(db, { agora: AGORA });
   assert.equal(a.licoes[0].estado, 'EM_TESTE');
   assert.match(a.manual, /## Práticas em teste/);
@@ -201,4 +201,56 @@ test('quando pedir indexação: só depois de duas esperas de 14 dias sem rastre
   assert.equal(r.decididos, 0, 'depois de duas esperas o módulo já não adia');
   h = await lerHoje(db, { agora: '2026-10-13T13:00:00.000Z' });
   assert.deepEqual(h.bloco3.accoes.map(a => [a.tipo, a.total, a.hoje]), [['PEDIR_INDEXACAO', 1, ['/nova/']]]);
+});
+
+test('nada se perde: lições de processo, «o que falta aprender» e dispensas', async () => {
+  const { lerFaltaAprender, lerAprendizagem, gravarLicao, resultadosDasLicoes, gerarManual } = await import('../src/aprendizagem.js');
+  const { DatabaseSync } = await import('node:sqlite');
+  const fsm = await import('node:fs'), pathm = await import('node:path'), urlm = await import('node:url');
+  const MOD = pathm.join(pathm.dirname(urlm.fileURLToPath(import.meta.url)), '..');
+  const sq = new DatabaseSync(':memory:');
+  for (const f of fsm.readdirSync(pathm.join(MOD, 'migrations')).filter(f => f.endsWith('.sql')).sort()) sq.exec(fsm.readFileSync(pathm.join(MOD, 'migrations', f), 'utf8'));
+  const stmt = (sql, params = []) => ({ sql, params, bind: (...p) => stmt(sql, p),
+    first: async () => { const r = sq.prepare(sql).get(...params); return r ? { ...r } : null; },
+    all: async () => ({ results: sq.prepare(sql).all(...params).map(r => ({ ...r })) }),
+    run: async () => { sq.prepare(sql).run(...params); return {}; } });
+  const db = { prepare: s => stmt(s), batch: async ss => { for (const s of ss) sq.prepare(s.sql).run(...s.params); return []; } };
+  const agora = '2026-09-15T10:00:00.000Z';
+
+  /* a migração traz as duas lições de processo e o incidente real, que já tem lição */
+  const proc = sq.prepare("SELECT chave FROM licoes WHERE natureza = 'PROCESSO' ORDER BY chave").all().map(x => x.chave);
+  assert.deepEqual(proc, ['operacao/frequencia-das-tarefas', 'operacao/limite-processamento-tarefas-agendadas']);
+  assert.equal((await lerFaltaAprender(db, { agora })).length, 0);
+
+  /* um problema sem lição → falta lição; com hipóteses eliminadas → causa por descobrir */
+  const ins = (chave, tipo, caminho) => sq.prepare("INSERT INTO assuntos (chave, tipo, caminho, evidencia, detectado_em, visto_em) VALUES (?, ?, ?, '{}', ?, ?)").run(chave, tipo, caminho, agora, agora);
+  try { ins('RASTREADA_NAO_INDEXADA /fr/ailes/yoti-3/', 'RASTREADA_NAO_INDEXADA', '/fr/ailes/yoti-3/'); }
+  catch (e) { /* o esquema de assuntos pode pedir mais colunas: o teste usa o mínimo que o módulo grava */ throw e; }
+  let f = await lerFaltaAprender(db, { agora });
+  assert.equal(f.length, 1);
+  assert.equal(f[0].estado, 'FALTA_LICAO');
+  sq.prepare("INSERT INTO hipoteses_eliminadas (hipotese, evidencia, eliminada_em, caminho) VALUES ('diferença técnica', 'igual às irmãs', '2026-09-14', '/fr/ailes/yoti-3/')").run();
+  f = await lerFaltaAprender(db, { agora });
+  assert.equal(f[0].estado, 'CAUSA_POR_DESCOBRIR');
+  assert.equal(f[0].hipoteses_eliminadas, 1);
+
+  /* um incidente fechado sem lição → falta lição; dispensado → sai */
+  sq.prepare(`INSERT INTO incidentes (aberto_em, ultimo_problema_em, fechado_em, contagens, causa_confirmada, resolucao, resolvido_em)
+    VALUES ('2026-09-15T01:00:00.000Z', '2026-09-15T02:00:00.000Z', '2026-09-15T02:02:00.000Z', '{"assuntos":{"EM_FALTA":30}}', 'causa x', 'resolução y', '2026-09-15T03:00:00.000Z')`).run();
+  f = await lerFaltaAprender(db, { agora });
+  assert.equal(f.find(x => x.origem === 'incidente').estado, 'FALTA_LICAO');
+  sq.prepare("INSERT INTO aprendizagem_dispensas (referencia, motivo) VALUES ('incidente:2026-09-15T01:00:00.000Z', 'teste: sem nada a aprender')").run();
+  assert.equal((await lerFaltaAprender(db, { agora })).filter(x => x.origem === 'incidente').length, 0);
+
+  /* uma lição de processo grava-se sem tipo de problema, e está em vigor */
+  const r = await gravarLicao(db, { chave: 'processo/teste', natureza: 'PROCESSO', categoria: 'Como se publica', titulo: 'T', sintoma: 's', causa: 'c',
+    correccao: 'x', prevencao: 'p', referencias: ['incidente:2026-09-15T01:00:00.000Z'] }, { agora, origem: 'CLAUDE' });
+  assert.equal(r.estado, 200);
+  const a = await lerAprendizagem(db, { agora });
+  assert.equal(a.licoes.find(l => l.chave === 'processo/teste').estado, 'EM_VIGOR');
+  assert.match(a.manual, /Regras de trabalho em vigor/);
+  assert.match(a.manual, /Nasceu de:/);
+  assert.equal(a.falta_aprender.length, 1);
+  /* uma lição MEDIDA continua a precisar de um tipo de problema válido */
+  assert.equal((await gravarLicao(db, { chave: 'x/sem-tipo', categoria: 'c', titulo: 't', sintoma: 's', causa: 'c', correccao: 'x', prevencao: 'p' })).estado, 400);
 });

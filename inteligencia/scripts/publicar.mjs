@@ -52,3 +52,7 @@ corre([WRANGLER, 'd1', 'migrations', 'apply', 'hs-inteligencia', '--remote']);
 passo('Publicar o Worker');
 corre([WRANGLER, 'deploy']);
 console.log('\n✔ https://happysoaring.com/inteligencia/\n');
+
+/* 14/09/2026 · nada se aprende e se perde: o que ainda não deixou lição (nunca bloqueia) */
+passo('O que falta aprender');
+try { corre([path.join(MODULO, 'scripts', 'falta-aprender.mjs'), '--aviso']); } catch (e) { console.log('  (não foi possível ler)'); }

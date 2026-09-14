@@ -9,6 +9,7 @@
    e dos assuntos resolvidos. Uma lição confirmada reforça a decisão; uma
    refutada deixa de ser aplicada sozinha e o caso passa para análise. */
 import { carregarContexto, verAssunto, textosDe, regrasAplicaveis, conteudoPacote, TIPOS } from './assuntos.js';
+import { descreverIncidente } from './vigia.js';
 
 const DIA = 864e5;
 const t = s => (s ? Date.parse(s) : NaN);
@@ -52,6 +53,8 @@ export function resultadosDasLicoes(licoes, { assuntos, pacotes, avaliacoes }) {
   }
   return licoes.map(l => {
     const r = porChave.get(l.chave);
+    /* uma regra de trabalho nascida de um caso real: está em vigor desde que existe (0014) */
+    if (l.natureza === 'PROCESSO') return { ...l, resultados: r, estado: 'EM_VIGOR' };
     const confirmacoes = r.melhorias + (r.pacotes ? 0 : r.resolvidos);   /* sem acção, conta o caso que se resolveu como previsto */
     const estado = r.pioraram > 0 || (r.sem_efeito >= 2 && r.melhorias === 0) ? 'REFUTADA'
       : confirmacoes >= 2 ? 'CONFIRMADA' : 'EM_TESTE';
@@ -148,7 +151,7 @@ export async function executarCicloDecisoes(env, { agora = new Date().toISOStrin
 
 /* ---------------------------------------------------------------- leitura -- */
 
-const ESTADO_LICAO = { CONFIRMADA: 'Confirmada', EM_TESTE: 'Em teste', REFUTADA: 'Não resultou' };
+const ESTADO_LICAO = { CONFIRMADA: 'Confirmada', EM_VIGOR: 'Em vigor', EM_TESTE: 'Em teste', REFUTADA: 'Não resultou' };
 
 export async function lerAprendizagem(db, { agora = new Date().toISOString() } = {}) {
   const [licoesBase, { results: assuntos }, { results: pacotes }, { results: avaliacoes }] = await Promise.all([
@@ -161,16 +164,16 @@ export async function lerAprendizagem(db, { agora = new Date().toISOString() } =
     assuntos: assuntos.map(a => { let ev = {}; try { ev = JSON.parse(a.evidencia); } catch (e) { ev = {}; } return { ...a, evidencia: ev }; }),
     pacotes, avaliacoes
   });
-  return { agora, licoes, manual: gerarManual(licoes, agora) };
+  return { agora, licoes, manual: gerarManual(licoes, agora), falta_aprender: await lerFaltaAprender(db, { agora, licoes: licoesBase }) };
 }
 
 /* O manual: o que resultou, o que está em teste e o que não resultou. */
 export function gerarManual(licoes, agora = new Date().toISOString()) {
   const L = [];
-  L.push('# Manual de boas práticas — SEO técnico e indexação', '');
+  L.push('# Manual de boas práticas — SEO técnico, publicação e operação', '');
   L.push('Gerado pelo módulo de inteligência da Happy Soaring a partir de erros reais detectados e do resultado das correcções.');
   L.push('Actualizado em ' + agora.slice(0, 10) + '. Uma prática só aparece como confirmada depois de resultados observados; não se atribui causa.', '');
-  const grupos = [['CONFIRMADA', 'Práticas confirmadas'], ['EM_TESTE', 'Práticas em teste'], ['REFUTADA', 'O que não resultou']];
+  const grupos = [['CONFIRMADA', 'Práticas confirmadas'], ['EM_VIGOR', 'Regras de trabalho em vigor'], ['EM_TESTE', 'Práticas em teste'], ['REFUTADA', 'O que não resultou']];
   for (const [estado, titulo] of grupos) {
     const doEstado = licoes.filter(l => l.estado === estado);
     if (!doEstado.length) continue;
@@ -185,6 +188,7 @@ export function gerarManual(licoes, agora = new Date().toISOString()) {
         L.push('- **Sintoma:** ' + l.sintoma);
         L.push('- **Causa:** ' + l.causa);
         L.push('- **Correcção:** ' + l.correccao);
+        if (l.natureza === 'PROCESSO') { L.push('- **Nasceu de:** ' + (referenciasDe(l).join('; ') || 'caso não registado') + '. Estado: em vigor.', ''); continue; }
         L.push('- **Evidência:** ' + r.casos + ' caso(s) detectado(s), ' + r.resolvidos + ' resolvido(s)' +
           (r.pacotes ? '; avaliações: ' + r.melhorias + ' melhoria(s) observada(s), ' + r.sem_efeito + ' sem efeito claro, ' +
             r.pioraram + ' pioraram, ' + r.inconclusivos + ' inconclusiva(s)' : '') + '. Estado: ' + ESTADO_LICAO[l.estado].toLowerCase() + '.', '');
@@ -205,14 +209,17 @@ export async function gravarLicao(db, corpo, { agora = new Date().toISOString(),
     chave: texto(corpo?.chave, 120), tipo_assunto: String(corpo?.tipo_assunto || ''), categoria: texto(corpo?.categoria, 80),
     titulo: texto(corpo?.titulo, 200), padrao: texto(corpo?.padrao, 300) || null, prioridade: Number(corpo?.prioridade ?? 100),
     sintoma: texto(corpo?.sintoma, 1000), causa: texto(corpo?.causa, 1000), correccao: texto(corpo?.correccao, 1000),
-    prevencao: texto(corpo?.prevencao, 1000), generica: corpo?.generica === false || corpo?.generica === 0 ? 0 : 1
+    prevencao: texto(corpo?.prevencao, 1000), generica: corpo?.generica === false || corpo?.generica === 0 ? 0 : 1,
+    natureza: corpo?.natureza === 'PROCESSO' ? 'PROCESSO' : 'MEDIDA',
+    referencias: Array.isArray(corpo?.referencias) ? JSON.stringify(corpo.referencias.map(x => texto(String(x), 200)).filter(Boolean).slice(0, 20)) : null
   };
   if (!/^[a-z0-9][a-z0-9/_-]{2,119}$/.test(v.chave)) return { estado: 400, erro: 'Chave inválida.' };
-  if (!TIPOS[v.tipo_assunto]) return { estado: 400, erro: 'Tipo de assunto desconhecido.' };
+  if (v.natureza === 'MEDIDA' && !TIPOS[v.tipo_assunto]) return { estado: 400, erro: 'Tipo de assunto desconhecido.' };
+  if (v.natureza === 'PROCESSO') { v.tipo_assunto = null; v.padrao = null; }
   for (const k of ['categoria', 'titulo', 'sintoma', 'causa', 'correccao', 'prevencao']) if (!v[k]) return { estado: 400, erro: 'Falta: ' + k + '.' };
   if (v.padrao) { try { new RegExp(v.padrao, 'i'); } catch (e) { return { estado: 400, erro: 'Padrão inválido.' }; } }
   if (!Number.isInteger(v.prioridade)) return { estado: 400, erro: 'Prioridade inválida.' };
-  const cols = ['tipo_assunto', 'categoria', 'titulo', 'padrao', 'prioridade', 'sintoma', 'causa', 'correccao', 'prevencao', 'generica'];
+  const cols = ['natureza', 'tipo_assunto', 'categoria', 'titulo', 'padrao', 'prioridade', 'sintoma', 'causa', 'correccao', 'prevencao', 'generica', 'referencias'];
   await db.batch([
     db.prepare(`INSERT INTO licoes (chave, ${cols.join(', ')}, origem, criada_em, alterada_em) VALUES (?, ${cols.map(() => '?').join(', ')}, ?, ?, ?)
       ON CONFLICT(chave) DO UPDATE SET ${cols.map(k => k + ' = excluded.' + k).join(', ')}, versao = licoes.versao + 1, alterada_em = excluded.alterada_em`)
@@ -222,4 +229,50 @@ export async function gravarLicao(db, corpo, { agora = new Date().toISOString(),
       .bind(agora, v.chave)
   ]);
   return { estado: 200, valor: await lerAprendizagem(db, { agora }) };
+}
+
+/* ------------------------------------------------------ o que falta aprender -- */
+
+export const referenciasDe = l => { try { const r = l.referencias ? JSON.parse(l.referencias) : []; return Array.isArray(r) ? r : []; } catch (e) { return []; } };
+
+/* O que aconteceu e ainda não deixou lição (14/09/2026). Nada se perde por esquecimento:
+     · um problema detectado que nenhuma lição reconhece — «falta lição», ou «causa por
+       descobrir» se já há hipóteses eliminadas para aquela página;
+     · um incidente do módulo (fechado, com peso) que nenhuma lição refere — «falta lição»
+       se já está resolvido, «causa por confirmar» se ainda não.
+   Um caso sai daqui quando uma lição o reconhece ou refere, ou quando é dispensado com um
+   motivo escrito (aprendizagem_dispensas). */
+export async function lerFaltaAprender(db, { agora = new Date().toISOString(), licoes = null } = {}) {
+  const [L, { results: assuntos }, { results: hipoteses }, { results: incidentes }, { results: dispensas }] = await Promise.all([
+    licoes ? Promise.resolve(licoes) : lerLicoes(db),
+    db.prepare('SELECT chave, tipo, caminho, evidencia, detectado_em, resolvido_em FROM assuntos').all(),
+    db.prepare("SELECT caminho, tipo_assunto FROM hipoteses_eliminadas WHERE estado = 'ELIMINADA'").all(),
+    db.prepare('SELECT * FROM incidentes WHERE fechado_em IS NOT NULL ORDER BY aberto_em DESC LIMIT 50').all(),
+    db.prepare('SELECT referencia FROM aprendizagem_dispensas').all()
+  ]);
+  const dispensado = new Set(dispensas.map(d => d.referencia));
+  const referidas = new Set(L.flatMap(referenciasDe));
+  const out = [];
+  const porCaso = new Map();
+  for (const a of assuntos) {
+    if (dispensado.has('assunto:' + a.chave)) continue;
+    let ev = {}; try { ev = JSON.parse(a.evidencia || '{}'); } catch (e) { ev = {}; }
+    if (licaoDe({ ...a, evidencia: ev }, L)) continue;
+    const hip = hipoteses.filter(h => h.caminho && a.caminho.startsWith(h.caminho) && (!h.tipo_assunto || h.tipo_assunto === a.tipo)).length;
+    const k = a.tipo + '|' + a.caminho;
+    if (porCaso.has(k)) continue;
+    porCaso.set(k, true);
+    out.push({ referencia: 'assunto:' + a.chave, origem: 'problema', titulo: (TIPOS[a.tipo]?.titulo || a.tipo), detalhe: a.caminho,
+      desde: a.detectado_em, activo: !a.resolvido_em,
+      estado: hip ? 'CAUSA_POR_DESCOBRIR' : 'FALTA_LICAO', hipoteses_eliminadas: hip });
+  }
+  for (const i of incidentes) {
+    const ref = 'incidente:' + i.aberto_em;
+    if (dispensado.has(ref) || referidas.has(ref)) continue;
+    const d = descreverIncidente(i, agora);
+    if (!(d.duracao_min >= 30 || d.execucoes_perdidas >= 5)) continue;
+    out.push({ referencia: ref, origem: 'incidente', titulo: 'Incidente do módulo', detalhe: d.execucoes_perdidas + ' execuções perdidas em ' + d.duracao_min + ' min',
+      desde: i.aberto_em, activo: false, estado: d.resolvido ? 'FALTA_LICAO' : 'CAUSA_POR_CONFIRMAR' });
+  }
+  return out.sort((a, b) => (a.desde < b.desde ? 1 : -1));
 }

@@ -33,7 +33,7 @@ test/                         testes sem rede
 scripts/publicar.mjs          publicação do módulo, com --publicar
 scripts/pacotes.mjs           pacotes de trabalho aprovados, só leitura (para o Claude implementar)
 scripts/registar.mjs          o Claude regista lições, implementações e hipóteses eliminadas
-scripts/manual.mjs            gera manual/boas-praticas.md a partir das lições
+scripts/manual.mjs            mostra o manual de boas práticas lido das lições (não guarda cópia)
 ```
 
 ## Testar e publicar
@@ -195,9 +195,22 @@ pacotes (e, para lições de «não fazer nada», dos casos que se resolveram so
 Estado: **confirmada** com 2 ou mais resultados positivos e nenhum pior; **não resultou**
 com uma piora ou duas avaliações sem efeito; **em teste** no resto.
 
-**Manual.** A página «Aprendizagem» e `node inteligencia/scripts/manual.mjs`
-(→ `inteligencia/manual/boas-praticas.md`) mostram as práticas confirmadas, em teste e
-as que não resultaram — para este site e para os próximos.
+**Lições de processo e «o que falta aprender»** (0014, 14/09/2026). Uma lição pode ser
+`PROCESSO`: uma regra de trabalho (como se publica, como o módulo opera) sem tipo de
+problema, nascida de um caso real que fica em `referencias`, e **em vigor** desde que existe.
+Para nada se perder, `lerFaltaAprender` lista os problemas que nenhuma lição reconhece e os
+incidentes que nenhuma lição refere — «falta lição», «causa por descobrir» (já há hipóteses
+eliminadas) ou «causa por confirmar». Sai-se da lista registando a lição, as hipóteses, ou
+dispensando com motivo (`registar.mjs dispensar`, tabela `aprendizagem_dispensas`). Aparece
+na página «Aprendizagem», na leitura de 2 em 2 dias (`leitura.mjs`), em
+`scripts/falta-aprender.mjs` e no fim das duas publicações (site e módulo), sem as bloquear.
+
+**Manual — uma só fonte de verdade.** As boas práticas vivem **só** nas lições do módulo
+(tabela `licoes`). A página «Aprendizagem» e `node inteligencia/scripts/manual.mjs` mostram-nas
+(confirmadas, em teste e as que não resultaram) — para este site e para os próximos. Não há
+cópia no repositório: quando for preciso levar o manual para outro lado, gera-se nesse dia
+com `--ficheiro`, e a cópia diz de quando é. Uma prática nova entra por `registar.mjs licao`,
+nunca escrita num .md, no `CLAUDE.md` ou numa memória.
 
 Fluxo do Claude: `pacotes.mjs` → corrigir no site → commit → `registar.mjs implementacao
 <lição> <commit>` → publicar → o módulo liga a publicação, espera o rastreio posterior,
