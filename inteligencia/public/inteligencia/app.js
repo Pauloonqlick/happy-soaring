@@ -108,8 +108,28 @@
           return li;
         });
         if (inc.some((x, k) => h.bloco1.incidentes[k].aberto) && !c.length) $('b1').textContent = 'O módulo não está a trabalhar como devia:';
-        mostrarLista($('b1-lista'), inc.concat(c.map(a => linhaAssunto(a, ''))));
-        $('bloco1').classList.toggle('bloco-critico', c.length > 0 || (h.bloco1.incidentes || []).some(i => i.aberto));
+        /* a conta Cloudflare perto do limite do que o plano inclui (custos.js) */
+        const NIVEL_LIM = { atencao: 'atenção', alerta: 'perto do limite', excedido: 'já a pagar a mais' };
+        const lim = (h.limites || []).map(l => {
+          const li = el('li', null, 'linha-assunto');
+          const p = x => (x * 100).toLocaleString('pt-PT', { maximumFractionDigits: 1 }) + '%';
+          if (l.id === 'dataforseo.saldo') {
+            li.appendChild(el('strong', 'Saldo DataForSEO: ' + (l.nivel === 'excedido' ? 'acabou' : l.nivel === 'alerta' ? 'está a acabar' : 'atenção')));
+            li.appendChild(el('div', l.saldo.toFixed(2) + ' USD' + (l.dias_restantes != null ? '; a este ritmo dura cerca de ' + Math.round(l.dias_restantes) + ' dias' : '') + '.', 'sub'));
+          } else {
+            li.appendChild(el('strong', 'Conta Cloudflare — ' + l.titulo + ': ' + NIVEL_LIM[l.nivel]));
+            li.appendChild(el('div', p(l.pct) + ' do incluído usado; a este ritmo chega a ' + p(l.pct_projeccao) + ' antes de renovar' +
+              (l.custo_projectado > 0 ? ' (cerca de ' + l.custo_projectado.toFixed(2) + ' USD a mais)' : '') + '.', 'sub'));
+          }
+          const a = el('a', 'Ver os custos');
+          a.href = 'custos/';
+          li.appendChild(a);
+          return li;
+        });
+        const limGrave = (h.limites || []).some(l => l.nivel === 'alerta' || l.nivel === 'excedido');
+        if (limGrave && !c.length && !inc.length) $('b1').textContent = 'Custos perto do limite:';
+        mostrarLista($('b1-lista'), inc.concat(lim, c.map(a => linhaAssunto(a, ''))));
+        $('bloco1').classList.toggle('bloco-critico', c.length > 0 || limGrave || (h.bloco1.incidentes || []).some(i => i.aberto));
 
         /* 2 — assuntos e rastreios desde a última visita */
         const m = h.bloco2, extra = [];

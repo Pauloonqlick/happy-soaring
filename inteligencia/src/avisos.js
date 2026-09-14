@@ -48,7 +48,8 @@ export function compor(aviso) {
   return { assunto, texto };
 }
 
-async function enviar(env, buscar, { assunto, texto, idempotencia }) {
+/* exportado para os avisos de consumo (custos.js), que usam o mesmo envio */
+export async function enviarEmail(env, buscar, { assunto, texto, idempotencia }) {
   const resp = await buscar(RESEND, {
     method: 'POST',
     headers: {
@@ -72,8 +73,8 @@ async function historico(db, agora) {
   const desde90 = new Date(t(agora) - 90 * DIA).toISOString();
   const desde24 = new Date(t(agora) - DIA).toISOString();
   const [{ results }, conta] = await Promise.all([
-    db.prepare("SELECT criado_em, assuntos FROM avisos WHERE estado = 'ENVIADO' AND motivo <> 'TESTE' AND criado_em > ? ORDER BY criado_em").bind(desde90).all(),
-    db.prepare("SELECT COUNT(*) AS n FROM avisos WHERE estado = 'ENVIADO' AND motivo <> 'TESTE' AND criado_em > ?").bind(desde24).first()
+    db.prepare("SELECT criado_em, assuntos FROM avisos WHERE estado = 'ENVIADO' AND motivo NOT IN ('TESTE', 'CONSUMO') AND criado_em > ? ORDER BY criado_em").bind(desde90).all(),
+    db.prepare("SELECT COUNT(*) AS n FROM avisos WHERE estado = 'ENVIADO' AND motivo NOT IN ('TESTE', 'CONSUMO') AND criado_em > ?").bind(desde24).first()
   ]);
   const avisados = new Set();
   for (const r of results) {
@@ -103,7 +104,7 @@ export async function executarCicloAvisos(env, { fetchImpl = fetch, agora = new 
 
   const { assunto, texto } = compor(aviso);
   const chaves = aviso.assuntos.map(a => ({ chave: a.chave, detectado_em: a.detectado_em }));
-  const r = await enviar(env, fetchImpl, { assunto, texto, idempotencia: 'aviso-' + agora.slice(0, 13) + '-' + chaves.length });
+  const r = await enviarEmail(env, fetchImpl, { assunto, texto, idempotencia: 'aviso-' + agora.slice(0, 13) + '-' + chaves.length });
   await db.prepare('INSERT INTO avisos (criado_em, motivo, assuntos, estado, id_fornecedor, erro) VALUES (?, ?, ?, ?, ?, ?)')
     .bind(agora, aviso.motivo, JSON.stringify(chaves), r.ok ? 'ENVIADO' : 'FALHOU', r.id ?? null, r.erro ?? null).run();
   relatorio.enviado = r.ok;
@@ -118,7 +119,7 @@ export async function enviarAvisoTeste(env, { fetchImpl = fetch, agora = new Dat
   const recente = await env.DB.prepare("SELECT 1 AS x FROM avisos WHERE motivo = 'TESTE' AND criado_em > ? LIMIT 1")
     .bind(new Date(t(agora) - INTERVALO_TESTE_MIN * 60000).toISOString()).first();
   if (recente) return { estado: 429, erro: 'Já foi enviado um teste há menos de ' + INTERVALO_TESTE_MIN + ' minutos.' };
-  const r = await enviar(env, fetchImpl, {
+  const r = await enviarEmail(env, fetchImpl, {
     assunto: 'Happy Soaring — aviso de teste',
     texto: 'Este é um aviso de teste do módulo de inteligência, pedido em ' + quando(agora) + '.\n\n' +
       'Se o recebeu, os avisos críticos estão ligados.\n\nAbrir o «Hoje»: ' + SITE + '/inteligencia/',

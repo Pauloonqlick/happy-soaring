@@ -74,8 +74,20 @@ test('sinais do grupo: versão atrás das irmãs, indexada sem impressões, não
 });
 
 test('agenda: a mesma regra decide o que corre e mostra a próxima execução de cada tarefa', () => {
-  assert.deepEqual([0, 2, 4, 8, 18, 28, 38, 48, 58].map(vezDoMinuto),
-    ['search_console', 'publicacoes', 'inspeccao', 'avisos', 'assuntos', 'decisoes', 'assuntos', 'decisoes', 'assuntos']);
+  /* a agenda antiga, antes de 15/09 */
+  const antes = '2026-09-13T17:00:00Z';
+  assert.deepEqual([0, 2, 4, 6, 8, 10, 18, 28, 38, 48, 58].map(m => vezDoMinuto(m, antes)),
+    ['search_console', 'publicacoes', 'inspeccao', 'publicacoes', 'avisos', 'search_console', 'assuntos', 'decisoes', 'assuntos', 'decisoes', 'assuntos']);
+  /* a nova: publicações nos minutos terminados em 2, Search Console de hora a hora, o resto em repouso */
+  const depois = '2026-09-15T10:00:00Z';
+  assert.deepEqual([0, 2, 4, 6, 8, 10, 12, 18, 20, 28, 38, 48, 52, 58].map(m => vezDoMinuto(m, depois)),
+    ['search_console', 'publicacoes', 'inspeccao', 'repouso', 'avisos', 'repouso', 'publicacoes', 'assuntos', 'repouso', 'decisoes', 'assuntos', 'decisoes', 'publicacoes', 'assuntos']);
+  /* a nova é um subconjunto da antiga: em cada minuto em que a nova corre uma tarefa, a antiga corria a mesma */
+  for (let m = 0; m < 60; m += 2) { const n = vezDoMinuto(m, depois); if (n !== 'repouso') assert.equal(vezDoMinuto(m, antes), n, 'minuto ' + m); }
+  const q = Object.fromEntries(proximasExecucoes('2026-09-15T10:45:30Z').map(x => [x.vez, x.proxima]));
+  assert.equal(q.search_console, '2026-09-15T11:00:00.000Z');
+  assert.equal(q.publicacoes, '2026-09-15T10:52:00.000Z');
+  assert.equal(Object.keys(q).includes('repouso'), false);
   const p = Object.fromEntries(proximasExecucoes('2026-09-13T17:45:30Z').map(x => [x.vez, x.proxima]));
   assert.equal(p.decisoes, '2026-09-13T17:48:00.000Z');
   assert.equal(p.search_console, '2026-09-13T17:50:00.000Z');

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Custos — Inteligência Happy Soaring</title>
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="stylesheet" href="/tema.css">
+<link rel="stylesheet" href="/inteligencia/estilo.css">
+<script src="/inteligencia/comum.js" defer></script>
+<script src="/inteligencia/custos.js" defer></script>
+</head>
+<body>
+
+<header class="topo">
+  <a class="marca" href="/" translate="no">HAPPY <span>SOARING</span></a>
+  <p class="modulo">Inteligência</p>
+  <nav class="topo-nav" aria-label="Módulo">
+    <a href="/inteligencia/">Hoje</a>
+    <a href="/inteligencia/semana/">Semana</a>
+    <a href="/inteligencia/registo/">Registo</a>
+    <a href="/inteligencia/custos/" aria-current="page">Custos</a>
+    <a href="/inteligencia/evolucao/">Evolução</a>
+    <a href="/inteligencia/indexacao/">Fila de indexação</a>
+    <a href="/inteligencia/alteracoes/">Alterações</a>
+    <a href="/inteligencia/conhecimento/">Conhecimento</a>
+    <a href="/inteligencia/contactos/">Contactos</a>
+    <a href="/inteligencia/configuracao/">Configuração</a>
+    <a href="/inteligencia/aprendizagem/">Aprendizagem</a>
+    <a href="/">Site</a>
+  </nav>
+  <p class="quem" id="quem" aria-live="polite"></p>
+</header>
+
+<main class="corpo corpo-uma">
+  <section aria-labelledby="t-custos">
+    <div class="hoje-cab">
+      <h1 id="t-custos">Custos</h1>
+      <p class="data" id="recolha"></p>
+    </div>
+    <p class="nota">Quanto custam a conta Cloudflare e a DataForSEO, quanto falta para passar do que o plano da Cloudflare inclui e quanto dura
+      o saldo da DataForSEO. Na Cloudflare os limites são da conta inteira — contam todos os Workers, bases, buckets e namespaces, também os
+      que não são do site — e o incluído renova-se no dia do mês em que o plano foi subscrito. É uma estimativa feita a partir das estatísticas
+      da Cloudflare e do saldo da DataForSEO; as faturas oficiais são as delas.</p>
+    <p class="vazio" id="estado">A carregar…</p>
+
+    <div class="bloco bloco-critico" id="sem-token" hidden>
+      <h2>Falta ligar o módulo às estatísticas da Cloudflare</h2>
+      <p class="sub">O módulo precisa de um token só de leitura. Faz-se uma vez, no painel da Cloudflare — o valor do token nunca passa por aqui nem pelo Claude.</p>
+      <ol class="custos-passos">
+        <li>No painel da Cloudflare: <strong>Manage account → Account API tokens → Create token → Create custom token</strong>.</li>
+        <li>Nome: <strong>hs-inteligencia-custos</strong>. Permissões: <strong>Account · Account Analytics · Read</strong> e
+          <strong>Account · D1 · Read</strong> (esta só serve para mostrar o nome das bases).</li>
+        <li>Criar e copiar o token.</li>
+        <li>Em <strong>Workers &amp; Pages → hs-inteligencia → Settings → Variables and Secrets → Add</strong>: tipo <strong>Secret</strong>,
+          nome <strong>CF_ANALYTICS_TOKEN</strong>, valor = o token. Guardar.</li>
+      </ol>
+      <p class="sub">A partir daí os consumos são lidos de hora a hora, ao minuto 08.</p>
+    </div>
+
+    <div id="conteudo" hidden>
+      <div class="registo-barra">
+        <div class="registo-nav">
+          <button type="button" id="anterior" aria-label="Ciclo anterior">‹</button>
+          <strong id="periodo" aria-live="polite"></strong>
+          <button type="button" id="seguinte" aria-label="Ciclo seguinte">›</button>
+          <button type="button" id="actual" class="registo-hoje">Ciclo actual</button>
+        </div>
+      </div>
+      <div class="resumo-fila" id="numeros"></div>
+      <p class="sub custos-aviso" id="aviso-geral"></p>
+
+      <h2 class="titulo-seccao">O que está incluído e quanto já se usou</h2>
+      <div id="metricas"></div>
+
+      <h2 class="titulo-seccao">DataForSEO</h2>
+      <div id="dataforseo"></div>
+
+      <h2 class="titulo-seccao">Quem consome na Cloudflare</h2>
+      <div class="cartoes" id="recursos"></div>
+
+      <h2 class="titulo-seccao">Mês a mês</h2>
+      <div id="historico"></div>
+
+      <p class="nota-escura" id="fontes"></p>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>

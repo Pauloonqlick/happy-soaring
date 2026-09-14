@@ -142,7 +142,7 @@ test('um incidente resolvido deixa de ser notícia, mas continua na operação c
   const real = bruta.prepare("SELECT * FROM incidentes WHERE aberto_em = '2026-09-13T23:36:00.000Z'").get();
   assert.match(real.causa_confirmada, /10 ms/);
   assert.match(real.resolucao, /Workers Paid/);
-  assert.equal(bruta.prepare("SELECT valor FROM esquema_meta WHERE chave='versao_esquema'").get().valor, '12');
+  assert.ok(Number(bruta.prepare("SELECT valor FROM esquema_meta WHERE chave='versao_esquema'").get().valor) >= 12);
   const d = descreverIncidente({ ...real });
   assert.equal(d.resolvido, true);
   assert.equal(d.causa, real.causa_confirmada);

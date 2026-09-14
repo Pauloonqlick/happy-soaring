@@ -19,6 +19,7 @@ import { vezDoMinuto } from './agenda.js';
 import { executarVigia } from './vigia.js';
 import { executarCicloSemana, listarSemanas, lerSemana } from './leitura.js';
 import { executarAgregacao, lerRegisto } from './registo.js';
+import { recolherConsumos, lerCustos, limitesParaHoje } from './custos.js';
 import { lerOperacao, lerIndexacaoEvolucao, lerPaginas, lerGeral } from './evolucao.js';
 import {
   lerConhecimento, gravarConhecimento, historicoConhecimento, TABELAS_CONHECIMENTO,
@@ -78,7 +79,11 @@ async function leitura(env, p, url, email) {
   if (p === API + '/indexacao') return json(await lerIndexacao(env.DB));
   if (p === API + '/hoje') {
     const desde = url.searchParams.get('desde');
-    return json(await lerHoje(env.DB, { desde: desde && !Number.isNaN(Date.parse(desde)) ? new Date(desde).toISOString() : null }));
+    const [hoje, limites] = await Promise.all([
+      lerHoje(env.DB, { desde: desde && !Number.isNaN(Date.parse(desde)) ? new Date(desde).toISOString() : null }),
+      limitesParaHoje(env).catch(() => [])
+    ]);
+    return json({ ...hoje, limites });
   }
   const a = p.match(/^\/inteligencia\/api\/assuntos\/(\d{1,9})$/);
   if (a) {
@@ -107,6 +112,10 @@ async function leitura(env, p, url, email) {
     const vista = ['dia', 'semana', 'mes'].includes(url.searchParams.get('vista')) ? url.searchParams.get('vista') : 'dia';
     const data = url.searchParams.get('data');
     return json(await lerRegisto(env, { vista, data: data && /^\d{4}-\d{2}(-\d{2})?$/.test(data) ? data : null }));
+  }
+  if (p === API + '/custos') {
+    const atras = Number(url.searchParams.get('ciclo'));
+    return json(await lerCustos(env, { atras: Number.isInteger(atras) && atras >= 0 && atras <= 24 ? atras : 0 }));
   }
   if (p === API + '/semanas') return json({ semanas: await listarSemanas(env.DB) });
   const sm = p.match(/^\/inteligencia\/api\/semanas\/(\d{4}-\d{2}-\d{2})$/);
@@ -152,16 +161,19 @@ export default {
   },
 
   /* UMA tarefa agendada (o limite de 5 é da conta), repartida por minuto:
-       minuto terminado em 0          → Search Console
+       minuto 00 de cada hora         → Search Console (desde 15/09/2026; antes, de 10 em 10)
        minuto terminado em 4          → inspecção de URL
        minutos 18, 38 e 58            → assuntos (detecção e avaliações)
-       minuto 08 de cada hora         → avisos críticos por email
+       minuto 08 de cada hora         → avisos críticos por email e consumos
        minutos 28 e 48                → decisões automáticas
-       os outros                      → publicações
+       minutos terminados em 2        → publicações (desde 15/09/2026; antes, todos os outros)
+       os outros                      → nada (repouso)
      Cada uma tem o orçamento inteiro da sua execução. */
   async scheduled(evento, env, ctx) {
-    const minuto = new Date(evento.scheduledTime || Date.now()).getUTCMinutes();
-    const vez = vezDoMinuto(minuto);
+    const instante = evento.scheduledTime || Date.now();
+    const vez = vezDoMinuto(new Date(instante).getUTCMinutes(), instante);
+    /* minuto de repouso: nada para fazer, nem registo (agenda.js) */
+    if (vez === 'repouso') return;
     ctx.waitUntil((async () => {
       const nome = 'ciclo_' + vez;
       const inicio = new Date();
@@ -189,7 +201,12 @@ export default {
         const r = vez === 'search_console' ? await executarCicloGsc(env)
           : vez === 'inspeccao' ? await executarCicloInspeccao(env)
           : vez === 'assuntos' ? await executarCicloAssuntos(env)
-          : vez === 'avisos' ? await executarCicloAvisos(env)
+          : vez === 'avisos' ? await (async () => {
+            const a = await executarCicloAvisos(env);
+            /* de hora a hora, os consumos da conta Cloudflare (painel de custos e aviso de limites) */
+            try { a.consumos = await recolherConsumos(env); } catch (e) { a.consumos = { erro: String(e && e.message || e).slice(0, 200) }; }
+            return a;
+          })()
           : vez === 'decisoes' ? await executarCicloDecisoes(env) : await executarCiclo(env);
         if (vez === 'search_console') {
           /* o vigia vai na execução mais leve; se falhar, o Search Console não fica por registar */

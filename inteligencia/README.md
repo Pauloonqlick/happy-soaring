@@ -81,10 +81,13 @@ o resumo mostra marca, não-marca e **desconhecido** (= total − visível), e a
 percentagem visível. A língua da pesquisa é inferida do texto só com evidência;
 sem ela é `UNKNOWN`. Nunca se deduz do país.
 
-A tarefa agendada é a mesma: aos minutos terminados em 0 é a vez do Search
-Console, aos terminados em 4 a da inspecção de URL, aos minutos 18, 38 e 58 a
-dos assuntos, ao minuto 08 de cada hora a dos avisos, aos minutos 28 e 48 a das decisões,
-nos outros das publicações.
+A tarefa agendada é a mesma e acorda de 2 em 2 minutos. Desde 15/09/2026 (ver
+`src/agenda.js`): ao minuto 00 de cada hora é a vez do Search Console (com o vigia,
+a semana em revista e o resumo do dia), aos minutos terminados em 4 a da inspecção de
+URL, aos 18, 38 e 58 a dos assuntos, ao 08 a dos avisos e consumos, aos 28 e 48 a das
+decisões e aos terminados em 2 a das publicações. Nos outros minutos pares não faz
+nada. Antes de 15/09 o Search Console corria de 10 em 10 minutos e as publicações em
+todos os minutos que sobravam.
 
 **Segredos necessários** (guardados por `scripts/autorizar-google.mjs`, que nunca
 mostra os valores): `GOOGLE_OAUTH_CLIENT_ID`, `GOOGLE_OAUTH_CLIENT_SECRET`,

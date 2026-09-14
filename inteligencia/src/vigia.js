@@ -13,7 +13,7 @@
    O vigia corre na execução do Search Console (a mais leve). Se a tarefa agendada
    parar por completo, o vigia pára com ela: o buraco é apanhado quando volta, porque
    o vigia verifica sempre desde o ponto onde ficou (até 24 h para trás). */
-import { vezDoMinuto, AGENDA } from './agenda.js';
+import { vezDoMinuto, AGENDA } from './agenda.js';   /* AGENDA só para os títulos */
 
 const MIN = 60000;
 const t = s => Date.parse(s);
@@ -25,11 +25,13 @@ export const ENTRE_PROBLEMAS_MIN = 20;
 export const JANELA_MAX_H = 24;
 const ESTADOS_PROBLEMA = ['INTERROMPIDA', 'FALHOU', 'EM_FALTA'];
 
-/* Os minutos pares em [desde, ate) e a tarefa que devia ter corrido em cada um. Puro. */
+/* Os minutos pares em [desde, ate) e a tarefa que devia ter corrido em cada um (com a agenda
+   em vigor nesse minuto; os minutos de repouso não contam). Puro. */
 export function slotsEsperados(desde, ate) {
   const out = [];
   for (let s = Math.ceil(t(desde) / (2 * MIN)) * 2 * MIN; s < t(ate); s += 2 * MIN) {
-    out.push({ em: iso(s), vez: vezDoMinuto(new Date(s).getUTCMinutes()) });
+    const vez = vezDoMinuto(new Date(s).getUTCMinutes(), s);
+    if (vez !== 'repouso') out.push({ em: iso(s), vez });
   }
   return out;
 }

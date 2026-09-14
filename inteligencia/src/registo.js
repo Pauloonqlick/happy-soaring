@@ -6,7 +6,7 @@
      execucoes_dia   o resumo de cada dia por tarefa, que fica para sempre
    O dia é o de Lisboa. Os estados são os do vigia (vigia.js). O «o que fez» sai do
    resumo JSON que cada tarefa já devolvia — nada novo é recolhido para isto. */
-import { AGENDA, proximasExecucoes } from './agenda.js';
+import { TAREFAS as AGENDA, proximasExecucoes } from './agenda.js';
 import { slotsEsperados, classificarSlots, descreverIncidente, MARGEM_MIN, INTERROMPIDA_APOS_MIN } from './vigia.js';
 
 export const ZONA = 'Europe/Lisbon';
@@ -74,6 +74,7 @@ export function trabalhoDe(vez, r) {
     conta('avaliados', r.avaliados, 'correcção avaliada', 'correcções avaliadas');
   } else if (vez === 'avisos') {
     if (r.enviado) { c.avisos = 1; frases.push('enviou um aviso por email'); }
+    if (r.consumos && r.consumos.aviso && r.consumos.aviso.enviado) { c.avisos = (c.avisos || 0) + 1; frases.push('avisou por email que a conta Cloudflare está perto do limite'); }
   } else if (vez === 'decisoes') {
     conta('decididos', r.decididos, 'decisão automática', 'decisões automáticas');
     conta('pacotes', r.pacotes, 'pacote de correcção criado', 'pacotes de correcção criados');
@@ -83,7 +84,13 @@ export function trabalhoDe(vez, r) {
   }
   const novidade = frases.length > 0;
   let texto = novidade ? frases.join(' · ') : 'verificou, sem novidades';
-  if (vez === 'avisos' && !r.enviado && r.motivo === 'SEM_CONFIGURACAO') texto = 'em pausa: o email de avisos não está configurado';
+  if (vez === 'avisos' && !novidade) {
+    const partes = [];
+    if (r.consumos) partes.push(r.consumos.motivo === 'SEM_TOKEN' ? 'consumos por ler (falta o token da Cloudflare)'
+      : r.consumos.erro || (r.consumos.erros && r.consumos.erros.length) ? 'consumos lidos com erros' : 'leu os consumos da Cloudflare');
+    if (!r.enviado && r.motivo === 'SEM_CONFIGURACAO') partes.push('email em pausa (não configurado)');
+    if (partes.length) texto = partes.join(' · ');
+  }
   else if (r.motivo && !novidade) texto = 'não fez nada: ' + String(r.motivo).toLowerCase().replace(/_/g, ' ');
   return { texto, novidade, contagens: c };
 }
