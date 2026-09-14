@@ -49,16 +49,36 @@
     return obter(API + 'operacao').then(d => {
       const raiz = $('op');
       raiz.textContent = '';
+      raiz.appendChild(el('h3', 'Incidentes'));
+      const dh = s => s ? new Date(s).toLocaleString('pt-PT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '—';
+      const duracao = m => m < 60 ? m + ' min' : Math.floor(m / 60) + ' h ' + String(m % 60).padStart(2, '0') + ' min';
+      if (!d.incidentes.length) raiz.appendChild(el('p', 'Nenhum incidente registado: todas as tarefas correram quando deviam.', 'nota'));
+      else raiz.appendChild(tabela(['Início', 'Fim', 'Duração', 'Tarefas afectadas', 'Execuções perdidas', 'Causa provável'], d.incidentes.map(i => {
+        const fim = el('span');
+        if (i.aberto) fim.appendChild(chip(['a decorrer', 'chip chip-sujo'])); else fim.textContent = dh(i.fechado_em);
+        const perdidas = [];
+        if (i.por_estado.INTERROMPIDA) perdidas.push(i.por_estado.INTERROMPIDA + ' cortadas a meio');
+        if (i.por_estado.EM_FALTA) perdidas.push(i.por_estado.EM_FALTA + ' sem registo');
+        if (i.por_estado.FALHOU) perdidas.push(i.por_estado.FALHOU + ' com erro');
+        return [dh(i.aberto_em), fim, duracao(i.duracao_min), i.tarefas.map(x => x.titulo + ' (' + x.execucoes + ')').join(', '),
+          num(i.execucoes_perdidas) + ' · ' + perdidas.join(' · '), i.causa_provavel];
+      })));
+
       raiz.appendChild(el('h3', 'Tarefas'));
       raiz.appendChild(tabela(['Tarefa', 'Quando corre', 'Última execução', 'Últimas 24 h', 'Próxima'], d.tarefas.map(t => {
         const ult = el('span');
         if (!t.ultima) ult.textContent = 'ainda sem registo';
         else {
           ult.appendChild(el('span', hora(t.ultima.inicio) + ' · ' + num(t.ultima.duracao_ms) + ' ms '));
-          ult.appendChild(chip(t.ultima.ok ? ['ok', 'chip chip-ok'] : ['falhou', 'chip chip-sujo']));
+          ult.appendChild(chip({ OK: ['ok', 'chip chip-ok'], FALHOU: ['falhou', 'chip chip-sujo'], A_CORRER: ['a correr', 'chip'],
+            INTERROMPIDA: ['cortada a meio', 'chip chip-sujo'] }[t.ultima.estado] || ['—', 'chip']));
           if (t.ultima.erro) ult.appendChild(el('div', t.ultima.erro, 'sub'));
         }
-        return [t.titulo, t.regra, ult, num(t.ultimas_24h.execucoes) + ' execuções · ' + num(t.ultimas_24h.falhas) + ' falhas', hora(t.proxima)];
+        const u24 = t.ultimas_24h;
+        const cel24 = el('span', num(u24.execucoes) + ' execuções · ' + num(u24.falhas) + ' falhas');
+        if (u24.interrompidas) cel24.appendChild(el('div', num(u24.interrompidas) + ' cortadas a meio', 'sub'));
+        if (u24.em_falta) cel24.appendChild(el('div', num(u24.em_falta) + ' não correram', 'sub'));
+        return [t.titulo, t.regra, ult, cel24, hora(t.proxima)];
       })));
 
       const f = d.filas;

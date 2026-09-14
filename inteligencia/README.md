@@ -222,3 +222,55 @@ para caber no limite de consultas por pedido):
 
 Tendências só confirmadas com 4 semanas completas: as 2 últimas ambas 20% abaixo (ou
 acima) da média das 2 anteriores, com amostra mínima. Com menos, diz «histórico insuficiente».
+
+## Vigia da tarefa agendada e incidentes
+
+Na noite de 13 para 14/09/2026 a Cloudflare cortou a meio, durante 9 h 18 min, 159
+execuções de publicações, assuntos e decisões: gastavam 20 a 65 ms de processamento e o
+plano gratuito permite 10 ms. Uma execução cortada não chegava a escrever o seu registo,
+e ninguém deu por isso. Desde então:
+
+- **Plano Workers Paid** (desde 14/09/2026) com um tecto de **1 s por execução**
+  (`[limits] cpu_ms` no `wrangler.toml`): folga para as tarefas, sem deixar que um erro
+  no código se transforme em custo. Os orçamentos de pedidos e consultas por execução
+  continuam os do plano gratuito.
+- **Registo antes e depois:** cada execução escreve-se em `execucoes` **antes** de começar
+  (`ok` vazio) e fecha o registo no fim. Aberta há mais de 5 minutos = **cortada a meio**.
+- **Vigia** (`src/vigia.js`), na execução do Search Console (a mais leve): compara a
+  agenda com o que correu, minuto a minuto, desde onde ficou da última vez (até 24 h):
+  `OK`, `FALHOU`, `INTERROMPIDA` ou `EM_FALTA`. Dois problemas a menos de 20 minutos um do
+  outro abrem um **incidente** (`incidentes`); 20 minutos sem problemas fecham-no. Um
+  problema isolado (por exemplo durante uma publicação do módulo) fica só nas contagens.
+- **Onde se vê:** no «Hoje», bloco 1, enquanto houver um incidente aberto ou nas 24 h
+  seguintes a um que tenha durado 30 minutos ou mais; em «Evolução → Operação», a lista
+  de incidentes e, por tarefa, as execuções cortadas a meio e as que não correram nas
+  últimas 24 h; no resumo de 2 em 2 dias.
+- **Registos da Cloudflare** (`[observability]`): guardam a causa exacta de cada
+  execução cortada.
+
+Limite conhecido: se a tarefa agendada parar por completo, o vigia pára com ela. O buraco
+fica registado quando a tarefa volta; até lá, quem dá por isso é o resumo de 2 em 2 dias
+(corre no computador do Paulo e vê a hora da última execução).
+
+## «A leitura de hoje» e «Semana em revista»
+
+Frases-modelo preenchidas pelo módulo (`src/leitura.js`), sem IA: cada frase só aparece
+quando o dado que a sustenta existe e tem amostra suficiente, liga ao detalhe e nunca diz
+que uma correcção causou um resultado — só o que se observou depois.
+
+- **A leitura de hoje** (topo do «Hoje»): só o que é novo desde a última visita deste
+  browser (na primeira visita, as últimas 24 h). Por ordem: módulo com tarefas a falhar,
+  páginas para pedir indexação, problemas novos, páginas que saíram do índice, correcções
+  publicadas, o Google a voltar a páginas corrigidas, avaliações, páginas que entraram no
+  índice (só mudanças de estado), problemas resolvidos, lições confirmadas ou refutadas,
+  incidentes já fechados. Sem novidades: «Nada de novo desde a tua última visita.»
+  Visibilidade (impressões e cliques) não entra: o dia-a-dia é ruído.
+- **Semana em revista** (`/inteligencia/semana/`): escrita e guardada em `semanas_revista`
+  quando o Search Console fecha os 7 dias de uma semana (segunda a domingo) — na execução do
+  Search Console. Secções: visibilidade (com a semana anterior só acima de 50 impressões;
+  marca/assunto dita parcial quando o Google esconde mais de metade das pesquisas),
+  destaques (páginas com pelo menos 20 impressões), oportunidade (posição média 8,5–20),
+  indexação, correcções e resultados, o módulo, próximas datas. Fica no «Hoje» até ser lida.
+- **Resumo de 2 em 2 dias:** `node inteligencia/scripts/leitura.mjs --horas 48` imprime as
+  mesmas frases (só leitura, pela API do D1 com a sessão do wrangler).
+  `--simular-semana` mostra como ficaria a última semana completa, sem gravar.

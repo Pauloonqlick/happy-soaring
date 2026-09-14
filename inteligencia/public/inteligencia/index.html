@@ -20,6 +20,7 @@
   <p class="modulo">Inteligência</p>
   <nav class="topo-nav" aria-label="Módulo">
     <a href="/inteligencia/" aria-current="page">Hoje</a>
+    <a href="/inteligencia/semana/">Semana</a>
     <a href="/inteligencia/evolucao/">Evolução</a>
     <a href="/inteligencia/indexacao/">Fila de indexação</a>
     <a href="/inteligencia/alteracoes/">Alterações</a>
@@ -40,6 +41,19 @@
     </div>
 
     <p class="aviso" id="aviso">A verificar as fontes…</p>
+
+    <section class="leitura" aria-labelledby="t-leitura">
+      <h2 id="t-leitura">A leitura de hoje</h2>
+      <p class="leitura-desde" id="leitura-desde"></p>
+      <ul class="leitura-frases" id="leitura-frases" hidden></ul>
+      <p class="vazio" id="leitura-vazio">A carregar…</p>
+    </section>
+
+    <section class="semana-cartao" id="semana-cartao" aria-labelledby="t-semana" hidden>
+      <h2 id="t-semana">Semana em revista <small id="semana-datas"></small></h2>
+      <p id="semana-destaque"></p>
+      <a class="botao-link" id="semana-ler" href="semana/">Ler a semana</a>
+    </section>
 
     <ol class="blocos">
       <li class="bloco" id="bloco1">

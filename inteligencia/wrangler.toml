@@ -46,11 +46,22 @@ GSC_PROPRIEDADE = "sc-domain:happysoaring.com"
 AVISOS_DE = "Inteligência Happy Soaring <alertas@avisos.happysoaring.com>"
 AVISOS_PARA = "paulo.pereira@happysoaring.com"
 
-# UMA tarefa agendada, gratuita: o plano Free tem 5 por conta, partilhadas.
-# De 2 em 2 minutos avança a observação das publicações, dentro dos limites
-# de 50 pedidos e 50 consultas por execução. Não chama nenhum serviço pago.
+# UMA tarefa agendada de 2 em 2 minutos, repartida por minuto (src/agenda.js).
+# Os orçamentos por execução (pedidos e consultas) continuam os do plano gratuito:
+# o módulo trabalha em lotes pequenos. Não chama nenhum serviço pago.
 [triggers]
 crons = ["*/2 * * * *"]
+
+# Plano Workers Paid desde 14/09/2026. No gratuito (10 ms) a Cloudflare cortava a meio
+# as execuções mais pesadas (até 65 ms). O tecto de 1 s por execução deixa folga de
+# ~15× e impede que um erro no código se transforme em custo.
+[limits]
+cpu_ms = 1000
+
+# Registos da própria Cloudflare (Workers Logs): guardam a causa exacta de cada
+# execução cortada (p. ex. exceededCpu). Não guardam segredos — o código nunca os escreve.
+[observability]
+enabled = true
 
 [[d1_databases]]
 binding = "DB"

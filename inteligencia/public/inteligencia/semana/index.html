@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Fila de indexação — Inteligência Happy Soaring</title>
+<title>Semana em revista — Inteligência Happy Soaring</title>
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="stylesheet" href="/tema.css">
 <link rel="stylesheet" href="/inteligencia/estilo.css">
 <script src="/inteligencia/comum.js" defer></script>
-<script src="/inteligencia/indexacao.js" defer></script>
+<script src="/inteligencia/semana.js" defer></script>
 </head>
 <body>
 
@@ -18,9 +18,9 @@
   <p class="modulo">Inteligência</p>
   <nav class="topo-nav" aria-label="Módulo">
     <a href="/inteligencia/">Hoje</a>
-    <a href="/inteligencia/semana/">Semana</a>
+    <a href="/inteligencia/semana/" aria-current="page">Semana</a>
     <a href="/inteligencia/evolucao/">Evolução</a>
-    <a href="/inteligencia/indexacao/" aria-current="page">Fila de indexação</a>
+    <a href="/inteligencia/indexacao/">Fila de indexação</a>
     <a href="/inteligencia/alteracoes/">Alterações</a>
     <a href="/inteligencia/conhecimento/">Conhecimento</a>
     <a href="/inteligencia/contactos/">Contactos</a>
@@ -32,31 +32,15 @@
 </header>
 
 <main class="corpo corpo-uma">
-  <section aria-labelledby="t-fila">
-    <h1 id="t-fila">Fila de indexação</h1>
-    <p class="nota" id="nota"></p>
-    <ul class="lista" id="limitacoes"></ul>
-
-    <div class="resumo-fila" id="resumo" aria-live="polite"></div>
-
+  <section aria-labelledby="t-semana">
+    <h1 id="t-semana">Semana em revista</h1>
+    <p class="nota">Uma semana de segunda a domingo, contada em frases a partir dos dados do módulo. Cada frase só aparece quando há dados
+      que a sustentem, e nunca diz que uma correcção causou um resultado — só o que se observou depois.</p>
+    <p class="campo campo-escuro" id="escolha" hidden><label for="semana-escolha">Semana</label> <select id="semana-escolha"></select></p>
     <p class="vazio" id="estado">A carregar…</p>
-    <div class="tabela-cx" id="caixa" hidden>
-      <table class="tabela">
-        <caption class="so-leitor">Páginas, última alteração, último rastreio e estado do pedido de indexação</caption>
-        <thead>
-          <tr>
-            <th scope="col">Página</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Última alteração</th>
-            <th scope="col">Último rastreio</th>
-            <th scope="col">Inspecção</th>
-            <th scope="col">Pedido</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody id="linhas"></tbody>
-      </table>
-    </div>
+    <h2 class="titulo-seccao" id="semana-titulo"></h2>
+    <p class="sub" id="semana-gerada"></p>
+    <div class="blocos" id="semana-secoes"></div>
   </section>
 </main>
 

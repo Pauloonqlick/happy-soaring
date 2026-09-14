@@ -13,6 +13,9 @@
    Uma limitação de evidência nunca é um assunto. */
 import { caminhosDoSitemap } from './publicacoes.js';
 import { lerIndexacao, NOTA_RASTREIO } from './inspeccao.js';
+import { incidentesParaHoje } from './vigia.js';
+import { frasesDoDia, lerDadosDoDia, lerSemana } from './leitura.js';
+import { resultadosDasLicoes } from './aprendizagem.js';
 
 export const ORCAMENTO_ASSUNTOS = { pedidos: 20, consultas: 30 };
 export const DIAS_RASTREIO_ESPERADO = 7;       /* referência: alteração sem rastreio posterior */
@@ -607,11 +610,16 @@ const MAX_ACCOES = 3;
 
 export async function lerHoje(db, { agora = new Date().toISOString(), desde = null } = {}) {
   const ctx = await carregarContexto(db, agora);
-  const [pubs, eventos] = await Promise.all([
+  /* «A leitura de hoje»: o que é novo desde a última visita; na primeira visita, as últimas 24 h */
+  const desdeLeitura = desde || new Date(t(agora) - DIA).toISOString();
+  const [pubs, eventos, incidentes, extra, semana] = await Promise.all([
     db.prepare(`SELECT SUM(meta_sujo = 1 AND criado_em_cf > ?) AS sujas FROM deployments WHERE processamento = 'PROCESSADO'`)
       .bind(new Date(t(agora) - 30 * DIA).toISOString()).first(),
     db.prepare(`SELECT tipo, MAX(criado_em) AS em, COUNT(*) AS n FROM eventos_operacionais
-      WHERE criado_em > strftime('%Y-%m-%dT%H:%M:%fZ', 'now', '-1 day') GROUP BY tipo ORDER BY em DESC`).all()
+      WHERE criado_em > strftime('%Y-%m-%dT%H:%M:%fZ', 'now', '-1 day') GROUP BY tipo ORDER BY em DESC`).all(),
+    incidentesParaHoje(db, agora).catch(() => []),
+    lerDadosDoDia(db, { desde: desdeLeitura, agora }).catch(() => null),
+    lerSemana(db).catch(() => null)
   ]);
   const vistos = ctx.assuntos.map(a => verAssunto(a, ctx));
   const activos = vistos.filter(v => !v.resolvido_em).sort(compararPrioridade);
@@ -690,6 +698,11 @@ export async function lerHoje(db, { agora = new Date().toISOString(), desde = nu
     razao: (() => { try { return JSON.parse(v.avaliacao.evidencia).razao; } catch (e) { return null; } })()
   }));
 
+  const leitura = extra ? {
+    desde: desdeLeitura, primeira_visita: !desde,
+    frases: frasesDoDia(entradaDoDia(ctx, vistos, extra, { desde: desdeLeitura, pedir: accoes.find(a => a.tipo === 'PEDIR_INDEXACAO') }))
+  } : null;
+
   /* 6 — limitações de evidência, hipóteses em teste, factos por confirmar, decisões pendentes */
   const limitacoes = [];
   const L = ctx.fila.limitacoes;
@@ -712,7 +725,9 @@ export async function lerHoje(db, { agora = new Date().toISOString(), desde = nu
     agora,
     nota_rastreio: NOTA_RASTREIO,
     ultimo_ciclo: ctx.ultimoCiclo,
-    bloco1: { criticos: criticos.map(linha), verificadas: ctx.ultimoCiclo ? ctx.ultimoCiclo.inspeccionadas : 0 },
+    leitura,
+    semana: semana ? { semana: semana.semana, fim: semana.fim, gerada_em: semana.gerada_em, destaque: semana.destaque } : null,
+    bloco1: { criticos: criticos.map(linha), verificadas: ctx.ultimoCiclo ? ctx.ultimoCiclo.inspeccionadas : 0, incidentes },
     bloco2: mudou,
     bloco3: {
       accoes: accoesHoje, maximo: MAX_ACCOES,
@@ -728,6 +743,77 @@ export async function lerHoje(db, { agora = new Date().toISOString(), desde = nu
       decisoes_pendentes: decisoesPendentes,
       ainda_nao_verificado: AINDA_NAO_VERIFICADO
     }
+  };
+}
+
+/* A entrada das frases do dia, a partir do que o «Hoje» já carregou. Puro. */
+export function entradaDoDia(ctx, vistos, extra, { desde, pedir = null }) {
+  const L = new Map(extra.licoes.map(l => [l.chave, l.titulo]));
+  const tituloLicao = (k, tipo) => L.get(k) || (TIPOS[tipo] ? TIPOS[tipo].titulo : 'outras correcções');
+  const tipoDoAssunto = new Map(ctx.assuntos.map(a => [a.chave, a.tipo]));
+  const agrupar = (lista) => {
+    const g = new Map();
+    for (const v of lista) {
+      if (!g.has(v.titulo)) g.set(v.titulo, { titulo: v.titulo, caminhos: [], aprovados: 0 });
+      g.get(v.titulo).caminhos.push(v.caminho);
+      if (v.decisao && v.decisao.decisao === 'APROVAR') g.get(v.titulo).aprovados++;
+    }
+    return [...g.values()];
+  };
+  const problema = v => v.acao === 'DECISAO' && (v.critico || v.confirmado);
+
+  /* correcções publicadas e ainda por avaliar: o Google já voltou? */
+  const regresso = new Map();
+  for (const p of ctx.pacotes) {
+    if (!p.publicado_em || ctx.avaliacaoPorPacote.get(p.id)) continue;
+    const k = p.licao_chave || tipoDoAssunto.get(p.assunto_chave) || '?';
+    if (!regresso.has(k)) regresso.set(k, { titulo: tituloLicao(p.licao_chave, tipoDoAssunto.get(p.assunto_chave)), total: 0, com_rastreio: 0, novos: 0, proxima_avaliacao: null });
+    const r = regresso.get(k);
+    r.total++;
+    const R = ctx.filaPorCaminho.get(p.caminho)?.ultimo_rastreio;
+    if (!depois(R, p.publicado_em)) continue;
+    r.com_rastreio++;
+    if (depois(R, desde)) r.novos++;
+    const av = somar(R, DIAS_OBSERVACAO_TECNICA).slice(0, 10);
+    if (!r.proxima_avaliacao || av < r.proxima_avaliacao) r.proxima_avaliacao = av;
+  }
+
+  const pacotePorId = new Map(ctx.pacotes.map(p => [p.id, p]));
+  const avaliacoes = new Map();
+  for (const v of ctx.avaliacaoPorPacote.values()) {
+    if (!depois(v.avaliado_em, desde)) continue;
+    const p = pacotePorId.get(v.pacote_id);
+    const k = (p && p.licao_chave) || (p && tipoDoAssunto.get(p.assunto_chave)) || '?';
+    if (!avaliacoes.has(k)) avaliacoes.set(k, { titulo: tituloLicao(p && p.licao_chave, p && tipoDoAssunto.get(p.assunto_chave)) });
+    const a = avaliacoes.get(k);
+    a[v.resultado] = (a[v.resultado] || 0) + 1;
+  }
+
+  /* lições que mudaram de estado: o estado de agora contra o que se sabia na visita anterior */
+  const comEvidencia = ctx.assuntos.map(a => { let ev = {}; try { ev = JSON.parse(a.evidencia); } catch (e) { ev = {}; } return { ...a, evidencia: ev }; });
+  const todasAv = [...ctx.avaliacaoPorPacote.values()];
+  const agoraL = resultadosDasLicoes(extra.licoes, { assuntos: comEvidencia, pacotes: ctx.pacotes, avaliacoes: todasAv });
+  const antesL = resultadosDasLicoes(extra.licoes, {
+    assuntos: comEvidencia.filter(a => !depois(a.detectado_em, desde)).map(a => ({ ...a, resolvido_em: a.resolvido_em && !depois(a.resolvido_em, desde) ? a.resolvido_em : null })),
+    pacotes: ctx.pacotes.filter(p => !depois(p.criado_em, desde)),
+    avaliacoes: todasAv.filter(v => !depois(v.avaliado_em, desde))
+  });
+  const antesPorChave = new Map(antesL.map(l => [l.chave, l.estado]));
+
+  return {
+    incidentes: extra.incidentes,
+    pedir: pedir ? { total: pedir.total, hoje: pedir.hoje } : null,
+    problemas: {
+      novos: agrupar(vistos.filter(v => !v.resolvido_em && depois(v.detectado_em, desde) && problema(v) &&
+        v.estado !== 'RETIRADO' && !(v.decisao && v.decisao.decisao === 'IGNORAR'))),
+      resolvidos: agrupar(vistos.filter(v => v.resolvido_em && depois(v.resolvido_em, desde) && v.acao === 'DECISAO' && v.estado === 'FECHADO'))
+    },
+    indexacao: extra.indexacao,
+    correccoes: extra.correccoesPorLicao.map(c => ({ titulo: tituloLicao(c.licao_chave, c.tipo), paginas: c.paginas })),
+    regresso: [...regresso.values()],
+    avaliacoes: [...avaliacoes.values()],
+    licoes: agoraL.filter(l => l.estado !== 'EM_TESTE' && antesPorChave.get(l.chave) !== l.estado)
+      .map(l => ({ titulo: l.titulo, antes: antesPorChave.get(l.chave), agora: l.estado }))
   };
 }
 

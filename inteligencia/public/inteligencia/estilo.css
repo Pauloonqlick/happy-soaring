@@ -204,3 +204,19 @@ details#mudar summary{cursor:pointer;font-size:14px;color:var(--painel-fraca)}
 .g-fr{stroke:#6a4bbf;fill:#6a4bbf;background:#6a4bbf}
 .g-de{stroke:#8a96a6;fill:#8a96a6;background:#8a96a6}
 .g-linha.g-pt,.g-linha.g-en,.g-linha.g-es,.g-linha.g-fr,.g-linha.g-de,.g-linha.g-marca,.g-linha.g-nao{fill:none}
+
+/* «A leitura de hoje» e «Semana em revista»: frases, com a cor só no marcador */
+.leitura,.semana-cartao{background:var(--papel-2);border:1px solid var(--linha);border-left:3px solid var(--tinta);padding:18px 20px;margin:0 0 16px}
+.leitura h2,.semana-cartao h2{margin:0 0 4px;font-size:17px;font-weight:700}
+.semana-cartao h2 small{font-weight:400;font-size:13px;color:var(--tinta-fraca)}
+.semana-cartao p{margin:6px 0 10px;max-width:72ch;line-height:1.5}
+.leitura-desde{margin:0 0 12px;font-size:12px;color:var(--tinta-fraca)}
+.leitura .vazio{margin:0}
+.leitura-frases{list-style:none;margin:0;padding:0;display:grid;gap:10px;max-width:76ch}
+.frase{position:relative;padding-left:16px;line-height:1.55}
+.frase::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--tinta-fraca)}
+.frase-alerta::before,.frase-accao::before{background:var(--destaque)}
+.frase-bom::before{background:#1d6b3a}
+.frase a{margin-left:8px;font-size:13px;color:var(--tinta-fraca);white-space:nowrap}
+.frase a:hover,.frase a:focus-visible{color:var(--tinta)}
+.semana-seccao h2{margin:0 0 10px}

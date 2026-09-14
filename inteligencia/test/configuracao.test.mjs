@@ -22,6 +22,14 @@ test('wrangler.toml: sem workers.dev, sem pré-visualizações, só as duas rota
   assert.deepEqual([...crons[0].matchAll(/"([^"]+)"/g)].map(m => m[1]), ['*/2 * * * *'], 'uma só tarefa agendada — o limite de 5 é partilhado pela conta');
 });
 
+test('wrangler.toml: tecto de processamento por execução e registos da Cloudflare ligados', () => {
+  const t = ler(path.join(MODULO, 'wrangler.toml'));
+  const cpu = /\[limits\][^[]*?cpu_ms\s*=\s*(\d+)/.exec(t);
+  assert.ok(cpu, 'há um tecto de processamento: um erro no código não se pode transformar em custo');
+  assert.ok(Number(cpu[1]) >= 200 && Number(cpu[1]) <= 5000, 'tecto com folga para as execuções (até ~65 ms) mas baixo');
+  assert.match(t, /\[observability\][^[]*?enabled\s*=\s*true/, 'a Cloudflare guarda a causa de cada execução cortada');
+});
+
 test('wrangler.toml: nenhum segredo escrito no ficheiro', () => {
   const t = ler(path.join(MODULO, 'wrangler.toml'));
   const semComentarios = t.replace(/^\s*#.*$/gm, '');

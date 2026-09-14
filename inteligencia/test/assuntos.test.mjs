@@ -224,6 +224,10 @@ test('percurso completo: detectar → porta → aprovar → pacote → publicaç
   assert.deepEqual(maisTarde.bloco3.accoes.map(x => x.caminho), ['/b/', '/a/', '/velha/'], 'sem decisão há mais de uma hora: precisa do Paulo, crítico primeiro');
   assert.deepEqual(maisTarde.bloco3.accoes[1].objectivos, ['Cursos e formação'], 'cada linha mostra o objectivo');
   assert.equal(hoje.bloco2.assuntos_novos.length, 4);
+  const temas = h => h.leitura.frases.map(f => f.tema);
+  assert.ok(temas(hoje).includes('problemas'), 'a leitura do dia conta os problemas novos');
+  assert.match(hoje.leitura.frases.find(f => f.tema === 'problemas').texto, /problemas novos: .*marcada para não ser indexada \(\/b\/\)/);
+  assert.ok(!hoje.leitura.frases.some(f => /nunca rastreada|ainda não rastreou/i.test(f.texto)), 'o que é só espera pelo Google não é problema');
   assert.ok(hoje.bloco6.ainda_nao_verificado.length > 0, 'o que não se verifica diz-se às claras');
   assert.ok(hoje.bloco6.limitacoes.every(l => typeof l === 'string'));
 
@@ -256,21 +260,34 @@ test('percurso completo: detectar → porta → aprovar → pacote → publicaç
   /* o Claude implementa; a publicação é observada e liga-se ao pacote */
   s.exec(`INSERT INTO deployments (id, url, criado_em_cf, processamento) VALUES ('d0', 'x', '2026-09-01T00:00:00Z', 'PROCESSADO'),
     ('d1', 'x', '2026-09-14T10:00:00Z', 'PROCESSADO');
+    UPDATE deployments SET processado_em = '2026-09-14T11:00:00Z' WHERE id = 'd1';
     UPDATE deployments SET anterior_id = 'd0' WHERE id = 'd1';
     INSERT INTO deployment_paginas (deployment_id, caminho, estado, resumo_conteudo) VALUES ('d0', '/b/', 'LIDA', 'x1'), ('d1', '/b/', 'LIDA', 'x2')`);
   await db.batch([db.prepare(SQL_ALTERACOES_DE_UMA_PUBLICACAO).bind('d1'), db.prepare(SQL_PACOTES_DE_UMA_PUBLICACAO).bind('d1')]);
   assert.equal(s.prepare('SELECT deployment_id FROM pacotes_trabalho').get().deployment_id, 'd1');
   assert.equal((await lerAssunto(db, idB, { agora: '2026-09-14T12:00:00Z' })).estado, 'PUBLICADO');
+  const hojePub = await lerHoje(db, { agora: '2026-09-14T12:00:00.000Z', desde: '2026-09-14T00:00:00.000Z' });
+  assert.deepEqual(hojePub.leitura.frases.map(f => f.texto).filter(x => /publicadas correcções/.test(x)),
+    ['Foram publicadas correcções em 1 página: «Página marcada para não ser indexada». Agora é esperar que o Google volte a ela.']);
+  const semNada = await lerHoje(db, { agora: '2026-09-14T12:30:00.000Z', desde: '2026-09-14T12:00:00.000Z' });
+  assert.deepEqual(semNada.leitura.frases, [], 'nada de novo desde a última visita: a leitura fica vazia');
 
   /* o Google rastreia depois da publicação e a inspecção já não mostra o noindex */
   inspeccionar(db, '/b/', '2026-09-16T00:00:00Z', { ultimo_rastreio: '2026-09-15T08:00:00Z' });
   assert.equal((await lerAssunto(db, idB, { agora: '2026-09-15T12:00:00Z' })).estado, 'EM_OBSERVACAO');
+  const hojeRastreio = await lerHoje(db, { agora: '2026-09-16T00:30:00.000Z', desde: '2026-09-15T00:00:00.000Z' });
+  assert.match(hojeRastreio.leitura.frases.find(f => f.tema === 'regresso').texto,
+    /^O Google já voltou a 1 de 1 página corrigida \(«Página marcada para não ser indexada»\)\. A avaliação começa a 29\/09\.$/);
   const r3 = await executarCicloAssuntos({ DB: db }, { fetchImpl: site, agora: '2026-09-16T01:00:00.000Z' });
   assert.equal(r3.avaliados, 1);
   const depois = await lerAssunto(db, idB, { agora: '2026-09-16T02:00:00.000Z' });
   assert.deepEqual([depois.estado, depois.avaliacao.resultado], ['AVALIADO', 'MELHORIA_OBSERVADA']);
   const hoje3 = await lerHoje(db, { agora: '2026-09-16T02:00:00.000Z', desde: '2026-09-15T00:00:00.000Z' });
   assert.deepEqual(hoje3.bloco5.resultados.map(x => [x.caminho, x.resultado]), [['/b/', 'MELHORIA_OBSERVADA']]);
+  const av = hoje3.leitura.frases.find(f => f.tema === 'avaliacoes');
+  assert.equal(av.tom, 'bom');
+  assert.match(av.texto, /^Avaliação de «Página marcada para não ser indexada» em 1 página: 1 melhoria\. .*não prova que a correcção o causou\.$/);
+  assert.ok(!hoje3.leitura.frases.some(f => /porque/.test(f.texto)), 'nunca «porque»');
   assert.deepEqual(hoje3.bloco1.criticos, []);
 
   /* regressão: o problema volta */

@@ -55,13 +55,61 @@
   function mostrarHoje() {
     return obter('api/hoje' + (ultimaVisita ? '?desde=' + encodeURIComponent(ultimaVisita) : ''))
       .then(h => {
+        /* a leitura de hoje: só o que é novo, em frases */
+        const lt = h.leitura;
+        const quando = s => new Date(s).toLocaleString('pt-PT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(',', ' às');
+        if (!lt) {
+          $('leitura-desde').textContent = '';
+          $('leitura-vazio').textContent = 'Não foi possível escrever a leitura de hoje.';
+        } else {
+          $('leitura-desde').textContent = lt.primeira_visita ? 'Nas últimas 24 horas' : 'Desde a tua última visita, ' + quando(lt.desde);
+          $('leitura-vazio').textContent = lt.primeira_visita ? 'Nada de novo nas últimas 24 horas.' : 'Nada de novo desde a tua última visita.';
+          mostrarLista($('leitura-frases'), lt.frases.map(f => {
+            const li = el('li', null, 'frase frase-' + f.tom);
+            li.appendChild(el('span', f.texto));
+            if (f.ligacao) {
+              const a = el('a', f.ligacao.rotulo);
+              a.href = f.ligacao.href;
+              li.appendChild(a);
+            }
+            return li;
+          }));
+        }
+        $('leitura-vazio').hidden = !!(lt && lt.frases.length);
+
+        /* a semana em revista: fica aqui até ser lida */
+        const sm = h.semana;
+        let lida = null;
+        try { lida = localStorage.getItem('hs-inteligencia-semana-lida'); } catch (e) { lida = null; }
+        $('semana-cartao').hidden = !sm || lida === sm.semana;
+        if (sm) {
+          $('semana-datas').textContent = dia(sm.semana) + ' a ' + dia(sm.fim);
+          $('semana-destaque').textContent = sm.destaque || '';
+          $('semana-ler').href = 'semana/?s=' + encodeURIComponent(sm.semana);
+        }
+
         /* 1 */
         const c = h.bloco1.criticos;
         if (!h.ultimo_ciclo) $('b1').textContent = 'Ainda não verificado: a detecção de problemas ainda não correu.';
         else if (!c.length) $('b1').textContent = 'Nenhum problema crítico — com base na inspecção de ' + plural(h.bloco1.verificadas, 'página', 'páginas') + '.';
         else $('b1').textContent = plural(c.length, 'problema crítico:', 'problemas críticos:');
-        mostrarLista($('b1-lista'), c.map(a => linhaAssunto(a, '')));
-        $('bloco1').classList.toggle('bloco-critico', c.length > 0);
+        /* o próprio módulo: tarefas que não correram ou foram cortadas */
+        const inc = (h.bloco1.incidentes || []).map(i => {
+          const hh = s => new Date(s).toLocaleString('pt-PT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+          const tarefas = i.tarefas.map(x => x.titulo).join(', ');
+          const li = el('li', null, 'linha-assunto');
+          li.appendChild(el('strong', i.aberto
+            ? 'O módulo tem tarefas a falhar desde ' + hh(i.aberto_em)
+            : 'O módulo esteve com tarefas a falhar entre ' + hh(i.aberto_em) + ' e ' + hh(i.fechado_em) + ' — já voltou ao normal'));
+          li.appendChild(el('div', plural(i.execucoes_perdidas, 'execução perdida', 'execuções perdidas') + ' (' + tarefas + '). ' + i.causa_provavel, 'sub'));
+          const a = el('a', 'Ver na operação');
+          a.href = 'evolucao/';
+          li.appendChild(a);
+          return li;
+        });
+        if (inc.some((x, k) => h.bloco1.incidentes[k].aberto) && !c.length) $('b1').textContent = 'O módulo não está a trabalhar como devia:';
+        mostrarLista($('b1-lista'), inc.concat(c.map(a => linhaAssunto(a, ''))));
+        $('bloco1').classList.toggle('bloco-critico', c.length > 0 || (h.bloco1.incidentes || []).some(i => i.aberto));
 
         /* 2 — assuntos e rastreios desde a última visita */
         const m = h.bloco2, extra = [];

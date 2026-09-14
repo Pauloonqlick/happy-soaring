@@ -11,6 +11,7 @@
    fazem-se em SQL, para caber no tempo de processador do plano gratuito. */
 import { proximasExecucoes } from './agenda.js';
 import { estadoAvisos } from './avisos.js';
+import { slotsEsperados, classificarSlots, descreverIncidente, MARGEM_MIN } from './vigia.js';
 
 const DIA = 864e5;
 const t = s => (s ? Date.parse(s) : NaN);
@@ -87,7 +88,7 @@ const SQL_VERSOES = `SELECT caminho, versoes FROM deployment_paginas WHERE verso
 export async function lerOperacao(env, { agora = new Date().toISOString() } = {}) {
   const db = env.DB;
   const h6 = new Date(t(agora) - 6 * 36e5).toISOString(), h24 = new Date(t(agora) - DIA).toISOString();
-  const [pubs, pubsRecentes, gsc, google, insp24, meta, assuntos, decisoes24, pacotes, execs, falhas, eventos, avisos] = await Promise.all([
+  const [pubs, pubsRecentes, gsc, google, insp24, meta, assuntos, decisoes24, pacotes, execs, falhas, eventos, avisos, execs24, incidentes] = await Promise.all([
     db.prepare("SELECT processamento, COUNT(*) AS n, MIN(criado_em_cf) AS mais_antiga FROM deployments GROUP BY processamento").all(),
     db.prepare("SELECT COUNT(*) AS n FROM deployments WHERE processamento IN ('PROCESSADO', 'FALHOU') AND processado_em > ?").bind(h6).first(),
     db.prepare('SELECT COUNT(*) AS dias, SUM(completo) AS completos, MIN(data) AS primeiro, MAX(data) AS ultimo, MAX(recolhido_em) AS recolhido FROM gsc_dias').first(),
@@ -109,8 +110,21 @@ export async function lerOperacao(env, { agora = new Date().toISOString() } = {}
       JOIN (SELECT vez, MAX(inicio) AS inicio FROM execucoes GROUP BY vez) u ON u.vez = e.vez AND u.inicio = e.inicio`).all(),
     db.prepare('SELECT vez, COUNT(*) AS execucoes, SUM(ok = 0) AS falhas, ROUND(AVG(duracao_ms)) AS duracao_media FROM execucoes WHERE inicio > ? GROUP BY vez').bind(h24).all(),
     db.prepare('SELECT tipo, COUNT(*) AS n, MAX(criado_em) AS ultimo FROM eventos_operacionais WHERE criado_em > ? GROUP BY tipo ORDER BY ultimo DESC').bind(h24).all(),
-    estadoAvisos(db, env).catch(() => null)
+    estadoAvisos(db, env).catch(() => null),
+    db.prepare('SELECT vez, inicio, ok FROM execucoes WHERE inicio >= ?').bind(h24).all(),
+    db.prepare('SELECT * FROM incidentes ORDER BY aberto_em DESC LIMIT 10').all()
   ]);
+  /* as últimas 24 h minuto a minuto: o que devia ter corrido e não correu, ou ficou a meio */
+  const primeiraExec = execs24.results.reduce((m, e) => (!m || e.inicio < m ? e.inicio : m), null);
+  const desde24 = primeiraExec && primeiraExec > h24 ? primeiraExec : h24;
+  const ate24 = new Date(Math.floor((t(agora) - MARGEM_MIN * 60000) / 60000) * 60000).toISOString();
+  const PROB = new Map();
+  if (primeiraExec) {
+    for (const s of classificarSlots(slotsEsperados(desde24, ate24), execs24.results, agora)) {
+      if (!PROB.has(s.vez)) PROB.set(s.vez, { INTERROMPIDA: 0, EM_FALTA: 0 });
+      if (s.estado === 'INTERROMPIDA' || s.estado === 'EM_FALTA') PROB.get(s.vez)[s.estado]++;
+    }
+  }
 
   const P = Object.fromEntries(pubs.results.map(x => [x.processamento, x]));
   const pendentes = P.PENDENTE?.n ?? 0;
@@ -129,8 +143,14 @@ export async function lerOperacao(env, { agora = new Date().toISOString() } = {}
       try { resumo = u?.resumo ? JSON.parse(u.resumo) : null; } catch (e) { resumo = null; }
       return {
         ...a,
-        ultima: u ? { inicio: u.inicio, duracao_ms: u.duracao_ms, ok: !!u.ok, resumo, erro: u.erro } : null,
-        ultimas_24h: f ? { execucoes: f.execucoes, falhas: f.falhas, duracao_media_ms: f.duracao_media } : { execucoes: 0, falhas: 0, duracao_media_ms: null }
+        ultima: u ? {
+          inicio: u.inicio, duracao_ms: u.duracao_ms, ok: u.ok === 1, resumo, erro: u.erro,
+          estado: u.ok === 1 ? 'OK' : u.ok === 0 ? 'FALHOU' : (t(agora) - t(u.inicio) < 5 * 60000 ? 'A_CORRER' : 'INTERROMPIDA')
+        } : null,
+        ultimas_24h: {
+          execucoes: f?.execucoes ?? 0, falhas: f?.falhas ?? 0, duracao_media_ms: f?.duracao_media ?? null,
+          interrompidas: PROB.get(a.vez)?.INTERROMPIDA ?? 0, em_falta: PROB.get(a.vez)?.EM_FALTA ?? 0
+        }
       };
     }),
     filas: {
@@ -158,7 +178,8 @@ export async function lerOperacao(env, { agora = new Date().toISOString() } = {}
       },
       avisos
     },
-    eventos_24h: eventos.results
+    eventos_24h: eventos.results,
+    incidentes: incidentes.results.map(i => descreverIncidente(i, agora))
   };
 }
 

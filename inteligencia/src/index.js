@@ -16,6 +16,8 @@ import { executarCicloAssuntos, lerHoje, lerAssunto, decidirAssunto, lerPacote }
 import { executarCicloAvisos, enviarAvisoTeste } from './avisos.js';
 import { executarCicloDecisoes, lerAprendizagem, gravarLicao } from './aprendizagem.js';
 import { vezDoMinuto } from './agenda.js';
+import { executarVigia } from './vigia.js';
+import { executarCicloSemana, listarSemanas, lerSemana } from './leitura.js';
 import { lerOperacao, lerIndexacaoEvolucao, lerPaginas, lerGeral } from './evolucao.js';
 import {
   lerConhecimento, gravarConhecimento, historicoConhecimento, TABELAS_CONHECIMENTO,
@@ -100,6 +102,12 @@ async function leitura(env, p, url, email) {
   if (p === API + '/evolucao/indexacao') return json(await lerIndexacaoEvolucao(env.DB));
   if (p === API + '/evolucao/paginas') return json(await lerPaginas(env.DB, { dias: [7, 28, 90].includes(Number(url.searchParams.get('dias'))) ? Number(url.searchParams.get('dias')) : 28 }));
   if (p === API + '/evolucao/geral') return json(await lerGeral(env.DB));
+  if (p === API + '/semanas') return json({ semanas: await listarSemanas(env.DB) });
+  const sm = p.match(/^\/inteligencia\/api\/semanas\/(\d{4}-\d{2}-\d{2})$/);
+  if (sm) {
+    const v = await lerSemana(env.DB, sm[1]);
+    return v ? json(v) : json({ erro: 'Semana sem revista' }, 404);
+  }
   return null;
 }
 
@@ -151,11 +159,20 @@ export default {
     ctx.waitUntil((async () => {
       const nome = 'ciclo_' + vez;
       const inicio = new Date();
-      /* cada execução fica registada (14 dias) para o painel de operação; nunca impede a tarefa */
+      /* Cada execução regista-se ANTES de começar e fecha o registo no fim (14 dias).
+         Se for cortada a meio, o registo fica aberto e o vigia dá por isso.
+         O registo nunca impede a tarefa. */
+      let id = null;
+      try {
+        const r = await env.DB.prepare('INSERT INTO execucoes (vez, inicio) VALUES (?, ?) RETURNING id').bind(vez, inicio.toISOString()).first();
+        id = r?.id ?? null;
+      } catch (e) { id = null; }
       const registar = async (ok, resumo, erro) => {
         try {
-          const stmts = [env.DB.prepare('INSERT INTO execucoes (vez, inicio, duracao_ms, ok, resumo, erro) VALUES (?, ?, ?, ?, ?, ?)')
-            .bind(vez, inicio.toISOString(), Date.now() - inicio.getTime(), ok ? 1 : 0, resumo ? JSON.stringify(resumo).slice(0, 1000) : null, erro)];
+          const valores = [Date.now() - inicio.getTime(), ok ? 1 : 0, resumo ? JSON.stringify(resumo).slice(0, 1000) : null, erro];
+          const stmts = [id != null
+            ? env.DB.prepare('UPDATE execucoes SET duracao_ms = ?, ok = ?, resumo = ?, erro = ? WHERE id = ?').bind(...valores, id)
+            : env.DB.prepare('INSERT INTO execucoes (duracao_ms, ok, resumo, erro, vez, inicio) VALUES (?, ?, ?, ?, ?, ?)').bind(...valores, vez, inicio.toISOString())];
           if (vez === 'search_console') {
             stmts.push(env.DB.prepare("DELETE FROM execucoes WHERE inicio < strftime('%Y-%m-%dT%H:%M:%fZ', 'now', '-14 days')"));
           }
@@ -168,6 +185,11 @@ export default {
           : vez === 'assuntos' ? await executarCicloAssuntos(env)
           : vez === 'avisos' ? await executarCicloAvisos(env)
           : vez === 'decisoes' ? await executarCicloDecisoes(env) : await executarCiclo(env);
+        if (vez === 'search_console') {
+          /* o vigia vai na execução mais leve; se falhar, o Search Console não fica por registar */
+          try { r.vigia = await executarVigia(env.DB); } catch (e) { r.vigia = { erro: String(e && e.message || e).slice(0, 200) }; }
+          try { r.semana = await executarCicloSemana(env.DB); } catch (e) { r.semana = { erro: String(e && e.message || e).slice(0, 200) }; }
+        }
         console.log(JSON.stringify({ evento: nome, ...r }));
         await registar(true, r, null);
       } catch (e) {
