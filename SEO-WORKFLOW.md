@@ -1,5 +1,13 @@
 # Como se trabalha SEO neste projeto
 
+> **Desde 14/09/2026:** indexação, rastreio, dados estruturados e desempenho vivem
+> no **módulo de inteligência** (`inteligencia/`, `https://happysoaring.com/inteligencia/`),
+> que inspecciona, mede e decide por regras. O `SEO-OPEN.md` passou a histórico
+> nessa parte. Estas regras continuam a valer para os exports da HS SEO
+> Intelligence (SERP e concorrência, que ficam no `hs-seo-intelligence`) e para
+> o trabalho editorial que ainda nasce no `SEO-OPEN.md`. Onde contradisserem o
+> módulo, manda o módulo.
+
 Estas regras valem **só** para o trabalho a partir de um export
 `hs-seo-*.json` da HS SEO Intelligence ou do `SEO-OPEN.md`. Não substituem nem
 alteram nenhuma das regras normais do projeto, que estão no `CLAUDE.md`.
@@ -221,12 +229,15 @@ mecanismo e não se gasta.
 corrida; semanalmente daria mais de 10 MB por ano no git, a duplicar o que o D1
 já guarda melhor.
 
-A memória das medições está no **D1**. O estado dos assuntos está no
-**`SEO-OPEN.md`**. O histórico do que foi alterado, e porquê, está nas
-**mensagens de commit**.
+A memória das medições está no **D1**. O estado dos assuntos de indexação e
+técnica está no **módulo de inteligência** (desde 14/09/2026); o que é editorial
+continua no **`SEO-OPEN.md`**. O histórico do que foi alterado, e porquê, está
+nas **mensagens de commit**.
 
 ## Como começa uma sessão
 
+0. Ler o módulo primeiro: o «Hoje», a fila de indexação e o que ele já decidiu.
+   Nada de indexação se decide contra ele.
 1. Ler o `run`. Se `complete: false`, dizê-lo antes de mais nada.
 2. Comparar `site_version` com o que está publicado.
 3. Reconciliar o `SEO-OPEN.md` e **propor** o que fechar, pela regra acima.
