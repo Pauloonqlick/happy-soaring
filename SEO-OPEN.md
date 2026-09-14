@@ -1,6 +1,38 @@
 # SEO — o que está em aberto
 
-Estado. As regras do processo estão no `SEO-WORKFLOW.md`.
+> ## A partir de 14/09/2026 este ficheiro é HISTÓRICO para indexação e medição
+>
+> **A fonte oficial passou a ser o módulo de inteligência** —
+> `https://happysoaring.com/inteligencia/`, código em `inteligencia/` (ver o
+> `inteligencia/README.md`). Desde 13/09 o módulo inspecciona as 175 páginas pela
+> API do Search Console, recolhe o desempenho todos os dias, observa cada
+> publicação, detecta problemas, **decide por regras** (o Paulo não gere; o Claude
+> implementa) e aprende com os resultados. Nada do que está abaixo sobre
+> indexação ou desempenho deve ser executado sem confrontar primeiro com o módulo.
+>
+> **Reconciliação a 14/09/2026, secção a secção:**
+>
+> | Secção | Estado |
+> |---|---|
+> | DESEMPENHO (exportações de 10 e 12/09) | Histórico. O módulo tem o Search Console completo até 12/09 e escreve a «Semana em revista». |
+> | Soluções 1 — preço de retalho | **Aberto, decisão do Paulo.** Sem preço visível, as fichas deixaram de declarar `Product` (commit `627a9c3`, publicado a 13/09). |
+> | Soluções 2 — bios do Instagram e do Facebook | **Aberto, acção do Paulo.** |
+> | Soluções 3 — emails Flow e FelloFly | **Aberto, acção do Paulo.** |
+> | Soluções 4 — pedidos de indexação | **SUBSTITUÍDO. Não executar a lista.** Regra do módulo: página nunca rastreada ou alterada sem rastreio espera duas vezes 14 dias pelo rastreio natural; só depois passa para o Paulo, no «Hoje» e na fila de indexação, no máximo 10 por dia. A próxima decisão é a 27/09. |
+> | Medição DataForSEO | **Continua no `hs-seo-intelligence`**, que se mantém vivo. O módulo não lê dele. SERP e IA no módulo são a Fase 6, ainda por decidir. Antes de uma re-medição paga, confirmar no módulo que o Google rastreou depois da alteração. |
+> | Aguardar Google — vídeos dos spots | Os `VideoObject` passaram a ter a data real (commit `627a9c3`). O rastreio posterior é seguido pelo módulo. |
+> | Aguardar Google — 7 fichas de asa | Seguido pelo módulo. A 13/09: 6 não indexadas — `/de/schirme/fusion/`, `/en/wings/vissta-xc/`, `/es/alas/albatroxx/`, `/fr/ailes/mohawk/`, `/fr/ailes/rpm-3/` (nunca rastreadas) e `/fr/ailes/yoti-3/` (rastreada, não indexada). Para a Yoti 3 FR ficaram registadas no módulo, a 14/09, três hipóteses eliminadas: diferença técnica, pouco texto, duplicado da Light. |
+> | Aguardar Google — 15 páginas de spot e Alfarim | Inspeccionadas a 13/09: spots 24 de 25 indexados (falta `/de/parakite-portugal/praia-do-meco/`, detectada e nunca rastreada); Alfarim 5 de 5; curso 5 de 5. |
+> | Pendente — diagramas, visuais e fotografia do curso | **Continua aberto aqui** (trabalho editorial; o módulo não gere conteúdo). |
+> | Pendente — 2 URLs em 404 | Continua sem endereços. O módulo verifica as URLs fora do sitemap com impressões e não encontrou nenhum 404 (as que achou redireccionam). A correcção de 14/09 na página de erro (caracteres invisíveis colados às ligações de um post) é outro caso. |
+> | Decisão Paulo — imagens órfãs, ligações às asas na inicial, wordmark, clientes OAuth | **Continuam decisões do Paulo.** As ligações às asas não afectam a indexação: 104 das 110 fichas estão indexadas. |
+> | Fechado e Retirados | Histórico. |
+>
+> O que continua a nascer aqui: trabalho editorial e de desenho, e decisões que
+> são só do Paulo. Tudo o que é indexação, rastreio, dados estruturados e
+> desempenho vive no módulo.
+
+Estado em 12/09 (histórico). As regras do processo estão no `SEO-WORKFLOW.md`.
 
 Última reconciliação: **12/09/2026**, com **segunda exportação de desempenho**
 no mesmo dia — a primeira comparação entre duas medições que este ficheiro tem.
@@ -477,6 +509,9 @@ deliberadamente vaga, e custa mais do que um backlink.
 `enviar-email-flow.url`, que abre o cliente de email já preenchido.
 
 ### 4 · OS PEDIDOS DE INDEXAÇÃO — agora medidos, não adivinhados
+
+> **SUBSTITUÍDO a 14/09/2026 — não executar a lista abaixo.** Quando pedir
+> indexação decide-o o módulo de inteligência (ver o topo deste ficheiro).
 **medido a 13/09 pela API do Search Console (inspecção de URL)**
 
 **A lista de 12/09 estava errada, e só a API o podia mostrar.** O Google

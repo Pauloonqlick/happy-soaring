@@ -143,6 +143,10 @@ tamanho dos `h2`. Ao estilar uma página de leitura, prefixar com
 Trabalho iniciado a partir de um `hs-seo-*.json` ou do `SEO-OPEN.md` → ler
 primeiro o `SEO-WORKFLOW.md`.
 
+Indexação, rastreio, dados estruturados e desempenho: a fonte oficial é o módulo
+de inteligência (`inteligencia/`, ver o `inteligencia/README.md`) desde
+14/09/2026. O `SEO-OPEN.md` é histórico nessa parte.
+
 Vale só para esse trabalho. Não altera nada do resto deste ficheiro.
 
 ## O mapa da estrutura
