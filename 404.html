@@ -5,6 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex" />
 <title>Página não encontrada — Happy Soaring</title>
+<script>
+/* LIGACOES COM CARACTERES INVISIVEIS COLADOS
+   ==========================================
+   Um post no Facebook (14/09/2026) levava as ligacoes do site com um U+2060
+   ("word joiner") colado ao fim — invisivel, vem do sitio de onde o texto
+   foi copiado. O endereco passa a ser /en/%E2%81%A0 e o Pages responde 404,
+   embora a pagina exista. Nao se consegue apanhar no _redirects (um splat
+   so vale no fim do padrao), por isso fica aqui: antes de mostrar o erro,
+   tira os caracteres invisiveis do endereco e, se sobrar outro endereco,
+   vai para la. Corre no <head> para o erro nem chegar a piscar.
+   So se muda de endereco quando havia mesmo um caracter invisivel: um
+   endereco errado de verdade continua a dar esta pagina. */
+(function () {
+  try {
+    var p = decodeURIComponent(location.pathname);
+    var limpo = p.replace(/[­᠎​-‏‪-‮⁠-⁤﻿]/g, '');
+    if (limpo !== p) location.replace(limpo + location.search + location.hash);
+  } catch (e) { /* endereco que nem se descodifica: fica o erro */ }
+})();
+</script>
 <style>
   :root{ --orange:#ff6a13 }
   *{margin:0;padding:0;box-sizing:border-box}
