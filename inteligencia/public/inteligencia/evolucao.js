@@ -42,6 +42,16 @@
     return cx;
   }
   const chip = ([t, c]) => el('span', t, c);
+  /* resolvido: causa confirmada e o que se fez; senão, a causa provável que o vigia deduz */
+  function causaIncidente(i) {
+    const c = el('span');
+    if (i.resolvido) {
+      c.appendChild(el('span', 'resolvido', 'chip chip-ok'));
+      c.appendChild(el('div', i.causa_confirmada, ''));
+      c.appendChild(el('div', i.resolucao, 'sub'));
+    } else c.textContent = 'Provável: ' + i.causa_provavel;
+    return c;
+  }
   const erro = (id, e) => { $(id).textContent = 'Não foi possível ler (' + e.message + ').'; };
 
   /* ---------------------------------------------------------- 1. operação -- */
@@ -53,7 +63,7 @@
       const dh = s => s ? new Date(s).toLocaleString('pt-PT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '—';
       const duracao = m => m < 60 ? m + ' min' : Math.floor(m / 60) + ' h ' + String(m % 60).padStart(2, '0') + ' min';
       if (!d.incidentes.length) raiz.appendChild(el('p', 'Nenhum incidente registado: todas as tarefas correram quando deviam.', 'nota'));
-      else raiz.appendChild(tabela(['Início', 'Fim', 'Duração', 'Tarefas afectadas', 'Execuções perdidas', 'Causa provável'], d.incidentes.map(i => {
+      else raiz.appendChild(tabela(['Início', 'Fim', 'Duração', 'Tarefas afectadas', 'Execuções perdidas', 'Causa'], d.incidentes.map(i => {
         const fim = el('span');
         if (i.aberto) fim.appendChild(chip(['a decorrer', 'chip chip-sujo'])); else fim.textContent = dh(i.fechado_em);
         const perdidas = [];
@@ -61,7 +71,7 @@
         if (i.por_estado.EM_FALTA) perdidas.push(i.por_estado.EM_FALTA + ' sem registo');
         if (i.por_estado.FALHOU) perdidas.push(i.por_estado.FALHOU + ' com erro');
         return [dh(i.aberto_em), fim, duracao(i.duracao_min), i.tarefas.map(x => x.titulo + ' (' + x.execucoes + ')').join(', '),
-          num(i.execucoes_perdidas) + ' · ' + perdidas.join(' · '), i.causa_provavel];
+          num(i.execucoes_perdidas) + ' · ' + perdidas.join(' · '), causaIncidente(i)];
       })));
 
       raiz.appendChild(el('h3', 'Tarefas'));

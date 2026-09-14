@@ -152,14 +152,19 @@ export function descreverIncidente(i, agora = new Date().toISOString()) {
   return {
     id: i.id, aberto: !i.fechado_em, aberto_em: i.aberto_em, fechado_em: i.fechado_em || null,
     ultimo_problema_em: i.ultimo_problema_em, duracao_min: Math.round((t(fim) - t(i.aberto_em)) / MIN),
-    execucoes_perdidas: perdidas, por_estado: total, tarefas, causa_provavel: causa, ultimo_erro: i.ultimo_erro || null
+    execucoes_perdidas: perdidas, por_estado: total, tarefas, causa_provavel: causa, ultimo_erro: i.ultimo_erro || null,
+    /* resolvido: fechado, com a causa confirmada e o que se fez (0012) */
+    resolvido: !!(i.fechado_em && i.resolucao), causa_confirmada: i.causa_confirmada || null,
+    resolucao: i.resolucao || null, resolvido_em: i.resolvido_em || null,
+    causa: i.causa_confirmada || causa
   };
 }
 
 /* Para o «Hoje»: o incidente aberto, ou um que tenha fechado há menos de 24 h e durado
-   pelo menos 30 minutos (os soluços curtos ficam só na página de operação). */
+   pelo menos 30 minutos (os soluços curtos ficam só na página de operação). Um incidente
+   já RESOLVIDO (causa confirmada e corrigida) deixa de ser notícia. */
 export async function incidentesParaHoje(db, agora = new Date().toISOString()) {
   const { results } = await db.prepare('SELECT * FROM incidentes WHERE fechado_em IS NULL OR fechado_em > ? ORDER BY aberto_em DESC LIMIT 5')
     .bind(iso(t(agora) - 24 * 36e5)).all();
-  return results.map(i => descreverIncidente(i, agora)).filter(i => i.aberto || i.duracao_min >= 30);
+  return results.map(i => descreverIncidente(i, agora)).filter(i => !i.resolvido && (i.aberto || i.duracao_min >= 30));
 }

@@ -18,6 +18,7 @@ import { executarCicloDecisoes, lerAprendizagem, gravarLicao } from './aprendiza
 import { vezDoMinuto } from './agenda.js';
 import { executarVigia } from './vigia.js';
 import { executarCicloSemana, listarSemanas, lerSemana } from './leitura.js';
+import { executarAgregacao, lerRegisto } from './registo.js';
 import { lerOperacao, lerIndexacaoEvolucao, lerPaginas, lerGeral } from './evolucao.js';
 import {
   lerConhecimento, gravarConhecimento, historicoConhecimento, TABELAS_CONHECIMENTO,
@@ -102,6 +103,11 @@ async function leitura(env, p, url, email) {
   if (p === API + '/evolucao/indexacao') return json(await lerIndexacaoEvolucao(env.DB));
   if (p === API + '/evolucao/paginas') return json(await lerPaginas(env.DB, { dias: [7, 28, 90].includes(Number(url.searchParams.get('dias'))) ? Number(url.searchParams.get('dias')) : 28 }));
   if (p === API + '/evolucao/geral') return json(await lerGeral(env.DB));
+  if (p === API + '/registo') {
+    const vista = ['dia', 'semana', 'mes'].includes(url.searchParams.get('vista')) ? url.searchParams.get('vista') : 'dia';
+    const data = url.searchParams.get('data');
+    return json(await lerRegisto(env, { vista, data: data && /^\d{4}-\d{2}(-\d{2})?$/.test(data) ? data : null }));
+  }
   if (p === API + '/semanas') return json({ semanas: await listarSemanas(env.DB) });
   const sm = p.match(/^\/inteligencia\/api\/semanas\/(\d{4}-\d{2}-\d{2})$/);
   if (sm) {
@@ -189,6 +195,8 @@ export default {
           /* o vigia vai na execução mais leve; se falhar, o Search Console não fica por registar */
           try { r.vigia = await executarVigia(env.DB); } catch (e) { r.vigia = { erro: String(e && e.message || e).slice(0, 200) }; }
           try { r.semana = await executarCicloSemana(env.DB); } catch (e) { r.semana = { erro: String(e && e.message || e).slice(0, 200) }; }
+          /* o resumo de cada dia para o «Registo de tarefas» (por dia, semana e mês) */
+          try { r.registo = await executarAgregacao(env.DB); } catch (e) { r.registo = { erro: String(e && e.message || e).slice(0, 200) }; }
         }
         console.log(JSON.stringify({ evento: nome, ...r }));
         await registar(true, r, null);

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Registo de tarefas — Inteligência Happy Soaring</title>
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="stylesheet" href="/tema.css">
+<link rel="stylesheet" href="/inteligencia/estilo.css">
+<script src="/inteligencia/comum.js" defer></script>
+<script src="/inteligencia/registo.js" defer></script>
+</head>
+<body>
+
+<header class="topo">
+  <a class="marca" href="/" translate="no">HAPPY <span>SOARING</span></a>
+  <p class="modulo">Inteligência</p>
+  <nav class="topo-nav" aria-label="Módulo">
+    <a href="/inteligencia/">Hoje</a>
+    <a href="/inteligencia/semana/">Semana</a>
+    <a href="/inteligencia/registo/" aria-current="page">Registo</a>
+    <a href="/inteligencia/evolucao/">Evolução</a>
+    <a href="/inteligencia/indexacao/">Fila de indexação</a>
+    <a href="/inteligencia/alteracoes/">Alterações</a>
+    <a href="/inteligencia/conhecimento/">Conhecimento</a>
+    <a href="/inteligencia/contactos/">Contactos</a>
+    <a href="/inteligencia/configuracao/">Configuração</a>
+    <a href="/inteligencia/aprendizagem/">Aprendizagem</a>
+    <a href="/">Site</a>
+  </nav>
+  <p class="quem" id="quem" aria-live="polite"></p>
+</header>
+
+<main class="corpo corpo-uma">
+  <section aria-labelledby="t-registo">
+    <div class="hoje-cab">
+      <h1 id="t-registo">Registo de tarefas</h1>
+      <p class="data" id="actualizado"></p>
+    </div>
+    <p class="nota">O que o módulo tem agendado, o que está a correr agora e o que aconteceu em cada execução — por dia, semana ou mês.
+      A tarefa agendada corre de 2 em 2 minutos e cada minuto par tem uma tarefa. Horas de Lisboa. A página actualiza-se sozinha de minuto a minuto.</p>
+    <p class="vazio" id="estado">A carregar…</p>
+
+    <div id="agora" hidden>
+      <div class="resumo-fila" id="agora-numeros"></div>
+      <h2 class="titulo-seccao">As tarefas agendadas</h2>
+      <div id="agora-tarefas"></div>
+      <h2 class="titulo-seccao">Datas marcadas</h2>
+      <ul class="registo-datas" id="agora-datas"></ul>
+    </div>
+
+    <div id="historico" hidden>
+      <h2 class="titulo-seccao">O que aconteceu</h2>
+      <div class="registo-barra">
+        <div class="registo-vistas" role="group" aria-label="Vista">
+          <button type="button" data-vista="dia">Dia</button>
+          <button type="button" data-vista="semana">Semana</button>
+          <button type="button" data-vista="mes">Mês</button>
+        </div>
+        <div class="registo-nav">
+          <button type="button" id="anterior" aria-label="Anterior">‹</button>
+          <strong id="periodo" aria-live="polite"></strong>
+          <button type="button" id="seguinte" aria-label="Seguinte">›</button>
+          <button type="button" id="hoje" class="registo-hoje">Hoje</button>
+        </div>
+      </div>
+      <div id="vista"></div>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>

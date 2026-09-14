@@ -220,3 +220,30 @@ details#mudar summary{cursor:pointer;font-size:14px;color:var(--painel-fraca)}
 .frase a{margin-left:8px;font-size:13px;color:var(--tinta-fraca);white-space:nowrap}
 .frase a:hover,.frase a:focus-visible{color:var(--tinta)}
 .semana-seccao h2{margin:0 0 10px}
+
+/* ---- «Registo de tarefas» (14/09/2026) ---- */
+.resumo-n.registo-bem{border-left:3px solid #3fae6a}
+.resumo-n.registo-mal{border-left:3px solid var(--destaque)}
+.registo-datas{margin:0;padding-left:18px;color:var(--tinta-fraca)}
+.registo-datas li{margin:4px 0}
+.registo-datas strong{color:var(--tinta)}
+.registo-barra{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;margin:4px 0 16px}
+.registo-vistas{display:inline-flex;border:1px solid var(--linha)}
+.registo-vistas button,.registo-nav button{font:inherit;font-size:14px;color:var(--tinta);background:none;border:0;padding:8px 16px;cursor:pointer}
+.registo-vistas button + button{border-left:1px solid var(--linha)}
+.registo-vistas button[aria-pressed="true"]{background:var(--tinta);color:var(--papel);font-weight:700}
+.registo-nav{display:flex;align-items:center;gap:6px}
+.registo-nav button{border:1px solid var(--linha);padding:6px 12px}
+.registo-nav strong{min-width:15ch;text-align:center;font-size:15px}
+.registo-nav button:hover,.registo-vistas button:hover{background:var(--papel-2)}
+.registo-vistas button[aria-pressed="true"]:hover{background:var(--tinta)}
+.registo-vistas button:focus-visible,.registo-nav button:focus-visible,.registo-link:focus-visible{outline:2px solid var(--destaque);outline-offset:2px}
+.registo-h3{margin:26px 0 10px;font-size:15px}
+.registo-contagem{margin:6px 0 8px}
+.tabela tr.registo-linha-mal td{background:#fff4ec}
+.tabela tr.registo-linha-total td{font-weight:600;background:#f4f7fb}
+.tabela .registo-a-correr{border-color:#1f6fc0;color:#1f6fc0}
+.registo-link{font:inherit;font-size:13px;background:none;border:0;padding:0;color:var(--painel-tinta);text-decoration:underline;cursor:pointer}
+.registo-log td:first-child{font-variant-numeric:tabular-nums;white-space:nowrap}
+.registo-semana td{white-space:nowrap}
+.registo-semana tr.registo-linha-total td{white-space:normal;min-width:150px;font-size:13px}

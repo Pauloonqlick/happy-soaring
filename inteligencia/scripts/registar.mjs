@@ -7,6 +7,8 @@
  *       prioridade, sintoma, causa, correccao, prevencao, generica)
  *   node inteligencia/scripts/registar.mjs implementacao <licao-ou-tipo> <commit> [nota]
  *       marca como implementados os pacotes ainda por publicar dessa lição ou tipo
+ *   node inteligencia/scripts/registar.mjs incidente <id> <ficheiro.json>
+ *       marca um incidente já fechado como resolvido (causa_confirmada, resolucao)
  *   node inteligencia/scripts/registar.mjs hipotese <ficheiro.json>
  *       regista uma hipótese eliminada (hipotese, evidencia, eliminada_em, caminho,
  *       tipo_assunto). ATENÇÃO: com tipo_assunto, os assuntos desse tipo nesse caminho
@@ -77,6 +79,15 @@ INSERT INTO conhecimento_historico (tabela, registo_id, versao, dados, gravado_e
 SELECT 'hipoteses_eliminadas', id, versao, json_object('id', id, 'versao', versao, 'alterado_em', alterado_em, ${cols.map(k => `'${k}', ${k}`).join(', ')}), ${q(agora)}
 FROM hipoteses_eliminadas WHERE id = (SELECT MAX(id) FROM hipoteses_eliminadas);`);
   console.log('✔ hipótese eliminada registada' + (val.tipo_assunto ? ' — RETIRA assuntos ' + val.tipo_assunto + ' em ' + (val.caminho || 'todo o site') : ' (só conhecimento)'));
+} else if (accao === 'incidente') {
+  /* marca um incidente FECHADO como resolvido: deixa de ser notícia no «Hoje» e na leitura */
+  const id = Number(args[0]);
+  if (!Number.isInteger(id) || id < 1 || !args[1]) erro('uso: incidente <id> <ficheiro.json com causa_confirmada e resolucao>');
+  const r = JSON.parse(fs.readFileSync(args[1], 'utf8'));
+  for (const k of ['causa_confirmada', 'resolucao']) if (!r[k] || String(r[k]).length < 20) erro('falta ' + k + ' (uma frase a sério)');
+  executar(`UPDATE incidentes SET causa_confirmada = ${q(r.causa_confirmada)}, resolucao = ${q(r.resolucao)}, resolvido_em = ${q(agora)}
+WHERE id = ${id} AND fechado_em IS NOT NULL;`);
+  console.log('✔ incidente ' + id + ' marcado como resolvido (só se já estava fechado)');
 } else {
-  erro('acção desconhecida — usa «licao», «implementacao» ou «hipotese»');
+  erro('acção desconhecida — usa «licao», «implementacao», «hipotese» ou «incidente»');
 }

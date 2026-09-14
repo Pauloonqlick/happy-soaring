@@ -138,7 +138,7 @@ export async function lerDadosDoDia(db, { desde, agora }) {
     else if (r.antes !== 'PASS' && r.agora === 'PASS') entraram.push(r.caminho);
   }
   return {
-    incidentes: inc.results.map(i => descreverIncidente(i, agora)).filter(i => i.aberto || i.duracao_min >= 30 || i.execucoes_perdidas >= 5),
+    incidentes: inc.results.map(i => descreverIncidente(i, agora)).filter(i => !i.resolvido && (i.aberto || i.duracao_min >= 30 || i.execucoes_perdidas >= 5)),
     indexacao: { entraram: entraram.sort(), sairam: sairam.sort() },
     correccoesPorLicao: cor.results,
     licoes: licoes.results
@@ -227,8 +227,9 @@ export function frasesDaSemana(d) {
   secoes.push({ id: 'correccoes', titulo: 'Correcções e resultados', frases: cr, vazio: 'Nenhuma correcção publicada nem avaliada nesta semana.' });
 
   /* 6. o próprio módulo */
-  const mod = d.incidentes.map(i => frase('modulo', 'alerta', 'A ' + quando(i.aberto_em) + ' o módulo teve tarefas a falhar durante ' + duracao(i.duracao_min) +
-    ' (' + plural(i.execucoes_perdidas, 'execução perdida', 'execuções perdidas') + ': ' + i.tarefas.map(x => x.titulo).join(', ') + '). ' + i.causa_provavel,
+  const mod = d.incidentes.map(i => frase('modulo', i.resolvido ? 'info' : 'alerta', 'A ' + quando(i.aberto_em) + ' o módulo teve tarefas a falhar durante ' + duracao(i.duracao_min) +
+    ' (' + plural(i.execucoes_perdidas, 'execução perdida', 'execuções perdidas') + ': ' + i.tarefas.map(x => x.titulo).join(', ') + '). ' +
+    (i.resolvido ? 'Resolvido — causa: ' + i.causa_confirmada + ' ' + i.resolucao : i.causa_provavel),
     'Ver a operação', 'evolucao/#s-op'));
   secoes.push({ id: 'modulo', titulo: 'O módulo', frases: mod,
     vazio: d.fim < REGISTO_EXECUCOES_DESDE ? 'Nesta semana o módulo ainda não registava as suas execuções.' : 'O módulo trabalhou sem paragens.' });

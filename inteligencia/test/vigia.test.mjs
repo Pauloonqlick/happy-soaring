@@ -153,10 +153,12 @@ test('operação: cortadas a meio e em falta nas últimas 24 h, e a lista de inc
   assert.equal(op.tarefas.find(x => x.vez === 'publicacoes').ultima.estado, 'OK');
 });
 
-test('o incidente real de 13–14/09 vem na migração e aparece no «Hoje» nas 24 h seguintes', async () => {
+test('o incidente real de 13–14/09 vem na migração e aparece no «Hoje» nas 24 h seguintes (enquanto não está resolvido)', async () => {
   const { DatabaseSync } = await import('node:sqlite');
   const sq = new DatabaseSync(':memory:');
   for (const f of MIGRACOES) sq.exec(fs.readFileSync(f, 'utf8'));
+  /* a 0012 marca-o como resolvido; aqui volta-se ao estado de antes para testar a regra das 24 h */
+  sq.exec('UPDATE incidentes SET causa_confirmada = NULL, resolucao = NULL, resolvido_em = NULL');
   const db = { prepare: sql => ({ bind: (...p) => ({ all: async () => ({ results: sq.prepare(sql).all(...p).map(r => ({ ...r })) }) }) }) };
   const [i] = await incidentesParaHoje(db, '2026-09-14T12:00:00.000Z');
   assert.equal(i.execucoes_perdidas, 159);
