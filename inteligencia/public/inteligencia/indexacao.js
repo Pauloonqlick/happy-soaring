@@ -54,7 +54,7 @@
 
     const r = d.resumo, cx = $('resumo');
     cx.textContent = '';
-    for (const [n, rotulo] of [[r.por_pedir, 'por pedir'], [r.pedidos, 'pedidas, à espera'], [r.sem_inspeccao, 'sem inspecção ainda'],
+    for (const [n, rotulo] of [[r.a_pedir, 'para pedires agora'], [r.a_aguardar, 'a aguardar o Google'], [r.pedidos, 'pedidas, à espera'], [r.sem_inspeccao, 'sem inspecção ainda'],
       [r.rastreados_depois_do_pedido + r.rastreados_sem_pedido, 'rastreadas depois da alteração'], [r.inspeccionadas, 'inspeccionadas']]) {
       const b = el('div', null, 'resumo-n');
       b.appendChild(el('b', String(n)));
@@ -85,11 +85,13 @@
       if (p.canonico_divergente) { tdP.appendChild(document.createTextNode(' ')); tdP.appendChild(el('span', 'canónico diferente', 'chip chip-sujo')); }
       tr.appendChild(tdP);
 
-      const [rotulo, classe] = p.nunca_rastreada && p.estado === 'PENDENTE' ? ['Nunca rastreada — por pedir', 'chip chip-conteudo']
+      const [rotulo, classe] = p.accao === 'PEDIR' ? ['Pedir indexação', 'chip chip-conteudo']
+        : p.accao === 'AGUARDAR' ? [(p.nunca_rastreada ? 'Nunca rastreada' : 'Sem rastreio') + ' — aguardar' + (p.aguardar_ate ? ' até ' + p.aguardar_ate.split('-').reverse().join('/') : ''), 'chip']
         : ESTADOS[p.estado] || [p.estado, 'chip'];
       const tdE = el('td');
       tdE.appendChild(el('span', rotulo, classe));
       if (p.atraso_horas != null) tdE.appendChild(el('div', 'rastreado ' + p.atraso_horas + ' h depois do pedido', 'sub'));
+      if (p.accao_razao) tdE.appendChild(el('div', p.accao_razao, 'sub'));
       tr.appendChild(tdE);
 
       tr.appendChild(el('td', p.ultima_alteracao
@@ -99,7 +101,7 @@
       tr.appendChild(el('td', quando(p.pedido_em)));
 
       const tdA = el('td');
-      if (p.estado === 'PENDENTE' || p.estado === 'ULTRAPASSADO' || p.estado === 'SEM_INSPECCAO') {
+      if (p.accao === 'PEDIR') {
         const url = 'https://happysoaring.com' + p.caminho;
         const abrir = el('a', 'Copiar e abrir o Search Console', 'botao-link');
         abrir.href = SEARCH_CONSOLE; abrir.target = '_blank'; abrir.rel = 'noopener';

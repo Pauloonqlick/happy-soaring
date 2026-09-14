@@ -62,7 +62,7 @@ export function resultadosDasLicoes(licoes, { assuntos, pacotes, avaliacoes }) {
 /* ----------------------------------------------------------------- regras -- */
 
 /* A decisão que o módulo toma sozinho, ou null quando não há regra segura. Puro. */
-export function politica(v, licao, agora) {
+export function politica(v, licao, agora, { adiamentos = 0 } = {}) {
   if (!v.critico && !v.confirmado) return null;
   if (licao && licao.estado === 'REFUTADA') {
     return { decisao: 'PEDIR_EVIDENCIA', razao: 'A correcção conhecida («' + licao.titulo + '») não resultou antes: o Claude revê a abordagem.' };
@@ -71,6 +71,8 @@ export function politica(v, licao, agora) {
   switch (v.tipo) {
     case 'NUNCA_RASTREADA':
     case 'ALTERACAO_SEM_RASTREIO':
+      /* depois de duas esperas sem rastreio, o pedido de indexação passa para o Paulo */
+      if (adiamentos >= 2) return null;
       return { decisao: 'ADIAR', adiar_ate: somarDias(agora, DIAS_AGUARDAR_RASTREIO),
         razao: 'Aguardar o rastreio natural: o sitemap indica a data da alteração. Pedidos manuais em massa não compensam.' + reforco };
     case 'URL_FORA_DO_SITEMAP': {
@@ -111,7 +113,9 @@ export async function executarCicloDecisoes(env, { agora = new Date().toISOStrin
     if (v.estado === 'RETIRADO' || v.estado === 'BLOQUEADO' || decisaoEmVigor(v, hoje)) continue;
     if (v.decisao && v.decisao.decisao === 'APROVAR') continue;
     const licao = licaoDe(v, licoes);
-    const d = politica(v, licao, agora);
+    const adiamentos = (ctx.decisoesPorChave.get(a.chave) || [])
+      .filter(x => x.decisao === 'ADIAR' && x.decidido_por === 'MODULO' && t(x.decidido_em) >= t(a.detectado_em)).length;
+    const d = politica(v, licao, agora, { adiamentos });
     if (!d) continue;
     decisoes.push({ chave: a.chave, ...d });
     relatorio.por_decisao[d.decisao] = (relatorio.por_decisao[d.decisao] || 0) + 1;

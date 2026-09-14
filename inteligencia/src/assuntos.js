@@ -628,6 +628,12 @@ export async function lerHoje(db, { agora = new Date().toISOString(), desde = nu
      activas cuja data de revisão chegou. */
   const semRegra = activos.filter(v => v.estado === 'PROPOSTO' && v.acao === 'DECISAO' && t(agora) - t(v.detectado_em) > 36e5);
   const accoes = semRegra.map(v => ({ tipo: 'DECISAO', ...linha(v) }));
+  const aPedir = ctx.fila.paginas.filter(p => p.accao === 'PEDIR')
+    .sort((x, y) => (x.nivel ?? 9) - (y.nivel ?? 9) || (ctx.impressoes.get(y.caminho) || 0) - (ctx.impressoes.get(x.caminho) || 0));
+  if (aPedir.length) {
+    /* no máximo 10 por dia: é a quota manual do Search Console */
+    accoes.unshift({ tipo: 'PEDIR_INDEXACAO', total: aPedir.length, hoje: aPedir.slice(0, 10).map(p => p.caminho) });
+  }
   const accoesHoje = accoes.slice(0, MAX_ACCOES);
   const decisoesPendentes = accoes.slice(MAX_ACCOES);
 

@@ -175,7 +175,7 @@ mais de uma hora e as decisões activas a rever.
 | Assunto (confirmado ou crítico) | Decisão do módulo |
 |---|---|
 | correcções técnicas (bloqueios, erros, canónico, dados estruturados, desindexação) | aprovar → pacote para o Claude |
-| nunca rastreada, alteração sem rastreio | aguardar 14 dias o rastreio natural |
+| nunca rastreada, alteração sem rastreio | aguardar 14 dias o rastreio natural, duas vezes; ao fim de 28 dias sem rastreio, o pedido de indexação vai para «O que precisa de ti» (no máximo 10 por dia) |
 | URL fora do sitemap que já redirecciona 301/308 | arquivar |
 | rastreada e não indexada | análise pelo Claude |
 | lição que não resultou | análise pelo Claude, nunca a mesma correcção sozinha |

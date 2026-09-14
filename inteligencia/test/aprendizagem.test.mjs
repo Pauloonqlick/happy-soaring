@@ -172,3 +172,33 @@ test('pacote aprovado depois de a correcção já estar publicada: liga-se pela 
   const r = Object.fromEntries(s.prepare('SELECT caminho, deployment_id FROM pacotes_trabalho').all().map(x => [x.caminho, x.deployment_id]));
   assert.deepEqual(r, { '/a/': 'd1', '/b/': null, '/c/': 'd1' }, 'pelo commit registado, ou por ter sido aprovado antes; sem nenhum dos dois, não se liga');
 });
+
+test('quando pedir indexação: só depois de duas esperas de 14 dias sem rastreio; até lá a fila diz «aguardar» e até quando', async () => {
+  const { accaoDaPagina } = await import('../src/inspeccao.js');
+  const agora = '2026-10-20T12:00:00.000Z';
+  assert.equal(accaoDaPagina('RASTREADO_SEM_PEDIDO', null, null, agora).accao, null);
+  assert.equal(accaoDaPagina('PENDENTE', null, '2026-10-18T00:00:00Z', agora).accao_razao.startsWith('Alteração recente'), true);
+  const esperar = accaoDaPagina('PENDENTE', { vigente: true, adiar_ate: '2026-10-27', adiamentos: 1, decidido: true }, '2026-09-01T00:00:00Z', agora);
+  assert.deepEqual([esperar.accao, esperar.aguardar_ate], ['AGUARDAR', '2026-10-27']);
+  assert.equal(accaoDaPagina('PENDENTE', { vigente: false, adiar_ate: '2026-10-13', adiamentos: 1, decidido: true }, '2026-09-01T00:00:00Z', agora).accao, 'AGUARDAR');
+  assert.equal(accaoDaPagina('PENDENTE', { vigente: false, adiar_ate: '2026-10-13', adiamentos: 2, decidido: true }, '2026-09-01T00:00:00Z', agora).accao, 'PEDIR');
+  const v = { tipo: 'NUNCA_RASTREADA', critico: 0, confirmado: 1, evidencia: {} };
+  assert.equal(politica(v, null, agora, { adiamentos: 1 }).decisao, 'ADIAR');
+  assert.equal(politica(v, null, agora, { adiamentos: 2 }), null, 'à terceira não há regra: passa para o Paulo');
+
+  /* percurso: duas esperas do módulo, e o «Hoje» pede ao Paulo */
+  const db = await d1Falsa();
+  inspeccionar(db, '/nova/', '2026-09-12T00:00:00Z', { veredicto: 'NEUTRAL', ultimo_rastreio: null });
+  await executarCicloAssuntos({ DB: db }, { fetchImpl: site(['/nova/']), agora: '2026-09-13T12:00:00.000Z' });
+  await executarCicloDecisoes({ DB: db }, { agora: '2026-09-13T12:28:00.000Z' });
+  let h = await lerHoje(db, { agora: '2026-09-14T12:00:00.000Z' });
+  assert.equal(h.bloco3.accoes.length, 0, 'primeira espera: nada para o Paulo');
+  assert.equal(h.ctx, undefined);
+  await executarCicloDecisoes({ DB: db }, { agora: '2026-09-28T12:28:00.000Z' });
+  h = await lerHoje(db, { agora: '2026-09-29T12:00:00.000Z' });
+  assert.equal(h.bloco3.accoes.length, 0, 'segunda espera: ainda nada');
+  const r = await executarCicloDecisoes({ DB: db }, { agora: '2026-10-13T12:28:00.000Z' });
+  assert.equal(r.decididos, 0, 'depois de duas esperas o módulo já não adia');
+  h = await lerHoje(db, { agora: '2026-10-13T13:00:00.000Z' });
+  assert.deepEqual(h.bloco3.accoes.map(a => [a.tipo, a.total, a.hoje]), [['PEDIR_INDEXACAO', 1, ['/nova/']]]);
+});

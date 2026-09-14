@@ -80,7 +80,16 @@
         mostrarLista($('mudou-assuntos'), extra);
 
         /* 3 */
-        const accoes = h.bloco3.accoes.map(a => linhaAssunto(a, ''));
+        const accoes = h.bloco3.accoes.map(a => {
+          if (a.tipo !== 'PEDIR_INDEXACAO') return linhaAssunto(a, '');
+          const li = el('li', null, 'linha-assunto');
+          const l = el('a', 'Pedir indexação de ' + plural(a.hoje.length, 'página', 'páginas') + ' hoje' +
+            (a.total > a.hoje.length ? ' (de ' + a.total + ')' : ''));
+          l.href = 'indexacao/';
+          li.appendChild(l);
+          li.appendChild(el('div', 'O Google não voltou a estas páginas em 28 dias: ' + a.hoje.join(', '), 'sub'));
+          return li;
+        });
         for (const d of h.bloco3.decisoes_a_rever) {
           const li = el('li');
           const a = el('a', 'Rever a decisão activa «' + d.titulo + '» (data de revisão: ' + dia(d.revisao_em) + ')');

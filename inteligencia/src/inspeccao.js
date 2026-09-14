@@ -212,8 +212,30 @@ export async function executarCicloInspeccao(env, { fetchImpl = fetch, agora = n
 
 const ESTADOS_ACCAO = new Set(['PENDENTE', 'ULTRAPASSADO']);
 
+/* Quando é que o Paulo tem de pedir indexação? Só quando o módulo já esperou duas
+   vezes pelo rastreio natural (14 + 14 dias) e o Google continua sem voltar à página.
+   Até lá, a página está a aguardar — e diz-se até quando. Puro. */
+export const ADIAMENTOS_ANTES_DE_PEDIR = 2;
+export function accaoDaPagina(estado, episodio, alteracaoEm, agora) {
+  if (estado !== 'PENDENTE' && estado !== 'ULTRAPASSADO') return { accao: null, accao_razao: null, aguardar_ate: null };
+  if (episodio && episodio.vigente) {
+    return { accao: 'AGUARDAR', aguardar_ate: episodio.adiar_ate,
+      accao_razao: episodio.adiar_ate ? 'O módulo decidiu aguardar o rastreio natural até ' + episodio.adiar_ate + '.' : 'Arquivado.' };
+  }
+  if (episodio && episodio.adiamentos >= ADIAMENTOS_ANTES_DE_PEDIR) {
+    return { accao: 'PEDIR', aguardar_ate: null,
+      accao_razao: 'O Google não voltou à página em ' + (episodio.adiamentos * 14) + ' dias de espera: vale a pena pedir indexação.' };
+  }
+  if (episodio && episodio.decidido) {
+    return { accao: 'AGUARDAR', aguardar_ate: null, accao_razao: 'A espera terminou; o módulo volta a decidir na próxima hora.' };
+  }
+  const recente = alteracaoEm && (t(agora) - t(alteracaoEm)) < 7 * 864e5;
+  return { accao: 'AGUARDAR', aguardar_ate: null,
+    accao_razao: recente ? 'Alteração recente: o Google costuma voltar sozinho nos primeiros dias.' : 'À espera da decisão do módulo.' };
+}
+
 export async function lerIndexacao(db, { agora = new Date().toISOString() } = {}) {
-  const [{ results: alt }, { results: goo }, { results: ped }, nivel, pausa, quota, pubs] = await Promise.all([
+  const [{ results: alt }, { results: goo }, { results: ped }, nivel, pausa, quota, pubs, { results: episodios }] = await Promise.all([
     db.prepare(`SELECT a.caminho, a.ultima_alteracao_em, a.tipo, d.short_id FROM paginas_alteracao a
                 LEFT JOIN deployments d ON d.id = a.deployment_id`).all(),
     db.prepare('SELECT * FROM paginas_google').all(),
@@ -222,8 +244,22 @@ export async function lerIndexacao(db, { agora = new Date().toISOString() } = {}
     db.prepare("SELECT valor FROM esquema_meta WHERE chave = 'inspeccao_pausa_ate'").first(),
     db.prepare(`SELECT criado_em, detalhe FROM eventos_operacionais WHERE tipo = 'INSPECCAO_QUOTA_ESGOTADA'
                 AND criado_em > strftime('%Y-%m-%dT%H:%M:%fZ', 'now', '-1 day') ORDER BY id DESC LIMIT 1`).first(),
-    db.prepare("SELECT SUM(processamento = 'PENDENTE') AS pendentes FROM deployments").first()
+    db.prepare("SELECT SUM(processamento = 'PENDENTE') AS pendentes FROM deployments").first(),
+    /* a decisão do módulo sobre as páginas por rastrear (aguardar o rastreio natural, ou pedir) */
+    db.prepare(`SELECT a.caminho,
+        (SELECT d.decisao FROM assunto_decisoes d WHERE d.assunto_chave = a.chave AND d.decidido_em >= a.detectado_em ORDER BY d.decidido_em DESC, d.id DESC LIMIT 1) AS decisao,
+        (SELECT d.adiar_ate FROM assunto_decisoes d WHERE d.assunto_chave = a.chave AND d.decidido_em >= a.detectado_em ORDER BY d.decidido_em DESC, d.id DESC LIMIT 1) AS adiar_ate,
+        (SELECT COUNT(*) FROM assunto_decisoes d WHERE d.assunto_chave = a.chave AND d.decisao = 'ADIAR' AND d.decidido_em >= a.detectado_em) AS adiamentos
+      FROM assuntos a WHERE a.resolvido_em IS NULL AND a.tipo IN ('NUNCA_RASTREADA', 'ALTERACAO_SEM_RASTREIO')`).all()
   ]);
+  const hoje = String(agora).slice(0, 10);
+  const EP = new Map();
+  for (const e of episodios) {
+    const actual = EP.get(e.caminho);
+    const vigente = (e.decisao === 'ADIAR' && e.adiar_ate >= hoje) || e.decisao === 'IGNORAR';
+    const x = { vigente, adiar_ate: e.decisao === 'ADIAR' ? e.adiar_ate : null, adiamentos: e.adiamentos, decidido: !!e.decisao };
+    if (!actual || (x.vigente && !actual.vigente)) EP.set(e.caminho, x);
+  }
   const G = new Map(goo.map(g => [g.caminho, g]));
   const P = new Map(ped.map(p => [p.caminho, p.pedido_em]));
   const N = new Map(nivel.results.map(n => [n.caminho, n.nivel]));
@@ -239,7 +275,8 @@ export async function lerIndexacao(db, { agora = new Date().toISOString() } = {}
       ultimo_rastreio: g?.ultimo_rastreio ?? null, ultima_inspeccao: g?.ultima_inspeccao_em ?? null,
       veredicto: g?.veredicto ?? null, cobertura: g?.cobertura ?? null,
       canonico_divergente: g && g.canonico_google && g.canonico_declarado ? g.canonico_google !== g.canonico_declarado : null,
-      pedido_em: P.get(c) ?? null, ...e
+      pedido_em: P.get(c) ?? null, ...e,
+      ...accaoDaPagina(e.estado, EP.get(c), a?.ultima_alteracao_em, agora)
     };
   });
 
@@ -253,6 +290,8 @@ export async function lerIndexacao(db, { agora = new Date().toISOString() } = {}
     nota: NOTA_RASTREIO,
     resumo: {
       por_pedir: paginas.filter(p => ESTADOS_ACCAO.has(p.estado)).length,
+      a_pedir: paginas.filter(p => p.accao === 'PEDIR').length,
+      a_aguardar: paginas.filter(p => p.accao === 'AGUARDAR').length,
       pendentes: contar('PENDENTE'), ultrapassados: contar('ULTRAPASSADO'), pedidos: contar('PEDIDO'),
       sem_inspeccao: contar('SEM_INSPECCAO'),
       rastreados_depois_do_pedido: contar('RASTREADO_DEPOIS_DO_PEDIDO'), rastreados_sem_pedido: contar('RASTREADO_SEM_PEDIDO'),
