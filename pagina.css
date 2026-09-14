@@ -3518,12 +3518,6 @@ html.pk-assist-bloqueio,html.pk-assist-bloqueio body{overflow:hidden}
 .pk-indice a:hover,.pk-indice a:focus-visible{border-color:var(--orange);color:var(--laranja-painel)}
 .pk-curso .pk-sec[id]{scroll-margin-top:calc(var(--pk-topo,0px) + 64px)}
 
-.pk-cap{display:flex;align-items:center;gap:14px;max-width:var(--pk-cx);margin:64px auto 0;padding:0 var(--pk-pad)}
-.pk-cap span{font-size:12px;font-weight:800;letter-spacing:var(--tr-rotulo);text-transform:uppercase;color:var(--tinta-fraca)}
-.pk-cap::before{content:'';width:22px;height:3px;background:var(--orange)}
-.pk-cap::after{content:'';flex:1;height:1px;background:var(--linha)}
-
-
 .pk-curso .pk-faq{align-items:start}
 .pk-curso details.pk-faq-q{border-top:1px solid var(--painel-linha);padding:14px 0 0}
 .pk-curso details.pk-faq-q summary{display:flex;justify-content:space-between;align-items:baseline;gap:16px;cursor:pointer;list-style:none}
@@ -3544,7 +3538,6 @@ html.pk-assist-bloqueio,html.pk-assist-bloqueio body{overflow:hidden}
   .pk-barra-fixa .pk-b{display:block;margin:0;text-align:center}
   body.pk-curso{padding-bottom:72px}
   .pk-factos{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .pk-cap{margin-top:44px}
 }
 
 /* ======================================================================

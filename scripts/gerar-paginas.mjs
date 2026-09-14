@@ -3930,8 +3930,9 @@ function paginaCurso(l, numWa) {
      Capítulos em vez de dezasseis secções soltas: o que decide (preço, para
      quem é, onde e com quem) antes do que explica (método, progressão). O
      «onde e com quem» era a 14.ª secção e a AI Overview de «curso parakite»
-     responde por requisitos e locais. O índice e as barras de capítulo leem
-     os rótulos do conteúdo, pela mesma ordem. */
+     responde por requisitos e locais. O índice lê os rótulos do conteúdo,
+     pela mesma ordem. Sem barras de capítulo por cima das secções (15/09):
+     repetiam o sobretítulo que cada secção já tem. */
   const junta = (secao, extra) => secao.replace(/\n<\/section>\n$/, extra + '\n</section>\n');
   B.metodo = junta(B.metodo, cit(C.citacao));
   B.erro = junta(B.erro, blocoCorrecao);
@@ -3944,10 +3945,7 @@ function paginaCurso(l, numWa) {
   const rotulos = lista(C.indice);
   corpo += `\n<nav class="pk-indice" aria-label="${tx(C.indiceRotulo)}"><div>${
     CAPITULOS.map((ids, k) => `<a href="#${ids[0]}">${rotulos[k]}</a>`).join('')}</div></nav>\n`;
-  CAPITULOS.forEach((ids, k) => {
-    corpo += `\n<div class="pk-cap" aria-hidden="true"><span>${rotulos[k]}</span></div>\n`;
-    for (const id of ids) corpo += B[id];
-  });
+  for (const id of usados) corpo += B[id];
   /* no telemóvel, o contacto fica sempre à mão; abre o assistente */
   corpo += `\n<div class="pk-barra-fixa"><a class="pk-b" href="#falar">${tx(C.ctaKicker)}</a></div>\n`;
 
