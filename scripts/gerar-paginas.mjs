@@ -1555,9 +1555,11 @@ function paginaPilot2Wing(l, num) {
 
   const cartoes = P2W.etapas.map((e, i) => {
     const ultimo = i === 4, quarto = i === 3;
-    const fundo = ultimo ? 'background:rgba(255,106,19,0.14);border:2px solid #ff6a13'
-      : quarto ? 'background:rgba(255,201,166,0.09);border:1px solid rgba(255,201,166,0.34)'
-      : 'background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12)';
+    /* 14/09/2026 · azul claro: cartões brancos sobre o chão claro; a quarta
+       etapa pêssego e a quinta laranja, como antes, mas em claro */
+    const fundo = ultimo ? 'background:#ffeee4;border:2px solid #ff6a13'
+      : quarto ? 'background:#fff6ef;border:1px solid #f3c9a8'
+      : 'background:#fff;border:1px solid #cbd8e5';
     /* OS NUMEROS TEM DE SE LER, E A RAZAO MUDOU DESDE QUE FORAM ESCRITOS
        Estavam a 1,57:1 (etapas 1-3), 2,24 (a quarta) e 2,02 (a quinta).
        Ficaram assim por se lhes chamar decoracao — e a isencao do WCAG
@@ -1575,7 +1577,9 @@ function paginaPilot2Wing(l, num) {
          etapa 5     .50 -> .76   (3,02:1)
        O fantasma fica menos fantasma. E o preco de o numero querer dizer
        alguma coisa. */
-    const numCor = ultimo ? 'rgba(255,106,19,0.76)' : quarto ? 'rgba(255,201,166,0.49)' : 'rgba(255,255,255,0.37)';
+    /* em claro (14/09/2026): #7d8ea3 3,35:1 no branco · #b86a33 3,85:1 no pêssego ·
+       #a63f00 5,6:1 no laranja claro — todos acima dos 3:1 do texto grande */
+    const numCor = ultimo ? '#a63f00' : quarto ? '#b86a33' : '#7d8ea3';
     return `<li class="sg-etapa" style="${fundo}">
       <span class="sg-etapa-n" style="color:${numCor}">0${i + 1}</span>
       <h3>${esc(t(e.nome, l))}</h3>
@@ -3364,14 +3368,21 @@ ${alt}
 function paginaCurso(l, numWa) {
   const rel = caminhoCurso(l);
   const url = DOMINIO + rel;
-  const foto = DOMINIO + '/images/course.jpg';
+  /* a fotografia do curso, do Paulo (14/09/2026); a `course.jpg` emprestada sai.
+     No herói usa-se a VERTICAL (curso-heroi-v-*.webp, recortada em 4:5);
+     esta horizontal, da mesma sessão, fica para as partilhas, que cortam mal
+     uma imagem vertical. */
+  const foto = DOMINIO + '/images/curso/curso-heroi-1600.jpg';
   const alts = alternativas(x => caminhoCurso(x));
   const alt = etiquetasAlt(alts);
   const inicio = inicioHref(l);
   const C = CURSO;
 
+  /* `horasCurso` e `equilibrio` derivam do PRECOS: mudar o preço ou as horas
+     muda as frases que os usam, sem ninguém as ir procurar */
+  const VALORES = { ...PRECOS, horasCurso: PRECOS.dias * PRECOS.horasDia, equilibrio: Math.round(PRECOS.curso / PRECOS.hora) };
   const precos = s => String(s).replace(/\{(\w+)\}/g, (_, k) =>
-    PRECOS[k] === undefined ? '{' + k + '}' : PRECOS[k]);
+    VALORES[k] === undefined ? '{' + k + '}' : VALORES[k]);
   const tx = o => precos(esc(t(o, l)));
   const lista = o => (t(o, l) || []).map(x => precos(esc(x)));
 
@@ -3380,13 +3391,20 @@ function paginaCurso(l, numWa) {
   const eyebrow = o => `\n  <p class="pg-eyebrow">${tx(o)}</p>`;
   const h2 = o => `\n  <h2>${tx(o)}</h2>`;
   const h3 = o => `\n  <h3>${tx(o)}</h3>`;
+  const h4 = o => `\n  <h4>${tx(o)}</h4>`;
   const par = (o, cl) => `\n  <p${cl ? ` class="${cl}"` : ''}>${tx(o)}</p>`;
   const cit = o => `\n  <p class="pk-cit">${tx(o)}</p>`;
 
-  const chips = o => `\n  <div class="sg-trans-lista">${
-    lista(o).map(x => `<b>${x}</b>`).join('')}</div>`;
-  const cadeia = o => `\n  <div class="sg-trans-lista">${lista(o).map((x, i) =>
-    `${i ? '<i>&rarr;</i>' : ''}<b>${x}</b>`).join('')}</div>`;
+  /* 14/09/2026 · OS COMPONENTES DESTA PÁGINA DEIXAM DE SER ETIQUETAS
+     `chips` e `cadeia` davam caixas iguais a botões, e na cadeia a seta ficava
+     pendurada no fim da linha quando partia. Agora:
+       chips  → lista em grelha, com traço (conjuntos sem ordem)
+       cadeia → fluxo: a seta vai presa ao passo SEGUINTE, por isso uma linha
+                partida começa em «→ passo», que se lê como continuação
+     O `sg-trans-lista` continua a existir no /pilot2wing/; aqui já não se usa. */
+  const chips = (o, variante) => `\n  <ul class="pk-tags${variante ? ' pk-tags-' + variante : ''}">${
+    lista(o).map(x => `<li>${x}</li>`).join('')}</ul>`;
+  const cadeia = o => `\n  <ol class="pk-fluxo">${lista(o).map(x => `<li>${x}</li>`).join('')}</ol>`;
 
   /* 11/09/2026 · O ESPAÇO ENTRE `</b>` E `<span>` NÃO É FORMATAÇÃO
      Sem ele, o `textContent` deste `li` dá «4 diasduração de referência», e
@@ -3444,15 +3462,19 @@ function paginaCurso(l, numWa) {
       return `<li><b>${alvo}</b> <span>${esc(t(x.papel, l))}</span></li>`;
     }).join('\n    ')}</ul>`;
 
-  const duas = cols => `\n  <div class="sg-duas">${cols.map(c => `
-    <div class="sg-abord${c.destaque ? ' sg-abord-nossa' : ''}">
+  /* as duas colunas comparadas: cartões de cantos vivos, com o fluxo e as
+     listas novas lá dentro; `variante` dá a cada par o seu desenho */
+  const duas = (cols, variante) => `\n  <div class="sg-duas pk-comparar${variante ? ' pk-comparar-' + variante : ''}">${cols.map(c => `
+    <div class="sg-abord${c.destaque ? ' sg-abord-nossa' : ''}${c.evitar ? ' sg-abord-evitar' : ''}">
       <p class="sg-abord-et">${tx(c.rotulo)}</p>
       ${c.subtitulo ? `<p class="sg-abord-tx">${tx(c.subtitulo)}</p>` : ''}
-      ${c.itens ? `<div class="sg-trans-lista">${
-        lista(c.itens).map(x => `<b>${x}</b>`).join('')}</div>` : ''}
-      ${c.etapas ? `<div class="sg-trans-lista">${lista(c.etapas).map((x, i) =>
-        `${i ? '<i>&rarr;</i>' : ''}<b>${x}</b>`).join('')}</div>` : ''}
+      ${c.itens ? chips(c.itens) : ''}
+      ${c.etapas ? cadeia(c.etapas) : ''}
     </div>`).join('')}</div>`;
+
+  /* os passos de um ciclo, numa linha ligada; o último é o objetivo */
+  const passos = o => `\n  <ol class="pk-passos">${lista(o).map((x, i) =>
+    `<li data-n="${String(i + 1).padStart(2, '0')}">${x}</li>`).join('')}</ol>`;
 
   const grelha = (itens, cols) => `\n  <ol class="sg-etapas" data-cols="${cols}">${
     itens.map((it, i) => `
@@ -3474,7 +3496,9 @@ function paginaCurso(l, numWa) {
       o.numerada ? 'ol' : 'ul'}>
   </div>`;
 
-  const botao2 = (o, href) => `\n  <p><a class="pk-b2" href="${esc(href)}">${tx(o)}</a></p>`;
+  /* `pk-b2` é uma VARIANTE do `pk-b`: sozinha não tem forma de botão e saía
+     como texto sublinhado. Leva as duas, como o resto do site. */
+  const botao2 = (o, href) => `\n  <p><a class="pk-b pk-b2" href="${esc(href)}">${tx(o)}</a></p>`;
 
   /* os endereços das páginas irmãs passam pelos helpers de rota: na página
      alemã o Pilot2Wing é /de/pilot2wing/ e o técnico é
@@ -3489,11 +3513,8 @@ function paginaCurso(l, numWa) {
 
   /* ---- 1 · HERÓI --------------------------------------------------- */
   corpo += `
-<section class="pk-heroi" id="topo">
-  <div class="pk-heroi-fundo" aria-hidden="true">
-    <img src="/images/course.jpg" alt="" />
-    <div class="pk-heroi-tinta"></div>
-  </div>
+<section class="pk-heroi pk-heroi-curso" id="topo">
+  <div class="pk-heroi-grelha">
   <div class="pk-heroi-tx">
     <nav class="pg-migalhas"><a href="${esc(inicio)}">${esc(t(T.inicio, l))}</a> &rsaquo;
       <a href="${esc(hrefPK)}">${tx(C.verHub)}</a> &rsaquo;
@@ -3502,59 +3523,177 @@ function paginaCurso(l, numWa) {
     <h1>${tx(C.h1)}</h1>
     <p class="pk-citacao cur-ancora">${tx(C.ancora)}</p>
     <p class="cur-ponte">${tx(C.ponte)}</p>
-    <p class="pk-tese">${tx(C.tese)}</p>
-    <p class="cur-assin">${tx(C.citacao)}</p>
+    <p class="pk-tese pk-resposta">${tx(C.resposta)}</p>
     <p class="pk-botoes">
-      <a class="pk-b" href="#falar">${tx(C.heroiBotao)}</a>
-      <a class="pk-b2" href="${esc(hrefP2W)}">${tx(C.metodoBotao)}</a>
+      <a class="pk-b" href="#falar">${tx(C.heroAssistente).replace('{perguntas}', C.sim.perguntas.length)}</a>
+      <a class="pk-b pk-b2" href="${esc(hrefP2W)}">${tx(C.metodoBotao)}</a>
     </p>
+  </div>
+  <figure class="pk-heroi-foto">
+    <img src="/images/curso/curso-heroi-v-1200.webp" srcset="/images/curso/curso-heroi-v-700.webp 700w, /images/curso/curso-heroi-v-1200.webp 1200w"
+      sizes="(max-width: 900px) 100vw, 50vw" width="1200" height="2137" alt="${esc(t(C.ogAlt, l))}" fetchpriority="high" />
+    <ul class="pk-factos">${[C.ficha[0], C.ficha[1], C.ficha[2], C.ficha[3], C.local].map(x =>
+      `<li><b>${tx(x.valor)}</b> <span>${tx(x.nota)}</span></li>`).join('')}</ul>
+  </figure>
   </div>
 </section>`;
 
+  /* AS SECÇÕES GUARDAM-SE EM `B` E A ORDEM DA PÁGINA DECIDE-SE NO FIM
+     (14/09/2026). Assim o índice, os capítulos e a ordem vivem num sítio só,
+     e mudar a ordem não obriga a mover blocos de código. */
+  const B = {};
+
   /* ---- 2 · O CURSO EM RESUMO · ilha clara -------------------------- */
-  corpo += sec('pk-sec pk-papel', 'resumo',
-    eyebrow(C.resumoKicker) + h2(C.resumoTitulo) + eixos(C.ficha) +
+  /* AS DUAS OPÇÕES LADO A LADO, E O SIMULADOR
+     O curso e a hora deixam de ser dois números numa grelha: são dois cartões
+     com o que cada um inclui, e o ponto de equilíbrio por baixo. O simulador
+     só aparece com JavaScript; sem ele fica a secção e o contacto no fim da
+     página. Textos no conteudo-curso-parakite.mjs; as regras, no script. */
+  const opcoes = () => {
+    const cartao = (o, id, preco) => `
+    <div class="pk-opcao" data-opcao="${id}" data-sug="${tx(C.sim.sugestao)}"><p class="pk-opcao-rot">${tx(o.rotulo)}</p><p class="pk-opcao-preco">${tx(preco)}</p><ul>${
+      lista(o.itens).map(x => `<li>${x}</li>`).join('')}</ul></div>`;
+    return `\n  <div class="pk-opcoes">${cartao(C.opcaoCurso, 'curso', C.ficha[1].valor)}${
+      cartao(C.opcaoHora, 'hora', C.ficha[2].valor)}</div>
+  <p class="pk-equilibrio">${tx(C.equilibrio)}</p>`;
+  };
+  /* O ASSISTENTE «CURSO COMPLETO OU À HORA?»
+     Um só assistente para a página: junta o simulador e as quatro perguntas de
+     WhatsApp. Os textos vão num JSON no próprio elemento; o fluxo e as regras
+     vivem no /curso-assistente.js, que não tem texto nenhum. Sem JavaScript não
+     aparece nada dele: ficam os cartões e, no fim da página, o WhatsApp direto. */
+  const txc = o => precos(t(o, l));          /* texto cru: o browser escreve-o com textContent */
+  const S = C.sim;
+  const UI = ['titulo', 'comecar', 'voltar', 'recomecar', 'passo', 'sugestao', 'aviso', 'rotuloMsg', 'outra', 'escreve',
+    'seguinte', 'respostas', 'verMensagem', 'mensagemTitulo', 'mensagemNota', 'acrescentar', 'voltarSugestao', 'fechar'];
+  const dadosAssist = {
+    wa: numWa, abre: t(C.ctaMsg, l), fecho: t(C.formFecho, l),
+    ui: Object.fromEntries(UI.map(k => [k, txc(S[k])]).concat([['enviar', txc(C.formBotao)]])),
+    perguntas: S.perguntas.map(q => ({ id: q.id, t: txc(q.t), rot: txc(q.rot), op: q.op.map(o => ({ n: o.n, t: txc(o.t) })) })),
+    res: Object.fromEntries(Object.entries(S.resultados).map(([k, o]) => [k, txc(o)])),
+    porque: Object.fromEntries(Object.entries(S.porque).map(([k, o]) => [k, txc(o)]))
+  };
+  /* onde o assistente abre: aqui, junto dos preços, e no fim da página. O
+     elemento é um só e muda-se para o lugar onde a pessoa carregou. */
+  const lugarAssist = (id, comTitulo) => `\n  <div class="pk-assist-lugar" data-lugar="${id}">
+    <div class="pk-assist-entrada" hidden>${comTitulo ? `
+      <h3>${tx(S.titulo)}</h3>` : ''}
+      <p class="pk-assist-intro">${tx(S.intro)}</p>
+      <p class="pk-assist-entrada-b"><button type="button" class="pk-b pk-assist-abre">${tx(S.comecar)}</button></p>
+    </div>
+  </div>`;
+  const assistente = () => lugarAssist('resumo', true) + `
+  <div class="pk-assist" id="pk-assist" data-assist="${esc(JSON.stringify(dadosAssist))}" hidden></div>
+  <script src="/curso-assistente.js" defer></script>`;
+
+  B['resumo'] = sec('pk-sec pk-papel', 'resumo',
+    eyebrow(C.resumoKicker) + h2(C.resumoTitulo) + opcoes() +
     par(C.fichaIndividual, 'pk-lead') + par(C.fichaNota, 'pk-nota') +
-    par(C.licenca, 'pk-nota'));
+    par(C.licenca, 'pk-nota') + assistente());
 
   /* ---- 3 · O QUE ESTE CURSO É ------------------------------------- */
-  corpo += sec('pk-sec', 'autonomia',
+  /* Os critérios em três grupos com o nono como resultado, e a ponte
+     autonomia / experiência a fechar. Textos no conteudo-curso-parakite.mjs. */
+  const criterios = () => {
+    const todos = lista(C.criterios);
+    return `\n  <div class="pk-criterios">${C.criteriosGrupos.map(g => `
+    <div class="pk-criterios-g"><h4>${tx(g.titulo)}</h4><ul>${g.itens.map(i => `<li>${todos[i]}</li>`).join('')}</ul></div>`).join('')}
+  </div>
+  <p class="pk-criterio-fim"><b>${tx(C.criterioResultadoRotulo)}</b> <span>${todos[C.criterioResultado]}</span></p>`;
+  };
+  const ponte = () => `\n  <div class="pk-ponte">${C.pontes.map((x, i) => `${i ? '<span class="pk-ponte-seta" aria-hidden="true"></span>' : ''}
+    <div class="pk-ponte-c${i ? ' pk-ponte-exp' : ''}"><p class="pk-ponte-nome">${tx(x.nome)}</p><p class="pk-ponte-verbo">${tx(x.verbo)}</p><p class="pk-ponte-nota">${tx(x.nota)}</p></div>`).join('')}
+  </div>`;
+  B['autonomia'] = sec('pk-sec pk-leitura', 'autonomia',
     eyebrow(C.autonomiaKicker) + h2(C.autonomiaTitulo) +
     par(C.autonomiaDef, 'pk-lead') + par(C.autonomiaLimites) +
-    h3(C.criteriosTitulo) + chips(C.criterios));
+    h3(C.criteriosTitulo) + criterios() + ponte());
 
   /* ---- 4 · COMO SE MEDE ------------------------------------------- */
-  corpo += sec('pk-sec', 'experiencia',
+  const sinais = () => `\n  <ul class="pk-sinais">${lista(C.expAtributos).map(x => `<li>${x}</li>`).join('')}</ul>`;
+  B['experiencia'] = sec('pk-sec pk-leitura', 'experiencia',
     eyebrow(C.expKicker) + h2(C.expTitulo) + par(C.expManobra) +
-    cit(C.expCentral) + chips(C.expAtributos));
+    cit(C.expCentral) + h3(C.expAtributosTitulo) + sinais());
 
   /* ---- 5 · DE ONDE VENS · ilha clara ------------------------------ */
-  corpo += sec('pk-sec pk-papel', 'conversao',
+  /* 14/09/2026 · A ENTRADA DO CAPÍTULO EM DUAS COLUNAS
+     Os requisitos ocupavam meia largura e deixavam a outra metade vazia; as
+     quatro coisas avaliadas eram uma fila de rótulos soltos. Passam a lado a
+     lado: à esquerda a resposta (a primeira frase dos requisitos em grande,
+     é o que a pesquisa pergunta), à direita o que a avaliação olha, em 2 × 2.
+     A frase partida é a mesma do conteúdo: nada de texto novo. */
+  const avaliacao = () => `\n  <ul class="pk-avaliar">${lista(C.avaliacaoItens).map(x => `<li>${x}</li>`).join('')}</ul>`;
+  const entradaConv = () => {
+    const req = tx(C.requisitosTexto);
+    const corte = req.indexOf('. ');
+    const [lead, resto] = corte > 0 ? [req.slice(0, corte + 1), req.slice(corte + 2)] : [req, ''];
+    return `\n  <div class="pk-conv-entrada">
+    <div class="pk-requisitos"><p class="pk-requisitos-rot">${tx(C.requisitosRotulo)}</p><p class="pk-requisitos-lead">${lead}</p>${
+      resto ? `<p class="pk-requisitos-tx">${resto}</p>` : ''}</div>
+    <div class="pk-avaliacao">${h3(C.avaliacaoTitulo)}${par(C.avaliacaoTexto)}${avaliacao()}
+    </div>
+  </div>`;
+  };
+  /* O diagrama: os dois cartões partilham as linhas da grelha (subgrid), por
+     isso rótulo, título e listas começam à mesma altura dos dois lados. */
+  const conversao = () => {
+    const [de, para] = C.asasColunas;
+    const itensPara = lista(para.itens);
+    return `\n  <div class="pk-conv">
+    <div class="pk-conv-lado pk-conv-de"><p class="pk-conv-rot">${tx(de.rotulo)}</p><h4>${tx(de.subtitulo)}</h4><ul class="pk-conv-trazes">${
+      lista(de.itens).map(x => `<li>${x}</li>`).join('')}</ul></div>
+    <div class="pk-conv-seta" aria-hidden="true"><span>${tx(C.conversaoSeta)}</span></div>
+    <div class="pk-conv-lado pk-conv-para"><p class="pk-conv-rot">${tx(para.rotulo)}</p><h4>${tx(para.subtitulo)}</h4><div class="pk-conv-gs">${
+      C.adaptarGrupos.map(g => `<div class="pk-conv-g"><p class="pk-conv-g-t">${tx(g.titulo)}</p><ul>${
+        g.itens.map(i => `<li>${itensPara[i]}</li>`).join('')}</ul></div>`).join('')}</div></div>
+  </div>`;
+  };
+  /* Os três hábitos: no parapente → no Parakite, uma linha por hábito. Os
+     perfis: três colunas e o fecho que diz que não há calendário. */
+  const habitos = () => {
+    const [ladoA, ladoB] = lista(C.habitosLados);
+    return `\n  <p class="pk-nota pk-habitos-nota">${tx(C.habitosNota)}</p>
+  <ol class="pk-habitos">${C.habitos.map((x, i) => `
+    <li><div class="pk-habito-t"><span class="pk-habito-n">${i + 1}</span><h4>${tx(x.titulo)}</h4></div>
+      <div class="pk-habito-a"><p class="pk-habito-rot">${ladoA}</p><p>${tx(x.antes)}</p></div>
+      <span class="pk-habito-seta" aria-hidden="true"></span>
+      <div class="pk-habito-b"><p class="pk-habito-rot">${ladoB}</p><p>${tx(x.depois)}</p></div></li>`).join('')}</ol>`;
+  };
+  const perfis = () => `\n  <ul class="pk-perfis">${C.perfis.map(x => `
+    <li><h4>${tx(x.nome)}</h4><p>${tx(x.texto)}</p></li>`).join('')}</ul>
+  <p class="pk-perfis-fecho">${tx(C.perfisFecho)}</p>`;
+
+  B['conversao'] = sec('pk-sec pk-papel pk-leitura', 'conversao',
     eyebrow(C.convKicker) + h2(C.convTitulo) +
-    h3(C.avaliacaoTitulo) + par(C.avaliacaoTexto) + chips(C.avaliacaoItens) +
-    duas(C.asasColunas) + cit(C.asasRemate) +
-    botao2(C.verTecnico, hrefQP));
+    entradaConv() +
+    conversao() + cit(C.asasRemate) +
+    h3(C.habitosTitulo) + habitos() +
+    h3(C.perfisTitulo) + perfis() +
+    `\n  <p class="pk-botoes">
+    <a class="pk-b" href="#falar">${tx(C.perfisBotao)}</a>
+    <a class="pk-b pk-b2" href="${esc(hrefQP)}">${tx(C.verTecnico)}</a>
+  </p>`);
 
   /* ---- 6 · O MÉTODO ----------------------------------------------- */
-  corpo += sec('pk-sec', 'metodo',
+  B['metodo'] = sec('pk-sec', 'metodo',
     eyebrow(C.metodoKicker) + h2(C.metodoTitulo) +
     par(C.metodoDistincao, 'pk-lead') +
-    grelha(lista(C.metodoCadeia).map(x => ({ h3: x })), 6) +
+    passos(C.metodoCadeia) +
     par(C.metodoTexto) +
     h3(C.qualidadeTitulo) + cadeia(C.qualidadeCadeia) + par(C.qualidadeTexto) +
     botao2(C.metodoLigacao, hrefP2W));
 
   /* ---- 7 · ERRO E AUTOMATISMO ------------------------------------- */
-  corpo += sec('pk-sec', 'erro',
+  B['erro'] = sec('pk-sec', 'erro',
     eyebrow(C.erroKicker) + h2(C.erroTitulo) +
     h3(C.habitoTitulo) +
-    duas([{ ...C.habitoColunas[0], destaque: true }, C.habitoColunas[1]]) +
+    duas([{ ...C.habitoColunas[0], destaque: true }, { ...C.habitoColunas[1], evitar: true }], 'habito') +
     par(C.habitoTexto) +
     h3(C.tecnicaTitulo) + par(C.tecnicaTexto) +
     h3(C.processoTitulo) + par(C.processoTexto) + cadeia(C.processoCadeia));
 
   /* ---- 8 · BODY FIRST · ilha clara -------------------------------- */
-  corpo += sec('pk-sec pk-papel', 'body-first',
+  B['body-first'] = sec('pk-sec pk-papel', 'body-first',
     eyebrow(C.bodyKicker) + h2(C.bodyTitulo) + par(C.bodyTexto, 'pk-lead') +
     h3(C.corpoAprendeTitulo) + par(C.corpoAprendeTexto) +
     h3(C.bodyNaoTitulo) + par(C.bodyNaoTexto) + par(C.bodyComandos) +
@@ -3563,7 +3702,7 @@ function paginaCurso(l, numWa) {
                 C.corpoElementos, { numerada: false, w: 900, h: 1249 }));
 
   /* ---- 9 · O HARNESS E AS PERNAS --------------------------------- */
-  corpo += sec('pk-sec', 'harness',
+  B['harness'] = sec('pk-sec', 'harness',
     eyebrow(C.harnessKicker) + h2(C.harnessTitulo) + par(C.harnessTexto) +
     par(C.harnessRefTexto) +
     h3(C.cadeiaTitulo) + cadeia(C.cadeiaElos) + par(C.cadeiaTexto) +
@@ -3572,7 +3711,7 @@ function paginaCurso(l, numWa) {
     figuraLista('/images/curso/body-first-silhueta.svg', C.harnessFiguraAlt,
                 C.harnessElementos, { numerada: true, w: 900, h: 1200 }) +
     h3(C.sentirTitulo) + chips(C.sentirItens) +
-    h3(C.groundTitulo) + par(C.groundTexto) + chips(C.groundItens) +
+    h3(C.groundTitulo) + par(C.groundTexto) + chips(C.groundItens, 'curtas') +
     /* O ALT VEM DO QP E NÃO É ESCRITO AQUI — 12/09/2026
        Estava `alt=""`, que diz ao leitor de ecrã «esta imagem é
        decoração». É uma fotografia de conteúdo, a seguir à lista de
@@ -3588,58 +3727,145 @@ function paginaCurso(l, numWa) {
     ' width="800" height="533" loading="lazy" /></p>');
 
   /* ---- 10 · CORRECÇÃO -------------------------------------------- */
-  corpo += sec('pk-sec', 'correcao',
-    eyebrow(C.corrKicker) + h2(C.corrTitulo) +
-    h3(C.lerTitulo) + cadeia(C.lerCadeia) + par(C.lerTexto) +
-    duas(C.reacaoColunas));
+  /* 14/09/2026: com 75 palavras não era secção — é o fim de «o corpo aprende o que repete» */
+  const blocoCorrecao = h3(C.corrTitulo) +
+    h4(C.lerTitulo) + cadeia(C.lerCadeia) + par(C.lerTexto) +
+    duas([{ ...C.reacaoColunas[0], destaque: true }, C.reacaoColunas[1]], 'reacao');
 
   /* ---- 11 · ENERGIA · curto de propósito ------------------------- */
-  corpo += sec('pk-sec', 'energia',
-    eyebrow(C.energiaKicker) + h2(C.energiaTitulo) + par(C.energiaTexto) +
+  /* 14/09/2026: curta de propósito, fecha o capítulo do método depois do harness */
+  const blocoEnergia = h3(C.energiaTitulo) + par(C.energiaTexto) +
     `\n  <p class="pk-botoes">
-    <a class="pk-b2" href="${esc(hrefQP)}">${tx(C.energiaLigacao)}</a>
-    <a class="pk-b2" href="${esc(hrefQP)}#reflex">${tx(C.reflexLigacao)}</a>
-  </p>`);
+    <a class="pk-b pk-b2" href="${esc(hrefQP)}">${tx(C.energiaLigacao)}</a>
+    <a class="pk-b pk-b2" href="${esc(hrefQP)}#reflex">${tx(C.reflexLigacao)}</a>
+  </p>`;
 
   /* ---- 12 · COMO SE PROGRIDE · ilha clara ------------------------ */
-  corpo += sec('pk-sec pk-papel', 'progressao',
+
+  /* OS TRILHOS SÃO DESENHO, A LISTA É O CONTEÚDO
+     Os dois trilhos são `aria-hidden` e os nomes das fases entram por CSS
+     (`content: attr(data-r)`): não repetem oito palavras duas vezes a quem
+     ouve a página, nem ao Google. Tudo o que se lê está na lista por baixo.
+     As larguras vivem no CSS (`.pk-trilho-a`, `.pk-trilho-b`) e são
+     ilustrativas — a própria página o diz. */
+  const trilhos = () => {
+    const curtas = lista(C.fasesCurtas), nomes = lista(C.trilhosPilotos);
+    return `\n  <div class="pk-trilhos" aria-hidden="true">${['a', 'b'].map((k, i) => `
+    <div class="pk-trilho"><span class="pk-trilho-nome">${nomes[i]}</span><div class="pk-trilho-fases pk-trilho-${k}">${
+      curtas.map((c, j) => `<span class="pk-f" data-f="${j + 1}" data-r="${c}"></span>`).join('')}</div></div>`).join('')}
+  </div>
+  <p class="pk-trilhos-legenda">${tx(C.trilhosLegenda)}</p>
+  <p class="pk-nota">${tx(C.trilhosNota)}</p>`;
+  };
+  const fasesLista = () => `\n  <ol class="pk-fases">${lista(C.fases).map((nome, i) => {
+    const d = C.fasesDetalhe[i];
+    const quando = d.fim ? `<b>${tx(d.fim)}</b>` : `<b>${tx(C.quandoRotulo)}</b> ${tx(d.q)}`;
+    return `
+    <li data-f="${i + 1}"><span class="pk-fases-n">${String(i + 1).padStart(2, '0')}</span><h4>${nome}</h4><p>${tx(d.o)}</p><p class="pk-fases-quando">${quando}</p></li>`;
+  }).join('')}</ol>`;
+
+  /* O CICLO É SVG ESCRITO AQUI, E NÃO UMA IMAGEM
+     Leva as palavras de cada língua, e o alemão é mais comprido: a caixa de
+     cada passo mede-se pelo número de letras e a área do desenho ajusta-se
+     ao que ficou, para nenhuma palavra ser cortada. */
+  const ciclo = () => {
+    const passos = lista(C.cicloPassos), centro = lista(C.cicloCentro);
+    const cx = 160, cy = 160, r = 112, n = passos.length;
+    const pos = passos.map((_, i) => {
+      const a = -Math.PI / 2 + i * 2 * Math.PI / n;
+      return { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a), a, w: t(C.cicloPassos, l)[i].length * 8.4 + 26 };
+    });
+    const f = v => Math.round(v * 10) / 10;
+    const arcos = pos.map((p0, i) => {
+      const p1 = pos[(i + 1) % n];
+      const a1 = p0.a + 0.4, a2 = p1.a - 0.4 + (i === n - 1 ? 2 * Math.PI : 0);
+      return `<path d="M${f(cx + r * Math.cos(a1))},${f(cy + r * Math.sin(a1))} A${r},${r} 0 0 1 ${f(cx + r * Math.cos(a2))},${f(cy + r * Math.sin(a2))}"/>`;
+    }).join('');
+    const nos = pos.map((q, i) => `<g class="pk-ciclo-no${i ? '' : ' pk-ciclo-no-1'}"><rect x="${f(q.x - q.w / 2)}" y="${f(q.y - 15)}" width="${f(q.w)}" height="30"/><text x="${f(q.x)}" y="${f(q.y + 5)}">${passos[i]}</text></g>`).join('');
+    const minX = Math.min(...pos.map(q => q.x - q.w / 2)) - 8, maxX = Math.max(...pos.map(q => q.x + q.w / 2)) + 8;
+    return `
+  <figure class="pk-ciclo">
+    <svg viewBox="${f(minX)} 20 ${f(maxX - minX)} 285" role="img" aria-label="${passos.join(' → ')} →">
+      <defs><marker id="pk-seta" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z"/></marker></defs>
+      <g class="pk-ciclo-arcos">${arcos}</g>${nos}
+      <text class="pk-ciclo-centro" x="${cx}" y="${cy - 2}">${centro[0]}</text><text class="pk-ciclo-centro2" x="${cx}" y="${cy + 16}">${centro[1]}</text>
+    </svg>
+    <figcaption><b>${tx(C.cicloDestaque)}</b> ${tx(C.cicloTexto)}</figcaption>
+  </figure>`;
+  };
+  const instrutor = () => {
+    const ext = lista(C.instrutorExtremos);
+    return `\n  <div class="pk-faixa-cx" aria-hidden="true"><div class="pk-faixa-ext"><span>${ext[0]}</span><span>${ext[1]}</span></div><div class="pk-faixa"><span>1</span><span>2</span><span>3</span></div></div>
+  <ol class="pk-momentos">${C.instrutorEtapas.map((e, i) => `
+    <li><span class="pk-momento-n">${tx(C.momentoRotulo)} ${i + 1}</span><div class="pk-quem">${
+      lista(e.cadeia).map((x, j) => `<b class="pk-quem-${e.quem[j] || 'n'}">${x}</b>`).join('')}</div><p>${tx(e.nota)}</p></li>`).join('')}</ol>` + ciclo();
+  };
+
+  B['progressao'] = sec('pk-sec pk-papel', 'progressao',
     eyebrow(C.progKicker) + h2(C.progTitulo) + par(C.progTexto, 'pk-lead') +
-    h3(C.fasesTitulo) + grelha(lista(C.fases).map(x => ({ h3: x })), 4) +
-    par(C.fasesTexto) +
-    h3(C.instrutorEtapasTitulo) +
-    grelha(C.instrutorEtapas.map(e => ({ cadeia: lista(e.cadeia) })), 3) +
+    h3(C.fasesTitulo) + trilhos() + fasesLista() +
+    h3(C.instrutorEtapasTitulo) + instrutor() +
     h3(C.inesperadoTitulo) + cadeia(C.inesperadoCadeia) + par(C.inesperadoTexto));
 
   /* ---- 13 · A DECISÃO ------------------------------------------- */
-  corpo += sec('pk-sec', 'decisao',
-    eyebrow(C.decKicker) + h2(C.decTitulo) + par(C.decTexto) +
-    h3(C.factoresTitulo) + chips(C.factores));
+  /* 14/09/2026: a decisão de não voar é o último passo da progressão */
+  const blocoDecisao = h3(C.decTitulo) + par(C.decTexto) +
+    h4(C.factoresTitulo) + chips(C.factores);
 
   /* ---- 14 · QUEM ENSINA E ONDE · ilha clara -------------------- */
-  corpo += sec('pk-sec pk-papel', 'quem-ensina',
+  B['quem-ensina'] = sec('pk-sec pk-papel', 'quem-ensina',
     eyebrow(C.ensinaKicker) + h2(C.ensinaTitulo) +
     h3(C.saberTitulo) + par(C.saberTexto) + par(C.licenca, 'pk-lead') +
     par(C.locaisTexto) + grelhaLocais() + par(C.equipTexto) +
     `\n  <p class="pk-botoes">
-    <a class="pk-b2" href="${esc(hrefPK)}">${tx(C.verSpots)}</a>
-    <a class="pk-b2" href="${esc(hrefAsa)}">${tx(C.verAsa)}</a>
+    <a class="pk-b pk-b2" href="${esc(hrefPK)}">${tx(C.verSpots)}</a>
+    <a class="pk-b pk-b2" href="${esc(hrefAsa)}">${tx(C.verAsa)}</a>
   </p>`);
 
   /* ---- 15 · PERGUNTAS · ilha clara ----------------------------- */
-  corpo += sec('pk-sec pk-papel', 'perguntas',
+  B['perguntas'] = sec('pk-sec pk-papel', 'perguntas',
     eyebrow(C.faqKicker) + h2(C.faqTitulo) +
-    '\n  <div class="pk-faq">' + C.faq.map(f =>
-      `<div class="pk-faq-q"><h3>${precos(esc(t(f.q, l)))}</h3><p>${
-        precos(esc(t(f.a, l)))}</p></div>`).join('') + '</div>' +
+    '\n  <div class="pk-faq">' + C.faq.map((f, i) =>
+      `<details class="pk-faq-q"${i ? '' : ' open'}><summary><h3>${precos(esc(t(f.q, l)))}</h3></summary><p>${
+        precos(esc(t(f.a, l)))}</p></details>`).join('') + '</div>' +
     botao2(C.reflexLigacao, hrefQP + '#reflex'));
 
   /* ---- 16 · FALAR ---------------------------------------------- */
-  corpo += sec('pk-sec', 'falar',
-    eyebrow(C.ctaKicker) + h2(C.ctaTitulo) +
+  /* O assistente abre aqui também; quem não quer responder a nada escreve
+     diretamente, com a mensagem simples. */
+  const waSimples = 'https://wa.me/' + numWa + '?text=' + encodeURIComponent(t(C.ctaMsg, l));
+  B['falar'] = sec('pk-sec', 'falar',
+    eyebrow(C.ctaKicker) + h2(C.ctaTitulo) + lugarAssist('falar', false) +
     `\n  <p class="pk-botoes">
-    <a class="pk-b" href="${esc(wa)}" rel="noopener" target="_blank">${tx(C.cta)}</a>
-    <a class="pk-b2" href="${esc(hrefPK)}">${tx(C.verHub)}</a>
+    <a class="pk-b pk-b2" href="${esc(waSimples)}" rel="noopener" target="_blank">${tx(S.direto)}</a>
+    <a class="pk-b pk-b2" href="${esc(hrefPK)}">${tx(C.verHub)}</a>
   </p>` + contactoAlt());
+
+
+  /* ---- A ORDEM DA PÁGINA (14/09/2026) ------------------------------
+     Capítulos em vez de dezasseis secções soltas: o que decide (preço, para
+     quem é, onde e com quem) antes do que explica (método, progressão). O
+     «onde e com quem» era a 14.ª secção e a AI Overview de «curso parakite»
+     responde por requisitos e locais. O índice e as barras de capítulo leem
+     os rótulos do conteúdo, pela mesma ordem. */
+  const junta = (secao, extra) => secao.replace(/\n<\/section>\n$/, extra + '\n</section>\n');
+  B.metodo = junta(B.metodo, cit(C.citacao));
+  B.erro = junta(B.erro, blocoCorrecao);
+  B.harness = junta(B.harness, blocoEnergia);
+  B.progressao = junta(B.progressao, blocoDecisao);
+  const CAPITULOS = [['resumo'], ['conversao'], ['quem-ensina'],
+    ['autonomia', 'experiencia', 'metodo', 'erro', 'body-first', 'harness'], ['progressao'], ['perguntas'], ['falar']];
+  const usados = CAPITULOS.flat();
+  for (const id of Object.keys(B)) if (!usados.includes(id)) throw new Error('curso: a secção ' + id + ' ficou fora da ordem');
+  const rotulos = lista(C.indice);
+  corpo += `\n<nav class="pk-indice" aria-label="${tx(C.indiceRotulo)}"><div>${
+    CAPITULOS.map((ids, k) => `<a href="#${ids[0]}">${rotulos[k]}</a>`).join('')}</div></nav>\n`;
+  CAPITULOS.forEach((ids, k) => {
+    corpo += `\n<div class="pk-cap" aria-hidden="true"><span>${rotulos[k]}</span></div>\n`;
+    for (const id of ids) corpo += B[id];
+  });
+  /* no telemóvel, o contacto fica sempre à mão; abre o assistente */
+  corpo += `\n<div class="pk-barra-fixa"><a class="pk-b" href="#falar">${tx(C.ctaKicker)}</a></div>\n`;
 
   /* ---- os dados estruturados ----------------------------------- */
   const ld = JSON.stringify({
@@ -3659,9 +3885,14 @@ function paginaCurso(l, numWa) {
         isPartOf: { '@id': DOMINIO + '/#site' },
         publisher: ORGANIZACAO,
         mainEntity: perguntas(C.faq.map(f => [precos(t(f.q, l)), precos(t(f.a, l))])),
-        primaryImageOfPage: { '@type': 'ImageObject', url: foto, width: 1920, height: 1200 }
+        primaryImageOfPage: { '@type': 'ImageObject', url: foto, width: 1600, height: 899 }
       },
-      /* SEM `hasCourseInstance`, SEM `offers` E SEM `courseWorkload`
+      /* 14/09/2026 · OS PREÇOS ENTRAM (`offers`), POR ESTAREM À VISTA
+         Os dois cartões do bloco 2 mostram 800 € e 60 €/hora: os dados
+         estruturados dizem o mesmo que a página, e nada mais. Continua de
+         fora o `courseWorkload`, pela razão escrita abaixo.
+
+         SEM `hasCourseInstance`, SEM `offers` E SEM `courseWorkload` (a nota original)
          O Course pede o nome, a descricao e quem o da, e isso e verdade e
          esta na pagina. O resto nao entra: os quatro dias sao duracao de
          REFERENCIA e nao promessa — esta escrito assim em cinco linguas no
@@ -3677,14 +3908,19 @@ function paginaCurso(l, numWa) {
         inLanguage: l,
         courseMode: 'onsite',
         provider: ORGANIZACAO,
-        teaches: lista(C.metodoCadeia).map(x => x.replace(/&[a-z]+;/g, ''))
+        teaches: lista(C.metodoCadeia).map(x => x.replace(/&[a-z]+;/g, '')),
+        offers: [
+          { '@type': 'Offer', category: 'Paid', name: t(C.opcaoCurso.rotulo, l), price: PRECOS.curso, priceCurrency: 'EUR' },
+          { '@type': 'Offer', category: 'Paid', name: t(C.opcaoHora.rotulo, l),
+            priceSpecification: { '@type': 'UnitPriceSpecification', price: PRECOS.hora, priceCurrency: 'EUR', unitCode: 'HUR' } }
+        ]
       }
     ])
   });
 
   return moldeDaPagina({
     lingua: l, url, alts, alt, foto, ld,
-    classe: 'pg pk tema',
+    classe: 'pg pk tema pk-curso',
     titulo: precos(t(C.titulo, l)),
     descricao: precos(t(C.descricao, l)),
     ogTipo: 'article',

@@ -194,9 +194,11 @@ body.pg{
 .pg p{margin-bottom:14px;max-width:68ch}
 .pg ul{margin:0 0 14px 20px}
 .pg li{margin-bottom:6px}
-.pg a{color:var(--orange)}
-.pg a:hover{color:#ff8a45}
-.pg strong{color:#fff}
+/* 14/09/2026 · azul claro: a ligação passa ao laranja escuro e o forte à tinta,
+   aqui mesmo, para não mudar o lugar desta regra na cascata */
+.pg a{color:var(--laranja-tinta)}
+.pg a:hover{color:#7a2e00}
+.pg strong{color:var(--tinta)}
 
 .pg-tams{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
 .pg-tams span{border:1px solid var(--linha);border-radius:8px;padding:5px 13px;
@@ -506,9 +508,9 @@ a.pg-video:hover .pg-video-play{background:#ff7c31}
    ====================================================================== */
 body.sg{background:#071d3a;color:#fff}
 body.sg .pg-topo{border-bottom:1px solid rgba(255,255,255,.09);background:none}
-body.sg a{color:#ff6a13}
-body.sg a:hover{color:#ff8a45}
-body.sg h1,body.sg h2,body.sg h3{color:#fff}
+body.sg a{color:#a63f00}   /* azul claro, 14/09/2026 */
+body.sg a:hover{color:#7a2e00}
+body.sg h1,body.sg h2,body.sg h3{color:#0e3b6d}
 
 /* ---- herói ---- */
 .sg-heroi{
@@ -2408,7 +2410,7 @@ a.fl-cor-a:hover{background:#ff7c31;color:var(--sobre-laranja)}
    mais. O `!important` aqui nao esta a ganhar uma discussao — esta a dizer
    que nao ha discussao nenhuma para ter.
    ====================================================================== */
-span.hs-nome{
+span.hs-nome{-webkit-hyphens:none;hyphens:none;
   /* `contents` e nao `inline`: o marcador deixa de gerar caixa nenhuma e o
      texto passa a contar como se ele nao existisse. Num contentor `flex`
      um `inline` era blockificado por regra da especificacao e virava um
@@ -3131,3 +3133,693 @@ ol.pk-eixos[data-cols="1"] span{grid-column:2;margin-top:2px}
    no HTML e um estilo que ninguem encontra quando quer mudar. */
 .cur-foto{margin:26px 0 0}
 .cur-foto img{display:block;width:100%;height:auto;border-radius:16px}
+
+/* ======================================================================
+   CURSO · «COMO SE PROGRIDE» — trilhos, fases, faixa do instrutor, ciclo
+   14/09/2026. A grelha de oito cartões 01–08 parecia um horário por baixo
+   de um título que diz que não há horário. Dois trilhos mostram o que o
+   parágrafo dizia: a mesma ordem, tempos diferentes, os dois chegam.
+
+   AS CORES DAS FASES
+     As quatro primeiras (no chão) são azuis escuros e levam texto branco;
+     as três do ar são azuis claros e levam a tinta do painel; a autonomia
+     é laranja com o preto que vai sobre o laranja. Cada par passa os
+     4,5:1 — é por isso que a rampa dá um salto entre a 4 e a 5, e o salto
+     coincide com a transição para voo.
+   ====================================================================== */
+.pk-trilhos{display:grid;gap:12px;margin:18px 0 8px}
+.pk-trilho{display:grid;grid-template-columns:92px minmax(0,1fr);gap:14px;align-items:center}
+.pk-trilho-nome{font-size:13px;font-weight:700;color:var(--painel-fraca)}
+.pk-trilho-fases{display:grid;gap:3px;height:44px}
+/* as larguras são ilustrativas: dois pilotos, oito fases, pesos diferentes */
+/* nenhum peso abaixo de 2: com 1 a «Autonomia» — a fase que é o objectivo —
+   saía cortada a 1180px nas cinco línguas */
+.pk-trilho-a{grid-template-columns:2fr 2fr 2fr 5fr 2fr 3fr 2fr 2fr}
+.pk-trilho-b{grid-template-columns:2fr 4fr 3fr 3fr 3fr 2fr 3fr 2fr}
+.pk-f{display:flex;align-items:center;justify-content:center;overflow:hidden;min-width:0;
+  font-size:11.5px;font-weight:700;letter-spacing:.02em;transition:opacity .15s}
+.pk-f::after{content:attr(data-r);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;padding:0 4px}
+.pk-f[data-f="1"]{background:#0e3b6d;color:#fff}
+.pk-f[data-f="2"]{background:#1f4d80;color:#fff}
+.pk-f[data-f="3"]{background:#305f93;color:#fff}
+.pk-f[data-f="4"]{background:#3f6c9f;color:#fff}
+.pk-f[data-f="5"]{background:#9dbbd9;color:#16202c}
+.pk-f[data-f="6"]{background:#b3cbe3;color:#16202c}
+.pk-f[data-f="7"]{background:#c9daec;color:#16202c}
+.pk-f[data-f="8"]{background:#ff6a13;color:#231000}
+.pk-trilhos-legenda{margin:6px 0 0 106px;font-size:14px;font-weight:600;color:var(--painel-tinta)}
+.pk-papel .pk-trilhos-legenda + .pk-nota{margin:4px 0 0 106px}
+
+/* passar por uma fase na lista acende-a nos dois trilhos */
+.pk-sec:has(.pk-fases li:hover) .pk-f{opacity:.3}
+.pk-sec:has(.pk-fases li[data-f="1"]:hover) .pk-f[data-f="1"],
+.pk-sec:has(.pk-fases li[data-f="2"]:hover) .pk-f[data-f="2"],
+.pk-sec:has(.pk-fases li[data-f="3"]:hover) .pk-f[data-f="3"],
+.pk-sec:has(.pk-fases li[data-f="4"]:hover) .pk-f[data-f="4"],
+.pk-sec:has(.pk-fases li[data-f="5"]:hover) .pk-f[data-f="5"],
+.pk-sec:has(.pk-fases li[data-f="6"]:hover) .pk-f[data-f="6"],
+.pk-sec:has(.pk-fases li[data-f="7"]:hover) .pk-f[data-f="7"],
+.pk-sec:has(.pk-fases li[data-f="8"]:hover) .pk-f[data-f="8"]{opacity:1}
+
+.pk-fases{list-style:none;margin:28px 0 36px;padding:0;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--painel-linha)}
+.pk-fases li{position:relative;display:grid;grid-template-columns:34px minmax(0,1fr);column-gap:12px;
+  padding:18px 16px 18px 0;border-bottom:1px solid var(--painel-linha)}
+.pk-fases li::before{content:'';grid-row:1 / span 4;width:14px;height:14px;margin-top:5px;justify-self:end}
+.pk-fases li[data-f="1"]::before{background:#0e3b6d}
+.pk-fases li[data-f="2"]::before{background:#1f4d80}
+.pk-fases li[data-f="3"]::before{background:#305f93}
+.pk-fases li[data-f="4"]::before{background:#3f6c9f}
+.pk-fases li[data-f="5"]::before{background:#9dbbd9}
+.pk-fases li[data-f="6"]::before{background:#b3cbe3}
+.pk-fases li[data-f="7"]::before{background:#c9daec}
+.pk-fases li[data-f="8"]::before{background:#ff6a13}
+.pk-fases-n{font-size:12px;color:var(--painel-fraca);font-variant-numeric:tabular-nums}
+.pk-papel .pk-fases h4{margin:0;font-size:17px;font-weight:800;letter-spacing:-.3px;color:var(--painel-tinta)}
+.pk-papel .pk-fases p{margin:4px 0 0;font-size:14.5px;line-height:1.5;color:var(--painel-fraca);text-align:left;max-width:none}
+.pk-papel .pk-fases .pk-fases-quando{margin-top:8px;font-size:13.5px;color:var(--painel-tinta)}
+.pk-fases-quando b{color:var(--laranja-tinta)}
+
+.pk-faixa-cx{margin:18px 0 0}
+.pk-faixa-ext{display:flex;justify-content:space-between;gap:16px;margin-bottom:10px;
+  font-size:11.5px;font-weight:700;letter-spacing:var(--tr-rotulo);text-transform:uppercase;color:var(--painel-fraca)}
+.pk-faixa{position:relative;height:14px;background:linear-gradient(90deg,#0e3b6d 0%,#5a86ad 55%,#ff6a13 100%)}
+.pk-faixa span{position:absolute;top:-7px;width:28px;height:28px;margin-left:-14px;border-radius:50%;
+  display:grid;place-items:center;background:#fff;border:3px solid #16202c;color:#16202c;font-size:12px;font-weight:800}
+.pk-faixa span:nth-child(1){left:12%}
+.pk-faixa span:nth-child(2){left:50%}
+.pk-faixa span:nth-child(3){left:88%}
+
+.pk-momentos{list-style:none;margin:26px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.pk-momentos li{border-top:3px solid var(--painel-tinta);padding-top:14px}
+.pk-momento-n{display:block;font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--painel-fraca)}
+.pk-quem{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.pk-quem b{font-size:13px;font-weight:700;padding:4px 10px;border:1px solid var(--painel-linha);color:var(--painel-tinta)}
+.pk-quem b.pk-quem-i{background:#0e3b6d;border-color:#0e3b6d;color:#fff}
+.pk-quem b.pk-quem-p{background:#ff6a13;border-color:#ff6a13;color:#231000}
+.pk-papel .pk-momentos p{margin:8px 0 0;font-size:15px;line-height:1.5;color:var(--painel-fraca);text-align:left;max-width:none}
+
+.pk-ciclo{display:grid;grid-template-columns:minmax(240px,320px) minmax(0,1fr);gap:28px;align-items:center;
+  margin:30px 0 36px;padding:24px;background:#f4f7fb}
+.pk-ciclo svg{display:block;width:100%;height:auto}
+.pk-ciclo-arcos path{fill:none;stroke:#5b6878;stroke-width:2;marker-end:url(#pk-seta)}
+.pk-ciclo marker path{fill:#5b6878}
+.pk-ciclo-no rect{fill:#fff;stroke:#16202c;stroke-width:1.5}
+.pk-ciclo-no text{font-size:13px;font-weight:700;fill:#16202c;text-anchor:middle}
+.pk-ciclo-no-1 rect{fill:#ff6a13;stroke:#ff6a13}
+.pk-ciclo-no-1 text{fill:#231000}
+.pk-ciclo-centro,.pk-ciclo-centro2{text-anchor:middle}
+.pk-ciclo-centro{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;fill:#a63f00}
+.pk-ciclo-centro2{font-size:11px;fill:#5b6878}
+.pk-ciclo figcaption{font-size:15px;line-height:1.55;color:var(--painel-fraca);max-width:52ch}
+.pk-ciclo figcaption b{color:var(--painel-tinta)}
+
+/* oito fases: 4 + 4, depois 2 × 4, depois uma coluna — nunca 5 + 3 */
+@media (max-width:1100px){ .pk-fases{grid-template-columns:repeat(2,minmax(0,1fr))} }
+/* abaixo disto os nomes já não cabem nos segmentos: fica a cor, e os nomes estão na lista */
+@media (max-width:1100px){ .pk-f::after{content:none} }
+@media (max-width:720px){
+  .pk-fases{grid-template-columns:minmax(0,1fr)}
+  .pk-trilho{grid-template-columns:minmax(0,1fr);gap:6px}
+  .pk-trilhos-legenda,.pk-papel .pk-trilhos-legenda + .pk-nota{margin-left:0}
+  .pk-momentos{grid-template-columns:minmax(0,1fr)}
+  .pk-ciclo{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){.pk-f{transition:none}}
+
+/* ======================================================================
+   CURSO · AUTONOMIA E EXPERIÊNCIA — critérios, ponte e sinais
+   14/09/2026. Duas secções que viviam de etiquetas redondas iguais às de
+   um botão. Os critérios passam a lista de verificação em três grupos, com
+   o nono como resultado; a experiência ganha uma grelha de sinais; e as
+   duas ficam ligadas por uma ponte que diz a diferença: uma ensina-se, a
+   outra acumula-se. Fundo azul: texto branco, linhas translúcidas.
+   ====================================================================== */
+.pg.pk .pk-leitura > p:not(.pg-eyebrow):not(.pk-cit):not(.pk-criterio-fim){max-width:72ch}
+
+.pk-criterios{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin:18px 0 0}
+.pk-criterios-g{border-top:3px solid var(--orange);padding-top:14px}
+.pk-criterios-g h4{margin:0 0 10px;font-size:11.5px;font-weight:700;letter-spacing:var(--tr-rotulo);text-transform:uppercase;color:var(--tinta-fraca)}
+.pk-criterios-g ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.pk-criterios-g li{position:relative;padding-left:30px;font-size:16px;line-height:1.45;color:var(--tinta)}
+.pk-criterios-g li::before{content:'';position:absolute;left:0;top:2px;width:18px;height:18px;border:2px solid var(--orange)}
+.pk-criterios-g li::after{content:'';position:absolute;left:6px;top:5px;width:5px;height:10px;
+  border:solid var(--orange);border-width:0 2px 2px 0;transform:rotate(45deg)}
+.pg.pk .pk-criterio-fim{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;margin:26px 0 0;
+  padding:16px 20px;border-left:4px solid var(--orange);background:rgba(255,255,255,.06);max-width:none}
+.pk-criterio-fim b{font-size:11.5px;font-weight:700;letter-spacing:var(--tr-rotulo);text-transform:uppercase;color:var(--orange)}
+.pk-criterio-fim span{font-size:18px;font-weight:700;color:var(--tinta)}
+
+.pk-ponte{display:grid;grid-template-columns:minmax(0,1fr) 56px minmax(0,1fr);align-items:stretch;margin:44px 0 0}
+.pk-ponte-c{border:1px solid var(--linha);padding:22px 24px}
+.pk-ponte-exp{border-color:rgba(255,106,19,.55)}
+.pg.pk .pk-ponte p{margin:0;max-width:none}
+.pk-ponte .pk-ponte-nome{font-size:11.5px;font-weight:700;letter-spacing:var(--tr-rotulo);text-transform:uppercase;color:var(--tinta-fraca)}
+.pk-ponte .pk-ponte-verbo{margin-top:6px;font-size:clamp(22px,2.4vw,30px);font-weight:800;letter-spacing:-.6px;line-height:1.1;color:var(--tinta)}
+.pk-ponte-exp .pk-ponte-verbo{color:var(--orange)}
+.pk-ponte .pk-ponte-nota{margin-top:8px;font-size:15px;line-height:1.5;color:var(--tinta-fraca)}
+.pk-ponte-seta{position:relative;align-self:center;height:2px;margin:0 10px;background:var(--linha)}
+.pk-ponte-seta::after{content:'';position:absolute;right:-1px;top:-5px;border:6px solid transparent;border-left-color:var(--tinta-fraca);border-right:0}
+
+.pk-sinais{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 28px}
+.pk-sinais li{padding:14px 0;border-top:1px solid var(--linha);font-size:16px;line-height:1.45;color:var(--tinta)}
+.pk-sinais li::before{content:'';display:block;width:18px;height:3px;margin-bottom:10px;background:var(--orange)}
+
+/* três grupos de critérios nunca ficam 2 + 1: mantêm as três colunas até ao telemóvel */
+@media (max-width:1100px){
+  .pk-sinais{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:720px){
+  .pk-criterios,.pk-sinais{grid-template-columns:minmax(0,1fr)}
+  .pk-ponte{grid-template-columns:minmax(0,1fr)}
+  .pk-ponte-seta{justify-self:center;width:2px;height:28px;margin:0}
+  .pk-ponte-seta::after{right:-5px;top:auto;bottom:-1px;border:6px solid transparent;border-top-color:var(--tinta-fraca);border-bottom:0}
+}
+
+/* ======================================================================
+   CURSO · DE ONDE VENS — a avaliação inicial e a conversão
+   14/09/2026. Quatro etiquetas coladas a dois cartões cinzentos cheios de
+   etiquetas. Passa a uma faixa de quatro (o que o instrutor olha primeiro)
+   e a um diagrama: o que já trazes → conversão → o que precisas de adaptar,
+   com o lado do Parakite agrupado. Ilha clara: tinta do painel.
+   ====================================================================== */
+/* 14/09/2026, 2.ª volta: a entrada em duas colunas (requisitos | avaliação),
+   a avaliação em 2 × 2 e o diagrama com as linhas partilhadas pelos dois
+   cartões. O «já trazes» ganha o fundo azul-claro de onde se vem; o Parakite
+   fica branco com o filete laranja. A seta deixa de ter o rótulo em cima da
+   ponta: o rótulo é uma pastilha no meio da linha. */
+.pk-conv-entrada{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,4vw,56px);margin:8px 0 0;align-items:stretch}
+.pg.pk .pk-conv-entrada p{max-width:none}
+.pk-requisitos{padding:26px 28px;background:#e9f0f7;border-left:4px solid #0e3b6d;display:flex;flex-direction:column;gap:10px}
+.pg.pk .pk-requisitos p{margin:0;text-align:left}
+.pg.pk .pk-requisitos-rot{font-size:11.5px;font-weight:800;letter-spacing:var(--tr-rotulo);text-transform:uppercase;color:#0e3b6d}
+.pg.pk .pk-requisitos-lead{font-size:clamp(26px,2.8vw,36px);font-weight:800;letter-spacing:-.8px;line-height:1.08;color:#0e3b6d;text-wrap:balance}
+.pg.pk .pk-requisitos-tx{font-size:16.5px;line-height:1.55;color:var(--painel-tinta)}
+.pg .pk-avaliacao h3{margin:0 0 8px}
+.pg.pk .pk-avaliacao > p{margin:0;text-align:left;color:var(--painel-fraca)}
+
+.pk-avaliar{list-style:none;margin:18px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.pk-avaliar li{position:relative;padding:14px 16px 14px 44px;font-size:15.5px;font-weight:700;line-height:1.35;color:var(--painel-tinta);
+  border:1px solid var(--painel-linha);background:#fff}
+/* um marcador quadrado e não um círculo: um círculo com ponto lê-se como botão de escolha */
+.pk-avaliar li::before{content:'';position:absolute;left:18px;top:50%;width:10px;height:10px;margin-top:-5px;background:#0e3b6d}
+
+.pk-conv{display:grid;grid-template-columns:minmax(0,4fr) 112px minmax(0,8fr);grid-template-rows:auto auto 1fr;margin:44px 0 8px}
+.pk-conv-lado{grid-row:1 / span 3;display:grid;grid-template-rows:subgrid;row-gap:0;padding:26px 28px 28px;border:1px solid var(--painel-linha)}
+.pk-conv-de{background:#e9f0f7;border-color:#e9f0f7}
+.pk-conv-para{background:#fff;border-color:rgba(255,106,19,.55);border-top:4px solid var(--orange)}
+.pg.pk .pk-conv p{max-width:none}
+.pk-conv .pk-conv-rot{margin:0;font-size:11.5px;font-weight:700;letter-spacing:var(--tr-rotulo);text-transform:uppercase;color:#0e3b6d}
+.pk-conv-para .pk-conv-rot{color:var(--laranja-tinta)}
+.pg .pk-papel .pk-conv h4{margin:4px 0 18px;font-size:clamp(20px,2vw,24px);font-weight:800;letter-spacing:-.4px;line-height:1.15;color:var(--painel-tinta)}
+.pk-conv ul{list-style:none;margin:0;padding:0;display:grid;gap:10px;align-content:start}
+.pk-conv li{position:relative;padding-left:26px;font-size:15.5px;line-height:1.4;color:var(--painel-tinta)}
+.pk-conv li::first-letter{text-transform:uppercase}
+/* já trazes: visto azul, com o mesmo filete de cima que os grupos do outro lado */
+.pk-conv ul.pk-conv-trazes{padding-top:14px;border-top:2px solid #0e3b6d}
+.pk-conv-trazes li::before{content:'';position:absolute;left:0;top:3px;width:16px;height:16px;background:#0e3b6d}
+.pk-conv-trazes li::after{content:'';position:absolute;left:5px;top:5px;width:4px;height:8px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+/* a adaptar: marca laranja */
+.pk-conv-gs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 24px;align-content:start}
+.pk-conv-g li::before{content:'';position:absolute;left:0;top:4px;width:14px;height:14px;border:2px solid var(--orange);border-radius:50%}
+.pk-conv .pk-conv-g-t{margin:0 0 10px;padding-top:12px;border-top:2px solid var(--orange);font-size:11.5px;font-weight:800;letter-spacing:var(--tr-rotulo);text-transform:uppercase;color:var(--laranja-tinta)}
+.pk-conv .pk-conv-g-t + ul{margin-top:0}
+/* a seta: linha, pastilha a meio, ponta no fim — nada sobreposto */
+.pk-conv-seta{grid-row:1 / span 3;position:relative;display:flex;align-items:center;justify-content:center}
+.pk-conv-seta::before{content:'';position:absolute;left:0;right:8px;top:50%;height:2px;margin-top:-1px;background:#0e3b6d}
+.pk-conv-seta::after{content:'';position:absolute;right:0;top:50%;margin-top:-7px;border:7px solid transparent;border-left:9px solid #0e3b6d;border-right:0}
+.pk-conv-seta span{position:relative;padding:5px 10px;background:var(--orange);color:var(--sobre-laranja);font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;line-height:1}
+
+@media (max-width:1100px){
+  .pk-conv-entrada{grid-template-columns:minmax(0,1fr)}
+  .pk-conv{grid-template-columns:minmax(0,1fr);grid-template-rows:none}
+  .pk-conv-lado,.pk-conv-seta{grid-row:auto}
+  .pk-conv-lado{grid-template-rows:none}
+  .pk-conv-seta{height:64px}
+  .pk-conv-seta::before{left:50%;right:auto;top:0;bottom:8px;width:2px;height:auto;margin:0 0 0 -1px}
+  .pk-conv-seta::after{right:auto;left:50%;top:auto;bottom:0;margin:0 0 0 -7px;border:7px solid transparent;border-top:9px solid #0e3b6d;border-bottom:0}
+}
+@media (max-width:720px){
+  .pk-avaliar{grid-template-columns:minmax(0,1fr)}
+  .pk-conv-gs{grid-template-columns:minmax(0,1fr)}
+  .pk-conv-lado,.pk-requisitos{padding:22px 20px}
+}
+
+/* ======================================================================
+   CURSO · OS TRÊS HÁBITOS, OS PONTOS DE PARTIDA E AS QUATRO PERGUNTAS
+   14/09/2026 — texto do Paulo. Os hábitos lêem-se como antes → depois, com
+   o lado do Parakite em destaque; os perfis são três colunas; as perguntas
+   montam a mensagem de WhatsApp no próprio browser.
+   ====================================================================== */
+.pg.pk .pk-habitos-nota{margin:4px 0 0;color:var(--painel-fraca)}
+.pk-habitos{list-style:none;margin:18px 0 0;padding:0;border-top:1px solid var(--painel-linha)}
+.pk-habitos > li{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,4fr) 44px minmax(0,5fr);gap:0 18px;align-items:start;
+  padding:22px 0;border-bottom:1px solid var(--painel-linha)}
+.pk-habito-t{display:flex;gap:12px;align-items:baseline}
+.pk-habito-n{flex:0 0 auto;display:grid;place-items:center;width:28px;height:28px;background:#0e3b6d;color:#fff;font-size:13px;font-weight:800}
+.pg .pk-papel .pk-habitos h4{margin:0;font-size:18px;font-weight:800;letter-spacing:-.3px;line-height:1.25;color:var(--painel-tinta)}
+.pg.pk .pk-habitos p{margin:0;max-width:none;text-align:left;font-size:15px;line-height:1.5}
+.pk-habito-a p{color:var(--painel-fraca)}
+.pk-habito-b p{color:var(--painel-tinta)}
+.pg.pk .pk-habitos .pk-habito-rot{margin-bottom:4px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.pk-habito-a .pk-habito-rot{color:var(--painel-fraca)}
+.pk-habito-b .pk-habito-rot{color:var(--laranja-tinta)}
+.pk-habito-b{padding-left:14px;border-left:3px solid var(--orange)}
+.pk-habito-seta{position:relative;height:2px;margin-top:30px;background:var(--painel-linha)}
+.pk-habito-seta::after{content:'';position:absolute;right:-1px;top:-5px;border:6px solid transparent;border-left-color:var(--painel-fraca);border-right:0}
+
+.pk-perfis{list-style:none;margin:18px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.pk-perfis li{border-top:3px solid #0e3b6d;padding-top:14px}
+.pg .pk-papel .pk-perfis h4{margin:0 0 8px;font-size:17px;font-weight:800;letter-spacing:-.3px;line-height:1.25;color:var(--painel-tinta)}
+.pg.pk .pk-perfis p{margin:0;max-width:none;text-align:left;font-size:15px;line-height:1.55;color:var(--painel-fraca)}
+.pg.pk .pk-perfis-fecho{margin:24px 0 0;padding:16px 20px;border-left:4px solid var(--orange);background:rgba(255,106,19,.07);
+  max-width:none;font-size:15.5px;line-height:1.55;color:var(--painel-tinta);text-align:left}
+
+
+@media (max-width:1100px){
+  .pk-habitos > li{grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr);gap:12px 18px}
+  .pk-habito-t{grid-column:1 / -1}
+}
+@media (max-width:720px){
+  .pk-habitos > li{grid-template-columns:minmax(0,1fr)}
+  .pk-habito-seta{display:none}
+  .pk-perfis{grid-template-columns:minmax(0,1fr)}
+}
+
+/* ======================================================================
+   CURSO · AS DUAS OPÇÕES E O ASSISTENTE «CURSO COMPLETO OU À HORA?»
+   14/09/2026. Cinco números numa grelha de 4 + 1 davam ao piloto os preços
+   mas não a escolha. Passam a dois cartões, com o ponto de equilíbrio por
+   baixo, e um simulador de cinco perguntas cuja sugestão acende o cartão.
+   ====================================================================== */
+.pk-opcoes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin:22px 0 0}
+.pk-opcao{position:relative;padding:24px 26px 22px;border:1px solid var(--painel-linha);border-top:4px solid #0e3b6d;background:var(--painel);transition:box-shadow .2s,border-color .2s}
+.pk-opcao[data-opcao="hora"]{border-top-color:var(--orange)}
+.pg.pk .pk-opcao p{margin:0;max-width:none}
+.pk-opcao .pk-opcao-rot{font-size:11.5px;font-weight:700;letter-spacing:var(--tr-rotulo);text-transform:uppercase;color:var(--painel-fraca)}
+.pk-opcao .pk-opcao-preco{margin-top:4px;font-size:clamp(30px,3.4vw,42px);font-weight:800;letter-spacing:-1px;line-height:1.05;color:var(--painel-tinta)}
+.pk-opcao ul{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px}
+.pk-opcao li{position:relative;padding-left:24px;font-size:15px;line-height:1.45;color:var(--painel-tinta)}
+.pk-opcao li::before{content:'';position:absolute;left:0;top:4px;width:14px;height:14px;background:#0e3b6d}
+.pk-opcao li::after{content:'';position:absolute;left:4.5px;top:6px;width:3.5px;height:7px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.pk-opcao-sugerida{border-color:var(--orange);box-shadow:0 0 0 2px var(--orange)}
+/* a etiqueta «A sugestão» vem do próprio cartão, na língua da página */
+.pk-opcao-sugerida::after{content:attr(data-sug);position:absolute;top:-13px;right:18px;padding:3px 10px;
+  font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:var(--orange);color:#231000}
+.pg.pk .pk-equilibrio{margin:14px 0 0;max-width:none;font-size:14.5px;line-height:1.5;color:var(--painel-fraca)}
+
+.pk-assist-lugar{margin:30px 0 0}
+.pk-assist-entrada{padding:24px 26px;border:1px solid var(--linha)}
+.pk-papel .pk-assist-entrada{background:#f4f7fb;border-color:var(--painel-linha)}
+.pg .pk-papel .pk-assist-entrada h3{margin:0;font-size:22px;font-weight:800;letter-spacing:-.4px;color:var(--painel-tinta)}
+.pg.pk .pk-assist-intro{margin:6px 0 0;max-width:70ch;font-size:15.5px;line-height:1.5}
+.pk-papel .pk-assist-intro{color:var(--painel-fraca)}
+.pg.pk .pk-assist-entrada-b{margin:16px 0 0}
+.pk-assist-entrada-b .pk-b{margin:0;border:0;cursor:pointer;font-family:inherit}
+
+/* O ASSISTENTE TEM SEMPRE FUNDO CLARO E CORES PRÓPRIAS
+   Abre tanto na ilha clara dos preços como na faixa azul do fim da página:
+   não pode herdar a tinta de nenhuma das duas. */
+.pk-assist{display:grid;gap:16px;padding:22px 26px 26px;background:#fff;color:#16202c;border:1px solid #dfe6ef;
+  box-shadow:0 12px 34px rgba(7,29,58,.18)}
+.pk-papel .pk-assist{background:#f4f7fb;box-shadow:none}
+.pg.pk .pk-assist p{margin:0;max-width:none;text-align:left}
+.pk-assist-topo{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.pg.pk .pk-assist-titulo{font-size:17px;font-weight:800;color:#16202c}
+.pk-assist-link{font:inherit;font-size:14px;font-weight:600;padding:6px 0;cursor:pointer;background:none;border:0;color:#5b6878;
+  text-decoration:underline;text-underline-offset:3px}
+.pk-assist-link:hover{color:#16202c}
+.pk-assist-feitas:empty{display:none}
+.pg.pk .pk-assist-feitas-t{margin-bottom:6px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#5b6878}
+.pk-assist-feitas-l{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.pk-assist-feita{font:inherit;font-size:13px;font-weight:600;padding:5px 10px;cursor:pointer;background:#fff;color:#16202c;border:1px solid #c9d4e1;border-radius:100px}
+.pk-assist-feita:hover,.pk-assist-feita.on{border-color:#ff6a13}
+.pk-assist-corpo{display:grid;gap:14px}
+.pg.pk .pk-assist-passo{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#5b6878}
+.pk-assist-barra{height:4px;background:#dfe6ef}
+.pk-assist-barra span{display:block;height:100%;background:#ff6a13;transition:width .25s}
+.pg.pk .pk-assist-q{font-size:clamp(19px,2vw,23px);font-weight:800;line-height:1.3;color:#16202c;outline:none}
+.pk-assist-ops{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.pk-assist-op{position:relative;min-height:56px;font:inherit;font-size:15.5px;font-weight:600;line-height:1.35;text-align:left;
+  padding:14px 16px 14px 48px;cursor:pointer;background:#fff;color:#16202c;border:1px solid #c9d4e1;border-radius:0;
+  transition:border-color .15s,box-shadow .15s}
+.pk-assist-op::before{content:'';position:absolute;left:16px;top:50%;width:18px;height:18px;margin-top:-9px;border:2px solid #5b6878;border-radius:50%;box-sizing:border-box}
+.pk-assist-op:hover{border-color:#ff6a13;box-shadow:0 0 0 1px #ff6a13}
+.pk-assist-op.on{border-color:#0e3b6d;box-shadow:0 0 0 2px #0e3b6d}
+.pk-assist-op.on::before{border-color:#0e3b6d;background:#0e3b6d;box-shadow:inset 0 0 0 3px #fff}
+.pk-assist-op-outra{border-style:dashed}
+.pk-assist-op:focus-visible,.pk-assist-link:focus-visible,.pk-assist-feita:focus-visible{outline:3px solid #ff6a13;outline-offset:2px}
+.pk-assist-outra{display:flex;flex-wrap:wrap;gap:10px}
+.pk-assist-outra input{flex:1 1 260px;min-width:0;box-sizing:border-box;font:inherit;font-size:16px;padding:12px 14px;color:#16202c;background:#fff;border:1px solid #5b6878;border-radius:0}
+.pk-assist-outra input:focus,.pk-assist-extra textarea:focus{outline:3px solid #ff6a13;outline-offset:1px}
+.pk-assist .pk-b{margin:0;border:0;cursor:pointer;font-family:inherit}
+.pk-assist .pk-b[disabled]{opacity:.45;cursor:not-allowed}
+.pg.pk .pk-assist-rot{font-size:11.5px;font-weight:700;letter-spacing:var(--tr-rotulo);text-transform:uppercase;color:#a63f00}
+.pg.pk .pk-assist-res{font-size:clamp(24px,2.6vw,32px);font-weight:800;letter-spacing:-.6px;line-height:1.1;color:#16202c;outline:none}
+.pg.pk .pk-assist-porque{font-size:16px;line-height:1.55;color:#16202c;max-width:70ch}
+.pg.pk .pk-assist-aviso{font-size:13.5px;line-height:1.5;color:#5b6878}
+.pg.pk .pk-assist-msg{white-space:pre-wrap;padding:14px 16px;font-size:14.5px;line-height:1.55;color:#16202c;background:#fff;border:1px solid #dfe6ef;border-left:4px solid #25d366}
+.pk-assist-extra{display:grid;gap:6px}
+.pk-assist-extra span{font-size:14px;color:#5b6878}
+.pk-assist-extra textarea{box-sizing:border-box;width:100%;font:inherit;font-size:16px;padding:10px 12px;color:#16202c;background:#fff;border:1px solid #5b6878;border-radius:0;resize:vertical}
+.pk-assist-fim{display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px}
+
+/* no telemóvel, uma pergunta de cada vez no ecrã inteiro */
+.pk-assist.pk-assist-ecra{position:fixed;inset:0;z-index:1000;overflow:auto;align-content:start;padding:16px 18px 32px;border:0;box-shadow:none;background:#fff}
+html.pk-assist-bloqueio,html.pk-assist-bloqueio body{overflow:hidden}
+
+@media (max-width:720px){
+  .pk-opcoes{grid-template-columns:minmax(0,1fr);gap:26px}
+  .pk-assist-entrada{padding:20px 18px}
+  .pk-assist-ops{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){ .pk-assist-barra span,.pk-assist-op,.pk-opcao{transition:none} }
+
+/* ======================================================================
+   CURSO · A NOVA ORGANIZAÇÃO (14/09/2026)
+   Resposta direta e factos no herói, índice fixo, capítulos, requisitos,
+   perguntas em acordeão e a barra de contacto do telemóvel. Tudo preso a
+   `.pk-curso`, a classe só desta página.
+   ====================================================================== */
+.pk-curso .pk-resposta{max-width:62ch}
+/* grelha de 3 + 2 dentro da coluna de texto do herói: a coluna é estreita de
+   propósito (o texto fica sobre a parte escura da fotografia) */
+.pk-factos{list-style:none;margin:22px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:18px;
+  border-bottom:1px solid rgba(255,255,255,.22)}
+.pk-factos li{padding:11px 0;border-top:1px solid rgba(255,255,255,.22);font-size:14px;line-height:1.35;color:rgba(255,255,255,.78)}
+.pk-factos b{display:block;font-size:20px;font-weight:800;letter-spacing:-.3px;color:#fff}
+.pk-factos span{display:block}
+
+.pk-indice{position:sticky;top:var(--pk-topo,0px);z-index:40;background:var(--papel);border-bottom:1px solid var(--linha)}
+.pk-indice div{display:flex;gap:6px;overflow-x:auto;padding:10px var(--margem-faixa,24px);scrollbar-width:none}
+.pk-indice div::-webkit-scrollbar{display:none}
+.pk-indice a{flex:0 0 auto;padding:7px 14px;font-size:13.5px;font-weight:600;line-height:1;white-space:nowrap;text-decoration:none;
+  color:var(--tinta);border:1px solid rgba(255,255,255,.25)}
+.pk-indice a:hover,.pk-indice a:focus-visible{border-color:var(--orange);color:var(--laranja-painel)}
+.pk-curso .pk-sec[id]{scroll-margin-top:calc(var(--pk-topo,0px) + 64px)}
+
+.pk-cap{display:flex;align-items:center;gap:14px;max-width:var(--pk-cx);margin:64px auto 0;padding:0 var(--pk-pad)}
+.pk-cap span{font-size:12px;font-weight:800;letter-spacing:var(--tr-rotulo);text-transform:uppercase;color:var(--tinta-fraca)}
+.pk-cap::before{content:'';width:22px;height:3px;background:var(--orange)}
+.pk-cap::after{content:'';flex:1;height:1px;background:var(--linha)}
+
+
+.pk-curso .pk-faq{align-items:start}
+.pk-curso details.pk-faq-q{border-top:1px solid var(--painel-linha);padding:14px 0 0}
+.pk-curso details.pk-faq-q summary{display:flex;justify-content:space-between;align-items:baseline;gap:16px;cursor:pointer;list-style:none}
+.pk-curso details.pk-faq-q summary::-webkit-details-marker{display:none}
+.pk-curso details.pk-faq-q summary::after{content:'+';flex:0 0 auto;font-size:22px;font-weight:700;line-height:1;color:var(--laranja-tinta)}
+.pk-curso details.pk-faq-q[open] summary::after{content:'\2013'}
+.pk-curso details.pk-faq-q summary h3{margin:0}
+.pk-curso details.pk-faq-q p{margin:10px 0 14px}
+.pk-curso details.pk-faq-q summary:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+
+/* os chips que sobram no método ficam com cantos vivos, como os componentes novos */
+.pk-curso .pk-sec .sg-trans-lista b,.pk-curso .pk-cadeia li{border-radius:0}
+
+.pk-barra-fixa{display:none}
+@media (max-width:720px){
+  .pk-barra-fixa{display:block;position:fixed;left:0;right:0;bottom:0;z-index:50;padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+    background:rgba(7,29,58,.96);border-top:1px solid var(--linha)}
+  .pk-barra-fixa .pk-b{display:block;margin:0;text-align:center}
+  body.pk-curso{padding-bottom:72px}
+  .pk-factos{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pk-cap{margin-top:44px}
+}
+
+/* ======================================================================
+   CURSO · OS COMPONENTES DO MÉTODO (14/09/2026)
+   Fluxo, lista em grelha, passos ligados e cartões comparados — os mesmos
+   em fundo azul e nas ilhas claras. Substituem as etiquetas `sg-trans-lista`
+   e os cartões redondos só nesta página.
+   ====================================================================== */
+.pk-fluxo{list-style:none;margin:14px 0 20px;padding:0;display:flex;flex-wrap:wrap;align-items:center;row-gap:8px}
+.pk-fluxo li{display:flex;align-items:center;font-size:15.5px;font-weight:700;line-height:1.3;color:var(--tinta)}
+.pk-fluxo li + li::before{content:'\2192';flex:0 0 auto;margin:0 12px;font-weight:400;color:var(--orange)}
+.pk-fluxo li:first-child::before{content:'';width:8px;height:8px;margin-right:10px;background:var(--orange)}
+.pk-papel .pk-fluxo li{color:var(--painel-tinta)}
+
+.pk-tags{list-style:none;margin:14px 0 20px;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));column-gap:24px}
+.pk-tags li{padding:10px 0 10px 22px;position:relative;border-top:1px solid var(--linha);font-size:15.5px;line-height:1.4;color:var(--tinta)}
+.pk-tags li::before{content:'';position:absolute;left:0;top:19px;width:12px;height:2px;background:var(--orange)}
+.pk-tags-curtas{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+.pk-papel .pk-tags li{color:var(--painel-tinta);border-top-color:var(--painel-linha)}
+
+.pk-passos{list-style:none;margin:28px 0 26px;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+.pk-passos li{position:relative;padding:48px 14px 0 0;font-size:17px;font-weight:800;letter-spacing:-.3px;line-height:1.25;color:var(--tinta)}
+.pk-passos li::before{content:attr(data-n);position:absolute;z-index:1;top:0;left:0;width:34px;height:34px;display:grid;place-items:center;
+  box-sizing:border-box;border:2px solid rgba(255,255,255,.5);border-radius:50%;background:var(--papel);color:var(--tinta);font-size:12.5px;font-weight:800;letter-spacing:0}
+.pk-passos li::after{content:'';position:absolute;top:16px;left:38px;right:4px;height:2px;background:var(--linha)}
+.pk-passos li:last-child::after{content:none}
+.pk-passos li:last-child::before{border-color:var(--orange);background:var(--orange);color:#231000}
+.pk-passos li:last-child{color:var(--laranja-painel)}
+
+.pk-curso .pk-comparar{gap:20px;margin:16px 0 18px}
+.pk-curso .pk-comparar .sg-abord{border-radius:0;padding:22px 24px 20px;background:rgba(255,255,255,.03);border:1px solid var(--linha)}
+.pk-curso .pk-comparar .sg-abord-nossa{border-top:4px solid var(--orange);background:rgba(255,106,19,.07)}
+.pk-curso .pk-comparar .sg-abord-et{margin:0 0 12px;display:flex;align-items:center;gap:8px}
+.pk-curso .pk-comparar-habito .sg-abord-nossa .sg-abord-et::before{content:'\2713';font-size:15px;color:var(--orange)}
+.pk-curso .pk-comparar-habito .sg-abord-evitar .sg-abord-et::before{content:'\2715';font-size:13px;color:rgba(255,255,255,.55)}
+.pk-curso .pk-comparar-habito .sg-abord-evitar .pk-fluxo li{color:rgba(255,255,255,.72)}
+.pk-curso .pk-comparar-habito .sg-abord-evitar .pk-fluxo li + li::before{color:rgba(255,255,255,.45)}
+.pk-curso .pk-comparar-habito .sg-abord-evitar .pk-fluxo li:first-child::before{background:rgba(255,255,255,.4)}
+.pk-curso .pk-comparar .pk-fluxo{margin:0}
+/* a energia que cada reação custa, desenhada: pequena e grande */
+.pk-curso .pk-comparar-reacao .sg-abord::after{content:'';display:block;height:6px;margin-top:18px;background:rgba(255,255,255,.14)}
+.pk-curso .pk-comparar-reacao .sg-abord{position:relative}
+.pk-curso .pk-comparar-reacao .sg-abord::before{content:'';position:absolute;left:24px;bottom:20px;height:6px;z-index:1;background:var(--orange)}
+.pk-curso .pk-comparar-reacao .sg-abord:first-child::before{width:calc((100% - 48px) * .28)}
+.pk-curso .pk-comparar-reacao .sg-abord:last-child::before{width:calc((100% - 48px) * .9);background:rgba(255,255,255,.55)}
+
+@media (max-width:900px){
+  .pk-passos{grid-template-columns:minmax(0,1fr)}
+  .pk-passos li{padding:6px 0 22px 52px}
+  .pk-passos li::after{top:38px;left:16px;right:auto;bottom:0;width:2px;height:auto}
+}
+
+/* ======================================================================
+   CURSO · O HERÓI EM DUAS COLUNAS, COM A FOTOGRAFIA DO CURSO (14/09/2026)
+   O herói das páginas `pk` é uma paisagem a um ecrã, tingida de azul, com o
+   texto por cima. Aqui mostra-se o curso: o texto à esquerda num fundo
+   próprio, a fotografia a cores à direita e os factos num cartão sobre ela.
+   Desliga-se só nesta página o que o herói partilhado traz (a altura de um
+   ecrã, a máscara, o recuo das migalhas). O parágrafo deixa de ser
+   justificado: partia «Para-kite» a meio.
+
+   E OS NOMES DA CASA NUNCA SE PARTEM, EM PÁGINA NENHUMA: o `span.hs-nome`
+   ganhou `hyphens:none` (mais acima). Um texto justificado com hifenização
+   podia dividir Parakite, Pilot2Wing ou Happy Soaring em duas linhas.
+   ====================================================================== */
+.pg.pk .pk-heroi.pk-heroi-curso{min-height:0;padding-bottom:clamp(36px,5vw,64px);background:var(--papel)}
+.pk-heroi-curso::after{content:none}
+.pk-heroi-grelha{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,4vw,64px);align-items:center;
+  width:calc(100% - 2 * var(--margem-faixa));max-width:var(--pk-cx);margin:clamp(16px,2vw,28px) auto 0}
+.pk .pk-heroi-curso .pk-heroi-tx{margin:0;max-width:none}
+.pk .pk-heroi-curso .pg-migalhas{max-width:none;margin:0 0 18px;padding:0;width:auto}
+.pg.pk .pk-heroi-curso .pk-tese{text-align:left;-webkit-hyphens:none;hyphens:none;max-width:60ch;margin-top:4px}
+.pk-heroi-curso .pk-botoes{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.pk-heroi-curso .pk-botoes .pk-b{margin:0}
+.pk-heroi-foto{position:relative;margin:0}
+/* a fotografia é vertical e o céu por cima da asa sobrava: em 1:1, com o recorte
+   descido, cabem ainda a asa inteira e o piloto até aos pés, e o cartão dos factos
+   só tapa areia (medido sobre o original de 1725x3072; era 4:5 e ocupava mais 25%) */
+.pk-heroi-foto img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;object-position:50% 72%}
+.pk-heroi-foto .pk-factos{position:relative;z-index:1;margin:-56px 20px 0;padding:6px 20px 10px;background:rgba(7,29,58,.94);
+  border:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(255,255,255,.14);row-gap:0}
+.pk-heroi-foto .pk-factos li{border-top:0;padding:10px 0}
+@media (max-width:900px){
+  .pk-heroi-grelha{grid-template-columns:minmax(0,1fr)}
+  .pk-heroi-foto .pk-factos{margin:-36px 12px 0}
+}
+
+/* ======================================================================
+   O AZUL CLARO, EM TODO O SITE (14/09/2026)
+   O Paulo: «o azul que estamos a usar deixa o site muito pesado». Numa
+   página de 20 000px, o #071d3a em faixas inteiras é uma parede. O site
+   passa a um azul-claro neutro como chão, com as ilhas de papel a
+   branco por cima — a alternância continua, mas entre dois claros.
+
+   O MARINHO NÃO DESAPARECE: MUDA DE PAPEL
+   Fica no cabeçalho e no rodapé (a moldura da marca, e o menu e o seletor
+   de idiomas foram desenhados para ele), e passa a ser a cor dos títulos,
+   dos vistos e das linhas de destaque. De fundo passa a tinta.
+
+   COMO SE FAZ
+   Os mesmos tokens de sempre, redefinidos no `body.pg` (primeiro só na página do curso; no mesmo
+   dia, a pedido do Paulo, em todas as páginas geradas); o cabeçalho e o
+   rodapé repõem os de origem. Depois, só as regras que tinham branco
+   escrito à mão para o fundo escuro. O laranja vivo continua a ser fundo de
+   botão e filete; como TEXTO sobre claro passa ao `--laranja-tinta`
+   (6,3:1), como já acontecia nas ilhas.
+
+   Contrastes medidos sobre #e9f0f7: tinta #14212f 14,6:1 · fraca #4d5c6e
+   5,9:1 · títulos #0e3b6d 9,9:1 · laranja-tinta 5,5:1.
+   ====================================================================== */
+body.pg,.pg.qp,.pg.sg,.pg.pk,.pg.asa,.pg.fl,.pg.mu{
+  --papel:#e9f0f7;
+  --tinta:#14212f;
+  --tinta-fraca:#4d5c6e;
+  --linha:#cbd8e5;
+  --laranja-painel:var(--laranja-tinta);
+  --titulo:#0e3b6d;
+}
+.pg .pg-topo,.pg .pg-rodape{
+  --papel:#071d3a;
+  --tinta:#fff;
+  --tinta-fraca:rgba(255,255,255,.68);
+  --linha:rgba(255,255,255,.16);
+  --laranja-painel:#ff842d;
+  color:#fff;
+}
+.pg h1,.pg .pk-sec:not(.pk-papel) > h2{color:var(--titulo)}
+
+/* herói */
+.pg .pk-tese{color:var(--tinta)}
+.pg .pg-migalhas a{color:var(--laranja-tinta)}
+.pg .pk-heroi-foto .pk-factos{background:#fff;border:1px solid var(--linha);box-shadow:0 14px 34px rgba(14,59,109,.14)}
+.pg .pk-heroi-foto .pk-factos li{color:var(--tinta-fraca)}
+.pg .pk-heroi-foto .pk-factos b{color:var(--titulo)}
+
+/* botões e índice */
+.pg .pk-b2{border-color:#9fb3c8}
+.pg .pk-b2:hover{background:rgba(14,59,109,.06);border-color:var(--titulo)}
+.pg .pk-indice{background:rgba(233,240,247,.96);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.pg .pk-indice a{border-color:#b9c9da;background:#fff}
+.pg .pk-barra-fixa{background:rgba(233,240,247,.97);border-top-color:var(--linha)}
+
+/* o laranja como texto, nas faixas claras sem ilha */
+.pg .pg-eyebrow,
+.pg .pk-et-laranja,
+.pg .pk-criterio-fim b,
+.pg .pk-ponte-exp .pk-ponte-verbo,
+.pg .pk-reflex a,
+.pg .pk-percurso-et,
+.pg .pk-metodo-et,
+.pg .sg-abord-nossa .sg-abord-et{color:var(--laranja-tinta)}
+
+/* os brancos que eram para o fundo escuro */
+.pg.pk .pk-criterio-fim{background:#fff}
+.pg .pk-passos li::before{border-color:#0e3b6d;background:#e9f0f7;color:#0e3b6d}
+.pg .pk-passos li:last-child::before{border-color:var(--orange);background:var(--orange);color:var(--sobre-laranja)}
+.pg .pk-comparar .sg-abord{background:#fff;border-color:var(--linha)}
+.pg .pk-comparar .sg-abord-nossa{background:#fff;border-color:rgba(255,106,19,.55);border-top-color:var(--orange)}
+.pg .sg-abord-et{color:var(--tinta-fraca)}
+.pg .pk-comparar-habito .sg-abord-evitar .sg-abord-et::before{color:var(--tinta-fraca)}
+.pg .pk-comparar-habito .sg-abord-evitar .pk-fluxo li{color:var(--tinta-fraca)}
+.pg .pk-comparar-habito .sg-abord-evitar .pk-fluxo li + li::before{color:#6f8196}
+.pg .pk-comparar-habito .sg-abord-evitar .pk-fluxo li:first-child::before{background:#8a9bb0}
+.pg .pk-comparar-reacao .sg-abord::after{background:var(--linha)}
+.pg .pk-comparar-reacao .sg-abord:last-child::before{background:#8a9bb0}
+.pg .sg-trans-lista i{color:#6f8196}
+.pg .sg-abord-nossa .sg-trans-lista i{color:var(--laranja-tinta)}
+.pg .pk-etapas li::before{color:#6f8196}
+.pg .pk-energia{background:rgba(255,255,255,.5)}
+.pg .cur-ponte{color:var(--titulo)}
+.pg .pk-sec:not(.pk-papel) .pg-alt a{color:var(--tinta)}
+.pg .pk-sec:not(.pk-papel) .pk-assist-entrada{background:#fff}
+
+/* ---- O RESTO DO SITE: o que estava escrito à mão para o fundo escuro ----
+   Regra a regra, com a mesma especificidade ou mais, e sempre depois da
+   original. O que continua escuro de propósito repõe os tokens escuros:
+   o herói fotográfico do /parakite-portugal/, a faixa com fotografia da
+   responsabilidade, os mosaicos de spot (texto sobre fotografia), o painel
+   da marca Flow (o logótipo é branco) e o vídeo. */
+.pg.pk .pk-heroi:not(.pk-heroi-curso),.pg .pk-resp,.pg .fl-cab-marca{
+  --tinta:#fff;--tinta-fraca:rgba(255,255,255,.72);--linha:rgba(255,255,255,.16);--laranja-painel:#ff842d;
+  color:#fff;
+}
+.pg.pk .pk-heroi:not(.pk-heroi-curso) h1,.pg .pk-resp > h2{color:#fff}
+.pg.pk .pk-heroi:not(.pk-heroi-curso) .pk-tese{color:#fff}
+.pg.pk .pk-heroi:not(.pk-heroi-curso) .pg-migalhas a,.pg .pk-resp a:not(.pk-b){color:#fff}
+.pg .pk-heroi:not(.pk-heroi-curso) .pg-eyebrow{color:#fff}
+.pg .pk-spot-b{color:#fff}
+
+/* ligações, destaques, rodapé */
+.pg .pg-rodape a,.pg .pg-rodape strong,.pg .pg-rodape-c a{color:#fff}
+.pg .pg-papel a:hover,.pg .pg-migalhas a:hover{color:var(--laranja-tinta)}
+.pg .pg-alt a{color:var(--tinta);border-bottom-color:#9fb3c8}
+.pg a.pg-saibamais,.pg .pg-cor-nome,.pg .pg-aviso-hist b,.pg .spot-aviso h2{color:var(--laranja-tinta)}
+
+/* fichas das asas: cartões e controlos passam a branco */
+.pg .pg-tams span,.pg .pg-cores img,.pg .pg-un,.pg .pg-pedir,.pg .pg-esq-b,.pg .pg-tsel-b,.pg .pg-pais input,
+.pg .pg-irmas-l a,.pg .pg-dealer-nota{background:#fff}
+.pg .pg-tsel-b.on{background:var(--orange)}
+.pg .pg-esq-b:hover,.pg .pg-tsel-b:hover{border-color:var(--titulo)}
+.pg .pg-vento-trilho{background:var(--linha)}
+.pg .pg-irmas-l a,.pg .pg-irmas-l a:hover{color:var(--tinta)}
+/* o bloco da asa do curso (Mullet 2) */
+.pg .pg-metodo{color:#14212f;background:#fff4ec}
+.pg .pg-metodo-et{color:var(--laranja-tinta)}
+.pg .pg-metodo-tx{color:var(--tinta)}
+.pg .pg-metodo-ls a.pg-metodo-a + a.pg-metodo-a,
+.pg .pg-metodo-ls a.pg-metodo-a:nth-child(2),
+.pg .pg-metodo-ls a.pg-metodo-a:nth-child(2):hover{color:var(--tinta);border-color:#9fb3c8}
+.pg .pg-metodo-ls a.pg-metodo-a:nth-child(2):hover{background:rgba(14,59,109,.06);border-color:var(--titulo)}
+
+/* Pilot2Wing */
+body.pg.sg{background:var(--papel);color:var(--tinta)}
+.pg.sg .sg-heroi h1 span,.pg.sg .sg-cadeia span.fim,.pg.sg .sg-fase-3 span{color:var(--laranja-tinta)}
+.pg.sg .sg-tese,.pg.sg .sg-parapente p,.pg.sg .sg-transicao strong,.pg.sg .sg-autor-n,.pg.sg .sg-abord-nossa .sg-abord-tx{color:var(--tinta)}
+.pg.sg .sg-principio-tx{color:var(--titulo)}
+.pg.sg .sg-abord{border-color:var(--linha);background:#fff}
+.pg.sg .sg-abord.sg-abord-nossa{border-color:var(--orange)}
+.pg.sg .sg-abord-et,.pg.sg .sg-abord-tx,.pg.sg .sg-espinha-dir p,.pg.sg .sg-cadeia span,.pg.sg .sg-etapa p,
+.pg.sg .sg-trans-et,.pg.sg .sg-perigo p,.pg.sg .sg-autor-et,.pg.sg .sg-autor p,.pg.sg .sg-asa p{color:var(--tinta-fraca)}
+.pg.sg .sg-abord-nossa .sg-abord-et{color:var(--laranja-tinta)}
+.pg.sg .sg-cadeia i,.pg.sg .sg-transicao i{color:#6f8196}
+.pg.sg .sg-espinha{background:#fff;border-top-color:var(--linha)}
+.pg.sg .sg-fase-1 span{color:var(--titulo)}
+.pg.sg .sg-fase-1::after,.pg.sg .sg-transicao{border-top-color:var(--linha)}
+.pg.sg .sg-fase-1::after{background:var(--linha)}
+.pg.sg .sg-fase-2 span{color:#8a4a1c}
+.pg.sg .sg-trans-lista b{border-color:var(--linha);color:var(--tinta)}
+.pg.sg .sg-perigo{background:#fff;border-color:var(--linha)}
+.pg a.sg-cta-2,.pg a.sg-cta-2:hover{color:var(--tinta)}
+.pg .sg-cta-2{border-color:#9fb3c8}
+body.pg.sg .pg-voltar{border-top-color:var(--linha)}
+
+/* catálogo Flow */
+.pg .fl-fam h3 span,.pg.fl h3 span{color:var(--tinta-fraca)}
+.pg .fl-lista a,.pg .fl-cartao{background:#fff}
+.pg .fl-cor-tx{color:var(--tinta)}
+.pg .fl-fecho{background:#fff;border:1px solid var(--linha);border-top:4px solid var(--orange)}
+.pg .fl-fecho p{color:var(--titulo)}
+
+/* /parakite-portugal/ */
+.pg .pk-metodo{background:#fff;border:1px solid var(--linha);border-top:4px solid var(--orange);color:#14212f}
+.pg.tema .pk-metodo .pk-metodo-et{color:var(--laranja-tinta)}
+.pg .pk-metodo-tx{color:var(--tinta-fraca)}
+.pg .pk-metodo a.pk-b2{color:var(--tinta);border-color:#9fb3c8}
+.pg .pk-metodo a.pk-b2:hover{background:rgba(14,59,109,.06)}
+.pg .pk-demo,.pg .pk-rental,.pg .pk-spots,.pg .pk-casa,.pg .pk-eco li,.pg .pk-cta,.pg .pk-exemplo{background:#fff}
+.pg .pk-exemplo li:last-child b,.pg .pk-dealer-et,.pg .pk-cta-et,.pg a.pk-cta .pk-cta-et,.pg .pk-asas a:hover,.pg .cur-assin::before{color:var(--laranja-tinta)}
+.pg.tema .pk-exemplo .pk-seta i,.pg.tema .pk-exemplo .pk-seta::before{color:#6f8196}
+.pg .cur-assin{color:var(--tinta)}
+.pg ol.pk-eixos[data-cols="1"] li::before{color:var(--laranja-tinta)}
+
+/* O que é um Parakite */
+.pg .qp-kicker,.pg .qp-frase em,.pg .qp-passo i,.pg .qp-mao b,.pg .qp-tri i,.pg .qp-link b::after,.pg .qp-faq summary::after,
+.pg.qp a.qp-cta::after{color:var(--laranja-tinta)}
+.pg.qp a.qp-cta{border-color:#9fb3c8}
+.pg.qp{--qp-cx:#fff;--qp-cx2:#f4f7fb;--qp-azul:#3b82c4}
+
+/* Música */
+.pg .mu-kicker{color:var(--laranja-tinta)}
+.pg .mu-nota{color:var(--tinta-fraca)}
+.pg .mu-lista li{background:#fff}
+.pg .mu-lista span{background:var(--papel)}
+.pg .pk-soon,.pg .pk-soon-li span,.pg .pk-soon-selo,.pg .pk-cadeia li.pk-oferta{color:#8a5a00}
+.pg .pk-soon-selo,.pg .pk-cadeia li.pk-oferta{border-color:#e2c27f}
+.pg .sg-cadeia i,.pg .sg-transicao i,.pg.pk .sg-trans-lista i,.pg .pk-etapas li::before{color:#6f8196}
+.pg .pk-spot-so-nome{background:#fff}
+.pg .pk-spot-so-nome span{text-shadow:none;color:var(--tinta-fraca)}
+/* o Pilot2Wing tinha o cabeçalho transparente sobre o marinho; sobre claro precisa do fundo do resto do site */
+body.pg.sg .pg-topo{background:rgba(7,29,58,.92);border-bottom-color:rgba(255,255,255,.09)}
+/* Música: o leitor é o mesmo da página inicial e foi desenhado escuro, com
+   dezenas de cores próprias. Em vez de o reescrever, ganha uma caixa escura
+   — lê-se como um aparelho pousado na página clara. A sombra do recorte da
+   fotografia passa a azul e mais leve: a preta fazia uma mancha no claro. */
+.pg.mu .music-panel{background:#141414;color:#eaeaea;padding:clamp(14px,2vw,24px);border-radius:16px}
+.pg .mu-foto{filter:drop-shadow(0 16px 26px rgba(14,59,109,.2))}
+.pg.pk .sg-abord-et{color:var(--tinta-fraca)}
+.pg.pk .sg-abord-nossa .sg-abord-et{color:var(--laranja-tinta)}

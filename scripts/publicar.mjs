@@ -60,6 +60,7 @@ const FICHEIROS = [
   'musica.css',      /* a loja de música: página inicial e /musica/ */
   'menu.js',         /* abre e fecha a gaveta; não constrói o menu */
   'musica.js',       /* arranca a loja de música na página própria */
+  'curso-assistente.js', /* o assistente «curso completo ou à hora?» da página do curso */
   'favicon.ico',      /* o icone que o Google mostra ao lado do nome do site */
   'site.webmanifest', /* so os icones: sem start_url nem display, nao e PWA */
   'robots.txt',
