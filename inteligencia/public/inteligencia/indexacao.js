@@ -23,9 +23,21 @@
   };
   const TIPOS = { conteudo: 'conteúdo', dados: 'dados do CMS', nova: 'página nova' };
 
-  function linkInspeccao(caminho) {
-    return 'https://search.google.com/search-console/inspect?resource_id=' + encodeURIComponent(PROPRIEDADE) +
-      '&id=' + encodeURIComponent('https://happysoaring.com' + caminho);
+  /* A ligação directa à inspecção (…/inspect?resource_id=…&id=…) dá 404 no Search
+     Console. O que funciona sempre: copiar o endereço e abrir a propriedade, onde
+     se cola na barra «Inspecionar qualquer URL» no topo. */
+  const SEARCH_CONSOLE = 'https://search.google.com/search-console?resource_id=' + encodeURIComponent(PROPRIEDADE);
+
+  function copiar(texto) {
+    if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(texto);
+    const t = el('textarea');
+    t.value = texto;
+    t.setAttribute('readonly', '');
+    t.className = 'so-leitor';
+    document.body.appendChild(t);
+    t.select();
+    try { document.execCommand('copy'); } finally { t.remove(); }
+    return Promise.resolve();
   }
 
   function mostrar(d) {
@@ -88,13 +100,23 @@
 
       const tdA = el('td');
       if (p.estado === 'PENDENTE' || p.estado === 'ULTRAPASSADO' || p.estado === 'SEM_INSPECCAO') {
-        const abrir = el('a', 'Abrir no Search Console', 'botao-link');
-        abrir.href = linkInspeccao(p.caminho); abrir.target = '_blank'; abrir.rel = 'noopener';
+        const url = 'https://happysoaring.com' + p.caminho;
+        const abrir = el('a', 'Copiar e abrir o Search Console', 'botao-link');
+        abrir.href = SEARCH_CONSOLE; abrir.target = '_blank'; abrir.rel = 'noopener';
+        abrir.title = 'Copia ' + url + ' — cola-o na barra «Inspecionar qualquer URL» no topo do Search Console';
+        const aviso = el('div', null, 'sub');
+        aviso.setAttribute('role', 'status');
+        abrir.addEventListener('click', () => {
+          copiar(url)
+            .then(() => { aviso.textContent = 'Endereço copiado: cola-o na barra de inspecção no topo do Search Console.'; })
+            .catch(() => { aviso.textContent = 'Não foi possível copiar: ' + url; });
+        });
         tdA.appendChild(abrir);
         const b = el('button', 'Já pedi', 'abrir');
         b.type = 'button';
         b.addEventListener('click', () => registar(p.caminho, b));
         tdA.appendChild(b);
+        tdA.appendChild(aviso);
       }
       tr.appendChild(tdA);
       tbody.appendChild(tr);
