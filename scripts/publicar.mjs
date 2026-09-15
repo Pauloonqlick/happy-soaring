@@ -333,6 +333,37 @@ for (const d of PASTAS.concat(PASTAS_GERADAS)) {
   copiaPasta(o, path.join(SAIDA, d));
 }
 
+/* 15/09/2026 · O CSS VAI PARA O AR SEM COMENTÁRIOS (auditoria)
+   As folhas deste projecto explicam as decisões por escrito, e ainda bem —
+   mas o pagina.css ia assim para o browser: 218 KB (50 KB comprimido) a
+   travar a primeira pintura das páginas geradas. Sem comentários nem espaços
+   fica em 19 KB comprimido.
+
+   A minificação é conservadora de propósito: tira comentários, junta espaços
+   e só apaga os que estão à volta de { } ; — nunca à volta de «:» nem de «>»,
+   porque «body.pg :is(…)» e «body.pg:is(…)» não são o mesmo seletor.
+   Comparado no browser a 15/09/2026: 10 páginas no computador e 3 no telemóvel,
+   todos os estilos calculados iguais antes e depois. A fonte no repositório
+   não muda; só a cópia que se publica. Faz-se ANTES do carimbo, para o resumo
+   ser o do ficheiro que vai mesmo para o ar. */
+passo('Minificar o CSS publicado');
+{
+  let antes = 0, depois = 0;
+  for (const f of FICHEIROS.filter(x => x.endsWith('.css'))) {
+    const p = path.join(SAIDA, f);
+    const css = fs.readFileSync(p, 'utf8');
+    const strings = css.match(/'[^'\n]*'|"[^"\n]*"/g) || [];
+    if (strings.some(s => s.includes('/*') || /\s\s|[{};]\s|\s[{};]/.test(s))) {
+      console.log('  ' + f + ': fica como está (tem texto entre aspas que a minificação podia alterar)');
+      continue;
+    }
+    const min = css.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ').replace(/\s*([{};])\s*/g, '$1').trim() + '\n';
+    antes += css.length; depois += min.length;
+    fs.writeFileSync(p, min);
+  }
+  console.log('  CSS: ' + Math.round(antes / 1024) + ' KB → ' + Math.round(depois / 1024) + ' KB');
+}
+
 passo('Carimbar a versão no JavaScript e no CSS');
 carimbar();
 

@@ -3058,7 +3058,22 @@ function initMotion(data) {
     const N = (data.wind && data.wind.density) || 90, P = [];
     for (let i = 0; i < N; i++) P.push(newP(true));
     let t = 0;
-    (function tick() {
+    /* 15/09/2026 · O VENTO SÓ SE DESENHA QUANDO SE VÊ (auditoria)
+       Corria 60 vezes por segundo mesmo com o canvas a opacidade 0, nas
+       secções sem vento — trabalho de processador por nada, no telemóvel.
+       Pára quando fica invisível e retoma quando volta; e quem pediu menos
+       movimento ao sistema não o tem de todo. */
+    const semMovimento = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let parado = true;
+    const retoma = () => {
+      if (!parado || semMovimento || canvas.style.opacity === '0') return;
+      parado = false;
+      requestAnimationFrame(tick);
+    };
+    let mudouEm = 0;               /* deixa acabar o fade antes de parar */
+    new MutationObserver(() => { mudouEm = performance.now(); retoma(); }).observe(canvas, { attributes: true, attributeFilter: ['style'] });
+    function tick() {
+      if (canvas.style.opacity === '0' && performance.now() - mudouEm > 900) { parado = true; return; }
       t += 0.016;
       const base = 1 + Math.sin(t * 0.6) * 0.35 + gust;
       gust *= 0.95;
@@ -3075,7 +3090,8 @@ function initMotion(data) {
         if (p.x - p.len > W) Object.assign(p, newP(false));
       }
       requestAnimationFrame(tick);
-    })();
+    }
+    retoma();
 
     /* liga/desliga o vento por slide: faz fade conforme o slide mais visível */
     const secs = [...document.querySelectorAll('section')];
@@ -3118,23 +3134,32 @@ function initMotion(data) {
    divide-se então. */
 const SLIDE_ADIADO = 'produtos';
 
+/* 15/09/2026 · EM PARALELO O QUE NÃO DEPENDE UM DO OUTRO (auditoria)
+   Medido no site: settings → tema → slides → avisos eram quatro esperas em
+   fila, e a imagem do hero só era pedida aos 830 ms numa ligação rápida —
+   num telemóvel em rede móvel, várias vezes isso. O tema não precisa do
+   settings, e os avisos não precisam dos slides: ficam duas vagas em vez de
+   quatro. A imagem do hero, essa, já vem pedida pelo <link rel="preload"> do
+   index.html. */
 async function loadSite() {
-  const settings = await fetch('/content/settings.json').then(r => r.json());
-  /* o tema e opcional: sem ficheiro valem as omissoes, que sao os
-     valores que as folhas ja trazem escritos */
-  const tema = await fetch('/content/tema.json')
-    .then(r => (r.ok ? r.json() : {})).catch(() => ({}));
+  const [settings, tema] = await Promise.all([
+    fetch('/content/settings.json').then(r => r.json()),
+    /* o tema e opcional: sem ficheiro valem as omissoes, que sao os
+       valores que as folhas ja trazem escritos */
+    fetch('/content/tema.json').then(r => (r.ok ? r.json() : {})).catch(() => ({}))
+  ]);
   const ids = Array.isArray(settings.slides) ? settings.slides : [];
-  const slides = await Promise.all(ids.map(id =>
-    id === SLIDE_ADIADO
-      ? Promise.resolve({ id, adiado: true })
-      : fetch('/content/slides/' + id + '.json').then(r => (r.ok ? r.json() : null)).catch(() => null)
-  ));
-
   const avisosIds = Array.isArray(settings.avisos) ? settings.avisos : [];
-  const avisos = await Promise.all(avisosIds.map(id =>
-    fetch('/content/avisos/' + id + '.json').then(r => (r.ok ? r.json() : null)).catch(() => null)
-  ));
+  const [slides, avisos] = await Promise.all([
+    Promise.all(ids.map(id =>
+      id === SLIDE_ADIADO
+        ? Promise.resolve({ id, adiado: true })
+        : fetch('/content/slides/' + id + '.json').then(r => (r.ok ? r.json() : null)).catch(() => null)
+    )),
+    Promise.all(avisosIds.map(id =>
+      fetch('/content/avisos/' + id + '.json').then(r => (r.ok ? r.json() : null)).catch(() => null)
+    ))
+  ]);
   return Object.assign({}, settings, {
     tema,
     sections: slides.filter(Boolean),

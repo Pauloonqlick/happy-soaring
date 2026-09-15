@@ -808,6 +808,15 @@ function escreveIniciais() {
   const f = path.join(RAIZ, 'index.html');
   const molde = fs.readFileSync(f, 'utf8');
 
+  /* 15/09/2026 · o preload das imagens do hero (index.html) tem de pedir as
+     mesmas imagens que o hero.json manda mostrar; senão descarrega-se uma
+     imagem que ninguém vê e a certa continua atrasada. Falha em voz alta. */
+  const piloto = (HERO.elements || HERO.items || []).find(x => x && /hero-pilot/.test(String(x.src || '')));
+  for (const img of [HERO.bgImage, HERO.bgImageMobile, piloto && piloto.src].filter(Boolean)) {
+    if (!molde.includes('<link rel="preload" as="image" href="' + img + '"'))
+      throw new Error('index.html: falta o preload de ' + img + ' (content/slides/hero.json mudou?)');
+  }
+
   /* o português escreve-se no próprio index.html: só o bloco estático muda */
   escrevePagina(f, trocaBloco(molde, OMISSAO));
 
@@ -1392,7 +1401,7 @@ ${scriptIdiomas()}
 
 function paginaFlow(l, num) {
   const url = DOMINIO + caminhoFlow(l);
-  const foto = DOMINIO + '/images/og-happysoaring.jpg';
+  const foto = DOMINIO + '/images/og/og-costa.jpg';   /* 15/09/2026: fotografia sem texto (auditoria) */
   const alts = alternativas(x => caminhoFlow(x));
   const alt = etiquetasAlt(alts);
   const wa = 'https://wa.me/' + num + '?text=' + encodeURIComponent(t(FL.ctaMsg, l));
@@ -1593,7 +1602,7 @@ const caminhoQP = l => ROTAS['/o-que-e-um-parakite/'][l]
 
 function paginaPilot2Wing(l, num) {
   const url = DOMINIO + caminhoP2W(l);
-  const foto = DOMINIO + '/images/og-happysoaring.jpg';
+  const foto = DOMINIO + '/images/og/og-costa.jpg';   /* 15/09/2026: fotografia sem texto (auditoria) */
   const alts = alternativas(x => caminhoP2W(x));
   const alt = etiquetasAlt(alts);
   const wa = 'https://wa.me/' + num + '?text=' + encodeURIComponent(t(P2W.ctaMsg, l));
@@ -1786,7 +1795,8 @@ function paginaParakite(l, num) {
   const alts = alternativas(caminhoPK);
   const alt = etiquetasAlt(alts);
   const inicio = inicioHref(l);
-  const foto = DOMINIO + '/images/og-parakite-portugal.jpg';
+  /* 15/09/2026: fotografia sem texto (auditoria) — o spot da Praia das Bicas, recortado a 1200×630 */
+  const foto = DOMINIO + '/images/og/spot-praia-das-bicas.jpg';
   const wa = m => 'https://wa.me/' + num + '?text=' + encodeURIComponent(t(m, l));
 
   const ld = JSON.stringify({
@@ -1956,7 +1966,8 @@ function paginaParakite(l, num) {
     ogTipo: 'website',
     ogLocale: IN.ogLocale[l],
     ogTitulo: t(PK.h1, l),
-    ogImagem: { largura: 1200, altura: 630, alt: t(PK.ogAlt, l) },
+    /* a imagem passou a ser a da Praia das Bicas (15/09/2026): o alt é o dessa fotografia, do spots.json */
+    ogImagem: { largura: 1200, altura: 630, alt: t(((SPOTS.find(s => s.id === 'praia-das-bicas') || {}).album || [{}])[0].alt, l) || t(PK.ogAlt, l) },
     rodape: esc(t(PK.rodape, l)),
     corpo: `
 <main>
@@ -2182,7 +2193,7 @@ function blocoParakite(p, l) {
 function pagina(p, l, num) {
   const url = DOMINIO + caminho(l, p);
   const cor = (p.cores || [])[0];
-  const foto = cor ? DOMINIO + '/images/asas/' + chave(p.nome) + '__' + cor + '.webp' : DOMINIO + '/images/og-happysoaring.jpg';
+  const foto = cor ? DOMINIO + '/images/asas/' + chave(p.nome) + '__' + cor + '.webp' : DOMINIO + '/images/og/og-costa.jpg';
   /* SEM ` | Happy Soaring`. Saiu a 10/09/2026, e a razao e a mesma para as
      159 paginas onde estava: desde outubro de 2022 o Google mostra o nome do
      site ACIMA do titulo nos resultados, e tira-o do `WebSite` dos dados
@@ -2486,7 +2497,7 @@ function paginaQuemSomos(l) {
   });
 
   return moldeDaPagina({
-    lingua: l, url, alts, alt, foto: DOMINIO + '/images/og-happysoaring.jpg', ld,
+    lingua: l, url, alts, alt, foto: DOMINIO + '/images/og/og-costa.jpg', ld,
     classe: 'pg spot papel tema qs',
     titulo: t(QS.titulo, l),
     descricao: t(QS.descricao, l),
@@ -2562,7 +2573,12 @@ function paginaSpot(s, l, num) {
   const f = s.ficha || {};
 
   const capa = (s.album || []).find(m => m.imagem);
-  const foto = capa ? DOMINIO + capa.imagem : DOMINIO + '/images/og-happysoaring.jpg';
+  /* 15/09/2026 · a imagem de partilha é um recorte horizontal (1200×630) da
+     fotografia do spot: a original é ao alto (1000×1779), e o Google pede para
+     evitar proporções extremas (auditoria). Sem recorte, fica a original. */
+  const recorte = '/images/og/spot-' + s.id + '.jpg';
+  const foto = fs.existsSync(path.join(RAIZ, recorte)) ? DOMINIO + recorte
+    : capa ? DOMINIO + capa.imagem : DOMINIO + '/images/og/og-costa.jpg';
 
   /* AS FOTOGRAFIAS VOLTAM À PÁGINA, E O POPUP DEIXA DE EXISTIR
      ==========================================================
@@ -2619,7 +2635,8 @@ function paginaSpot(s, l, num) {
      inventada. Lição do módulo de inteligência: dados-estruturados/video-sem-data. */
   const nosVideo = media.filter(m => m.videoId && VIDEOS_YOUTUBE[m.videoId]?.uploadDate).map(m => ({
     '@type': 'VideoObject',
-    name: s.nome + (t(m.legenda, l) ? ' — ' + t(m.legenda, l) : ''),
+    /* o título real do vídeo, lido no YouTube (auditoria 15/09/2026: o name é o título do vídeo) */
+    name: VIDEOS_YOUTUBE[m.videoId].titulo || (s.nome + (t(m.legenda, l) ? ' — ' + t(m.legenda, l) : '')),
     description: t(m.alt, l) || t(m.legenda, l) || s.nome,
     thumbnailUrl: DOMINIO + (m.imagem || capaDe(m)),
     /* sem `contentUrl`: apontava para a página do YouTube, e a documentação do
@@ -2963,7 +2980,7 @@ if (!so && !soIdioma) {
 
 function paginaQueParakite(l) {
   const url = DOMINIO + caminhoQP(l);
-  const foto = DOMINIO + '/images/og-o-que-e-um-parakite.jpg';
+  const foto = DOMINIO + '/images/og/og-parakite.jpg';   /* 15/09/2026: fotografia sem texto (auditoria) */
   const alts = alternativas(x => caminhoQP(x));
   const alt = etiquetasAlt(alts);
   const inicio = inicioHref(l);
@@ -3331,7 +3348,7 @@ const MUSICA = (() => {
 
 function paginaMusica(l) {
   const url = DOMINIO + caminhoMU(l);
-  const foto = DOMINIO + '/images/og-musica.jpg';
+  const foto = DOMINIO + '/images/og/og-musica.jpg';   /* 15/09/2026: fotografia sem texto (auditoria) */
   const alts = alternativas(x => caminhoMU(x));
   const alt = etiquetasAlt(alts);
   const inicio = inicioHref(l);
@@ -3380,13 +3397,14 @@ function paginaMusica(l) {
           name: f.name,
           genre: f.genre || undefined,
           byArtist: { '@id': DOMINIO + '/#paulo' }
-        })),
-        byArtist: {
-          '@type': 'Person',
-          '@id': DOMINIO + '/#paulo',
-          name: bio.nome || 'Paulo Pereira',
-          description: t(bio.abertura, l) || undefined
-        }
+        }))
+      },
+      /* 15/09/2026 · o Paulo num nó próprio (auditoria): o byArtist não é propriedade
+         de MusicPlaylist na schema.org — as faixas apontam para ele pelo @id */
+      { '@type': 'Person',
+        '@id': DOMINIO + '/#paulo',
+        name: bio.nome || 'Paulo Pereira',
+        description: t(bio.abertura, l) || undefined
       }
     ])
   });
@@ -3753,8 +3771,8 @@ function paginaCurso(l, numWa) {
   <figure class="pk-heroi-foto">
     <img src="/images/curso/curso-heroi-asa-1000.webp" srcset="/images/curso/curso-heroi-asa-600.webp 600w, /images/curso/curso-heroi-asa-1000.webp 1000w"
       sizes="(max-width: 900px) 60vw, 360px" width="1000" height="1873" alt="${esc(t(C.ogAlt, l))}" fetchpriority="high" />
-    <ul class="pk-factos">${[C.ficha[0], C.ficha[1], C.ficha[2], C.ficha[3], C.local].map(x =>
-      `<li><b>${tx(x.valor)}</b> <span>${tx(x.nota)}</span></li>`).join('')}</ul>
+    <!-- 15/09/2026 · sem a caixa dos factos (decisão do Paulo): repetia o parágrafo
+         ao lado e a secção «O curso em resumo», e tapava a fotografia de fundo -->
   </figure>
   </div>
 </section>`;
@@ -4307,8 +4325,8 @@ if (!so && !soIdioma) {
      É a regra antiga — «sem data fiável, não se inventa» — aplicada por
      página em vez de ao ficheiro todo.
 
-     O `changefreq` e a `priority` ficam: não custam nada e o Google
-     ignora-os de qualquer maneira. O `lastmod` é o único dos três que ele
+     O `changefreq` e a `priority` SAÍRAM a 15/09/2026 (auditoria): o Google
+     ignora-os, e a documentação oficial di-lo. O `lastmod` é o único dos três que ele
      usa, e era o único que faltava. */
 
   const FICHEIRO_DATAS = path.join(RAIZ, 'sitemap-datas.json');
@@ -4361,8 +4379,6 @@ if (!so && !soIdioma) {
     '  <url>',
     '    <loc>' + loc + '</loc>',
     ...(datas[loc] ? ['    <lastmod>' + datas[loc] + '</lastmod>'] : []),
-    '    <changefreq>' + freq + '</changefreq>',
-    '    <priority>' + pri + '</priority>',
     '  </url>'
   ].join('\n');
   const corpoMapa = fixas.map(u => entrada(u.loc, u.freq, u.pri))

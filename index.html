@@ -74,14 +74,14 @@
 <meta property="og:url" content="https://happysoaring.com/" />
 <meta property="og:title" content="Happy Soaring — Parakite e Parapente em Portugal" />
 <meta property="og:description" content="Parakite e parapente em Portugal com a Happy Soaring: aconselhamento, equipamento Flow Paragliders e formação com a escola parceira FelloFly." />
-<meta property="og:image" content="https://happysoaring.com/images/og-happysoaring.jpg" />
+<meta property="og:image" content="https://happysoaring.com/images/og/og-costa.jpg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="Costa portuguesa vista de cima, com a marca Happy Soaring" />
+<meta property="og:image:alt" content="Costa portuguesa vista de cima: arriba, praia e mar" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Happy Soaring — Parakite e Parapente em Portugal" />
 <meta name="twitter:description" content="Parakite e parapente em Portugal: aconselhamento, equipamento Flow Paragliders e formação com a escola parceira FelloFly." />
-<meta name="twitter:image" content="https://happysoaring.com/images/og-happysoaring.jpg" />
+<meta name="twitter:image" content="https://happysoaring.com/images/og/og-costa.jpg" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -90,7 +90,19 @@
      para o estreito dos titulos e para o corpo normal, e e um ficheiro so.
      Ate aqui o site nao carregava tipo nenhum — era Segoe UI no Windows,
      San Francisco no iPhone e Roboto no Android. -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..112,400..800&amp;display=swap" />
+<!-- 15/09/2026 · a fonte já não trava a primeira pintura (auditoria): só serve
+     a secção do mapa, que fica abaixo do primeiro ecrã. Carrega em paralelo e
+     aplica-se quando chega; sem JavaScript, o <noscript> carrega-a como antes. -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..112,400..800&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..112,400..800&amp;display=swap" /></noscript>
+<!-- 15/09/2026 · AS IMAGENS DO HERO PEDIDAS JÁ NO HTML (auditoria)
+     Sem isto só eram pedidas depois do app.js e dos JSON (830 ms numa ligação
+     rápida). O media tem de ser o mesmo do <picture> do app.js (760px), e os
+     endereços os do content/slides/hero.json — o gerador recusa gerar se
+     deixarem de bater certo. -->
+<link rel="preload" as="image" href="/images/hero-bg-mobile.jpg" media="(max-width: 760px)" fetchpriority="high" />
+<link rel="preload" as="image" href="/images/hero-bg.jpg" media="(min-width: 761px)" fetchpriority="high" />
+<link rel="preload" as="image" href="/images/hero-pilot.webp" />
 <link rel="stylesheet" href="/styles.css" />
 <link rel="stylesheet" href="/musica.css" />
 

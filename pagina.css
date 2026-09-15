@@ -4260,3 +4260,25 @@ body.spot.papel.qs .spot-sec h3:first-child{margin-top:0}
 .qs-equipa{list-style:none;margin:0 0 6px;padding:0;display:flex;flex-wrap:wrap;gap:14px 22px}
 .qs-equipa li{display:flex;align-items:center;gap:10px;font-weight:700}
 .qs-equipa img{width:64px;height:64px;object-fit:cover;border-radius:50%}
+
+/* ======================================================================
+   CURSO · A FOTOGRAFIA DE FUNDO DO HERÓI (15/09/2026, pedido do Paulo)
+   A duna e o mar em tom azul, por trás do texto e da asa. O texto continua
+   marinho sobre claro: um véu azul-claro forte do lado do texto, que abre à
+   direita para a fotografia se ver por trás da asa amarela. No telemóvel o
+   texto vem por cima, por isso o véu corre de cima para baixo.
+   A imagem é decoração (fundo CSS): o que diz a página continua no texto.
+   ====================================================================== */
+.pg.pk .pk-heroi.pk-heroi-curso{
+  background-color:#e9f0f7;
+  background-image:linear-gradient(90deg,rgba(233,240,247,.96) 0%,rgba(233,240,247,.92) 40%,rgba(233,240,247,.5) 64%,rgba(233,240,247,.14) 100%),
+    url(/images/curso/curso-fundo-1920.webp);
+  background-size:cover;background-position:center 62%;background-repeat:no-repeat;
+}
+@media (max-width:900px){
+  .pg.pk .pk-heroi.pk-heroi-curso{
+    background-image:linear-gradient(180deg,rgba(233,240,247,.95) 0%,rgba(233,240,247,.9) 55%,rgba(233,240,247,.45) 100%),
+      url(/images/curso/curso-fundo-1000.webp);
+    background-position:center bottom;
+  }
+}

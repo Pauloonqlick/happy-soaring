@@ -50,10 +50,10 @@ export const IN = {
   ogLocale: { pt: 'pt_PT', en: 'en_GB', es: 'es_ES', fr: 'fr_FR', de: 'de_DE' },
   /* alt da imagem de partilha — muda de língua, a imagem não */
   ogAlt: {
-    pt: 'Costa portuguesa vista de cima, com a marca Happy Soaring',
-    en: 'The Portuguese coast from above, with the Happy Soaring wordmark',
-    es: 'La costa portuguesa desde el aire, con la marca Happy Soaring',
-    fr: 'La côte portugaise vue du ciel, avec la marque Happy Soaring',
-    de: 'Die portugiesische Küste von oben, mit dem Schriftzug Happy Soaring'
+    pt: 'Costa portuguesa vista de cima: arriba, praia e mar',
+    en: 'The Portuguese coast from above: cliff, beach and sea',
+    es: 'La costa portuguesa desde el aire: acantilado, playa y mar',
+    fr: 'La côte portugaise vue du ciel : falaise, plage et mer',
+    de: 'Die portugiesische Küste von oben: Klippe, Strand und Meer'
   }
 };
