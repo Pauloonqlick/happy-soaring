@@ -2466,7 +2466,7 @@ function paginaQuemSomos(l) {
     [caminhoFlow(l), 'Flow Paragliders', QS.fazemos.flow],
     [caminhoCurso(l), t(CURSO.migalhaCurso, l), QS.fazemos.curso],
     [caminhoPK(l), t(SP.hub, l), QS.fazemos.spots],
-    [caminhoMU(l), t(MU.migalha, l), MU.desc]
+    [caminhoMU(l), t(MU.migalha, l), QS.fazemos.musica]
   ].map(([href, rot, txt]) => `<li><a href="${esc(href)}">${esc(rot)}</a> — ${esc(t(txt, l))}</li>`).join('');
 
   const equipa = CURSO.equipa.map(g => `

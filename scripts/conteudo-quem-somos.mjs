@@ -11,7 +11,7 @@
  *   O que já existe noutro conteúdo não se copia para aqui: o gerador lê-o de
  *   lá — a apresentação da Flow (FL.entrada), o percurso do Paulo
  *   (P2W.autorTexto), a equipa do curso (CURSO.equipa), as asas que o Paulo
- *   voa (campo `voada` de cada asa) e a descrição da música (MU.desc). Aqui
+ *   voa (campo `voada` de cada asa) e o endereço da música. Aqui
  *   ficam só os rótulos e as frases que ligam isso tudo.
  *
  * O QUE NÃO ESTÁ AQUI, E PORQUE
@@ -49,11 +49,12 @@ export const QS = {
   pauloTit: { pt: 'Paulo Pereira', en: 'Paulo Pereira', es: 'Paulo Pereira', fr: 'Paulo Pereira', de: 'Paulo Pereira' },
   /* o texto do percurso é o P2W.autorTexto; isto vem a seguir */
   pauloMais: {
-    pt: 'Dedica-se a tempo inteiro à Happy Soaring. A música original do site também é dele: é multi-instrumentista e compositor.',
-    en: 'Works full-time on Happy Soaring. The site’s original music is also Paulo’s — a multi-instrumentalist and composer.',
-    es: 'Se dedica a tiempo completo a Happy Soaring. La música original del sitio también es suya: es multiinstrumentista y compositor.',
-    fr: 'Se consacre à plein temps à Happy Soaring. La musique originale du site est aussi de Paulo, multi-instrumentiste et compositeur.',
-    de: 'Arbeitet in Vollzeit an Happy Soaring. Auch die Originalmusik der Website stammt von Paulo — Multiinstrumentalist und Komponist.'
+    /* 15/09/2026 · o site também é desenvolvido pelo Paulo (dito por ele) */
+    pt: 'Dedica-se a tempo inteiro à Happy Soaring e é quem desenvolve este site. A música original do site também é de Paulo, multi-instrumentista e compositor.',
+    en: 'Works full-time on Happy Soaring and develops this website. The site’s original music is also Paulo’s — a multi-instrumentalist and composer.',
+    es: 'Se dedica a tiempo completo a Happy Soaring y es quien desarrolla este sitio. La música original del sitio también es de Paulo, multiinstrumentista y compositor.',
+    fr: 'Se consacre à plein temps à Happy Soaring et développe ce site. La musique originale du site est aussi de Paulo, multi-instrumentiste et compositeur.',
+    de: 'Arbeitet in Vollzeit an Happy Soaring und entwickelt diese Website. Auch die Originalmusik der Website stammt von Paulo — Multiinstrumentalist und Komponist.'
   },
   asasTit: {
     pt: 'Asas que o Paulo voa', en: 'Wings Paulo flies', es: 'Alas que vuela Paulo',
@@ -75,6 +76,14 @@ export const QS = {
       es: 'curso de conversión para pilotos de parapente, con el método Pilot2Wing.',
       fr: 'cours de conversion pour pilotes de parapente, avec la méthode Pilot2Wing.',
       de: 'Umstiegskurs für Gleitschirmpiloten mit der Pilot2Wing-Methode.'
+    },
+    /* 15/09/2026 · a música vai assinada: é do Paulo (pedido dele) */
+    musica: {
+      pt: 'música original de Paulo Pereira, inspirada no vento, no mar e no voo, para usar nos teus vídeos de voo.',
+      en: 'original music by Paulo Pereira, inspired by wind, sea and flight, to use in your flight videos.',
+      es: 'música original de Paulo Pereira, inspirada en el viento, el mar y el vuelo, para usar en tus vídeos de vuelo.',
+      fr: 'musique originale de Paulo Pereira, inspirée par le vent, la mer et le vol, à utiliser dans tes vidéos de vol.',
+      de: 'Originalmusik von Paulo Pereira, inspiriert von Wind, Meer und Flug, für deine Flugvideos.'
     },
     spots: {
       pt: 'os spots onde se voa Parakite e parapente perto de Lisboa.',
