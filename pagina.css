@@ -3285,12 +3285,33 @@ ol.pk-eixos[data-cols="1"] span{grid-column:2;margin-top:2px}
 .pk-sinais li{padding:14px 0;border-top:1px solid var(--linha);font-size:16px;line-height:1.45;color:var(--tinta)}
 .pk-sinais li::before{content:'';display:block;width:18px;height:3px;margin-bottom:10px;background:var(--orange)}
 
+/* 15/09/2026 · EXPERIÊNCIA: a ideia e os sinais lado a lado.
+   A citação corria a largura toda, justificada e hifenizada pelo .pg.tema p
+   («movi-mento»), e os seis sinais ficavam soltos com um traço por cima de
+   cada um. Agora a ideia fica numa coluna estreita, alinhada à esquerda, e
+   os sinais num cartão branco, em duas colunas, com o marcador na linha. */
+.pk-exp{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:48px;align-items:start;margin-top:22px}
+.pg.pk .pk-exp p{text-align:left;-webkit-hyphens:manual;hyphens:manual;max-width:none}
+.pg.pk .pk-exp-tx p:first-child{margin-top:0;font-size:17px;line-height:1.6;color:var(--tinta-fraca)}
+.pg.pk .pk-exp .pk-cit{margin:24px 0 0;max-width:none;font-size:clamp(21px,2vw,27px);line-height:1.25;text-wrap:pretty}
+.pk-exp-sinais{background:#fff;border:1px solid var(--linha);padding:24px 28px 12px}
+.pg.pk .pk-exp-sinais h3{margin:0 0 6px}
+.pk-exp .pk-sinais{margin:0;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px}
+.pk-exp .pk-sinais li{display:grid;grid-template-columns:10px minmax(0,1fr);gap:12px;align-items:baseline;padding:17px 0;border-top:1px solid var(--linha);font-size:16.5px}
+.pk-exp .pk-sinais li:nth-child(-n+2){border-top:0}
+.pk-exp .pk-sinais li::before{width:10px;height:10px;margin:0;background:var(--orange);transform:translateY(1px)}
+
 /* três grupos de critérios nunca ficam 2 + 1: mantêm as três colunas até ao telemóvel */
 @media (max-width:1100px){
   .pk-sinais{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pk-exp{grid-template-columns:minmax(0,1fr);gap:28px}
+  .pg.pk .pk-exp .pk-cit{max-width:30ch}
 }
 @media (max-width:720px){
-  .pk-criterios,.pk-sinais{grid-template-columns:minmax(0,1fr)}
+  .pk-criterios,.pk-sinais,.pk-exp .pk-sinais{grid-template-columns:minmax(0,1fr)}
+  .pk-exp .pk-sinais li:nth-child(2){border-top:1px solid var(--linha)}
+  .pk-exp-sinais{padding:18px 18px 6px}
+  .pk-exp .pk-sinais li{padding:12px 0}
   .pk-ponte{grid-template-columns:minmax(0,1fr)}
   .pk-ponte-seta{justify-self:center;width:2px;height:28px;margin:0}
   .pk-ponte-seta::after{right:-5px;top:auto;bottom:-1px;border:6px solid transparent;border-top-color:var(--tinta-fraca);border-bottom:0}
@@ -3588,6 +3609,30 @@ html.pk-assist-bloqueio,html.pk-assist-bloqueio body{overflow:hidden}
   .pk-passos{grid-template-columns:minmax(0,1fr)}
   .pk-passos li{padding:6px 0 22px 52px}
   .pk-passos li::after{top:38px;left:16px;right:auto;bottom:0;width:2px;height:auto}
+}
+
+/* 15/09/2026 · O MÉTODO EM TRÊS BLOCOS.
+   Era uma coluna corrida: parágrafos justificados a toda a largura (150
+   caracteres por linha, «trans-forma»), o subtítulo solto, e a ligação e a
+   frase final desligadas no fundo. Agora:
+     1. o ciclo num cartão branco, com a razão da ordem por baixo dos passos;
+     2. «qualidade antes de rapidez»: título e fluxo à esquerda, texto à direita;
+     3. a frase de fecho e a ligação na mesma linha, separadas por um filete. */
+.pg.pk .pk-met p{text-align:left;-webkit-hyphens:manual;hyphens:manual}
+.pg.pk .pk-met > .pk-lead{max-width:68ch}
+.pk-met-ciclo{margin:28px 0 0;padding:30px 32px 26px;background:#fff;border:1px solid var(--linha)}
+.pk-met-ciclo .pk-passos{margin:0}
+.pg.pk .pk-met-nota{margin:30px 0 0;max-width:78ch;color:var(--tinta-fraca)}
+.pk-met-q{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:24px 48px;align-items:start;margin:44px 0 0}
+.pg.pk .pk-met-q h3{margin:0 0 12px}
+.pk-met-q .pk-fluxo{margin:0}
+.pg.pk .pk-met-q > p{margin:0;max-width:68ch}
+.pk-met-fim{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px 40px;margin:40px 0 0;padding-top:28px;border-top:1px solid var(--linha)}
+.pg.pk .pk-met-fim .pk-cit{margin:0;max-width:34ch}
+.pg.pk .pk-met-fim p:last-child{margin:0}
+@media (max-width:900px){
+  .pk-met-ciclo{padding:22px 20px 18px}
+  .pk-met-q{grid-template-columns:minmax(0,1fr)}
 }
 
 /* ======================================================================

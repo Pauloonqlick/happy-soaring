@@ -3660,9 +3660,12 @@ function paginaCurso(l, numWa) {
 
   /* ---- 4 · COMO SE MEDE ------------------------------------------- */
   const sinais = () => `\n  <ul class="pk-sinais">${lista(C.expAtributos).map(x => `<li>${x}</li>`).join('')}</ul>`;
+  /* 15/09: a ideia à esquerda, os sinais num cartão à direita — em vez de uma
+     citação a toda a largura e seis sinais soltos por baixo */
   B['experiencia'] = sec('pk-sec pk-leitura', 'experiencia',
-    eyebrow(C.expKicker) + h2(C.expTitulo) + par(C.expManobra) +
-    cit(C.expCentral) + h3(C.expAtributosTitulo) + sinais());
+    eyebrow(C.expKicker) + h2(C.expTitulo) +
+    `\n  <div class="pk-exp">\n  <div class="pk-exp-tx">` + par(C.expManobra) + cit(C.expCentral) + `\n  </div>` +
+    `\n  <div class="pk-exp-sinais">` + h3(C.expAtributosTitulo) + sinais() + `\n  </div>\n  </div>`);
 
   /* ---- 5 · DE ONDE VENS · ilha clara ------------------------------ */
   /* 14/09/2026 · A ENTRADA DO CAPÍTULO EM DUAS COLUNAS
@@ -3724,13 +3727,16 @@ function paginaCurso(l, numWa) {
   </p>`);
 
   /* ---- 6 · O MÉTODO ----------------------------------------------- */
-  B['metodo'] = sec('pk-sec', 'metodo',
+  /* 15/09: três blocos em vez de uma coluna corrida a toda a largura — o ciclo
+     num cartão com a razão da ordem por baixo; «qualidade antes de rapidez» com
+     o fluxo ao lado do texto; e a frase de fecho ao lado da ligação */
+  B['metodo'] = sec('pk-sec pk-met', 'metodo',
     eyebrow(C.metodoKicker) + h2(C.metodoTitulo) +
     par(C.metodoDistincao, 'pk-lead') +
-    passos(C.metodoCadeia) +
-    par(C.metodoTexto) +
-    h3(C.qualidadeTitulo) + cadeia(C.qualidadeCadeia) + par(C.qualidadeTexto) +
-    botao2(C.metodoLigacao, hrefP2W));
+    `\n  <div class="pk-met-ciclo">` + passos(C.metodoCadeia) + par(C.metodoTexto, 'pk-met-nota') + `\n  </div>` +
+    `\n  <div class="pk-met-q">\n  <div>` + h3(C.qualidadeTitulo) + cadeia(C.qualidadeCadeia) + `\n  </div>` +
+    par(C.qualidadeTexto) + `\n  </div>` +
+    `\n  <div class="pk-met-fim">` + cit(C.citacao) + botao2(C.metodoLigacao, hrefP2W) + `\n  </div>`);
 
   /* ---- 7 · ERRO E AUTOMATISMO ------------------------------------- */
   /* 14/09/2026 · A SECÇÃO DO ERRO GANHA RITMO E AS FOTOGRAFIAS DO INSTRUTOR
@@ -3934,7 +3940,6 @@ function paginaCurso(l, numWa) {
      pela mesma ordem. Sem barras de capítulo por cima das secções (15/09):
      repetiam o sobretítulo que cada secção já tem. */
   const junta = (secao, extra) => secao.replace(/\n<\/section>\n$/, extra + '\n</section>\n');
-  B.metodo = junta(B.metodo, cit(C.citacao));
   B.erro = junta(B.erro, blocoCorrecao);
   B.harness = junta(B.harness, blocoEnergia);
   B.progressao = junta(B.progressao, blocoDecisao);
