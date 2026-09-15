@@ -2651,6 +2651,27 @@ collections:
                     name: flowHref
                     widget: string
                     required: false
+                    hint: Aparece na ficha como fonte da descrição da Flow («Ver a página da Flow»).
+                  - label: Voada pela Happy Soaring
+                    name: voada
+                    widget: object
+                    collapsed: true
+                    required: false
+                    hint: Só asas que o Paulo voa mesmo. A ficha mostra «Paulo Pereira voa a …» e os anos de Parakite.
+                    fields:
+                      - label: O Paulo voa esta asa
+                        name: sim
+                        widget: boolean
+                        default: false
+                        required: false
+                      - label: Tamanhos que voa (opcional)
+                        name: tamanhos
+                        widget: list
+                        required: false
+                        field:
+                          label: Tamanho
+                          name: tamanho
+                          widget: string
           - label: Vídeo (YouTube)
             name: video
             fields:

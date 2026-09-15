@@ -3,9 +3,10 @@
 User-agent: *
 Allow: /
 
-# Gestao de conteudos: nao ha nada aqui para indexar, e cada visita de um
-# crawler e orcamento de rastreio gasto a nada.
-Disallow: /admin/
+# Gestao de conteudos (/admin/): SEM Disallow desde 15/09/2026. A pagina tem
+# noindex, e o Google so le o noindex se puder abrir a pagina; bloqueada aqui,
+# o endereco podia aparecer na pesquisa sem descricao. Documentacao oficial:
+# developers.google.com/search/docs/crawling-indexing/robots/intro
 
 # Ferramentas e ficheiros de trabalho
 Disallow: /editor/

@@ -173,14 +173,6 @@ export const CURSO = {
     nota: { pt: 'spots a menos de 35 min de Lisboa', en: 'sites under 35 min from Lisbon', es: 'spots a menos de 35 min de Lisboa',
             fr: 'sites à moins de 35 min de Lisbonne', de: 'Spots unter 35 Min. von Lissabon' }
   },
-  /* o botão principal do herói abre o assistente; `{perguntas}` é o número de perguntas dele */
-  heroAssistente: {
-    pt: 'Curso completo ou à hora? Descobre em {perguntas} perguntas',
-    en: 'Full course or hourly? Find out in {perguntas} questions',
-    es: '¿Curso completo o por horas? Descúbrelo en {perguntas} preguntas',
-    fr: 'Cours complet ou à l’heure ? Découvre-le en {perguntas} questions',
-    de: 'Kompletter Kurs oder stundenweise? Finde es in {perguntas} Fragen heraus'
-  },
   /* O ÍNDICE E OS CAPÍTULOS — a mesma ordem das secções no gerador */
   indiceRotulo: { pt: 'Nesta página', en: 'On this page', es: 'En esta página', fr: 'Sur cette page', de: 'Auf dieser Seite' },
   indice: {
@@ -218,6 +210,22 @@ export const CURSO = {
   metodoBotao: {
     pt: 'Conhecer o Pilot2Wing', en: 'About Pilot2Wing', es: 'Conocer Pilot2Wing',
     fr: 'Découvrir Pilot2Wing', de: 'Pilot2Wing kennenlernen'
+  },
+  /* O PERCURSO «QUERO FAZER O CURSO» (15/09/2026)
+     Um ecrã por passo, sem scroll pela página inteira. Só estes rótulos são
+     novos: os títulos dos passos são os do índice e o conteúdo de cada passo
+     são os textos desta página (o gerador escolhe quais). O último passo é o
+     assistente «curso completo ou à hora?». Sem JavaScript o botão leva ao
+     resumo e preço. */
+  percurso: {
+    botao: { pt: 'Quero fazer o curso', en: 'I want to take the course', es: 'Quiero hacer el curso',
+             fr: 'Je veux suivre le cours', de: 'Ich möchte den Kurs machen' },
+    titulo: { pt: 'O curso em {n} passos', en: 'The course in {n} steps', es: 'El curso en {n} pasos',
+              fr: 'Le cours en {n} étapes', de: 'Der Kurs in {n} Schritten' },
+    passo: { pt: 'Passo {n} de {t}', en: 'Step {n} of {t}', es: 'Paso {n} de {t}',
+             fr: 'Étape {n} sur {t}', de: 'Schritt {n} von {t}' },
+    detalhe: { pt: 'Ler em detalhe na página', en: 'Read it in full on the page', es: 'Leer en detalle en la página',
+               fr: 'Lire en détail sur la page', de: 'Ausführlich auf der Seite lesen' }
   },
 
   /* ==================================================================

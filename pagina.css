@@ -3509,6 +3509,115 @@ ol.pk-eixos[data-cols="1"] span{grid-column:2;margin-top:2px}
 .pk-assist.pk-assist-ecra{position:fixed;inset:0;z-index:1000;overflow:auto;align-content:start;padding:16px 18px 32px;border:0;box-shadow:none;background:#fff}
 html.pk-assist-bloqueio,html.pk-assist-bloqueio body{overflow:hidden}
 
+/* ======================================================================
+   CURSO · O PERCURSO «QUERO FAZER O CURSO» (15/09/2026)
+   Cinco ecrãs por cima da página. No computador, uma janela ao centro com os
+   passos em cima, o conteúdo a rolar por dentro e os botões sempre à vista
+   em baixo; no telemóvel, o ecrã inteiro. Fundo branco e cores próprias,
+   como o assistente: não herda nada da secção de onde se abriu.
+   ====================================================================== */
+.pk-perc{position:fixed;inset:0;z-index:1001;display:grid;place-items:center;padding:24px;background:rgba(7,29,58,.62)}
+.pk-perc[hidden]{display:none}
+html.pk-perc-bloqueio,html.pk-perc-bloqueio body{overflow:hidden}
+.pk-perc-caixa{display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;width:min(780px,100%);height:min(760px,calc(100vh - 48px));
+  background:#fff;color:#16202c;box-shadow:0 24px 60px rgba(7,29,58,.35)}
+.pg.pk .pk-perc p{margin:0;max-width:none;text-align:left;-webkit-hyphens:manual;hyphens:manual}
+.pk-perc-topo{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px 0}
+.pg.pk .pk-perc-titulo{font-size:12px;font-weight:700;letter-spacing:var(--tr-rotulo);text-transform:uppercase;color:#5b6878}
+.pk-perc-fechar{font:inherit;font-size:14px;font-weight:600;padding:8px 0;cursor:pointer;background:none;border:0;color:#5b6878;
+  text-decoration:underline;text-underline-offset:3px}
+.pk-perc-fechar:hover{color:#16202c}
+
+.pk-perc-passos{list-style:none;margin:12px 0 0;padding:0 28px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;border-bottom:1px solid #dfe6ef}
+.pk-perc-tab{display:flex;align-items:center;gap:8px;width:100%;min-height:48px;padding:6px 2px 10px;font:inherit;text-align:left;cursor:pointer;
+  background:none;border:0;border-bottom:3px solid transparent;margin-bottom:-1px;color:#5b6878}
+.pk-perc-tab-n{flex:0 0 auto;display:grid;place-items:center;width:24px;height:24px;font-size:12.5px;font-weight:800;border:2px solid #9fb0c3;color:#5b6878;background:#fff}
+.pk-perc-tab-t{font-size:13px;font-weight:600;line-height:1.2}
+.pk-perc-tab.feito .pk-perc-tab-n{border-color:#0e3b6d;background:#0e3b6d;color:#fff}
+.pk-perc-tab[aria-current]{border-bottom-color:#ff6a13;color:#0e3b6d}
+.pk-perc-tab[aria-current] .pk-perc-tab-n{border-color:#ff6a13;background:#ff6a13;color:#231000}
+.pk-perc-tab:hover{color:#16202c}
+
+.pk-perc-rolo{overflow:auto;overscroll-behavior:contain;padding:26px 28px 30px}
+.pk-perc-corpo{display:grid;gap:22px}
+.pg.pk .pk-perc-n{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#a63f00}
+.pg.pk .pk-perc-h{margin-top:-14px;font-size:clamp(26px,3.2vw,34px);font-weight:800;letter-spacing:-.6px;line-height:1.1;color:#0e3b6d;outline:none;text-wrap:balance}
+.pk-perc-b{display:grid;gap:10px}
+.pg.pk .pk-perc-rot{font-size:11.5px;font-weight:700;letter-spacing:var(--tr-rotulo);text-transform:uppercase;color:#5b6878}
+.pg.pk .pk-perc-tx{font-size:17px;line-height:1.55;color:#16202c;max-width:62ch}
+.pg.pk .pk-perc-nota{font-size:14px;line-height:1.5;color:#5b6878;max-width:66ch}
+
+.pk-perc-lista{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.pk-perc-lista li{position:relative;padding-left:24px;font-size:15.5px;line-height:1.45;color:#16202c}
+.pk-perc-lista li::before{content:'';position:absolute;left:0;top:6px;width:10px;height:10px;background:#ff6a13}
+.pk-perc-b-lista .pk-perc-lista{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 24px}
+
+.pk-perc-factos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.pk-perc-factos li{padding:14px 16px;background:#eef3f8;border-top:3px solid #0e3b6d}
+.pk-perc-factos b{display:block;font-size:20px;font-weight:800;letter-spacing:-.3px;line-height:1.15}
+.pk-perc-factos span{display:block;margin-top:3px;font-size:13.5px;line-height:1.35;color:#4d5c6e}
+
+.pk-perc-fases{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px;counter-reset:fase}
+.pk-perc-fases li{counter-increment:fase;display:flex;align-items:center;gap:6px;padding:6px 10px 6px 6px;font-size:14px;font-weight:600;color:#16202c;border:1px solid #c9d4e1}
+.pk-perc-fases li::before{content:counter(fase);display:grid;place-items:center;width:20px;height:20px;font-size:11.5px;font-weight:800;background:#0e3b6d;color:#fff}
+.pk-perc-fases li:last-child{border-color:#ff6a13}
+.pk-perc-fases li:last-child::before{background:#ff6a13;color:#231000}
+
+.pk-perc-b-equipa{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px}
+.pk-perc-grupo{display:grid;gap:10px;align-content:start}
+.pk-perc-pessoas{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:16px}
+.pk-perc-pessoas li{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:700;color:#0e3b6d}
+.pk-perc-pessoas img{width:56px;height:56px;object-fit:cover;border-radius:50%;background:#eef3f8}
+
+.pk-perc-locais{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px}
+.pk-perc-locais li{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:2px 10px;padding:10px 0;border-top:1px solid #dfe6ef}
+.pk-perc-locais b{font-size:15.5px;font-weight:700}
+.pk-perc-locais span{font-size:13.5px;color:#5b6878}
+
+.pk-perc-b-opcoes{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.pk-perc-opcao{display:grid;gap:6px;align-content:start;padding:18px 20px;border:1px solid #c9d4e1}
+.pk-perc-opcao:first-child{border-top:3px solid #ff6a13}
+.pg.pk .pk-perc-preco{font-size:32px;font-weight:800;letter-spacing:-.8px;line-height:1.05;color:#0e3b6d}
+.pk-perc-opcao .pk-perc-lista{margin-top:8px}
+.pk-perc-opcao .pk-perc-lista li{font-size:14.5px}
+
+.pk-perc-falar{margin-top:18px}
+.pk-perc-falar .pk-assist-lugar{margin:0}
+.pk-perc-falar .pk-assist-entrada{background:#f4f7fb;border-color:#dfe6ef}
+.pg.pk .pk-perc-falar .pk-assist-intro{color:#4d5c6e}
+.pk-perc-falar .pk-assist{box-shadow:none;background:#f4f7fb}
+.pg.pk .pk-perc-direto{margin-top:14px}
+
+.pk-perc-pe{display:flex;align-items:center;gap:10px 24px;padding:14px 28px;border-top:1px solid #dfe6ef;background:#fff}
+.pk-perc-link,.pg a.pk-perc-link{font:inherit;font-size:14.5px;font-weight:600;padding:8px 0;cursor:pointer;background:none;border:0;color:#5b6878;
+  text-decoration:underline;text-underline-offset:3px}
+.pk-perc-link:hover,.pg a.pk-perc-link:hover{color:#16202c}
+.pk-perc-detalhe{margin-right:auto}
+.pk-perc-voltar + .pk-perc-detalhe{margin-left:0}
+.pk-perc .pk-b{margin:0;border:0;cursor:pointer;font-family:inherit}
+.pk-perc-tab:focus-visible,.pk-perc-link:focus-visible,.pk-perc-fechar:focus-visible,.pk-perc .pk-b:focus-visible{outline:3px solid #ff6a13;outline-offset:2px}
+
+@media (max-width:720px){
+  .pk-perc{padding:0;place-items:stretch}
+  .pk-perc-caixa{width:100%;height:100%;height:100dvh;box-shadow:none}
+  .pk-perc-topo{padding:10px 18px 0}
+  .pk-perc-passos{padding:0 18px;gap:4px}
+  .pk-perc-tab{justify-content:center;min-height:44px;padding:4px 0 8px}
+  .pk-perc-tab-t{display:none}
+  .pk-perc-rolo{padding:20px 18px 26px}
+  .pk-perc-b-lista .pk-perc-lista,.pk-perc-b-equipa,.pk-perc-locais,.pk-perc-b-opcoes{grid-template-columns:minmax(0,1fr)}
+  .pk-perc-factos{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .pk-perc-factos li{padding:10px}
+  .pk-perc-factos b{font-size:16px}
+  .pk-perc-factos span{font-size:12px}
+  .pk-perc-pe{padding:10px 18px calc(10px + env(safe-area-inset-bottom));gap:8px 16px}
+  .pk-perc-detalhe{font-size:13.5px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .pk-perc:not([hidden]) .pk-perc-caixa{animation:pk-perc-entra .18s ease-out}
+}
+@keyframes pk-perc-entra{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
 @media (max-width:720px){
   .pk-opcoes{grid-template-columns:minmax(0,1fr);gap:26px}
   .pk-assist-entrada{padding:20px 18px}
@@ -4121,3 +4230,18 @@ body.spot.papel .spot-aviso h2,.pg .spot-aviso h2{color:#0e3b6d}
 /* a classe repetida é de propósito: a regra azul vale (0,5,2) por causa do :is();
    a biografia só tem este texto a negrito (medido), por isso não entra na lista dos escuros */
 :root body.pg .bio .bio-nome.bio-nome.bio-nome{color:#fff}
+
+/* ======================================================================
+   FICHAS · A FONTE DO TEXTO DA FLOW E AS ASAS QUE O PAULO VOA (15/09/2026)
+   Auditoria face à documentação do Google: a descrição longa e as secções
+   técnicas são da Flow e falam na primeira pessoa. O cartão diz de quem é
+   o texto e liga ao fabricante. As asas que o Paulo voa ganham uma nota
+   própria, antes da descrição, com experiência em primeira mão.
+   ====================================================================== */
+.pg .pg-papel .pg-fonte-rot{margin:0 0 22px;max-width:none;font-size:12px;font-weight:800;letter-spacing:var(--tr-rotulo);text-transform:uppercase;color:#a63f00}
+.pg-papel .pg-fonte-rot + .pg-sec h2{margin-top:0}
+.pg .pg-papel .pg-fonte{margin:4px 0 22px;padding-top:16px;max-width:none;border-top:1px solid var(--painel-linha);font-size:14px;color:var(--painel-fraca)}
+.pg .pg-papel .pg-fonte a{font-weight:700}
+.pg .pg-voada{max-width:none;margin:0 0 24px;padding:18px 22px;background:#fff;border:1px solid #cbd8e5;border-left:4px solid #ff6a13}
+.pg .pg-voada .pg-voada-tit{margin:0 0 4px;font-size:12px;font-weight:800;letter-spacing:var(--tr-rotulo);text-transform:uppercase;color:#a63f00}
+.pg .pg-voada p{margin:0;max-width:none;color:#14212f}

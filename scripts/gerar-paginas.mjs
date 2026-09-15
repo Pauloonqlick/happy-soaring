@@ -150,10 +150,12 @@ const VIDEOS_YOUTUBE = JSON.parse(fs.readFileSync(path.join(RAIZ, 'scripts/dados
    havendo FAQ: foi decisao do Paulo». Passou a haver, e vale registar com
    que informacao a decisao mudou, porque nao mudou o que se pensava saber:
 
-   Desde agosto de 2023 o Google so mostra o resultado rico de FAQ a sites
-   de saude e de entidades governamentais reconhecidas. Para este site a
-   marcacao NAO produz resultado rico nenhum — nesse ponto a decisao
-   anterior estava certa e continua certa.
+   15/09/2026 · CORRIGIDO: a 7/05/2026 o Google deixou de mostrar o
+   resultado rico de FAQ a qualquer site, e a 15/06/2026 retirou a
+   documentação (documentação oficial, «Actualizações da documentação»).
+   O que aqui estava — «só saúde e governo, desde 2023» — ficou velho. E o
+   Google escreve também que não há marcação especial para as funcionalidades
+   de IA. A marcação não faz mal; manter ou retirar é decisão do Paulo.
 
    O que mudou e o outro leitor. Pergunta e resposta ja emparelhadas sao o
    formato mais facil de levantar por um motor de resposta, e a FAQ deste
@@ -217,7 +219,10 @@ function compoeDescricao(partes, lim = 160, minimo = 100) {
     if (saida.length < minimo) {
       const espaco = lim - saida.length - 2;   /* o espaco e a reticencia */
       if (espaco > 30) {
-        const ped = pedacoDe(f, espaco);
+        /* sem nada antes, a vírgula tem de vir tarde: cortar aos 40 deu a
+           /en/parakite-portugal/alfarim/ uma descrição de 41 caracteres
+           («Alfarim, in the municipality of Sesimbra…») — auditoria 15/09/2026 */
+        const ped = pedacoDe(f, espaco, saida ? 40 : 90);
         if (ped) saida = (saida + ' ' + ped + '…').trim();
       }
     }
@@ -269,6 +274,41 @@ const T = {
                es:'Punto de venta oficial Flow Paragliders en Portugal',
                fr:'Revendeur officiel Flow Paragliders au Portugal',
                de:'Offizieller Flow-Paragliders-Händler in Portugal' },
+  /* 15/09/2026 · A FONTE DO TEXTO DA FLOW (auditoria)
+     A descrição longa e as secções técnicas são texto da Flow, que fala na
+     primeira pessoa («o nosso perfil»). Sem a fonte à vista, lia-se como se
+     fosse a Happy Soaring a desenhar a asa — e o Google pergunta se é evidente
+     quem escreveu. O bloco passa a dizer de quem é e a ligar ao fabricante. */
+  fonteRot:  { pt:'Descrição da Flow Paragliders', en:'Description by Flow Paragliders',
+               es:'Descripción de Flow Paragliders', fr:'Description par Flow Paragliders',
+               de:'Beschreibung von Flow Paragliders' },
+  fonteNota: { pt:'Texto da Flow Paragliders, o fabricante.', en:'Text by Flow Paragliders, the manufacturer.',
+               es:'Texto de Flow Paragliders, el fabricante.', fr:'Texte de Flow Paragliders, le fabricant.',
+               de:'Text von Flow Paragliders, dem Hersteller.' },
+  fonteLink: { pt:'Ver a página da Flow', en:'See the Flow page', es:'Ver la página de Flow',
+               fr:'Voir la page Flow', de:'Zur Flow-Seite' },
+  /* 15/09/2026 · AS ASAS QUE O PAULO VOA (dito por ele: AlbatroXX 13 e 16,
+     Mullet 2 17.5, 20 e 23, MulletX 15, Freedom 2 XS; Parakite há 4 anos, a tempo
+     inteiro). Os dados vivem no campo `voada` de cada asa, no CMS. */
+  voadaTit:  { pt:'Voada pela Happy Soaring', en:'Flown by Happy Soaring', es:'Volada por Happy Soaring',
+               fr:'Volée par Happy Soaring', de:'Von Happy Soaring geflogen' },
+  voadaTams: { pt:'Paulo Pereira, da Happy Soaring, voa a {asa} {tam}.', en:'Paulo Pereira, of Happy Soaring, flies the {asa} {tam}.',
+               es:'Paulo Pereira, de Happy Soaring, vuela la {asa} {tam}.', fr:'Paulo Pereira, de Happy Soaring, vole la {asa} {tam}.',
+               de:'Paulo Pereira von Happy Soaring fliegt den {asa} {tam}.' },
+  voadaSem:  { pt:'Paulo Pereira, da Happy Soaring, voa a {asa}.', en:'Paulo Pereira, of Happy Soaring, flies the {asa}.',
+               es:'Paulo Pereira, de Happy Soaring, vuela la {asa}.', fr:'Paulo Pereira, de Happy Soaring, vole la {asa}.',
+               de:'Paulo Pereira von Happy Soaring fliegt den {asa}.' },
+  voadaUm:   { pt:'no tamanho', en:'in size', es:'en la talla', fr:'en taille', de:'in Größe' },
+  voadaVar:  { pt:'nos tamanhos', en:'in sizes', es:'en las tallas', fr:'en tailles', de:'in den Größen' },
+  voadaE:    { pt:'e', en:'and', es:'y', fr:'et', de:'und' },
+  voadaAnos: { pt:'Voa Parakite há {n} anos e dedica-se a tempo inteiro a este projecto.',
+               en:'Flying Parakite for {n} years, full-time on this project.',
+               es:'Vuela Parakite desde hace {n} años y se dedica a tiempo completo a este proyecto.',
+               fr:'En Parakite depuis {n} ans, à plein temps sur ce projet.',
+               de:'Seit {n} Jahren Parakite, in Vollzeit für dieses Projekt.' },
+  /* o texto alternativo da foto principal diz a cor que se vê (auditoria 15/09/2026) */
+  corAlt:    { pt:'cor', en:'colour', es:'color', fr:'coloris', de:'Farbe' },
+  contactos: { pt:'Contactos', en:'Contact', es:'Contacto', fr:'Contact', de:'Kontakt' },
   inicio:    { pt:'Início', en:'Home', es:'Inicio', fr:'Accueil', de:'Start' },
   migalhas:  { pt:'Onde estás', en:'Breadcrumb', es:'Dónde estás',
                fr:'Fil d’Ariane', de:'Brotkrumen' },
@@ -675,15 +715,28 @@ ${(MAPA.cartoes || []).filter(c => c && c.visible !== false).map(c => `    <h3>$
           d ? ' — ' + esc(d) : ''}</li>`;
       }).join('')}</ul>`).join('\n')}`;
 
+  /* 15/09/2026 · AS PÁGINAS DO MENU E OS CONTACTOS TAMBÉM AQUI (auditoria)
+     O curso e a música só existiam no menu montado pelo app.js, e o email e o
+     telefone que a Organization declara só apareciam no rodapé montado por ele.
+     As entradas saem do mesmo menu.json que o app.js e as páginas geradas usam. */
+  const vistas = new Set();
+  const paginasMenu = entradasDoMenu(MENU, l, { naInicial: false })
+    .filter(e => e.tipo === 'pagina' && e.href !== inicioHref(l) && !vistas.has(e.href) && vistas.add(e.href));
+  const nav = paginasMenu.length ? `
+    <ul>${paginasMenu.map(e => `<li><a href="${esc(e.href)}">${esc(e.rotulo)}</a></li>`).join('')}</ul>` : '';
+
   return `<div class="hs-estatico">
     <h1>${esc(h1)}</h1>
-    <p>${esc(entrada)}</p>
+    <p>${esc(entrada)}</p>${nav}
 ${areas}
 
     <h2>${esc(t(FL.gamaTit, l))}</h2>
     <p>${esc(t(FL.gamaSub, l))}
     <a href="${esc(caminhoFlow(l))}">${esc(t(FL.ancoraLink, l))}</a></p>
 ${listas}
+
+    <h2>${esc(t(T.contactos, l))}</h2>
+    <p><!--email_off--><a href="mailto:${CONTACTO.email}">${CONTACTO.email}</a><!--email_on--> · <a href="tel:${CONTACTO.tel}">${CONTACTO.telVis}</a></p>
   </div>`;
 }
 
@@ -1353,7 +1406,7 @@ function paginaFlow(l, num) {
   }
   const catalogo = [...porFam.entries()].map(([fam, asas]) => `
     <div class="fl-fam">
-      <h3>${esc(rotuloFamilia(fam, l))} <span>${asas.length} ${esc(t(FL.modelos, l))}</span></h3>
+      <h3>${esc(rotuloFamilia(fam, l))} <span>${asas.length} ${esc(t(asas.length === 1 ? FL.modelo : FL.modelos, l))}</span></h3>
       <ul class="fl-lista">${asas.map(p => {
         const cls = rotuloClasse(p.classificacao, l);
         /* A MESMA RECEITA DO `pg-irmas`, E O MESMO FICHEIRO
@@ -1492,6 +1545,23 @@ function paginaFlow(l, num) {
 
 /* a ligação contextual das 22 páginas de produto para o hub, sempre na
    língua da própria página */
+/* ---- as asas que o Paulo voa (15/09/2026) ----------------------------
+   Só aparece nas asas marcadas no CMS (campo `voada`). Os anos contam-se a
+   partir de 2022: «4 anos de Parakite», dito pelo Paulo e confirmado (início em 2022) a 15/09/2026. */
+const PARAKITE_DESDE = 2022;
+function blocoVoada(p, l) {
+  const v = p.voada;
+  if (!v || !v.sim) return '';
+  const tams = (v.tamanhos || []).map(String).filter(Boolean);
+  const lista = tams.length > 1 ? tams.slice(0, -1).join(', ') + ' ' + t(T.voadaE, l) + ' ' + tams[tams.length - 1] : tams[0];
+  const frase = tams.length
+    ? t(T.voadaTams, l).replace('{asa}', p.nome).replace('{tam}', t(tams.length > 1 ? T.voadaVar : T.voadaUm, l) + ' ' + lista)
+    : t(T.voadaSem, l).replace('{asa}', p.nome);
+  const anos = new Date().getFullYear() - PARAKITE_DESDE;
+  return `<section class="pg-sec pg-voada"><p class="pg-voada-tit">${esc(t(T.voadaTit, l))}</p>
+    <p>${esc(frase)} ${esc(t(T.voadaAnos, l).replace('{n}', anos))}</p></section>`;
+}
+
 function blocoDealer(p, l) {
   return `<p class="pg-dealer-nota">${esc(t(FL.ancora, l))}
     <a href="${esc(caminhoFlow(l))}">${esc(t(FL.ancoraLink, l))}</a></p>`;
@@ -1531,25 +1601,17 @@ function paginaPilot2Wing(l, num) {
   const etapasCurso = P2W.cursoEtapas[l] || P2W.cursoEtapas[OMISSAO];
   const inicio = inicioHref(l);
 
-  /* HowTo descreve exactamente o que isto é: um método por etapas. Sem
-     duração nem custo — não os temos, e inventá-los é o que não se faz. */
+  /* 15/09/2026 · SEM HowTo. O resultado HowTo deixou de aparecer no Google em
+     2023 (documentação oficial, «Actualizações da documentação»): a marcação
+     não levava nada a ninguém. As etapas continuam na página, que é onde se
+     lêem. Decisão do Paulo, na auditoria de 15/09/2026. */
   const ld = JSON.stringify({
     '@context': 'https://schema.org',
     '@graph': comEntidade([
       { '@type': 'BreadcrumbList', itemListElement: [
         { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + inicioHref(l) },
         { '@type': 'ListItem', position: 2, name: 'Pilot2Wing', item: url }
-      ]},
-      { '@type': 'HowTo',
-        name: 'Pilot2Wing',
-        description: t(P2W.descricao, l),
-        url,
-        inLanguage: l,
-        author: { '@type': 'Person', name: P2W.autorNome, worksFor: ORGANIZACAO },
-        step: P2W.etapas.map((e, i) => ({
-          '@type': 'HowToStep', position: i + 1, name: t(e.nome, l), text: t(e.texto, l)
-        }))
-      }
+      ]}
     ])
   });
 
@@ -1744,9 +1806,10 @@ function paginaParakite(l, num) {
         inLanguage: l,
         mainEntity: perguntas(PK.faq.map(q => [t(q.p, l), t(q.r, l)])),
         isPartOf: { '@id': DOMINIO + '/#site' },
-        publisher: ORGANIZACAO,
-        author: { '@type': 'Person', name: P2W.autorNome, worksFor: ORGANIZACAO },
-        primaryImageOfPage: { '@type': 'ImageObject', url: foto, width: 1200, height: 630 }
+        publisher: ORGANIZACAO
+        /* sem `author` nem `primaryImageOfPage` (auditoria 15/09/2026): o nome não
+           aparece no corpo desta página e a imagem era a de partilha, que também
+           não. O Google pede para não marcar o que quem lê não vê. */
       }
     ])
   });
@@ -1844,12 +1907,10 @@ function paginaParakite(l, num) {
      a sério vale muito mais do que um endereço encontrado num sitemap, e um
      sistema de IA que leia o HTML sem o executar não encontrava nada.
 
-     Agora o mosaico de um spot com página é um <a> com o endereço lá dentro.
-     O clique continua a abrir o popup — o JavaScript trava a navegação — mas
-     o ctrl+clique abre a página noutro separador, como qualquer pessoa
-     espera de uma ligação, e sem JavaScript o mosaico leva à página em vez
-     de não fazer nada. O aria-haspopup diz a quem ouve que aquilo abre uma
-     caixa e não muda de página. */
+     Agora o mosaico de um spot com página é um <a> com o endereço lá dentro,
+     e o clique leva mesmo à página: o popup saiu a 11/09/2026 (ver acima).
+     Este comentário dizia que o clique ainda o abria — corrigido na
+     auditoria de 15/09/2026. */
   const spots = SPOTS.map((s) => {
     const album = (s.album || []).filter(m => m && (m.imagem || m.videoId));
     const capa = capaDe(album[0]);
@@ -2199,10 +2260,12 @@ function pagina(p, l, num) {
         : `<a class="pg-wa" href="#pedir">${esc(t(T.pedir, l))}</a>`}
     </div>
     ${cor ? `<img class="pg-foto" id="pg-foto" src="/images/asas/${chave(p.nome)}__${cor}.webp"
-      alt="${esc(p.nome + ' — Flow Paragliders')}" width="1200" height="794" />` : ''}
+      alt="${esc(p.nome + ', ' + t(T.corAlt, l) + ' ' + String(cor).replace(/-/g, ' ') + ' — Flow Paragliders')}" width="1200" height="794" />` : ''}
   </div>
 
   ${blocoPedido(p, l, num)}
+
+  ${blocoVoada(p, l)}
 
   <div class="pg-papel">
   ${t(p.descricao, l) ? '<section class="pg-sec sem-titulo">' + corpo(t(p.descricao, l)) + '</section>' : ''}
@@ -2224,11 +2287,14 @@ function pagina(p, l, num) {
   ${(p.specs || []).length ? `<section class="pg-sec pg-largo"><h2>${esc(t(T.specs, l))}</h2>
     ${tabelaSpecs(p, l)}</section>` : ''}
 
-  <div class="pg-papel">
+  ${t(p.descricaoLonga, l) || secs.trim() ? `<div class="pg-papel pg-fabricante">
+  <p class="pg-fonte-rot">${esc(t(T.fonteRot, l))}</p>
   ${t(p.descricaoLonga, l) ? '<section class="pg-sec sem-titulo">' + corpo(t(p.descricaoLonga, l)) + '</section>' : ''}
 
   ${secs}
-  </div>
+  <p class="pg-fonte">${esc(t(T.fonteNota, l))}${p.flowHref
+    ? ` <a href="${esc(p.flowHref)}" rel="noopener" target="_blank">${esc(t(T.fonteLink, l))}</a>` : ''}</p>
+  </div>` : ''}
 
   ${blocoDealer(p, l)}
 
@@ -2424,12 +2490,15 @@ function paginaSpot(s, l, num) {
         números sirva todas em vez de o código ter casos. */
   const media = (s.album || []).filter(m => m && (m.imagem || m.videoId));
   const blocoMedia = !media.length ? '' : `
-  <div class="spot-media">${media.map(m => {
+  <div class="spot-media">${media.map((m, i) => {
     const src = m.imagem || capaDe(m);
     const altM = esc(t(m.alt, l));
     const leg = esc(t(m.legenda, l) || '');
+    /* a primeira aparece logo a seguir à abertura, no primeiro ecrã: sem lazy e
+       com prioridade (auditoria 15/09/2026 — o Google pede para não adiar o que
+       se vê de imediato). As seguintes continuam lazy. */
     const img = `<img src="${esc(src)}" alt="${altM}" width="1000" height="1779"
-        loading="lazy" decoding="async" />`;
+        ${i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" />`;
     const dentro = m.videoId
       ? `<button type="button" class="spot-video" data-video="${esc(m.videoId)}"
         aria-label="${esc(t(SP.verVideo, l))}: ${altM}">${img}
@@ -2452,7 +2521,9 @@ function paginaSpot(s, l, num) {
     name: s.nome + (t(m.legenda, l) ? ' — ' + t(m.legenda, l) : ''),
     description: t(m.alt, l) || t(m.legenda, l) || s.nome,
     thumbnailUrl: DOMINIO + (m.imagem || capaDe(m)),
-    contentUrl: 'https://www.youtube.com/watch?v=' + m.videoId,
+    /* sem `contentUrl`: apontava para a página do YouTube, e a documentação do
+       Google pede para não ligar à página onde o vídeo vive (auditoria 15/09/2026).
+       O `embedUrl` é o que o clique abre. */
     embedUrl: 'https://www.youtube-nocookie.com/embed/' + m.videoId,
     uploadDate: VIDEOS_YOUTUBE[m.videoId].uploadDate,
     inLanguage: l,
@@ -3574,7 +3645,7 @@ function paginaCurso(l, numWa) {
     <p class="cur-ponte">${tx(C.ponte)}</p>
     <p class="pk-tese pk-resposta">${tx(C.resposta)}</p>
     <p class="pk-botoes">
-      <a class="pk-b" href="#falar">${tx(C.heroAssistente).replace('{perguntas}', C.sim.perguntas.length)}</a>
+      <a class="pk-b" href="#resumo" data-percurso>${tx(C.percurso.botao)}</a>
       <a class="pk-b pk-b2" href="${esc(hrefP2W)}">${tx(C.metodoBotao)}</a>
     </p>
   </div>
@@ -3951,6 +4022,53 @@ function paginaCurso(l, numWa) {
   corpo += `\n<nav class="pk-indice" aria-label="${tx(C.indiceRotulo)}"><div>${
     CAPITULOS.map((ids, k) => `<a href="#${ids[0]}">${rotulos[k]}</a>`).join('')}</div></nav>\n`;
   for (const id of usados) corpo += B[id];
+
+  /* ---- O PERCURSO «QUERO FAZER O CURSO» (15/09/2026) ----------------
+     Cinco ecrãs por cima da página, abertos pelo botão do herói. Nenhum texto
+     novo além dos rótulos de `C.percurso`: os títulos são os do índice e cada
+     passo leva os textos das secções desta página. Os textos vão num JSON e o
+     /curso-assistente.js desenha-os — assim não ficam repetidos no HTML. O
+     último passo é o assistente «curso completo ou à hora?», que se muda
+     para dentro do percurso como se muda para o resumo ou para o fim. */
+  const lst = o => (t(o, l) || []).map(x => precos(x));
+  const ix = t(C.indice, l);
+  const dadosPerc = {
+    ui: { titulo: txc(C.percurso.titulo).replace('{n}', 5), passo: txc(C.percurso.passo), detalhe: txc(C.percurso.detalhe),
+      seguinte: txc(S.seguinte), voltar: txc(S.voltar), fechar: txc(S.fechar) },
+    passos: [
+      { id: 'conversao', t: ix[1], blocos: [
+        { tipo: 'texto', rot: txc(C.requisitosRotulo), tx: txc(C.requisitosTexto) },
+        { tipo: 'lista', rot: txc(C.avaliacaoTitulo), itens: lst(C.avaliacaoItens) },
+        { tipo: 'texto', rot: txc(C.autonomiaKicker), tx: txc(C.autonomiaDef) }] },
+      { id: 'progressao', t: ix[4], blocos: [
+        { tipo: 'factos', itens: [C.ficha[0], C.ficha[3], C.ficha[4]].map(x => ({ v: txc(x.valor), n: txc(x.nota) })) },
+        { tipo: 'fases', rot: txc(C.fasesTitulo), itens: lst(C.fasesCurtas) },
+        { tipo: 'texto', tx: txc(C.progTexto) }] },
+      { id: 'quem-ensina', t: ix[2], blocos: [
+        { tipo: 'equipa', grupos: C.equipa.map(g => ({ t: txc(g.titulo), pessoas: g.pessoas.map(p => ({ nome: p.nome, foto: '/images/curso/' + p.foto + '-480.webp' })) })) },
+        { tipo: 'locais', rot: txc(C.local.valor) + ' · ' + txc(C.local.nota), itens: C.locais.map(x => ({ v: x.nome, n: txc(x.papel) })) },
+        { tipo: 'texto', tx: txc(C.equipTexto) },
+        { tipo: 'nota', tx: txc(C.licenca) }] },
+      { id: 'resumo', t: ix[0], blocos: [
+        { tipo: 'opcoes', itens: [[C.opcaoCurso, C.ficha[1].valor], [C.opcaoHora, C.ficha[2].valor]].map(([o, p]) => ({ rot: txc(o.rotulo), preco: txc(p), itens: lst(o.itens) })) },
+        { tipo: 'nota', tx: txc(C.equilibrio) }] },
+      { id: 'falar', t: ix[6], blocos: [{ tipo: 'texto', tx: txc(C.ctaTitulo) }] }
+    ]
+  };
+  corpo += `
+<div class="pk-perc" id="pk-perc" role="dialog" aria-modal="true" aria-labelledby="pk-perc-t" data-perc="${esc(JSON.stringify(dadosPerc))}" hidden>
+  <div class="pk-perc-caixa">
+    <div class="pk-perc-topo"><p class="pk-perc-titulo" id="pk-perc-t">${esc(dadosPerc.ui.titulo)}</p><button type="button" class="pk-perc-fechar">${tx(S.fechar)}</button></div>
+    <ol class="pk-perc-passos"></ol>
+    <div class="pk-perc-rolo">
+      <div class="pk-perc-corpo"></div>
+      <div class="pk-perc-falar" hidden>${lugarAssist('percurso', false)}
+        <p class="pk-perc-direto"><a class="pk-perc-link" href="${esc(waSimples)}" rel="noopener" target="_blank">${tx(S.direto)}</a></p>
+      </div>
+    </div>
+    <div class="pk-perc-pe"></div>
+  </div>
+</div>\n`;
   /* no telemóvel, o contacto fica sempre à mão; abre o assistente */
   corpo += `\n<div class="pk-barra-fixa"><a class="pk-b" href="#falar">${tx(C.ctaKicker)}</a></div>\n`;
 
@@ -3973,35 +4091,14 @@ function paginaCurso(l, numWa) {
         publisher: ORGANIZACAO,
         mainEntity: perguntas(C.faq.map(f => [precos(t(f.q, l)), precos(t(f.a, l))])),
         primaryImageOfPage: { '@type': 'ImageObject', url: foto, width: 1600, height: 899 }
-      },
-      /* 14/09/2026 · OS PREÇOS ENTRAM (`offers`), POR ESTAREM À VISTA
-         Os dois cartões do bloco 2 mostram 800 € e 60 €/hora: os dados
-         estruturados dizem o mesmo que a página, e nada mais. Continua de
-         fora o `courseWorkload`, pela razão escrita abaixo.
-
-         SEM `hasCourseInstance`, SEM `offers` E SEM `courseWorkload` (a nota original)
-         O Course pede o nome, a descricao e quem o da, e isso e verdade e
-         esta na pagina. O resto nao entra: os quatro dias sao duracao de
-         REFERENCIA e nao promessa — esta escrito assim em cinco linguas no
-         proprio conteudo —, e o schema.org nao tem forma de dizer
-         "referencia". Um `courseWorkload: P4D` endurecia numa garantia o
-         que a pagina toda tem cuidado em nao garantir. O preco esta a
-         visivel no bloco 2; nao vai para o schema enquanto nao houver
-         instancia a que ele pertenca. */
-      { '@type': 'Course',
-        '@id': url + '#curso',
-        name: t(C.h1, l),
-        description: precos(t(C.descricao, l)),
-        inLanguage: l,
-        courseMode: 'onsite',
-        provider: ORGANIZACAO,
-        teaches: lista(C.metodoCadeia).map(x => x.replace(/&[a-z]+;/g, '')),
-        offers: [
-          { '@type': 'Offer', category: 'Paid', name: t(C.opcaoCurso.rotulo, l), price: PRECOS.curso, priceCurrency: 'EUR' },
-          { '@type': 'Offer', category: 'Paid', name: t(C.opcaoHora.rotulo, l),
-            priceSpecification: { '@type': 'UnitPriceSpecification', price: PRECOS.hora, priceCurrency: 'EUR', unitCode: 'HUR' } }
-        ]
       }
+      /* 15/09/2026 · SEM Course. O resultado «informação de cursos» saiu do Google
+         em 2025 e a lista de cursos pede pelo menos três — este site tem um. A
+         marcação obrigava ainda a dizer quem fornece o curso, e a página diz que
+         a formação é dada por instrutores de uma escola parceira que ainda não se
+         nomeia. Sem Course, a página diz a verdade e os dados estruturados não
+         contradizem nada. Preços, duração e método continuam à vista na página.
+         Decisão do Paulo, na auditoria de 15/09/2026. */
     ])
   });
 

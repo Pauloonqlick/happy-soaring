@@ -838,6 +838,9 @@ footer small{opacity:.7}
 }
 .flow-file:hover{background:#e6f0fb;border-color:#b9d3ee}
 .flow-file::before{content:"↓";margin-right:7px;opacity:.75}
+/* 15/09/2026 · de quem é o texto da ficha: da Flow, com ligação ao fabricante */
+.flow-det-fonte{margin:18px 0 0;padding-top:14px;border-top:1px solid #eaeff6;font-size:13.5px;color:#5b6878}
+.flow-det-fonte a{color:#0b63c5;font-weight:700}
 @media(max-width:900px){
   .flow-sec-body.lado-a-lado{grid-template-columns:1fr}
 }

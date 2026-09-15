@@ -1258,6 +1258,77 @@ titulo('18. As datas do sitemap batem com as páginas que estão no disco');
 }
 
 /* ------------------------------------------------------------------ */
+titulo('19. Cada página diz ao Google a mesma coisa sobre si: canónico, línguas e indexação');
+{
+  /* 15/09/2026 · AUDITORIA FACE À DOCUMENTAÇÃO DO GOOGLE
+     As 175 páginas estavam certas, mas nada o garantia: nenhuma verificação
+     lia o <head>. Uma regressão do gerador — um hreflang a menos, um canónico
+     de outra língua, um noindex esquecido — passava sem aviso em todas.
+     Confirma-se, página a página, o que a documentação oficial pede:
+       · um só canónico, absoluto, igual ao endereço do sitemap
+         (developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls);
+       · as seis alternativas (pt, en, es, fr, de, x-default), a da própria
+         língua igual ao canónico, todas no sitemap, e RECÍPROCAS — cada página
+         apontada devolve o mesmo grupo; sem retorno o Google ignora-as
+         (…/specialty/international/localized-versions);
+       · o x-default igual à versão inglesa, como o site decidiu;
+       · o lang do <html> igual à língua do endereço;
+       · nenhum noindex numa página que o sitemap promete. */
+  const LINGUAS = ['pt', 'en', 'es', 'fr', 'de'];
+  const linguaDe = url => (url.match(/^\/(en|es|fr|de)\//) || [null, 'pt'])[1];
+  const atributos = tag => Object.fromEntries([...tag.matchAll(/([a-z-]+)\s*=\s*"([^"]*)"/gi)].map(m => [m[1].toLowerCase(), m[2]]));
+  const noSitemap = new Set(paginas.map(p => DOMINIO + p.url));
+  const grupos = new Map();
+  let falhas = 0;
+  const erro19 = m => { falha(m); falhas++; };
+
+  for (const p of vivas) {
+    const html = fs.readFileSync(p.ficheiro, 'utf8');
+    const cabeca = html.slice(0, html.search(/<\/head>/i) + 1 || html.length);
+    const links = [...cabeca.matchAll(/<link\b[^>]*>/gi)].map(m => atributos(m[0]));
+    const proprio = DOMINIO + p.url;
+
+    const canonicos = links.filter(a => (a.rel || '').toLowerCase() === 'canonical');
+    if (canonicos.length !== 1) erro19(p.url + ': ' + canonicos.length + ' canónicos (tem de haver exactamente um)');
+    else if (canonicos[0].href !== proprio) erro19(p.url + ': o canónico aponta para ' + canonicos[0].href);
+
+    const alt = links.filter(a => (a.rel || '').toLowerCase() === 'alternate' && a.hreflang);
+    const porLingua = {};
+    for (const a of alt) {
+      if (porLingua[a.hreflang]) erro19(p.url + ': hreflang="' + a.hreflang + '" repetido');
+      porLingua[a.hreflang] = a.href;
+    }
+    const esperadas = [...LINGUAS, 'x-default'];
+    const faltam = esperadas.filter(h => !porLingua[h]);
+    const sobram = Object.keys(porLingua).filter(h => !esperadas.includes(h));
+    if (faltam.length) erro19(p.url + ': faltam hreflang ' + faltam.join(', '));
+    if (sobram.length) erro19(p.url + ': hreflang inesperado ' + sobram.join(', '));
+    const lingua = linguaDe(p.url);
+    if (porLingua[lingua] && porLingua[lingua] !== proprio) erro19(p.url + ': o hreflang da própria língua (' + lingua + ') aponta para ' + porLingua[lingua]);
+    if (porLingua['x-default'] && porLingua.en && porLingua['x-default'] !== porLingua.en) erro19(p.url + ': x-default diferente da versão inglesa');
+    for (const [h, href] of Object.entries(porLingua)) {
+      if (!noSitemap.has(href)) erro19(p.url + ': hreflang="' + h + '" aponta para ' + href + ', que não está no sitemap');
+    }
+    grupos.set(proprio, JSON.stringify(esperadas.map(h => porLingua[h] || null)));
+
+    const lang = (html.match(/<html\b[^>]*\blang="([^"]+)"/i) || [])[1];
+    if (lang !== lingua) erro19(p.url + ': <html lang="' + lang + '"> numa página em ' + lingua);
+
+    const robots = [...cabeca.matchAll(/<meta\b[^>]*>/gi)].map(m => atributos(m[0]))
+      .filter(a => /^(robots|googlebot)$/i.test(a.name || ''));
+    if (robots.some(a => /noindex/i.test(a.content || ''))) erro19(p.url + ': noindex numa página do sitemap');
+  }
+  /* reciprocidade: todas as páginas de um grupo declaram o mesmo grupo */
+  for (const [url, grupo] of grupos) {
+    for (const href of new Set(JSON.parse(grupo))) {
+      if (!href || !grupos.has(href) || href === url) continue;
+      if (grupos.get(href) !== grupo) erro19(url.replace(DOMINIO, '') + ': aponta para ' + href.replace(DOMINIO, '') + ', que não devolve o mesmo grupo de línguas');
+    }
+  }
+  ok(vivas.length + ' páginas, ' + falhas + ' problema(s) de canónico, hreflang, lang ou noindex');
+}
+
+/* ------------------------------------------------------------------ */
 return problemas;
 }
 

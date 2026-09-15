@@ -252,7 +252,14 @@ export const UI = {
   flowVento: { pt:'Gama de vento', en:'Wind range', es:'Rango de viento', fr:'Plage de vent', de:'Windbereich' },
   unidadeKn: { pt:'nós', en:'knots', es:'nudos', fr:'nœuds', de:'Knoten' },
   unidadeKmh:{ pt:'km/h', en:'km/h', es:'km/h', fr:'km/h', de:'km/h' },
-  flowDescricao:{ pt:'Descrição', en:'Description', es:'Descripción', fr:'Description', de:'Beschreibung' }
+  /* 15/09/2026 · o texto longo e as secções são da Flow, na primeira pessoa: dizer de quem é (auditoria) */
+  flowDescricao:{ pt:'Descrição da Flow Paragliders', en:'Description by Flow Paragliders', es:'Descripción de Flow Paragliders',
+                  fr:'Description par Flow Paragliders', de:'Beschreibung von Flow Paragliders' },
+  flowFonte: { pt:'Texto da Flow Paragliders, o fabricante.', en:'Text by Flow Paragliders, the manufacturer.',
+               es:'Texto de Flow Paragliders, el fabricante.', fr:'Texte de Flow Paragliders, le fabricant.',
+               de:'Text von Flow Paragliders, dem Hersteller.' },
+  flowFonteLink: { pt:'Ver a página da Flow', en:'See the Flow page', es:'Ver la página de Flow',
+                   fr:'Voir la page Flow', de:'Zur Flow-Seite' }
 };
 
 /**

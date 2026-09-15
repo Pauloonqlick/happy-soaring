@@ -1147,6 +1147,21 @@ function buildFlow(item) {
       d.appendChild(bloco);
     });
 
+    /* 15/09/2026 · de quem é o texto de cima: da Flow, com ligação ao fabricante (auditoria) */
+    if (longa || (p.seccoes || []).length) {
+      const fonte = el('p', 'flow-det-fonte');
+      fonte.textContent = ui('flowFonte') + ' ';
+      if (p.flowHref) {
+        const a = el('a');
+        a.href = p.flowHref;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.textContent = ui('flowFonteLink');
+        fonte.appendChild(a);
+      }
+      d.appendChild(fonte);
+    }
+
     /* acerta o rótulo do botão com o estado inicial (tudo fechado) */
     if (d.__sincAcord) d.__sincAcord();
 
@@ -2921,8 +2936,12 @@ function buildLangSwitcher(locales) {
 
   const list = el('div', 'lang-list');
   locales.filter(code => code !== LOCALE).forEach(code => {
-    const b = el('button', 'lang');
-    b.type = 'button';
+    /* 15/09/2026 · uma LIGAÇÃO com endereço, e não um botão (auditoria): o Google
+       só segue <a href>, como já fazem as páginas geradas. O clique continua a
+       guardar a posição e a escolha antes de o browser seguir a ligação. */
+    const b = el('a', 'lang');
+    b.href = (code === DEFAULT_LOCALE ? '/' : '/' + code + '/');
+    b.hreflang = code;
     b.setAttribute('aria-label', code);
     b.innerHTML = FLAGS[code] || code;
     b.addEventListener('click', () => {
@@ -2931,7 +2950,6 @@ function buildLangSwitcher(locales) {
          E carregar numa bandeira é uma escolha explícita — fica guardada. */
       guardaPosicao();
       guardaIdioma(code);
-      location.href = (code === DEFAULT_LOCALE ? '/' : '/' + code + '/');
     });
     list.appendChild(b);
   });

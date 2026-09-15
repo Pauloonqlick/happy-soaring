@@ -19,8 +19,9 @@
 # 404 deita fora o historico do endereco, um 301 transfere-o.
 #
 # Cada linha aponta directamente ao destino final. Nenhuma passa por outra:
-# uma cadeia de redirects perde autoridade em cada salto e o Google acaba
-# por deixar de a seguir.
+# a documentacao do Google recomenda ir directo ao destino (idealmente ate 3
+# saltos; o Googlebot segue ate 10). Corrigido a 15/09/2026: aqui dizia que
+# uma cadeia "perde autoridade em cada salto", o que a documentacao nao diz.
 #
 # Duas linhas por lingua porque a barra final conta: /en/smartground e
 # /en/smartground/ sao enderecos diferentes para quem os escreve a mao.

@@ -73,7 +73,7 @@ const PASTAS = [
   'content',         /* o JSON que o site lê */
   'images',
   'music',
-  'admin'            /* CMS: pede sessão do GitHub, e o robots.txt tapa-o */
+  'admin'            /* CMS: pede sessão do GitHub; noindex na própria página (o robots.txt deixou de o bloquear a 15/09/2026, para o Google ler o noindex) */
 ];
 
 /* as páginas das asas, geradas: /asas/… em pt e /en|es|fr|de/… nas outras */
@@ -196,9 +196,16 @@ function carimbar() {
      fora desta lista quando nasceu, e sem carimbo um visitante que voltasse
      recebia a versão velha da cache — ou seja, a única folha cuja mudança se
      quer ver imediatamente era a única que não se via. */
+  /* 15/09/2026 · o curso-assistente.js entrou na lista FICHEIROS mas não
+     nesta: o percurso «Quero fazer o curso» saiu para o ar e, a quem já tinha
+     a página em cache, o botão não fazia nada durante 4 horas. Todo o .js e
+     .css de FICHEIROS tem de estar aqui — a verificação logo abaixo garante-o. */
   const v = {};
-  for (const f of ['app.js', 'styles.css', 'pagina.css', 'tema.css', 'menu.css',
-    'menu.js', 'musica.css', 'musica.js'])
+  const carimbaveis = ['app.js', 'styles.css', 'pagina.css', 'tema.css', 'menu.css',
+    'menu.js', 'musica.css', 'musica.js', 'curso-assistente.js'];
+  const semCarimbo = FICHEIROS.filter(f => /\.(js|css)$/.test(f) && !carimbaveis.includes(f));
+  if (semCarimbo.length) erro('ficheiros .js/.css sem carimbo de versão: ' + semCarimbo.join(', ') + ' — acrescenta-os a `carimbaveis`');
+  for (const f of carimbaveis)
     if (fs.existsSync(path.join(SAIDA, f))) v[f] = resumo(f);
 
   /* reescrever as referências em todo o HTML publicado */

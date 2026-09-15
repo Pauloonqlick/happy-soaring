@@ -92,12 +92,16 @@ export const CLASSE_ROTULOS = {
      característica aerodinâmica pertence. E há mais razão para lá ficar do
      que parecia — o manual da Cosmos descreve o perfil a mudar com os
      trimmers e o acelerador, e isso nunca cabia numa palavra só. */
-  'ppg_beginner':     { pt:'Beginner PPG', en:'Beginner PPG', es:'Beginner PPG',
-                        fr:'Beginner PPG', de:'Beginner PPG' },
-  'ppg_intermediate': { pt:'Intermediate PPG', en:'Intermediate PPG', es:'Intermediate PPG',
-                        fr:'Intermediate PPG', de:'Intermediate PPG' },
-  'ppg_advanced':     { pt:'Advanced PPG', en:'Advanced PPG', es:'Advanced PPG',
-                        fr:'Advanced PPG', de:'Advanced PPG' }
+  /* 15/09/2026 · O NÍVEL TRADUZ-SE (auditoria). O rótulo entra no título das
+     fichas, e o Google pede títulos na língua da página: «Advanced PPG» num
+     título alemão contrariava isso. «Parakite» e «Performance Parakite» ficam,
+     porque são o nome das categorias da Flow. */
+  'ppg_beginner':     { pt:'Paramotor de iniciação', en:'Beginner PPG', es:'Paramotor de iniciación',
+                        fr:'Paramoteur débutant', de:'Motorschirm für Einsteiger' },
+  'ppg_intermediate': { pt:'Paramotor intermédio', en:'Intermediate PPG', es:'Paramotor intermedio',
+                        fr:'Paramoteur intermédiaire', de:'Motorschirm Mittelstufe' },
+  'ppg_advanced':     { pt:'Paramotor avançado', en:'Advanced PPG', es:'Paramotor avanzado',
+                        fr:'Paramoteur avancé', de:'Motorschirm für Fortgeschrittene' }
   /* As normas (EN-A, EN-B, EN-C, EN-D, EN 926-1, EN-B / EN 926-1) não entram:
      são códigos e escrevem-se sempre da mesma maneira. Caem pela chave. */
 };

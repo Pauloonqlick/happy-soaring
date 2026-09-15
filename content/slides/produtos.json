@@ -40,11 +40,11 @@
       },
       "titleVisible": false,
       "description": {
-        "pt": "Represento a gama completa da Flow. Escolhe a família, filtra pelo teu nível e vê a asa na cor que quiseres.",
-        "en": "I represent the complete Flow range. Choose the family, filter by your level and see each wing in the colour you want.",
-        "es": "Represento la gama completa de Flow. Elige la familia, filtra por tu nivel y mira el ala en el color que quieras.",
-        "fr": "Je représente toute la gamme Flow. Choisis la famille, filtre selon ton niveau et regarde l'aile dans la couleur que tu veux.",
-        "de": "Ich vertrete das komplette Flow-Programm. Wähle die Familie, filtere nach deinem Niveau und sieh dir den Schirm in der gewünschten Farbe an."
+        "pt": "Revendedor oficial da Flow, com a gama completa. Escolhe a família, filtra pelo teu nível e vê a asa na cor que quiseres.",
+        "en": "Official Flow dealer, with the complete range. Choose the family, filter by your level and see each wing in the colour you want.",
+        "es": "Punto de venta oficial de Flow, con la gama completa. Elige la familia, filtra por tu nivel y mira el ala en el color que quieras.",
+        "fr": "Revendeur officiel Flow, avec toute la gamme. Choisis la famille, filtre selon ton niveau et regarde l'aile dans la couleur que tu veux.",
+        "de": "Offizieller Flow-Händler mit dem kompletten Programm. Wähle die Familie, filtere nach deinem Niveau und sieh dir den Schirm in der gewünschten Farbe an."
       },
       "descriptionVisible": false,
       "showDesktop": true,
@@ -359,7 +359,15 @@
             }
           ],
           "logo": "mullet2",
-          "coresCustom": true
+          "coresCustom": true,
+          "voada": {
+            "sim": true,
+            "tamanhos": [
+              "17.5",
+              "20",
+              "23"
+            ]
+          }
         },
         {
           "visible": true,
@@ -587,7 +595,13 @@
               }
             }
           ],
-          "logo": ""
+          "logo": "",
+          "voada": {
+            "sim": true,
+            "tamanhos": [
+              "15"
+            ]
+          }
         },
         {
           "visible": true,
@@ -744,7 +758,14 @@
               }
             }
           ],
-          "logo": "albatroxx"
+          "logo": "albatroxx",
+          "voada": {
+            "sim": true,
+            "tamanhos": [
+              "13",
+              "16"
+            ]
+          }
         },
         {
           "visible": true,
@@ -1650,7 +1671,13 @@
             }
           ],
           "logo": "freedom2",
-          "imagensLonga": []
+          "imagensLonga": [],
+          "voada": {
+            "sim": true,
+            "tamanhos": [
+              "XS"
+            ]
+          }
         },
         {
           "visible": true,

@@ -103,7 +103,8 @@
     lg.querySelector('.pk-assist-entrada').hidden = true;
     lg.appendChild(A);
     A.hidden = false;
-    var ecra = movel();
+    /* dentro do percurso já se está num ecrã próprio: não abre outro por cima */
+    var ecra = movel() && !lg.closest('.pk-perc');
     A.classList.toggle('pk-assist-ecra', ecra);
     document.documentElement.classList.toggle('pk-assist-bloqueio', ecra);
     desenha();
@@ -334,4 +335,180 @@
     corpo.appendChild(fim);
     foca(titulo);
   }
+})();
+
+/* O PERCURSO «QUERO FAZER O CURSO» (15/09/2026)
+   Cinco ecrãs por cima da página: para quem é, como se progride, onde e com
+   quem, o curso e o preço, e falar — este com o assistente de cima dentro.
+   Os textos vêm do JSON do `#pk-perc`; aqui só há o desenho.
+
+   O BOTÃO «VOLTAR» DO TELEMÓVEL recua um passo e só fecha no primeiro. Abrir
+   acrescenta uma entrada ao histórico; recuar um passo volta a pô-la. Fechar
+   pelo botão tira-a, para o «voltar» seguinte não abrir nada. */
+(function () {
+  'use strict';
+  var P = document.getElementById('pk-perc');
+  if (!P) return;
+  var D;
+  try { D = JSON.parse(P.getAttribute('data-perc')); } catch (e) { return; }
+
+  var N = D.passos.length, passo = 0, aberto = false, ignorarPop = false, origem = null;
+  var caixa = P.querySelector('.pk-perc-caixa'), rolo = P.querySelector('.pk-perc-rolo');
+  var passosEl = P.querySelector('.pk-perc-passos'), corpo = P.querySelector('.pk-perc-corpo');
+  var falar = P.querySelector('.pk-perc-falar'), pe = P.querySelector('.pk-perc-pe');
+
+  function el(tag, cls, txt) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (txt != null) e.textContent = txt;
+    return e;
+  }
+  function botao(cls, txt, fn) {
+    var b = el('button', cls, txt);
+    b.type = 'button';
+    b.addEventListener('click', fn);
+    return b;
+  }
+
+  /* os separadores dos passos: tocar num salta para ele */
+  var tabs = D.passos.map(function (p, k) {
+    var li = el('li');
+    var b = botao('pk-perc-tab', null, function () { passo = k; desenha(); });
+    b.appendChild(el('span', 'pk-perc-tab-n', String(k + 1)));
+    b.appendChild(el('span', 'pk-perc-tab-t', p.t));
+    li.appendChild(b);
+    passosEl.appendChild(li);
+    return b;
+  });
+
+  function rotulo(pai, txt) { if (txt) pai.appendChild(el('p', 'pk-perc-rot', txt)); }
+  function lista(cls, itens, fn) {
+    var ul = el(cls.indexOf('fases') >= 0 ? 'ol' : 'ul', cls);
+    itens.forEach(function (x) { var li = el('li'); fn(li, x); ul.appendChild(li); });
+    return ul;
+  }
+  function bloco(b) {
+    var d = el('div', 'pk-perc-b pk-perc-b-' + b.tipo);
+    rotulo(d, b.rot);
+    if (b.tipo === 'texto') d.appendChild(el('p', 'pk-perc-tx', b.tx));
+    else if (b.tipo === 'nota') d.appendChild(el('p', 'pk-perc-nota', b.tx));
+    else if (b.tipo === 'lista') d.appendChild(lista('pk-perc-lista', b.itens, function (li, x) { li.textContent = x; }));
+    else if (b.tipo === 'fases') d.appendChild(lista('pk-perc-fases', b.itens, function (li, x) { li.textContent = x; }));
+    else if (b.tipo === 'factos' || b.tipo === 'locais') {
+      d.appendChild(lista('pk-perc-' + b.tipo, b.itens, function (li, x) {
+        li.appendChild(el('b', null, x.v));
+        li.appendChild(document.createTextNode(' '));
+        li.appendChild(el('span', null, x.n));
+      }));
+    } else if (b.tipo === 'equipa') {
+      b.grupos.forEach(function (g) {
+        var gr = el('div', 'pk-perc-grupo');
+        rotulo(gr, g.t);
+        gr.appendChild(lista('pk-perc-pessoas', g.pessoas, function (li, p) {
+          var img = el('img');
+          img.src = p.foto;
+          img.alt = '';
+          img.width = 96;
+          img.height = 96;
+          img.loading = 'lazy';
+          li.appendChild(img);
+          li.appendChild(el('span', null, p.nome));
+        }));
+        d.appendChild(gr);
+      });
+    } else if (b.tipo === 'opcoes') {
+      b.itens.forEach(function (o) {
+        var c = el('div', 'pk-perc-opcao');
+        c.appendChild(el('p', 'pk-perc-rot', o.rot));
+        c.appendChild(el('p', 'pk-perc-preco', o.preco));
+        c.appendChild(lista('pk-perc-lista', o.itens, function (li, x) { li.textContent = x; }));
+        d.appendChild(c);
+      });
+    }
+    return d;
+  }
+
+  function desenha() {
+    var p = D.passos[passo];
+    tabs.forEach(function (b, k) {
+      b.classList.toggle('feito', k < passo);
+      if (k === passo) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+    });
+    corpo.textContent = '';
+    corpo.appendChild(el('p', 'pk-perc-n', D.ui.passo.replace('{n}', passo + 1).replace('{t}', N)));
+    var h = el('p', 'pk-perc-h', p.t);
+    h.setAttribute('role', 'heading');
+    h.setAttribute('aria-level', '2');
+    corpo.appendChild(h);
+    p.blocos.forEach(function (b) { corpo.appendChild(bloco(b)); });
+    falar.hidden = p.id !== 'falar';
+
+    pe.textContent = '';
+    if (passo > 0) pe.appendChild(botao('pk-perc-link pk-perc-voltar', D.ui.voltar, function () { passo--; desenha(); }));
+    var det = el('a', 'pk-perc-link pk-perc-detalhe', D.ui.detalhe);
+    det.href = '#' + p.id;
+    det.addEventListener('click', function (e) {
+      e.preventDefault();
+      var alvo = document.getElementById(p.id);
+      fecha(true);
+      try { history.replaceState(null, '', '#' + p.id); } catch (x) { /* ficheiro local */ }
+      if (alvo) alvo.scrollIntoView({ block: 'start' });
+    });
+    pe.appendChild(det);
+    if (passo < N - 1) pe.appendChild(botao('pk-b pk-perc-seguinte', D.ui.seguinte, function () { passo++; desenha(); }));
+
+    rolo.scrollTop = 0;
+    h.setAttribute('tabindex', '-1');
+    try { h.focus({ preventScroll: true }); } catch (x) { h.focus(); }
+  }
+
+  function abre() {
+    if (aberto) return;
+    aberto = true;
+    origem = document.activeElement;
+    passo = 0;
+    P.hidden = false;
+    document.documentElement.classList.add('pk-perc-bloqueio');
+    desenha();
+    try { history.pushState({ pkPerc: 1 }, ''); } catch (x) { /* ficheiro local */ }
+  }
+  /* semHistorico: quando quem fecha já mexeu no histórico (o «voltar», o «ler em detalhe») */
+  function fecha(semHistorico) {
+    if (!aberto) return;
+    aberto = false;
+    P.hidden = true;
+    document.documentElement.classList.remove('pk-perc-bloqueio');
+    if (!semHistorico && history.state && history.state.pkPerc) { ignorarPop = true; history.back(); }
+    if (origem && origem.focus) try { origem.focus({ preventScroll: true }); } catch (x) { /* nada */ }
+  }
+
+  addEventListener('popstate', function () {
+    if (ignorarPop) { ignorarPop = false; return; }
+    if (!aberto) return;
+    if (passo > 0) {
+      passo--;
+      desenha();
+      try { history.pushState({ pkPerc: 1 }, ''); } catch (x) { /* nada */ }
+    } else fecha(true);
+  });
+
+  P.querySelector('.pk-perc-fechar').addEventListener('click', function () { fecha(false); });
+  P.addEventListener('click', function (e) { if (e.target === P) fecha(false); });
+  document.addEventListener('keydown', function (e) {
+    if (!aberto) return;
+    if (e.key === 'Escape') { fecha(false); return; }
+    if (e.key !== 'Tab') return;
+    /* o foco não sai do percurso enquanto está aberto */
+    var f = [].filter.call(caixa.querySelectorAll('button, a[href], input, textarea, [tabindex="-1"]'), function (x) {
+      return x.offsetParent !== null && x.getAttribute('tabindex') !== '-1';
+    });
+    if (!f.length) return;
+    var i = f.indexOf(document.activeElement);
+    if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }
+    else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
+  });
+
+  [].forEach.call(document.querySelectorAll('[data-percurso]'), function (a) {
+    a.addEventListener('click', function (e) { e.preventDefault(); abre(); });
+  });
 })();

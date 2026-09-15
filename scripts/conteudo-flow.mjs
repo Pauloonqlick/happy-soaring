@@ -50,12 +50,14 @@ export const FL = {
     pt: 'Revendedor oficial', en: 'Official dealer', es: 'Punto de venta oficial',
     fr: 'Revendeur officiel', de: 'Offizieller Händler'
   },
+  /* 15/09/2026 · «representa» saiu (auditoria): o estatuto é dealer/revendedor oficial e mais nada
+     (em espanhol «punto de venta oficial») — regra do CLAUDE.md. */
   entrada: {
-    pt: 'A Happy Soaring representa a Flow Paragliders em Portugal. Trazemos a gama completa — parakites, parapentes, paramotor, tandem, arneses e reservas — e ficamos com o piloto antes e depois da compra.',
-    en: 'Happy Soaring represents Flow Paragliders in Portugal. We carry the full range — parakites, paragliders, paramotor, tandem, harnesses and reserves — and we stay with the pilot before and after the sale.',
-    es: 'Happy Soaring representa a Flow Paragliders en Portugal. Traemos la gama completa — parakites, parapentes, paramotor, biplaza, arneses y paracaídas de emergencia — y acompañamos al piloto antes y después de la compra.',
-    fr: 'Happy Soaring représente Flow Paragliders au Portugal. Nous proposons la gamme complète — parakites, parapentes, paramoteur, biplace, sellettes et parachutes de secours — et nous accompagnons le pilote avant et après l’achat.',
-    de: 'Happy Soaring vertritt Flow Paragliders in Portugal. Wir führen die komplette Reihe — Parakites, Gleitschirme, Motorschirm, Tandem, Gurtzeuge und Rettungsschirme — und begleiten den Piloten vor und nach dem Kauf.'
+    pt: 'A Happy Soaring é revendedor oficial da Flow Paragliders em Portugal. Trazemos a gama completa — parakites, parapentes, paramotor, tandem, arneses e reservas — e ficamos com o piloto antes e depois da compra.',
+    en: 'Happy Soaring is an official Flow Paragliders dealer in Portugal. We carry the full range — parakites, paragliders, paramotor, tandem, harnesses and reserves — and we stay with the pilot before and after the sale.',
+    es: 'Happy Soaring es punto de venta oficial de Flow Paragliders en Portugal. Traemos la gama completa — parakites, parapentes, paramotor, biplaza, arneses y paracaídas de emergencia — y acompañamos al piloto antes y después de la compra.',
+    fr: 'Happy Soaring est revendeur officiel Flow Paragliders au Portugal. Nous proposons la gamme complète — parakites, parapentes, paramoteur, biplace, sellettes et parachutes de secours — et nous accompagnons le pilote avant et après l’achat.',
+    de: 'Happy Soaring ist offizieller Händler von Flow Paragliders in Portugal. Wir führen die komplette Reihe — Parakites, Gleitschirme, Motorschirm, Tandem, Gurtzeuge und Rettungsschirme — und begleiten den Piloten vor und nach dem Kauf.'
   },
 
   dealerTit: {
@@ -173,6 +175,8 @@ export const FL = {
   },
 
   modelos: { pt: 'modelos', en: 'models', es: 'modelos', fr: 'modèles', de: 'Modelle' },
+  /* «Tandem 1 modelos» (auditoria 15/09/2026): com uma asa, o singular */
+  modelo: { pt: 'modelo', en: 'model', es: 'modelo', fr: 'modèle', de: 'Modell' },
   voltar: { pt: 'Voltar ao início', en: 'Back to the homepage', es: 'Volver al inicio',
             fr: 'Retour à l’accueil', de: 'Zurück zur Startseite' }
 };

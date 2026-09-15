@@ -44,7 +44,7 @@ outro spot, é isto — não voltar a decidir nada disto do zero.
 | campo | o que é |
 |---|---|
 | `titulo` | uma linha só, com travessão: `Praia das Bicas — Parakite e parapente` |
-| `descricao` | a abertura, um ou dois parágrafos. Também é o que o popup do hub mostra |
+| `descricao` | a abertura, um ou dois parágrafos. Também dá a description da página |
 | `ficha` | `concelho` (só para o schema) e `linhas`: uma lista livre de rótulo/valor, pela ordem que estiver |
 | `seccoes` | o texto por assuntos, cada uma com título e texto. A ordem aqui é a ordem na página |
 | `aviso` | a parte que diz que a página não decide nada. Obrigatória |
@@ -88,9 +88,11 @@ faz a publicação parar — já veio um colado do sítio onde o texto foi redig
 a verificação das ligações internas não o via, porque para ela um `https://` é o
 site de outra pessoa.
 
-**Sem fotografias nem vídeo na página.** A galeria vive no popup do hub. A
-página é para ler; repetir lá as imagens era duplicar o mesmo conteúdo em dois
-endereços.
+**As fotografias e o vídeo do `album` ficam na própria página** (desde
+11/09/2026), logo depois da abertura e antes do primeiro título — decisão do
+Paulo: quem chega quer ver o sítio antes de ler sobre ele. O popup do hub saiu;
+o hub mostra a grelha com uma fotografia por spot e liga à página. O vídeo só
+contacta o YouTube ao clique.
 
 **O endereço** é `/parakite-portugal/<id>/` — debaixo do hub, que existe, para
 quem corta o URL a meio não cair num 404. As cinco línguas levam o prefixo
@@ -153,6 +155,9 @@ Vivem só nas lições do módulo — página https://happysoaring.com/inteligen
 - Antes de criar ou alterar páginas do site, ler o manual:
   `node inteligencia/scripts/manual.mjs`, e aplicá-lo (incluindo juntar alterações
   numa só publicação em vez de publicar a mesma página várias vezes).
+- Antes de afirmar como o Google funciona, confirmar na documentação oficial
+  (developers.google.com/search, ajuda do Search Console). Uma lição de SEO leva as `fontes`
+  lidas; as mudanças do Google que tocam nelas aparecem em «o que falta aprender».
 - Uma prática nova ou corrigida regista-se no módulo (`registar.mjs licao`). Não se
   escreve neste ficheiro, no `SEO-WORKFLOW.md`, no `SEO-OPEN.md`, numa cópia .md
   nem em memórias — esses sítios apontam para o módulo, não repetem o que ele diz.
