@@ -26,6 +26,17 @@ if (!fs.existsSync(WRANGLER)) erro('falta o wrangler do projecto — corre `npm 
 
 const toml = fs.readFileSync(path.join(MODULO, 'wrangler.toml'), 'utf8');
 
+/* 15/09/2026 · os testes só correm o Worker; um erro de sintaxe no JavaScript das
+   páginas passou-lhes ao lado e deixou a página Hoje toda em «A carregar…» */
+passo('JavaScript das páginas do painel');
+const pastaPublica = path.join(MODULO, 'public', 'inteligencia');
+const scriptsPublicos = fs.readdirSync(pastaPublica, { recursive: true }).map(String).filter(f => f.endsWith('.js'));
+for (const f of scriptsPublicos) {
+  try { execFileSync(process.execPath, ['--check', path.join(pastaPublica, f)], { stdio: ['ignore', 'ignore', 'pipe'] }); }
+  catch (e) { erro('erro de sintaxe em public/inteligencia/' + f + ' — nada foi publicado\n' + String(e.stderr || '').split('\n').slice(0, 5).join('\n')); }
+}
+console.log('  ✓ ' + scriptsPublicos.length + ' ficheiros sem erros de sintaxe');
+
 passo('Testes do módulo');
 const testes = fs.readdirSync(path.join(MODULO, 'test')).filter(f => f.endsWith('.test.mjs'))
   .map(f => path.join('inteligencia', 'test', f));

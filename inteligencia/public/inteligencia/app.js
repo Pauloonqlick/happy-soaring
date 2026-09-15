@@ -110,7 +110,7 @@
         if (inc.some((x, k) => h.bloco1.incidentes[k].aberto) && !c.length) $('b1').textContent = 'O módulo não está a trabalhar como devia:';
         /* a conta Cloudflare perto do limite do que o plano inclui (custos.js) */
         const NIVEL_LIM = { atencao: 'atenção', alerta: 'perto do limite', excedido: 'já a pagar a mais' };
-        const lim = (h.limites || []).map(l => {
+        const perto = (h.limites || []).map(l => {
           const li = el('li', null, 'linha-assunto');
           const p = x => (x * 100).toLocaleString('pt-PT', { maximumFractionDigits: 1 }) + '%';
           if (l.id === 'dataforseo.saldo') {
@@ -128,7 +128,7 @@
         });
         const limGrave = (h.limites || []).some(l => l.nivel === 'alerta' || l.nivel === 'excedido');
         if (limGrave && !c.length && !inc.length) $('b1').textContent = 'Custos perto do limite:';
-        mostrarLista($('b1-lista'), inc.concat(lim, c.map(a => linhaAssunto(a, ''))));
+        mostrarLista($('b1-lista'), inc.concat(perto, c.map(a => linhaAssunto(a, ''))));
         $('bloco1').classList.toggle('bloco-critico', c.length > 0 || limGrave || (h.bloco1.incidentes || []).some(i => i.aberto));
 
         /* 2 — assuntos e rastreios desde a última visita */
