@@ -83,6 +83,16 @@
         "de": "Musik"
       },
       "target": "/musica/"
+    },
+    {
+      "label": {
+        "pt": "Quem somos",
+        "en": "About us",
+        "es": "Quiénes somos",
+        "fr": "Qui sommes-nous",
+        "de": "Über uns"
+      },
+      "target": "/quem-somos/"
     }
   ],
   "footer": {

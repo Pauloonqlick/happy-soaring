@@ -2632,6 +2632,12 @@ html{ scroll-padding-top:var(--h-topo, 96px) }
   list-style:none;margin:0;padding:0;
   display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;
 }
+/* 15/09/2026 · a explicação do vento, que os spots deixaram de repetir e para onde ligam (#vento) */
+.pk-vento{margin:34px 0 0;padding-top:26px;border-top:1px solid var(--linha);max-width:74ch;scroll-margin-top:96px}
+.pk-vento h3{margin:0 0 10px}
+.pk-vento .spot-lista{margin:6px 0 14px;padding-left:1.2em}
+.pk-vento .spot-lista li{margin:0 0 4px}
+.pk-vento .spot-lista li::marker{color:var(--laranja-tinta)}
 .pk-spot{margin:0}
 .pk-spot-b,.pk-spot-so-nome{
   position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;
@@ -4245,3 +4251,12 @@ body.spot.papel .spot-aviso h2,.pg .spot-aviso h2{color:#0e3b6d}
 .pg .pg-voada{max-width:none;margin:0 0 24px;padding:18px 22px;background:#fff;border:1px solid #cbd8e5;border-left:4px solid #ff6a13}
 .pg .pg-voada .pg-voada-tit{margin:0 0 4px;font-size:12px;font-weight:800;letter-spacing:var(--tr-rotulo);text-transform:uppercase;color:#a63f00}
 .pg .pg-voada p{margin:0;max-width:none;color:#14212f}
+
+/* ======================================================================
+   QUEM SOMOS (15/09/2026) — a grelha de leitura dos spots, com a equipa
+   ====================================================================== */
+body.spot.papel.qs .spot-sec h3{margin:18px 0 8px;font-size:15px;letter-spacing:.02em}
+body.spot.papel.qs .spot-sec h3:first-child{margin-top:0}
+.qs-equipa{list-style:none;margin:0 0 6px;padding:0;display:flex;flex-wrap:wrap;gap:14px 22px}
+.qs-equipa li{display:flex;align-items:center;gap:10px;font-weight:700}
+.qs-equipa img{width:64px;height:64px;object-fit:cover;border-radius:50%}

@@ -107,7 +107,12 @@ export const ROTAS = {
                                  en: '/en/parakite-course-portugal/',
                                  es: '/es/curso-parakite-portugal/',
                                  fr: '/fr/cours-parakite-portugal/',
-                                 de: '/de/parakite-kurs-portugal/' }
+                                 de: '/de/parakite-kurs-portugal/' },
+
+  /* QUEM SOMOS (15/09/2026). Traduz inteiro, porque não é nome de nada: é a
+     expressão com que cada língua chama a esta página. */
+  '/quem-somos/': { pt: '/quem-somos/', en: '/en/about-us/', es: '/es/quienes-somos/',
+                    fr: '/fr/qui-sommes-nous/', de: '/de/ueber-uns/' }
 };
 
 export function comIdioma(href, lingua) {

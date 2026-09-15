@@ -35,6 +35,7 @@ import { PK } from './conteudo-parakite.mjs';
 import { entradasDoMenu, ROTAS, comIdioma } from '../regras/navegacao.js';
 import { comQualificadores, protegeNomes, tiraPontosDosTitulos } from '../regras/textos.js';
 import { CURSO, PRECOS } from './conteudo-curso-parakite.mjs';
+import { QS } from './conteudo-quem-somos.mjs';
 import { folhaDoTema } from '../regras/tema.js';
 
 const RAIZ = process.cwd();   /* corre-se a partir da raiz do projecto */
@@ -2098,6 +2099,10 @@ function paginaParakite(l, num) {
       ${contactoAlt()}
     </div>
     <ul class="pk-spots-g">${spots}</ul>
+    <div class="pk-vento" id="vento">
+      <h3>${esc(t(PK.ventoTit, l))}</h3>
+      ${paragrafos(t(PK.ventoTexto, l), l)}
+    </div>
   </section>
 
   <section class="pk-sec pk-papel" id="escolher">
@@ -2435,6 +2440,102 @@ const paragrafos = (txt, l) => String(txt || '').split(/\n\s*\n/)
     }
     return '<p>' + comLigacoes(esc(bloco).replace(/\n/g, '<br />'), l) + '</p>';
   }).join('\n      ');
+
+/* ---- a página «Quem somos» (15/09/2026) -------------------------------
+   Pedida pelo Paulo depois da auditoria face à documentação do Google: quem
+   está por trás do site só se via no /pilot2wing/ e na equipa do curso.
+   Usa a grelha de leitura das páginas de spot (título à esquerda, texto à
+   direita) e junta o que já existe noutros conteúdos, lido de lá — ver o
+   cabeçalho de scripts/conteudo-quem-somos.mjs. */
+const caminhoQS = l => ROTAS['/quem-somos/'][l] || ROTAS['/quem-somos/'][OMISSAO];
+function paginaQuemSomos(l) {
+  const url = DOMINIO + caminhoQS(l);
+  const alts = alternativas(x => caminhoQS(x));
+  const alt = etiquetasAlt(alts);
+  const inicio = inicioHref(l);
+  const h1 = t(QS.h1, l);
+
+  const voadas = produtos.filter(p => p.voada && p.voada.sim).map(p => {
+    const tams = (p.voada.tamanhos || []).map(String).filter(Boolean);
+    const lista = tams.length > 1 ? tams.slice(0, -1).join(', ') + ' ' + t(T.voadaE, l) + ' ' + tams[tams.length - 1] : tams[0];
+    return `<li><a href="${esc(caminho(l, p))}">${esc(p.nome)}</a>${tams.length
+      ? ' — ' + esc(t(tams.length > 1 ? T.voadaVar : T.voadaUm, l) + ' ' + lista) : ''}</li>`;
+  }).join('');
+
+  const fazemos = [
+    [caminhoFlow(l), 'Flow Paragliders', QS.fazemos.flow],
+    [caminhoCurso(l), t(CURSO.migalhaCurso, l), QS.fazemos.curso],
+    [caminhoPK(l), t(SP.hub, l), QS.fazemos.spots],
+    [caminhoMU(l), t(MU.migalha, l), MU.desc]
+  ].map(([href, rot, txt]) => `<li><a href="${esc(href)}">${esc(rot)}</a> — ${esc(t(txt, l))}</li>`).join('');
+
+  const equipa = CURSO.equipa.map(g => `
+      <h3>${esc(t(g.titulo, l))}</h3>
+      <ul class="qs-equipa">${g.pessoas.map(p => `<li><img src="/images/curso/${esc(p.foto)}-480.webp" alt="${esc(p.nome)}" width="480" height="480" loading="lazy" /><span>${esc(p.nome)}</span></li>`).join('')}</ul>`).join('');
+
+  const ld = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': comEntidade([
+      { '@type': 'BreadcrumbList', itemListElement: [
+        { '@type': 'ListItem', position: 1, name: t(T.inicio, l), item: DOMINIO + inicio },
+        { '@type': 'ListItem', position: 2, name: h1, item: url }
+      ]},
+      { '@type': ['WebPage', 'AboutPage'], '@id': url, url, name: h1, description: t(QS.descricao, l),
+        inLanguage: l, isPartOf: { '@id': DOMINIO + '/#site' }, about: ORGANIZACAO }
+    ])
+  });
+
+  return moldeDaPagina({
+    lingua: l, url, alts, alt, foto: DOMINIO + '/images/og-happysoaring.jpg', ld,
+    classe: 'pg spot papel tema qs',
+    titulo: t(QS.titulo, l),
+    descricao: t(QS.descricao, l),
+    ogTipo: 'website',
+    ogTitulo: t(QS.titulo, l),
+    rodape: 'Happy Soaring &middot; ' + esc(t(T.dealer, l)),
+    corpo: `
+<main class="pg-cx spot-cx">
+  <nav class="pg-migalhas"><a href="${esc(inicio)}">${esc(t(T.inicio, l))}</a> &rsaquo; ${esc(h1)}</nav>
+
+  <h1 class="spot-h1">${esc(h1)}</h1>
+  <div class="spot-abre">
+    <p>${esc(t(FL.entrada, l))}</p>
+    <p>${esc(t(QS.curso, l))}</p>
+  </div>
+
+  <section class="spot-sec">
+    <h2>${esc(t(QS.pauloTit, l))}</h2>
+    <div>
+      <p>${esc(t(P2W.autorTexto, l))} ${esc(t(QS.pauloMais, l))}</p>
+      <p><a href="${esc(caminhoP2W(l))}">${esc(t(P2W.conhecer, l))}</a></p>
+      ${voadas ? `<h3>${esc(t(QS.asasTit, l))}</h3>
+      <ul class="spot-lista">${voadas}</ul>` : ''}
+    </div>
+  </section>
+
+  <section class="spot-sec">
+    <h2>${esc(t(QS.fazemosTit, l))}</h2>
+    <ul class="spot-lista">${fazemos}</ul>
+  </section>
+
+  <section class="spot-sec">
+    <h2>${esc(t(QS.equipaTit, l))}</h2>
+    <div>${equipa}
+    </div>
+  </section>
+
+  <section class="spot-sec">
+    <h2>${esc(t(QS.contactosTit, l))}</h2>
+    <ul class="spot-lista qs-contactos">
+      <li><!--email_off--><a href="mailto:${CONTACTO.email}">${CONTACTO.email}</a><!--email_on--></li>
+      <li><a href="tel:${CONTACTO.tel}">${CONTACTO.telVis}</a></li>
+      <li><a href="${CONTACTO.instagram}" rel="me noopener" target="_blank">Instagram</a></li>
+      <li><a href="${CONTACTO.youtube}" rel="me noopener" target="_blank">YouTube</a></li>
+    </ul>
+  </section>
+</main>`
+  });
+}
 
 function paginaSpot(s, l, num) {
   const url = DOMINIO + caminhoSpot(l, s);
@@ -4152,6 +4253,20 @@ if (!so || so === 'musica') {
     urls.push(DOMINIO + rel);
   }
   console.log('  Música: ' + IDIOMAS.length + ' páginas');
+}
+
+/* quem somos: depois da música, porque lê o caminhoMU e o MU (15/09/2026) */
+if (!so || so === 'quem-somos') {
+  for (const l of IDIOMAS) {
+    const rel = caminhoQS(l);
+    const dir = path.join(destino, rel);
+    fs.mkdirSync(dir, { recursive: true });
+    const html = paginaQuemSomos(l);
+    confereAlternativas(html, rel);
+    escrevePagina(path.join(dir, 'index.html'), html);
+    urls.push(DOMINIO + rel);
+  }
+  console.log('  Quem somos: ' + IDIOMAS.length + ' páginas');
 }
 
 
