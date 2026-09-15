@@ -97,7 +97,10 @@
       tr.appendChild(el('td', p.ultima_alteracao
         ? quando(p.ultima_alteracao.em) + ' · ' + (TIPOS[p.ultima_alteracao.tipo] || p.ultima_alteracao.tipo) : '—'));
       tr.appendChild(el('td', quando(p.ultimo_rastreio)));
-      tr.appendChild(el('td', p.ultima_inspeccao ? quando(p.ultima_inspeccao) + (p.cobertura ? ' · ' + p.cobertura : '') : '—'));
+      const tdI = el('td', p.ultima_inspeccao ? quando(p.ultima_inspeccao) + (p.cobertura ? ' · ' + p.cobertura : '') : '—');
+      /* passar o rato mostra o que o estado quer dizer, pela ajuda oficial do Google */
+      if (p.cobertura_definicao) tdI.title = p.cobertura_definicao;
+      tr.appendChild(tdI);
       tr.appendChild(el('td', quando(p.pedido_em)));
 
       const tdA = el('td');

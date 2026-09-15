@@ -75,6 +75,11 @@ export function trabalhoDe(vez, r) {
   } else if (vez === 'avisos') {
     if (r.enviado) { c.avisos = 1; frases.push('enviou um aviso por email'); }
     if (r.consumos && r.consumos.aviso && r.consumos.aviso.enviado) { c.avisos = (c.avisos || 0) + 1; frases.push('avisou por email que a conta Cloudflare está perto do limite'); }
+    const doc = r.documentacao;
+    if (doc && doc.lida && !doc.primeira) {
+      conta('documentacao_novas', doc.novas, 'mudança nova na documentação do Google', 'mudanças novas na documentação do Google');
+      conta('documentacao_por_rever', doc.por_rever, 'lição a rever por mudança do Google', 'lições a rever por mudanças do Google');
+    }
   } else if (vez === 'decisoes') {
     conta('decididos', r.decididos, 'decisão automática', 'decisões automáticas');
     conta('pacotes', r.pacotes, 'pacote de correcção criado', 'pacotes de correcção criados');
@@ -88,8 +93,9 @@ export function trabalhoDe(vez, r) {
     const partes = [];
     if (r.consumos) partes.push(r.consumos.motivo === 'SEM_TOKEN' ? 'consumos por ler (falta o token da Cloudflare)'
       : r.consumos.erro || (r.consumos.erros && r.consumos.erros.length) ? 'consumos lidos com erros' : 'leu os consumos da Cloudflare');
+    if (r.documentacao) partes.push(r.documentacao.erro ? 'documentação do Google por ler (erro)' : r.documentacao.lida ? 'leu a documentação do Google' : null);
     if (!r.enviado && r.motivo === 'SEM_CONFIGURACAO') partes.push('email em pausa (não configurado)');
-    if (partes.length) texto = partes.join(' · ');
+    if (partes.filter(Boolean).length) texto = partes.filter(Boolean).join(' · ');
   }
   else if (r.motivo && !novidade) texto = 'não fez nada: ' + String(r.motivo).toLowerCase().replace(/_/g, ' ');
   return { texto, novidade, contagens: c };

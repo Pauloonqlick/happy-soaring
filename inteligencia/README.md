@@ -205,6 +205,17 @@ dispensando com motivo (`registar.mjs dispensar`, tabela `aprendizagem_dispensas
 na página «Aprendizagem», na leitura de 2 em 2 dias (`leitura.mjs`), em
 `scripts/falta-aprender.mjs` e no fim das duas publicações (site e módulo), sem as bloquear.
 
+**Fontes oficiais e a documentação do Google vigiada** (0015, 15/09/2026). Cada lição guarda
+em `fontes` as páginas oficiais em que se apoia (lidas antes de citar); uma lição de SEO sem
+fonte fica «sem fonte oficial» em «o que falta aprender». Uma vez por semana, na execução dos
+avisos, `src/documentacao.js` lê o feed oficial das actualizações da documentação da Pesquisa
+Google (tabela `documentacao_google`). Uma entrada nova que cite uma página usada como fonte
+fica «rever lição» até se registar o que se fez (`registar.mjs rever <guid> <nota>`); as
+outras ficam à vista na página «Aprendizagem». Uma leitura falhada tenta-se na hora seguinte.
+Os estados de cobertura do Google (Detetada, Rastreada, …) explicam-se com a definição da
+ajuda oficial do Search Console (`src/definicoes-google.js`), na ficha do assunto e na fila de
+indexação — nunca com interpretações de terceiros.
+
 **Manual — uma só fonte de verdade.** As boas práticas vivem **só** nas lições do módulo
 (tabela `licoes`). A página «Aprendizagem» e `node inteligencia/scripts/manual.mjs` mostram-nas
 (confirmadas, em teste e as que não resultaram) — para este site e para os próximos. Não há

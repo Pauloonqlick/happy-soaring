@@ -49,7 +49,7 @@ const stmt = (sql, params = []) => ({
   first: async () => (await consulta(sql, params))[0] ?? null
 });
 
-const ESTADO = { FALTA_LICAO: 'falta lição', CAUSA_POR_DESCOBRIR: 'causa por descobrir', CAUSA_POR_CONFIRMAR: 'causa por confirmar' };
+const ESTADO = { FALTA_LICAO: 'falta lição', CAUSA_POR_DESCOBRIR: 'causa por descobrir', CAUSA_POR_CONFIRMAR: 'causa por confirmar', REVER_LICAO: 'rever lição', SEM_FONTE: 'sem fonte oficial' };
 
 async function principal() {
   if (semSessao) return sair('  (não foi possível ler «O que falta aprender»: sem sessão do wrangler)');
@@ -58,7 +58,7 @@ async function principal() {
   catch (e) { return sair('  (não foi possível ler «O que falta aprender»: ' + String(e.message).slice(0, 120) + ')'); }
 
   if (AVISO) {
-    const semLicao = falta.filter(x => x.estado !== 'CAUSA_POR_DESCOBRIR');
+    const semLicao = falta.filter(x => x.estado === 'FALTA_LICAO' || x.estado === 'CAUSA_POR_CONFIRMAR');
     if (!falta.length) return sair('  ✓ nada por aprender: todos os problemas e incidentes já deixaram lição ou foram dispensados');
     return sair('  ⚠ O QUE FALTA APRENDER: ' + falta.length + ' caso(s)' + (semLicao.length ? ', ' + semLicao.length + ' sem lição nem hipóteses' : '') +
       ' — node inteligencia/scripts/falta-aprender.mjs. Registar a lição (ou dispensar com motivo) antes de fechar o trabalho.');

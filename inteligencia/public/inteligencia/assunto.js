@@ -84,6 +84,17 @@
     }
     par(ev, 'Detectado em', data(a.detectado_em));
     $('nota-rastreio').textContent = a.nota_rastreio;
+    /* o que o estado quer dizer, nas palavras da ajuda oficial do Search Console */
+    const def = $('definicao-google');
+    def.textContent = '';
+    def.hidden = !a.definicao_google;
+    if (a.definicao_google) {
+      def.appendChild(el('b', '«' + a.definicao_google.estado + '», segundo o Google: '));
+      def.appendChild(document.createTextNode(a.definicao_google.definicao + ' '));
+      const fonte = el('a', 'Ver a definição oficial');
+      fonte.href = a.definicao_google.fonte; fonte.target = '_blank'; fonte.rel = 'noopener';
+      def.appendChild(fonte);
+    }
 
     /* ficha */
     const f = a.ficha;

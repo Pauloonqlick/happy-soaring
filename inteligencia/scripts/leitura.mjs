@@ -95,7 +95,7 @@ else {
 }
 
 /* 14/09/2026 · o que ainda não deixou lição — para que nada se perda por esquecimento */
-const ESTADOS_FALTA = { FALTA_LICAO: 'falta lição', CAUSA_POR_DESCOBRIR: 'causa por descobrir', CAUSA_POR_CONFIRMAR: 'causa por confirmar' };
+const ESTADOS_FALTA = { FALTA_LICAO: 'falta lição', CAUSA_POR_DESCOBRIR: 'causa por descobrir', CAUSA_POR_CONFIRMAR: 'causa por confirmar', REVER_LICAO: 'rever lição', SEM_FONTE: 'sem fonte oficial' };
 const falta = await lerFaltaAprender(db, { agora }).catch(e => { console.log('\nO QUE FALTA APRENDER: não foi possível ler (' + e.message + ')'); return null; });
 if (falta) {
   console.log('\nO QUE FALTA APRENDER' + (falta.length ? ' (' + falta.length + ')' : ''));

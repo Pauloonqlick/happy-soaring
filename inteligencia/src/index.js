@@ -20,6 +20,7 @@ import { executarVigia } from './vigia.js';
 import { executarCicloSemana, listarSemanas, lerSemana } from './leitura.js';
 import { executarAgregacao, lerRegisto } from './registo.js';
 import { recolherConsumos, lerCustos, limitesParaHoje } from './custos.js';
+import { executarDocumentacao } from './documentacao.js';
 import { lerOperacao, lerIndexacaoEvolucao, lerPaginas, lerGeral } from './evolucao.js';
 import {
   lerConhecimento, gravarConhecimento, historicoConhecimento, TABELAS_CONHECIMENTO,
@@ -164,7 +165,7 @@ export default {
        minuto 00 de cada hora         → Search Console (desde 15/09/2026; antes, de 10 em 10)
        minuto terminado em 4          → inspecção de URL
        minutos 18, 38 e 58            → assuntos (detecção e avaliações)
-       minuto 08 de cada hora         → avisos críticos por email e consumos
+       minuto 08 de cada hora         → avisos críticos por email, consumos e (1 vez por semana) a documentação do Google
        minutos 28 e 48                → decisões automáticas
        minutos terminados em 2        → publicações (desde 15/09/2026; antes, todos os outros)
        os outros                      → nada (repouso)
@@ -205,6 +206,8 @@ export default {
             const a = await executarCicloAvisos(env);
             /* de hora a hora, os consumos da conta Cloudflare (painel de custos e aviso de limites) */
             try { a.consumos = await recolherConsumos(env); } catch (e) { a.consumos = { erro: String(e && e.message || e).slice(0, 200) }; }
+            /* uma vez por semana, as actualizações da documentação oficial do Google (documentacao.js) */
+            try { a.documentacao = await executarDocumentacao(env); } catch (e) { a.documentacao = { erro: String(e && e.message || e).slice(0, 200) }; }
             return a;
           })()
           : vez === 'decisoes' ? await executarCicloDecisoes(env) : await executarCiclo(env);

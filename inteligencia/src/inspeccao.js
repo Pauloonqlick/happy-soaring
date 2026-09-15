@@ -9,6 +9,7 @@
    conservadora: inspecciona só o que precisa, e uma quota esgotada é uma
    limitação — pausa, retoma depois, nunca é problema SEO. */
 import { tokenDeAcesso, temCredencialGoogle } from './google.js';
+import { definicaoDaCobertura } from './definicoes-google.js';
 import { caminhosDoSitemap } from './publicacoes.js';
 
 export const ORCAMENTO_INSPECCAO = { pedidos: 40, consultas: 40 };
@@ -274,6 +275,8 @@ export async function lerIndexacao(db, { agora = new Date().toISOString() } = {}
       ultima_alteracao: a ? { em: a.ultima_alteracao_em, tipo: a.tipo, publicacao: a.short_id } : null,
       ultimo_rastreio: g?.ultimo_rastreio ?? null, ultima_inspeccao: g?.ultima_inspeccao_em ?? null,
       veredicto: g?.veredicto ?? null, cobertura: g?.cobertura ?? null,
+      /* o que o estado quer dizer, pela ajuda oficial do Search Console (definicoes-google.js) */
+      cobertura_definicao: definicaoDaCobertura(g?.cobertura)?.definicao ?? null,
       canonico_divergente: g && g.canonico_google && g.canonico_declarado ? g.canonico_google !== g.canonico_declarado : null,
       pedido_em: P.get(c) ?? null, ...e,
       ...accaoDaPagina(e.estado, EP.get(c), a?.ultima_alteracao_em, agora)

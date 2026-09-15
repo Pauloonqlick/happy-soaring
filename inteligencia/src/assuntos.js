@@ -12,6 +12,7 @@
    o Google reporta. O que o módulo ainda não verifica diz-se às claras.
    Uma limitação de evidência nunca é um assunto. */
 import { caminhosDoSitemap } from './publicacoes.js';
+import { definicaoDaCobertura } from './definicoes-google.js';
 import { lerIndexacao, NOTA_RASTREIO } from './inspeccao.js';
 import { incidentesParaHoje } from './vigia.js';
 import { frasesDoDia, lerDadosDoDia, lerSemana } from './leitura.js';
@@ -857,6 +858,8 @@ export async function lerAssunto(db, id, { agora = new Date().toISOString() } = 
       estado_indexacao: pagina.estado, ultimo_rastreio: pagina.ultimo_rastreio, ultima_inspeccao: pagina.ultima_inspeccao,
       cobertura: pagina.cobertura, ultima_alteracao: pagina.ultima_alteracao, pedido_em: pagina.pedido_em
     },
+    /* a definição oficial do estado que o Google deu a esta página (definicoes-google.js) */
+    definicao_google: definicaoDaCobertura((v.evidencia && v.evidencia.cobertura) || (pagina && pagina.cobertura)),
     nota_rastreio: NOTA_RASTREIO
   };
 }

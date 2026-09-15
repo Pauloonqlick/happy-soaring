@@ -10,6 +10,7 @@
    refutada deixa de ser aplicada sozinha e o caso passa para análise. */
 import { carregarContexto, verAssunto, textosDe, regrasAplicaveis, conteudoPacote, TIPOS } from './assuntos.js';
 import { descreverIncidente } from './vigia.js';
+import { fontesDe, lerDocumentacao } from './documentacao.js';
 
 const DIA = 864e5;
 const t = s => (s ? Date.parse(s) : NaN);
@@ -164,7 +165,8 @@ export async function lerAprendizagem(db, { agora = new Date().toISOString() } =
     assuntos: assuntos.map(a => { let ev = {}; try { ev = JSON.parse(a.evidencia); } catch (e) { ev = {}; } return { ...a, evidencia: ev }; }),
     pacotes, avaliacoes
   });
-  return { agora, licoes, manual: gerarManual(licoes, agora), falta_aprender: await lerFaltaAprender(db, { agora, licoes: licoesBase }) };
+  const [falta_aprender, documentacao] = await Promise.all([lerFaltaAprender(db, { agora, licoes: licoesBase }), lerDocumentacao(db)]);
+  return { agora, licoes, manual: gerarManual(licoes, agora), falta_aprender, documentacao };
 }
 
 /* O manual: o que resultou, o que está em teste e o que não resultou. */
@@ -188,6 +190,9 @@ export function gerarManual(licoes, agora = new Date().toISOString()) {
         L.push('- **Sintoma:** ' + l.sintoma);
         L.push('- **Causa:** ' + l.causa);
         L.push('- **Correcção:** ' + l.correccao);
+        const fontes = fontesDe(l);
+        if (fontes.length) L.push('- **Fonte oficial:** ' + fontes.map(x => x.titulo + ' (' + x.url + ')').join('; '));
+        else if (l.natureza !== 'PROCESSO') L.push('- **Fonte oficial:** ainda por indicar.');
         if (l.natureza === 'PROCESSO') { L.push('- **Nasceu de:** ' + (referenciasDe(l).join('; ') || 'caso não registado') + '. Estado: em vigor.', ''); continue; }
         L.push('- **Evidência:** ' + r.casos + ' caso(s) detectado(s), ' + r.resolvidos + ' resolvido(s)' +
           (r.pacotes ? '; avaliações: ' + r.melhorias + ' melhoria(s) observada(s), ' + r.sem_efeito + ' sem efeito claro, ' +
@@ -211,18 +216,26 @@ export async function gravarLicao(db, corpo, { agora = new Date().toISOString(),
     sintoma: texto(corpo?.sintoma, 1000), causa: texto(corpo?.causa, 1000), correccao: texto(corpo?.correccao, 1000),
     prevencao: texto(corpo?.prevencao, 1000), generica: corpo?.generica === false || corpo?.generica === 0 ? 0 : 1,
     natureza: corpo?.natureza === 'PROCESSO' ? 'PROCESSO' : 'MEDIDA',
-    referencias: Array.isArray(corpo?.referencias) ? JSON.stringify(corpo.referencias.map(x => texto(String(x), 200)).filter(Boolean).slice(0, 20)) : null
+    referencias: Array.isArray(corpo?.referencias) ? JSON.stringify(corpo.referencias.map(x => texto(String(x), 200)).filter(Boolean).slice(0, 20)) : null,
+    fontes: Array.isArray(corpo?.fontes) ? corpo.fontes : null
   };
+  /* as fontes oficiais em que a lição se apoia (0015): título e endereço https de cada uma */
+  if (v.fontes) {
+    const ok = v.fontes.length <= 8 && v.fontes.every(x => x && texto(x.titulo, 200) && /^https:\/\/[a-z0-9.-]+\.[a-z]{2,}\/\S{0,400}$/i.test(String(x.url || '')));
+    if (!ok) return { estado: 400, erro: 'Fontes inválidas: cada uma com título e endereço https (no máximo 8).' };
+    v.fontes = JSON.stringify(v.fontes.map(x => ({ titulo: texto(x.titulo, 200), url: String(x.url) })));
+  }
   if (!/^[a-z0-9][a-z0-9/_-]{2,119}$/.test(v.chave)) return { estado: 400, erro: 'Chave inválida.' };
   if (v.natureza === 'MEDIDA' && !TIPOS[v.tipo_assunto]) return { estado: 400, erro: 'Tipo de assunto desconhecido.' };
   if (v.natureza === 'PROCESSO') { v.tipo_assunto = null; v.padrao = null; }
   for (const k of ['categoria', 'titulo', 'sintoma', 'causa', 'correccao', 'prevencao']) if (!v[k]) return { estado: 400, erro: 'Falta: ' + k + '.' };
   if (v.padrao) { try { new RegExp(v.padrao, 'i'); } catch (e) { return { estado: 400, erro: 'Padrão inválido.' }; } }
   if (!Number.isInteger(v.prioridade)) return { estado: 400, erro: 'Prioridade inválida.' };
-  const cols = ['natureza', 'tipo_assunto', 'categoria', 'titulo', 'padrao', 'prioridade', 'sintoma', 'causa', 'correccao', 'prevencao', 'generica', 'referencias'];
+  const cols = ['natureza', 'tipo_assunto', 'categoria', 'titulo', 'padrao', 'prioridade', 'sintoma', 'causa', 'correccao', 'prevencao', 'generica', 'referencias', 'fontes'];
   await db.batch([
     db.prepare(`INSERT INTO licoes (chave, ${cols.join(', ')}, origem, criada_em, alterada_em) VALUES (?, ${cols.map(() => '?').join(', ')}, ?, ?, ?)
-      ON CONFLICT(chave) DO UPDATE SET ${cols.map(k => k + ' = excluded.' + k).join(', ')}, versao = licoes.versao + 1, alterada_em = excluded.alterada_em`)
+      ON CONFLICT(chave) DO UPDATE SET ${cols.map(k => k === 'fontes' ? 'fontes = COALESCE(excluded.fontes, licoes.fontes)' : k + ' = excluded.' + k).join(', ')},
+        versao = licoes.versao + 1, alterada_em = excluded.alterada_em`)
       .bind(v.chave, ...cols.map(k => v[k]), origem, agora, agora),
     db.prepare(`INSERT INTO licoes_historico (chave, versao, dados, gravado_em)
       SELECT chave, versao, json_object('chave', chave, 'versao', versao, ${cols.map(k => `'${k}', ${k}`).join(', ')}, 'origem', origem), ? FROM licoes WHERE chave = ?`)
@@ -241,14 +254,20 @@ export const referenciasDe = l => { try { const r = l.referencias ? JSON.parse(l
      · um incidente do módulo (fechado, com peso) que nenhuma lição refere — «falta lição»
        se já está resolvido, «causa por confirmar» se ainda não.
    Um caso sai daqui quando uma lição o reconhece ou refere, ou quando é dispensado com um
-   motivo escrito (aprendizagem_dispensas). */
+   motivo escrito (aprendizagem_dispensas).
+
+   15/09/2026 · e o que o Google muda:
+     · uma mudança na documentação oficial que toca na fonte de uma lição — «rever lição»,
+       até se registar o que se fez (documentacao_google.revista_em);
+     · uma lição de SEO (MEDIDA) sem fonte oficial — «sem fonte oficial». */
 export async function lerFaltaAprender(db, { agora = new Date().toISOString(), licoes = null } = {}) {
-  const [L, { results: assuntos }, { results: hipoteses }, { results: incidentes }, { results: dispensas }] = await Promise.all([
+  const [L, { results: assuntos }, { results: hipoteses }, { results: incidentes }, { results: dispensas }, { results: mudancas }] = await Promise.all([
     licoes ? Promise.resolve(licoes) : lerLicoes(db),
     db.prepare('SELECT chave, tipo, caminho, evidencia, detectado_em, resolvido_em FROM assuntos').all(),
     db.prepare("SELECT caminho, tipo_assunto FROM hipoteses_eliminadas WHERE estado = 'ELIMINADA'").all(),
     db.prepare('SELECT * FROM incidentes WHERE fechado_em IS NOT NULL ORDER BY aberto_em DESC LIMIT 50').all(),
-    db.prepare('SELECT referencia FROM aprendizagem_dispensas').all()
+    db.prepare('SELECT referencia FROM aprendizagem_dispensas').all(),
+    db.prepare("SELECT guid, titulo, publicada_em, licoes FROM documentacao_google WHERE revista_em IS NULL AND licoes <> '[]'").all()
   ]);
   const dispensado = new Set(dispensas.map(d => d.referencia));
   const referidas = new Set(L.flatMap(referenciasDe));
@@ -273,6 +292,19 @@ export async function lerFaltaAprender(db, { agora = new Date().toISOString(), l
     if (!(d.duracao_min >= 30 || d.execucoes_perdidas >= 5)) continue;
     out.push({ referencia: ref, origem: 'incidente', titulo: 'Incidente do módulo', detalhe: d.execucoes_perdidas + ' execuções perdidas em ' + d.duracao_min + ' min',
       desde: i.aberto_em, activo: false, estado: d.resolvido ? 'FALTA_LICAO' : 'CAUSA_POR_CONFIRMAR' });
+  }
+  const tituloDe = new Map(L.map(l => [l.chave, l.titulo]));
+  for (const m of mudancas) {
+    const ref = 'documentacao:' + m.guid;
+    if (dispensado.has(ref)) continue;
+    let chaves = []; try { chaves = JSON.parse(m.licoes); } catch (e) { chaves = []; }
+    out.push({ referencia: ref, origem: 'documentacao', titulo: 'Mudança na documentação do Google', detalhe: m.titulo + ' — toca em: ' +
+      chaves.map(k => '«' + (tituloDe.get(k) || k) + '»').join(', '), desde: m.publicada_em, activo: true, estado: 'REVER_LICAO' });
+  }
+  for (const l of L) {
+    if (l.natureza === 'PROCESSO' || fontesDe(l).length || dispensado.has('licao:' + l.chave)) continue;
+    out.push({ referencia: 'licao:' + l.chave, origem: 'licao', titulo: 'Lição sem fonte oficial', detalhe: l.titulo,
+      desde: l.criada_em, activo: false, estado: 'SEM_FONTE' });
   }
   return out.sort((a, b) => (a.desde < b.desde ? 1 : -1));
 }

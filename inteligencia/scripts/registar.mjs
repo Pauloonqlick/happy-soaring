@@ -5,10 +5,13 @@
  *   node inteligencia/scripts/registar.mjs licao <ficheiro.json>
  *       cria ou actualiza uma lição (chave, natureza MEDIDA|PROCESSO, tipo_assunto (só MEDIDA),
  *       categoria, titulo, padrao, prioridade, sintoma, causa, correccao, prevencao, generica,
- *       referencias — obrigatórias numa PROCESSO: ["incidente:<aberto_em>", …])
+ *       referencias — obrigatórias numa PROCESSO: ["incidente:<aberto_em>", …],
+ *       fontes — as páginas oficiais em que se apoia, lidas antes: [{"titulo", "url"}, …])
  *   node inteligencia/scripts/registar.mjs implementacao <licao-ou-tipo> <commit> [nota]
  *       marca como implementados os pacotes ainda por publicar dessa lição ou tipo
- *   node inteligencia/scripts/registar.mjs dispensar <assunto:chave|incidente:aberto_em> <motivo>
+ *   node inteligencia/scripts/registar.mjs rever <guid> <o que se fez>
+ *       uma mudança na documentação do Google que tocava numa lição, já revista
+ *   node inteligencia/scripts/registar.mjs dispensar <assunto:chave|incidente:aberto_em|licao:chave|documentacao:guid> <motivo>
  *       um caso que não deixa lição (fica o motivo; sai de «O que falta aprender»)
  *   node inteligencia/scripts/registar.mjs incidente <id> <ficheiro.json>
  *       marca um incidente já fechado como resolvido (causa_confirmada, resolucao)
@@ -52,12 +55,19 @@ if (accao === 'licao') {
   if (processo && !(Array.isArray(l.referencias) && l.referencias.length)) erro('uma lição de processo diz de que caso nasceu: referencias ["incidente:…", …]');
   if (!/^[a-z0-9][a-z0-9/_-]{2,119}$/.test(l.chave)) erro('chave inválida');
   if (l.padrao) new RegExp(l.padrao, 'i');
-  const cols = ['natureza', 'tipo_assunto', 'categoria', 'titulo', 'padrao', 'prioridade', 'sintoma', 'causa', 'correccao', 'prevencao', 'generica', 'referencias'];
+  if (l.fontes != null && !(Array.isArray(l.fontes) && l.fontes.length <= 8 &&
+    l.fontes.every(x => x && x.titulo && /^https:\/\/[a-z0-9.-]+\.[a-z]{2,}\/\S{0,400}$/i.test(String(x.url || ''))))) {
+    erro('fontes: lista de {"titulo", "url": "https://…"} (no máximo 8), lidas antes de citar');
+  }
+  if (!processo && !Array.isArray(l.fontes)) console.log('⚠ lição de SEO sem fontes oficiais: fica «sem fonte oficial» em «O que falta aprender» (se já tinha fontes, mantêm-se)');
+  const cols = ['natureza', 'tipo_assunto', 'categoria', 'titulo', 'padrao', 'prioridade', 'sintoma', 'causa', 'correccao', 'prevencao', 'generica', 'referencias', 'fontes'];
   const val = { ...l, natureza: processo ? 'PROCESSO' : 'MEDIDA', tipo_assunto: processo ? null : l.tipo_assunto, prioridade: Number(l.prioridade ?? 100),
-    generica: l.generica === false ? 0 : 1, padrao: processo ? null : (l.padrao || null), referencias: Array.isArray(l.referencias) ? JSON.stringify(l.referencias) : null };
+    generica: l.generica === false ? 0 : 1, padrao: processo ? null : (l.padrao || null), referencias: Array.isArray(l.referencias) ? JSON.stringify(l.referencias) : null,
+    fontes: Array.isArray(l.fontes) ? JSON.stringify(l.fontes.map(x => ({ titulo: String(x.titulo), url: String(x.url) }))) : null };
+  /* sem «fontes» no ficheiro, as que a lição já tinha ficam (COALESCE) */
   executar(`INSERT INTO licoes (chave, ${cols.join(', ')}, origem, criada_em, alterada_em)
 VALUES (${q(l.chave)}, ${cols.map(k => q(val[k])).join(', ')}, 'CLAUDE', ${q(agora)}, ${q(agora)})
-ON CONFLICT(chave) DO UPDATE SET ${cols.map(k => k + ' = excluded.' + k).join(', ')}, versao = licoes.versao + 1, alterada_em = excluded.alterada_em;
+ON CONFLICT(chave) DO UPDATE SET ${cols.map(k => k === 'fontes' ? 'fontes = COALESCE(excluded.fontes, licoes.fontes)' : k + ' = excluded.' + k).join(', ')}, versao = licoes.versao + 1, alterada_em = excluded.alterada_em;
 INSERT INTO licoes_historico (chave, versao, dados, gravado_em)
 SELECT chave, versao, json_object('chave', chave, 'versao', versao, ${cols.map(k => `'${k}', ${k}`).join(', ')}, 'origem', origem), ${q(agora)}
 FROM licoes WHERE chave = ${q(l.chave)};`);
@@ -85,10 +95,17 @@ INSERT INTO conhecimento_historico (tabela, registo_id, versao, dados, gravado_e
 SELECT 'hipoteses_eliminadas', id, versao, json_object('id', id, 'versao', versao, 'alterado_em', alterado_em, ${cols.map(k => `'${k}', ${k}`).join(', ')}), ${q(agora)}
 FROM hipoteses_eliminadas WHERE id = (SELECT MAX(id) FROM hipoteses_eliminadas);`);
   console.log('✔ hipótese eliminada registada' + (val.tipo_assunto ? ' — RETIRA assuntos ' + val.tipo_assunto + ' em ' + (val.caminho || 'todo o site') : ' (só conhecimento)'));
+} else if (accao === 'rever') {
+  /* uma mudança na documentação do Google que tocava numa lição: fica escrito o que se fez */
+  const [guid, ...nota] = args;
+  if (!guid || nota.join(' ').trim().length < 20) erro('uso: rever <guid da entrada> <o que se fez: lição actualizada, ou porque não muda nada>');
+  executar(`UPDATE documentacao_google SET revista_em = ${q(agora)}, revisao = ${q(nota.join(' ').trim())}, revista_por = 'CLAUDE'
+WHERE guid = ${q(guid)} AND revista_em IS NULL;`);
+  console.log('✔ mudança revista (só se ainda estava por rever): ' + guid);
 } else if (accao === 'dispensar') {
   /* um caso que não deixa lição: fica escrito porquê e sai de «O que falta aprender» */
   const [referencia, ...motivo] = args;
-  if (!/^(assunto|incidente):.{3,200}$/.test(referencia || '') || motivo.join(' ').trim().length < 20) erro('uso: dispensar <assunto:chave|incidente:aberto_em> <motivo, uma frase a sério>');
+  if (!/^(assunto|incidente|licao|documentacao):.{3,300}$/.test(referencia || '') || motivo.join(' ').trim().length < 20) erro('uso: dispensar <assunto:chave|incidente:aberto_em|licao:chave|documentacao:guid> <motivo, uma frase a sério>');
   executar(`INSERT OR REPLACE INTO aprendizagem_dispensas (referencia, motivo, dispensada_em, por) VALUES (${q(referencia)}, ${q(motivo.join(' ').trim())}, ${q(agora)}, 'CLAUDE');`);
   console.log('✔ dispensado: ' + referencia);
 } else if (accao === 'incidente') {
@@ -101,5 +118,5 @@ FROM hipoteses_eliminadas WHERE id = (SELECT MAX(id) FROM hipoteses_eliminadas);
 WHERE id = ${id} AND fechado_em IS NOT NULL;`);
   console.log('✔ incidente ' + id + ' marcado como resolvido (só se já estava fechado)');
 } else {
-  erro('acção desconhecida — usa «licao», «implementacao», «hipotese», «incidente» ou «dispensar»');
+  erro('acção desconhecida — usa «licao», «implementacao», «hipotese», «incidente», «rever» ou «dispensar»');
 }
